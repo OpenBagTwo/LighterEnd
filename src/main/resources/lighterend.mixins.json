@@ -3,7 +3,6 @@
 	"package": "io.github.openbagtwo.lighterend.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

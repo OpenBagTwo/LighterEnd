@@ -3,7 +3,7 @@
 	"package": "io.github.openbagtwo.lighterend.mixin.client",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"ExampleClientMixin"
+		"MinecraftMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -1,0 +1,49 @@
+package io.github.openbagtwo.lighterend.rendering;
+
+import net.minecraft.client.color.block.BlockColor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
+import net.minecraft.util.Mth;
+
+public class AuroraCrystalRenderer {
+
+  public static final Vec3i[] COLORS = new Vec3i[]{
+      new Vec3i(247, 77, 161),
+      new Vec3i(120, 184, 255),
+      new Vec3i(120, 255, 168),
+      new Vec3i(243, 58, 255)
+  };
+
+  public static BlockColor getBlockColor() {
+    return (state, world, pos, tintIndex) -> {
+      if (pos == null) {
+        pos = BlockPos.ZERO;
+      }
+
+      long i = (long) pos.getX() + (long) pos.getY() + (long) pos.getZ();
+      double delta = i * 0.1;
+      int index = floor(delta);
+      int index2 = (index + 1) & 3;
+      delta -= index;
+      index &= 3;
+
+      Vec3i color1 = COLORS[index];
+      Vec3i color2 = COLORS[index2];
+
+      int r = floor(Mth.lerp(delta, color1.getX(), color2.getX()));
+      int g = floor(Mth.lerp(delta, color1.getY(), color2.getY()));
+      int b = floor(Mth.lerp(delta, color1.getZ(), color2.getZ()));
+
+      return color(r, g, b);
+    };
+  }
+
+  private static int floor(double x) {
+    return x < 0 ? (int) (x - 1) : (int) x;
+  }
+
+  private static int color(int r, int g, int b) {
+    return (255 << 24) | (r << 16) | (g << 8) | b;
+  }
+
+}

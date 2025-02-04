@@ -1,0 +1,6 @@
+{
+	"parent": "lighterend:block/tint_cube_noshade",
+	"textures": {
+		"texture": "lighterend:block/aurora_crystal"
+	}
+}
