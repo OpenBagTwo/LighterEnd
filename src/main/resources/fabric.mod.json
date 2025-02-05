@@ -22,7 +22,7 @@
 			"io.github.openbagtwo.lighterend.LighterEndClient"
 		],
 		"fabric-datagen": [
-			"io.github.openbagtwo.lighterend.LighterEndDataGenerator"
+			"io.github.openbagtwo.lighterend.datagen.LighterEndDataGenerator"
 		]
 	},
 	"mixins": [
