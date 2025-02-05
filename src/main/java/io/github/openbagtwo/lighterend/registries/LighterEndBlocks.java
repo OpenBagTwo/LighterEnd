@@ -3,34 +3,34 @@ package io.github.openbagtwo.lighterend.registries;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.AuroraCrystalBlock;
 import java.util.function.Function;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Item.Properties;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.Item.Settings;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.util.Identifier;
 
 public class LighterEndBlocks {
 
   public static final Block AURORA_CRYSTAL = register("aurora_crystal", AuroraCrystalBlock::new, true);
 
-  public static Block register(String name, Function<BlockBehaviour.Properties, Block> factory, boolean hasItem) {
-    ResourceLocation id = ResourceLocation.fromNamespaceAndPath(LighterEnd.MOD_ID, name);
-    Block block = factory.apply(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id)));
+  public static Block register(String name, Function<AbstractBlock.Settings, Block> factory, boolean hasItem) {
+    Identifier id = Identifier.of(LighterEnd.MOD_ID, name);
+    Block block = factory.apply(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, id)));
 
     if (hasItem){
-      ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, id);
-      Registry.register(BuiltInRegistries.ITEM,
+      RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, id);
+      Registry.register(Registries.ITEM,
           itemKey,
-        new BlockItem(block, new Properties().setId(itemKey))
+        new BlockItem(block, new Settings().registryKey(itemKey))
       );
     }
-    ResourceKey<Block> blockKey = ResourceKey.create(Registries.BLOCK, id);
-    return Registry.register(BuiltInRegistries.BLOCK, blockKey, block);
+    RegistryKey<Block> blockKey = RegistryKey.of(RegistryKeys.BLOCK, id);
+    return Registry.register(Registries.BLOCK, blockKey, block);
   }
 
   public static void initialize() {}

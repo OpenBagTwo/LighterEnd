@@ -3,9 +3,9 @@ package io.github.openbagtwo.lighterend.datagen;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.minecraft.client.data.models.BlockModelGenerators;
-import net.minecraft.client.data.models.ItemModelGenerators;
-import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.ItemModelGenerator;
+import net.minecraft.client.data.Models;
 
 public class ModelProvider extends FabricModelProvider {
 
@@ -14,14 +14,14 @@ public class ModelProvider extends FabricModelProvider {
   }
 
   @Override
-  public void generateBlockStateModels(BlockModelGenerators blockModelGenerators) {
+  public void generateBlockStateModels(BlockStateModelGenerator blockModelGenerators) {
 
   }
 
   @Override
-  public void generateItemModels(ItemModelGenerators itemModelGenerators) {
-    itemModelGenerators.generateFlatItem(
-      LighterEndItems.AURORA_CRYSTAL_SHARD, ModelTemplates.FLAT_ITEM
+  public void generateItemModels(ItemModelGenerator itemModelGenerators) {
+    itemModelGenerators.register(
+      LighterEndItems.AURORA_CRYSTAL_SHARD, Models.GENERATED
     );
 
   }

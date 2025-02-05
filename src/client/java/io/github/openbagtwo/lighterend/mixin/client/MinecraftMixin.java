@@ -2,9 +2,9 @@ package io.github.openbagtwo.lighterend.mixin.client;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.rendering.AuroraCrystalRenderer;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.RunArgs;
 import net.minecraft.client.color.block.BlockColors;
-import net.minecraft.client.main.GameConfig;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Minecraft.class)
+@Mixin(MinecraftClient.class)
 public abstract class MinecraftMixin {
 
   @Final
@@ -20,8 +20,8 @@ public abstract class MinecraftMixin {
   private BlockColors blockColors;
 
   @Inject(method = "<init>*", at = @At("TAIL"))
-  private void provideColors(GameConfig args, CallbackInfo info) {
-    blockColors.register(AuroraCrystalRenderer.getBlockColor(), LighterEndBlocks.AURORA_CRYSTAL);
+  private void provideColors(RunArgs args, CallbackInfo info) {
+    blockColors.registerColorProvider(AuroraCrystalRenderer.getBlockColor(), LighterEndBlocks.AURORA_CRYSTAL);
   }
 
 }
