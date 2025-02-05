@@ -9,7 +9,7 @@ import net.minecraft.client.data.Models;
 
 public class ModelProvider extends FabricModelProvider {
 
-  public ModelProvider(FabricDataOutput output) {
+  protected ModelProvider(FabricDataOutput output) {
     super(output);
   }
 
