@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.TransparentBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -24,6 +25,7 @@ public class AuroraCrystalBlock extends TransparentBlock {
         .isViewBlocking(Blocks::never)
         .strength(1F)
         .lightLevel((bs) -> 15)
+        .mapColor(MapColor.COLOR_MAGENTA)
     );
   }
 
