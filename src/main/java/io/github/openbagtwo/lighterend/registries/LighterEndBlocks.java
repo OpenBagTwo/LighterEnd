@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.AuroraCrystalBlock;
+import java.util.function.Function;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -15,22 +16,12 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public class LighterEndBlocks {
 
+  public static final Block AURORA_CRYSTAL = register("aurora_crystal", AuroraCrystalBlock::new, true);
 
-  public static final Block AURORA_CRYSTAL = register(
-      "aurora_crystal",
-      new AuroraCrystalBlock(
-          BlockBehaviour.Properties.of().setId(
-              ResourceKey.create(
-                  Registries.BLOCK,
-                  ResourceLocation.fromNamespaceAndPath(LighterEnd.MOD_ID, "aurora_crystal")
-              )
-          )
-      ),
-      true
-  );
-
-  public static Block register(String name, Block block, boolean hasItem) {
+  public static Block register(String name, Function<BlockBehaviour.Properties, Block> factory, boolean hasItem) {
     ResourceLocation id = ResourceLocation.fromNamespaceAndPath(LighterEnd.MOD_ID, name);
+    Block block = factory.apply(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id)));
+
     if (hasItem){
       ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, id);
       Registry.register(BuiltInRegistries.ITEM,
