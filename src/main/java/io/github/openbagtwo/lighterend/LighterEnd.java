@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
+import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ public class LighterEnd implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		LighterEndItems.initialize();
 		LighterEndBlocks.initialize();
 	}
 }

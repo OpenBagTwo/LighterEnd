@@ -1,3 +1,4 @@
 {
-  "block.betterend.aurora_crystal": "Aurora Crystal"
+  "block.lighterend.aurora_crystal": "Aurora Crystal",
+  "item.lighterend.aurora_crystal_shard": "Aurora Crystal Shard"
 }
