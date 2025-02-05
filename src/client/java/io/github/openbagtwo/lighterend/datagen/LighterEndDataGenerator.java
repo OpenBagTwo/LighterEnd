@@ -11,5 +11,6 @@ public class LighterEndDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(BlockLootTableProvider::new);
 		pack.addProvider(ModelProvider::new);
 		pack.addProvider(RecipeProvider::new);
+		pack.addProvider(BlockTagProvider::new);
 	}
 }

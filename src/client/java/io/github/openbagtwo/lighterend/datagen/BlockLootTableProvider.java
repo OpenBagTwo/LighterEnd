@@ -24,6 +24,8 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
   @Override
   public void generate() {
     addDrop(LighterEndBlocks.AURORA_CRYSTAL, auroraCrystalDrops());
+    addDrop(LighterEndBlocks.ENDER_BLOCK);
+
   }
 
   private LootTable.Builder auroraCrystalDrops() {
