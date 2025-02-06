@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab_top",
-  "textures": {
-    "bottom": "lighterend:block/violecite_bricks",
-    "side": "lighterend:block/violecite_bricks",
-    "top": "lighterend:block/violecite_bricks"
-  }
-}

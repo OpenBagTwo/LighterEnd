@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "lighterend:violecite_polished",
-  "result": {
-    "count": 1,
-    "id": "lighterend:violecite_brick_stairs"
-  }
-}

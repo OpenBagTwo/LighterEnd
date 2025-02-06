@@ -22,6 +22,8 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
+      - name: run datagen
+        run: sh gradlew runDatagen
       - name: build
         run: sh gradlew build
       - name: capture build artifacts

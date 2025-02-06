@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/outer_stairs",
-  "textures": {
-    "bottom": "lighterend:block/violecite",
-    "side": "lighterend:block/violecite",
-    "top": "lighterend:block/violecite"
-  }
-}

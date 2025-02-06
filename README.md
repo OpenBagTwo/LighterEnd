@@ -46,9 +46,9 @@ If there is a BetterEnd feature you would like to take responsibility for portin
 
 0. Download and install a Java 21 OpenJDK such as [Temurin](https://adoptium.net/temurin/releases/)
 1. Clone this repo
-1. Load this project into your favorite Java IDE and run the "build" gradle task. Alternatively,
-   if you're on pretty much any system that's not Windows, open a command line, navigate to the
-   project root and execute the command `sh ./gradlew build`
+1. Load this project into your favorite Java IDE and run the "runDatagen" gradle task (or, from
+   the command line, run `sh ./gradlew runDatagen` from the project root)
+1. Now run the "build" task, either from the IDE or via  `sh ./gradlew build`
 1. The compiled jar will be found under `build/libs`
 
 ## License and Acknowledgements

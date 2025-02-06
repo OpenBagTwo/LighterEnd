@@ -42,3 +42,4 @@ replay_*.log
 # misc
 *.tar.gz
 .cache
+generated
