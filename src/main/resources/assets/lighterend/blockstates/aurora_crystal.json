@@ -1,7 +1,9 @@
 {
-	"variants": {
-		"": [
-			{ "model": "lighterend:block/aurora_crystal" }
-		]
-	}
+  "variants": {
+    "": [
+      {
+        "model": "lighterend:block/aurora_crystal"
+      }
+    ]
+  }
 }

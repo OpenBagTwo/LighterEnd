@@ -186,5 +186,3 @@ public class LighterEndBlocks {
   public static void initialize() {}
 
 }
-
-

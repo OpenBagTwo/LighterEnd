@@ -1,6 +1,6 @@
 {
-  "replace": false,
   "colors": {
     "lighterend:aurora_crystal": "#f74da1"
-  }
+  },
+  "replace": false
 }

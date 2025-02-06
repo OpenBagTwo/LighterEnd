@@ -1,11 +1,11 @@
 {
-	"required": true,
-	"package": "io.github.openbagtwo.lighterend.mixin.client",
-	"compatibilityLevel": "JAVA_21",
-	"client": [
-		"MinecraftMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+  "client": [
+    "MinecraftMixin"
+  ],
+  "compatibilityLevel": "JAVA_21",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "package": "io.github.openbagtwo.lighterend.mixin.client",
+  "required": true
 }

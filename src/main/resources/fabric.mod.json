@@ -1,44 +1,44 @@
 {
-	"schemaVersion": 1,
-	"id": "lighterend",
-	"version": "${version}",
-	"name": "LighterEnd",
-	"description": "Bringing light and life to the most desolate dimension. A continuation of BetterEnd",
-	"authors": [
-		"OpenBagTwo"
-	],
-	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
-	},
-	"license": "GPL-3.0",
-	"icon": "assets/lighterend/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"io.github.openbagtwo.lighterend.LighterEnd"
-		],
-		"client": [
-			"io.github.openbagtwo.lighterend.LighterEndClient"
-		],
-		"fabric-datagen": [
-			"io.github.openbagtwo.lighterend.datagen.LighterEndDataGenerator"
-		]
-	},
-	"mixins": [
-		"lighterend.mixins.json",
-		{
-			"config": "lighterend.client.mixins.json",
-			"environment": "client"
-		}
-	],
-	"depends": {
-		"fabricloader": ">=0.16.10",
-		"minecraft": "~1.21.4",
-		"java": ">=21",
-		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
-	}
+  "authors": [
+    "OpenBagTwo"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "depends": {
+    "fabric-api": "*",
+    "fabricloader": ">=0.16.10",
+    "java": ">=21",
+    "minecraft": "~1.21.4"
+  },
+  "description": "Bringing light and life to the most desolate dimension. A continuation of BetterEnd",
+  "entrypoints": {
+    "client": [
+      "io.github.openbagtwo.lighterend.LighterEndClient"
+    ],
+    "fabric-datagen": [
+      "io.github.openbagtwo.lighterend.datagen.LighterEndDataGenerator"
+    ],
+    "main": [
+      "io.github.openbagtwo.lighterend.LighterEnd"
+    ]
+  },
+  "environment": "*",
+  "icon": "assets/lighterend/icon.png",
+  "id": "lighterend",
+  "license": "GPL-3.0",
+  "mixins": [
+    "lighterend.mixins.json",
+    {
+      "config": "lighterend.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "name": "LighterEnd",
+  "schemaVersion": 1,
+  "suggests": {
+    "another-mod": "*"
+  },
+  "version": "${version}"
 }

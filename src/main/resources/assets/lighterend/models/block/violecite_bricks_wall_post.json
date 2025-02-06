@@ -1,22 +1,80 @@
 {
-	"parent": "block/block",
-	"textures": {
-		"side": "betterend:block/violecite_post_side",
-		"top": "betterend:block/violecite_post_top",
-		"particle": "#side"
-	},
-	"elements": [ 	 
-		{
-			"from": [ 4, -0.01, 4 ],
-			"to": [ 12, 16, 12 ],
-			"faces": {
-				"down": { "uv": [ 4, 4, 12, 12 ], "texture": "#top", "cullface": "down" },
-				"up": { "uv": [ 4, 4, 12, 12 ], "texture": "#top", "cullface": "up" },
-				"north": { "uv": [ 4, 0, 12, 16 ], "texture": "#side" },
-				"south": { "uv": [ 4, 0, 12, 16 ], "texture": "#side" },
-				"west": { "uv": [ 4, 0, 12, 16 ], "texture": "#side" },
-				"east": { "uv": [ 4, 0, 12, 16 ], "texture": "#side" }
-			}
-		}
-	]
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#top",
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ]
+        },
+        "east": {
+          "texture": "#side",
+          "uv": [
+            4,
+            0,
+            12,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#side",
+          "uv": [
+            4,
+            0,
+            12,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#side",
+          "uv": [
+            4,
+            0,
+            12,
+            16
+          ]
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#top",
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ]
+        },
+        "west": {
+          "texture": "#side",
+          "uv": [
+            4,
+            0,
+            12,
+            16
+          ]
+        }
+      },
+      "from": [
+        4,
+        -0.01,
+        4
+      ],
+      "to": [
+        12,
+        16,
+        12
+      ]
+    }
+  ],
+  "parent": "block/block",
+  "textures": {
+    "particle": "#side",
+    "side": "betterend:block/violecite_post_side",
+    "top": "betterend:block/violecite_post_top"
+  }
 }

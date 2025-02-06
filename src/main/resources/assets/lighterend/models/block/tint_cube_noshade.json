@@ -1,22 +1,90 @@
 {
-	"parent": "block/block",
-	"textures": {
-		"particle": "#texture"
-	},
-	"elements": [ 	 
-		{
-			"__comment": "Box1",
-			"from": [ 0, 0, 0 ],
-			"to": [ 16, 16, 16 ],
-			"shade": false,
-			"faces": {
-				"down": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture", "cullface": "down", "tintindex": 0 },
-				"up": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture", "cullface": "up", "tintindex": 0 },
-				"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture", "cullface": "north", "tintindex": 0 },
-				"south": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture", "cullface": "south", "tintindex": 0 },
-				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture", "cullface": "west", "tintindex": 0 },
-				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture", "cullface": "east", "tintindex": 0 }
-			}
-		}
-	]
+  "elements": [
+    {
+      "__comment": "Box1",
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#texture",
+          "tintindex": 0,
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "cullface": "east",
+          "texture": "#texture",
+          "tintindex": 0,
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#texture",
+          "tintindex": 0,
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#texture",
+          "tintindex": 0,
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#texture",
+          "tintindex": 0,
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#texture",
+          "tintindex": 0,
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "shade": false,
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
+  "parent": "block/block",
+  "textures": {
+    "particle": "#texture"
+  }
 }
