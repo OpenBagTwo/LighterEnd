@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "lighterend:violecite_polished"
+  ],
+  "result": {
+    "count": 1,
+    "id": "lighterend:violecite_button"
+  }
+}

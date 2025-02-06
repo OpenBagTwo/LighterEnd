@@ -1,12 +1,12 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
+  "category": "building",
   "key": {
-    "s": "lighterend:aurora_crystal_shard"
+    "#": "lighterend:aurora_crystal_shard"
   },
   "pattern": [
-    "ss",
-    "ss"
+    "##",
+    "##"
   ],
   "result": {
     "count": 1,

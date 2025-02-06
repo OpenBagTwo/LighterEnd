@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "lighterend:violecite",
+  "result": {
+    "count": 1,
+    "id": "lighterend:violecite_tile_wall"
+  }
+}

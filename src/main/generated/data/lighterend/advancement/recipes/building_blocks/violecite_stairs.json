@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ender_pearl": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "lighterend:violecite_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_violecite": {
       "conditions": {
         "items": [
           {
-            "items": "lighterend:ender_block"
+            "items": "lighterend:violecite_stairs"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "lighterend:ender_block"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "has_ender_pearl"
+      "has_violecite"
     ]
   ],
   "rewards": {
     "recipes": [
-      "lighterend:ender_block"
+      "lighterend:violecite_stairs"
     ]
   }
 }

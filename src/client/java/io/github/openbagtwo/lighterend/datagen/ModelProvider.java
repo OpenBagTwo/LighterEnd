@@ -1,12 +1,17 @@
 package io.github.openbagtwo.lighterend.datagen;
 
+import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
+import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.BlockStateModelGenerator.BlockTexturePool;
 import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Models;
+import net.minecraft.client.data.TexturedModel;
+import net.minecraft.util.Identifier;
 
 public class ModelProvider extends FabricModelProvider {
 
@@ -17,7 +22,33 @@ public class ModelProvider extends FabricModelProvider {
   @Override
   public void generateBlockStateModels(BlockStateModelGenerator blockModelGenerator) {
     blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.ENDER_BLOCK);
+    generateMaterialModels(blockModelGenerator, LighterEndBlocks.VIOLECITE);
+  }
 
+  public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator, Material material){
+    BlockTexturePool texturePool = blockModelGenerator.registerCubeAllModelTexturePool(material.baseBlock);
+    texturePool.stairs(material.baseStairs);
+    texturePool.slab(material.baseSlab);
+    texturePool.wall(material.baseWall);
+
+    texturePool = blockModelGenerator.registerCubeAllModelTexturePool(material.bricks);
+    texturePool.stairs(material.brickStairs);
+    texturePool.slab(material.brickSlab);
+    texturePool.wall(material.brickWall);
+
+    texturePool = blockModelGenerator.registerCubeAllModelTexturePool(material.polished);
+    texturePool.stairs(material.polishedStairs);
+    texturePool.slab(material.polishedSlab);
+    texturePool.wall(material.polishedWall);
+    texturePool.button(material.button);
+    texturePool.pressurePlate(material.pressurePlate);
+
+    texturePool = blockModelGenerator.registerCubeAllModelTexturePool(material.tiles);
+    texturePool.stairs(material.tileStairs);
+    texturePool.slab(material.tileSlab);
+    texturePool.wall(material.tileWall);
+
+    blockModelGenerator.registerAxisRotated(material.pillar, TexturedModel.CUBE_COLUMN);
   }
 
   @Override

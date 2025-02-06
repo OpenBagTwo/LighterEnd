@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "lighterend:block/violecite_polished_slab"
+    },
+    "type=double": {
+      "model": "lighterend:block/violecite_polished"
+    },
+    "type=top": {
+      "model": "lighterend:block/violecite_polished_slab_top"
+    }
+  }
+}

@@ -1,5 +1,24 @@
 {
   "values": [
-    "lighterend:ender_block"
+    "lighterend:ender_block",
+    "lighterend:violecite",
+    "lighterend:violecite_stairs",
+    "lighterend:violecite_slab",
+    "lighterend:violecite_wall",
+    "lighterend:violecite_bricks",
+    "lighterend:violecite_brick_stairs",
+    "lighterend:violecite_brick_slab",
+    "lighterend:violecite_brick_wall",
+    "lighterend:violecite_polished",
+    "lighterend:violecite_polished_stairs",
+    "lighterend:violecite_polished_slab",
+    "lighterend:violecite_polished_wall",
+    "lighterend:violecite_tiles",
+    "lighterend:violecite_tile_stairs",
+    "lighterend:violecite_tile_slab",
+    "lighterend:violecite_tile_wall",
+    "lighterend:violecite_pillar",
+    "lighterend:violecite_button",
+    "lighterend:violecite_pressure_plate"
   ]
 }

@@ -1,5 +1,24 @@
 {
   "item.lighterend.aurora_crystal": "Aurora Crystal",
   "item.lighterend.aurora_crystal_shard": "Aurora Crystal Shard",
-  "item.lighterend.ender_block": "Ender Block"
+  "item.lighterend.ender_block": "Ender Block",
+  "item.lighterend.violecite": "Violecite",
+  "item.lighterend.violecite_stairs": "Violecite Stairs",
+  "item.lighterend.violecite_slab": "Violecite Slab",
+  "item.lighterend.violecite_wall": "Violecite Wall",
+  "item.lighterend.violecite_polished": "Polished Violecite",
+  "item.lighterend.violecite_polished_stairs": "Polished Violecite Stairs",
+  "item.lighterend.violecite_polished_slab": "Polished Violecite Slab",
+  "item.lighterend.violecite_polished_wall": "Polished Violecite Wall",
+  "item.lighterend.violecite_bricks": "Violecite Bricks",
+  "item.lighterend.violecite_brick_stairs": "Violecite Brick Stairs",
+  "item.lighterend.violecite_brick_slab": "Violecite Brick Slab",
+  "item.lighterend.violecite_brick_wall": "Violecite Brick Wall",
+  "item.lighterend.violecite_tiles": "Violecite Tiles",
+  "item.lighterend.violecite_tile_stairs": "Violecite Tile Stairs",
+  "item.lighterend.violecite_tile_slab": "Violecite Tile Slab",
+  "item.lighterend.violecite_tile_wall": "Violecite Tile Wall",
+  "item.lighterend.violecite_pillar": "Violecite Pillar",
+  "item.lighterend.violecite_button": "Violecite Button",
+  "item.lighterend.violecite_pressure_plate": "Violecite Pressure Plate"
 }

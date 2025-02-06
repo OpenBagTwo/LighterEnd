@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "lighterend:block/violecite_pillar_top",
+    "side": "lighterend:block/violecite_pillar_side"
+  }
+}

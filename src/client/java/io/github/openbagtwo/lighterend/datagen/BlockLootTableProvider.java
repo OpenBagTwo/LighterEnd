@@ -5,6 +5,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
+import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.loot.LootTable;
@@ -25,6 +26,9 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
   public void generate() {
     addDrop(LighterEndBlocks.AURORA_CRYSTAL, auroraCrystalDrops());
     addDrop(LighterEndBlocks.ENDER_BLOCK);
+    for (Block block : LighterEndBlocks.VIOLECITE.blocks){
+      addDrop(block);
+    }
 
   }
 
