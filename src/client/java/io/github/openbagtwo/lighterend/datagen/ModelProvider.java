@@ -4,6 +4,7 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
+import java.util.Arrays;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.client.data.BlockStateModelGenerator;
@@ -24,6 +25,13 @@ public class ModelProvider extends FabricModelProvider {
     blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.ENDER_BLOCK);
     generateMaterialModels(blockModelGenerator, LighterEndBlocks.VIOLECITE);
     blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.MISSING_TILE);
+    for (Material jadestone : Arrays.asList(
+        LighterEndBlocks.AZURE_JADESTONE,
+        LighterEndBlocks.SANDY_JADESTONE,
+        LighterEndBlocks.VIRID_JADESTONE
+    )) {
+      generateMaterialModels(blockModelGenerator, jadestone);
+    }
   }
 
   public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator, Material material){

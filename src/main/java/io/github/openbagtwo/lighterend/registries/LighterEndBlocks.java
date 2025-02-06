@@ -52,6 +52,16 @@ public class LighterEndBlocks {
       )
   );
 
+  public static final Material AZURE_JADESTONE = new Material(
+      "azure_jadestone", MapColor.LIGHT_BLUE
+  );
+  public static final Material SANDY_JADESTONE = new Material(
+      "sandy_jadestone", MapColor.YELLOW
+  );
+  public static final Material VIRID_JADESTONE = new Material(
+      "virid_jadestone", MapColor.GREEN
+  );
+
   public static class Material {
 
     public final String baseName;

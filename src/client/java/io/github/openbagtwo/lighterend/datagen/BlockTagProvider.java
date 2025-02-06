@@ -1,6 +1,8 @@
 package io.github.openbagtwo.lighterend.datagen;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
+import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -32,5 +34,21 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         .add(LighterEndBlocks.VIOLECITE.brickWall)
         .add(LighterEndBlocks.VIOLECITE.polishedWall)
         .add(LighterEndBlocks.VIOLECITE.tileWall);
+
+    for (Material jadestone : Arrays.asList(
+        LighterEndBlocks.AZURE_JADESTONE,
+        LighterEndBlocks.SANDY_JADESTONE,
+        LighterEndBlocks.VIRID_JADESTONE
+    )) {
+      for (Block block : jadestone.blocks){
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(block);
+        getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL).add(block);
+      }
+      getOrCreateTagBuilder(BlockTags.WALLS)
+          .add(jadestone.baseWall)
+          .add(jadestone.brickWall)
+          .add(jadestone.polishedWall)
+          .add(jadestone.tileWall);
+    }
   }
 }

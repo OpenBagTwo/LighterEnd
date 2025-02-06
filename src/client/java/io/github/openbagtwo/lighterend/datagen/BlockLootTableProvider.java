@@ -1,7 +1,9 @@
 package io.github.openbagtwo.lighterend.datagen;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
+import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
@@ -30,7 +32,15 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
       addDrop(block);
     }
     addDrop(LighterEndBlocks.MISSING_TILE);
-
+    for (Material jadestone : Arrays.asList(
+        LighterEndBlocks.AZURE_JADESTONE,
+        LighterEndBlocks.SANDY_JADESTONE,
+        LighterEndBlocks.VIRID_JADESTONE
+    )) {
+      for (Block block : jadestone.blocks){
+        addDrop(block);
+      }
+    }
   }
 
   private LootTable.Builder auroraCrystalDrops() {

@@ -54,6 +54,14 @@ public class RecipeProvider extends FabricRecipeProvider {
                 hasItem(LighterEndBlocks.VIOLECITE.tiles),
                 conditionsFromItem(LighterEndBlocks.MISSING_TILE)
             ).offerTo(exporter);
+
+        for (Material jadestone : Arrays.asList(
+            LighterEndBlocks.AZURE_JADESTONE,
+            LighterEndBlocks.SANDY_JADESTONE,
+            LighterEndBlocks.VIRID_JADESTONE
+        )) {
+          generateMaterialRecipes(jadestone);
+        }
       }
 
       public void generateMaterialRecipes(Material material) {
