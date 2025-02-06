@@ -23,6 +23,7 @@ public class ModelProvider extends FabricModelProvider {
   public void generateBlockStateModels(BlockStateModelGenerator blockModelGenerator) {
     blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.ENDER_BLOCK);
     generateMaterialModels(blockModelGenerator, LighterEndBlocks.VIOLECITE);
+    blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.MISSING_TILE);
   }
 
   public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator, Material material){

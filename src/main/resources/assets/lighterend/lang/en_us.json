@@ -20,5 +20,6 @@
   "item.lighterend.violecite_tile_wall": "Violecite Tile Wall",
   "item.lighterend.violecite_pillar": "Violecite Pillar",
   "item.lighterend.violecite_button": "Violecite Button",
-  "item.lighterend.violecite_pressure_plate": "Violecite Pressure Plate"
+  "item.lighterend.violecite_pressure_plate": "Violecite Pressure Plate",
+  "item.lighterend.missing_tile": "Missing Tile"
 }

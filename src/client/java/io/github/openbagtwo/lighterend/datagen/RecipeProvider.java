@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.item.ItemConvertible;
@@ -43,6 +44,16 @@ public class RecipeProvider extends FabricRecipeProvider {
             ).offerTo(exporter);
 
         generateMaterialRecipes(LighterEndBlocks.VIOLECITE);
+
+        createShaped(RecipeCategory.BUILDING_BLOCKS, LighterEndBlocks.MISSING_TILE, 4)
+            .pattern("VP")
+            .pattern("PV")
+            .input('V', LighterEndBlocks.VIOLECITE.tiles)
+            .input('P', Blocks.PURPUR_BLOCK)
+            .criterion(
+                hasItem(LighterEndBlocks.VIOLECITE.tiles),
+                conditionsFromItem(LighterEndBlocks.MISSING_TILE)
+            ).offerTo(exporter);
       }
 
       public void generateMaterialRecipes(Material material) {

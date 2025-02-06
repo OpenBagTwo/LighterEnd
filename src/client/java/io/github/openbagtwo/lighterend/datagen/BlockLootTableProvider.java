@@ -29,6 +29,7 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     for (Block block : LighterEndBlocks.VIOLECITE.blocks){
       addDrop(block);
     }
+    addDrop(LighterEndBlocks.MISSING_TILE);
 
   }
 

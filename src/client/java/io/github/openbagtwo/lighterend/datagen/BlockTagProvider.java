@@ -17,7 +17,8 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
   @Override
   protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
     getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-      .add(LighterEndBlocks.ENDER_BLOCK);
+      .add(LighterEndBlocks.ENDER_BLOCK)
+      .add(LighterEndBlocks.MISSING_TILE);
 
     getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL)
         .add(LighterEndBlocks.ENDER_BLOCK);

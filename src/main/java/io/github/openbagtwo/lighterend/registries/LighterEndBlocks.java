@@ -4,6 +4,7 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.AuroraCrystalBlock;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Function;
 import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.Block;
@@ -30,7 +31,7 @@ public class LighterEndBlocks {
   public static final Block AURORA_CRYSTAL = register("aurora_crystal", AuroraCrystalBlock::new);
   public static final Block ENDER_BLOCK = register(
       "ender_block",
-      settings ->  new Block(
+      settings -> new Block(
           settings
               .instrument(NoteBlockInstrument.IRON_XYLOPHONE)
               .mapColor(MapColor.BRIGHT_TEAL)
@@ -39,7 +40,17 @@ public class LighterEndBlocks {
               .sounds(BlockSoundGroup.STONE)
       )
   );
-  public static final Material VIOLECITE = new Material("violecite", MapColor.PURPLE);
+  public static final Material VIOLECITE = new Material("violecite", MapColor.TERRACOTTA_BLACK);
+  public static final Block MISSING_TILE = register(
+      "missing_tile",
+      settings -> new Block(
+          settings
+              .instrument(NoteBlockInstrument.BASEDRUM)
+              .requiresTool()
+              .strength(3.0F, 9.0F)
+              .mapColor(MapColor.TERRACOTTA_PURPLE)
+      )
+  );
 
   public static class Material {
 
@@ -74,7 +85,11 @@ public class LighterEndBlocks {
     // public final Block pedestal;
 
     public Settings applySettings(Settings settings){
-      return settings.instrument(NoteBlockInstrument.BASEDRUM).requiresTool().strength(3.0F, 9.0F).mapColor(this.mapColor);
+      return settings
+          .instrument(NoteBlockInstrument.BASEDRUM)
+          .requiresTool()
+          .strength(3.0F, 9.0F)
+          .mapColor(this.mapColor);
     }
 
     public Material(String name, MapColor mapColor){
