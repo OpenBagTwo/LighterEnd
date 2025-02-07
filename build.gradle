@@ -50,6 +50,8 @@ processResources {
 	filesMatching("fabric.mod.json") {
 		expand "version": project.version
 	}
+	// exclude means "keep original" (assets takes priority over generated assets)
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -64,12 +66,18 @@ java {
 
 	sourceCompatibility = JavaVersion.VERSION_21
 	targetCompatibility = JavaVersion.VERSION_21
+
 }
 
 jar {
 	from("LICENSE") {
 		rename { "${it}_${project.base.archivesName.get()}"}
 	}
+}
+
+sourcesJar {
+	// exclude means "keep original" (assets takes priority over generated assets)
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 

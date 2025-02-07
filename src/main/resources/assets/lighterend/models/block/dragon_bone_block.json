@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "lighterend:block/dragon_bone_block_top",
+    "side": "lighterend:block/dragon_bone_block_side"
+  }
+}

@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.AuroraCrystalBlock;
+import io.github.openbagtwo.lighterend.blocks.DragonBoneBlocks;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -60,6 +61,22 @@ public class LighterEndBlocks {
   );
   public static final Material VIRID_JADESTONE = new Material(
       "virid_jadestone", MapColor.GREEN
+  );
+
+  public static Block DRAGON_BONE_BLOCK = register(
+      "dragon_bone_block",
+      settings -> new PillarBlock(DragonBoneBlocks.applySettings(settings))
+  );
+  public static Block DRAGON_BONE_STAIRS = register(
+      "dragon_bone_stairs",
+      settings -> new StairsBlock(
+          DRAGON_BONE_BLOCK.getDefaultState(),
+          DragonBoneBlocks.applySettings(settings)
+      )
+  );
+  public static Block DRAGON_BONE_SLAB = register(
+      "dragon_bone_slab",
+      settings -> new SlabBlock(DragonBoneBlocks.applySettings(settings))
   );
 
   public static class Material {

@@ -41,6 +41,9 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
         addDrop(block);
       }
     }
+    addDrop(LighterEndBlocks.DRAGON_BONE_BLOCK);
+    addDrop(LighterEndBlocks.DRAGON_BONE_STAIRS);
+    addDrop(LighterEndBlocks.DRAGON_BONE_SLAB);
   }
 
   private LootTable.Builder auroraCrystalDrops() {

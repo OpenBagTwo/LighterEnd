@@ -62,6 +62,35 @@ public class RecipeProvider extends FabricRecipeProvider {
         )) {
           generateMaterialRecipes(jadestone);
         }
+
+        createShaped(RecipeCategory.BUILDING_BLOCKS, LighterEndBlocks.DRAGON_BONE_BLOCK, 8)
+            .pattern("BBB")
+            .pattern("BDB")
+            .pattern("BBB")
+            .input('B', Blocks.BONE_BLOCK)
+            .input('D', Items.DRAGON_BREATH)
+            .criterion(
+                hasItem(Items.DRAGON_BREATH),
+                conditionsFromItem(LighterEndBlocks.DRAGON_BONE_BLOCK)
+            ).offerTo(exporter);
+        offerSlabRecipe(
+            RecipeCategory.BUILDING_BLOCKS,
+            LighterEndBlocks.DRAGON_BONE_SLAB,
+            LighterEndBlocks.DRAGON_BONE_BLOCK
+        );
+        offerStonecuttingRecipe(
+            RecipeCategory.BUILDING_BLOCKS,
+            LighterEndBlocks.DRAGON_BONE_SLAB,
+            LighterEndBlocks.DRAGON_BONE_BLOCK,
+            2
+        );
+        offerStairsRecipe(LighterEndBlocks.DRAGON_BONE_STAIRS, LighterEndBlocks.DRAGON_BONE_BLOCK);
+        offerStonecuttingRecipe(
+            RecipeCategory.BUILDING_BLOCKS,
+            LighterEndBlocks.DRAGON_BONE_STAIRS,
+            LighterEndBlocks.DRAGON_BONE_BLOCK
+        );
+
       }
 
       public void generateMaterialRecipes(Material material) {
