@@ -106,6 +106,13 @@ public class RecipeProvider extends FabricRecipeProvider {
                 conditionsFromItem(Items.CYAN_DYE)
             ).offerTo(exporter);
 
+        createShapeless(RecipeCategory.MISC, Items.ORANGE_DYE)
+            .input(LighterEndBlocks.UMBRELLA_FERN)
+            .criterion(
+                hasItem(LighterEndBlocks.UMBRELLA_FERN),
+                conditionsFromItem(Items.ORANGE_DYE)
+            ).offerTo(exporter);
+
       }
 
       public void generateMaterialRecipes(Material material) {

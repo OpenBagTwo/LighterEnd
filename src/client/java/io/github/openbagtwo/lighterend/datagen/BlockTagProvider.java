@@ -74,7 +74,11 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         Blocks.END_STONE, LighterEndBlocks.END_MOSS
     );
 
-    getOrCreateTagBuilder(BlockTags.FLOWERS).add(LighterEndBlocks.CREEPING_MOSS);
+    getOrCreateTagBuilder(BlockTags.FLOWERS).add(
+        LighterEndBlocks.CREEPING_MOSS,
+        LighterEndBlocks.UMBRELLA_FERN,
+        LighterEndBlocks.TALL_UMBRELLA_FERN
+    );
   }
 
 }

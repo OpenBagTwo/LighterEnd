@@ -1,0 +1,22 @@
+{
+  "defaultMap": {
+    "spriteMap": [
+      {
+        "material": "lighterend:wave_glow_all",
+        "sprite": "lighterend:block/umbrella_fern_sporophyte"
+      },
+      {
+        "material": "lighterend:waving",
+        "sprite": "lighterend:block/umbrella_fern_up"
+      },
+      {
+        "material": "lighterend:waving",
+        "sprite": "lighterend:block/umbrella_fern_end"
+      },
+      {
+        "material": "lighterend:waving_floor",
+        "sprite": "lighterend:block/umbrella_fern_bottom"
+      }
+    ]
+  }
+}

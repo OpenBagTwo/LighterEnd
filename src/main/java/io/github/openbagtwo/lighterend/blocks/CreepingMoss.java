@@ -24,14 +24,15 @@ public class CreepingMoss extends PlantBlock implements Fertilizable {
     super(
         settings
             .mapColor(MapColor.LIGHT_BLUE)
+            .replaceable()
             .noCollision()
-            .nonOpaque()
             .breakInstantly()
+            .nonOpaque()
+            .sounds(BlockSoundGroup.GRASS)
             .pistonBehavior(PistonBehavior.DESTROY)
             .offset(OffsetType.XZ)
-            .sounds(BlockSoundGroup.GRASS)
-            .luminance((bs) -> 11)
             .burnable()
+            .luminance((bs) -> 5)
     );
   }
 

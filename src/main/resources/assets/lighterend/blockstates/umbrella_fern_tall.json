@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "lighterend:block/umbrella_fern_bottom"
+    },
+    "half=upper": [
+      {
+        "model": "lighterend:block/umbrella_fern_top"
+      },
+      {
+        "model": "lighterend:block/umbrella_fern_top_2"
+      },
+      {
+        "model": "lighterend:block/umbrella_fern_top_3"
+      }
+    ]
+  }
+}

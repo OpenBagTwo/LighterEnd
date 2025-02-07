@@ -4,7 +4,6 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
@@ -43,7 +42,8 @@ public class LighterEndConfiguredFeatures {
         new SimpleBlockFeatureConfig(
             new WeightedBlockStateProvider(
                 DataPool.<BlockState>builder()
-                    .add(LighterEndBlocks.CREEPING_MOSS.getDefaultState(), 1)  // placeholder
+                    .add(LighterEndBlocks.CREEPING_MOSS.getDefaultState(), 1)
+                    .add(LighterEndBlocks.UMBRELLA_FERN.getDefaultState(), 1)
             )
         )
     );

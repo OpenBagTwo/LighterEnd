@@ -5,9 +5,10 @@ import io.github.openbagtwo.lighterend.blocks.AuroraCrystalBlock;
 import io.github.openbagtwo.lighterend.blocks.CreepingMoss;
 import io.github.openbagtwo.lighterend.blocks.DragonBoneBlocks;
 import io.github.openbagtwo.lighterend.blocks.EndMoss;
+import io.github.openbagtwo.lighterend.blocks.UmbrellaFern;
+import io.github.openbagtwo.lighterend.blocks.UmbrellaFern.TallUmbrellaFern;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.function.Function;
 import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.Block;
@@ -84,6 +85,11 @@ public class LighterEndBlocks {
   public static Block END_MOSS = register("end_moss", EndMoss::new);
 
   public static Block CREEPING_MOSS = register("creeping_moss", CreepingMoss::new);
+
+  public static Block UMBRELLA_FERN = register("umbrella_fern", UmbrellaFern::new);
+  public static Block TALL_UMBRELLA_FERN = register(
+      "umbrella_fern_tall", TallUmbrellaFern::new, false
+  );
 
   public static class Material {
 

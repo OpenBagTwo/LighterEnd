@@ -7,7 +7,12 @@ import net.minecraft.client.render.RenderLayer;
 public class PlantRenderer {
 
   public static void initialize() {
-    BlockRenderLayerMap.INSTANCE.putBlock(LighterEndBlocks.CREEPING_MOSS, RenderLayer.getCutout());
+    BlockRenderLayerMap.INSTANCE.putBlocks(
+        RenderLayer.getCutout(),
+        LighterEndBlocks.CREEPING_MOSS,
+        LighterEndBlocks.UMBRELLA_FERN,
+        LighterEndBlocks.TALL_UMBRELLA_FERN
+    );
   }
 
 }

@@ -11,7 +11,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
@@ -48,7 +47,9 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     addDrop(LighterEndBlocks.DRAGON_BONE_SLAB);
     addDropWithSilkTouch(LighterEndBlocks.END_MOSS, Blocks.END_STONE);
 
-    addDrop(LighterEndBlocks.CREEPING_MOSS, block -> this.dropsWithSilkTouchOrShears(block));
+    addDrop(LighterEndBlocks.CREEPING_MOSS, this::dropsWithSilkTouchOrShears);
+    addDrop(LighterEndBlocks.UMBRELLA_FERN, this::dropsWithSilkTouchOrShears);
+    addDrop(LighterEndBlocks.TALL_UMBRELLA_FERN, LighterEndBlocks.UMBRELLA_FERN);
   }
 
   private LootTable.Builder auroraCrystalDrops() {
