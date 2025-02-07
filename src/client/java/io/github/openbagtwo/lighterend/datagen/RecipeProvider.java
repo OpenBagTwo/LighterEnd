@@ -91,6 +91,14 @@ public class RecipeProvider extends FabricRecipeProvider {
             LighterEndBlocks.DRAGON_BONE_BLOCK
         );
 
+        createShapeless(RecipeCategory.MISC, LighterEndBlocks.END_MOSS, 2)
+            .input(Blocks.END_STONE)
+            .input(Ingredient.ofItems(Blocks.MOSS_BLOCK, Blocks.PALE_MOSS_BLOCK))
+            .criterion(
+                hasItem(Blocks.END_STONE),
+                conditionsFromItem(LighterEndBlocks.END_MOSS)
+            ).offerTo(exporter);
+
       }
 
       public void generateMaterialRecipes(Material material) {

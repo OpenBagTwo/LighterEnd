@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "minecraft:block/end_stone",
+    "side": "lighterend:block/end_moss_side",
+    "top": "lighterend:block/end_moss_top"
+  }
+}

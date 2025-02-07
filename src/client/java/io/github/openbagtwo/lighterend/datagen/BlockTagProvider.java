@@ -2,11 +2,13 @@ package io.github.openbagtwo.lighterend.datagen;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
+import io.github.openbagtwo.lighterend.tags.LighterEndTags;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.registry.tag.BlockTags;
@@ -23,7 +25,8 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         .add(LighterEndBlocks.MISSING_TILE)
         .add(LighterEndBlocks.DRAGON_BONE_BLOCK)
         .add(LighterEndBlocks.DRAGON_BONE_STAIRS)
-        .add(LighterEndBlocks.DRAGON_BONE_SLAB);
+        .add(LighterEndBlocks.DRAGON_BONE_SLAB)
+        .add(LighterEndBlocks.END_MOSS);
 
     getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL)
         .add(LighterEndBlocks.ENDER_BLOCK);
@@ -53,5 +56,14 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
           .add(jadestone.polishedWall)
           .add(jadestone.tileWall);
     }
+
+    getOrCreateTagBuilder(BlockTags.ENDERMAN_HOLDABLE).add(LighterEndBlocks.END_MOSS);
+    getOrCreateTagBuilder(BlockTags.ANIMALS_SPAWNABLE_ON).add(LighterEndBlocks.END_MOSS);
+    getOrCreateTagBuilder(BlockTags.REPLACEABLE_BY_TREES).add(LighterEndBlocks.END_MOSS);
+    getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE).add(LighterEndBlocks.END_MOSS);
+
+    getOrCreateTagBuilder(LighterEndTags.END_MOSS_REPLACEABLE).add(Blocks.END_STONE);
+
   }
+
 }

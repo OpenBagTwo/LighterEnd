@@ -8,6 +8,7 @@ import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.loot.LootTable;
@@ -44,6 +45,7 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     addDrop(LighterEndBlocks.DRAGON_BONE_BLOCK);
     addDrop(LighterEndBlocks.DRAGON_BONE_STAIRS);
     addDrop(LighterEndBlocks.DRAGON_BONE_SLAB);
+    addDropWithSilkTouch(LighterEndBlocks.END_MOSS, Blocks.END_STONE);
   }
 
   private LootTable.Builder auroraCrystalDrops() {

@@ -3,6 +3,7 @@ package io.github.openbagtwo.lighterend.registries;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.AuroraCrystalBlock;
 import io.github.openbagtwo.lighterend.blocks.DragonBoneBlocks;
+import io.github.openbagtwo.lighterend.blocks.EndMoss;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -78,6 +79,8 @@ public class LighterEndBlocks {
       "dragon_bone_slab",
       settings -> new SlabBlock(DragonBoneBlocks.applySettings(settings))
   );
+
+  public static Block END_MOSS = register("end_moss", EndMoss::new);
 
   public static class Material {
 

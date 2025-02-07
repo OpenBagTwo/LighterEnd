@@ -17,5 +17,6 @@ public class LighterEnd implements ModInitializer {
 	public void onInitialize() {
 		LighterEndItems.initialize();
 		LighterEndBlocks.initialize();
+
 	}
 }

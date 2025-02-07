@@ -1,8 +1,11 @@
 package io.github.openbagtwo.lighterend.datagen;
 
+import io.github.openbagtwo.lighterend.world.LighterEndConfiguredFeatures;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator.Pack;
+import net.minecraft.registry.RegistryBuilder;
+import net.minecraft.registry.RegistryKeys;
 
 public class LighterEndDataGenerator implements DataGeneratorEntrypoint {
 	@Override
@@ -12,5 +15,14 @@ public class LighterEndDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModelProvider::new);
 		pack.addProvider(RecipeProvider::new);
 		pack.addProvider(BlockTagProvider::new);
+		pack.addProvider(RegistryProvider::new);
+	}
+
+	@Override
+	public void buildRegistry(RegistryBuilder registryBuilder){
+		registryBuilder.addRegistry(
+				RegistryKeys.CONFIGURED_FEATURE,
+				LighterEndConfiguredFeatures::bootstrap
+		);
 	}
 }
