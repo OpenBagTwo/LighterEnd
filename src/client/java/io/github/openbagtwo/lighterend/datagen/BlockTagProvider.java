@@ -23,10 +23,12 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
         .add(LighterEndBlocks.ENDER_BLOCK)
         .add(LighterEndBlocks.MISSING_TILE)
-        .add(LighterEndBlocks.DRAGON_BONE_BLOCK)
-        .add(LighterEndBlocks.DRAGON_BONE_STAIRS)
-        .add(LighterEndBlocks.DRAGON_BONE_SLAB)
-        .add(LighterEndBlocks.END_MOSS);
+        .add(
+            LighterEndBlocks.DRAGON_BONE_BLOCK,
+            LighterEndBlocks.DRAGON_BONE_STAIRS,
+            LighterEndBlocks.DRAGON_BONE_SLAB,
+            LighterEndBlocks.END_MOSS
+        );
 
     getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL)
         .add(LighterEndBlocks.ENDER_BLOCK);
@@ -36,10 +38,12 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     }
 
     getOrCreateTagBuilder(BlockTags.WALLS)
-        .add(LighterEndBlocks.VIOLECITE.baseWall)
-        .add(LighterEndBlocks.VIOLECITE.brickWall)
-        .add(LighterEndBlocks.VIOLECITE.polishedWall)
-        .add(LighterEndBlocks.VIOLECITE.tileWall);
+        .add(
+            LighterEndBlocks.VIOLECITE.baseWall,
+            LighterEndBlocks.VIOLECITE.brickWall,
+            LighterEndBlocks.VIOLECITE.polishedWall,
+            LighterEndBlocks.VIOLECITE.tileWall
+        );
 
     for (Material jadestone : Arrays.asList(
         LighterEndBlocks.AZURE_JADESTONE,
@@ -51,10 +55,12 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL).add(block);
       }
       getOrCreateTagBuilder(BlockTags.WALLS)
-          .add(jadestone.baseWall)
-          .add(jadestone.brickWall)
-          .add(jadestone.polishedWall)
-          .add(jadestone.tileWall);
+          .add(
+              jadestone.baseWall,
+              jadestone.brickWall,
+              jadestone.polishedWall,
+              jadestone.tileWall
+          );
     }
 
     getOrCreateTagBuilder(BlockTags.ENDERMAN_HOLDABLE).add(LighterEndBlocks.END_MOSS);
@@ -64,6 +70,11 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
     getOrCreateTagBuilder(LighterEndTags.END_MOSS_REPLACEABLE).add(Blocks.END_STONE);
 
+    getOrCreateTagBuilder(LighterEndTags.END_SOIL).add(
+        Blocks.END_STONE, LighterEndBlocks.END_MOSS
+    );
+
+    getOrCreateTagBuilder(BlockTags.FLOWERS).add(LighterEndBlocks.CREEPING_MOSS);
   }
 
 }

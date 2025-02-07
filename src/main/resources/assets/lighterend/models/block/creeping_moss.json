@@ -1,0 +1,452 @@
+{
+  "__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
+  "elements": [
+    {
+      "__comment": "PlaneY1",
+      "faces": {
+        "down": {
+          "rotation": 180,
+          "texture": "#texture",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#texture",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        0,
+        -0.001,
+        -10
+      ],
+      "rotation": {
+        "angle": 22.5,
+        "axis": "x",
+        "origin": [
+          0,
+          0,
+          6
+        ]
+      },
+      "shade": false,
+      "to": [
+        16,
+        0,
+        6
+      ]
+    },
+    {
+      "__comment": "PlaneY1",
+      "faces": {
+        "down": {
+          "texture": "#texture",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "rotation": 180,
+          "texture": "#texture",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        0,
+        0,
+        10
+      ],
+      "rotation": {
+        "angle": -22.5,
+        "axis": "x",
+        "origin": [
+          0,
+          0,
+          10
+        ]
+      },
+      "shade": false,
+      "to": [
+        16,
+        0.001,
+        26
+      ]
+    },
+    {
+      "__comment": "PlaneY4",
+      "faces": {
+        "down": {
+          "rotation": 90,
+          "texture": "#texture",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "rotation": 270,
+          "texture": "#texture",
+          "uv": [
+            0,
+            16,
+            16,
+            0
+          ]
+        }
+      },
+      "from": [
+        10,
+        -0.001,
+        0
+      ],
+      "rotation": {
+        "angle": 22.5,
+        "axis": "z",
+        "origin": [
+          10,
+          0,
+          16
+        ]
+      },
+      "shade": false,
+      "to": [
+        26,
+        0,
+        16
+      ]
+    },
+    {
+      "__comment": "PlaneY4",
+      "faces": {
+        "down": {
+          "rotation": 270,
+          "texture": "#texture",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "rotation": 270,
+          "texture": "#texture",
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ]
+        }
+      },
+      "from": [
+        -10,
+        0,
+        2
+      ],
+      "rotation": {
+        "angle": -22.5,
+        "axis": "z",
+        "origin": [
+          6,
+          0,
+          18
+        ]
+      },
+      "shade": false,
+      "to": [
+        6,
+        0.001,
+        18
+      ]
+    },
+    {
+      "__comment": "PlaneX6",
+      "faces": {
+        "east": {
+          "texture": "#spore",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#spore",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        0,
+        0,
+        -6.5
+      ],
+      "rotation": {
+        "angle": -45,
+        "axis": "y",
+        "origin": [
+          0,
+          16,
+          16
+        ]
+      },
+      "shade": false,
+      "to": [
+        0.001,
+        16,
+        16
+      ]
+    },
+    {
+      "__comment": "PlaneX6",
+      "faces": {
+        "north": {
+          "texture": "#spore",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#spore",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        -6.5,
+        0,
+        15.999
+      ],
+      "rotation": {
+        "angle": -45,
+        "axis": "y",
+        "origin": [
+          16,
+          16,
+          16
+        ]
+      },
+      "shade": false,
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "__comment": "PlaneY1",
+      "faces": {
+        "down": {
+          "rotation": 180,
+          "texture": "#texture",
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#texture",
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ]
+        }
+      },
+      "from": [
+        0,
+        -0.001,
+        -9
+      ],
+      "rotation": {
+        "angle": 45,
+        "axis": "x",
+        "origin": [
+          0,
+          0,
+          7
+        ]
+      },
+      "shade": false,
+      "to": [
+        16,
+        0,
+        7
+      ]
+    },
+    {
+      "__comment": "PlaneY1",
+      "faces": {
+        "down": {
+          "texture": "#texture",
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ]
+        },
+        "up": {
+          "rotation": 180,
+          "texture": "#texture",
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ]
+        }
+      },
+      "from": [
+        0,
+        0,
+        9
+      ],
+      "rotation": {
+        "angle": -45,
+        "axis": "x",
+        "origin": [
+          0,
+          0,
+          9
+        ]
+      },
+      "shade": false,
+      "to": [
+        16,
+        0.001,
+        25
+      ]
+    },
+    {
+      "__comment": "PlaneY4",
+      "faces": {
+        "down": {
+          "rotation": 90,
+          "texture": "#texture",
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ]
+        },
+        "up": {
+          "rotation": 270,
+          "texture": "#texture",
+          "uv": [
+            16,
+            16,
+            0,
+            0
+          ]
+        }
+      },
+      "from": [
+        9,
+        -0.001,
+        0
+      ],
+      "rotation": {
+        "angle": 45,
+        "axis": "z",
+        "origin": [
+          9,
+          0,
+          16
+        ]
+      },
+      "shade": false,
+      "to": [
+        25,
+        0,
+        16
+      ]
+    },
+    {
+      "__comment": "PlaneY4",
+      "faces": {
+        "down": {
+          "rotation": 270,
+          "texture": "#texture",
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ]
+        },
+        "up": {
+          "rotation": 270,
+          "texture": "#texture",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        -9,
+        0,
+        2
+      ],
+      "rotation": {
+        "angle": -45,
+        "axis": "z",
+        "origin": [
+          7,
+          0,
+          18
+        ]
+      },
+      "shade": false,
+      "to": [
+        7,
+        0.001,
+        18
+      ]
+    }
+  ],
+  "textures": {
+    "particle": "lighterend:block/creeping_moss_leaves",
+    "spore": "lighterend:block/creeping_moss_spores",
+    "texture": "lighterend:block/creeping_moss_leaves"
+  }
+}

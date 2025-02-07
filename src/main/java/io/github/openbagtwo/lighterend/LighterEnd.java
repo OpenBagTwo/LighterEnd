@@ -1,5 +1,6 @@
 package io.github.openbagtwo.lighterend;
 
+import io.github.openbagtwo.lighterend.misc.Composting;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import net.fabricmc.api.ModInitializer;
@@ -17,6 +18,7 @@ public class LighterEnd implements ModInitializer {
 	public void onInitialize() {
 		LighterEndItems.initialize();
 		LighterEndBlocks.initialize();
+		Composting.initialize();
 
 	}
 }

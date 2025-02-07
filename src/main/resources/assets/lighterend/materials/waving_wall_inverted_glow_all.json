@@ -1,0 +1,10 @@
+{
+  "layers": [
+    {
+      "disableAo": true,
+      "disableDiffuse": true,
+      "fragmentSource": "lighterend:shaders/material/glow_all.frag",
+      "vertexSource": "lighterend:shaders/material/wall_wave_inverted.vert"
+    }
+  ]
+}

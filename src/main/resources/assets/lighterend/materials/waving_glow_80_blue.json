@@ -1,0 +1,8 @@
+{
+  "layers": [
+    {
+      "fragmentSource": "lighterend:shaders/material/glow_80_blue.frag",
+      "vertexSource": "lighterend:shaders/material/wave.vert"
+    }
+  ]
+}

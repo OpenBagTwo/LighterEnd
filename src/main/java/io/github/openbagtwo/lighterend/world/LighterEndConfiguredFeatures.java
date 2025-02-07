@@ -43,7 +43,7 @@ public class LighterEndConfiguredFeatures {
         new SimpleBlockFeatureConfig(
             new WeightedBlockStateProvider(
                 DataPool.<BlockState>builder()
-                    .add(Blocks.AMETHYST_CLUSTER.getDefaultState(), 1)  // placeholder
+                    .add(LighterEndBlocks.CREEPING_MOSS.getDefaultState(), 1)  // placeholder
             )
         )
     );
@@ -63,10 +63,10 @@ public class LighterEndConfiguredFeatures {
             VerticalSurfaceType.FLOOR,
             ConstantIntProvider.create(1),
             0.0F,
-            5,
+            2,
             0.1F,
-            UniformIntProvider.create(1, 2),
-            0.75F)
+            UniformIntProvider.create(0, 1),
+            0.25F)
     );
 
   }

@@ -1,0 +1,10 @@
+{
+  "layers": [
+    {
+      "disableAo": true,
+      "disableDiffuse": true,
+      "fragmentSource": "lighterend:shaders/material/glow_green_2.frag",
+      "vertexSource": "canvas:shaders/material/default.vert"
+    }
+  ]
+}

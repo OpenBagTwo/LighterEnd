@@ -1,0 +1,10 @@
+{
+  "layers": [
+    {
+      "disableAo": false,
+      "disableDiffuse": true,
+      "fragmentSource": "canvas:shaders/material/default.frag",
+      "vertexSource": "canvas:shaders/material/default.vert"
+    }
+  ]
+}

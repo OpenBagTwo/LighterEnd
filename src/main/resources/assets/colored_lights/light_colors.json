@@ -1,6 +1,7 @@
 {
   "colors": {
-    "lighterend:aurora_crystal": "#f74da1"
+    "lighterend:aurora_crystal": "#f74da1",
+    "lighterend:creeping_moss": "#0de4fc"
   },
   "replace": false
 }

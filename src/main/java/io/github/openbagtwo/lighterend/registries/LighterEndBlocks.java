@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.AuroraCrystalBlock;
+import io.github.openbagtwo.lighterend.blocks.CreepingMoss;
 import io.github.openbagtwo.lighterend.blocks.DragonBoneBlocks;
 import io.github.openbagtwo.lighterend.blocks.EndMoss;
 import java.util.Arrays;
@@ -81,6 +82,8 @@ public class LighterEndBlocks {
   );
 
   public static Block END_MOSS = register("end_moss", EndMoss::new);
+
+  public static Block CREEPING_MOSS = register("creeping_moss", CreepingMoss::new);
 
   public static class Material {
 

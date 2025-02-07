@@ -34,7 +34,7 @@
   ],
   "textures": {
     "particle": "#wall",
-    "top": "betterend:block/violecite_bricks_wall_top",
-    "wall": "betterend:block/violecite_bricks"
+    "top": "lighterend:block/violecite_bricks_wall_top",
+    "wall": "lighterend:block/violecite_bricks"
   }
 }

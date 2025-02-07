@@ -1,0 +1,10 @@
+{
+  "layers": [
+    {
+      "disableAo": true,
+      "disableDiffuse": true,
+      "fragmentSource": "lighterend:shaders/material/glow_80_cyan.frag",
+      "vertexSource": "canvas:shaders/material/default.vert"
+    }
+  ]
+}

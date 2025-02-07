@@ -1,0 +1,14 @@
+{
+  "defaultMap": {
+    "spriteMap": [
+      {
+        "material": "lighterend:waving_floor_glow_half",
+        "sprite": "lighterend:block/creeping_moss_spores"
+      },
+      {
+        "material": "lighterend:waving_floor",
+        "sprite": "lighterend:block/creeping_moss_leaves"
+      }
+    ]
+  }
+}

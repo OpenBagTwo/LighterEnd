@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "lighterend:block/creeping_moss"
+      },
+      {
+        "model": "lighterend:block/creeping_moss",
+        "y": 90
+      },
+      {
+        "model": "lighterend:block/creeping_moss",
+        "y": 180
+      },
+      {
+        "model": "lighterend:block/creeping_moss",
+        "y": 270
+      }
+    ]
+  }
+}

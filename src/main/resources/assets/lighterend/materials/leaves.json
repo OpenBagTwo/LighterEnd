@@ -1,0 +1,8 @@
+{
+  "layers": [
+    {
+      "fragmentSource": "canvas:shaders/material/default.frag",
+      "vertexSource": "lighterend:shaders/material/wave.vert"
+    }
+  ]
+}

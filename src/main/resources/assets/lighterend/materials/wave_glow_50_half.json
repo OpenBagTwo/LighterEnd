@@ -1,0 +1,10 @@
+{
+  "layers": [
+    {
+      "disableAo": true,
+      "disableDiffuse": true,
+      "fragmentSource": "lighterend:shaders/material/glow_50_half.frag",
+      "vertexSource": "lighterend:shaders/material/wave.vert"
+    }
+  ]
+}

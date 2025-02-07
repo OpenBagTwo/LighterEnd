@@ -1,0 +1,8 @@
+{
+  "layers": [
+    {
+      "fragmentSource": "lighterend:shaders/material/glow_purple.frag",
+      "vertexSource": "canvas:shaders/material/default.vert"
+    }
+  ]
+}

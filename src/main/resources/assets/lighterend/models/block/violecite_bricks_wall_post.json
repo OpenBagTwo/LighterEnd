@@ -74,7 +74,7 @@
   "parent": "block/block",
   "textures": {
     "particle": "#side",
-    "side": "betterend:block/violecite_post_side",
-    "top": "betterend:block/violecite_post_top"
+    "side": "lighterend:block/violecite_post_side",
+    "top": "lighterend:block/violecite_post_top"
   }
 }
