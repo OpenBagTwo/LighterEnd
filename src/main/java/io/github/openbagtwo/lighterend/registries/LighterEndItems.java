@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier;
 public class LighterEndItems {
 
   public static final Item AURORA_CRYSTAL_SHARD = register("aurora_crystal_shard");
+  public static final Item LUMECORN_EAR = register("lumecorn_rod");
 
   public static Item register(String name){
     return register(name, new Settings());
@@ -22,6 +23,7 @@ public class LighterEndItems {
     return Registry.register(Registries.ITEM, key, new Item(settings.registryKey(key)));
   }
 
-  public static void initialize() {}
+  public static void initialize() {
+  }
 
 }

@@ -11,7 +11,9 @@ public class PlantRenderer {
         RenderLayer.getCutout(),
         LighterEndBlocks.CREEPING_MOSS,
         LighterEndBlocks.UMBRELLA_FERN,
-        LighterEndBlocks.TALL_UMBRELLA_FERN
+        LighterEndBlocks.TALL_UMBRELLA_FERN,
+        LighterEndBlocks.LUMECORN_SEED,
+        LighterEndBlocks.LUMECORN
     );
   }
 

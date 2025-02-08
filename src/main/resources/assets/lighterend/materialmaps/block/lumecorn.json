@@ -1,0 +1,34 @@
+{
+  "defaultMap": {
+    "spriteMap": [
+      {
+        "material": "lighterend:glow_inc",
+        "sprite": "lighterend:block/lumecorn_light_bottom"
+      },
+      {
+        "material": "lighterend:glow_inc",
+        "sprite": "lighterend:block/lumecorn_light_middle"
+      },
+      {
+        "material": "lighterend:glow_inc",
+        "sprite": "lighterend:block/lumecorn_light_top_middle"
+      },
+      {
+        "material": "lighterend:glow_inc",
+        "sprite": "lighterend:block/lumecorn_light_top"
+      },
+      {
+        "material": "lighterend:waving_floor",
+        "sprite": "lighterend:block/lumecorn_leaf_2"
+      },
+      {
+        "material": "lighterend:waving_floor",
+        "sprite": "lighterend:block/lumecorn_leaf_1"
+      },
+      {
+        "material": "lighterend:waving",
+        "sprite": "lighterend:block/lumecorn_big_petal"
+      }
+    ]
+  }
+}

@@ -5,6 +5,7 @@ import io.github.openbagtwo.lighterend.blocks.AuroraCrystalBlock;
 import io.github.openbagtwo.lighterend.blocks.CreepingMoss;
 import io.github.openbagtwo.lighterend.blocks.DragonBoneBlocks;
 import io.github.openbagtwo.lighterend.blocks.EndMoss;
+import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern.TallUmbrellaFern;
 import java.util.Arrays;
@@ -90,6 +91,9 @@ public class LighterEndBlocks {
   public static Block TALL_UMBRELLA_FERN = register(
       "umbrella_fern_tall", TallUmbrellaFern::new, false
   );
+
+  public static Block LUMECORN_SEED = register("lumecorn_seed", Lumecorn.LumecornSeed::new);
+  public static Block LUMECORN = register("lumecorn", Lumecorn::new, false);
 
   public static class Material {
 

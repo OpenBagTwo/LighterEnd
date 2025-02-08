@@ -1,0 +1,96 @@
+{
+  "__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
+  "elements": [
+    {
+      "__comment": "PlaneX2",
+      "faces": {
+        "east": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "rotation": {
+        "angle": 45,
+        "axis": "y",
+        "origin": [
+          0,
+          0,
+          0
+        ]
+      },
+      "shade": false,
+      "to": [
+        0.001,
+        16,
+        22.5
+      ]
+    },
+    {
+      "__comment": "PlaneX2",
+      "faces": {
+        "east": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        16,
+        0,
+        0
+      ],
+      "rotation": {
+        "angle": -45,
+        "axis": "y",
+        "origin": [
+          16,
+          0,
+          0
+        ]
+      },
+      "shade": false,
+      "to": [
+        16.001,
+        16,
+        22.5
+      ]
+    }
+  ],
+  "textures": {
+    "particle": "lighterend:block/lumecorn_roots",
+    "roots": "lighterend:block/lumecorn_roots",
+    "texture": "lighterend:block/lumecorn_roots"
+  }
+}

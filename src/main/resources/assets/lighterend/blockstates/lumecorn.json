@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "shape=bottom_big": {
+      "model": "lighterend:block/lumecorn_roots_big"
+    },
+    "shape=bottom_small": {
+      "model": "lighterend:block/lumecorn_roots_small"
+    },
+    "shape=light_bottom": {
+      "model": "lighterend:block/lumecorn_light_bottom"
+    },
+    "shape=light_middle": {
+      "model": "lighterend:block/lumecorn_light_middle"
+    },
+    "shape=light_top": {
+      "model": "lighterend:block/lumecorn_light_top"
+    },
+    "shape=light_top_middle": {
+      "model": "lighterend:block/lumecorn_light_top_middle"
+    },
+    "shape=middle": {
+      "model": "lighterend:block/lumecorn_middle"
+    }
+  }
+}

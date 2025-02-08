@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.world;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
 import net.minecraft.block.BlockState;
@@ -30,6 +31,9 @@ public class LighterEndConfiguredFeatures {
   public static final RegistryKey<ConfiguredFeature<?, ?>> END_MOSS_VEGETATION
       = LighterEndConfiguredFeatures.of("end_moss_vegetation");
 
+  public static final RegistryKey<ConfiguredFeature<?, ?>> LUMECORN
+      = LighterEndConfiguredFeatures.of("lumecorn");
+
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
     RegistryEntryLookup<ConfiguredFeature<?, ?>> lookup = context.getRegistryLookup(
         RegistryKeys.CONFIGURED_FEATURE
@@ -42,8 +46,9 @@ public class LighterEndConfiguredFeatures {
         new SimpleBlockFeatureConfig(
             new WeightedBlockStateProvider(
                 DataPool.<BlockState>builder()
-                    .add(LighterEndBlocks.CREEPING_MOSS.getDefaultState(), 1)
-                    .add(LighterEndBlocks.UMBRELLA_FERN.getDefaultState(), 1)
+                    .add(LighterEndBlocks.CREEPING_MOSS.getDefaultState(), 10)
+                    .add(LighterEndBlocks.UMBRELLA_FERN.getDefaultState(), 10)
+                    .add(LighterEndBlocks.LUMECORN_SEED.getDefaultState(), 1)
             )
         )
     );
@@ -68,6 +73,7 @@ public class LighterEndConfiguredFeatures {
             UniformIntProvider.create(0, 1),
             0.25F)
     );
+    ConfiguredFeatures.register(context, LUMECORN, new Lumecorn.LumecornFeature());
 
   }
 
