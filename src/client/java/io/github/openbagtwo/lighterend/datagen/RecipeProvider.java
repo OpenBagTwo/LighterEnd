@@ -8,14 +8,19 @@ import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Blocks;
+import net.minecraft.data.recipe.CookingRecipeJsonBuilder;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
+import net.minecraft.util.Identifier;
 
 public class RecipeProvider extends FabricRecipeProvider {
   protected RecipeProvider(FabricDataOutput output, CompletableFuture<WrapperLookup> registriesFuture) {
@@ -113,6 +118,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                 conditionsFromItem(Items.ORANGE_DYE)
             ).offerTo(exporter);
 
+        generateCookingRecipes(LighterEndItems.LUMECORN_EAR, LighterEndItems.POPPED_LUMECORN);
       }
 
       public void generateMaterialRecipes(Material material) {
@@ -228,6 +234,43 @@ public class RecipeProvider extends FabricRecipeProvider {
         createButtonRecipe(
             output, Ingredient.ofItem(input)
         ).criterion(hasItem(input),conditionsFromItem(output)).offerTo(exporter);
+      }
+
+      public void generateCookingRecipes(ItemConvertible input, ItemConvertible output){
+        Identifier output_key = Registries.ITEM.getId(output.asItem());
+        CookingRecipeJsonBuilder.createSmelting(
+                Ingredient.ofItem(input),
+                RecipeCategory.FOOD,
+                output,
+                0.35F,
+                200
+            ).criterion(hasItem(input), conditionsFromItem(output)
+            ).offerTo(
+                exporter,
+                RegistryKey.of(RegistryKeys.RECIPE, output_key.withSuffixedPath("_smelting"))
+            );
+        CookingRecipeJsonBuilder.createSmoking(
+                Ingredient.ofItem(input),
+                RecipeCategory.FOOD,
+                output,
+                0.35F,
+                100
+            ).criterion(hasItem(input), conditionsFromItem(output)
+            ).offerTo(
+                exporter,
+                RegistryKey.of(RegistryKeys.RECIPE, output_key.withSuffixedPath("_smoking"))
+            );
+        CookingRecipeJsonBuilder.createCampfireCooking(
+                Ingredient.ofItem(input),
+                RecipeCategory.FOOD,
+                output,
+                0.35F,
+                600
+            ).criterion(hasItem(input), conditionsFromItem(output)
+            ).offerTo(
+                exporter,
+                RegistryKey.of(RegistryKeys.RECIPE, output_key.withSuffixedPath("_campfire"))
+            );
       }
     };
   }

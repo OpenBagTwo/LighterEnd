@@ -9,7 +9,7 @@ import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 
 public class RegistryProvider extends FabricDynamicRegistryProvider
 {
-  public RegistryProvider(FabricDataOutput output, CompletableFuture<WrapperLookup> registriesFuture) {
+  protected RegistryProvider(FabricDataOutput output, CompletableFuture<WrapperLookup> registriesFuture) {
     super(output, registriesFuture);
   }
 

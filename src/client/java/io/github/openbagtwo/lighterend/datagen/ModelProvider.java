@@ -76,6 +76,9 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(
       LighterEndItems.AURORA_CRYSTAL_SHARD, Models.GENERATED
     );
+    itemModelGenerator.register(
+        LighterEndItems.POPPED_LUMECORN, Models.GENERATED
+    );
 
   }
 

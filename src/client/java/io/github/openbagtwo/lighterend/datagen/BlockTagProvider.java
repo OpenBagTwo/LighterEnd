@@ -14,12 +14,12 @@ import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.registry.tag.BlockTags;
 
 public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
-  protected BlockTagProvider(FabricDataOutput output, CompletableFuture<WrapperLookup> registriesFuture) {
-    super(output, registriesFuture);
+  protected BlockTagProvider(FabricDataOutput output, CompletableFuture<WrapperLookup> future) {
+    super(output, future);
   }
 
   @Override
-  protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
+  protected void configure(RegistryWrapper.WrapperLookup lookup) {
     getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
         .add(LighterEndBlocks.ENDER_BLOCK)
         .add(LighterEndBlocks.MISSING_TILE)
