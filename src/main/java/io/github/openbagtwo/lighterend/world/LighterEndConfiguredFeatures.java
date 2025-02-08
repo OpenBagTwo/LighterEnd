@@ -31,9 +31,6 @@ public class LighterEndConfiguredFeatures {
   public static final RegistryKey<ConfiguredFeature<?, ?>> END_MOSS_VEGETATION
       = LighterEndConfiguredFeatures.of("end_moss_vegetation");
 
-  public static final RegistryKey<ConfiguredFeature<?, ?>> LUMECORN
-      = LighterEndConfiguredFeatures.of("lumecorn");
-
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
     RegistryEntryLookup<ConfiguredFeature<?, ?>> lookup = context.getRegistryLookup(
         RegistryKeys.CONFIGURED_FEATURE
@@ -73,7 +70,6 @@ public class LighterEndConfiguredFeatures {
             UniformIntProvider.create(0, 1),
             0.25F)
     );
-    ConfiguredFeatures.register(context, LUMECORN, new Lumecorn.LumecornFeature());
 
   }
 

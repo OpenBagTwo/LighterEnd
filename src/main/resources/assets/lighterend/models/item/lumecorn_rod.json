@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "lighterend:item/lumecorn"
+    "layer0": "lighterend:item/lumecorn_rod"
   }
 }

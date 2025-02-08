@@ -9,12 +9,17 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.StemBlock;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
+import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.provider.number.BinomialLootNumberProvider;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
@@ -50,6 +55,7 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     addDrop(LighterEndBlocks.CREEPING_MOSS, this::dropsWithSilkTouchOrShears);
     addDrop(LighterEndBlocks.UMBRELLA_FERN, this::dropsWithSilkTouchOrShears);
     addDrop(LighterEndBlocks.TALL_UMBRELLA_FERN, LighterEndBlocks.UMBRELLA_FERN);
+    addDrop(LighterEndBlocks.LUMECORN_SEED);
   }
 
   private LootTable.Builder auroraCrystalDrops() {
@@ -58,14 +64,13 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
              Crystals to be renewable. */
     RegistryWrapper.Impl<Enchantment> impl = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT);
     return this.dropsWithSilkTouch(
-      LighterEndBlocks.AURORA_CRYSTAL,
-      this.applyExplosionDecay(
         LighterEndBlocks.AURORA_CRYSTAL,
-        ItemEntry.builder(LighterEndItems.AURORA_CRYSTAL_SHARD)
-          .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 4.0F)))
-          .apply(ApplyBonusLootFunction.oreDrops(impl.getOrThrow(Enchantments.FORTUNE)))
-      )
+        this.applyExplosionDecay(
+            LighterEndBlocks.AURORA_CRYSTAL,
+            ItemEntry.builder(LighterEndItems.AURORA_CRYSTAL_SHARD)
+                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 4.0F)))
+                .apply(ApplyBonusLootFunction.oreDrops(impl.getOrThrow(Enchantments.FORTUNE)))
+        )
     );
   }
-
 }
