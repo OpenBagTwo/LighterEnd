@@ -43,3 +43,4 @@ replay_*.log
 *.tar.gz
 .cache
 generated
+Nullscape-Lightened

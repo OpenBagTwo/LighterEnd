@@ -119,6 +119,8 @@ public class RecipeProvider extends FabricRecipeProvider {
             ).offerTo(exporter);
 
         generateCookingRecipes(LighterEndItems.LUMECORN_EAR, LighterEndItems.POPPED_LUMECORN);
+
+        generateMaterialRecipes(LighterEndBlocks.UMBRALITH);
       }
 
       public void generateMaterialRecipes(Material material) {

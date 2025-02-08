@@ -98,6 +98,8 @@ public class LighterEndBlocks {
       "lumecorn_stem",Lumecorn.LumecornStem::new, false
   );
 
+  public static Material UMBRALITH = new Material("umbralith", MapColor.BLACK);
+
   public static class Material {
 
     public final String baseName;

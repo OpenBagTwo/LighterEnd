@@ -55,6 +55,10 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     addDrop(LighterEndBlocks.LUMECORN_STEM, LighterEndBlocks.LUMECORN_SEED);
     addDrop(LighterEndBlocks.LUMECORN, lumecornEarDrops());
 
+    for (Block block : LighterEndBlocks.UMBRALITH.blocks){
+      addDrop(block);
+    }
+
   }
 
   private LootTable.Builder auroraCrystalDrops() {

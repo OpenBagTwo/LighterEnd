@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "lighterend:block/umbralith_1",
+        "weight": 10
+      },
+      {
+        "model": "lighterend:block/umbralith_2",
+        "weight": 10
+      },
+      {
+        "model": "lighterend:block/umbralith_6",
+        "weight": 10
+      },
+      {
+        "model": "lighterend:block/umbralith_7",
+        "weight": 10
+      },
+      {
+        "model": "lighterend:block/umbralith_3",
+        "weight": 1
+      },
+      {
+        "model": "lighterend:block/umbralith_4",
+        "weight": 1
+      },
+      {
+        "model": "lighterend:block/umbralith_5",
+        "weight": 1
+      }
+    ]
+  }
+}

@@ -43,6 +43,8 @@ public class ModelProvider extends FabricModelProvider {
     );
     texturePool.stairs(LighterEndBlocks.DRAGON_BONE_STAIRS);
     texturePool.slab(LighterEndBlocks.DRAGON_BONE_SLAB);
+
+    generateMaterialModels(blockModelGenerator, LighterEndBlocks.UMBRALITH);
   }
 
   public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator, Material material){

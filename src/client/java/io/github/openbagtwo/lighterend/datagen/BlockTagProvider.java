@@ -81,6 +81,23 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     );
 
     getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).add(LighterEndBlocks.LUMECORN_STEM);
+
+    for (Block block : LighterEndBlocks.UMBRALITH.blocks){
+      getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(block);
+    }
+
+    getOrCreateTagBuilder(BlockTags.WALLS)
+        .add(
+            LighterEndBlocks.UMBRALITH.baseWall,
+            LighterEndBlocks.UMBRALITH.brickWall,
+            LighterEndBlocks.UMBRALITH.polishedWall,
+            LighterEndBlocks.UMBRALITH.tileWall
+        );
+
+    getOrCreateTagBuilder(LighterEndTags.END_MOSS_REPLACEABLE)
+        .add(LighterEndBlocks.UMBRALITH.baseBlock);
+    getOrCreateTagBuilder(LighterEndTags.END_SOIL)
+        .add(LighterEndBlocks.UMBRALITH.baseBlock);
   }
 
 }
