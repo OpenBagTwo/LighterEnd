@@ -56,6 +56,9 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     addDrop(LighterEndBlocks.UMBRELLA_FERN, this::dropsWithSilkTouchOrShears);
     addDrop(LighterEndBlocks.TALL_UMBRELLA_FERN, LighterEndBlocks.UMBRELLA_FERN);
     addDrop(LighterEndBlocks.LUMECORN_SEED);
+    addDrop(LighterEndBlocks.LUMECORN_STEM, LighterEndBlocks.LUMECORN_SEED);
+    addDrop(LighterEndBlocks.LUMECORN, lumecornEarDrops());
+
   }
 
   private LootTable.Builder auroraCrystalDrops() {
@@ -72,5 +75,16 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
                 .apply(ApplyBonusLootFunction.oreDrops(impl.getOrThrow(Enchantments.FORTUNE)))
         )
     );
+  }
+
+  private LootTable.Builder lumecornEarDrops() {
+    return LootTable.builder()
+        .pool(
+            this.addSurvivesExplosionCondition(
+                LighterEndItems.LUMECORN_EAR,
+                LootPool.builder().rolls(UniformLootNumberProvider.create(1.0F, 2.0F))
+                    .with(ItemEntry.builder(LighterEndItems.LUMECORN_EAR))
+            )
+        );
   }
 }

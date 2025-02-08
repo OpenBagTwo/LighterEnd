@@ -79,6 +79,8 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.UMBRELLA_FERN,
         LighterEndBlocks.TALL_UMBRELLA_FERN
     );
+
+    getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).add(LighterEndBlocks.LUMECORN_STEM);
   }
 
 }

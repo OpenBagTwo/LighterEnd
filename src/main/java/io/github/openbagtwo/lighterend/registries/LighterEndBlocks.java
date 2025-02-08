@@ -94,6 +94,9 @@ public class LighterEndBlocks {
 
   public static Block LUMECORN_SEED = register("lumecorn_seed", Lumecorn.LumecornSeed::new);
   public static Block LUMECORN = register("lumecorn", Lumecorn::new, false);
+  public static Block LUMECORN_STEM = register(
+      "lumecorn_stem",Lumecorn.LumecornStem::new, false
+  );
 
   public static class Material {
 

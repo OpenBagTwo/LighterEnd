@@ -4,7 +4,6 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
-import io.github.openbagtwo.lighterend.world.LighterEndConfiguredFeatures;
 import java.util.Optional;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -28,11 +27,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.WorldView;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
 import net.minecraft.world.tick.ScheduledTickView;
 
 public class Lumecorn extends Block {
@@ -53,9 +48,9 @@ public class Lumecorn extends Block {
             .mapColor(MapColor.BRIGHT_TEAL)
             .instrument(NoteBlockInstrument.BASS)
             .sounds(BlockSoundGroup.WOOD)
-            .strength(0.5F)
+            .strength(0.2F)
             .burnable()
-            .luminance(bs -> bs.get(SHAPE).getLight())
+            .luminance(bs -> 15)
     );
   }
 
@@ -74,13 +69,17 @@ public class Lumecorn extends Block {
   @Override
   protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
     LumecornShape shape = state.get(SHAPE);
-    if (shape == LumecornShape.BOTTOM_BIG || shape == LumecornShape.BOTTOM_SMALL) {
-      return world.getBlockState(pos.down()).isIn(LighterEndTags.END_SOIL);
-    } else if (shape == LumecornShape.LIGHT_TOP) {
-      return world.getBlockState(pos.down()).isOf(this);
+    if (shape == LumecornShape.LIGHT_TOP) {
+      return (
+          world.getBlockState(pos.down()).isOf(this)
+          || world.getBlockState(pos.down()).isOf(LighterEndBlocks.LUMECORN_STEM)
+      );
     } else {
       return (
-          world.getBlockState(pos.down()).isOf(this) && world.getBlockState(pos.up()).isOf(this)
+          (
+              world.getBlockState(pos.down()).isOf(this)
+              || world.getBlockState(pos.down()).isOf(LighterEndBlocks.LUMECORN_STEM)
+          ) && world.getBlockState(pos.up()).isOf(this)
       );
     }
   }
@@ -110,15 +109,77 @@ public class Lumecorn extends Block {
       BlockState state,
       boolean includeData
   ) {
-    LumecornShape shape = state.get(SHAPE);
-    if (
-        shape == LumecornShape.BOTTOM_BIG
-            || shape == LumecornShape.BOTTOM_SMALL
-            || shape == LumecornShape.MIDDLE
+    return new ItemStack(LighterEndItems.LUMECORN_EAR);
+  }
+
+  public static class LumecornStem extends Block {
+
+    public LumecornStem(Settings settings) {
+      super(
+          settings
+              .mapColor(MapColor.DARK_AQUA)
+              .instrument(NoteBlockInstrument.BASS)
+              .sounds(BlockSoundGroup.WOOD)
+              .strength(0.5F)
+              .burnable()
+              .luminance(bs -> 0)
+      );
+    }
+
+    @Override
+    protected void appendProperties(Builder<Block, BlockState> builder) {
+      builder.add(SHAPE);
+    }
+
+    @Override
+    protected VoxelShape getOutlineShape(
+        BlockState state, BlockView world, BlockPos pos, ShapeContext context
+    ) {
+      return SHAPE_BOTTOM;
+    }
+
+    @Override
+    protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+      LumecornShape shape = state.get(SHAPE);
+      if (shape == LumecornShape.BOTTOM_BIG || shape == LumecornShape.BOTTOM_SMALL) {
+        return world.getBlockState(pos.down()).isIn(LighterEndTags.END_SOIL);
+      } else {
+        return (
+            world.getBlockState(pos.down()).isOf(this) && (
+                world.getBlockState(pos.up()).isOf(this)
+                    || world.getBlockState(pos.up()).isOf(LighterEndBlocks.LUMECORN)
+            )
+        );
+      }
+    }
+
+    @Override
+    protected BlockState getStateForNeighborUpdate(
+        BlockState state,
+        WorldView world,
+        ScheduledTickView tickView,
+        BlockPos pos,
+        Direction direction,
+        BlockPos neighborPos,
+        BlockState neighborState,
+        Random random
+    ) {
+      if (!canPlaceAt(state, world, pos)) {
+        return Blocks.AIR.getDefaultState();
+      } else {
+        return state;
+      }
+    }
+
+    @Override
+    protected ItemStack getPickStack(
+        WorldView world,
+        BlockPos pos,
+        BlockState state,
+        boolean includeData
     ) {
       return new ItemStack(LighterEndBlocks.LUMECORN_SEED);
     }
-    return new ItemStack(LighterEndItems.LUMECORN_EAR);
   }
 
   public static class LumecornSeed extends SaplingBlock {
@@ -170,7 +231,7 @@ public class Lumecorn extends Block {
         if (height == 4) {
           world.setBlockState(
               mut,
-              LighterEndBlocks.LUMECORN.getDefaultState().with(
+              LighterEndBlocks.LUMECORN_STEM.getDefaultState().with(
                   Lumecorn.SHAPE, LumecornShape.BOTTOM_SMALL
               ),
               18 // 18 = Don't trigger observers or client changes
@@ -183,7 +244,7 @@ public class Lumecorn extends Block {
         if (random.nextBoolean()) {
           world.setBlockState(
               mut,
-              LighterEndBlocks.LUMECORN.getDefaultState().with(
+              LighterEndBlocks.LUMECORN_STEM.getDefaultState().with(
                   Lumecorn.SHAPE, LumecornShape.BOTTOM_SMALL
               ),
               18
@@ -191,14 +252,14 @@ public class Lumecorn extends Block {
         } else {
           world.setBlockState(
               mut,
-              LighterEndBlocks.LUMECORN.getDefaultState().with(
+              LighterEndBlocks.LUMECORN_STEM.getDefaultState().with(
                   Lumecorn.SHAPE, LumecornShape.BOTTOM_BIG
               ),
               18
           );
           world.setBlockState(
               mut.move(Direction.UP),
-              LighterEndBlocks.LUMECORN.getDefaultState().with(
+              LighterEndBlocks.LUMECORN_STEM.getDefaultState().with(
                   Lumecorn.SHAPE, LumecornShape.MIDDLE
               ),
               18

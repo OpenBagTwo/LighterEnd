@@ -13,7 +13,8 @@ public class PlantRenderer {
         LighterEndBlocks.UMBRELLA_FERN,
         LighterEndBlocks.TALL_UMBRELLA_FERN,
         LighterEndBlocks.LUMECORN_SEED,
-        LighterEndBlocks.LUMECORN
+        LighterEndBlocks.LUMECORN,
+        LighterEndBlocks.LUMECORN_STEM
     );
   }
 
