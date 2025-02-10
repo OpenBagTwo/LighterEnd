@@ -87,5 +87,6 @@
   "item.lighterend.virid_jadestone_tile_stairs": "Virid Jadestone Tile Stairs",
   "item.lighterend.virid_jadestone_tile_wall": "Virid Jadestone Tile Wall",
   "item.lighterend.virid_jadestone_tiles": "Virid Jadestone Tiles",
-  "item.lighterend.virid_jadestone_wall": "Virid Jadestone Wall"
+  "item.lighterend.virid_jadestone_wall": "Virid Jadestone Wall",
+  "itemGroup.lighterend.lighterend_items": "LighterEnd Items"
 }

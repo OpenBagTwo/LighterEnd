@@ -1,5 +1,6 @@
 package io.github.openbagtwo.lighterend;
 
+import io.github.openbagtwo.lighterend.Items.ItemGroups;
 import io.github.openbagtwo.lighterend.misc.Composting;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
@@ -19,6 +20,7 @@ public class LighterEnd implements ModInitializer {
     LighterEndItems.initialize();
     LighterEndBlocks.initialize();
     Composting.initialize();
+    ItemGroups.initialize();
 
   }
 }

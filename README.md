@@ -129,6 +129,10 @@ All assets (textures, models) were created by the BetterX team.
 
 Music was composed, performed and recorded by Firel.
 
+Many thanks to the excellent tutorial mods developed by
+by [Kaupenjoe](https://github.com/Tutorials-By-Kaupenjoe/Fabric-Tutorial-1.21.X)
+and [TurtyWurty](https://github.com/DaRealTurtyWurty/1.21-Tutorial-Mod).
+
 You **may** use, modify and redistribute this mod, and you **may** include this mod within your
 modpack or run it on a server, so long as you abide by the terms of
 this license, which critically states that you **must** make the source code (including your
