@@ -23,12 +23,15 @@ import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.util.Identifier;
 
 public class RecipeProvider extends FabricRecipeProvider {
-  protected RecipeProvider(FabricDataOutput output, CompletableFuture<WrapperLookup> registriesFuture) {
+
+  protected RecipeProvider(FabricDataOutput output,
+      CompletableFuture<WrapperLookup> registriesFuture) {
     super(output, registriesFuture);
   }
 
   @Override
-  protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
+  protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup,
+      RecipeExporter exporter) {
     return new RecipeGenerator(registryLookup, exporter) {
       @Override
       public void generate() {
@@ -151,7 +154,6 @@ public class RecipeProvider extends FabricRecipeProvider {
             RecipeCategory.BUILDING_BLOCKS, material.pillar, material.baseBlock
         );
 
-
         offerPolishedStoneRecipe(
             RecipeCategory.BUILDING_BLOCKS, material.polished, material.baseBlock
         );
@@ -165,7 +167,7 @@ public class RecipeProvider extends FabricRecipeProvider {
         offerWallRecipe(RecipeCategory.BUILDING_BLOCKS, material.polishedWall, material.polished);
         offerButtonRecipe(material.button, material.polished);
         offerPressurePlateRecipe(material.pressurePlate, material.polished);
-        for (ItemConvertible input : Arrays.asList(material.polished, material.baseBlock)){
+        for (ItemConvertible input : Arrays.asList(material.polished, material.baseBlock)) {
           offerStonecuttingRecipe(
               RecipeCategory.BUILDING_BLOCKS, material.polishedSlab, input, 2
           );
@@ -189,7 +191,7 @@ public class RecipeProvider extends FabricRecipeProvider {
         offerWallRecipe(RecipeCategory.BUILDING_BLOCKS, material.brickWall, material.bricks);
         for (ItemConvertible input : Arrays.asList(
             material.bricks, material.polished, material.baseBlock
-        )){
+        )) {
           offerStonecuttingRecipe(
               RecipeCategory.BUILDING_BLOCKS, material.brickSlab, input, 2
           );
@@ -211,7 +213,7 @@ public class RecipeProvider extends FabricRecipeProvider {
         offerWallRecipe(RecipeCategory.BUILDING_BLOCKS, material.tileWall, material.tiles);
         for (ItemConvertible input : Arrays.asList(
             material.tiles, material.bricks, material.polished, material.baseBlock
-        )){
+        )) {
           offerStonecuttingRecipe(
               RecipeCategory.BUILDING_BLOCKS, material.tileSlab, input, 2
           );
@@ -227,52 +229,53 @@ public class RecipeProvider extends FabricRecipeProvider {
       }
 
       // seems odd these aren't already implemented
-      public void offerStairsRecipe(ItemConvertible output, ItemConvertible input){
+      public void offerStairsRecipe(ItemConvertible output, ItemConvertible input) {
         createStairsRecipe(
             output, Ingredient.ofItem(input)
-        ).criterion(hasItem(input),conditionsFromItem(output)).offerTo(exporter);
-      }
-      public void offerButtonRecipe(ItemConvertible output, ItemConvertible input){
-        createButtonRecipe(
-            output, Ingredient.ofItem(input)
-        ).criterion(hasItem(input),conditionsFromItem(output)).offerTo(exporter);
+        ).criterion(hasItem(input), conditionsFromItem(output)).offerTo(exporter);
       }
 
-      public void generateCookingRecipes(ItemConvertible input, ItemConvertible output){
+      public void offerButtonRecipe(ItemConvertible output, ItemConvertible input) {
+        createButtonRecipe(
+            output, Ingredient.ofItem(input)
+        ).criterion(hasItem(input), conditionsFromItem(output)).offerTo(exporter);
+      }
+
+      public void generateCookingRecipes(ItemConvertible input, ItemConvertible output) {
         Identifier output_key = Registries.ITEM.getId(output.asItem());
         CookingRecipeJsonBuilder.createSmelting(
-                Ingredient.ofItem(input),
-                RecipeCategory.FOOD,
-                output,
-                0.35F,
-                200
-            ).criterion(hasItem(input), conditionsFromItem(output)
-            ).offerTo(
-                exporter,
-                RegistryKey.of(RegistryKeys.RECIPE, output_key.withSuffixedPath("_smelting"))
-            );
+            Ingredient.ofItem(input),
+            RecipeCategory.FOOD,
+            output,
+            0.35F,
+            200
+        ).criterion(hasItem(input), conditionsFromItem(output)
+        ).offerTo(
+            exporter,
+            RegistryKey.of(RegistryKeys.RECIPE, output_key.withSuffixedPath("_smelting"))
+        );
         CookingRecipeJsonBuilder.createSmoking(
-                Ingredient.ofItem(input),
-                RecipeCategory.FOOD,
-                output,
-                0.35F,
-                100
-            ).criterion(hasItem(input), conditionsFromItem(output)
-            ).offerTo(
-                exporter,
-                RegistryKey.of(RegistryKeys.RECIPE, output_key.withSuffixedPath("_smoking"))
-            );
+            Ingredient.ofItem(input),
+            RecipeCategory.FOOD,
+            output,
+            0.35F,
+            100
+        ).criterion(hasItem(input), conditionsFromItem(output)
+        ).offerTo(
+            exporter,
+            RegistryKey.of(RegistryKeys.RECIPE, output_key.withSuffixedPath("_smoking"))
+        );
         CookingRecipeJsonBuilder.createCampfireCooking(
-                Ingredient.ofItem(input),
-                RecipeCategory.FOOD,
-                output,
-                0.35F,
-                600
-            ).criterion(hasItem(input), conditionsFromItem(output)
-            ).offerTo(
-                exporter,
-                RegistryKey.of(RegistryKeys.RECIPE, output_key.withSuffixedPath("_campfire"))
-            );
+            Ingredient.ofItem(input),
+            RecipeCategory.FOOD,
+            output,
+            0.35F,
+            600
+        ).criterion(hasItem(input), conditionsFromItem(output)
+        ).offerTo(
+            exporter,
+            RegistryKey.of(RegistryKeys.RECIPE, output_key.withSuffixedPath("_campfire"))
+        );
       }
     };
   }

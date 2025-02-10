@@ -19,7 +19,6 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.PlacedFeatures;
 import net.minecraft.world.gen.feature.SimpleBlockFeatureConfig;
 import net.minecraft.world.gen.feature.VegetationPatchFeatureConfig;
-import net.minecraft.world.gen.placementmodifier.PlacementModifier;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider;
 
@@ -49,7 +48,6 @@ public class LighterEndConfiguredFeatures {
         )
     );
 
-
     ConfiguredFeatures.register(
         context,
         END_MOSS_PATCH_BONEMEAL,
@@ -58,8 +56,7 @@ public class LighterEndConfiguredFeatures {
             LighterEndTags.END_MOSS_REPLACEABLE,
             BlockStateProvider.of(LighterEndBlocks.END_MOSS),
             PlacedFeatures.createEntry(
-                lookup.getOrThrow(END_MOSS_VEGETATION),
-                new PlacementModifier[0]
+                lookup.getOrThrow(END_MOSS_VEGETATION)
             ),
             VerticalSurfaceType.FLOOR,
             ConstantIntProvider.create(1),

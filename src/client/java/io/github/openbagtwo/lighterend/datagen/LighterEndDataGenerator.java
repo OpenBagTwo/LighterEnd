@@ -8,21 +8,22 @@ import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 
 public class LighterEndDataGenerator implements DataGeneratorEntrypoint {
-	@Override
-	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
-		Pack pack = fabricDataGenerator.createPack();
-		pack.addProvider(BlockLootTableProvider::new);
-		pack.addProvider(ModelProvider::new);
-		pack.addProvider(RecipeProvider::new);
-		pack.addProvider(BlockTagProvider::new);
-		pack.addProvider(RegistryProvider::new);
-	}
 
-	@Override
-	public void buildRegistry(RegistryBuilder registryBuilder){
-		registryBuilder.addRegistry(
-				RegistryKeys.CONFIGURED_FEATURE,
-				LighterEndConfiguredFeatures::bootstrap
-		);
-	}
+  @Override
+  public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
+    Pack pack = fabricDataGenerator.createPack();
+    pack.addProvider(BlockLootTableProvider::new);
+    pack.addProvider(ModelProvider::new);
+    pack.addProvider(RecipeProvider::new);
+    pack.addProvider(BlockTagProvider::new);
+    pack.addProvider(RegistryProvider::new);
+  }
+
+  @Override
+  public void buildRegistry(RegistryBuilder registryBuilder) {
+    registryBuilder.addRegistry(
+        RegistryKeys.CONFIGURED_FEATURE,
+        LighterEndConfiguredFeatures::bootstrap
+    );
+  }
 }

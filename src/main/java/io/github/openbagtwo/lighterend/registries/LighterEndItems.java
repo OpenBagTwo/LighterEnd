@@ -20,9 +20,10 @@ public class LighterEndItems {
       FoodComponents.POPPED_LUMECORN_NUTRITION, FoodComponents.POPPED_LUMECORN_EFFECT)
   );
 
-  public static Item register(String name){
+  public static Item register(String name) {
     return register(name, new Settings());
   }
+
   public static Item register(String name, Settings settings) {
     Identifier id = Identifier.of(LighterEnd.MOD_ID, name);
     RegistryKey<Item> key = RegistryKey.of(RegistryKeys.ITEM, id);

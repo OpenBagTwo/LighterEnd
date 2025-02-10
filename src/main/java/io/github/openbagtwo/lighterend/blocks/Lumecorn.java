@@ -31,6 +31,7 @@ import net.minecraft.world.WorldView;
 import net.minecraft.world.tick.ScheduledTickView;
 
 public class Lumecorn extends Block {
+
   public static final EnumProperty<LumecornShape> SHAPE = EnumProperty.of(
       "shape",
       LumecornShape.class
@@ -72,13 +73,13 @@ public class Lumecorn extends Block {
     if (shape == LumecornShape.LIGHT_TOP) {
       return (
           world.getBlockState(pos.down()).isOf(this)
-          || world.getBlockState(pos.down()).isOf(LighterEndBlocks.LUMECORN_STEM)
+              || world.getBlockState(pos.down()).isOf(LighterEndBlocks.LUMECORN_STEM)
       );
     } else {
       return (
           (
               world.getBlockState(pos.down()).isOf(this)
-              || world.getBlockState(pos.down()).isOf(LighterEndBlocks.LUMECORN_STEM)
+                  || world.getBlockState(pos.down()).isOf(LighterEndBlocks.LUMECORN_STEM)
           ) && world.getBlockState(pos.up()).isOf(this)
       );
     }

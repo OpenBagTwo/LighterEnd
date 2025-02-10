@@ -1,6 +1,5 @@
 package io.github.openbagtwo.lighterend.blocks;
 
-import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.world.LighterEndConfiguredFeatures;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -8,7 +7,6 @@ import net.minecraft.block.MapColor;
 import net.minecraft.block.MossBlock;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.math.BlockPos;

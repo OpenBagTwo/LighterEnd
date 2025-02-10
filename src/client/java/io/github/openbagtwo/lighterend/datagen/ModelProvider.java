@@ -47,8 +47,10 @@ public class ModelProvider extends FabricModelProvider {
     generateMaterialModels(blockModelGenerator, LighterEndBlocks.UMBRALITH);
   }
 
-  public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator, Material material){
-    BlockTexturePool texturePool = blockModelGenerator.registerCubeAllModelTexturePool(material.baseBlock);
+  public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator,
+      Material material) {
+    BlockTexturePool texturePool = blockModelGenerator.registerCubeAllModelTexturePool(
+        material.baseBlock);
     texturePool.stairs(material.baseStairs);
     texturePool.slab(material.baseSlab);
     texturePool.wall(material.baseWall);
@@ -76,7 +78,7 @@ public class ModelProvider extends FabricModelProvider {
   @Override
   public void generateItemModels(ItemModelGenerator itemModelGenerator) {
     itemModelGenerator.register(
-      LighterEndItems.AURORA_CRYSTAL_SHARD, Models.GENERATED
+        LighterEndItems.AURORA_CRYSTAL_SHARD, Models.GENERATED
     );
     itemModelGenerator.register(
         LighterEndItems.POPPED_LUMECORN, Models.GENERATED

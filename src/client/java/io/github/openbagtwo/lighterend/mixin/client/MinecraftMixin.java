@@ -21,7 +21,8 @@ public abstract class MinecraftMixin {
 
   @Inject(method = "<init>*", at = @At("TAIL"))
   private void provideColors(RunArgs args, CallbackInfo info) {
-    blockColors.registerColorProvider(AuroraCrystalRenderer.getBlockColor(), LighterEndBlocks.AURORA_CRYSTAL);
+    blockColors.registerColorProvider(AuroraCrystalRenderer.getBlockColor(),
+        LighterEndBlocks.AURORA_CRYSTAL);
   }
 
 }

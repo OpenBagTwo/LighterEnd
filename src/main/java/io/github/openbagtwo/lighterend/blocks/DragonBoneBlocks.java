@@ -7,7 +7,7 @@ import net.minecraft.sound.BlockSoundGroup;
 
 public class DragonBoneBlocks {
 
-  public static Settings applySettings(Settings settings){
+  public static Settings applySettings(Settings settings) {
     return settings
         .instrument(NoteBlockInstrument.XYLOPHONE)
         .requiresTool()

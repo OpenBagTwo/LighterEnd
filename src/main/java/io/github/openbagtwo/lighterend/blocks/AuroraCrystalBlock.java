@@ -15,26 +15,26 @@ public class AuroraCrystalBlock extends TransparentBlock {
 
   public AuroraCrystalBlock(Settings properties) {
     super(
-      properties
-        .instrument(NoteBlockInstrument.HAT)
-        .sounds(BlockSoundGroup.GLASS)
-        .nonOpaque()
-        .allowsSpawning(Blocks::never)
-        .solidBlock(Blocks::never)
-        .suffocates(Blocks::never)
-        .blockVision(Blocks::never)
-        .strength(1F)
-        .luminance((bs) -> 15)
-        .mapColor(MapColor.MAGENTA)
+        properties
+            .instrument(NoteBlockInstrument.HAT)
+            .sounds(BlockSoundGroup.GLASS)
+            .nonOpaque()
+            .allowsSpawning(Blocks::never)
+            .solidBlock(Blocks::never)
+            .suffocates(Blocks::never)
+            .blockVision(Blocks::never)
+            .strength(1F)
+            .luminance((bs) -> 15)
+            .mapColor(MapColor.MAGENTA)
     );
   }
 
   @Override
   public VoxelShape getCameraCollisionShape(
-    BlockState blockState,
-    BlockView blockGetter,
-    BlockPos blockPos,
-    ShapeContext collisionContext
+      BlockState blockState,
+      BlockView blockGetter,
+      BlockPos blockPos,
+      ShapeContext collisionContext
   ) {
     return this.getCollisionShape(blockState, blockGetter, blockPos, collisionContext);
   }

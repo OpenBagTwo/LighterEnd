@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 
 public class Composting {
 
-  public static void initialize(){
+  public static void initialize() {
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.CREEPING_MOSS, 0.5F);
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.UMBRELLA_FERN, 0.5F);
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.LUMECORN_SEED, 0.3F);

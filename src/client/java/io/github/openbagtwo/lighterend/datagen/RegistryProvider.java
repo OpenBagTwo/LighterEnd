@@ -7,9 +7,10 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 
-public class RegistryProvider extends FabricDynamicRegistryProvider
-{
-  protected RegistryProvider(FabricDataOutput output, CompletableFuture<WrapperLookup> registriesFuture) {
+public class RegistryProvider extends FabricDynamicRegistryProvider {
+
+  protected RegistryProvider(FabricDataOutput output,
+      CompletableFuture<WrapperLookup> registriesFuture) {
     super(output, registriesFuture);
   }
 

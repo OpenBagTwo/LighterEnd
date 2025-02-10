@@ -22,7 +22,9 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 
 public class BlockLootTableProvider extends FabricBlockLootTableProvider {
-  protected BlockLootTableProvider(FabricDataOutput dataOutput, CompletableFuture<WrapperLookup> registryLookup){
+
+  protected BlockLootTableProvider(FabricDataOutput dataOutput,
+      CompletableFuture<WrapperLookup> registryLookup) {
     super(dataOutput, registryLookup);
   }
 
@@ -30,7 +32,7 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
   public void generate() {
     addDrop(LighterEndBlocks.AURORA_CRYSTAL, auroraCrystalDrops());
     addDrop(LighterEndBlocks.ENDER_BLOCK);
-    for (Block block : LighterEndBlocks.VIOLECITE.blocks){
+    for (Block block : LighterEndBlocks.VIOLECITE.blocks) {
       addDrop(block);
     }
     addDrop(LighterEndBlocks.MISSING_TILE);
@@ -39,7 +41,7 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
         LighterEndBlocks.SANDY_JADESTONE,
         LighterEndBlocks.VIRID_JADESTONE
     )) {
-      for (Block block : jadestone.blocks){
+      for (Block block : jadestone.blocks) {
         addDrop(block);
       }
     }
@@ -55,7 +57,7 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     addDrop(LighterEndBlocks.LUMECORN_STEM, LighterEndBlocks.LUMECORN_SEED);
     addDrop(LighterEndBlocks.LUMECORN, lumecornEarDrops());
 
-    for (Block block : LighterEndBlocks.UMBRALITH.blocks){
+    for (Block block : LighterEndBlocks.UMBRALITH.blocks) {
       addDrop(block);
     }
 

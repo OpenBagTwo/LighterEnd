@@ -14,6 +14,7 @@ import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.registry.tag.BlockTags;
 
 public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
+
   protected BlockTagProvider(FabricDataOutput output, CompletableFuture<WrapperLookup> future) {
     super(output, future);
   }
@@ -33,7 +34,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL)
         .add(LighterEndBlocks.ENDER_BLOCK);
 
-    for (Block block : LighterEndBlocks.VIOLECITE.blocks){
+    for (Block block : LighterEndBlocks.VIOLECITE.blocks) {
       getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(block);
     }
 
@@ -50,7 +51,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.SANDY_JADESTONE,
         LighterEndBlocks.VIRID_JADESTONE
     )) {
-      for (Block block : jadestone.blocks){
+      for (Block block : jadestone.blocks) {
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(block);
         getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL).add(block);
       }
@@ -82,7 +83,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
     getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).add(LighterEndBlocks.LUMECORN_STEM);
 
-    for (Block block : LighterEndBlocks.UMBRALITH.blocks){
+    for (Block block : LighterEndBlocks.UMBRALITH.blocks) {
       getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(block);
     }
 

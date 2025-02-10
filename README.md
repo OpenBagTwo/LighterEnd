@@ -92,7 +92,6 @@ BetterEnd:
   area based on the presence of other blocks in the vicinity (_e.g._ amount of water nearby)
 - New trim materials (and possibly trim patterns)
 
-
 ## Contributing
 
 If there is a BetterEnd feature you would like to take responsibility for porting, please
@@ -107,6 +106,20 @@ If there is a BetterEnd feature you would like to take responsibility for portin
 1. Now run the "build" task, either from the IDE or via  `sh ./gradlew build`
 1. The compiled jar will be found under `build/libs`
 
+### Style Guide
+
+* This project uses [pre-commit](https://pre-commit.com/) hooks to format Markdown
+  and non-generated JSON files. To set up pre-commit, follow the instructions linked above to
+  install `pre-commit` on your system, then, from the repo root, run `pre-commit install` to
+  have the hooks run on every commit.
+* It is strongly recommended that you turn on automatic format on save / commit in your Java IDE.
+  Instructions for doing that inside IntelliJ can be found
+  [here](https://www.jetbrains.com/help/idea/reformat-and-rearrange-code.html#reformat-on-save).
+  Make sure to select:
+    * Reformat code
+    * Optimize imports
+      on any save.
+
 ## License and Acknowledgements
 
 All code in this repository is licensed under
@@ -116,7 +129,7 @@ All assets (textures, models) were created by the BetterX team.
 
 Music was composed, performed and recorded by Firel.
 
-You **may** use, modify and redistribute this mod, and  you **may** include this mod within your
+You **may** use, modify and redistribute this mod, and you **may** include this mod within your
 modpack or run it on a server, so long as you abide by the terms of
 this license, which critically states that you **must** make the source code (including your
 modifications to the mod) available to anyone downloading the mod

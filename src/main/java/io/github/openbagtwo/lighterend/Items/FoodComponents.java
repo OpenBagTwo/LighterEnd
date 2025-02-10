@@ -8,6 +8,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
 
 public class FoodComponents {
+
   public static final FoodComponent LUMECORN_NUTRITION = new FoodComponent.Builder()
       .nutrition(4)
       .saturationModifier(0.3F)

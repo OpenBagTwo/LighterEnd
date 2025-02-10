@@ -54,7 +54,8 @@ public class UmbrellaFern extends ShortPlantBlock {
   }
 
   public static class TallUmbrellaFern extends TallFlowerBlock {
-    public TallUmbrellaFern(Settings settings){
+
+    public TallUmbrellaFern(Settings settings) {
       super(
           settings
               .mapColor(MapColor.ORANGE)
@@ -83,7 +84,6 @@ public class UmbrellaFern extends ShortPlantBlock {
     // TODO: rotated variants
 
   }
-
 
 
 }
