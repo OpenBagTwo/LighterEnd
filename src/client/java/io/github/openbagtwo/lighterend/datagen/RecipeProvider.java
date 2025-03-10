@@ -44,12 +44,6 @@ public class RecipeProvider extends FabricRecipeProvider {
         offer2x2CompactingRecipe(
             RecipeCategory.BUILDING_BLOCKS, LighterEndBlocks.ENDER_BLOCK, Items.ENDER_PEARL
         );
-        createShapeless(RecipeCategory.TOOLS, Items.ENDER_PEARL, 4)
-            .input(LighterEndBlocks.ENDER_BLOCK)
-            .criterion(
-                hasItem(LighterEndBlocks.ENDER_BLOCK),
-                conditionsFromItem(Items.ENDER_PEARL)
-            ).offerTo(exporter);
 
         generateMaterialRecipes(LighterEndBlocks.VIOLECITE);
 
