@@ -9,7 +9,7 @@ import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DataPool;
+import net.minecraft.util.collection.Pool;
 import net.minecraft.util.math.VerticalSurfaceType;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
@@ -40,7 +40,7 @@ public class LighterEndConfiguredFeatures {
         Feature.SIMPLE_BLOCK,
         new SimpleBlockFeatureConfig(
             new WeightedBlockStateProvider(
-                DataPool.<BlockState>builder()
+                Pool.<BlockState>builder()
                     .add(LighterEndBlocks.CREEPING_MOSS.getDefaultState(), 10)
                     .add(LighterEndBlocks.UMBRELLA_FERN.getDefaultState(), 10)
                     .add(LighterEndBlocks.LUMECORN_SEED.getDefaultState(), 1)
