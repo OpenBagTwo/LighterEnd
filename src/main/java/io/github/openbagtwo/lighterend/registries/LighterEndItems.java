@@ -13,9 +13,7 @@ import net.minecraft.util.Identifier;
 public class LighterEndItems {
 
   public static final Item AURORA_CRYSTAL_SHARD = register("aurora_crystal_shard");
-  public static final Item LUMECORN_EAR = register("lumecorn_rod", new Settings().food(
-      FoodComponents.LUMECORN_NUTRITION, FoodComponents.LUMECORN_EFFECT)
-  );
+  public static final Item LUMECORN_EAR = register("lumecorn_rod");
   public static final Item POPPED_LUMECORN = register("lumecorn_popped", new Settings().food(
       FoodComponents.POPPED_LUMECORN_NUTRITION, FoodComponents.POPPED_LUMECORN_EFFECT)
   );
