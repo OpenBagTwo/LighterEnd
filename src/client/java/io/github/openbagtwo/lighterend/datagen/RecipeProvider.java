@@ -95,7 +95,7 @@ public class RecipeProvider extends FabricRecipeProvider {
 
         createShapeless(RecipeCategory.MISC, LighterEndBlocks.END_MOSS, 2)
             .input(Blocks.END_STONE)
-            .input(Ingredient.ofItems(Blocks.MOSS_BLOCK, Blocks.PALE_MOSS_BLOCK))
+            .input(Blocks.PALE_MOSS_BLOCK)
             .criterion(
                 hasItem(Blocks.END_STONE),
                 conditionsFromItem(LighterEndBlocks.END_MOSS)
