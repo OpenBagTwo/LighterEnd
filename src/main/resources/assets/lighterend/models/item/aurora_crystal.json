@@ -1,0 +1,6 @@
+{
+  "parent": "lighterend:block/aurora_crystal",
+  "textures": {
+    "texture": "lighterend:item/aurora_crystal"
+  }
+}
