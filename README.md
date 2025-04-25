@@ -24,49 +24,22 @@ The goal of this project is **not** to be a continuation, faithful port or groun
 is instead to create a simple, maintainable mod that can bring the _core aspects_ of BetterEnd's
 ethos—that of a brighter dimension, teeming with life—to future versions of the game.
 
-Each component of the BetterEnd that makes its way into this mod will be selected carefully, with
-intention, and reimplemented from scratch to take full advantage of the newest Minecraft features
-while also not introducing unbalanced elements that would be overpowered compared to the vanilla
-experience.
-
-If you take issue with my decisions of what to include and exclude, the intention of my approach
-to the project's design is to keep things simple, verbose and easily understandable so that it's
-easy for even new Java programmers to fork this project and realize their own vision.
-
-That said: I'm also open to contribution, collaboration and co-ownership, so if you'd like to
-become actively involved in this project, please
-[open an issue](https://github.com/OpenBagTwo/LighterEnd/issues/new) to kick off the discussioN!
-
 ## Roadmap
 
-The plan for development roughly breaks down into three stages:
+Subject, of course, to change
 
-### The First Alpha Release
-
-will be focused on reimplementing some core BetterEnd blocks—at least one each of stone, soil,
-plant and crop—but will not introduce any new biomes or make any changes to the worldgen.
-Included in this release will be some process—possibly manual—for editing the worldgen of the
-Nullscape datapack to use these blocks as replacements for the Nether / Overworld blocks the
-datapack uses by default.
-
-### Beta Development
-
-will define biomes and reintroduce mobs to those biomes. Rather than modify worldgen to include
-these biomes, the beta builds will allow the player to **create** these biomes via some mechanism
-akin to Minecraft Pocket's [Nether Reactor](https://minecraft.wiki/w/Nether_Reactor).
-
-The idea is to create a progression where each biome will unlock access to blocks and mob loot
-that can be used to create more biomes.
-
-### Stable Release
-
-Finally, the full "stable" release will include a pre-transformed End, pre-populated with the
-biomes developed during Beta (the current plan is for the biome transformation mechanic to be
-retained as an optional game mode / world type).
+- [x] **Proof of Concept**: Re-implement a select few BetterEnd blocks—at least one each of stone,
+  soil, plant and crop—but no biomes or worldgen.
+- [ ] **Beta 1**: Add a few selected structures—at least one two tree and one non-natural
+  ruin—and at least one mob
+- [ ] **Beta 2**: Introduce first biome and begin modifying the world generation
+- [ ] **Beta 3**: Cave Generation
+- [ ] **Beta 4**: Armored Elytra (see below) and End Veil enchantment (rare, loot only)
+- [ ] **Full Release**: To reintroduce the custom central end pillar structures
 
 ### Out of Scope
 
-Again: the goal is **not** to recreate the full BetterEnd. The completed version of LighterEnd:
+The completed version of LighterEnd:
 
 - Will likely feature ore, but not Thallasium or Ender Ore (and thus, there will be no Terminite
   nor Aeternium)—these material types are either redundant or overpowered.
@@ -88,8 +61,6 @@ BetterEnd:
 
 - Breeding villagers in The End will produce End Villagers, who will have exclusive professions,
   job sites and trades
-- Crafting a Reactor (full name TBD) will allow the player to change the biome of the surrounding
-  area based on the presence of other blocks in the vicinity (_e.g._ amount of water nearby)
 - New trim materials (and possibly trim patterns)
 
 ## Contributing
