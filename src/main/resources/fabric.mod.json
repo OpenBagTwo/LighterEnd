@@ -3,8 +3,8 @@
     "OpenBagTwo"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/OpenBagTwo/LighterEnd",
+    "sources": "https://github.com/OpenBagTwo/LighterEnd"
   },
   "depends": {
     "fabric-api": "*",
