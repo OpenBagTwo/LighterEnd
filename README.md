@@ -65,6 +65,9 @@ BetterEnd:
 
 ## Contributing
 
+**Worldgen datapack developers wanted!!** If you have experience creating custom dimensions
+or adding biomes to existing dimensions, please contact me!
+
 If there is a BetterEnd feature you would like to take responsibility for porting, please
 [open an issue](https://github.com/OpenBagTwo/LighterEnd/issues/new) to start that discussion!
 
