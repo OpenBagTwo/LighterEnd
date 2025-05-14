@@ -30,7 +30,7 @@ Subject, of course, to change
 
 - [x] **Proof of Concept**: Re-implement a select few BetterEnd blocks—at least one each of stone,
   soil, plant and crop—but no biomes or worldgen.
-- [ ] **Beta 1**: Add a few selected structures—at least one two tree and one non-natural
+- [ ] **Beta 1**: Add a few selected structures—at least two trees and one non-natural
   ruin—and at least one mob
 - [ ] **Beta 2**: Introduce first biome and begin modifying the world generation
 - [ ] **Beta 3**: Cave Generation
