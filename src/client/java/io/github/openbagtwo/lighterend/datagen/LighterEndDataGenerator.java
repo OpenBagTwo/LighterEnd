@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.datagen;
 
 import io.github.openbagtwo.lighterend.world.LighterEndConfiguredFeatures;
+import io.github.openbagtwo.lighterend.world.LighterEndPlacedFeatures;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator.Pack;
@@ -24,6 +25,10 @@ public class LighterEndDataGenerator implements DataGeneratorEntrypoint {
     registryBuilder.addRegistry(
         RegistryKeys.CONFIGURED_FEATURE,
         LighterEndConfiguredFeatures::bootstrap
+    );
+    registryBuilder.addRegistry(
+        RegistryKeys.PLACED_FEATURE,
+        LighterEndPlacedFeatures::bootstrap
     );
   }
 }

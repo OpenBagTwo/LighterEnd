@@ -4,6 +4,7 @@ import io.github.openbagtwo.lighterend.Items.ItemGroups;
 import io.github.openbagtwo.lighterend.misc.Composting;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
+import io.github.openbagtwo.lighterend.world.gen.LighterEndWorldGen;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,5 +23,6 @@ public class LighterEnd implements ModInitializer {
     Composting.initialize();
     ItemGroups.initialize();
 
+    LighterEndWorldGen.modifyWorldGen();
   }
 }
