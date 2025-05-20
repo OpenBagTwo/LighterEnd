@@ -25,7 +25,7 @@ public class AuroraCrystalRenderer {
 
       long i = (long) pos.getX() + (long) pos.getY() + (long) pos.getZ();
       double delta = i * 0.1;
-      int index = floor(delta);
+      int index = MathHelper.floor(delta);
       int index2 = (index + 1) & 3;
       delta -= index;
       index &= 3;
@@ -33,16 +33,12 @@ public class AuroraCrystalRenderer {
       Vec3i color1 = COLORS[index];
       Vec3i color2 = COLORS[index2];
 
-      int r = floor(MathHelper.lerp(delta, color1.getX(), color2.getX()));
-      int g = floor(MathHelper.lerp(delta, color1.getY(), color2.getY()));
-      int b = floor(MathHelper.lerp(delta, color1.getZ(), color2.getZ()));
+      int r = MathHelper.floor(MathHelper.lerp(delta, color1.getX(), color2.getX()));
+      int g = MathHelper.floor(MathHelper.lerp(delta, color1.getY(), color2.getY()));
+      int b = MathHelper.floor(MathHelper.lerp(delta, color1.getZ(), color2.getZ()));
 
       return color(r, g, b);
     };
-  }
-
-  private static int floor(double x) {
-    return x < 0 ? (int) (x - 1) : (int) x;
   }
 
   private static int color(int r, int g, int b) {

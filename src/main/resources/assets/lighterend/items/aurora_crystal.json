@@ -1,6 +1,12 @@
 {
   "model": {
-    "model": "lighterend:item/aurora_crystal",
+    "model": "lighterend:block/aurora_crystal",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": 15940351
+      }
+    ],
     "type": "minecraft:model"
   }
 }
