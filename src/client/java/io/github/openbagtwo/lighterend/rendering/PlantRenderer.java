@@ -14,7 +14,8 @@ public class PlantRenderer {
         LighterEndBlocks.TALL_UMBRELLA_FERN,
         LighterEndBlocks.LUMECORN_SEED,
         LighterEndBlocks.LUMECORN,
-        LighterEndBlocks.LUMECORN_STEM
+        LighterEndBlocks.LUMECORN_STEM,
+        LighterEndBlocks.TENANEA_FLOWER
     );
   }
 

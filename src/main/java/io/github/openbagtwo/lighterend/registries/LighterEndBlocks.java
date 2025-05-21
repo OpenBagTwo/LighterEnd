@@ -6,6 +6,7 @@ import io.github.openbagtwo.lighterend.blocks.CreepingMoss;
 import io.github.openbagtwo.lighterend.blocks.DragonBoneBlocks;
 import io.github.openbagtwo.lighterend.blocks.EndMoss;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
+import io.github.openbagtwo.lighterend.blocks.TenaneaFlowerBlock;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern.TallUmbrellaFern;
 import java.util.Arrays;
@@ -68,6 +69,8 @@ public class LighterEndBlocks {
   public static Block LUMECORN_STEM = register("lumecorn_stem", Lumecorn.LumecornStem::new, false);
 
   public static Material UMBRALITH = new Material("umbralith", MapColor.BLACK);
+
+  public static Block TENANEA_FLOWER = register("tenanea_flower", TenaneaFlowerBlock::new);
 
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);

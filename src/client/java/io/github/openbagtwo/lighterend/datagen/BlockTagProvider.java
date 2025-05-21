@@ -78,7 +78,8 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     getOrCreateTagBuilder(BlockTags.FLOWERS).add(
         LighterEndBlocks.CREEPING_MOSS,
         LighterEndBlocks.UMBRELLA_FERN,
-        LighterEndBlocks.TALL_UMBRELLA_FERN
+        LighterEndBlocks.TALL_UMBRELLA_FERN,
+        LighterEndBlocks.TENANEA_FLOWER
     );
 
     getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).add(LighterEndBlocks.LUMECORN_STEM);
@@ -99,6 +100,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         .add(LighterEndBlocks.UMBRALITH.baseBlock);
     getOrCreateTagBuilder(LighterEndTags.END_SOIL)
         .add(LighterEndBlocks.UMBRALITH.baseBlock);
+
   }
 
 }

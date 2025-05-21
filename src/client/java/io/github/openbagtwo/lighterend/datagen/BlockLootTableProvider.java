@@ -61,6 +61,9 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
       addDrop(block);
     }
 
+    addDrop(LighterEndBlocks.TENANEA_FLOWER, this::dropsWithShears);
+
+
   }
 
   private LootTable.Builder auroraCrystalDrops() {

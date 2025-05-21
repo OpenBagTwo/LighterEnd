@@ -1,0 +1,185 @@
+{
+  "elements": [
+    {
+      "__comment": "PlaneX1",
+      "faces": {
+        "east": {
+          "texture": "#flowers",
+          "tintindex": 0,
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#flowers",
+          "tintindex": 0,
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        2.375,
+        0,
+        2.25
+      ],
+      "rotation": {
+        "angle": 45,
+        "axis": "y",
+        "origin": [
+          2.375,
+          0,
+          2.25
+        ]
+      },
+      "shade": false,
+      "to": [
+        2.376,
+        16,
+        18.25
+      ]
+    },
+    {
+      "__comment": "PlaneX1",
+      "faces": {
+        "east": {
+          "texture": "#flowers",
+          "tintindex": 0,
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#flowers",
+          "tintindex": 0,
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        13.75,
+        0,
+        2.25
+      ],
+      "rotation": {
+        "angle": -45,
+        "axis": "y",
+        "origin": [
+          13.75,
+          0,
+          2.25
+        ]
+      },
+      "shade": false,
+      "to": [
+        13.751,
+        16,
+        18.25
+      ]
+    },
+    {
+      "__comment": "PlaneX1",
+      "faces": {
+        "east": {
+          "texture": "#vine",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#vine",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        2.375,
+        0,
+        2.25
+      ],
+      "rotation": {
+        "angle": 45,
+        "axis": "y",
+        "origin": [
+          2.375,
+          0,
+          2.25
+        ]
+      },
+      "shade": false,
+      "to": [
+        2.376,
+        16,
+        18.25
+      ]
+    },
+    {
+      "__comment": "PlaneX1",
+      "faces": {
+        "east": {
+          "texture": "#vine",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#vine",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        13.75,
+        0,
+        2.25
+      ],
+      "rotation": {
+        "angle": -45,
+        "axis": "y",
+        "origin": [
+          13.75,
+          0,
+          2.25
+        ]
+      },
+      "shade": false,
+      "to": [
+        13.751,
+        16,
+        18.25
+      ]
+    }
+  ],
+  "textures": {
+    "flowers": "lighterend:block/tenanea_flowers",
+    "particle": "#flowers",
+    "vine": "lighterend:block/tenanea_flowers_stem"
+  }
+}
