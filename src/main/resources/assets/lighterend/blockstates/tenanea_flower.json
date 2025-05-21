@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "tip=false": {
       "model": "lighterend:block/tenanea_flowers_middle"
+    },
+    "tip=true": {
+      "model": "lighterend:block/tenanea_flowers_bottom"
     }
   }
 }
