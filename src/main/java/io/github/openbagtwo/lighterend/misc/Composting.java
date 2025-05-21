@@ -11,6 +11,7 @@ public class Composting {
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.UMBRELLA_FERN, 0.5F);
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.LUMECORN_SEED, 0.3F);
     CompostingChanceRegistry.INSTANCE.add(LighterEndItems.LUMECORN_EAR, 0.65F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.TENANEA_FLOWER, 0.65F);
   }
 
 }

@@ -44,7 +44,7 @@ public class TenaneaFlowerBlock extends AbstractPlantStemBlock {
             .offset(OffsetType.NONE)
             .burnable()
             .ticksRandomly()
-            .luminance((bs) -> 15),
+            .luminance((bs) -> 8),
         Direction.DOWN,
         SHAPE,
         false,
