@@ -11,9 +11,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 
-public class AuroraCrystalBlock extends TransparentBlock {
+public class AuroraCrystal extends TransparentBlock {
 
-  public AuroraCrystalBlock(Settings properties) {
+  public AuroraCrystal(Settings properties) {
     super(
         properties
             .instrument(NoteBlockInstrument.HAT)

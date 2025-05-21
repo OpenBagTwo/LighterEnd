@@ -5,7 +5,7 @@ import net.minecraft.block.MapColor;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.sound.BlockSoundGroup;
 
-public class DragonBoneBlocks {
+public class DragonBone {
 
   public static Settings applySettings(Settings settings) {
     return settings

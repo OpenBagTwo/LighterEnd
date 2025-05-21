@@ -1,12 +1,12 @@
 package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import io.github.openbagtwo.lighterend.blocks.AuroraCrystalBlock;
+import io.github.openbagtwo.lighterend.blocks.AuroraCrystal;
 import io.github.openbagtwo.lighterend.blocks.CreepingMoss;
-import io.github.openbagtwo.lighterend.blocks.DragonBoneBlocks;
+import io.github.openbagtwo.lighterend.blocks.DragonBone;
 import io.github.openbagtwo.lighterend.blocks.EndMoss;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
-import io.github.openbagtwo.lighterend.blocks.TenaneaFlowerBlock;
+import io.github.openbagtwo.lighterend.blocks.TenaneaFlower;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern.TallUmbrellaFern;
 import java.util.Arrays;
@@ -34,7 +34,7 @@ import net.minecraft.util.Identifier;
 
 public class LighterEndBlocks {
 
-  public static final Block AURORA_CRYSTAL = register("aurora_crystal", AuroraCrystalBlock::new);
+  public static final Block AURORA_CRYSTAL = register("aurora_crystal", AuroraCrystal::new);
   public static final Block ENDER_BLOCK = register("ender_block", settings -> new Block(
       settings.instrument(NoteBlockInstrument.IRON_XYLOPHONE).mapColor(MapColor.BRIGHT_TEAL)
           .strength(5F, 6F).requiresTool().sounds(BlockSoundGroup.STONE)));
@@ -49,12 +49,12 @@ public class LighterEndBlocks {
   public static final Material VIRID_JADESTONE = new Material("virid_jadestone", MapColor.GREEN);
 
   public static Block DRAGON_BONE_BLOCK = register("dragon_bone_block",
-      settings -> new PillarBlock(DragonBoneBlocks.applySettings(settings)));
+      settings -> new PillarBlock(DragonBone.applySettings(settings)));
   public static Block DRAGON_BONE_STAIRS = register("dragon_bone_stairs",
       settings -> new StairsBlock(DRAGON_BONE_BLOCK.getDefaultState(),
-          DragonBoneBlocks.applySettings(settings)));
+          DragonBone.applySettings(settings)));
   public static Block DRAGON_BONE_SLAB = register("dragon_bone_slab",
-      settings -> new SlabBlock(DragonBoneBlocks.applySettings(settings)));
+      settings -> new SlabBlock(DragonBone.applySettings(settings)));
 
   public static Block END_MOSS = register("end_moss", EndMoss::new);
 
@@ -70,7 +70,7 @@ public class LighterEndBlocks {
 
   public static Material UMBRALITH = new Material("umbralith", MapColor.BLACK);
 
-  public static Block TENANEA_FLOWER = register("tenanea_flower", TenaneaFlowerBlock::new);
+  public static Block TENANEA_FLOWER = register("tenanea_flower", TenaneaFlower::new);
 
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);

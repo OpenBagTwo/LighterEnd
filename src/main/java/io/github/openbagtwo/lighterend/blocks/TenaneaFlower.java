@@ -26,14 +26,14 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.tick.ScheduledTickView;
 
-public class TenaneaFlowerBlock extends AbstractPlantStemBlock {
+public class TenaneaFlower extends AbstractPlantStemBlock {
 
-  public static final MapCodec<TenaneaFlowerBlock> CODEC = createCodec(TenaneaFlowerBlock::new);
+  public static final MapCodec<TenaneaFlower> CODEC = createCodec(TenaneaFlower::new);
   private static final VoxelShape SHAPE = Block.createCuboidShape(2, 0, 2, 14, 16, 14);
   public static final BooleanProperty TIP = Properties.TIP;
   public static final Vec3i[] COLORS;
 
-  public TenaneaFlowerBlock(AbstractBlock.Settings settings) {
+  public TenaneaFlower(AbstractBlock.Settings settings) {
     super(
         settings
             .mapColor(MapColor.MAGENTA)
@@ -140,7 +140,7 @@ public class TenaneaFlowerBlock extends AbstractPlantStemBlock {
   }
 
   @Override
-  public MapCodec<TenaneaFlowerBlock> getCodec() {
+  public MapCodec<TenaneaFlower> getCodec() {
     return CODEC;
   }
 
