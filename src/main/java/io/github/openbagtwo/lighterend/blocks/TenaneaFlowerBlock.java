@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.blocks;
 
 import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
+import io.github.openbagtwo.lighterend.registries.LighterEndParticles;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.AbstractPlantStemBlock;
 import net.minecraft.block.Block;
@@ -21,6 +22,7 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.tick.ScheduledTickView;
 
@@ -123,6 +125,18 @@ public class TenaneaFlowerBlock extends AbstractPlantStemBlock {
   public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
     super.grow(world, random, pos, state);
     world.setBlockState(this.getTipPos(world, pos), state.with(TIP, true));
+  }
+
+  @Override
+  public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+    super.randomDisplayTick(state, world, pos, random);
+    if (random.nextInt(32) == 0) {
+      double x = (double) pos.getX() + random.nextGaussian() + 0.5;
+      double z = (double) pos.getZ() + random.nextGaussian() + 0.5;
+      double y = (double) pos.getY() + random.nextDouble();
+      world.addParticleClient(LighterEndParticles.TENANEA_PETAL, x, y, z, 0, 0, 0);
+    }
+
   }
 
   @Override
