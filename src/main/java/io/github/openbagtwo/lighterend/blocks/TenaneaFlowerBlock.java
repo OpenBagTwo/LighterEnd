@@ -3,12 +3,12 @@ package io.github.openbagtwo.lighterend.blocks;
 import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.AbstractPlantStemBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Fertilizable;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.MultifaceBlock;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.VineLogic;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
@@ -21,11 +21,10 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.tick.ScheduledTickView;
 
-public class TenaneaFlowerBlock extends Block implements Fertilizable {
+public class TenaneaFlowerBlock extends AbstractPlantStemBlock {
 
   public static final MapCodec<TenaneaFlowerBlock> CODEC = createCodec(TenaneaFlowerBlock::new);
   private static final VoxelShape SHAPE = Block.createCuboidShape(2, 0, 2, 14, 16, 14);
@@ -45,20 +44,28 @@ public class TenaneaFlowerBlock extends Block implements Fertilizable {
             .offset(OffsetType.NONE)
             .burnable()
             .ticksRandomly()
-            .luminance((bs) -> 15)
+            .luminance((bs) -> 15),
+        Direction.DOWN,
+        SHAPE,
+        false,
+        0.1
     );
     this.setDefaultState(this.stateManager.getDefaultState().with(TIP, true));
   }
 
   @Override
-  protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos,
-      ShapeContext context) {
-    return SHAPE;
+  protected int getGrowthLength(Random random) {
+    return VineLogic.getGrowthLength(random);
   }
 
   @Override
-  protected boolean isTransparent(BlockState state) {
-    return true;
+  protected boolean chooseStemState(BlockState state) {
+    return VineLogic.isValidForWeepingStem(state);
+  }
+
+  @Override
+  protected Block getPlant() {
+    return LighterEndBlocks.TENANEA_FLOWER;
   }
 
   @Override
@@ -83,22 +90,15 @@ public class TenaneaFlowerBlock extends Block implements Fertilizable {
       BlockState neighborState,
       Random random
   ) {
-    if (!this.canPlaceAt(state, world, pos)) {
-      tickView.scheduleBlockTick(pos, this, 1);
-    }
+    super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos,
+        neighborState, random);
 
     return state.with(TIP, !world.getBlockState(pos.down()).isOf(this));
   }
 
   @Override
-  protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-    if (!this.canPlaceAt(state, world, pos)) {
-      world.breakBlock(pos, true);
-    }
-  }
-
-  @Override
   protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    super.appendProperties(builder);
     builder.add(TIP);
   }
 
@@ -120,18 +120,10 @@ public class TenaneaFlowerBlock extends Block implements Fertilizable {
   }
 
   @Override
-  public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-    return true;
-  }
-
-  @Override
   public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-    BlockPos blockPos = this.getTipPos(world, pos).down();
-    if (world.getBlockState(blockPos).isAir()) {
-      world.setBlockState(blockPos, state.with(TIP, true));
-    }
+    super.grow(world, random, pos, state);
+    world.setBlockState(this.getTipPos(world, pos), state.with(TIP, true));
   }
-
 
   @Override
   public MapCodec<TenaneaFlowerBlock> getCodec() {

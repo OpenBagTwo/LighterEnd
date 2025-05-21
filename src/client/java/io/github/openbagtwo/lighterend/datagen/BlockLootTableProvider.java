@@ -61,7 +61,7 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
       addDrop(block);
     }
 
-    addDrop(LighterEndBlocks.TENANEA_FLOWER);
+    addDrop(LighterEndBlocks.TENANEA_FLOWER, this::dropsWithSilkTouch);
 
 
   }
