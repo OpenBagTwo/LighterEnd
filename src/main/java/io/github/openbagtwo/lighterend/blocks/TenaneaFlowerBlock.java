@@ -44,7 +44,6 @@ public class TenaneaFlowerBlock extends Block implements Fertilizable {
             .pistonBehavior(PistonBehavior.DESTROY)
             .offset(OffsetType.NONE)
             .burnable()
-            .requiresTool()
             .ticksRandomly()
             .luminance((bs) -> 15)
     );
