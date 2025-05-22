@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.datagen;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
+import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -54,7 +55,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             .input('P', Blocks.PURPUR_BLOCK)
             .criterion(
                 hasItem(LighterEndBlocks.VIOLECITE.tiles),
-                conditionsFromItem(LighterEndBlocks.MISSING_TILE)
+                conditionsFromItem(LighterEndBlocks.VIOLECITE.tiles)
             ).offerTo(exporter);
 
         for (Material jadestone : Arrays.asList(
@@ -73,7 +74,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             .input('D', Items.DRAGON_BREATH)
             .criterion(
                 hasItem(Items.DRAGON_BREATH),
-                conditionsFromItem(LighterEndBlocks.DRAGON_BONE_BLOCK)
+                conditionsFromItem(Items.DRAGON_BREATH)
             ).offerTo(exporter);
         offerSlabRecipe(
             RecipeCategory.BUILDING_BLOCKS,
@@ -98,26 +99,35 @@ public class RecipeProvider extends FabricRecipeProvider {
             .input(Blocks.PALE_MOSS_BLOCK)
             .criterion(
                 hasItem(Blocks.END_STONE),
-                conditionsFromItem(LighterEndBlocks.END_MOSS)
+                conditionsFromItem(Blocks.END_STONE)
             ).offerTo(exporter);
 
         createShapeless(RecipeCategory.MISC, Items.CYAN_DYE)
             .input(LighterEndBlocks.CREEPING_MOSS)
             .criterion(
                 hasItem(LighterEndBlocks.CREEPING_MOSS),
-                conditionsFromItem(Items.CYAN_DYE)
+                conditionsFromItem(LighterEndBlocks.CREEPING_MOSS)
             ).offerTo(exporter);
 
         createShapeless(RecipeCategory.MISC, Items.ORANGE_DYE)
             .input(LighterEndBlocks.UMBRELLA_FERN)
             .criterion(
                 hasItem(LighterEndBlocks.UMBRELLA_FERN),
-                conditionsFromItem(Items.ORANGE_DYE)
+                conditionsFromItem(LighterEndBlocks.UMBRELLA_FERN)
             ).offerTo(exporter);
 
         generateCookingRecipes(LighterEndItems.LUMECORN_EAR, LighterEndItems.POPPED_LUMECORN);
 
         generateMaterialRecipes(LighterEndBlocks.UMBRALITH);
+
+        createShapeless(RecipeCategory.MISC, Items.MAGENTA_DYE)
+            .input(LighterEndBlocks.TENANEA_FLOWER)
+            .criterion(
+                hasItem(LighterEndBlocks.TENANEA_FLOWER),
+                conditionsFromItem(LighterEndBlocks.TENANEA_FLOWER)
+            ).offerTo(exporter);
+
+        generateWoodRecipes(LighterEndBlocks.TENANEA);
       }
 
       public void generateMaterialRecipes(Material material) {
@@ -142,7 +152,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             .input('s', material.baseSlab)
             .criterion(
                 hasItem(material.baseSlab),
-                conditionsFromItem(material.pillar)
+                conditionsFromItem(material.baseSlab)
             ).offerTo(exporter);
         offerStonecuttingRecipe(
             RecipeCategory.BUILDING_BLOCKS, material.pillar, material.baseBlock
@@ -218,7 +228,48 @@ public class RecipeProvider extends FabricRecipeProvider {
               RecipeCategory.BUILDING_BLOCKS, material.tileWall, input
           );
         }
+      }
 
+      public void generateWoodRecipes(Wood wood) {
+        createShaped(RecipeCategory.BUILDING_BLOCKS, wood.wood, 3).pattern("ll").pattern("ll")
+            .input('l', wood.log).criterion(
+                hasItem(wood.log),
+                conditionsFromItem(wood.log)
+            ).offerTo(exporter);
+        createShaped(RecipeCategory.BUILDING_BLOCKS, wood.strippedWood, 3).pattern("ll")
+            .pattern("ll").input('l', wood.log).criterion(
+                hasItem(wood.strippedLog),
+                conditionsFromItem(wood.strippedLog)
+            ).offerTo(exporter);
+        createShapeless(RecipeCategory.BUILDING_BLOCKS, wood.planks, 4).input(
+                Ingredient.ofItems(wood.log, wood.strippedLog, wood.wood, wood.strippedWood))
+            .criterion(hasItem(wood.log), conditionsFromItem(wood.log)).offerTo(exporter);
+        offerSlabRecipe(RecipeCategory.BUILDING_BLOCKS, wood.slab, wood.planks);
+        offerStairsRecipe(wood.stairs, wood.planks);
+        createDoorRecipe(wood.door, Ingredient.ofItem(wood.planks)).criterion(hasItem(wood.planks),
+            conditionsFromItem(wood.planks)).offerTo(exporter);
+        createDoorRecipe(wood.trapdoor, Ingredient.ofItem(wood.planks)).criterion(
+            hasItem(wood.planks),
+            conditionsFromItem(wood.planks)).offerTo(exporter);
+        createFenceRecipe(wood.fence, Ingredient.ofItem(wood.planks)).criterion(
+            hasItem(wood.planks),
+            conditionsFromItem(wood.planks)).offerTo(exporter);
+        createFenceGateRecipe(wood.gate, Ingredient.ofItem(wood.planks)).criterion(
+            hasItem(wood.planks),
+            conditionsFromItem(wood.planks)).offerTo(exporter);
+        offerButtonRecipe(wood.button, wood.planks);
+        offerPressurePlateRecipe(wood.pressurePlate, wood.planks);
+        createShaped(RecipeCategory.DECORATIONS, wood.ladder, 2)
+            .input('#', wood.slab)
+            .pattern("#")
+            .pattern("#")
+            .pattern("#")
+            .criterion(hasItem(wood.planks), this.conditionsFromItem(wood.planks))
+            .offerTo(exporter);
+        createSignRecipe(wood.sign, Ingredient.ofItem(wood.planks)).criterion(
+            hasItem(wood.planks),
+            conditionsFromItem(wood.planks)).offerTo(exporter);
+        offerHangingSignRecipe(wood.hangingSign, wood.strippedLog);
 
       }
 
@@ -226,13 +277,13 @@ public class RecipeProvider extends FabricRecipeProvider {
       public void offerStairsRecipe(ItemConvertible output, ItemConvertible input) {
         createStairsRecipe(
             output, Ingredient.ofItem(input)
-        ).criterion(hasItem(input), conditionsFromItem(output)).offerTo(exporter);
+        ).criterion(hasItem(input), conditionsFromItem(input)).offerTo(exporter);
       }
 
       public void offerButtonRecipe(ItemConvertible output, ItemConvertible input) {
         createButtonRecipe(
             output, Ingredient.ofItem(input)
-        ).criterion(hasItem(input), conditionsFromItem(output)).offerTo(exporter);
+        ).criterion(hasItem(input), conditionsFromItem(input)).offerTo(exporter);
       }
 
       public void generateCookingRecipes(ItemConvertible input, ItemConvertible output) {
@@ -243,7 +294,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             output,
             0.35F,
             200
-        ).criterion(hasItem(input), conditionsFromItem(output)
+        ).criterion(hasItem(input), conditionsFromItem(input)
         ).offerTo(
             exporter,
             RegistryKey.of(RegistryKeys.RECIPE, output_key.withSuffixedPath("_smelting"))
@@ -254,7 +305,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             output,
             0.35F,
             100
-        ).criterion(hasItem(input), conditionsFromItem(output)
+        ).criterion(hasItem(input), conditionsFromItem(input)
         ).offerTo(
             exporter,
             RegistryKey.of(RegistryKeys.RECIPE, output_key.withSuffixedPath("_smoking"))
@@ -265,7 +316,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             output,
             0.35F,
             600
-        ).criterion(hasItem(input), conditionsFromItem(output)
+        ).criterion(hasItem(input), conditionsFromItem(input)
         ).offerTo(
             exporter,
             RegistryKey.of(RegistryKeys.RECIPE, output_key.withSuffixedPath("_campfire"))

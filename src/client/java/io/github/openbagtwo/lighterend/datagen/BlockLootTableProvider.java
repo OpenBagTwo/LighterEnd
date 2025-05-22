@@ -64,7 +64,9 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     addDrop(LighterEndBlocks.TENANEA_FLOWER, this::dropsWithSilkTouch);
     addDrop(LighterEndBlocks.TENANEA_SAPLING);
 
-
+    for (Block block : LighterEndBlocks.TENANEA.blocks) {
+      addDrop(block);
+    }
   }
 
   private LootTable.Builder auroraCrystalDrops() {

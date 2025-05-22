@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "lighterend:block/tenanea_ladder",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "lighterend:block/tenanea_ladder"
+    },
+    "facing=south": {
+      "model": "lighterend:block/tenanea_ladder",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "lighterend:block/tenanea_ladder",
+      "y": 270
+    }
+  }
+}

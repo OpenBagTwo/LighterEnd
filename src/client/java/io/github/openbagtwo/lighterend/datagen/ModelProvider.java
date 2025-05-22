@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.datagen;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
+import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import java.util.Arrays;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
@@ -51,34 +52,40 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndBlocks.TENANEA_SAPLING,
         CrossType.NOT_TINTED
     );
+    generateWoodModels(blockModelGenerator, LighterEndBlocks.TENANEA);
   }
 
   public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator,
       Material material) {
-    BlockTexturePool texturePool = blockModelGenerator.registerCubeAllModelTexturePool(
-        material.baseBlock);
-    texturePool.stairs(material.baseStairs);
-    texturePool.slab(material.baseSlab);
-    texturePool.wall(material.baseWall);
+    blockModelGenerator.registerCubeAllModelTexturePool(
+            material.baseBlock).stairs(material.baseStairs).slab(material.baseSlab)
+        .wall(material.baseWall);
 
-    texturePool = blockModelGenerator.registerCubeAllModelTexturePool(material.bricks);
-    texturePool.stairs(material.brickStairs);
-    texturePool.slab(material.brickSlab);
-    texturePool.wall(material.brickWall);
+    blockModelGenerator.registerCubeAllModelTexturePool(material.bricks)
+        .stairs(material.brickStairs).slab(material.brickSlab).wall(material.brickWall);
 
-    texturePool = blockModelGenerator.registerCubeAllModelTexturePool(material.polished);
-    texturePool.stairs(material.polishedStairs);
-    texturePool.slab(material.polishedSlab);
-    texturePool.wall(material.polishedWall);
-    texturePool.button(material.button);
-    texturePool.pressurePlate(material.pressurePlate);
+    blockModelGenerator.registerCubeAllModelTexturePool(material.polished)
+        .stairs(material.polishedStairs).slab(material.polishedSlab).wall(material.polishedWall)
+        .button(material.button).pressurePlate(material.pressurePlate);
 
-    texturePool = blockModelGenerator.registerCubeAllModelTexturePool(material.tiles);
-    texturePool.stairs(material.tileStairs);
-    texturePool.slab(material.tileSlab);
-    texturePool.wall(material.tileWall);
+    blockModelGenerator.registerCubeAllModelTexturePool(material.tiles).stairs(material.tileStairs)
+        .slab(material.tileSlab).wall(material.tileWall);
 
     blockModelGenerator.registerAxisRotated(material.pillar, TexturedModel.CUBE_COLUMN);
+  }
+
+  public static void generateWoodModels(BlockStateModelGenerator blockModelGenerator,
+      Wood wood) {
+    blockModelGenerator.createLogTexturePool(wood.log).log(wood.log).wood(wood.wood);
+    blockModelGenerator.createLogTexturePool(wood.strippedLog).log(wood.strippedLog)
+        .wood(wood.strippedWood);
+    blockModelGenerator.registerCubeAllModelTexturePool(wood.planks).stairs(wood.stairs)
+        .slab(wood.slab).fence(wood.fence).fenceGate(wood.gate).button(wood.button)
+        .pressurePlate(wood.pressurePlate);
+    blockModelGenerator.registerDoor(wood.door);
+    blockModelGenerator.registerTrapdoor(wood.trapdoor);
+    blockModelGenerator.registerHangingSign(wood.strippedWood, wood.hangingSign,
+        wood.wallHangingSign);
   }
 
   @Override

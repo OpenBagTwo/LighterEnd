@@ -1,0 +1,6 @@
+{
+  "parent": "lighterend:block/ladder",
+  "textures": {
+    "texture": "lighterend:block/tenanea_ladder"
+  }
+}
