@@ -199,7 +199,7 @@ public class Lumecorn extends Block {
               .burnable()
               .ticksRandomly()
       );
-      this.setDefaultState(this.stateManager.getDefaultState().with(AGE, Integer.valueOf(0)));
+      this.setDefaultState(this.stateManager.getDefaultState().with(AGE, 0));
     }
 
     @Override

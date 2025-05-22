@@ -7,6 +7,7 @@ import io.github.openbagtwo.lighterend.blocks.DragonBone;
 import io.github.openbagtwo.lighterend.blocks.EndMoss;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.TenaneaFlower;
+import io.github.openbagtwo.lighterend.blocks.TenaneaSapling;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern.TallUmbrellaFern;
 import java.util.Arrays;
@@ -23,6 +24,7 @@ import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.WallBlock;
 import net.minecraft.block.enums.NoteBlockInstrument;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -71,6 +73,7 @@ public class LighterEndBlocks {
   public static Material UMBRALITH = new Material("umbralith", MapColor.BLACK);
 
   public static Block TENANEA_FLOWER = register("tenanea_flower", TenaneaFlower::new);
+  public static Block TENANEA_SAPLING = register("tenanea_sapling", TenaneaSapling::new);
 
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);
@@ -115,9 +118,10 @@ public class LighterEndBlocks {
     public final Block pillar;
     public final Block button;
     public final Block pressurePlate;
+    // public final Block pedestal;
     public final List<Block> blocks;
     private final MapColor mapColor;
-    // public final Block pedestal;
+
 
     public Material(String name, MapColor mapColor) {
       this.baseName = name;
@@ -156,16 +160,19 @@ public class LighterEndBlocks {
       pillar = register(baseName + "_pillar", settings -> new PillarBlock(applySettings(settings)));
       button = register(baseName + "_button",
           settings -> new ButtonBlock(BlockSetType.POLISHED_BLACKSTONE, 30,
-              applySettings(settings)));
+              settings.noCollision().strength(0.5F).pistonBehavior(PistonBehavior.DESTROY)));
       pressurePlate = register(baseName + "_pressure_plate",
           settings -> new PressurePlateBlock(BlockSetType.POLISHED_BLACKSTONE,
-              applySettings(settings)));
+              settings.mapColor(mapColor)
+                  .solid()
+                  .instrument(NoteBlockInstrument.BASEDRUM)
+                  .noCollision()
+                  .strength(0.5F)
+                  .pistonBehavior(PistonBehavior.DESTROY)));
 
       blocks = Arrays.asList(baseBlock, baseStairs, baseSlab, baseWall, bricks, brickStairs,
           brickSlab, brickWall, polished, polishedStairs, polishedSlab, polishedWall, tiles,
           tileStairs, tileSlab, tileWall, pillar, button, pressurePlate);
-
-
     }
 
     public Settings applySettings(Settings settings) {

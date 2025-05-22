@@ -101,6 +101,8 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     getOrCreateTagBuilder(LighterEndTags.END_SOIL)
         .add(LighterEndBlocks.UMBRALITH.baseBlock);
 
+    getOrCreateTagBuilder(BlockTags.SAPLINGS).add(LighterEndBlocks.TENANEA_SAPLING);
+
   }
 
 }
