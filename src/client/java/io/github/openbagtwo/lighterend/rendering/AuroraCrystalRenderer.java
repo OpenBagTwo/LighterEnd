@@ -3,7 +3,7 @@ package io.github.openbagtwo.lighterend.rendering;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.client.color.block.BlockColorProvider;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3i;
@@ -47,7 +47,7 @@ public class AuroraCrystalRenderer {
 
   public static void initialize() {
     BlockRenderLayerMap.INSTANCE.putBlocks(
-        RenderLayer.getTranslucent(),
+        BlockRenderLayer.TRANSLUCENT,
         LighterEndBlocks.AURORA_CRYSTAL
     );
   }

@@ -21,19 +21,19 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
   @Override
   protected void configure(RegistryWrapper.WrapperLookup lookup) {
     for (Wood wood : Arrays.asList(LighterEndBlocks.TENANEA)) {
-      getOrCreateTagBuilder(ItemTags.LOGS_THAT_BURN).add(wood.log.asItem(),
+      valueLookupBuilder(ItemTags.LOGS_THAT_BURN).add(wood.log.asItem(),
           wood.strippedLog.asItem(), wood.wood.asItem(), wood.strippedWood.asItem());
-      getOrCreateTagBuilder(ItemTags.PLANKS).add(wood.planks.asItem());
-      getOrCreateTagBuilder(ItemTags.WOODEN_BUTTONS).add(wood.button.asItem());
-      getOrCreateTagBuilder(ItemTags.WOODEN_DOORS).add(wood.door.asItem());
-      getOrCreateTagBuilder(ItemTags.WOODEN_STAIRS).add(wood.stairs.asItem());
-      getOrCreateTagBuilder(ItemTags.WOODEN_SLABS).add(wood.slab.asItem());
-      getOrCreateTagBuilder(ItemTags.WOODEN_FENCES).add(wood.fence.asItem());
-      getOrCreateTagBuilder(ItemTags.FENCE_GATES).add(wood.gate.asItem());
-      getOrCreateTagBuilder(ItemTags.WOODEN_PRESSURE_PLATES).add(wood.pressurePlate.asItem());
-      getOrCreateTagBuilder(ItemTags.WOODEN_TRAPDOORS).add(wood.trapdoor.asItem());
-      getOrCreateTagBuilder(ItemTags.SIGNS).add(wood.sign.asItem());
-      getOrCreateTagBuilder(ItemTags.HANGING_SIGNS).add(wood.hangingSign.asItem());
+      valueLookupBuilder(ItemTags.PLANKS).add(wood.planks.asItem());
+      valueLookupBuilder(ItemTags.WOODEN_BUTTONS).add(wood.button.asItem());
+      valueLookupBuilder(ItemTags.WOODEN_DOORS).add(wood.door.asItem());
+      valueLookupBuilder(ItemTags.WOODEN_STAIRS).add(wood.stairs.asItem());
+      valueLookupBuilder(ItemTags.WOODEN_SLABS).add(wood.slab.asItem());
+      valueLookupBuilder(ItemTags.WOODEN_FENCES).add(wood.fence.asItem());
+      valueLookupBuilder(ItemTags.FENCE_GATES).add(wood.gate.asItem());
+      valueLookupBuilder(ItemTags.WOODEN_PRESSURE_PLATES).add(wood.pressurePlate.asItem());
+      valueLookupBuilder(ItemTags.WOODEN_TRAPDOORS).add(wood.trapdoor.asItem());
+      valueLookupBuilder(ItemTags.SIGNS).add(wood.sign.asItem());
+      valueLookupBuilder(ItemTags.HANGING_SIGNS).add(wood.hangingSign.asItem());
 
     }
     for (Material material : Arrays.asList(
@@ -42,10 +42,10 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
         LighterEndBlocks.SANDY_JADESTONE,
         LighterEndBlocks.VIRID_JADESTONE, LighterEndBlocks.UMBRALITH
     )) {
-      getOrCreateTagBuilder(ItemTags.STONE_BUTTONS).add(material.button.asItem());
+      valueLookupBuilder(ItemTags.STONE_BUTTONS).add(material.button.asItem());
     }
-    getOrCreateTagBuilder(ItemTags.CHICKEN_FOOD).add(LighterEndBlocks.LUMECORN_SEED.asItem());
-    getOrCreateTagBuilder(ItemTags.BEE_FOOD).add(LighterEndBlocks.TENANEA_FLOWER.asItem());
+    valueLookupBuilder(ItemTags.CHICKEN_FOOD).add(LighterEndBlocks.LUMECORN_SEED.asItem());
+    valueLookupBuilder(ItemTags.BEE_FOOD).add(LighterEndBlocks.TENANEA_FLOWER.asItem());
 
   }
 

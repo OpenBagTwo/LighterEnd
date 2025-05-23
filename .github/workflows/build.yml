@@ -4,6 +4,7 @@ on:
   push:
     branches:
     - 1.21.5
+    - 1.21.6
   release:
     types: [published]
 jobs:
