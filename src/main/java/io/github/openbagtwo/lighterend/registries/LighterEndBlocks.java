@@ -6,6 +6,7 @@ import io.github.openbagtwo.lighterend.blocks.CreepingMoss;
 import io.github.openbagtwo.lighterend.blocks.DragonBone;
 import io.github.openbagtwo.lighterend.blocks.EndMoss;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
+import io.github.openbagtwo.lighterend.blocks.Signs;
 import io.github.openbagtwo.lighterend.blocks.TenaneaFlower;
 import io.github.openbagtwo.lighterend.blocks.TenaneaSapling;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern;
@@ -22,18 +23,14 @@ import net.minecraft.block.ButtonBlock;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
-import net.minecraft.block.HangingSignBlock;
 import net.minecraft.block.LadderBlock;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.block.PressurePlateBlock;
-import net.minecraft.block.SignBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.TrapdoorBlock;
 import net.minecraft.block.WallBlock;
-import net.minecraft.block.WallHangingSignBlock;
-import net.minecraft.block.WallSignBlock;
 import net.minecraft.block.WoodType;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
@@ -282,35 +279,20 @@ public class LighterEndBlocks {
           settings.strength(0.4F).sounds(BlockSoundGroup.LADDER).nonOpaque()
               .pistonBehavior(PistonBehavior.DESTROY)));
       sign = register(baseName + "_sign",
-          settings -> new SignBlock(WoodType.CHERRY, settings.mapColor(planks.getDefaultMapColor())
-              .solid()
-              .instrument(NoteBlockInstrument.BASS)
-              .noCollision()
-              .strength(1.0F)
-              .burnable()));
+          settings -> new Signs.LighterEndStandingSignBlock(
+              settings.mapColor(planks.getDefaultMapColor())));
       wallSign = register(baseName + "_wall_sign",
-          settings -> new WallSignBlock(WoodType.CHERRY, settings.lootTable(sign.getLootTableKey())
-              .overrideTranslationKey(sign.getTranslationKey())
-              .mapColor(planks.getDefaultMapColor())
-              .solid()
-              .instrument(NoteBlockInstrument.BASS)
-              .noCollision()
-              .strength(1.0F)
-              .burnable()));
+          settings -> new Signs.LighterEndWallSignBlock(
+              settings.mapColor(planks.getDefaultMapColor()).lootTable(sign.getLootTableKey())
+                  .overrideTranslationKey(sign.getTranslationKey())));
       hangingSign = register(baseName + "_hanging_sign",
-          settings -> new HangingSignBlock(WoodType.CHERRY,
-              settings.mapColor(planks.getDefaultMapColor()).solid()
-                  .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0F).burnable()));
+          settings -> new Signs.LighterEndCeilingHangingSignBlock(
+              settings.mapColor(planks.getDefaultMapColor())));
       wallHangingSign = register(baseName + "_wall_hanging_sign",
-          settings -> new WallHangingSignBlock(WoodType.CHERRY,
+          settings -> new Signs.LighterEndWallHangingSignBlock(
               settings.lootTable(hangingSign.getLootTableKey())
                   .overrideTranslationKey(hangingSign.getTranslationKey())
-                  .mapColor(planks.getDefaultMapColor())
-                  .solid()
-                  .instrument(NoteBlockInstrument.BASS)
-                  .noCollision()
-                  .strength(1.0F)
-                  .burnable()));
+                  .mapColor(planks.getDefaultMapColor())));
 
       blocks = Arrays.asList(log, strippedLog, wood, strippedWood, planks, slab, stairs, door,
           trapdoor, fence, gate, button, pressurePlate, sign, hangingSign);

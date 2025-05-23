@@ -84,6 +84,7 @@ public class ModelProvider extends FabricModelProvider {
         .pressurePlate(wood.pressurePlate);
     blockModelGenerator.registerDoor(wood.door);
     blockModelGenerator.registerTrapdoor(wood.trapdoor);
+    blockModelGenerator.registerHangingSign(wood.strippedWood, wood.sign, wood.wallSign);
     blockModelGenerator.registerHangingSign(wood.strippedWood, wood.hangingSign,
         wood.wallHangingSign);
   }
