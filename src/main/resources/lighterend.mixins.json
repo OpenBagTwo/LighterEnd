@@ -3,9 +3,7 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "mixins": [
-    "BlockEntityTypeMixin"
-  ],
+  "mixins": [],
   "package": "io.github.openbagtwo.lighterend.mixin",
   "required": true
 }
