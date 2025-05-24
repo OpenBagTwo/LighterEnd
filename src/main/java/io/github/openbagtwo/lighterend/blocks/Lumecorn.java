@@ -4,6 +4,7 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
+import io.github.openbagtwo.lighterend.utils.Flags;
 import java.util.Optional;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -27,7 +28,11 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 import net.minecraft.world.tick.ScheduledTickView;
 
 public class Lumecorn extends Block {
@@ -210,70 +215,9 @@ public class Lumecorn extends Block {
         if (!world.getBlockState(pos.down()).isIn(LighterEndTags.END_SOIL)) {
           return;
         }
-
-        int height = random.nextBetween(4, 7);
-        BlockPos.Mutable mut = new BlockPos.Mutable().set(pos);
-        for (int i = 1; i < height; i++) {
-          mut.move(Direction.UP);
-          if (!world.isAir(mut)) {
-            return;
-          }
-        }
-        mut.set(pos);
-        BlockState topMiddle = LighterEndBlocks.LUMECORN.getDefaultState()
-            .with(Lumecorn.SHAPE, LumecornShape.LIGHT_TOP_MIDDLE);
-        BlockState middle = LighterEndBlocks.LUMECORN.getDefaultState()
-            .with(Lumecorn.SHAPE, LumecornShape.LIGHT_MIDDLE);
-        BlockState bottom = LighterEndBlocks.LUMECORN.getDefaultState()
-            .with(Lumecorn.SHAPE, LumecornShape.LIGHT_BOTTOM);
-        BlockState top = LighterEndBlocks.LUMECORN.getDefaultState().with(
-            Lumecorn.SHAPE, LumecornShape.LIGHT_TOP
-        );
-        if (height == 4) {
-          world.setBlockState(
-              mut,
-              LighterEndBlocks.LUMECORN_STEM.getDefaultState().with(
-                  Lumecorn.SHAPE, LumecornShape.BOTTOM_SMALL
-              ),
-              18 // 18 = Don't trigger observers or client changes
-          );
-          world.setBlockState(mut.move(Direction.UP), bottom, 18);
-          world.setBlockState(mut.move(Direction.UP), topMiddle, 18);
-          world.setBlockState(mut.move(Direction.UP), top, 18);
-          return;
-        }
-        if (random.nextBoolean()) {
-          world.setBlockState(
-              mut,
-              LighterEndBlocks.LUMECORN_STEM.getDefaultState().with(
-                  Lumecorn.SHAPE, LumecornShape.BOTTOM_SMALL
-              ),
-              18
-          );
-        } else {
-          world.setBlockState(
-              mut,
-              LighterEndBlocks.LUMECORN_STEM.getDefaultState().with(
-                  Lumecorn.SHAPE, LumecornShape.BOTTOM_BIG
-              ),
-              18
-          );
-          world.setBlockState(
-              mut.move(Direction.UP),
-              LighterEndBlocks.LUMECORN_STEM.getDefaultState().with(
-                  Lumecorn.SHAPE, LumecornShape.MIDDLE
-              ),
-              18
-          );
-          height--;
-        }
-        world.setBlockState(mut.move(Direction.UP), bottom, 18);
-
-        for (int i = 4; i < height; i++) {
-          world.setBlockState(mut.move(Direction.UP), middle, 18);
-        }
-        world.setBlockState(mut.move(Direction.UP), topMiddle, 18);
-        world.setBlockState(mut.move(Direction.UP), top, 18);
+        FeatureContext<DefaultFeatureConfig> context = new FeatureContext<>(null, world,
+            world.getChunkManager().getChunkGenerator(), random, pos, new DefaultFeatureConfig());
+        new LumecornFeature().generate(context);
       }
     }
 
@@ -325,6 +269,85 @@ public class Lumecorn extends Block {
 
     public int getLight() {
       return light;
+    }
+  }
+
+  public static class LumecornFeature extends Feature<DefaultFeatureConfig> {
+
+    public LumecornFeature() {
+      super(DefaultFeatureConfig.CODEC);
+    }
+
+    @Override
+    public boolean generate(FeatureContext<DefaultFeatureConfig> featureConfig) {
+      final Random random = featureConfig.getRandom();
+      final BlockPos pos = featureConfig.getOrigin();
+      final StructureWorldAccess world = featureConfig.getWorld();
+
+      int height = random.nextBetween(4, 7);
+      BlockPos.Mutable mut = new BlockPos.Mutable().set(pos);
+      for (int i = 1; i < height; i++) {
+        mut.move(Direction.UP);
+        if (!world.isAir(mut)) {
+          return false;
+        }
+      }
+      mut.set(pos);
+      BlockState topMiddle = LighterEndBlocks.LUMECORN.getDefaultState()
+          .with(Lumecorn.SHAPE, LumecornShape.LIGHT_TOP_MIDDLE);
+      BlockState middle = LighterEndBlocks.LUMECORN.getDefaultState()
+          .with(Lumecorn.SHAPE, LumecornShape.LIGHT_MIDDLE);
+      BlockState bottom = LighterEndBlocks.LUMECORN.getDefaultState()
+          .with(Lumecorn.SHAPE, LumecornShape.LIGHT_BOTTOM);
+      BlockState top = LighterEndBlocks.LUMECORN.getDefaultState().with(
+          Lumecorn.SHAPE, LumecornShape.LIGHT_TOP
+      );
+      if (height == 4) {
+        world.setBlockState(
+            mut,
+            LighterEndBlocks.LUMECORN_STEM.getDefaultState().with(
+                Lumecorn.SHAPE, LumecornShape.BOTTOM_SMALL
+            ),
+            Flags.SILENT
+        );
+        world.setBlockState(mut.move(Direction.UP), bottom, 18);
+        world.setBlockState(mut.move(Direction.UP), topMiddle, 18);
+        world.setBlockState(mut.move(Direction.UP), top, 18);
+        return true;
+      }
+      if (random.nextBoolean()) {
+        world.setBlockState(
+            mut,
+            LighterEndBlocks.LUMECORN_STEM.getDefaultState().with(
+                Lumecorn.SHAPE, LumecornShape.BOTTOM_SMALL
+            ),
+            18
+        );
+      } else {
+        world.setBlockState(
+            mut,
+            LighterEndBlocks.LUMECORN_STEM.getDefaultState().with(
+                Lumecorn.SHAPE, LumecornShape.BOTTOM_BIG
+            ),
+            18
+        );
+        world.setBlockState(
+            mut.move(Direction.UP),
+            LighterEndBlocks.LUMECORN_STEM.getDefaultState().with(
+                Lumecorn.SHAPE, LumecornShape.MIDDLE
+            ),
+            18
+        );
+        height--;
+      }
+      world.setBlockState(mut.move(Direction.UP), bottom, 18);
+
+      for (int i = 4; i < height; i++) {
+        world.setBlockState(mut.move(Direction.UP), middle, 18);
+      }
+      world.setBlockState(mut.move(Direction.UP), topMiddle, 18);
+      world.setBlockState(mut.move(Direction.UP), top, 18);
+      return true;
     }
   }
 

@@ -1,10 +1,14 @@
 package io.github.openbagtwo.lighterend.world;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
+import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
 import net.minecraft.block.BlockState;
 import net.minecraft.registry.Registerable;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -15,6 +19,7 @@ import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.ConfiguredFeatures;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.PlacedFeatures;
 import net.minecraft.world.gen.feature.SimpleBlockFeatureConfig;
@@ -28,6 +33,20 @@ public class LighterEndConfiguredFeatures {
       = LighterEndConfiguredFeatures.of("end_moss_patch_bonemeal");
   public static final RegistryKey<ConfiguredFeature<?, ?>> END_MOSS_VEGETATION
       = LighterEndConfiguredFeatures.of("end_moss_vegetation");
+  public static final Feature<DefaultFeatureConfig> LUMECORN_FEATURE = Registry.register(
+      Registries.FEATURE,
+      Identifier.of(LighterEnd.MOD_ID, "lumecorn"),
+      new Lumecorn.LumecornFeature());
+  public static final Feature<DefaultFeatureConfig> TENANEA_TREE_FEATURE = Registry.register(
+      Registries.FEATURE,
+      Identifier.of(LighterEnd.MOD_ID, "tenanea_tree"),
+      new TenaneaTree());
+
+  public static final RegistryKey<ConfiguredFeature<?, ?>> LUMECORN = LighterEndConfiguredFeatures.of(
+      "lumecorn");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> TENANEA_TREE = LighterEndConfiguredFeatures.of(
+      "tenanea_tree");
+
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
     RegistryEntryLookup<ConfiguredFeature<?, ?>> lookup = context.getRegistryLookup(
@@ -67,6 +86,21 @@ public class LighterEndConfiguredFeatures {
             0.25F)
     );
 
+    ConfiguredFeatures.register(
+        context,
+        LUMECORN,
+        LUMECORN_FEATURE
+    );
+    ConfiguredFeatures.register(
+        context,
+        TENANEA_TREE,
+        TENANEA_TREE_FEATURE
+    );
+
+
+  }
+
+  public static void initialize() {
   }
 
   public static RegistryKey<ConfiguredFeature<?, ?>> of(String id) {
