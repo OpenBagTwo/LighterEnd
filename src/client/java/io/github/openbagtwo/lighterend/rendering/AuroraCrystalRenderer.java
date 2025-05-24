@@ -41,15 +41,18 @@ public class AuroraCrystalRenderer {
     };
   }
 
-  private static int color(int r, int g, int b) {
-    return (255 << 24) | (r << 16) | (g << 8) | b;
-  }
-
   public static void initialize() {
     BlockRenderLayerMap.INSTANCE.putBlocks(
         BlockRenderLayer.TRANSLUCENT,
         LighterEndBlocks.AURORA_CRYSTAL
     );
   }
+
+  //Utils (TODO: refactor out as needed)
+
+  private static int color(int r, int g, int b) {
+    return (255 << 24) | (r << 16) | (g << 8) | b;
+  }
+
 
 }

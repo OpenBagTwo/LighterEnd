@@ -39,6 +39,8 @@ public class TenaneaFlowerRenderer {
     };
   }
 
+  // Utils (TODO: refactor out as needed)
+
   private static int getRandom(int x, int z) {
     int h = x * 374761393 + z * 668265263;
     h = (h ^ (h >> 13)) * 1274126177;
