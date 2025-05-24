@@ -35,7 +35,9 @@ import net.minecraft.block.WoodType;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.HangingSignItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.SignItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -280,19 +282,31 @@ public class LighterEndBlocks {
               .pistonBehavior(PistonBehavior.DESTROY)));
       sign = register(baseName + "_sign",
           settings -> new Signs.LighterEndStandingSignBlock(
-              settings.mapColor(planks.getDefaultMapColor())));
+              settings.mapColor(planks.getDefaultMapColor())), false);
       wallSign = register(baseName + "_wall_sign",
           settings -> new Signs.LighterEndWallSignBlock(
               settings.mapColor(planks.getDefaultMapColor()).lootTable(sign.getLootTableKey())
-                  .overrideTranslationKey(sign.getTranslationKey())));
+                  .overrideTranslationKey(sign.getTranslationKey())), false);
+      Registry.register(Registries.ITEM, Identifier.of(LighterEnd.MOD_ID, baseName + "_sign"),
+          new SignItem(sign, wallSign, new Item.Settings().maxCount(16).registryKey(
+                  RegistryKey.of(RegistryKeys.ITEM,
+                      Identifier.of(LighterEnd.MOD_ID, baseName + "_sign")))
+              .useBlockPrefixedTranslationKey()));
       hangingSign = register(baseName + "_hanging_sign",
           settings -> new Signs.LighterEndCeilingHangingSignBlock(
-              settings.mapColor(planks.getDefaultMapColor())));
+              settings.mapColor(planks.getDefaultMapColor())), false);
       wallHangingSign = register(baseName + "_wall_hanging_sign",
           settings -> new Signs.LighterEndWallHangingSignBlock(
               settings.lootTable(hangingSign.getLootTableKey())
                   .overrideTranslationKey(hangingSign.getTranslationKey())
-                  .mapColor(planks.getDefaultMapColor())));
+                  .mapColor(planks.getDefaultMapColor())), false);
+      Registry.register(Registries.ITEM,
+          Identifier.of(LighterEnd.MOD_ID, baseName + "_hanging_sign"),
+          new HangingSignItem(hangingSign, wallHangingSign,
+              new Item.Settings().maxCount(16).registryKey(
+                      RegistryKey.of(RegistryKeys.ITEM,
+                          Identifier.of(LighterEnd.MOD_ID, baseName + "_hanging_sign")))
+                  .useBlockPrefixedTranslationKey()));
 
       blocks = Arrays.asList(log, strippedLog, wood, strippedWood, planks, slab, stairs, door,
           trapdoor, fence, gate, button, pressurePlate, sign, hangingSign);
