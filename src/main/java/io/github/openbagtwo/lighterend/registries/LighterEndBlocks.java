@@ -14,6 +14,7 @@ import io.github.openbagtwo.lighterend.blocks.UmbrellaFern.TallUmbrellaFern;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
+import net.fabricmc.fabric.api.object.builder.v1.block.type.WoodTypeBuilder;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.Block;
@@ -197,6 +198,7 @@ public class LighterEndBlocks {
   public static class Wood {
 
     public final String baseName;
+    public final WoodType woodType;
     public final Block log;
     public final Block strippedLog;
     public final Block wood;
@@ -224,6 +226,12 @@ public class LighterEndBlocks {
       this.baseName = name;
       this.woodColor = woodColor;
 
+      // TODO: Add individual sound sets (BlockSetType)
+      woodType = new WoodTypeBuilder().register(
+          Identifier.of(LighterEnd.MOD_ID, baseName),
+          BlockSetType.CHERRY
+      );
+
       log = register(baseName + "_log", settings -> new PillarBlock(applyLogSettings(
           settings.mapColor(
               state -> state.get(PillarBlock.AXIS) == Direction.Axis.Y ? woodColor : barkColor))));
@@ -242,7 +250,6 @@ public class LighterEndBlocks {
       stairs = register(baseName + "_stairs",
           settings -> new StairsBlock(planks.getDefaultState(), applyPlankSettings(settings)));
 
-      // TODO: Add individual sound sets (BlockSetType / WoodType)
       door = register(baseName + "_door", settings -> new DoorBlock(BlockSetType.CHERRY,
           settings.mapColor(planks.getDefaultMapColor())
               .instrument(NoteBlockInstrument.BASS)
@@ -263,7 +270,7 @@ public class LighterEndBlocks {
               .strength(2.0F, 3.0F)
               .burnable()
               .sounds(BlockSoundGroup.CHERRY_WOOD)));
-      gate = register(baseName + "_fence_gate", settings -> new FenceGateBlock(WoodType.CHERRY,
+      gate = register(baseName + "_fence_gate", settings -> new FenceGateBlock(woodType,
           settings.mapColor(planks.getDefaultMapColor()).solid()
               .instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F).burnable()));
       button = register(baseName + "_button", settings -> new ButtonBlock(BlockSetType.CHERRY, 30,
@@ -281,10 +288,10 @@ public class LighterEndBlocks {
           settings.strength(0.4F).sounds(BlockSoundGroup.LADDER).nonOpaque()
               .pistonBehavior(PistonBehavior.DESTROY)));
       sign = register(baseName + "_sign",
-          settings -> new Signs.LighterEndStandingSignBlock(
+          settings -> new Signs.LighterEndStandingSignBlock(woodType,
               settings.mapColor(planks.getDefaultMapColor())), false);
       wallSign = register(baseName + "_wall_sign",
-          settings -> new Signs.LighterEndWallSignBlock(
+          settings -> new Signs.LighterEndWallSignBlock(woodType,
               settings.mapColor(planks.getDefaultMapColor()).lootTable(sign.getLootTableKey())
                   .overrideTranslationKey(sign.getTranslationKey())), false);
       Registry.register(Registries.ITEM, Identifier.of(LighterEnd.MOD_ID, baseName + "_sign"),
@@ -293,10 +300,10 @@ public class LighterEndBlocks {
                       Identifier.of(LighterEnd.MOD_ID, baseName + "_sign")))
               .useBlockPrefixedTranslationKey()));
       hangingSign = register(baseName + "_hanging_sign",
-          settings -> new Signs.LighterEndCeilingHangingSignBlock(
+          settings -> new Signs.LighterEndCeilingHangingSignBlock(woodType,
               settings.mapColor(planks.getDefaultMapColor())), false);
       wallHangingSign = register(baseName + "_wall_hanging_sign",
-          settings -> new Signs.LighterEndWallHangingSignBlock(
+          settings -> new Signs.LighterEndWallHangingSignBlock(woodType,
               settings.lootTable(hangingSign.getLootTableKey())
                   .overrideTranslationKey(hangingSign.getTranslationKey())
                   .mapColor(planks.getDefaultMapColor())), false);

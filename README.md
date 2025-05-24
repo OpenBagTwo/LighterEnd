@@ -105,7 +105,10 @@ Music was composed, performed and recorded by Firel.
 
 Many thanks to the excellent tutorial mods developed by
 by [Kaupenjoe](https://github.com/Tutorials-By-Kaupenjoe/Fabric-Tutorial-1.21.X)
-and [TurtyWurty](https://github.com/DaRealTurtyWurty/1.21-Tutorial-Mod).
+and [TurtyWurty](https://github.com/DaRealTurtyWurty/1.21-Tutorial-Mod) and
+to [Pintér Gábor](https://github.com/pinter-gabor-at) and his
+[IronSigns mod](https://gitlab.com/pintergabor/ironsigns) for providing an extremely helpful
+example of adding custom signs.
 
 You **may** use, modify and redistribute this mod, and you **may** include this mod within your
 modpack or run it on a server, so long as you abide by the terms of

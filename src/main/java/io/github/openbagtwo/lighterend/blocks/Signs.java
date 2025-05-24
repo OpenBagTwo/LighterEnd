@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HangingSignBlock;
@@ -17,11 +18,17 @@ public class Signs {
 
   public static class LighterEndStandingSignBlock extends SignBlock {
 
-    public static final MapCodec<SignBlock> CODEC = createCodec(LighterEndStandingSignBlock::new);
+    public static final MapCodec<SignBlock> CODEC =
+        RecordCodecBuilder.mapCodec((instance) ->
+            instance.group(
+                    WoodType.CODEC.fieldOf("wood_type")
+                        .forGetter((obj) -> obj.getWoodType()),
+                    createSettingsCodec())
+                .apply(instance, LighterEndStandingSignBlock::new));
 
-    public LighterEndStandingSignBlock(Settings properties) {
+    public LighterEndStandingSignBlock(WoodType woodType, Settings properties) {
       super(
-          WoodType.CHERRY,
+          woodType,
           properties
               .solid()
               .instrument(NoteBlockInstrument.BASS)
@@ -44,11 +51,17 @@ public class Signs {
 
   public static class LighterEndWallSignBlock extends WallSignBlock {
 
-    public static final MapCodec<WallSignBlock> CODEC = createCodec(LighterEndWallSignBlock::new);
+    public static final MapCodec<WallSignBlock> CODEC =
+        RecordCodecBuilder.mapCodec((instance) ->
+            instance.group(
+                    WoodType.CODEC.fieldOf("wood_type")
+                        .forGetter((obj) -> obj.getWoodType()),
+                    createSettingsCodec())
+                .apply(instance, LighterEndWallSignBlock::new));
 
-    public LighterEndWallSignBlock(Settings properties) {
+    public LighterEndWallSignBlock(WoodType woodType, Settings properties) {
       super(
-          WoodType.CHERRY,
+          woodType,
           properties
               .solid()
               .instrument(NoteBlockInstrument.BASS)
@@ -71,12 +84,17 @@ public class Signs {
 
   public static class LighterEndCeilingHangingSignBlock extends HangingSignBlock {
 
-    public static final MapCodec<HangingSignBlock> CODEC = createCodec(
-        LighterEndCeilingHangingSignBlock::new);
+    public static final MapCodec<HangingSignBlock> CODEC =
+        RecordCodecBuilder.mapCodec((instance) ->
+            instance.group(
+                    WoodType.CODEC.fieldOf("wood_type")
+                        .forGetter((obj) -> obj.getWoodType()),
+                    createSettingsCodec())
+                .apply(instance, LighterEndCeilingHangingSignBlock::new));
 
-    public LighterEndCeilingHangingSignBlock(Settings properties) {
+    public LighterEndCeilingHangingSignBlock(WoodType woodType, Settings properties) {
       super(
-          WoodType.CHERRY,
+          woodType,
           properties
               .solid()
               .instrument(NoteBlockInstrument.BASS)
@@ -99,12 +117,17 @@ public class Signs {
 
   public static class LighterEndWallHangingSignBlock extends WallHangingSignBlock {
 
-    public static final MapCodec<WallHangingSignBlock> CODEC = createCodec(
-        LighterEndWallHangingSignBlock::new);
+    public static final MapCodec<WallHangingSignBlock> CODEC =
+        RecordCodecBuilder.mapCodec((instance) ->
+            instance.group(
+                    WoodType.CODEC.fieldOf("wood_type")
+                        .forGetter((obj) -> obj.getWoodType()),
+                    createSettingsCodec())
+                .apply(instance, LighterEndWallHangingSignBlock::new));
 
-    public LighterEndWallHangingSignBlock(Settings properties) {
+    public LighterEndWallHangingSignBlock(WoodType woodType, Settings properties) {
       super(
-          WoodType.CHERRY,
+          woodType,
           properties
               .solid()
               .instrument(NoteBlockInstrument.BASS)
