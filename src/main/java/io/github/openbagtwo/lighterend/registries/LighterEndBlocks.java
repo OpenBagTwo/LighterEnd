@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.WoodTypeBuilder;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.Block;
@@ -30,6 +31,7 @@ import net.minecraft.block.PillarBlock;
 import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
+import net.minecraft.block.TintedParticleLeavesBlock;
 import net.minecraft.block.TrapdoorBlock;
 import net.minecraft.block.WallBlock;
 import net.minecraft.block.WoodType;
@@ -88,6 +90,22 @@ public class LighterEndBlocks {
   public static Block TENANEA_FLOWER = register("tenanea_flower", TenaneaFlower::new);
   public static Block TENANEA_SAPLING = register("tenanea_sapling", TenaneaSapling::new);
   public static Wood TENANEA = new Wood("tenanea", MapColor.TERRACOTTA_YELLOW, MapColor.MAGENTA);
+  public static Block TENANEA_LEAVES = register(
+      "tenanea_leaves",
+      settings -> new TintedParticleLeavesBlock(
+          0.01F,
+          settings.mapColor(MapColor.PINK).strength(0.2F)
+              .ticksRandomly()
+              .sounds(BlockSoundGroup.GRASS)
+              .nonOpaque()
+              .allowsSpawning(Blocks::canSpawnOnLeaves)
+              .suffocates(Blocks::never)
+              .blockVision(Blocks::never)
+              .burnable()
+              .pistonBehavior(PistonBehavior.DESTROY)
+              .solidBlock(Blocks::never)
+      )
+  );
 
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);
@@ -108,6 +126,13 @@ public class LighterEndBlocks {
   }
 
   public static void initialize() {
+    FlammableBlockRegistry.getDefaultInstance().add(CREEPING_MOSS, 60, 100);
+    FlammableBlockRegistry.getDefaultInstance().add(UMBRELLA_FERN, 60, 100);
+    FlammableBlockRegistry.getDefaultInstance().add(TALL_UMBRELLA_FERN, 60, 100);
+    FlammableBlockRegistry.getDefaultInstance().add(LUMECORN, 60, 100);
+    FlammableBlockRegistry.getDefaultInstance().add(LUMECORN_STEM, 60, 100);
+    FlammableBlockRegistry.getDefaultInstance().add(TENANEA_FLOWER, 15, 100);
+    FlammableBlockRegistry.getDefaultInstance().add(TENANEA_LEAVES, 30, 60);
   }
 
   public static class Material {
@@ -314,6 +339,13 @@ public class LighterEndBlocks {
                       RegistryKey.of(RegistryKeys.ITEM,
                           Identifier.of(LighterEnd.MOD_ID, baseName + "_hanging_sign")))
                   .useBlockPrefixedTranslationKey()));
+
+      for (Block block : Arrays.asList(log, strippedLog, wood, strippedWood)) {
+        FlammableBlockRegistry.getDefaultInstance().add(block, 5, 5);
+      }
+      for (Block block : Arrays.asList(planks, slab, stairs, fence, gate)) {
+        FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
+      }
 
       blocks = Arrays.asList(log, strippedLog, wood, strippedWood, planks, slab, stairs, door,
           trapdoor, fence, gate, button, pressurePlate, sign, hangingSign);

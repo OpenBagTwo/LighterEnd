@@ -53,6 +53,7 @@ public class ModelProvider extends FabricModelProvider {
         CrossType.NOT_TINTED
     );
     generateWoodModels(blockModelGenerator, LighterEndBlocks.TENANEA);
+    blockModelGenerator.registerSingleton(LighterEndBlocks.TENANEA_LEAVES, TexturedModel.LEAVES);
   }
 
   public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator,

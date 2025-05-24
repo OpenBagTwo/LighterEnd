@@ -117,6 +117,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     valueLookupBuilder(BlockTags.AXE_MINEABLE).add(LighterEndBlocks.LUMECORN_STEM);
 
     valueLookupBuilder(BlockTags.SAPLINGS).add(LighterEndBlocks.TENANEA_SAPLING);
+    valueLookupBuilder(BlockTags.LEAVES).add(LighterEndBlocks.TENANEA_LEAVES);
 
     valueLookupBuilder(LighterEndTags.END_MOSS_REPLACEABLE)
         .add(LighterEndBlocks.UMBRALITH.baseBlock);
