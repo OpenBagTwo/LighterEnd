@@ -4,7 +4,8 @@
     "lighterend:creeping_moss": "#0de4fc",
     "lighterend:lumecorn": "#e0fceb",
     "lighterend:umbrella_fern": "#ff943e",
-    "lighterend:umbrella_fern_tall": "#ff943e"
+    "lighterend:umbrella_fern_tall": "#ff943e",
+    "lighterend:umbrella_tree_cluster": "#c054f9"
   },
   "replace": false
 }

@@ -12,6 +12,7 @@ import io.github.openbagtwo.lighterend.blocks.TenaneaFlower;
 import io.github.openbagtwo.lighterend.blocks.TenaneaSapling;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern.TallUmbrellaFern;
+import io.github.openbagtwo.lighterend.blocks.UmbrellaTreeCluster;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -108,6 +109,11 @@ public class LighterEndBlocks {
       )
   );
   public static Block SILK_MOTH_NEST = register("silk_moth_nest", SilkMothNest::new);
+  public static Block UMBRELLA_TREE_CLUSTER = register("umbrella_tree_cluster",
+      UmbrellaTreeCluster::new);
+  public static Block UMBRELLA_TREE_CLUSTER_EMPTY = register("umbrella_tree_cluster_empty",
+      UmbrellaTreeCluster.EmptyCluster::new);
+
 
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);
@@ -136,6 +142,8 @@ public class LighterEndBlocks {
     FlammableBlockRegistry.getDefaultInstance().add(TENANEA_FLOWER, 15, 100);
     FlammableBlockRegistry.getDefaultInstance().add(TENANEA_LEAVES, 30, 60);
     FlammableBlockRegistry.getDefaultInstance().add(SILK_MOTH_NEST, 30, 20);
+    FlammableBlockRegistry.getDefaultInstance().add(UMBRELLA_TREE_CLUSTER, 60, 100);
+    FlammableBlockRegistry.getDefaultInstance().add(UMBRELLA_TREE_CLUSTER_EMPTY, 30, 20);
   }
 
   public static class Material {

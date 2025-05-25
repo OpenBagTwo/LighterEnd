@@ -6,6 +6,7 @@ import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
+import net.minecraft.sound.SoundEvents;
 
 public class FoodComponents {
 
@@ -23,4 +24,14 @@ public class FoodComponents {
           )
       ).build();
 
+  public static final FoodComponent UMBRELLA_JUICE_NUTRITION = new FoodComponent.Builder()
+      .nutrition(5)
+      .saturationModifier(0.7F)
+      .alwaysEdible()
+      .build();
+
+  public static final ConsumableComponent UMBRELLA_JUICE_EFFECT = ConsumableComponents.drink()
+      .consumeSeconds(2.0F)
+      .sound(SoundEvents.ITEM_HONEY_BOTTLE_DRINK)
+      .build();
 }

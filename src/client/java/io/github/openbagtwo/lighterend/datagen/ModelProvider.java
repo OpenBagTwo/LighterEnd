@@ -56,6 +56,9 @@ public class ModelProvider extends FabricModelProvider {
     );
     generateWoodModels(blockModelGenerator, LighterEndBlocks.TENANEA);
     blockModelGenerator.registerSingleton(LighterEndBlocks.TENANEA_LEAVES, TexturedModel.LEAVES);
+
+    blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.UMBRELLA_TREE_CLUSTER);
+    blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY);
   }
 
   public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator,
@@ -99,7 +102,9 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndItems.POPPED_LUMECORN,
         LighterEndItems.SILK,
         LighterEndItems.SILK_MATRIX,
+        LighterEndItems.UMBRELLA_JUICE,
         LighterEndMobs.SILK_MOTH.spawnEgg
+
     )) {
       itemModelGenerator.register(
           item, Models.GENERATED

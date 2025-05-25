@@ -78,6 +78,8 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     }
 
     addDrop(LighterEndBlocks.SILK_MOTH_NEST, mothNestDrops());
+    addDrop(LighterEndBlocks.UMBRELLA_TREE_CLUSTER);
+    addDrop(LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY);
   }
 
   private LootTable.Builder auroraCrystalDrops() {

@@ -5,6 +5,7 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import java.util.function.Function;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -20,6 +21,12 @@ public class LighterEndItems {
   );
   public static final Item SILK = register("silk_fiber");
   public static final Item SILK_MATRIX = register("silk_matrix");
+
+  public static final Item UMBRELLA_JUICE = register("umbrella_juice", new Settings()
+      .food(FoodComponents.UMBRELLA_JUICE_NUTRITION, FoodComponents.UMBRELLA_JUICE_EFFECT)
+      .useRemainder(Items.GLASS_BOTTLE)
+      .maxCount(16)
+  );
 
   public static Item register(String name) {
     return register(name, new Settings());

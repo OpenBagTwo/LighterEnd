@@ -101,12 +101,6 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     valueLookupBuilder(BlockTags.REPLACEABLE_BY_TREES).add(LighterEndBlocks.END_MOSS);
     valueLookupBuilder(BlockTags.SCULK_REPLACEABLE).add(LighterEndBlocks.END_MOSS);
 
-    valueLookupBuilder(LighterEndTags.END_MOSS_REPLACEABLE).add(Blocks.END_STONE);
-
-    valueLookupBuilder(LighterEndTags.END_SOIL).add(
-        Blocks.END_STONE, LighterEndBlocks.END_MOSS
-    );
-
     valueLookupBuilder(BlockTags.FLOWERS).add(
         LighterEndBlocks.CREEPING_MOSS,
         LighterEndBlocks.UMBRELLA_FERN,
@@ -119,10 +113,28 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     valueLookupBuilder(BlockTags.SAPLINGS).add(LighterEndBlocks.TENANEA_SAPLING);
     valueLookupBuilder(BlockTags.LEAVES).add(LighterEndBlocks.TENANEA_LEAVES);
 
+    valueLookupBuilder(BlockTags.AXE_MINEABLE).add(
+        LighterEndBlocks.UMBRELLA_TREE_CLUSTER,
+        LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY
+    );
+
     valueLookupBuilder(LighterEndTags.END_MOSS_REPLACEABLE)
-        .add(LighterEndBlocks.UMBRALITH.baseBlock);
+        .add(
+            Blocks.END_STONE,
+            Blocks.BLACKSTONE,
+            Blocks.DEAD_BRAIN_CORAL_BLOCK,
+            Blocks.DEAD_BUBBLE_CORAL_BLOCK,
+            Blocks.DEAD_FIRE_CORAL_BLOCK,
+            Blocks.DEAD_HORN_CORAL_BLOCK,
+            Blocks.DEAD_TUBE_CORAL_BLOCK,
+            LighterEndBlocks.UMBRALITH.baseBlock
+        );
     valueLookupBuilder(LighterEndTags.END_SOIL)
-        .add(LighterEndBlocks.UMBRALITH.baseBlock);
+        .add(
+            Blocks.END_STONE,
+            LighterEndBlocks.END_MOSS,
+            LighterEndBlocks.UMBRALITH.baseBlock
+        );
 
 
   }

@@ -14,6 +14,8 @@ public class Composting {
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.TENANEA_FLOWER, 0.65F);
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.TENANEA_SAPLING, 0.3F);
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.TENANEA_LEAVES, 0.3F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.UMBRELLA_TREE_CLUSTER, 0.85F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY, 0.65F);
   }
 
 }
