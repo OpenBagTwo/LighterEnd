@@ -3,7 +3,11 @@ package io.github.openbagtwo.lighterend.blocks;
 import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.blocks.entities.SilkMothNestEntity;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
+import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
+import io.github.openbagtwo.lighterend.utils.Flags;
+import io.github.openbagtwo.lighterend.utils.GlobalState;
+import io.github.openbagtwo.lighterend.utils.PosInfo;
 import java.util.List;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -34,6 +38,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootWorldContext;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
@@ -43,6 +48,7 @@ import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.IntProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
@@ -50,12 +56,19 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.Heightmap;
+import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
@@ -257,5 +270,66 @@ public class SilkMothNest extends BlockWithEntity {
   @Override
   public BlockState mirror(BlockState state, BlockMirror mirror) {
     return state.rotate(mirror.getRotation(state.get(FACING)));
+  }
+
+  public static class SilkMothNestFeature extends Feature<DefaultFeatureConfig> {
+
+    public SilkMothNestFeature() {
+      super(DefaultFeatureConfig.CODEC);
+    }
+
+    private boolean canGenerate(StructureWorldAccess world, BlockPos pos) {
+      BlockState state = world.getBlockState(pos.up());
+      if (state.isIn(BlockTags.LEAVES) || state.isIn(BlockTags.LOGS)) {
+        state = world.getBlockState(pos);
+        if (state.isAir() && world.isAir(pos.down())) {
+          for (Direction dir : PosInfo.HORIZONTAL) {
+            return !world.getBlockState(pos.down().offset(dir)).blocksMovement();
+          }
+        }
+      }
+      return false;
+    }
+
+    @Override
+    public boolean generate(FeatureContext<DefaultFeatureConfig> featureConfig) {
+      final Mutable POS = GlobalState.stateForThread().POS;
+      final Random random = featureConfig.getRandom();
+      final BlockPos center = featureConfig.getOrigin();
+      final StructureWorldAccess world = featureConfig.getWorld();
+      int maxY = world.getTopY(Heightmap.Type.WORLD_SURFACE, center.getX(), center.getZ());
+      int minY = upRay(world, new BlockPos(center.getX(), 0, center.getZ()), maxY);
+      POS.set(center);
+      for (int y = maxY; y > minY; y--) {
+        POS.setY(y);
+        if (canGenerate(world, POS)) {
+          Direction dir = PosInfo.HORIZONTAL[random.nextInt(4)];
+          world.setBlockState(
+              POS,
+              LighterEndBlocks.SILK_MOTH_NEST.getDefaultState()
+                  .with(Properties.HORIZONTAL_FACING, dir),
+              Flags.SILENT
+          );
+          POS.setY(y - 1);
+          world.setBlockState(
+              POS,
+              LighterEndBlocks.SILK_MOTH_NEST.getDefaultState()
+                  .with(Properties.HORIZONTAL_FACING, dir),
+              Flags.SILENT
+          );
+          return true;
+        }
+      }
+      return false;
+    }
+  }
+
+  // Utils (TODO: Refactor as needed)
+  public static int upRay(WorldAccess world, BlockPos pos, int maxDist) {
+    int length = 0;
+    for (int j = 1; j < maxDist && (world.isAir(pos.up(j))); j++) {
+      length++;
+    }
+    return length;
   }
 }

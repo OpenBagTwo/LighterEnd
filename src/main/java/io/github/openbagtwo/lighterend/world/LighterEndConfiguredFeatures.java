@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.world;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
+import io.github.openbagtwo.lighterend.blocks.SilkMothNest.SilkMothNestFeature;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
 import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
@@ -30,22 +31,30 @@ import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider;
 public class LighterEndConfiguredFeatures {
 
   public static final RegistryKey<ConfiguredFeature<?, ?>> END_MOSS_PATCH_BONEMEAL
-      = LighterEndConfiguredFeatures.of("end_moss_patch_bonemeal");
+      = of("end_moss_patch_bonemeal");
   public static final RegistryKey<ConfiguredFeature<?, ?>> END_MOSS_VEGETATION
-      = LighterEndConfiguredFeatures.of("end_moss_vegetation");
+      = of("end_moss_vegetation");
+
   public static final Feature<DefaultFeatureConfig> LUMECORN_FEATURE = Registry.register(
       Registries.FEATURE,
       Identifier.of(LighterEnd.MOD_ID, "lumecorn"),
       new Lumecorn.LumecornFeature());
+  public static final RegistryKey<ConfiguredFeature<?, ?>> LUMECORN = of(
+      "lumecorn");
+
   public static final Feature<DefaultFeatureConfig> TENANEA_TREE_FEATURE = Registry.register(
       Registries.FEATURE,
       Identifier.of(LighterEnd.MOD_ID, "tenanea_tree"),
       new TenaneaTree());
-
-  public static final RegistryKey<ConfiguredFeature<?, ?>> LUMECORN = LighterEndConfiguredFeatures.of(
-      "lumecorn");
-  public static final RegistryKey<ConfiguredFeature<?, ?>> TENANEA_TREE = LighterEndConfiguredFeatures.of(
+  public static final RegistryKey<ConfiguredFeature<?, ?>> TENANEA_TREE = of(
       "tenanea_tree");
+
+  public static final Feature<DefaultFeatureConfig> MOTH_NEST_FEATURE = Registry.register(
+      Registries.FEATURE,
+      Identifier.of(LighterEnd.MOD_ID, "silk_moth_nest"),
+      new SilkMothNestFeature()
+  );
+  public static final RegistryKey<ConfiguredFeature<?, ?>> MOTH_NEST = of("silk_moth_nest");
 
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
@@ -95,6 +104,12 @@ public class LighterEndConfiguredFeatures {
         context,
         TENANEA_TREE,
         TENANEA_TREE_FEATURE
+    );
+
+    ConfiguredFeatures.register(
+        context,
+        MOTH_NEST,
+        MOTH_NEST_FEATURE
     );
 
 

@@ -3,6 +3,7 @@ package io.github.openbagtwo.lighterend.world.features.trees;
 import com.google.common.collect.Lists;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.utils.Flags;
+import io.github.openbagtwo.lighterend.utils.PosInfo;
 import io.github.openbagtwo.lighterend.utils.math.sdf.SDF;
 import io.github.openbagtwo.lighterend.utils.math.sdf.operators.SDFDisplace;
 import io.github.openbagtwo.lighterend.utils.math.sdf.operators.SDFScale;
@@ -33,13 +34,6 @@ import net.minecraft.world.gen.feature.util.FeatureContext;
 import org.joml.Vector3f;
 
 public class TenaneaTree extends Feature<DefaultFeatureConfig> {
-
-  public static final Direction[] HORIZONTAL = new Direction[]{
-      Direction.NORTH,
-      Direction.EAST,
-      Direction.SOUTH,
-      Direction.WEST
-  };
 
   private static final Function<BlockState, Boolean> REPLACE;
   private static final Function<BlockState, Boolean> IGNORE;
@@ -106,10 +100,10 @@ public class TenaneaTree extends Feature<DefaultFeatureConfig> {
         .setSource(sphere);
 
     Mutable mut = new Mutable();
-    for (Direction d1 : HORIZONTAL) {
+    for (Direction d1 : PosInfo.HORIZONTAL) {
       BlockPos p = mut.set(pos).move(Direction.UP).move(d1).toImmutable();
       world.setBlockState(p, LighterEndBlocks.TENANEA.wood.getDefaultState(), Flags.SILENT);
-      for (Direction d2 : HORIZONTAL) {
+      for (Direction d2 : PosInfo.HORIZONTAL) {
         mut.set(p).move(Direction.UP).move(d2);
         world.setBlockState(p, LighterEndBlocks.TENANEA.wood.getDefaultState(), Flags.SILENT);
       }
