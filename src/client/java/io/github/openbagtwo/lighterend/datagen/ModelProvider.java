@@ -99,10 +99,18 @@ public class ModelProvider extends FabricModelProvider {
   public void generateItemModels(ItemModelGenerator itemModelGenerator) {
     for (Item item : Arrays.asList(
         LighterEndItems.AURORA_CRYSTAL_SHARD,
+        LighterEndItems.LUMECORN_EAR,
         LighterEndItems.POPPED_LUMECORN,
         LighterEndItems.SILK,
         LighterEndItems.SILK_MATRIX,
         LighterEndItems.UMBRELLA_JUICE,
+        LighterEndBlocks.CREEPING_MOSS.asItem(),
+        LighterEndBlocks.END_MOSS.asItem(),
+        LighterEndBlocks.UMBRELLA_FERN.asItem(),
+        LighterEndBlocks.LUMECORN_SEED.asItem(),
+        LighterEndBlocks.TENANEA.ladder.asItem(),
+        LighterEndBlocks.TENANEA_FLOWER.asItem(),
+        LighterEndBlocks.SILK_MOTH_NEST.asItem(),
         LighterEndMobs.SILK_MOTH.spawnEgg
 
     )) {
