@@ -26,7 +26,8 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.VIOLECITE,
         LighterEndBlocks.AZURE_JADESTONE,
         LighterEndBlocks.SANDY_JADESTONE,
-        LighterEndBlocks.VIRID_JADESTONE, LighterEndBlocks.UMBRALITH
+        LighterEndBlocks.VIRID_JADESTONE,
+        LighterEndBlocks.UMBRALITH
     )) {
       for (Block block : material.blocks) {
         valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(block);
@@ -43,7 +44,8 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     }
 
     for (Wood wood : Arrays.asList(
-        LighterEndBlocks.TENANEA
+        LighterEndBlocks.TENANEA,
+        LighterEndBlocks.UMBRELLA
     )) {
       for (Block block : wood.blocks) {
         valueLookupBuilder(BlockTags.AXE_MINEABLE).add(block);
@@ -122,6 +124,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         .add(
             Blocks.END_STONE,
             Blocks.BLACKSTONE,
+            Blocks.BASALT,
             Blocks.DEAD_BRAIN_CORAL_BLOCK,
             Blocks.DEAD_BUBBLE_CORAL_BLOCK,
             Blocks.DEAD_FIRE_CORAL_BLOCK,
@@ -133,6 +136,22 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         .add(
             Blocks.END_STONE,
             LighterEndBlocks.END_MOSS,
+            LighterEndBlocks.UMBRALITH.baseBlock
+        );
+    valueLookupBuilder(LighterEndTags.END_STONES)
+        .add(
+            Blocks.END_STONE,
+            Blocks.BLACKSTONE,
+            Blocks.BASALT,
+            Blocks.DEAD_BRAIN_CORAL_BLOCK,
+            Blocks.DEAD_BUBBLE_CORAL_BLOCK,
+            Blocks.DEAD_FIRE_CORAL_BLOCK,
+            Blocks.DEAD_HORN_CORAL_BLOCK,
+            Blocks.DEAD_TUBE_CORAL_BLOCK,
+            LighterEndBlocks.VIOLECITE.baseBlock,
+            LighterEndBlocks.AZURE_JADESTONE.baseBlock,
+            LighterEndBlocks.SANDY_JADESTONE.baseBlock,
+            LighterEndBlocks.VIRID_JADESTONE.baseBlock,
             LighterEndBlocks.UMBRALITH.baseBlock
         );
 

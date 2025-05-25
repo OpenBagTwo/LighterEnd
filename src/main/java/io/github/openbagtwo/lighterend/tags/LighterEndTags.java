@@ -17,4 +17,9 @@ public class LighterEndTags {
       RegistryKeys.BLOCK,
       Identifier.of(LighterEnd.MOD_ID, "end_soil")
   );
+
+  public static final TagKey<Block> END_STONES = TagKey.of(
+      RegistryKeys.BLOCK,
+      Identifier.of(LighterEnd.MOD_ID, "end_stones")
+  );
 }

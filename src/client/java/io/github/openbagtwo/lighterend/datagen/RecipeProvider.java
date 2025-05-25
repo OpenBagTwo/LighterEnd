@@ -153,6 +153,14 @@ public class RecipeProvider extends FabricRecipeProvider {
                 hasItem(LighterEndItems.SILK_MATRIX),
                 conditionsFromItem(LighterEndItems.SILK_MATRIX)
             ).offerTo(exporter);
+
+        generateWoodRecipes(LighterEndBlocks.UMBRELLA);
+        CookingRecipeJsonBuilder.createSmelting(
+                Ingredient.ofItem(LighterEndBlocks.UMBRELLA_MEMBRANE), RecipeCategory.MISC,
+                Items.SLIME_BALL, 0.1F, 200)
+            .criterion(hasItem(LighterEndBlocks.UMBRELLA_MEMBRANE),
+                this.conditionsFromItem(LighterEndBlocks.UMBRELLA_MEMBRANE))
+            .offerTo(this.exporter);
       }
 
       public void generateMaterialRecipes(Material material) {

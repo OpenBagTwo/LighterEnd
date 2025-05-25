@@ -2,11 +2,10 @@ package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
-import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
 import java.util.Optional;
+import java.util.function.Supplier;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.MapColor;
 import net.minecraft.block.SaplingBlock;
 import net.minecraft.block.SaplingGenerator;
 import net.minecraft.block.piston.PistonBehavior;
@@ -16,14 +15,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
-public class TenaneaSapling extends SaplingBlock {
+public class Sapling extends SaplingBlock {
 
-  public TenaneaSapling(Settings settings) {
-    super(TENANEA_GENERATOR,
+  public final Supplier<Feature<DefaultFeatureConfig>> treeConstructor;
+
+  public Sapling(Supplier<Feature<DefaultFeatureConfig>> treeConstructor, Settings settings) {
+    super(SAPLING_GENERATOR,
         settings
-            .mapColor(MapColor.PINK)
             .noCollision()
             .breakInstantly()
             .sounds(BlockSoundGroup.CROP)
@@ -31,17 +32,18 @@ public class TenaneaSapling extends SaplingBlock {
             .burnable()
             .ticksRandomly()
     );
+    this.treeConstructor = treeConstructor;
   }
 
   @Override
   public void generate(ServerWorld world, BlockPos pos, BlockState state, Random random) {
-    if ((Integer) state.get(STAGE) == 0) {
+    if (state.get(STAGE) == 0) {
       world.setBlockState(pos, state.cycle(STAGE),
           Block.SKIP_REDRAW_AND_BLOCK_ENTITY_REPLACED_CALLBACK);
     } else {
       FeatureContext<DefaultFeatureConfig> context = new FeatureContext<>(null, world,
           world.getChunkManager().getChunkGenerator(), random, pos, new DefaultFeatureConfig());
-      new TenaneaTree().generate(context);
+      treeConstructor.get().generate(context);
     }
   }
 
@@ -57,8 +59,8 @@ public class TenaneaSapling extends SaplingBlock {
     }
   }
 
-  public static final SaplingGenerator TENANEA_GENERATOR = new SaplingGenerator(
-      LighterEnd.MOD_ID + ":tenanea",
+  private static final SaplingGenerator SAPLING_GENERATOR = new SaplingGenerator(
+      LighterEnd.MOD_ID + ":sapling",
       Optional.empty(),
       Optional.empty(),
       Optional.empty()

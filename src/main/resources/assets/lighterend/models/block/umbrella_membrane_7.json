@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "lighterend:block/umbrella_membrane_7"
+  }
+}

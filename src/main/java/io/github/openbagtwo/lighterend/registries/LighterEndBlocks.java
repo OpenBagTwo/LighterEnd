@@ -6,13 +6,16 @@ import io.github.openbagtwo.lighterend.blocks.CreepingMoss;
 import io.github.openbagtwo.lighterend.blocks.DragonBone;
 import io.github.openbagtwo.lighterend.blocks.EndMoss;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
+import io.github.openbagtwo.lighterend.blocks.Sapling;
 import io.github.openbagtwo.lighterend.blocks.Signs;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.blocks.TenaneaFlower;
-import io.github.openbagtwo.lighterend.blocks.TenaneaSapling;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern.TallUmbrellaFern;
+import io.github.openbagtwo.lighterend.blocks.UmbrellaMembrane;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaTreeCluster;
+import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
+import io.github.openbagtwo.lighterend.world.features.trees.UmbrellaTree;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -90,29 +93,26 @@ public class LighterEndBlocks {
   public static Material UMBRALITH = new Material("umbralith", MapColor.BLACK);
 
   public static Block TENANEA_FLOWER = register("tenanea_flower", TenaneaFlower::new);
-  public static Block TENANEA_SAPLING = register("tenanea_sapling", TenaneaSapling::new);
+  public static Block TENANEA_SAPLING = register("tenanea_sapling",
+      settings -> new Sapling(TenaneaTree::new, settings.mapColor(MapColor.PINK)));
   public static Wood TENANEA = new Wood("tenanea", MapColor.TERRACOTTA_YELLOW, MapColor.MAGENTA);
   public static Block TENANEA_LEAVES = register(
       "tenanea_leaves",
       settings -> new TintedParticleLeavesBlock(
           0.01F,
-          settings.mapColor(MapColor.PINK).strength(0.2F)
-              .ticksRandomly()
-              .sounds(BlockSoundGroup.GRASS)
-              .nonOpaque()
-              .allowsSpawning(Blocks::canSpawnOnLeaves)
-              .suffocates(Blocks::never)
-              .blockVision(Blocks::never)
-              .burnable()
-              .pistonBehavior(PistonBehavior.DESTROY)
-              .solidBlock(Blocks::never)
+          applyLeafSettings(settings.mapColor(MapColor.PINK))
       )
   );
   public static Block SILK_MOTH_NEST = register("silk_moth_nest", SilkMothNest::new);
+
   public static Block UMBRELLA_TREE_CLUSTER = register("umbrella_tree_cluster",
       UmbrellaTreeCluster::new);
   public static Block UMBRELLA_TREE_CLUSTER_EMPTY = register("umbrella_tree_cluster_empty",
       UmbrellaTreeCluster.EmptyCluster::new);
+  public static Block UMBRELLA_TREE_SAPLING = register("umbrella_tree_sapling",
+      settings -> new Sapling(UmbrellaTree::new, settings.mapColor(MapColor.BRIGHT_TEAL)));
+  public static Wood UMBRELLA = new Wood("umbrella", MapColor.BLUE, MapColor.GREEN);
+  public static Block UMBRELLA_MEMBRANE = register("umbrella_membrane", UmbrellaMembrane::new);
 
 
   public static Block register(String name, Function<Settings, Block> factory) {
@@ -379,6 +379,20 @@ public class LighterEndBlocks {
           .burnable();
     }
 
+  }
+
+  public static Settings applyLeafSettings(Settings settings) {
+    return settings
+        .strength(0.2F)
+        .ticksRandomly()
+        .sounds(BlockSoundGroup.GRASS)
+        .nonOpaque()
+        .allowsSpawning(Blocks::canSpawnOnLeaves)
+        .suffocates(Blocks::never)
+        .blockVision(Blocks::never)
+        .burnable()
+        .pistonBehavior(PistonBehavior.DESTROY)
+        .solidBlock(Blocks::never);
   }
 
 }

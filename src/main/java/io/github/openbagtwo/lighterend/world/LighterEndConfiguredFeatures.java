@@ -6,6 +6,7 @@ import io.github.openbagtwo.lighterend.blocks.SilkMothNest.SilkMothNestFeature;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
 import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
+import io.github.openbagtwo.lighterend.world.features.trees.UmbrellaTree;
 import net.minecraft.block.BlockState;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.Registries;
@@ -48,6 +49,13 @@ public class LighterEndConfiguredFeatures {
       new TenaneaTree());
   public static final RegistryKey<ConfiguredFeature<?, ?>> TENANEA_TREE = of(
       "tenanea_tree");
+
+  public static final Feature<DefaultFeatureConfig> UMBRELLA_TREE_FEATURE = Registry.register(
+      Registries.FEATURE,
+      Identifier.of(LighterEnd.MOD_ID, "umbrella_tree"),
+      new UmbrellaTree());
+  public static final RegistryKey<ConfiguredFeature<?, ?>> UMBRELLA_TREE = of(
+      "umbrella_tree");
 
   public static final Feature<DefaultFeatureConfig> MOTH_NEST_FEATURE = Registry.register(
       Registries.FEATURE,
@@ -105,11 +113,15 @@ public class LighterEndConfiguredFeatures {
         TENANEA_TREE,
         TENANEA_TREE_FEATURE
     );
-
     ConfiguredFeatures.register(
         context,
         MOTH_NEST,
         MOTH_NEST_FEATURE
+    );
+    ConfiguredFeatures.register(
+        context,
+        UMBRELLA_TREE,
+        UMBRELLA_TREE_FEATURE
     );
 
 

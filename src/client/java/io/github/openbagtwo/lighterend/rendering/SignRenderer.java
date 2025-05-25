@@ -17,7 +17,10 @@ public class SignRenderer {
     BlockEntityRendererFactories.register(LighterEndBlockEntities.HANGING_SIGN,
         HangingSignBlockEntityRenderer::new);
 
-    for (Wood wood : Arrays.asList(LighterEndBlocks.TENANEA)) {
+    for (Wood wood : Arrays.asList(
+        LighterEndBlocks.TENANEA,
+        LighterEndBlocks.UMBRELLA
+    )) {
       TexturedRenderLayers.SIGN_TYPE_TEXTURES.put(wood.woodType,
           TexturedRenderLayers.getSignTextureId(wood.woodType));
       TexturedRenderLayers.HANGING_SIGN_TYPE_TEXTURES.put(wood.woodType,

@@ -20,7 +20,10 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
   @Override
   protected void configure(RegistryWrapper.WrapperLookup lookup) {
-    for (Wood wood : Arrays.asList(LighterEndBlocks.TENANEA)) {
+    for (Wood wood : Arrays.asList(
+        LighterEndBlocks.TENANEA,
+        LighterEndBlocks.UMBRELLA
+    )) {
       valueLookupBuilder(ItemTags.LOGS_THAT_BURN).add(wood.log.asItem(),
           wood.strippedLog.asItem(), wood.wood.asItem(), wood.strippedWood.asItem());
       valueLookupBuilder(ItemTags.PLANKS).add(wood.planks.asItem());

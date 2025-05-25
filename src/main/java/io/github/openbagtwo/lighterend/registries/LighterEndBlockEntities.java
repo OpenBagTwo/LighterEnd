@@ -31,14 +31,23 @@ public class LighterEndBlockEntities {
 
   public static final BlockEntityType<LighterEndSignBlockEntity> SIGN = Registry.register(
       Registries.BLOCK_ENTITY_TYPE, Identifier.of(LighterEnd.MOD_ID, "sign"),
-      FabricBlockEntityTypeBuilder.create(Signs.LighterEndSignBlockEntity::new,
-          LighterEndBlocks.TENANEA.sign, LighterEndBlocks.TENANEA.wallSign).build(null));
+      FabricBlockEntityTypeBuilder.create(
+          Signs.LighterEndSignBlockEntity::new,
+          LighterEndBlocks.TENANEA.sign,
+          LighterEndBlocks.TENANEA.wallSign,
+          LighterEndBlocks.UMBRELLA.sign,
+          LighterEndBlocks.UMBRELLA.wallSign
+      ).build(null));
 
   public static final BlockEntityType<LighterEndHangingSignBlockEntity> HANGING_SIGN = Registry.register(
       Registries.BLOCK_ENTITY_TYPE, Identifier.of(LighterEnd.MOD_ID, "hanging_sign"),
-      FabricBlockEntityTypeBuilder.create(Signs.LighterEndHangingSignBlockEntity::new,
-              LighterEndBlocks.TENANEA.hangingSign, LighterEndBlocks.TENANEA.wallHangingSign)
-          .build(null));
+      FabricBlockEntityTypeBuilder.create(
+          Signs.LighterEndHangingSignBlockEntity::new,
+          LighterEndBlocks.TENANEA.hangingSign,
+          LighterEndBlocks.TENANEA.wallHangingSign,
+          LighterEndBlocks.UMBRELLA.hangingSign,
+          LighterEndBlocks.UMBRELLA.wallHangingSign
+      ).build(null));
 
   public static final BlockEntityType<SilkMothNestEntity> SILK_MOTH_NEST = Registry.register(
       Registries.BLOCK_ENTITY_TYPE, Identifier.of(LighterEnd.MOD_ID, "silk_moth_nest"),

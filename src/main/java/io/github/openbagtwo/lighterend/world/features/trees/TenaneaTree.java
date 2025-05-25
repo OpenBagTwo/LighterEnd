@@ -2,8 +2,11 @@ package io.github.openbagtwo.lighterend.world.features.trees;
 
 import com.google.common.collect.Lists;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
+import io.github.openbagtwo.lighterend.tags.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
+import io.github.openbagtwo.lighterend.utils.MiscUtils;
 import io.github.openbagtwo.lighterend.utils.PosInfo;
+import io.github.openbagtwo.lighterend.utils.math.MathUtils;
 import io.github.openbagtwo.lighterend.utils.math.sdf.SDF;
 import io.github.openbagtwo.lighterend.utils.math.sdf.operators.SDFDisplace;
 import io.github.openbagtwo.lighterend.utils.math.sdf.operators.SDFScale;
@@ -12,15 +15,11 @@ import io.github.openbagtwo.lighterend.utils.math.sdf.operators.SDFSubtract;
 import io.github.openbagtwo.lighterend.utils.math.sdf.operators.SDFTranslate;
 import io.github.openbagtwo.lighterend.utils.math.sdf.primitives.SDFSphere;
 import io.github.openbagtwo.lighterend.world.gen.noise.OpenSimplexNoise;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
@@ -39,9 +38,6 @@ public class TenaneaTree extends Feature<DefaultFeatureConfig> {
   private static final Function<BlockState, Boolean> IGNORE;
   private static final List<Vector3f> SPLINE;
 
-  private static final float PI2 = (float) Math.PI * 2.0f;
-
-
   public TenaneaTree() {
     super(DefaultFeatureConfig.CODEC);
   }
@@ -53,18 +49,22 @@ public class TenaneaTree extends Feature<DefaultFeatureConfig> {
     final BlockPos pos = featureConfig.getOrigin();
     final StructureWorldAccess world = featureConfig.getWorld();
 
+    if (!world.getBlockState(pos.down()).isIn(LighterEndTags.END_SOIL)) {
+      return false;
+    }
+
     float size = MathHelper.nextInt(random, 7, 10);
     int count = (int) (size * 0.45F);
-    float var = PI2 / (float) (count * 3);
-    float start = MathHelper.nextFloat(random, 0, PI2);
+    float var = MathUtils.PI2 / (float) (count * 3);
+    float start = MathHelper.nextFloat(random, 0, MathUtils.PI2);
     for (int i = 0; i < count; i++) {
       float angle =
-          (float) i / (float) count * PI2 + MathHelper.nextFloat(random, 0, var) + start;
-      List<Vector3f> spline = copySpline(SPLINE);
-      rotateSpline(spline, angle);
-      scale(spline, size + MathHelper.nextFloat(random, 0, size * 0.5F));
-      offsetParts(spline, random, 1F, 0, 1F);
-      fillSpline(spline, world, LighterEndBlocks.TENANEA.wood.getDefaultState(),
+          (float) i / (float) count * MathUtils.PI2 + MathHelper.nextFloat(random, 0, var) + start;
+      List<Vector3f> spline = MathUtils.copySpline(SPLINE);
+      MathUtils.rotateSpline(spline, angle);
+      MathUtils.scale(spline, size + MathHelper.nextFloat(random, 0, size * 0.5F));
+      MathUtils.offsetParts(spline, random, 1F, 0, 1F);
+      MathUtils.fillSpline(spline, world, LighterEndBlocks.TENANEA.wood.getDefaultState(),
           pos,
           REPLACE);
       Vector3f last = spline.getLast();
@@ -188,7 +188,7 @@ public class TenaneaTree extends Feature<DefaultFeatureConfig> {
       if (state.getBlock() == LighterEndBlocks.TENANEA_LEAVES) {
         return true;
       }
-      return replaceableOrPlant(state);
+      return MiscUtils.replaceableOrPlant(state);
     };
 
     IGNORE = (state) -> Arrays.asList(LighterEndBlocks.TENANEA.log, LighterEndBlocks.TENANEA.wood)
@@ -203,141 +203,4 @@ public class TenaneaTree extends Feature<DefaultFeatureConfig> {
         new Vector3f(0.50F, 1.00F, 0.00F)
     );
   }
-
-  // Utils (TODO: refactor out as needed)
-
-  public static void offsetParts(List<Vector3f> spline, Random random, float dx, float dy,
-      float dz) {
-    int count = spline.size();
-    for (int i = 1; i < count; i++) {
-      Vector3f pos = spline.get(i);
-      float x = pos.x() + (float) random.nextGaussian() * dx;
-      float y = pos.y() + (float) random.nextGaussian() * dy;
-      float z = pos.z() + (float) random.nextGaussian() * dz;
-      pos.set(x, y, z);
-    }
-  }
-
-
-  public static boolean fillSpline(
-      List<Vector3f> spline,
-      StructureWorldAccess world,
-      BlockState state,
-      BlockPos pos,
-      Function<BlockState, Boolean> replace
-  ) {
-    Vector3f startPos = spline.getFirst();
-    for (int i = 1; i < spline.size(); i++) {
-      Vector3f endPos = spline.get(i);
-      if (!(fillLine(startPos, endPos, world, state, pos, replace))) {
-        return false;
-      }
-      startPos = endPos;
-    }
-
-    return true;
-  }
-
-  public static boolean fillLine(
-      Vector3f start,
-      Vector3f end,
-      StructureWorldAccess world,
-      BlockState state,
-      BlockPos pos,
-      Function<BlockState, Boolean> replace
-  ) {
-    float dx = end.x() - start.x();
-    float dy = end.y() - start.y();
-    float dz = end.z() - start.z();
-    float max = Math.max(Math.max(Math.abs(dx), Math.abs(dy)), Math.abs(dz));
-    int count = MathHelper.floor(max + 1);
-    dx /= max;
-    dy /= max;
-    dz /= max;
-    float x = start.x();
-    float y = start.y();
-    float z = start.z();
-    boolean down = Math.abs(dy) > 0.2;
-
-    BlockState bState;
-    Mutable bPos = new Mutable();
-    for (int i = 0; i < count; i++) {
-      bPos.set(x + pos.getX(), y + pos.getY(), z + pos.getZ());
-      bState = world.getBlockState(bPos);
-      if (bState.equals(state) || replace.apply(bState)) {
-        world.setBlockState(bPos, state, Flags.SILENT);
-        bPos.setY(bPos.getY() - 1);
-        bState = world.getBlockState(bPos);
-        if (down && bState.equals(state) || replace.apply(bState)) {
-          world.setBlockState(bPos, state, Flags.SILENT);
-        }
-      } else {
-        return false;
-      }
-      x += dx;
-      y += dy;
-      z += dz;
-    }
-    bPos.set(end.x() + pos.getX(), end.y() + pos.getY(), end.z() + pos.getZ());
-    bState = world.getBlockState(bPos);
-    if (bState.equals(state) || replace.apply(bState)) {
-      world.setBlockState(bPos, state, Flags.SILENT);
-      bPos.setY(bPos.getY() - 1);
-      bState = world.getBlockState(bPos);
-      if (down && bState.equals(state) || replace.apply(bState)) {
-        world.setBlockState(bPos, state, Flags.SILENT);
-      }
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public static void rotateSpline(List<Vector3f> spline, float angle) {
-    for (Vector3f v : spline) {
-      float sin = (float) Math.sin(angle);
-      float cos = (float) Math.cos(angle);
-      float x = v.x() * cos + v.z() * sin;
-      float z = v.x() * sin + v.z() * cos;
-      v.set(x, v.y(), z);
-    }
-  }
-
-  public static List<Vector3f> copySpline(List<Vector3f> spline) {
-    List<Vector3f> result = new ArrayList<>(spline.size());
-    for (Vector3f v : spline) {
-      result.add(new Vector3f(v.x(), v.y(), v.z()));
-    }
-    return result;
-  }
-
-  public static void scale(List<Vector3f> spline, float scale) {
-    scale(spline, scale, scale, scale);
-  }
-
-  public static void scale(List<Vector3f> spline, float x, float y, float z) {
-    for (Vector3f v : spline) {
-      v.set(v.x() * x, v.y() * y, v.z() * z);
-    }
-  }
-
-  public static Boolean replaceableOrPlant(BlockState state) {
-    final Block block = state.getBlock();
-
-    if (state.getPistonBehavior() == PistonBehavior.DESTROY && block.getHardness() == 0) {
-      return true;
-    }
-
-    if (state.getSoundGroup() == BlockSoundGroup.GRASS
-        || state.getSoundGroup() == BlockSoundGroup.WET_GRASS
-        || state.getSoundGroup() == BlockSoundGroup.CROP
-        || state.getSoundGroup() == BlockSoundGroup.CAVE_VINES
-
-    ) {
-      return true;
-    }
-
-    return state.isReplaceable();
-  }
-
 }

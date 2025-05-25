@@ -16,7 +16,8 @@ public class PlantRenderer {
         LighterEndBlocks.LUMECORN,
         LighterEndBlocks.LUMECORN_STEM,
         LighterEndBlocks.TENANEA_FLOWER,
-        LighterEndBlocks.TENANEA_SAPLING
+        LighterEndBlocks.TENANEA_SAPLING,
+        LighterEndBlocks.UMBRELLA_TREE_SAPLING
     );
   }
 
