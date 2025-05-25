@@ -79,6 +79,7 @@ public class SilkMothNest extends BlockWithEntity {
             .instrument(NoteBlockInstrument.BASS)
             .strength(0.3F)
             .sounds(BlockSoundGroup.WOOD)
+            .nonOpaque()
             .burnable()
     );
     this.setDefaultState(
