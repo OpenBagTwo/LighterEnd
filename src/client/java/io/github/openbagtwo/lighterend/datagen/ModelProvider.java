@@ -4,6 +4,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
+import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import java.util.Arrays;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -13,6 +14,7 @@ import net.minecraft.client.data.BlockStateModelGenerator.CrossType;
 import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Models;
 import net.minecraft.client.data.TexturedModel;
+import net.minecraft.item.Item;
 
 public class ModelProvider extends FabricModelProvider {
 
@@ -92,13 +94,17 @@ public class ModelProvider extends FabricModelProvider {
 
   @Override
   public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-    itemModelGenerator.register(
-        LighterEndItems.AURORA_CRYSTAL_SHARD, Models.GENERATED
-    );
-    itemModelGenerator.register(
-        LighterEndItems.POPPED_LUMECORN, Models.GENERATED
-    );
-
+    for (Item item : Arrays.asList(
+        LighterEndItems.AURORA_CRYSTAL_SHARD,
+        LighterEndItems.POPPED_LUMECORN,
+        LighterEndItems.SILK,
+        LighterEndItems.SILK_MATRIX,
+        LighterEndMobs.SILK_MOTH.spawnEgg
+    )) {
+      itemModelGenerator.register(
+          item, Models.GENERATED
+      );
+    }
   }
 
 

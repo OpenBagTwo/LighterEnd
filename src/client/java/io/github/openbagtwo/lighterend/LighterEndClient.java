@@ -3,6 +3,7 @@ package io.github.openbagtwo.lighterend;
 import io.github.openbagtwo.lighterend.particles.TenaneaPetal;
 import io.github.openbagtwo.lighterend.registries.LighterEndParticles;
 import io.github.openbagtwo.lighterend.rendering.AuroraCrystalRenderer;
+import io.github.openbagtwo.lighterend.rendering.EntityModels;
 import io.github.openbagtwo.lighterend.rendering.PlantRenderer;
 import io.github.openbagtwo.lighterend.rendering.SignRenderer;
 import net.fabricmc.api.ClientModInitializer;
@@ -17,6 +18,7 @@ public class LighterEndClient implements ClientModInitializer {
     ParticleFactoryRegistry.getInstance()
         .register(LighterEndParticles.TENANEA_PETAL, TenaneaPetal.Factory::new);
     SignRenderer.initialize();
+    EntityModels.initialize();
 
   }
 }

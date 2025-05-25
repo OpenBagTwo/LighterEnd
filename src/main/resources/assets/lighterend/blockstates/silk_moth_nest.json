@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=east,fullness=0": {
+      "model": "lighterend:block/silk_moth_nest_bottom",
+      "y": 90
+    },
+    "facing=east,fullness=1": {
+      "model": "lighterend:block/silk_moth_nest_bottom",
+      "y": 90
+    },
+    "facing=east,fullness=2": {
+      "model": "lighterend:block/silk_moth_nest_bottom",
+      "y": 90
+    },
+    "facing=east,fullness=3": {
+      "model": "lighterend:block/silk_moth_nest_bottom_silk",
+      "y": 90
+    },
+    "facing=north,fullness=0": {
+      "model": "lighterend:block/silk_moth_nest_bottom"
+    },
+    "facing=north,fullness=1": {
+      "model": "lighterend:block/silk_moth_nest_bottom"
+    },
+    "facing=north,fullness=2": {
+      "model": "lighterend:block/silk_moth_nest_bottom"
+    },
+    "facing=north,fullness=3": {
+      "model": "lighterend:block/silk_moth_nest_bottom_silk"
+    },
+    "facing=south,fullness=0": {
+      "model": "lighterend:block/silk_moth_nest_bottom",
+      "y": 180
+    },
+    "facing=south,fullness=1": {
+      "model": "lighterend:block/silk_moth_nest_bottom",
+      "y": 180
+    },
+    "facing=south,fullness=2": {
+      "model": "lighterend:block/silk_moth_nest_bottom",
+      "y": 180
+    },
+    "facing=south,fullness=3": {
+      "model": "lighterend:block/silk_moth_nest_bottom_silk",
+      "y": 180
+    },
+    "facing=west,fullness=0": {
+      "model": "lighterend:block/silk_moth_nest_bottom",
+      "y": 270
+    },
+    "facing=west,fullness=1": {
+      "model": "lighterend:block/silk_moth_nest_bottom",
+      "y": 270
+    },
+    "facing=west,fullness=2": {
+      "model": "lighterend:block/silk_moth_nest_bottom",
+      "y": 270
+    },
+    "facing=west,fullness=3": {
+      "model": "lighterend:block/silk_moth_nest_bottom_silk",
+      "y": 270
+    }
+  }
+}

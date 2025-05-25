@@ -128,6 +128,31 @@ public class RecipeProvider extends FabricRecipeProvider {
             ).offerTo(exporter);
 
         generateWoodRecipes(LighterEndBlocks.TENANEA);
+
+        createShapeless(RecipeCategory.MISC, Items.STRING, 2)
+            .input(LighterEndItems.SILK)
+            .criterion(
+                hasItem(LighterEndItems.SILK),
+                conditionsFromItem(LighterEndItems.SILK)
+            ).offerTo(exporter);
+
+        offerReversibleCompactingRecipes(
+            RecipeCategory.MISC,
+            LighterEndItems.SILK,
+            RecipeCategory.MISC,
+            LighterEndItems.SILK_MATRIX
+        );
+
+        createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.SILK_MOTH_NEST)
+            .pattern("PPP")
+            .pattern("MMM")
+            .pattern("PPP")
+            .input('M', LighterEndItems.SILK_MATRIX)
+            .input('P', LighterEndBlocks.TENANEA.planks)
+            .criterion(
+                hasItem(LighterEndItems.SILK_MATRIX),
+                conditionsFromItem(LighterEndItems.SILK_MATRIX)
+            ).offerTo(exporter);
       }
 
       public void generateMaterialRecipes(Material material) {

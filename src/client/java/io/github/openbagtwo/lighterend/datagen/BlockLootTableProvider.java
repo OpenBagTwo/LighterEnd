@@ -1,5 +1,8 @@
 package io.github.openbagtwo.lighterend.datagen;
 
+import static io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities.MOTHS;
+
+import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
@@ -15,7 +18,10 @@ import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
+import net.minecraft.loot.function.CopyComponentsLootFunction;
+import net.minecraft.loot.function.CopyStateLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
@@ -70,6 +76,8 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     for (Block block : LighterEndBlocks.TENANEA.blocks) {
       addDrop(block);
     }
+
+    addDrop(LighterEndBlocks.SILK_MOTH_NEST, mothNestDrops());
   }
 
   private LootTable.Builder auroraCrystalDrops() {
@@ -96,6 +104,23 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
                 LootPool.builder().rolls(UniformLootNumberProvider.create(1.0F, 2.0F))
                     .with(ItemEntry.builder(LighterEndItems.LUMECORN_EAR))
             )
+        );
+  }
+
+  private LootTable.Builder mothNestDrops() {
+    return LootTable.builder()
+        .pool(
+            LootPool.builder()
+                .conditionally(this.createSilkTouchCondition())
+                .rolls(ConstantLootNumberProvider.create(1.0F))
+                .with(
+                    ItemEntry.builder(LighterEndBlocks.SILK_MOTH_NEST)
+                        .apply(CopyComponentsLootFunction.builder(
+                            CopyComponentsLootFunction.Source.BLOCK_ENTITY).include(MOTHS
+                        ))
+                        .apply(CopyStateLootFunction.builder(LighterEndBlocks.SILK_MOTH_NEST)
+                            .addProperty(SilkMothNest.FULLNESS))
+                )
         );
   }
 }

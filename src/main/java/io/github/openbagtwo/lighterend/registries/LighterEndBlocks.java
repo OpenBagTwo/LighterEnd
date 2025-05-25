@@ -7,6 +7,7 @@ import io.github.openbagtwo.lighterend.blocks.DragonBone;
 import io.github.openbagtwo.lighterend.blocks.EndMoss;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.Signs;
+import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.blocks.TenaneaFlower;
 import io.github.openbagtwo.lighterend.blocks.TenaneaSapling;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern;
@@ -106,6 +107,7 @@ public class LighterEndBlocks {
               .solidBlock(Blocks::never)
       )
   );
+  public static Block SILK_MOTH_NEST = register("silk_moth_nest", SilkMothNest::new);
 
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);
@@ -133,6 +135,7 @@ public class LighterEndBlocks {
     FlammableBlockRegistry.getDefaultInstance().add(LUMECORN_STEM, 60, 100);
     FlammableBlockRegistry.getDefaultInstance().add(TENANEA_FLOWER, 15, 100);
     FlammableBlockRegistry.getDefaultInstance().add(TENANEA_LEAVES, 30, 60);
+    FlammableBlockRegistry.getDefaultInstance().add(SILK_MOTH_NEST, 30, 20);
   }
 
   public static class Material {

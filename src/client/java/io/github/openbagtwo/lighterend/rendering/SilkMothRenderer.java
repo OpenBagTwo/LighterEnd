@@ -1,0 +1,30 @@
+package io.github.openbagtwo.lighterend.rendering;
+
+import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.mobs.SilkMoth;
+import io.github.openbagtwo.lighterend.rendering.models.SilkMothModel;
+import io.github.openbagtwo.lighterend.rendering.states.SilkMothRenderState;
+import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.MobEntityRenderer;
+import net.minecraft.util.Identifier;
+
+public class SilkMothRenderer extends
+    MobEntityRenderer<SilkMoth, SilkMothRenderState, SilkMothModel> {
+
+  private static final Identifier TEXTURE = Identifier.of(LighterEnd.MOD_ID,
+      "textures/entity/silk_moth.png");
+
+  public SilkMothRenderer(EntityRendererFactory.Context ctx) {
+    super(ctx, new SilkMothModel(ctx.getPart(EntityModels.SILK_MOTH_MODEL)), 0.5f);
+  }
+
+  @Override
+  public SilkMothRenderState createRenderState() {
+    return new SilkMothRenderState();
+  }
+
+  @Override
+  public Identifier getTexture(SilkMothRenderState state) {
+    return TEXTURE;
+  }
+}

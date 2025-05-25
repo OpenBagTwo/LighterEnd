@@ -47,7 +47,6 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
     valueLookupBuilder(ItemTags.CHICKEN_FOOD).add(LighterEndBlocks.LUMECORN_SEED.asItem());
     valueLookupBuilder(ItemTags.BEE_FOOD).add(LighterEndBlocks.TENANEA_FLOWER.asItem());
     valueLookupBuilder(ItemTags.LEAVES).add(LighterEndBlocks.TENANEA_LEAVES.asItem());
-
   }
 
 
