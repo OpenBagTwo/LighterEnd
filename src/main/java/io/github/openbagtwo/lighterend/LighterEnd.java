@@ -7,6 +7,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import io.github.openbagtwo.lighterend.registries.LighterEndParticles;
+import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.world.LighterEndConfiguredFeatures;
 import io.github.openbagtwo.lighterend.world.gen.LighterEndWorldGen;
 import net.fabricmc.api.ModInitializer;
@@ -29,6 +30,7 @@ public class LighterEnd implements ModInitializer {
     LighterEndBlockEntities.initialize();
     LighterEndMobs.initialize();
     Composting.initialize();
+    LighterEndSounds.initialize();
     ItemGroups.initialize();
 
     LighterEndConfiguredFeatures.initialize();

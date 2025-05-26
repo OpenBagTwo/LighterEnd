@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.rendering;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
+import io.github.openbagtwo.lighterend.rendering.models.DragonflyModel;
 import io.github.openbagtwo.lighterend.rendering.models.SilkMothModel;
 import java.util.function.Function;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
@@ -15,6 +16,7 @@ import net.minecraft.util.Identifier;
 public class EntityModels {
 
   public static final EntityModelLayer SILK_MOTH_MODEL = makeLayer("silk_moth");
+  public static final EntityModelLayer DRAGONFLY_MODEL = makeLayer("dragonfly");
 
   public static void initialize() {
     EntityModelLayerRegistry.registerModelLayer(EntityModels.SILK_MOTH_MODEL,
@@ -23,6 +25,10 @@ public class EntityModels {
 
     EntityModelLayerRegistry.registerModelLayer(makeLayer("silk_moth_baby"),
         () -> SilkMothModel.getTexturedModelData().transform(SilkMothModel.BABY_TRANSFORMER));
+
+    EntityModelLayerRegistry.registerModelLayer(EntityModels.DRAGONFLY_MODEL,
+        DragonflyModel::getTexturedModelData);
+    register(LighterEndMobs.DRAGONFLY.mob, DragonflyRenderer::new);
   }
 
   private static void register(EntityType<?> type, Function<Context, MobEntityRenderer> renderer) {

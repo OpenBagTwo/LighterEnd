@@ -117,7 +117,8 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndBlocks.TENANEA_FLOWER.asItem(),
         LighterEndBlocks.SILK_MOTH_NEST.asItem(),
         LighterEndBlocks.UMBRELLA.ladder.asItem(),
-        LighterEndMobs.SILK_MOTH.spawnEgg
+        LighterEndMobs.SILK_MOTH.spawnEgg,
+        LighterEndMobs.DRAGONFLY.spawnEgg
 
     )) {
       itemModelGenerator.register(

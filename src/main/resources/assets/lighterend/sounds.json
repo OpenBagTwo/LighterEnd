@@ -1,0 +1,22 @@
+{
+  "entity.dragonfly.idle": {
+    "category": "entity",
+    "sounds": [
+      {
+        "attenuation_distance": 16,
+        "name": "lighterend:entity/dragonfly/dragonfly_1",
+        "stream": false
+      },
+      {
+        "attenuation_distance": 16,
+        "name": "lighterend:entity/dragonfly/dragonfly_2",
+        "stream": false
+      },
+      {
+        "attenuation_distance": 16,
+        "name": "lighterend:entity/dragonfly/dragonfly_3",
+        "stream": false
+      }
+    ]
+  }
+}

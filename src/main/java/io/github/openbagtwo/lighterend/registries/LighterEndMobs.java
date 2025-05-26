@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.mobs.Dragonfly;
 import io.github.openbagtwo.lighterend.mobs.SilkMoth;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.Entity;
@@ -18,9 +19,13 @@ import net.minecraft.util.Identifier;
 
 public class LighterEndMobs {
 
-  public static final LighterEndMob<SilkMoth> SILK_MOTH = new LighterEndMob("silk_moth",
+  public static final LighterEndMob<SilkMoth> SILK_MOTH = new LighterEndMob<>("silk_moth",
       EntityType.Builder.create(SilkMoth::new, SpawnGroup.CREATURE).dimensions(
           0.6F, 0.6F).eyeHeight(0.3F).maxTrackingRange(8));
+
+  public static final LighterEndMob<Dragonfly> DRAGONFLY = new LighterEndMob<>("dragonfly",
+      EntityType.Builder.create(Dragonfly::new, SpawnGroup.AMBIENT).dimensions(
+          0.6F, 0.5F).eyeHeight(0.25F).maxTrackingRange(8));
 
   public static class LighterEndMob<T extends Entity> {
 
@@ -44,6 +49,7 @@ public class LighterEndMobs {
 
   public static void initialize() {
     FabricDefaultAttributeRegistry.register(SILK_MOTH.mob, SilkMoth.createAttributes());
+    FabricDefaultAttributeRegistry.register(DRAGONFLY.mob, Dragonfly.createAttributes());
   }
 
 }
