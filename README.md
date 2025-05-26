@@ -30,7 +30,7 @@ Subject, of course, to change
 
 - [x] **Proof of Concept**: Re-implement a select few BetterEnd blocks—at least one each of stone,
   soil, plant and crop—but no biomes or worldgen.
-- [ ] **Alpha 2**: First "features"—at least two trees, plus either a ruin or a lake—that can be
+- [x] **Alpha 2**: First "features"—at least two trees, plus either a ruin or a lake—that can be
   `/place`d into a world, along with their associated blocks (read: wood sets) and at least one mob
 - [ ] **Alpha 3**: An armored elytra (see below), bringing back the music discs, modifying
   vanilla loot tables
