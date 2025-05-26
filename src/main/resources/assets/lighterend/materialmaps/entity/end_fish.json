@@ -1,0 +1,12 @@
+{
+  "map": [
+    {
+      "material": "canvas:emissive_transform",
+      "predicate": {
+        "materialPredicate": {
+          "renderLayerName": "eyes"
+        }
+      }
+    }
+  ]
+}

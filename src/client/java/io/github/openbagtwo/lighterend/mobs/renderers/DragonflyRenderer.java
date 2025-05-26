@@ -1,9 +1,10 @@
-package io.github.openbagtwo.lighterend.rendering;
+package io.github.openbagtwo.lighterend.mobs.renderers;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.mobs.Dragonfly;
-import io.github.openbagtwo.lighterend.rendering.models.DragonflyModel;
-import io.github.openbagtwo.lighterend.rendering.states.DragonflyRenderState;
+import io.github.openbagtwo.lighterend.mobs.EntityModels;
+import io.github.openbagtwo.lighterend.mobs.models.DragonflyModel;
+import io.github.openbagtwo.lighterend.mobs.states.DragonflyRenderState;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.util.Identifier;

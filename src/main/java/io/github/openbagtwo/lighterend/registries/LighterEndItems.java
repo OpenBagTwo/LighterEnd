@@ -3,6 +3,10 @@ package io.github.openbagtwo.lighterend.registries;
 import io.github.openbagtwo.lighterend.Items.FoodComponents;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import java.util.function.Function;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.item.EntityBucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.item.Items;
@@ -10,6 +14,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 
 public class LighterEndItems {
@@ -27,6 +32,16 @@ public class LighterEndItems {
       .useRemainder(Items.GLASS_BOTTLE)
       .maxCount(16)
   );
+  public static final Item END_FISH_BUCKET = register("bucket_end_fish",
+      settings -> new EntityBucketItem(
+          LighterEndMobs.END_FISH.mob, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, settings),
+      new Item.Settings().maxCount(1)
+          .component(DataComponentTypes.BUCKET_ENTITY_DATA, NbtComponent.DEFAULT));
+  public static final Item CUBOZOA_BUCKET = register("bucket_cubozoa",
+      settings -> new EntityBucketItem(LighterEndMobs.CUBOZOA.mob, Fluids.WATER,
+          SoundEvents.ITEM_BUCKET_EMPTY_FISH, settings),
+      new Item.Settings().maxCount(1)
+          .component(DataComponentTypes.BUCKET_ENTITY_DATA, NbtComponent.DEFAULT));
 
   public static Item register(String name) {
     return register(name, new Settings());

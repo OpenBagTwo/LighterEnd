@@ -1,8 +1,8 @@
 package io.github.openbagtwo.lighterend.mixin.client;
 
+import io.github.openbagtwo.lighterend.blocks.AuroraCrystalRenderer;
+import io.github.openbagtwo.lighterend.blocks.TenaneaFlowerRenderer;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
-import io.github.openbagtwo.lighterend.rendering.AuroraCrystalRenderer;
-import io.github.openbagtwo.lighterend.rendering.TenaneaFlowerRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.RunArgs;
 import net.minecraft.client.color.block.BlockColors;

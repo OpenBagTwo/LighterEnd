@@ -1,6 +1,6 @@
 package io.github.openbagtwo.lighterend.particles;
 
-import io.github.openbagtwo.lighterend.rendering.TenaneaFlowerRenderer;
+import io.github.openbagtwo.lighterend.blocks.TenaneaFlowerRenderer;
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFactory;

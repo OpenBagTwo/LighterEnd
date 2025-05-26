@@ -1,4 +1,4 @@
-package io.github.openbagtwo.lighterend.rendering;
+package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;

@@ -109,6 +109,8 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndItems.SILK,
         LighterEndItems.SILK_MATRIX,
         LighterEndItems.UMBRELLA_JUICE,
+        LighterEndItems.END_FISH_BUCKET,
+        LighterEndItems.CUBOZOA_BUCKET,
         LighterEndBlocks.CREEPING_MOSS.asItem(),
         LighterEndBlocks.END_MOSS.asItem(),
         LighterEndBlocks.UMBRELLA_FERN.asItem(),
@@ -118,7 +120,9 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndBlocks.SILK_MOTH_NEST.asItem(),
         LighterEndBlocks.UMBRELLA.ladder.asItem(),
         LighterEndMobs.SILK_MOTH.spawnEgg,
-        LighterEndMobs.DRAGONFLY.spawnEgg
+        LighterEndMobs.DRAGONFLY.spawnEgg,
+        LighterEndMobs.END_FISH.spawnEgg,
+        LighterEndMobs.CUBOZOA.spawnEgg
 
     )) {
       itemModelGenerator.register(

@@ -1,4 +1,4 @@
-package io.github.openbagtwo.lighterend.rendering;
+package io.github.openbagtwo.lighterend.blocks;
 
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.util.math.BlockPos;

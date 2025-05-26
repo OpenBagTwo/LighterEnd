@@ -1,6 +1,6 @@
-package io.github.openbagtwo.lighterend.rendering.models;
+package io.github.openbagtwo.lighterend.mobs.models;
 
-import io.github.openbagtwo.lighterend.rendering.states.DragonflyRenderState;
+import io.github.openbagtwo.lighterend.mobs.states.DragonflyRenderState;
 import net.minecraft.client.model.ModelData;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.model.ModelPartBuilder;

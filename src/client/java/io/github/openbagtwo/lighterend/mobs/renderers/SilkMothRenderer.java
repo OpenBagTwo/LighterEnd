@@ -1,9 +1,10 @@
-package io.github.openbagtwo.lighterend.rendering;
+package io.github.openbagtwo.lighterend.mobs.renderers;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.mobs.EntityModels;
 import io.github.openbagtwo.lighterend.mobs.SilkMoth;
-import io.github.openbagtwo.lighterend.rendering.models.SilkMothModel;
-import io.github.openbagtwo.lighterend.rendering.states.SilkMothRenderState;
+import io.github.openbagtwo.lighterend.mobs.models.SilkMothModel;
+import io.github.openbagtwo.lighterend.mobs.states.SilkMothRenderState;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.util.Identifier;
