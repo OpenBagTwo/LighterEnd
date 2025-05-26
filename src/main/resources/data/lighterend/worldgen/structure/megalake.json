@@ -1,0 +1,6 @@
+{
+  "biomes": "#minecraft:is_end",
+  "spawn_overrides": {},
+  "step": "lakes",
+  "type": "lighterend:megalake"
+}
