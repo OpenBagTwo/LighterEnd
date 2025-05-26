@@ -111,6 +111,7 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndItems.UMBRELLA_JUICE,
         LighterEndItems.END_FISH_BUCKET,
         LighterEndItems.CUBOZOA_BUCKET,
+        LighterEndItems.RAW_END_FISH,
         LighterEndBlocks.CREEPING_MOSS.asItem(),
         LighterEndBlocks.END_MOSS.asItem(),
         LighterEndBlocks.UMBRELLA_FERN.asItem(),

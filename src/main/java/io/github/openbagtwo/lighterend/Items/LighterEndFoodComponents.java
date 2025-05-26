@@ -8,7 +8,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
 import net.minecraft.sound.SoundEvents;
 
-public class FoodComponents {
+public class LighterEndFoodComponents {
 
   public static final FoodComponent POPPED_LUMECORN_NUTRITION = new FoodComponent.Builder()
       .nutrition(2)

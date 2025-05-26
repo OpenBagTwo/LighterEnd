@@ -1,9 +1,10 @@
 package io.github.openbagtwo.lighterend.registries;
 
-import io.github.openbagtwo.lighterend.Items.FoodComponents;
+import io.github.openbagtwo.lighterend.Items.LighterEndFoodComponents;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import java.util.function.Function;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.FoodComponents;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.EntityBucketItem;
@@ -22,13 +23,15 @@ public class LighterEndItems {
   public static final Item AURORA_CRYSTAL_SHARD = register("aurora_crystal_shard");
   public static final Item LUMECORN_EAR = register("lumecorn_rod");
   public static final Item POPPED_LUMECORN = register("lumecorn_popped", new Settings().food(
-      FoodComponents.POPPED_LUMECORN_NUTRITION, FoodComponents.POPPED_LUMECORN_EFFECT)
+      LighterEndFoodComponents.POPPED_LUMECORN_NUTRITION,
+      LighterEndFoodComponents.POPPED_LUMECORN_EFFECT)
   );
   public static final Item SILK = register("silk_fiber");
   public static final Item SILK_MATRIX = register("silk_matrix");
 
   public static final Item UMBRELLA_JUICE = register("umbrella_juice", new Settings()
-      .food(FoodComponents.UMBRELLA_JUICE_NUTRITION, FoodComponents.UMBRELLA_JUICE_EFFECT)
+      .food(LighterEndFoodComponents.UMBRELLA_JUICE_NUTRITION,
+          LighterEndFoodComponents.UMBRELLA_JUICE_EFFECT)
       .useRemainder(Items.GLASS_BOTTLE)
       .maxCount(16)
   );
@@ -42,6 +45,8 @@ public class LighterEndItems {
           SoundEvents.ITEM_BUCKET_EMPTY_FISH, settings),
       new Item.Settings().maxCount(1)
           .component(DataComponentTypes.BUCKET_ENTITY_DATA, NbtComponent.DEFAULT));
+  public static final Item RAW_END_FISH = register("end_fish", new Settings()
+      .food(FoodComponents.TROPICAL_FISH));
 
   public static Item register(String name) {
     return register(name, new Settings());

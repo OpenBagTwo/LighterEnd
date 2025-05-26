@@ -161,6 +161,33 @@ public class RecipeProvider extends FabricRecipeProvider {
             .criterion(hasItem(LighterEndBlocks.UMBRELLA_MEMBRANE),
                 this.conditionsFromItem(LighterEndBlocks.UMBRELLA_MEMBRANE))
             .offerTo(this.exporter);
+
+        CookingRecipeJsonBuilder.createSmelting(
+            Ingredient.ofItem(LighterEndItems.RAW_END_FISH),
+            RecipeCategory.DECORATIONS,
+            Items.GLOW_INK_SAC,
+            0.35F,
+            200
+        ).criterion(hasItem(LighterEndItems.RAW_END_FISH),
+            conditionsFromItem(LighterEndItems.RAW_END_FISH)
+        ).offerTo(
+            exporter,
+            RegistryKey.of(RegistryKeys.RECIPE,
+                Registries.ITEM.getId(LighterEndItems.RAW_END_FISH).withSuffixedPath("_smelting"))
+        );
+        CookingRecipeJsonBuilder.createSmoking(
+            Ingredient.ofItem(LighterEndItems.RAW_END_FISH),
+            RecipeCategory.DECORATIONS,
+            Items.GLOW_INK_SAC,
+            0.35F,
+            100
+        ).criterion(hasItem(LighterEndItems.RAW_END_FISH),
+            conditionsFromItem(LighterEndItems.RAW_END_FISH)
+        ).offerTo(
+            exporter,
+            RegistryKey.of(RegistryKeys.RECIPE,
+                Registries.ITEM.getId(LighterEndItems.RAW_END_FISH).withSuffixedPath("_smoking"))
+        );
       }
 
       public void generateMaterialRecipes(Material material) {
