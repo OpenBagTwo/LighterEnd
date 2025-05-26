@@ -22,6 +22,7 @@ import net.minecraft.util.Identifier;
 public class EntityModels {
 
   public static final EntityModelLayer SILK_MOTH_MODEL = makeLayer("silk_moth");
+  public static final EntityModelLayer SILK_MOTH_BABY = makeLayer("silk_moth_baby");
   public static final EntityModelLayer DRAGONFLY_MODEL = makeLayer("dragonfly");
   public static final EntityModelLayer END_FISH_MODEL = makeLayer("end_fish");
   public static final EntityModelLayer CUBOZOA_MODEL = makeLayer("cubozoa");
@@ -31,7 +32,7 @@ public class EntityModels {
         SilkMothModel::getTexturedModelData);
     register(LighterEndMobs.SILK_MOTH.mob, SilkMothRenderer::new);
 
-    EntityModelLayerRegistry.registerModelLayer(makeLayer("silk_moth_baby"),
+    EntityModelLayerRegistry.registerModelLayer(SILK_MOTH_BABY,
         () -> SilkMothModel.getTexturedModelData().transform(SilkMothModel.BABY_TRANSFORMER));
 
     EntityModelLayerRegistry.registerModelLayer(EntityModels.DRAGONFLY_MODEL,

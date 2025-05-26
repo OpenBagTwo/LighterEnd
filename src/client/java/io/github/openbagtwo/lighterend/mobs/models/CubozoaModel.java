@@ -7,8 +7,11 @@ import net.minecraft.client.model.ModelPartBuilder;
 import net.minecraft.client.model.ModelPartData;
 import net.minecraft.client.model.ModelTransform;
 import net.minecraft.client.model.TexturedModelData;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 
 public class CubozoaModel extends EntityModel<CubozoaRenderState> {
@@ -55,7 +58,7 @@ public class CubozoaModel extends EntityModel<CubozoaRenderState> {
   }
 
   public CubozoaModel(ModelPart modelPart) {
-    super(modelPart);
+    super(modelPart, RenderLayer::getEntityTranslucent);
     tentacle = new ModelPart[TENTACLE_COUNT];
     tentacle_center = new ModelPart[TENTACLE_COUNT];
 
@@ -77,5 +80,18 @@ public class CubozoaModel extends EntityModel<CubozoaRenderState> {
     for (int i = 0; i < TENTACLE_COUNT; i++) {
       tentacle[i].pitch = sin * 0.15f;
     }
+  }
+
+  public void renderOverride(
+      MatrixStack matrices,
+      VertexConsumer vertices,
+      int light,
+      int overlay,
+      int color
+  ) {
+    matrices.push();
+    matrices.scale(scaleXZ, scaleY, scaleXZ);
+    model.render(matrices, vertices, light, overlay);
+    matrices.pop();
   }
 }
