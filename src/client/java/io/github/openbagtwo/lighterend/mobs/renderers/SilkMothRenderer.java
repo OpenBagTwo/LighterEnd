@@ -33,4 +33,10 @@ public class SilkMothRenderer extends
   public Identifier getTexture(SilkMothRenderState state) {
     return TEXTURE;
   }
+
+  @Override
+  public void updateRenderState(SilkMoth moth, SilkMothRenderState state, float f) {
+    super.updateRenderState(moth, state, f);
+    state.animationProgress += f / 2;
+  }
 }

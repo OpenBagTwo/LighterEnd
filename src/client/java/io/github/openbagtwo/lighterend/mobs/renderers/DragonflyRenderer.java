@@ -39,4 +39,10 @@ public class DragonflyRenderer extends
   public Identifier getTexture(DragonflyRenderState state) {
     return TEXTURE;
   }
+
+  @Override
+  public void updateRenderState(Dragonfly fly, DragonflyRenderState state, float f) {
+    super.updateRenderState(fly, state, f);
+    state.animationProgress += f / 2;
+  }
 }

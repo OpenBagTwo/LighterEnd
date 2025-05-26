@@ -73,6 +73,8 @@ public class CubozoaRenderer extends
 
   @Override
   public void updateRenderState(Cubozoa fish, CubozoaRenderState state, float f) {
+    super.updateRenderState(fish, state, f);
     state.variant = fish.getVariant();
+    state.animationProgress += f / 2;
   }
 }

@@ -73,6 +73,7 @@ public class CubozoaModel extends EntityModel<CubozoaRenderState> {
   public void setAngles(
       CubozoaRenderState renderState
   ) {
+    super.setAngles(renderState);
     float sin = MathHelper.sin(renderState.animationProgress * 0.13F);
     scaleY = sin * 0.1F + 0.9F;
     scaleXZ = MathHelper.sin(renderState.animationProgress * 0.13F + 3.14F) * 0.1F + 0.9F;
