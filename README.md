@@ -18,7 +18,7 @@ dimension from a barren, repetitive wasteland into a thriving and alien worldsca
 life, light, adventure and mystery. Sadly, after almost five years of continued development,
 the mod has been abandoned, and its codebase is a tangled, unmaintainable mess, spread across no
 fewer than [four](https://github.com/quiqueck/BCLib)
-[separate](https://github.com/quiqueck/WunderLib) [repos](https://github.com/quiqueck/WorldWeaver.
+[separate](https://github.com/quiqueck/WunderLib) [repos](https://github.com/quiqueck/WorldWeaver).
 
 The goal of this project is **not** to be a continuation, faithful port or ground-up rewrite. It
 is instead to create a simple, maintainable mod that can bring the _core aspects_ of BetterEnd's
@@ -95,6 +95,18 @@ If there is a BetterEnd feature you would like to take responsibility for portin
     * Reformat code
     * Optimize imports
       on any save.
+* The top priority of this mod is to make it easy to understand and maintain (note that "difficult
+  to update" and "tedious to update" are not the same thing). This means that implementations
+  should be as "flat" as possible—no interfaces, the bare minimum of abstraction, and any "helper"
+  methods should be used at least twice before they're refactored out into their own "library"
+  class.
+    * And, just to be extra clear: ***this mod should never depend on any other mod, library, API or
+      project*** outside the Fabric API. If someone else already solved a thing, adapt how they
+      did it (with proper attribution, and assuming it's GPL-compatible open source)—don't just
+      count on that library always existing forever.
+    * The corollary to the above is that this project will ***never*** be refactored into a
+      general-purpose modding library or API. Anyone seeking to adapt the solutions developed for
+      this mod is welcome to adapt those bits of code (subject to the license below).
 
 ## License and Acknowledgements
 
@@ -103,7 +115,7 @@ All code in this repository is licensed under
 
 All assets (textures, models) were created by the BetterX team.
 
-Music was composed, performed and recorded by Firel.
+Music discs were composed, performed and recorded by Firel.
 
 Many thanks to the excellent tutorial mods developed by
 by [Kaupenjoe](https://github.com/Tutorials-By-Kaupenjoe/Fabric-Tutorial-1.21.X)
