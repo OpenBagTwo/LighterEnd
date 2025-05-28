@@ -69,7 +69,7 @@ public class UmbrellaTreeCluster extends Block {
 
       return ActionResult.SUCCESS;
     }
-    return ActionResult.FAIL.FAIL;
+    return ActionResult.FAIL;
   }
 
   public static class EmptyCluster extends Block {
@@ -88,7 +88,7 @@ public class UmbrellaTreeCluster extends Block {
     }
 
     @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
       if (state.get(NATURAL) && random.nextInt(16) == 0) {
         world.setBlockState(pos,
             LighterEndBlocks.UMBRELLA_TREE_CLUSTER.getDefaultState()
