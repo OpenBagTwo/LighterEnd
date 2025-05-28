@@ -14,10 +14,9 @@ import net.minecraft.util.Identifier;
 public class DragonflyRenderer extends
     MobEntityRenderer<Dragonfly, DragonflyRenderState, DragonflyModel> {
 
-  private static final Identifier TEXTURE = Identifier.of(LighterEnd.MOD_ID,
-      "textures/entity/dragonfly.png");
+  private static final Identifier TEXTURE = LighterEnd.of("textures/entity/dragonfly.png");
   private static final RenderLayer GLOW = RenderLayer.getEyes(
-      Identifier.of(LighterEnd.MOD_ID, "textures/entity/dragonfly_glow.png")
+      LighterEnd.of("textures/entity/dragonfly_glow.png")
   );
 
   public DragonflyRenderer(EntityRendererFactory.Context ctx) {

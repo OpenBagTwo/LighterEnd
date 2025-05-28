@@ -14,7 +14,6 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.Pool;
 import net.minecraft.util.math.VerticalSurfaceType;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
@@ -38,28 +37,28 @@ public class LighterEndConfiguredFeatures {
 
   public static final Feature<DefaultFeatureConfig> LUMECORN_FEATURE = Registry.register(
       Registries.FEATURE,
-      Identifier.of(LighterEnd.MOD_ID, "lumecorn"),
+      LighterEnd.of("lumecorn"),
       new Lumecorn.LumecornFeature());
   public static final RegistryKey<ConfiguredFeature<?, ?>> LUMECORN = of(
       "lumecorn");
 
   public static final Feature<DefaultFeatureConfig> TENANEA_TREE_FEATURE = Registry.register(
       Registries.FEATURE,
-      Identifier.of(LighterEnd.MOD_ID, "tenanea_tree"),
+      LighterEnd.of("tenanea_tree"),
       new TenaneaTree());
   public static final RegistryKey<ConfiguredFeature<?, ?>> TENANEA_TREE = of(
       "tenanea_tree");
 
   public static final Feature<DefaultFeatureConfig> UMBRELLA_TREE_FEATURE = Registry.register(
       Registries.FEATURE,
-      Identifier.of(LighterEnd.MOD_ID, "umbrella_tree"),
+      LighterEnd.of("umbrella_tree"),
       new UmbrellaTree());
   public static final RegistryKey<ConfiguredFeature<?, ?>> UMBRELLA_TREE = of(
       "umbrella_tree");
 
   public static final Feature<DefaultFeatureConfig> MOTH_NEST_FEATURE = Registry.register(
       Registries.FEATURE,
-      Identifier.of(LighterEnd.MOD_ID, "silk_moth_nest"),
+      LighterEnd.of("silk_moth_nest"),
       new SilkMothNestFeature()
   );
   public static final RegistryKey<ConfiguredFeature<?, ?>> MOTH_NEST = of("silk_moth_nest");
@@ -131,6 +130,6 @@ public class LighterEndConfiguredFeatures {
   }
 
   public static RegistryKey<ConfiguredFeature<?, ?>> of(String id) {
-    return RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Identifier.of(LighterEnd.MOD_ID, id));
+    return RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, LighterEnd.of(id));
   }
 }

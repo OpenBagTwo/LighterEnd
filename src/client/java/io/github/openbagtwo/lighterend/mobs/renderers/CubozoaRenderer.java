@@ -21,14 +21,14 @@ public class CubozoaRenderer extends
     MobEntityRenderer<Cubozoa, CubozoaRenderState, CubozoaModel> {
 
   private static final List<Identifier> TEXTURES = Arrays.asList(
-      Identifier.of(LighterEnd.MOD_ID, "textures/entity/cubozoa/cubozoa.png"),
-      Identifier.of(LighterEnd.MOD_ID, "textures/entity/cubozoa/cubozoa_sulphur.png")
+      LighterEnd.of("textures/entity/cubozoa/cubozoa.png"),
+      LighterEnd.of("textures/entity/cubozoa/cubozoa_sulphur.png")
   );
   private static final List<RenderLayer> GLOW = Arrays.asList(
       RenderLayer.getEyes(
-          Identifier.of(LighterEnd.MOD_ID, "textures/entity/cubozoa/cubozoa_glow.png")),
+          LighterEnd.of("textures/entity/cubozoa/cubozoa_glow.png")),
       RenderLayer.getEyes(
-          Identifier.of(LighterEnd.MOD_ID, "extures/entity/cubozoa/cubozoa_sulphur_glow.png"))
+          LighterEnd.of("extures/entity/cubozoa/cubozoa_sulphur_glow.png"))
   );
 
   public CubozoaRenderer(EntityRendererFactory.Context ctx) {

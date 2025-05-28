@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
 
 public class LighterEndParticles {
 
@@ -17,7 +16,7 @@ public class LighterEndParticles {
   public static SimpleParticleType register(String name, SimpleParticleType particleType) {
     return Registry.register(
         Registries.PARTICLE_TYPE,
-        Identifier.of(LighterEnd.MOD_ID, name),
+        LighterEnd.of(name),
         particleType);
   }
 

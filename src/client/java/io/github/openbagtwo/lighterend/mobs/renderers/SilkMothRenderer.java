@@ -12,8 +12,7 @@ import net.minecraft.util.Identifier;
 public class SilkMothRenderer extends
     AgeableMobEntityRenderer<SilkMoth, SilkMothRenderState, SilkMothModel> {
 
-  private static final Identifier TEXTURE = Identifier.of(LighterEnd.MOD_ID,
-      "textures/entity/silk_moth.png");
+  private static final Identifier TEXTURE = LighterEnd.of("textures/entity/silk_moth.png");
 
   public SilkMothRenderer(EntityRendererFactory.Context ctx) {
     super(

@@ -6,7 +6,6 @@ import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.feature.PlacedFeatures;
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures;
@@ -42,7 +41,7 @@ public class LighterEndPlacedFeatures {
   }
 
   public static RegistryKey<PlacedFeature> of(String id) {
-    return RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier.of(LighterEnd.MOD_ID, id));
+    return RegistryKey.of(RegistryKeys.PLACED_FEATURE, LighterEnd.of(id));
   }
 
 }

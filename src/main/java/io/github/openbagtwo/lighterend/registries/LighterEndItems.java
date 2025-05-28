@@ -57,7 +57,7 @@ public class LighterEndItems {
   }
 
   public static Item register(String name, Function<Settings, Item> factory, Settings settings) {
-    Identifier id = Identifier.of(LighterEnd.MOD_ID, name);
+    Identifier id = LighterEnd.of(name);
     RegistryKey<Item> key = RegistryKey.of(RegistryKeys.ITEM, id);
     return Registry.register(Registries.ITEM, key, factory.apply(settings.registryKey(key)));
   }

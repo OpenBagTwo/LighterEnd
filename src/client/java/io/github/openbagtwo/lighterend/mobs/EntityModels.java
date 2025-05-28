@@ -17,7 +17,6 @@ import net.minecraft.client.render.entity.EntityRendererFactory.Context;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.entity.EntityType;
-import net.minecraft.util.Identifier;
 
 public class EntityModels {
 
@@ -53,6 +52,6 @@ public class EntityModels {
   }
 
   private static EntityModelLayer makeLayer(String name) {
-    return new EntityModelLayer(Identifier.of(LighterEnd.MOD_ID, name), "main");
+    return new EntityModelLayer(LighterEnd.of(name), "main");
   }
 }

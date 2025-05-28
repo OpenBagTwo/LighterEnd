@@ -11,7 +11,7 @@ public class LighterEndSounds {
   public static final SoundEvent DRAGONFLY_IDLE = register("entity.dragonfly.idle");
 
   private static SoundEvent register(String name) {
-    Identifier id = Identifier.of(LighterEnd.MOD_ID, name);
+    Identifier id = LighterEnd.of(name);
     return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
   }
 

@@ -7,7 +7,6 @@ import io.github.openbagtwo.lighterend.world.structures.pieces.LakePiece;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.structure.StructurePieceType;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.structure.StructureType;
 
@@ -19,13 +18,13 @@ public class LighterEndStructures {
   public static StructurePieceType register(String name, StructurePieceType piece) {
     return Registry.register(
         Registries.STRUCTURE_PIECE,
-        Identifier.of(LighterEnd.MOD_ID, name),
+        LighterEnd.of(name),
         piece
     );
   }
 
   public static <S extends Structure> StructureType<S> register(String name, MapCodec<S> codec) {
-    return Registry.register(Registries.STRUCTURE_TYPE, Identifier.of(LighterEnd.MOD_ID, name),
+    return Registry.register(Registries.STRUCTURE_TYPE, LighterEnd.of(name),
         () -> codec);
   }
 
@@ -38,7 +37,7 @@ public class LighterEndStructures {
 //  }
 
 //  public static RegistryKey<Structure> of(String id) {
-//    return RegistryKey.of(RegistryKeys.STRUCTURE, Identifier.of(LighterEnd.MOD_ID, id));
+//    return RegistryKey.of(RegistryKeys.STRUCTURE, LighterEnd.of(id));
 //  }
 
   public static void initialize() {

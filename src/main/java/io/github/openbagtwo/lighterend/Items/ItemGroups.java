@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 
 public final class ItemGroups {
 
@@ -33,7 +32,7 @@ public final class ItemGroups {
           .build());
 
   public static <T extends ItemGroup> T register(String name, T itemGroup) {
-    return Registry.register(Registries.ITEM_GROUP, Identifier.of(LighterEnd.MOD_ID, name),
+    return Registry.register(Registries.ITEM_GROUP, LighterEnd.of(name),
         itemGroup);
   }
 

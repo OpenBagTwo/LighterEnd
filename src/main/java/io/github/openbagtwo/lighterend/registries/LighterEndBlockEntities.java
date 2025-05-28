@@ -25,12 +25,11 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
 
 public class LighterEndBlockEntities {
 
   public static final BlockEntityType<LighterEndSignBlockEntity> SIGN = Registry.register(
-      Registries.BLOCK_ENTITY_TYPE, Identifier.of(LighterEnd.MOD_ID, "sign"),
+      Registries.BLOCK_ENTITY_TYPE, LighterEnd.of("sign"),
       FabricBlockEntityTypeBuilder.create(
           Signs.LighterEndSignBlockEntity::new,
           LighterEndBlocks.TENANEA.sign,
@@ -40,7 +39,7 @@ public class LighterEndBlockEntities {
       ).build(null));
 
   public static final BlockEntityType<LighterEndHangingSignBlockEntity> HANGING_SIGN = Registry.register(
-      Registries.BLOCK_ENTITY_TYPE, Identifier.of(LighterEnd.MOD_ID, "hanging_sign"),
+      Registries.BLOCK_ENTITY_TYPE, LighterEnd.of("hanging_sign"),
       FabricBlockEntityTypeBuilder.create(
           Signs.LighterEndHangingSignBlockEntity::new,
           LighterEndBlocks.TENANEA.hangingSign,
@@ -50,7 +49,7 @@ public class LighterEndBlockEntities {
       ).build(null));
 
   public static final BlockEntityType<SilkMothNestEntity> SILK_MOTH_NEST = Registry.register(
-      Registries.BLOCK_ENTITY_TYPE, Identifier.of(LighterEnd.MOD_ID, "silk_moth_nest"),
+      Registries.BLOCK_ENTITY_TYPE, LighterEnd.of("silk_moth_nest"),
       FabricBlockEntityTypeBuilder.create(SilkMothNestEntity::new, LighterEndBlocks.SILK_MOTH_NEST)
           .build(null)
   );

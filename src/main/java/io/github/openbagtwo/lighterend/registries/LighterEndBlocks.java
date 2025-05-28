@@ -120,7 +120,7 @@ public class LighterEndBlocks {
   }
 
   public static Block register(String name, Function<Settings, Block> factory, boolean hasItem) {
-    Identifier id = Identifier.of(LighterEnd.MOD_ID, name);
+    Identifier id = LighterEnd.of(name);
     Block block = factory.apply(
         Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, id)));
 
@@ -264,7 +264,7 @@ public class LighterEndBlocks {
 
       // TODO: Add individual sound sets (BlockSetType)
       woodType = new WoodTypeBuilder().register(
-          Identifier.of(LighterEnd.MOD_ID, baseName),
+          LighterEnd.of(baseName),
           BlockSetType.CHERRY
       );
 
@@ -330,10 +330,10 @@ public class LighterEndBlocks {
           settings -> new Signs.LighterEndWallSignBlock(woodType,
               settings.mapColor(planks.getDefaultMapColor()).lootTable(sign.getLootTableKey())
                   .overrideTranslationKey(sign.getTranslationKey())), false);
-      Registry.register(Registries.ITEM, Identifier.of(LighterEnd.MOD_ID, baseName + "_sign"),
+      Registry.register(Registries.ITEM, LighterEnd.of(baseName + "_sign"),
           new SignItem(sign, wallSign, new Item.Settings().maxCount(16).registryKey(
                   RegistryKey.of(RegistryKeys.ITEM,
-                      Identifier.of(LighterEnd.MOD_ID, baseName + "_sign")))
+                      LighterEnd.of(baseName + "_sign")))
               .useBlockPrefixedTranslationKey()));
       hangingSign = register(baseName + "_hanging_sign",
           settings -> new Signs.LighterEndCeilingHangingSignBlock(woodType,
@@ -344,11 +344,11 @@ public class LighterEndBlocks {
                   .overrideTranslationKey(hangingSign.getTranslationKey())
                   .mapColor(planks.getDefaultMapColor())), false);
       Registry.register(Registries.ITEM,
-          Identifier.of(LighterEnd.MOD_ID, baseName + "_hanging_sign"),
+          LighterEnd.of(baseName + "_hanging_sign"),
           new HangingSignItem(hangingSign, wallHangingSign,
               new Item.Settings().maxCount(16).registryKey(
                       RegistryKey.of(RegistryKeys.ITEM,
-                          Identifier.of(LighterEnd.MOD_ID, baseName + "_hanging_sign")))
+                          LighterEnd.of(baseName + "_hanging_sign")))
                   .useBlockPrefixedTranslationKey()));
 
       for (Block block : Arrays.asList(log, strippedLog, wood, strippedWood)) {

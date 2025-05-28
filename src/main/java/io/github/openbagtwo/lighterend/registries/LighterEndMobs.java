@@ -17,7 +17,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
 
 public class LighterEndMobs {
 
@@ -44,11 +43,10 @@ public class LighterEndMobs {
 
     public LighterEndMob(String name, EntityType.Builder<T> settings) {
       mob = Registry.register(Registries.ENTITY_TYPE,
-          Identifier.of(LighterEnd.MOD_ID, name),
+          LighterEnd.of(name),
           settings.build(
               RegistryKey.of(
-                  RegistryKeys.ENTITY_TYPE, Identifier.of(
-                      LighterEnd.MOD_ID, name))));
+                  RegistryKeys.ENTITY_TYPE, LighterEnd.of(name))));
       spawnEgg = LighterEndItems.register(
           name + "_spawn_egg",
           (properties) -> new SpawnEggItem((EntityType<? extends MobEntity>) mob, properties),
