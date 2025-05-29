@@ -15,6 +15,14 @@
         },
         "texture": "lighterend:silk"
       }
+    ],
+    "wings": [
+      {
+        "dyeable": {
+          "color_when_undyed": 14873826
+        },
+        "texture": "minecraft:elytra"
+      }
     ]
   }
 }
