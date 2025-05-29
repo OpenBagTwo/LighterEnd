@@ -32,8 +32,8 @@ Subject, of course, to change
   soil, plant and crop—but no biomes or worldgen.
 - [x] **Alpha 2**: First "features"—at least two trees, plus either a ruin or a lake—that can be
   `/place`d into a world, along with their associated blocks (read: wood sets) and at least one mob
-- [ ] **Alpha 3**: An armored elytra (see below), bringing back the music discs, modifying
-  vanilla loot tables
+- [x] **Alpha 3**: An armored elytra (see below)
+- [ ] **Alpha 4** Bring back the music discs and modify the vanilla loot tables to provide them
 - [ ] **First Beta**: Introduce the first biomes and a start modifying the worldgen so stuff
   naturally spawns
 - [ ] **First Release**: Enough worldgen that the experience can be enjoyed without needing to
@@ -48,7 +48,7 @@ The completed version of LighterEnd:
 - Will not include Crystalite armor. Which, again, is overpowered.
 - While there _will_ be an armored elytra, it will be heavily nerfed (with the glide decay of
   Aeternium elytra and sub-Diamond levels of protection) in order to balance it with vanilla
-  elytra.
+  elytra
 - Will only feature one type of end soil, though this soil may take on different appearances in
   different biomes, and bonemealing the soil in different biomes will produce different plants
 - Will not include Eternal Portals
@@ -61,6 +61,7 @@ The completed version of LighterEnd:
 On the flip side, I do plan on implementing **new** features that were not present in the original
 BetterEnd:
 
+- The option for gravity in The End to be 1/3 of normal
 - Breeding villagers in The End will produce End Villagers, who will have exclusive professions,
   job sites and trades
 - New trim materials (and possibly trim patterns)
