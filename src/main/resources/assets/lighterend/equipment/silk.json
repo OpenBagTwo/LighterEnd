@@ -21,7 +21,8 @@
         "dyeable": {
           "color_when_undyed": -262145
         },
-        "texture": "minecraft:elytra"
+        "texture": "minecraft:elytra",
+        "use_player_texture": true
       }
     ]
   }
