@@ -17,6 +17,18 @@
         "name": "lighterend:entity/dragonfly/dragonfly_3",
         "stream": false
       }
-    ]
+    ],
+    "subtitle": "lighterend:subtitles.entity.dragonfly.idle"
+  },
+  "item.armor.equip_silk": {
+    "sounds": [
+      "item/armor/equip_leather1",
+      "item/armor/equip_leather2",
+      "item/armor/equip_leather3",
+      "item/armor/equip_leather4",
+      "item/armor/equip_leather5",
+      "item/armor/equip_leather6"
+    ],
+    "subtitle": "lighterend:subtitles.item.armor.equip_silk"
   }
 }

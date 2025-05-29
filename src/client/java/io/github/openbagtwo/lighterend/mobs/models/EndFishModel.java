@@ -75,9 +75,7 @@ public class EndFishModel extends EntityModel<EndFishRenderState> {
   }
 
   @Override
-  public void setAngles(
-      EndFishRenderState renderState
-  ) {
+  public void setAngles(EndFishRenderState renderState) {
     float s1 = (float) Math.sin(renderState.animationProgress * 0.1);
     float s2 = (float) Math.sin(renderState.animationProgress * 0.05);
     flipper.yaw = s1 * 0.3F;

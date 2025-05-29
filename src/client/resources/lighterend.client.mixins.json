@@ -1,6 +1,6 @@
 {
   "client": [
-    "MinecraftMixin"
+    "ColorPrividingMixin"
   ],
   "compatibilityLevel": "JAVA_21",
   "injectors": {

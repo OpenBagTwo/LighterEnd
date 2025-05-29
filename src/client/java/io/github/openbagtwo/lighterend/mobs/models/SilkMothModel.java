@@ -157,9 +157,7 @@ public class SilkMothModel extends EntityModel<SilkMothRenderState> {
   }
 
   @Override
-  public void setAngles(
-      SilkMothRenderState renderState
-  ) {
+  public void setAngles(SilkMothRenderState renderState) {
     wingR_r1.roll = MathHelper.sin(renderState.animationProgress * 2F) * 0.4F + 0.3927F;
     wingL_r1.roll = -wingR_r1.roll;
     head_pivot.pitch = MathHelper.sin(renderState.animationProgress * 0.03F) * 0.1F;

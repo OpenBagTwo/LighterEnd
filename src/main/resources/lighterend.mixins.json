@@ -3,7 +3,9 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "mixins": [],
+  "mixins": [
+    "GlideDecayMixin"
+  ],
   "package": "io.github.openbagtwo.lighterend.mixin",
   "required": true
 }

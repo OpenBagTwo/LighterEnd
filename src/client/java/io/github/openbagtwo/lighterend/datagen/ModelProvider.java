@@ -15,6 +15,7 @@ import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Models;
 import net.minecraft.client.data.TexturedModel;
 import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
 
 public class ModelProvider extends FabricModelProvider {
 
@@ -130,6 +131,36 @@ public class ModelProvider extends FabricModelProvider {
           item, Models.GENERATED
       );
     }
+    itemModelGenerator.registerArmor(
+        LighterEndItems.SILK_HELMET,
+        LighterEndItems.SILK_MATERIAL,
+        Identifier.ofVanilla("trims/items/helmet_trim"),
+        true
+    );
+    itemModelGenerator.registerArmor(
+        LighterEndItems.SILK_CHESTPLATE,
+        LighterEndItems.SILK_MATERIAL,
+        Identifier.ofVanilla("trims/items/chestplate_trim"),
+        true
+    );
+    itemModelGenerator.registerArmor(
+        LighterEndItems.SILK_ELYTRA,
+        LighterEndItems.SILK_MATERIAL,
+        Identifier.ofVanilla("trims/items/chestplate_trim"),
+        true
+    );
+    itemModelGenerator.registerArmor(
+        LighterEndItems.SILK_LEGGINGS,
+        LighterEndItems.SILK_MATERIAL,
+        Identifier.ofVanilla("trims/items/leggings_trim"),
+        true
+    );
+    itemModelGenerator.registerArmor(
+        LighterEndItems.SILK_BOOTS,
+        LighterEndItems.SILK_MATERIAL,
+        Identifier.ofVanilla("trims/items/boots_trim"),
+        true
+    );
   }
 
 

@@ -106,9 +106,7 @@ public class DragonflyModel extends EntityModel<DragonflyRenderState> {
   }
 
   @Override
-  public void setAngles(
-      DragonflyRenderState renderState
-  ) {
+  public void setAngles(DragonflyRenderState renderState) {
     float progress = renderState.animationProgress * 2F;
 
     wing_1.roll = 0.3491F + (float) Math.sin(progress) * 0.3491F;
