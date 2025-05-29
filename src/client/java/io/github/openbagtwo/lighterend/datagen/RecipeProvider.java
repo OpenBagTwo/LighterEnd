@@ -3,6 +3,7 @@ package io.github.openbagtwo.lighterend.datagen;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
+import io.github.openbagtwo.lighterend.registries.LighterEndEquipment;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -149,6 +150,17 @@ public class RecipeProvider extends FabricRecipeProvider {
             .pattern("PPP")
             .input('M', LighterEndItems.SILK_MATRIX)
             .input('P', LighterEndBlocks.TENANEA.planks)
+            .criterion(
+                hasItem(LighterEndItems.SILK_MATRIX),
+                conditionsFromItem(LighterEndItems.SILK_MATRIX)
+            ).offerTo(exporter);
+
+        createShaped(RecipeCategory.COMBAT, LighterEndEquipment.SILK_ELYTRA)
+            .pattern("P P")
+            .pattern("MMM")
+            .pattern("MMM")
+            .input('M', LighterEndItems.SILK_MATRIX)
+            .input('P', Items.PHANTOM_MEMBRANE)
             .criterion(
                 hasItem(LighterEndItems.SILK_MATRIX),
                 conditionsFromItem(LighterEndItems.SILK_MATRIX)

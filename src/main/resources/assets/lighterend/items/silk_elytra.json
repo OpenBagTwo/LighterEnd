@@ -1,0 +1,161 @@
+{
+  "model": {
+    "cases": [
+      {
+        "model": {
+          "model": "lighterend:item/silk_elytra_quartz_trim",
+          "tints": [
+            {
+              "default": -262145,
+              "type": "minecraft:dye"
+            }
+          ],
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:quartz"
+      },
+      {
+        "model": {
+          "model": "lighterend:item/silk_elytra_iron_trim",
+          "tints": [
+            {
+              "default": -262145,
+              "type": "minecraft:dye"
+            }
+          ],
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:iron"
+      },
+      {
+        "model": {
+          "model": "lighterend:item/silk_elytra_netherite_trim",
+          "tints": [
+            {
+              "default": -262145,
+              "type": "minecraft:dye"
+            }
+          ],
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:netherite"
+      },
+      {
+        "model": {
+          "model": "lighterend:item/silk_elytra_redstone_trim",
+          "tints": [
+            {
+              "default": -262145,
+              "type": "minecraft:dye"
+            }
+          ],
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:redstone"
+      },
+      {
+        "model": {
+          "model": "lighterend:item/silk_elytra_copper_trim",
+          "tints": [
+            {
+              "default": -262145,
+              "type": "minecraft:dye"
+            }
+          ],
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:copper"
+      },
+      {
+        "model": {
+          "model": "lighterend:item/silk_elytra_gold_trim",
+          "tints": [
+            {
+              "default": -262145,
+              "type": "minecraft:dye"
+            }
+          ],
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:gold"
+      },
+      {
+        "model": {
+          "model": "lighterend:item/silk_elytra_emerald_trim",
+          "tints": [
+            {
+              "default": -262145,
+              "type": "minecraft:dye"
+            }
+          ],
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:emerald"
+      },
+      {
+        "model": {
+          "model": "lighterend:item/silk_elytra_diamond_trim",
+          "tints": [
+            {
+              "default": -262145,
+              "type": "minecraft:dye"
+            }
+          ],
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:diamond"
+      },
+      {
+        "model": {
+          "model": "lighterend:item/silk_elytra_lapis_trim",
+          "tints": [
+            {
+              "default": -262145,
+              "type": "minecraft:dye"
+            }
+          ],
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:lapis"
+      },
+      {
+        "model": {
+          "model": "lighterend:item/silk_elytra_amethyst_trim",
+          "tints": [
+            {
+              "default": -262145,
+              "type": "minecraft:dye"
+            }
+          ],
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:amethyst"
+      },
+      {
+        "model": {
+          "model": "lighterend:item/silk_elytra_resin_trim",
+          "tints": [
+            {
+              "default": -262145,
+              "type": "minecraft:dye"
+            }
+          ],
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:resin"
+      }
+    ],
+    "fallback": {
+      "model": "lighterend:item/silk_elytra",
+      "tints": [
+        {
+          "default": -262145,
+          "type": "minecraft:dye"
+        }
+      ],
+      "type": "minecraft:model"
+    },
+    "property": "minecraft:trim_material",
+    "type": "minecraft:select"
+  }
+}

@@ -3,6 +3,7 @@ package io.github.openbagtwo.lighterend.datagen;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
+import io.github.openbagtwo.lighterend.registries.LighterEndEquipment;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import java.util.Arrays;
@@ -131,36 +132,14 @@ public class ModelProvider extends FabricModelProvider {
           item, Models.GENERATED
       );
     }
+
     itemModelGenerator.registerArmor(
-        LighterEndItems.SILK_HELMET,
-        LighterEndItems.SILK_MATERIAL,
-        Identifier.ofVanilla("trims/items/helmet_trim"),
-        true
-    );
-    itemModelGenerator.registerArmor(
-        LighterEndItems.SILK_CHESTPLATE,
-        LighterEndItems.SILK_MATERIAL,
+        LighterEndEquipment.SILK_ELYTRA,
+        LighterEndEquipment.SILK_MATERIAL,
         Identifier.ofVanilla("trims/items/chestplate_trim"),
         true
     );
-    itemModelGenerator.registerArmor(
-        LighterEndItems.SILK_ELYTRA,
-        LighterEndItems.SILK_MATERIAL,
-        Identifier.ofVanilla("trims/items/chestplate_trim"),
-        true
-    );
-    itemModelGenerator.registerArmor(
-        LighterEndItems.SILK_LEGGINGS,
-        LighterEndItems.SILK_MATERIAL,
-        Identifier.ofVanilla("trims/items/leggings_trim"),
-        true
-    );
-    itemModelGenerator.registerArmor(
-        LighterEndItems.SILK_BOOTS,
-        LighterEndItems.SILK_MATERIAL,
-        Identifier.ofVanilla("trims/items/boots_trim"),
-        true
-    );
+
   }
 
 

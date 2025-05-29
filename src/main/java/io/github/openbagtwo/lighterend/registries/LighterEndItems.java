@@ -1,11 +1,7 @@
 package io.github.openbagtwo.lighterend.registries;
 
-import com.google.common.collect.Maps;
-import io.github.openbagtwo.lighterend.Items.ArmoredElytra;
 import io.github.openbagtwo.lighterend.Items.LighterEndFoodComponents;
 import io.github.openbagtwo.lighterend.LighterEnd;
-import io.github.openbagtwo.lighterend.tags.LighterEndTags;
-import java.util.Map;
 import java.util.function.Function;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.FoodComponents;
@@ -15,9 +11,6 @@ import net.minecraft.item.EntityBucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.item.Items;
-import net.minecraft.item.equipment.ArmorMaterial;
-import net.minecraft.item.equipment.EquipmentAsset;
-import net.minecraft.item.equipment.EquipmentType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -54,44 +47,6 @@ public class LighterEndItems {
           .component(DataComponentTypes.BUCKET_ENTITY_DATA, NbtComponent.DEFAULT));
   public static final Item RAW_END_FISH = register("end_fish", new Settings()
       .food(FoodComponents.TROPICAL_FISH));
-
-  public static final RegistryKey<EquipmentAsset> SILK_MATERIAL = RegistryKey.of(
-      RegistryKey.ofRegistry(Identifier.ofVanilla("equipment_asset")),
-      LighterEnd.of("silk")
-  );
-
-  public static final ArmorMaterial SILK_ARMOR = new ArmorMaterial(
-      10, // durability base puts it between gold and iron
-      Maps.newEnumMap(
-          Map.of(
-              EquipmentType.BOOTS, 1,  // nerf boot defense
-              EquipmentType.LEGGINGS, 6,
-              EquipmentType.CHESTPLATE, 8,
-              EquipmentType.HELMET, 3,
-              EquipmentType.BODY, 4  // on par with chainmail
-          )
-      ),
-      25, // enchantability on par with gold
-      LighterEndSounds.EQUIP_SILK,
-      0.0F,  // no toughness
-      0.0F,  // no knockback protection,
-      LighterEndTags.REPAIRS_SILK_ARMOR,
-      SILK_MATERIAL
-  );
-
-  public static final Item SILK_HELMET = register("silk_helmet",
-      (new Item.Settings()).armor(SILK_ARMOR, EquipmentType.HELMET));
-  public static final Item SILK_CHESTPLATE = register("silk_chestplate",
-      (new Item.Settings()).armor(SILK_ARMOR, EquipmentType.CHESTPLATE));
-  public static final Item SILK_LEGGINGS = register("silk_leggings",
-      (new Item.Settings()).armor(SILK_ARMOR, EquipmentType.LEGGINGS));
-  public static final Item SILK_BOOTS = register("silk_boots",
-      (new Item.Settings()).armor(SILK_ARMOR, EquipmentType.BOOTS));
-  public static final Item SILK_ELYTRA = register(
-      "silk_elytra",
-      settings -> new ArmoredElytra(settings, SILK_ARMOR, 100, 0.95F, false),
-      new Settings()
-  );
 
   public static Item register(String name) {
     return register(name, new Settings());

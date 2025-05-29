@@ -1,0 +1,45 @@
+{
+  "sources": [
+    {
+      "palette_key": "minecraft:trims/color_palettes/trim_palette",
+      "permutations": {
+        "amethyst": "minecraft:trims/color_palettes/amethyst",
+        "copper": "minecraft:trims/color_palettes/copper",
+        "diamond": "minecraft:trims/color_palettes/diamond",
+        "diamond_darker": "minecraft:trims/color_palettes/diamond_darker",
+        "emerald": "minecraft:trims/color_palettes/emerald",
+        "gold": "minecraft:trims/color_palettes/gold",
+        "gold_darker": "minecraft:trims/color_palettes/gold_darker",
+        "iron": "minecraft:trims/color_palettes/iron",
+        "iron_darker": "minecraft:trims/color_palettes/iron_darker",
+        "lapis": "minecraft:trims/color_palettes/lapis",
+        "netherite": "minecraft:trims/color_palettes/netherite",
+        "netherite_darker": "minecraft:trims/color_palettes/netherite_darker",
+        "quartz": "minecraft:trims/color_palettes/quartz",
+        "redstone": "minecraft:trims/color_palettes/redstone",
+        "resin": "minecraft:trims/color_palettes/resin"
+      },
+      "textures": [
+        "minecraft:trims/entity/wings/sentry",
+        "minecraft:trims/entity/wings/dune",
+        "minecraft:trims/entity/wings/coast",
+        "minecraft:trims/entity/wings/wild",
+        "minecraft:trims/entity/wings/ward",
+        "minecraft:trims/entity/wings/eye",
+        "minecraft:trims/entity/wings/vex",
+        "minecraft:trims/entity/wings/tide",
+        "minecraft:trims/entity/wings/snout",
+        "minecraft:trims/entity/wings/rib",
+        "minecraft:trims/entity/wings/spire",
+        "minecraft:trims/entity/wings/wayfinder",
+        "minecraft:trims/entity/wings/shaper",
+        "minecraft:trims/entity/wings/silence",
+        "minecraft:trims/entity/wings/raiser",
+        "minecraft:trims/entity/wings/host",
+        "minecraft:trims/entity/wings/flow",
+        "minecraft:trims/entity/wings/bolt"
+      ],
+      "type": "minecraft:paletted_permutations"
+    }
+  ]
+}

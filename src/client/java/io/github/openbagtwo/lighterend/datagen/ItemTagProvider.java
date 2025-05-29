@@ -3,6 +3,7 @@ package io.github.openbagtwo.lighterend.datagen;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
+import io.github.openbagtwo.lighterend.registries.LighterEndEquipment;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
 import java.util.Arrays;
@@ -53,13 +54,13 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
     valueLookupBuilder(ItemTags.BEE_FOOD).add(LighterEndBlocks.TENANEA_FLOWER.asItem());
     valueLookupBuilder(ItemTags.LEAVES).add(LighterEndBlocks.TENANEA_LEAVES.asItem());
 
-    valueLookupBuilder(ItemTags.HEAD_ARMOR).add(LighterEndItems.SILK_HELMET);
-    valueLookupBuilder(ItemTags.CHEST_ARMOR).add(
-        LighterEndItems.SILK_CHESTPLATE,
-        LighterEndItems.SILK_ELYTRA
+    valueLookupBuilder(ItemTags.DYEABLE).add(
+        LighterEndEquipment.SILK_ELYTRA
     );
-    valueLookupBuilder(ItemTags.LEG_ARMOR).add(LighterEndItems.SILK_LEGGINGS);
-    valueLookupBuilder(ItemTags.FOOT_ARMOR).add(LighterEndItems.SILK_BOOTS);
+
+    valueLookupBuilder(ItemTags.CHEST_ARMOR).add(
+        LighterEndEquipment.SILK_ELYTRA
+    );  // this makes silk elytra trimmable
 
     valueLookupBuilder(LighterEndTags.REPAIRS_SILK_ARMOR).add(LighterEndItems.SILK);
   }

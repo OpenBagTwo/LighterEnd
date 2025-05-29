@@ -3,23 +3,23 @@
     "humanoid": [
       {
         "dyeable": {
-          "color_when_undyed": 14873826
+          "color_when_undyed": -262145
         },
-        "texture": "lighterend:silk"
+        "texture": "minecraft:leather"
       }
     ],
     "humanoid_leggings": [
       {
         "dyeable": {
-          "color_when_undyed": 14873826
+          "color_when_undyed": -262145
         },
-        "texture": "lighterend:silk"
+        "texture": "minecraft:leather"
       }
     ],
     "wings": [
       {
         "dyeable": {
-          "color_when_undyed": 14873826
+          "color_when_undyed": -262145
         },
         "texture": "minecraft:elytra"
       }
