@@ -12,6 +12,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndParticles;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.registries.LighterEndStructures;
 import io.github.openbagtwo.lighterend.world.LighterEndConfiguredFeatures;
+import io.github.openbagtwo.lighterend.world.VanillaLootTableModifiers;
 import io.github.openbagtwo.lighterend.world.gen.LighterEndWorldGen;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
@@ -46,6 +47,7 @@ public class LighterEnd implements ModInitializer {
     LighterEndConfiguredFeatures.initialize();
     LighterEndStructures.initialize();
 
+    VanillaLootTableModifiers.patchLootTables();
     LighterEndWorldGen.modifyWorldGen();
   }
 }
