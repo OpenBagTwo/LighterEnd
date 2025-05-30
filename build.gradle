@@ -1,6 +1,7 @@
 plugins {
     id 'fabric-loom' version '1.10-SNAPSHOT'
     id "fr.brouillard.oss.gradle.jgitver" version "0.9.1"
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
     id 'maven-publish'
 }
 
@@ -41,6 +42,10 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+//    modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
+
+    compileOnly "org.yaml:snakeyaml:2.2"
+    shadow(implementation("org.yaml:snakeyaml:2.2"))
 
 }
 

@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend;
 
 import io.github.openbagtwo.lighterend.Items.ItemGroups;
+import io.github.openbagtwo.lighterend.config.Config;
 import io.github.openbagtwo.lighterend.misc.Composting;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
@@ -33,6 +34,8 @@ public class LighterEnd implements ModInitializer {
   @Override
   public void onInitialize() {
 
+    Config config = Config.loadConfiguration();
+
     LighterEndItems.initialize();
     LighterEndMusicDiscs.initialize();
     LighterEndParticles.initialize();
@@ -47,7 +50,7 @@ public class LighterEnd implements ModInitializer {
     LighterEndConfiguredFeatures.initialize();
     LighterEndStructures.initialize();
 
-    VanillaLootTableModifiers.patchLootTables();
-    LighterEndWorldGen.modifyWorldGen();
+    VanillaLootTableModifiers.patchLootTables(config);
+    LighterEndWorldGen.modifyWorldGen(config);
   }
 }

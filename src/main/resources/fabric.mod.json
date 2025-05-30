@@ -23,6 +23,9 @@
     ],
     "main": [
       "io.github.openbagtwo.lighterend.LighterEnd"
+    ],
+    "modmenu": [
+      "io.github.openbagtwo.lighterend.config.ModMenu"
     ]
   },
   "environment": "*",
