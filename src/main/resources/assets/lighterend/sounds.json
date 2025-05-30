@@ -30,5 +30,45 @@
       "item/armor/equip_leather6"
     ],
     "subtitle": "lighterend:subtitles.item.armor.equip_silk"
+  },
+  "music_disc.endseeker": {
+    "category": "record",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "lighterend:records/firel-endseeker",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.eo_dracona": {
+    "category": "record",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "lighterend:records/firel-eo_dracona",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.grasping_at_stars": {
+    "category": "record",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "lighterend:records/firel-grasping_at_stars",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.strange_and_alien": {
+    "category": "record",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "lighterend:records/firel-strange_and_alien",
+        "stream": true
+      }
+    ]
   }
 }

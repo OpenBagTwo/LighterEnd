@@ -1,0 +1,8 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "item.lighterend.music_disc_eo_dracona.desc"
+  },
+  "length_in_seconds": 353.0,
+  "sound_event": "lighterend:music_disc.eo_dracona"
+}

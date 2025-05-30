@@ -1,0 +1,8 @@
+{
+  "comparator_output": 4,
+  "description": {
+    "translate": "item.lighterend.music_disc_strange_and_alien.desc"
+  },
+  "length_in_seconds": 266.0,
+  "sound_event": "lighterend:music_disc.strange_and_alien"
+}

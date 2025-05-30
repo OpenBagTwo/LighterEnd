@@ -6,6 +6,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
 import io.github.openbagtwo.lighterend.registries.LighterEndEquipment;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
+import io.github.openbagtwo.lighterend.registries.LighterEndMusicDiscs;
 import java.util.Arrays;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -114,6 +115,10 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndItems.END_FISH_BUCKET,
         LighterEndItems.CUBOZOA_BUCKET,
         LighterEndItems.RAW_END_FISH,
+        LighterEndMusicDiscs.ENDSEEKER,
+        LighterEndMusicDiscs.EO_DRACONA,
+        LighterEndMusicDiscs.GRASPING_AT_STARS,
+        LighterEndMusicDiscs.STRANGE_AND_ALIEN,
         LighterEndBlocks.CREEPING_MOSS.asItem(),
         LighterEndBlocks.END_MOSS.asItem(),
         LighterEndBlocks.UMBRELLA_FERN.asItem(),
