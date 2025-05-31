@@ -103,7 +103,7 @@ public class LighterEndBlocks {
           applyLeafSettings(settings.mapColor(MapColor.PINK))
       )
   );
-  public static Block SILK_MOTH_NEST = register("silk_moth_nest", SilkMothNest::new);
+  public static Block SILK_MOTH_NEST = register("silk_moth_nest", SilkMothNest::new, false);
 
   public static Block UMBRELLA_TREE_CLUSTER = register("umbrella_tree_cluster",
       UmbrellaTreeCluster::new);

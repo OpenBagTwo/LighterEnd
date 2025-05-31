@@ -75,9 +75,12 @@ public class LighterEndBlockEntities {
         Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type,
         ComponentsAccess components) {
       textConsumer.accept(
-          Text.translatable(LighterEnd.MOD_ID, "container.silk_moth_nest.moths", this.moths.size(),
-              3).formatted(
-              Formatting.GRAY));
+          Text.translatable(
+              "container." + LighterEnd.MOD_ID + "silk_moth_nest.moths",
+              this.moths.size(),
+              SilkMothNestEntity.MAX_MOTH_COUNT
+          ).formatted(Formatting.GRAY)
+      );
     }
   }
 

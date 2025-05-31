@@ -121,7 +121,7 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
                 .conditionally(this.createSilkTouchCondition())
                 .rolls(ConstantLootNumberProvider.create(1.0F))
                 .with(
-                    ItemEntry.builder(LighterEndBlocks.SILK_MOTH_NEST)
+                    ItemEntry.builder(LighterEndItems.SILK_MOTH_NEST)
                         .apply(CopyComponentsLootFunction.builder(
                             CopyComponentsLootFunction.Source.BLOCK_ENTITY).include(MOTHS
                         ))

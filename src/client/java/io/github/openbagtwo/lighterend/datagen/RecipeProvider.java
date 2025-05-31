@@ -144,7 +144,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             LighterEndItems.SILK_MATRIX
         );
 
-        createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.SILK_MOTH_NEST)
+        createShaped(RecipeCategory.DECORATIONS, LighterEndItems.SILK_MOTH_NEST)
             .pattern("PPP")
             .pattern("MMM")
             .pattern("PPP")
