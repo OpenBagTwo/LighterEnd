@@ -77,7 +77,8 @@ public class SilkMothNest extends BlockWithEntity {
   public static final MapCodec<SilkMothNest> CODEC = createCodec(
       SilkMothNest::new);
   public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
-  public static final IntProperty FULLNESS = IntProperty.of("fullness", 0, 3);
+  public static final int MAX_FULLNESS = 3;
+  public static final IntProperty FULLNESS = IntProperty.of("fullness", 0, MAX_FULLNESS);
 
 
   @Override
@@ -110,18 +111,25 @@ public class SilkMothNest extends BlockWithEntity {
   }
 
   @Override
-  public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state,
-      @Nullable BlockEntity blockEntity, ItemStack tool) {
+  public void afterBreak(
+      World world,
+      PlayerEntity player,
+      BlockPos pos,
+      BlockState state,
+      @Nullable BlockEntity blockEntity,
+      ItemStack tool
+  ) {
     super.afterBreak(world, player, pos, state, blockEntity, tool);
     if (!world.isClient && blockEntity instanceof SilkMothNestEntity nestEntity) {
-      if (!EnchantmentHelper.hasAnyEnchantmentsIn(tool,
-          EnchantmentTags.PREVENTS_BEE_SPAWNS_WHEN_MINING)) {
-        ItemScatterer.onStateReplaced(state, world, pos);
+      if (!EnchantmentHelper.hasAnyEnchantmentsIn(
+          tool, EnchantmentTags.PREVENTS_BEE_SPAWNS_WHEN_MINING
+      )) {
         nestEntity.tryReleaseMoths(state);
+        ItemScatterer.onStateReplaced(state, world, pos);
+
       }
     }
   }
-
 
   public static void dropSilk(World world, BlockPos pos) {
     dropStack(world, pos, new ItemStack(LighterEndItems.SILK, 3));
@@ -132,7 +140,7 @@ public class SilkMothNest extends BlockWithEntity {
       PlayerEntity player, Hand hand, BlockHitResult hit) {
     int i = state.get(FULLNESS);
     boolean bl = false;
-    if (i >= 3) {
+    if (i >= MAX_FULLNESS) {
       Item item = stack.getItem();
       if (stack.isOf(Items.SHEARS)) {
         world.playSound(player, player.getX(), player.getY(), player.getZ(),
@@ -192,19 +200,26 @@ public class SilkMothNest extends BlockWithEntity {
 
   @Override
   public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-    if (world instanceof ServerWorld serverWorld
-        && player.shouldSkipBlockDrops()
-        && serverWorld.getGameRules().getBoolean(GameRules.DO_TILE_DROPS)
-        && world.getBlockEntity(pos) instanceof SilkMothNestEntity nestEntity) {
-      int i = state.get(FULLNESS);
-      boolean bl = nestEntity.getOccupancy() > 0;
-      if (bl || i > 0) {
+    if (
+        world instanceof ServerWorld serverWorld
+            && player.shouldSkipBlockDrops()
+            && serverWorld.getGameRules().getBoolean(GameRules.DO_TILE_DROPS)
+            && world.getBlockEntity(pos) instanceof SilkMothNestEntity nestEntity
+    ) {
+      int fullness = state.get(FULLNESS);
+      boolean occupied = nestEntity.getOccupancy() > 0;
+      if (occupied || fullness > 0) {
         ItemStack itemStack = new ItemStack(this);
         itemStack.applyComponentsFrom(nestEntity.createComponentMap());
         itemStack.set(
-            DataComponentTypes.BLOCK_STATE, BlockStateComponent.DEFAULT.with(FULLNESS, i));
-        ItemEntity itemEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(),
-            itemStack);
+            DataComponentTypes.BLOCK_STATE, BlockStateComponent.DEFAULT.with(FULLNESS, fullness));
+        ItemEntity itemEntity = new ItemEntity(
+            world,
+            pos.getX(),
+            pos.getY(),
+            pos.getZ(),
+            itemStack
+        );
         itemEntity.setToDefaultPickupDelay();
         world.spawnEntity(itemEntity);
       }

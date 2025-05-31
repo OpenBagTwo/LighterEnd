@@ -8,12 +8,13 @@ import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.mobs.SilkMoth;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities.MothsComponent;
+import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
+import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
 import io.netty.buffer.ByteBuf;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FireBlock;
 import net.minecraft.block.entity.BlockEntity;
@@ -23,7 +24,6 @@ import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
@@ -84,7 +84,6 @@ public class SilkMothNestEntity extends BlockEntity {
     if (this.isNearFire()) {
       this.tryReleaseMoths(this.world.getBlockState(this.getPos()));
     }
-
     super.markDirty();
   }
 
@@ -109,7 +108,7 @@ public class SilkMothNestEntity extends BlockEntity {
   public List<Entity> tryReleaseMoths(BlockState state) {
     List<Entity> list = Lists.<Entity>newArrayList();
     this.moths.removeIf(
-        moth -> releaseMoth(this.world, this.pos, state, moth.createData(), list));
+        moth -> releaseMoth(this.world, this.pos, state, moth.createData(), list, true));
     if (!list.isEmpty()) {
       super.markDirty();
     }
@@ -120,7 +119,7 @@ public class SilkMothNestEntity extends BlockEntity {
     return state.get(SilkMothNest.FULLNESS);
   }
 
-  public void tryEnterHive(BeeEntity entity) {
+  public void tryEnterHive(SilkMoth entity) {
     if (this.moths.size() < MAX_MOTH_COUNT) {
       entity.stopRiding();
       entity.removeAllPassengers();
@@ -152,28 +151,32 @@ public class SilkMothNestEntity extends BlockEntity {
       BlockPos pos,
       BlockState state,
       MothData moth,
-      @Nullable List<Entity> entities
+      @Nullable List<Entity> entities,
+      boolean emergency
   ) {
 
-    Direction direction = state.get(BeehiveBlock.FACING);
+    Direction direction = state.get(SilkMothNest.FACING);
     BlockPos blockPos = pos.offset(direction);
     boolean bl = !world.getBlockState(blockPos).getCollisionShape(world, blockPos).isEmpty();
     if (bl) {
       return false;
     } else {
       Entity entity = moth.loadEntity(world, pos);
+
       if (entity != null) {
         if (entity instanceof SilkMoth mothEntity) {
 
-          if (state.contains(SilkMothNest.FULLNESS)) {
-            int i = getFullness(state);
-            if (i < 5) {
-              int j = world.random.nextInt(100) == 0 ? 2 : 1;
-              if (i + j > 5) {
-                j--;
+          if (state.isOf(LighterEndBlocks.SILK_MOTH_NEST) && !emergency) {
+            int current_fullness = getFullness(state);
+            if (current_fullness < SilkMothNest.MAX_FULLNESS) {
+              int additional_fullness = 1;
+              if (current_fullness + additional_fullness < SilkMothNest.MAX_FULLNESS) {
+                if (world.random.nextInt(100) == 0) {  // 1% chance of bonus fullness
+                  additional_fullness += 1;
+                }
               }
-
-              world.setBlockState(pos, state.with(SilkMothNest.FULLNESS, i + j));
+              world.setBlockState(pos,
+                  state.with(SilkMothNest.FULLNESS, current_fullness + additional_fullness));
             }
           }
 
@@ -209,7 +212,7 @@ public class SilkMothNestEntity extends BlockEntity {
     while (iterator.hasNext()) {
       Moth moth = iterator.next();
       if (moth.canExitHive()) {
-        if (releaseMoth(world, pos, state, moth.createData(), null)) {
+        if (releaseMoth(world, pos, state, moth.createData(), null, false)) {
           bl = true;
           iterator.remove();
         }
@@ -320,9 +323,13 @@ public class SilkMothNestEntity extends BlockEntity {
 
     public static MothData create(int ticksInHive) {
       NbtCompound nbtCompound = new NbtCompound();
-      nbtCompound.putString("id", Registries.ENTITY_TYPE.getId(EntityType.BEE).toString());
-      return new MothData(NbtComponent.of(nbtCompound),
-          ticksInHive, 600);
+      nbtCompound.putString("id",
+          Registries.ENTITY_TYPE.getId(LighterEndMobs.SILK_MOTH.mob).toString());
+      return new MothData(
+          NbtComponent.of(nbtCompound),
+          ticksInHive,
+          MIN_OCCUPATION_TICKS
+      );
     }
 
     @Nullable
