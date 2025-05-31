@@ -42,7 +42,7 @@ public class EndMoss extends MossBlock {
 
   @Override
   protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-    if (!stayAlive(state, world, pos) && (random.nextInt(16) == 0)) {
+    if (!stayAlive(state, world, pos)) {
       world.setBlockState(pos, Blocks.END_STONE.getDefaultState());
     }
   }
