@@ -8,6 +8,7 @@ import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.mobs.SilkMoth;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities.MothsComponent;
+import io.github.openbagtwo.lighterend.tags.LighterEndTags;
 import io.netty.buffer.ByteBuf;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -27,7 +28,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.storage.NbtWriteView;
@@ -70,8 +70,8 @@ public class SilkMothNestEntity extends BlockEntity {
       "leash",
       "UUID"
   );
-  public static final int MAX_MOTH_COUNT = 3;
-  private static final int MIN_OCCUPATION_TICKS = 2400;
+  public static final int MAX_MOTH_COUNT = 1;
+  public static final int MIN_OCCUPATION_TICKS = 2400;
   private final List<Moth> moths = Lists.newArrayList();
 
 
@@ -154,6 +154,7 @@ public class SilkMothNestEntity extends BlockEntity {
       MothData moth,
       @Nullable List<Entity> entities
   ) {
+
     Direction direction = state.get(BeehiveBlock.FACING);
     BlockPos blockPos = pos.offset(direction);
     boolean bl = !world.getBlockState(blockPos).getCollisionShape(world, blockPos).isEmpty();
@@ -331,7 +332,7 @@ public class SilkMothNestEntity extends BlockEntity {
           nbtCompound::remove);
       Entity entity = EntityType.loadEntityWithPassengers(nbtCompound, world, SpawnReason.LOAD,
           entityx -> entityx);
-      if (entity != null && entity.getType().isIn(EntityTypeTags.BEEHIVE_INHABITORS)) {
+      if (entity != null && entity.getType().isIn(LighterEndTags.MOTH_NEST_INHABITORS)) {
         entity.setNoGravity(true);
         if (entity instanceof SilkMoth mothEntity) {
           mothEntity.setHive(mothEntity.getWorld(), pos);

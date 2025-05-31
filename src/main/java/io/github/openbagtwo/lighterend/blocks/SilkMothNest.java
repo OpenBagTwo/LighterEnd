@@ -292,11 +292,11 @@ public class SilkMothNest extends BlockWithEntity {
     }
 
     @Override
-    public boolean generate(FeatureContext<DefaultFeatureConfig> featureConfig) {
+    public boolean generate(FeatureContext<DefaultFeatureConfig> generator) {
       final Mutable POS = GlobalState.stateForThread().POS;
-      final Random random = featureConfig.getRandom();
-      final BlockPos center = featureConfig.getOrigin();
-      final StructureWorldAccess world = featureConfig.getWorld();
+      final Random random = generator.getRandom();
+      final BlockPos center = generator.getOrigin();
+      final StructureWorldAccess world = generator.getWorld();
       int maxY = world.getTopY(Heightmap.Type.WORLD_SURFACE, center.getX(), center.getZ());
       int minY = upRay(world, new BlockPos(center.getX(), 0, center.getZ()), maxY);
       POS.set(center);
@@ -310,6 +310,10 @@ public class SilkMothNest extends BlockWithEntity {
                   .with(Properties.HORIZONTAL_FACING, dir),
               Flags.SILENT
           );
+          world.getBlockEntity(POS, LighterEndBlockEntities.SILK_MOTH_NEST).ifPresent(nest ->
+              nest.addMoth(SilkMothNestEntity.MothData.create(
+                  random.nextInt(SilkMothNestEntity.MIN_OCCUPATION_TICKS))));
+
           POS.setY(y - 1);
           world.setBlockState(
               POS,
@@ -317,6 +321,9 @@ public class SilkMothNest extends BlockWithEntity {
                   .with(Properties.HORIZONTAL_FACING, dir),
               Flags.SILENT
           );
+          world.getBlockEntity(POS, LighterEndBlockEntities.SILK_MOTH_NEST).ifPresent(nest ->
+              nest.addMoth(SilkMothNestEntity.MothData.create(
+                  random.nextInt(SilkMothNestEntity.MIN_OCCUPATION_TICKS))));
           return true;
         }
       }

@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.datagen;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
+import io.github.openbagtwo.lighterend.tags.LighterEndTags;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -33,5 +34,8 @@ public class MobTagProvider extends FabricTagProvider.EntityTypeTagProvider {
 //        LighterEndMobs.END_FISH.mob,
 //        LighterEndMobs.CUBOZOA.mob
 //    );
+    valueLookupBuilder(LighterEndTags.MOTH_NEST_INHABITORS).add(
+        LighterEndMobs.SILK_MOTH.mob
+    );
   }
 }
