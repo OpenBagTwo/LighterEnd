@@ -33,7 +33,7 @@ Subject, of course, to change
 - [x] **Alpha 2**: First "features"—at least two trees, plus either a ruin or a lake—that can be
   `/place`d into a world, along with their associated blocks (read: wood sets) and at least one mob
 - [x] **Alpha 3**: An armored elytra (see below)
-- [ ] **Alpha 4** Bring back the music discs and modify the vanilla loot tables to provide them
+- [x] **Alpha 4** Bring back the music discs and modify the vanilla loot tables to provide them
 - [ ] **First Beta**: Introduce the first biomes and a start modifying the worldgen so stuff
   naturally spawns
 - [ ] **First Release**: Enough worldgen that the experience can be enjoyed without needing to
