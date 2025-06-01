@@ -80,6 +80,20 @@ jar {
     }
 }
 
+shadowJar {
+    from sourceSets.main.output
+    from sourceSets.client.output
+
+    configurations = [project.configurations.shadow]
+    archiveClassifier.set("dev")
+    relocate "org.yaml", "{${project.maven_group}.${project.archivesBaseName}.shadow.org.yaml"
+}
+
+remapJar {
+    dependsOn(shadowJar)
+    inputFile = tasks.shadowJar.archiveFile
+}
+
 sourcesJar {
     // exclude means "keep original" (assets takes priority over generated assets)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
