@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "lighterend:block/charnia_cyan"
+      },
+      {
+        "model": "lighterend:block/charnia_cyan",
+        "y": 90
+      },
+      {
+        "model": "lighterend:block/charnia_cyan",
+        "y": 180
+      },
+      {
+        "model": "lighterend:block/charnia_cyan",
+        "y": 270
+      }
+    ]
+  }
+}

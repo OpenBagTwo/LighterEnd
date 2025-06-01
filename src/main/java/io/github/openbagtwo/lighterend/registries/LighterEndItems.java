@@ -52,6 +52,7 @@ public class LighterEndItems {
           .component(DataComponentTypes.BUCKET_ENTITY_DATA, NbtComponent.DEFAULT));
   public static final Item RAW_END_FISH = register("end_fish", new Settings()
       .food(FoodComponents.TROPICAL_FISH));
+  public static final Item GLOW_BARB = register("glow_barb");
 
   public static Item register(String name) {
     return register(name, new Settings());

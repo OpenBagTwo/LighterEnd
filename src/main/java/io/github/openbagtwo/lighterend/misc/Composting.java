@@ -16,6 +16,12 @@ public class Composting {
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.TENANEA_LEAVES, 0.3F);
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.UMBRELLA_TREE_CLUSTER, 0.85F);
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY, 0.65F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.CHARNIA_CYAN, 0.65F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.CHARNIA_GREEN, 0.65F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.CHARNIA_LIGHT_BLUE, 0.65F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.CHARNIA_ORANGE, 0.65F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.CHARNIA_PURPLE, 0.65F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.CHARNIA_RED, 0.65F);
   }
 
 }

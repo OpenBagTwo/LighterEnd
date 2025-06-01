@@ -174,32 +174,39 @@ public class RecipeProvider extends FabricRecipeProvider {
                 this.conditionsFromItem(LighterEndBlocks.UMBRELLA_MEMBRANE))
             .offerTo(this.exporter);
 
-        CookingRecipeJsonBuilder.createSmelting(
-            Ingredient.ofItem(LighterEndItems.RAW_END_FISH),
-            RecipeCategory.DECORATIONS,
-            Items.GLOW_INK_SAC,
-            0.35F,
-            200
-        ).criterion(hasItem(LighterEndItems.RAW_END_FISH),
-            conditionsFromItem(LighterEndItems.RAW_END_FISH)
-        ).offerTo(
-            exporter,
-            RegistryKey.of(RegistryKeys.RECIPE,
-                Registries.ITEM.getId(LighterEndItems.RAW_END_FISH).withSuffixedPath("_smelting"))
-        );
-        CookingRecipeJsonBuilder.createSmoking(
-            Ingredient.ofItem(LighterEndItems.RAW_END_FISH),
-            RecipeCategory.DECORATIONS,
-            Items.GLOW_INK_SAC,
-            0.35F,
-            100
-        ).criterion(hasItem(LighterEndItems.RAW_END_FISH),
-            conditionsFromItem(LighterEndItems.RAW_END_FISH)
-        ).offerTo(
-            exporter,
-            RegistryKey.of(RegistryKeys.RECIPE,
-                Registries.ITEM.getId(LighterEndItems.RAW_END_FISH).withSuffixedPath("_smoking"))
-        );
+        generateSmokingSmeltingRecipes(LighterEndItems.RAW_END_FISH, Items.GLOW_INK_SAC,
+            RecipeCategory.MISC);
+
+        generateSmokingSmeltingRecipes(LighterEndBlocks.CHARNIA_CYAN, Items.CYAN_DYE,
+            RecipeCategory.MISC);
+        generateSmokingSmeltingRecipes(LighterEndBlocks.CHARNIA_GREEN, Items.GREEN_DYE,
+            RecipeCategory.MISC);
+        generateSmokingSmeltingRecipes(LighterEndBlocks.CHARNIA_LIGHT_BLUE, Items.LIGHT_BLUE_DYE,
+            RecipeCategory.MISC);
+        generateSmokingSmeltingRecipes(LighterEndBlocks.CHARNIA_ORANGE, Items.ORANGE_DYE,
+            RecipeCategory.MISC);
+        generateSmokingSmeltingRecipes(LighterEndBlocks.CHARNIA_PURPLE, Items.PURPLE_DYE,
+            RecipeCategory.MISC);
+        generateSmokingSmeltingRecipes(LighterEndBlocks.CHARNIA_RED, Items.RED_DYE,
+            RecipeCategory.MISC);
+
+        createShaped(RecipeCategory.COMBAT, Items.SPECTRAL_ARROW, 4)
+            .pattern("X")
+            .pattern("#")
+            .pattern("Y")
+            .input('X', LighterEndItems.GLOW_BARB)
+            .input('#', Items.STICK)
+            .input('Y', Ingredient.ofItems(
+                LighterEndBlocks.CHARNIA_CYAN,
+                LighterEndBlocks.CHARNIA_GREEN,
+                LighterEndBlocks.CHARNIA_LIGHT_BLUE,
+                LighterEndBlocks.CHARNIA_ORANGE,
+                LighterEndBlocks.CHARNIA_PURPLE,
+                LighterEndBlocks.CHARNIA_RED)
+            ).criterion(
+                hasItem(LighterEndItems.GLOW_BARB),
+                conditionsFromItem(LighterEndItems.GLOW_BARB)
+            ).offerTo(exporter);
       }
 
       public void generateMaterialRecipes(Material material) {
@@ -359,10 +366,30 @@ public class RecipeProvider extends FabricRecipeProvider {
       }
 
       public void generateCookingRecipes(ItemConvertible input, ItemConvertible output) {
+        generateSmokingSmeltingRecipes(input, output, RecipeCategory.FOOD);
+
+        CookingRecipeJsonBuilder.createCampfireCooking(
+            Ingredient.ofItem(input),
+            RecipeCategory.FOOD,
+            output,
+            0.35F,
+            600
+        ).criterion(hasItem(input), conditionsFromItem(input)
+        ).offerTo(
+            exporter,
+            RegistryKey.of(
+                RegistryKeys.RECIPE,
+                Registries.ITEM.getId(output.asItem()).withSuffixedPath("_campfire")
+            )
+        );
+      }
+
+      public void generateSmokingSmeltingRecipes(ItemConvertible input, ItemConvertible output,
+          RecipeCategory category) {
         Identifier output_key = Registries.ITEM.getId(output.asItem());
         CookingRecipeJsonBuilder.createSmelting(
             Ingredient.ofItem(input),
-            RecipeCategory.FOOD,
+            category,
             output,
             0.35F,
             200
@@ -373,25 +400,15 @@ public class RecipeProvider extends FabricRecipeProvider {
         );
         CookingRecipeJsonBuilder.createSmoking(
             Ingredient.ofItem(input),
-            RecipeCategory.FOOD,
+            category,
             output,
             0.35F,
             100
-        ).criterion(hasItem(input), conditionsFromItem(input)
+        ).criterion(hasItem(input),
+            conditionsFromItem(input)
         ).offerTo(
             exporter,
             RegistryKey.of(RegistryKeys.RECIPE, output_key.withSuffixedPath("_smoking"))
-        );
-        CookingRecipeJsonBuilder.createCampfireCooking(
-            Ingredient.ofItem(input),
-            RecipeCategory.FOOD,
-            output,
-            0.35F,
-            600
-        ).criterion(hasItem(input), conditionsFromItem(input)
-        ).offerTo(
-            exporter,
-            RegistryKey.of(RegistryKeys.RECIPE, output_key.withSuffixedPath("_campfire"))
         );
       }
     };

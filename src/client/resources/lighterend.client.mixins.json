@@ -1,6 +1,6 @@
 {
   "client": [
-    "ColorPrividingMixin"
+    "ColorProvidingMixin"
   ],
   "compatibilityLevel": "JAVA_21",
   "injectors": {

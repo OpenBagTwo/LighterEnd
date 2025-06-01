@@ -1,0 +1,6 @@
+{
+  "parent": "lighterend:block/charnia",
+  "textures": {
+    "texture": "lighterend:block/charnia_cyan"
+  }
+}

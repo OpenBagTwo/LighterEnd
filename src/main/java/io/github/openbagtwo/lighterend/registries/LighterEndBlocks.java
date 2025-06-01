@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.AuroraCrystal;
+import io.github.openbagtwo.lighterend.blocks.Charnia;
 import io.github.openbagtwo.lighterend.blocks.CreepingMoss;
 import io.github.openbagtwo.lighterend.blocks.DragonBone;
 import io.github.openbagtwo.lighterend.blocks.EndMoss;
@@ -113,6 +114,13 @@ public class LighterEndBlocks {
       settings -> new Sapling(UmbrellaTree::new, settings.mapColor(MapColor.BRIGHT_TEAL)));
   public static Wood UMBRELLA = new Wood("umbrella", MapColor.BLUE, MapColor.GREEN);
   public static Block UMBRELLA_MEMBRANE = register("umbrella_membrane", UmbrellaMembrane::new);
+
+  public static final Block CHARNIA_CYAN = register("charnia_cyan", Charnia::new);
+  public static final Block CHARNIA_GREEN = register("charnia_green", Charnia::new);
+  public static final Block CHARNIA_LIGHT_BLUE = register("charnia_light_blue", Charnia::new);
+  public static final Block CHARNIA_ORANGE = register("charnia_orange", Charnia::new);
+  public static final Block CHARNIA_PURPLE = register("charnia_purple", Charnia::new);
+  public static final Block CHARNIA_RED = register("charnia_red", Charnia::new);
 
 
   public static Block register(String name, Function<Settings, Block> factory) {

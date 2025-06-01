@@ -19,6 +19,11 @@ public class LighterEndTags {
       LighterEnd.of("end_soil")
   );
 
+  public static final TagKey<Block> END_SOIL_AQUATIC = TagKey.of(
+      RegistryKeys.BLOCK,
+      LighterEnd.of("end_soil_aquatic")
+  );
+
   public static final TagKey<Block> END_STONES = TagKey.of(
       RegistryKeys.BLOCK,
       LighterEnd.of("end_stones")

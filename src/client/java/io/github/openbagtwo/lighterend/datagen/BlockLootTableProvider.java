@@ -85,6 +85,13 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
       addDrop(block);
     }
     addDrop(LighterEndBlocks.UMBRELLA_MEMBRANE);
+
+    addDrop(LighterEndBlocks.CHARNIA_CYAN, this::dropsWithSilkTouchOrShears);
+    addDrop(LighterEndBlocks.CHARNIA_GREEN, this::dropsWithSilkTouchOrShears);
+    addDrop(LighterEndBlocks.CHARNIA_LIGHT_BLUE, this::dropsWithSilkTouchOrShears);
+    addDrop(LighterEndBlocks.CHARNIA_ORANGE, this::dropsWithSilkTouchOrShears);
+    addDrop(LighterEndBlocks.CHARNIA_PURPLE, this::dropsWithSilkTouchOrShears);
+    addDrop(LighterEndBlocks.CHARNIA_RED, this::dropsWithSilkTouchOrShears);
   }
 
   private LootTable.Builder auroraCrystalDrops() {
