@@ -92,17 +92,14 @@ public class SilkMothNestEntity extends BlockEntity {
   }
 
   public boolean isNearFire() {
-    if (this.world == null) {
-      return false;
-    } else {
+    if (this.world != null) {
       for (BlockPos blockPos : BlockPos.iterate(this.pos.add(-1, -1, -1), this.pos.add(1, 1, 1))) {
         if (this.world.getBlockState(blockPos).getBlock() instanceof FireBlock) {
           return true;
         }
       }
-
-      return false;
     }
+    return false;
   }
 
   public List<Entity> tryReleaseMoths(BlockState state) {
@@ -178,6 +175,7 @@ public class SilkMothNestEntity extends BlockEntity {
               world.setBlockState(pos,
                   state.with(SilkMothNest.FULLNESS, current_fullness + additional_fullness));
             }
+            mothEntity.resetCannotEnterHiveTicks();
           }
 
           if (entities != null) {
@@ -342,7 +340,7 @@ public class SilkMothNestEntity extends BlockEntity {
       if (entity != null && entity.getType().isIn(LighterEndTags.MOTH_NEST_INHABITORS)) {
         entity.setNoGravity(true);
         if (entity instanceof SilkMoth mothEntity) {
-          mothEntity.setHive(mothEntity.getWorld(), pos);
+          mothEntity.setHive(pos);
           tickEntity(this.ticksInHive, mothEntity);
         }
         return entity;
