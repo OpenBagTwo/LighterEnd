@@ -4,7 +4,8 @@
     "defaultRequire": 1
   },
   "mixins": [
-    "GlideDecayMixin"
+    "GlideDecayMixin",
+    "UnderwaterBonemealMixin"
   ],
   "package": "io.github.openbagtwo.lighterend.mixin",
   "required": true

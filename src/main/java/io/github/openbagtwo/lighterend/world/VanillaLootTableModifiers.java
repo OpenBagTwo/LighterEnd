@@ -13,7 +13,7 @@ public class VanillaLootTableModifiers {
   public static void patchLootTables(Config config) {
     LootTableEvents.MODIFY.register((key, tableBuilder, source, registry) -> {
           if (LootTables.END_CITY_TREASURE_CHEST.equals(key)) {
-            if (config.getMusicDiscsInEndCitiesSetting()) {
+            if (config.musicDiscsAreFoundInEndCities()) {
               tableBuilder.pool(LootPool.builder()
                   .rolls(UniformLootNumberProvider.create(0, 1))
                   .with(ItemEntry.builder(LighterEndMusicDiscs.STRANGE_AND_ALIEN))

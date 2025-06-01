@@ -64,7 +64,7 @@ public class Charnia extends PlantBlock implements Fertilizable, FluidFillable {
   @Override
   protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
     return floor.isSideSolidFullSquare(world, pos, Direction.UP) && floor.isIn(
-        LighterEndTags.END_SOIL_AQUATIC);
+        LighterEndTags.AQUATIC_END_SOIL);
   }
 
   @Nullable

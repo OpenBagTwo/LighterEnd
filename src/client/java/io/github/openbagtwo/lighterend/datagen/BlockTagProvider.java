@@ -154,7 +154,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.VIRID_JADESTONE.baseBlock,
             LighterEndBlocks.UMBRALITH.baseBlock
         );
-    valueLookupBuilder(LighterEndTags.END_SOIL_AQUATIC)
+    valueLookupBuilder(LighterEndTags.AQUATIC_END_SOIL)
         .add(
             Blocks.END_STONE,
             Blocks.BLACKSTONE,
@@ -168,6 +168,15 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             Blocks.MUD,
             LighterEndBlocks.UMBRALITH.baseBlock,
             LighterEndBlocks.END_MOSS  // though pretty sure this won't survive underwater
+        );
+    valueLookupBuilder(LighterEndTags.AQUATIC_END_VEGETATION)
+        .add(
+            LighterEndBlocks.CHARNIA_CYAN,
+            LighterEndBlocks.CHARNIA_GREEN,
+            LighterEndBlocks.CHARNIA_LIGHT_BLUE,
+            LighterEndBlocks.CHARNIA_ORANGE,
+            LighterEndBlocks.CHARNIA_PURPLE,
+            LighterEndBlocks.CHARNIA_RED
         );
 
 

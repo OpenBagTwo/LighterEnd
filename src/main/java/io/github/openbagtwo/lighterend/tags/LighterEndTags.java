@@ -9,6 +9,11 @@ import net.minecraft.registry.tag.TagKey;
 
 public class LighterEndTags {
 
+  public static final TagKey<Block> END_STONES = TagKey.of(
+      RegistryKeys.BLOCK,
+      LighterEnd.of("end_stones")
+  );
+
   public static final TagKey<Block> END_MOSS_REPLACEABLE = TagKey.of(
       RegistryKeys.BLOCK,
       LighterEnd.of("end_moss_replaceable")
@@ -19,14 +24,14 @@ public class LighterEndTags {
       LighterEnd.of("end_soil")
   );
 
-  public static final TagKey<Block> END_SOIL_AQUATIC = TagKey.of(
+  public static final TagKey<Block> AQUATIC_END_SOIL = TagKey.of(
       RegistryKeys.BLOCK,
       LighterEnd.of("end_soil_aquatic")
   );
 
-  public static final TagKey<Block> END_STONES = TagKey.of(
+  public static final TagKey<Block> AQUATIC_END_VEGETATION = TagKey.of(
       RegistryKeys.BLOCK,
-      LighterEnd.of("end_stones")
+      LighterEnd.of("end_vegetation_aquatic")
   );
 
   public static final TagKey<Item> REPAIRS_SILK_ARMOR = TagKey.of(

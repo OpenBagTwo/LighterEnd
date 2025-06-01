@@ -28,6 +28,11 @@ public class ConfigScreen extends GameOptionsScreen {
               this.config.musicDiscsInEndCities, (value) -> {
                 this.config.musicDiscsInEndCities = value;
               }));
+      this.body.addSingleOptionEntry(
+          SimpleOption.ofBoolean("Bonemealing Underwater in The End Produces End Vegetation",
+              this.config.bonemealUnderwaterInEndMakesEndVegetation, (value) -> {
+                this.config.bonemealUnderwaterInEndMakesEndVegetation = value;
+              }));
     }
   }
 

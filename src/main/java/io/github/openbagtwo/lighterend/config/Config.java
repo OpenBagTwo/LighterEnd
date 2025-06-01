@@ -30,12 +30,18 @@ public class Config {
    */
   protected boolean musicDiscsInEndCities;
 
-
   /**
-   * Determine whether shriekers should cause darkness
+   * Whether using bonemeal underwater in The End should produce modded underwater vegetation
    */
-  public boolean getMusicDiscsInEndCitiesSetting() {
+  protected boolean bonemealUnderwaterInEndMakesEndVegetation;
+
+
+  public boolean musicDiscsAreFoundInEndCities() {
     return this.musicDiscsInEndCities;
+  }
+
+  public boolean bonemealingUnderwaterInEndProducesEndVegetation() {
+    return this.bonemealUnderwaterInEndMakesEndVegetation;
   }
 
 
@@ -43,6 +49,7 @@ public class Config {
    * Default values
    */
   private static final boolean DEFAULT_MUSIC_DISCS_IN_END_CITIES = true;
+  private static final boolean DEFAULT_UNDERWATER_BONEMEAL_SETTING = true;
 
   /**
    * Load the mod configuration, however you have to
@@ -90,6 +97,8 @@ public class Config {
     }
     Map<String, Object> writeme = new LinkedHashMap<>();
     writeme.put("music_discs_found_in_end_cities", this.musicDiscsInEndCities);
+    writeme.put("bonemealing_underwater_in_the_end_produces_end_vegetation",
+        this.bonemealUnderwaterInEndMakesEndVegetation);
 
     (new Yaml(configFormat)).dump(writeme, configWriter);
     LighterEnd.LOGGER.info(
@@ -104,6 +113,7 @@ public class Config {
     LighterEnd.LOGGER.info("Loading default " + LighterEnd.MOD_NAME + " configuration");
     Config config = new Config();
     config.musicDiscsInEndCities = DEFAULT_MUSIC_DISCS_IN_END_CITIES;
+    config.bonemealUnderwaterInEndMakesEndVegetation = DEFAULT_UNDERWATER_BONEMEAL_SETTING;
     return config;
   }
 
@@ -124,6 +134,8 @@ public class Config {
     }
     Map<String, Object> writeme = new LinkedHashMap<>();
     writeme.put("music_discs_found_in_end_cities", DEFAULT_MUSIC_DISCS_IN_END_CITIES);
+    writeme.put("bonemealing_underwater_in_the_end_produces_end_vegetation",
+        DEFAULT_UNDERWATER_BONEMEAL_SETTING);
 
     (new Yaml(configFormat)).dump(writeme, configWriter);
     LighterEnd.LOGGER.info(
@@ -153,9 +165,16 @@ public class Config {
               DEFAULT_MUSIC_DISCS_IN_END_CITIES
           ).toString()
       );
+      boolean underwaterBonemealSetting = Boolean.parseBoolean(
+          settings.getOrDefault(
+              "bonemealing_underwater_in_the_end_produces_end_vegetation",
+              DEFAULT_UNDERWATER_BONEMEAL_SETTING
+          ).toString()
+      );
 
       Config config = new Config();
       config.musicDiscsInEndCities = musicDiscsInEndCities;
+      config.bonemealUnderwaterInEndMakesEndVegetation = underwaterBonemealSetting;
       return config;
 
     } catch (Exception e) {
