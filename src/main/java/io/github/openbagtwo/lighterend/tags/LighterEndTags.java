@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.world.biome.Biome;
 
 public class LighterEndTags {
 
@@ -42,5 +43,10 @@ public class LighterEndTags {
   public static final TagKey<EntityType<?>> MOTH_NEST_INHABITORS = TagKey.of(
       RegistryKeys.ENTITY_TYPE,
       LighterEnd.of("lives_in_moth_nests")
+  );
+
+  public static final TagKey<Biome> VANILLA_END_BIOMES = TagKey.of(
+      RegistryKeys.BIOME,
+      LighterEnd.of("end_biomes_vanilla")
   );
 }

@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.mixin.client;
 
 import io.github.openbagtwo.lighterend.blocks.AuroraCrystalRenderer;
+import io.github.openbagtwo.lighterend.blocks.EndMossRenderer;
 import io.github.openbagtwo.lighterend.blocks.TenaneaFlowerRenderer;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import net.minecraft.client.MinecraftClient;
@@ -26,6 +27,8 @@ public abstract class ColorProvidingMixin {
         LighterEndBlocks.AURORA_CRYSTAL);
     blockColors.registerColorProvider(TenaneaFlowerRenderer.getBlockColor(),
         LighterEndBlocks.TENANEA_FLOWER);
+    blockColors.registerColorProvider(EndMossRenderer.getBlockColor(),
+        LighterEndBlocks.END_MOSS);
   }
 
 }

@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.datagen;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBiomes;
+import io.github.openbagtwo.lighterend.tags.LighterEndTags;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -9,6 +10,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 
 public class BiomeTagProvider extends FabricTagProvider<Biome> {
 
@@ -22,6 +24,12 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
   protected void configure(WrapperLookup lookup) {
     builder(BiomeTags.IS_END).add(LighterEndBiomes.BLOSSOM_FOREST);
     builder(BiomeTags.END_CITY_HAS_STRUCTURE).add(LighterEndBiomes.BLOSSOM_FOREST);
-
+    builder(LighterEndTags.VANILLA_END_BIOMES).add(
+        BiomeKeys.THE_END,
+        BiomeKeys.END_BARRENS,
+        BiomeKeys.SMALL_END_ISLANDS,
+        BiomeKeys.END_MIDLANDS,
+        BiomeKeys.END_HIGHLANDS
+    );
   }
 }

@@ -1,6 +1,12 @@
 {
   "model": {
     "model": "lighterend:block/end_moss",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": 4904661
+      }
+    ],
     "type": "minecraft:model"
   }
 }
