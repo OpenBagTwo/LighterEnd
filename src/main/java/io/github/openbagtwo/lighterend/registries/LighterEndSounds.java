@@ -17,6 +17,11 @@ public class LighterEndSounds {
       "ambient.blossom.loop");
   public static final RegistryEntry<SoundEvent> BLOSSOM_MUSIC = registerReference("music.blossom");
 
+  public static final RegistryEntry<SoundEvent> UMBRELLA_AMBIENT = registerReference(
+      "ambient.umbrella.loop");
+  public static final RegistryEntry<SoundEvent> UMBRELLA_MUSIC = registerReference(
+      "music.umbrella");
+
 
   public static SoundEvent register(String name) {
     Identifier id = LighterEnd.of(name);

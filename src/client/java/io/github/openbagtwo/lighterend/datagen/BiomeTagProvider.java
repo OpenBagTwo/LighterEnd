@@ -22,8 +22,15 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
 
   @Override
   protected void configure(WrapperLookup lookup) {
-    builder(BiomeTags.IS_END).add(LighterEndBiomes.BLOSSOM_FOREST);
-    builder(BiomeTags.END_CITY_HAS_STRUCTURE).add(LighterEndBiomes.BLOSSOM_FOREST);
+    builder(BiomeTags.IS_END).add(
+        LighterEndBiomes.BLOSSOM_FOREST,
+        LighterEndBiomes.UMBRELLA_JUNGLE
+    );
+    builder(BiomeTags.END_CITY_HAS_STRUCTURE).add(
+        LighterEndBiomes.BLOSSOM_FOREST,
+        LighterEndBiomes.UMBRELLA_JUNGLE
+    );
+
     builder(LighterEndTags.VANILLA_END_BIOMES).add(
         BiomeKeys.THE_END,
         BiomeKeys.END_BARRENS,

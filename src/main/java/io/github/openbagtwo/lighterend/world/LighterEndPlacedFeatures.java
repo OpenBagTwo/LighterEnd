@@ -32,21 +32,20 @@ public class LighterEndPlacedFeatures {
     context.register(LUMECORN,
         new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.LUMECORN),
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
-                PlacedFeatures.createCountExtraModifier(2, 0.1f, 2),
+                PlacedFeatures.createCountExtraModifier(10, 0.1f, 2),
                 LighterEndBlocks.LUMECORN_SEED)));
     context.register(TENANEA_TREE,
         new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.TENANEA_TREE),
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
-                PlacedFeatures.createCountExtraModifier(2, 0.1f, 2),
+                PlacedFeatures.createCountExtraModifier(10, 0.5f, 2),
                 LighterEndBlocks.TENANEA_SAPLING)));
     context.register(MOTH_NEST,
         new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.MOTH_NEST),
             VegetationPlacedFeatures.modifiers(2)));
-
     context.register(UMBRELLA_TREE,
         new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.UMBRELLA_TREE),
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
-                PlacedFeatures.createCountExtraModifier(2, 0.1f, 2),
+                PlacedFeatures.createCountExtraModifier(1, 0.1f, 1),
                 LighterEndBlocks.UMBRELLA_TREE_SAPLING)));
 
   }

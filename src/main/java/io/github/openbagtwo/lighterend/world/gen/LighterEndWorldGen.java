@@ -19,6 +19,10 @@ public class LighterEndWorldGen {
   public static void modifyWorldGen(Config config) {
     if (config.generateBiomes()) {
       TheEndBiomes.addHighlandsBiome(LighterEndBiomes.BLOSSOM_FOREST, 1.0);
+
+      TheEndBiomes.addHighlandsBiome(LighterEndBiomes.UMBRELLA_JUNGLE, 1.0);
+      TheEndBiomes.addMidlandsBiome(LighterEndBiomes.UMBRELLA_JUNGLE,
+          LighterEndBiomes.UMBRELLA_JUNGLE, 1.0);
     }
   }
 
@@ -28,7 +32,10 @@ public class LighterEndWorldGen {
             STONE_DEPTH_FLOOR,
             sequence(
                 condition(
-                    biome(LighterEndBiomes.BLOSSOM_FOREST),
+                    biome(
+                        LighterEndBiomes.BLOSSOM_FOREST,
+                        LighterEndBiomes.UMBRELLA_JUNGLE
+                    ),
                     sequence(
                         condition(
                             noiseThreshold(NoiseParameters.END_MOSS_SURFACE, -0.5, 0.5),
