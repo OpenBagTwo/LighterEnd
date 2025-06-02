@@ -12,8 +12,10 @@ import net.minecraft.world.gen.feature.VegetationPlacedFeatures;
 
 public class LighterEndPlacedFeatures {
 
+  public static final RegistryKey<PlacedFeature> END_MOSS_VEGETATION = of("end_moss_vegetation");
   public static final RegistryKey<PlacedFeature> LUMECORN = of("lumecorn");
   public static final RegistryKey<PlacedFeature> TENANEA_TREE = of("tenanea_tree");
+  public static final RegistryKey<PlacedFeature> MOTH_NEST = of("moth_nest");
   public static final RegistryKey<PlacedFeature> UMBRELLA_TREE = of("umbrella_tree");
 
 
@@ -22,6 +24,11 @@ public class LighterEndPlacedFeatures {
         RegistryKeys.PLACED_FEATURE
     );
     var configuredFeatures = context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
+
+    context.register(END_MOSS_VEGETATION,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.END_MOSS_VEGETATION),
+            VegetationPlacedFeatures.modifiers(20)));
     context.register(LUMECORN,
         new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.LUMECORN),
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
@@ -32,6 +39,10 @@ public class LighterEndPlacedFeatures {
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
                 PlacedFeatures.createCountExtraModifier(2, 0.1f, 2),
                 LighterEndBlocks.TENANEA_SAPLING)));
+    context.register(MOTH_NEST,
+        new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.MOTH_NEST),
+            VegetationPlacedFeatures.modifiers(2)));
+
     context.register(UMBRELLA_TREE,
         new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.UMBRELLA_TREE),
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(

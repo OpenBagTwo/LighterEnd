@@ -4,7 +4,9 @@
     "defaultRequire": 1
   },
   "mixins": [
+    "ChunkGeneratorSettingsAccessor",
     "GlideDecayMixin",
+    "SurfaceGenMixin",
     "UnderwaterBonemealMixin"
   ],
   "package": "io.github.openbagtwo.lighterend.mixin",

@@ -118,12 +118,16 @@ All assets (textures, models) were created by the BetterX team.
 
 Music discs were composed, performed and recorded by Firel.
 
-Many thanks to the excellent tutorial mods developed by
-by [Kaupenjoe](https://github.com/Tutorials-By-Kaupenjoe/Fabric-Tutorial-1.21.X)
-and [TurtyWurty](https://github.com/DaRealTurtyWurty/1.21-Tutorial-Mod) and
-to [Pintér Gábor](https://github.com/pinter-gabor-at) and his
-[IronSigns mod](https://gitlab.com/pintergabor/ironsigns) for providing an extremely helpful
-example of adding custom signs.
+Many thanks:
+
+- to the excellent tutorial mods developed by
+  [Kaupenjoe](https://github.com/Tutorials-By-Kaupenjoe/Fabric-Tutorial-1.21.X) and
+  [TurtyWurty](https://github.com/DaRealTurtyWurty/1.21-Tutorial-Mod)
+- to [Pintér Gábor](https://github.com/pinter-gabor-at) and his
+  [IronSigns mod](https://gitlab.com/pintergabor/ironsigns) for providing an extremely helpful
+  example of adding custom signs
+- to the [Enderscape](https://github.com/they-made-enderscape/enderscape) team for great modern
+  examples of library-free worldgen and terrain modification
 
 You **may** use, modify and redistribute this mod, and you **may** include this mod within your
 modpack or run it on a server, so long as you abide by the terms of

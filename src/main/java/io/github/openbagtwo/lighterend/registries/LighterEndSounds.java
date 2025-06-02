@@ -13,6 +13,11 @@ public class LighterEndSounds {
   public static final RegistryEntry<SoundEvent> EQUIP_SILK = registerReference(
       "item.armor.equip_silk");
 
+  public static final RegistryEntry<SoundEvent> BLOSSOM_AMBIENT = registerReference(
+      "ambient.blossom.loop");
+  public static final RegistryEntry<SoundEvent> BLOSSOM_MUSIC = registerReference("music.blossom");
+
+
   public static SoundEvent register(String name) {
     Identifier id = LighterEnd.of(name);
     return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
