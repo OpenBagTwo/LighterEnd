@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.WorldAccess;
 
 public class PosInfo implements Comparable<PosInfo> {
 
@@ -30,6 +31,14 @@ public class PosInfo implements Comparable<PosInfo> {
     this.add = add;
     this.pos = pos;
     blocks.put(pos, this);
+  }
+
+  public static int downRay(WorldAccess world, BlockPos pos, int maxDist) {
+    int length = 0;
+    for (int j = 1; j < maxDist && (world.isAir(pos.down(j))); j++) {
+      length++;
+    }
+    return length;
   }
 
   public BlockState getState() {

@@ -32,6 +32,8 @@ public class LakePiece extends BasePiece {
 
   private static final BlockState ENDSTONE = Blocks.END_STONE.getDefaultState();
   private static final BlockState WATER = Blocks.WATER.getDefaultState();
+  private static final BlockState SAND = Blocks.SAND.getDefaultState();
+
   private final Map<Integer, Byte> heightmap = Maps.newHashMap();
   private OpenSimplexNoise noise;
   private BlockPos center;
@@ -143,7 +145,7 @@ public class LakePiece extends BasePiece {
               } else {
                 state = state.getFluidState().isEmpty()
                     ? ENDSTONE
-                    : Blocks.SAND.getDefaultState();
+                    : SAND;
               }
               chunk.setBlockState(mut, state);
             }
@@ -184,7 +186,7 @@ public class LakePiece extends BasePiece {
               } else {
                 bState = bState.getFluidState().isEmpty()
                     ? ENDSTONE
-                    : Blocks.SAND.getDefaultState();
+                    : SAND;
               }
 
               mut.setY(y);
@@ -204,7 +206,7 @@ public class LakePiece extends BasePiece {
                   } else {
                     bState = bState.getFluidState().isEmpty()
                         ? ENDSTONE
-                        : Blocks.SAND.getDefaultState();
+                        : SAND;
                   }
                   mut.setY(y);
                   makeEndstonePillar(chunk, mut, bState);

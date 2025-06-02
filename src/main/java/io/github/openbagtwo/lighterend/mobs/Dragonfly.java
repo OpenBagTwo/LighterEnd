@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.mobs;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
+import io.github.openbagtwo.lighterend.utils.PosInfo;
 import io.github.openbagtwo.lighterend.utils.math.MathUtils;
 import java.util.EnumSet;
 import net.minecraft.block.BlockState;
@@ -33,7 +34,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.NotNull;
 
@@ -173,7 +173,7 @@ public class Dragonfly extends AnimalEntity implements Flutterer {
     }
 
     private Vec3d getRandomLocation() {
-      int h = downRay(Dragonfly.this.getWorld(),
+      int h = PosInfo.downRay(Dragonfly.this.getWorld(),
           Dragonfly.this.getBlockPos(), 16);
       Vec3d rotation = Dragonfly.this.getRotationVec(0.0F);
       Vec3d airPos = AboveGroundTargeting.find(Dragonfly.this, 8, 7, rotation.x, rotation.z,
@@ -214,7 +214,7 @@ public class Dragonfly extends AnimalEntity implements Flutterer {
     }
 
     private boolean isInVoid(Vec3d pos) {
-      int h = downRay(
+      int h = PosInfo.downRay(
           Dragonfly.this.getWorld(),
           new BlockPos((int) pos.x, (int) pos.y, (int) pos.z),
           128
@@ -231,15 +231,5 @@ public class Dragonfly extends AnimalEntity implements Flutterer {
   @Override
   public boolean canImmediatelyDespawn(double d) {
     return !this.hasCustomName();
-  }
-
-  // Utils (TODO: Refactor as needed)
-
-  public static int downRay(WorldAccess world, BlockPos pos, int maxDist) {
-    int length = 0;
-    for (int j = 1; j < maxDist && (world.isAir(pos.down(j))); j++) {
-      length++;
-    }
-    return length;
   }
 }

@@ -5,6 +5,7 @@ import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest.SilkMothNestFeature;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
+import io.github.openbagtwo.lighterend.world.features.EndLake;
 import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
 import io.github.openbagtwo.lighterend.world.features.trees.UmbrellaTree;
 import net.minecraft.block.BlockState;
@@ -34,6 +35,13 @@ public class LighterEndConfiguredFeatures {
       = of("end_moss_patch_bonemeal");
   public static final RegistryKey<ConfiguredFeature<?, ?>> END_MOSS_VEGETATION
       = of("end_moss_vegetation");
+
+  public static final Feature<DefaultFeatureConfig> END_LAKE_FEATURE = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("end_lake"),
+      new EndLake()
+  );
+  public static final RegistryKey<ConfiguredFeature<?, ?>> END_LAKE = of("end_lake");
 
   public static final Feature<DefaultFeatureConfig> LUMECORN_FEATURE = Registry.register(
       Registries.FEATURE,
@@ -121,6 +129,11 @@ public class LighterEndConfiguredFeatures {
         context,
         UMBRELLA_TREE,
         UMBRELLA_TREE_FEATURE
+    );
+    ConfiguredFeatures.register(
+        context,
+        END_LAKE,
+        END_LAKE_FEATURE
     );
 
 
