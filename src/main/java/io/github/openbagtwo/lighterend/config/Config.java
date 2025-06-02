@@ -26,6 +26,11 @@ public class Config {
       .resolve(LighterEnd.MOD_ID + ".yaml").toAbsolutePath();
 
   /**
+   * Whether to add the mod's biomes to the worldgen
+   */
+  protected boolean generateBiomes;
+
+  /**
    * Whether to add the mod's music discs to End City loot tables
    */
   protected boolean musicDiscsInEndCities;
@@ -35,6 +40,10 @@ public class Config {
    */
   protected boolean bonemealUnderwaterInEndMakesEndVegetation;
 
+
+  public boolean generateBiomes() {
+    return this.generateBiomes;
+  }
 
   public boolean musicDiscsAreFoundInEndCities() {
     return this.musicDiscsInEndCities;
@@ -48,6 +57,7 @@ public class Config {
   /**
    * Default values
    */
+  private static final boolean DEFAULT_BIOME_GENERATION = true;
   private static final boolean DEFAULT_MUSIC_DISCS_IN_END_CITIES = true;
   private static final boolean DEFAULT_UNDERWATER_BONEMEAL_SETTING = true;
 
@@ -96,6 +106,7 @@ public class Config {
       );
     }
     Map<String, Object> writeme = new LinkedHashMap<>();
+    writeme.put("generate_biomes", this.generateBiomes);
     writeme.put("music_discs_found_in_end_cities", this.musicDiscsInEndCities);
     writeme.put("bonemealing_underwater_in_the_end_produces_end_vegetation",
         this.bonemealUnderwaterInEndMakesEndVegetation);
@@ -112,6 +123,7 @@ public class Config {
   private static Config getDefaultConfiguration() {
     LighterEnd.LOGGER.info("Loading default " + LighterEnd.MOD_NAME + " configuration");
     Config config = new Config();
+    config.generateBiomes = DEFAULT_BIOME_GENERATION;
     config.musicDiscsInEndCities = DEFAULT_MUSIC_DISCS_IN_END_CITIES;
     config.bonemealUnderwaterInEndMakesEndVegetation = DEFAULT_UNDERWATER_BONEMEAL_SETTING;
     return config;
@@ -133,6 +145,7 @@ public class Config {
       );
     }
     Map<String, Object> writeme = new LinkedHashMap<>();
+    writeme.put("generate_biomes", DEFAULT_BIOME_GENERATION);
     writeme.put("music_discs_found_in_end_cities", DEFAULT_MUSIC_DISCS_IN_END_CITIES);
     writeme.put("bonemealing_underwater_in_the_end_produces_end_vegetation",
         DEFAULT_UNDERWATER_BONEMEAL_SETTING);
@@ -159,6 +172,12 @@ public class Config {
 
     try {
       // Now we actually construct the thing
+      boolean generateBiomes = Boolean.parseBoolean(
+          settings.getOrDefault(
+              "generate_biomes",
+              DEFAULT_BIOME_GENERATION
+          ).toString()
+      );
       boolean musicDiscsInEndCities = Boolean.parseBoolean(
           settings.getOrDefault(
               "music_discs_found_in_end_cities",
@@ -173,6 +192,7 @@ public class Config {
       );
 
       Config config = new Config();
+      config.generateBiomes = generateBiomes;
       config.musicDiscsInEndCities = musicDiscsInEndCities;
       config.bonemealUnderwaterInEndMakesEndVegetation = underwaterBonemealSetting;
       return config;

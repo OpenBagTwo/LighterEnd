@@ -24,6 +24,11 @@ public class ConfigScreen extends GameOptionsScreen {
   protected void addOptions() {
     if (this.body != null) {
       this.body.addSingleOptionEntry(
+          SimpleOption.ofBoolean("Generate Modded Biomes",
+              this.config.generateBiomes, (value) -> {
+                this.config.generateBiomes = value;
+              }));
+      this.body.addSingleOptionEntry(
           SimpleOption.ofBoolean("Mod Music Discs Can Be Found in End Cities",
               this.config.musicDiscsInEndCities, (value) -> {
                 this.config.musicDiscsInEndCities = value;

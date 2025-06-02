@@ -17,7 +17,9 @@ import net.minecraft.world.gen.surfacebuilder.MaterialRules.MaterialRule;
 public class LighterEndWorldGen {
 
   public static void modifyWorldGen(Config config) {
-    TheEndBiomes.addHighlandsBiome(LighterEndBiomes.BLOSSOM_FOREST, 0.5);
+    if (config.generateBiomes()) {
+      TheEndBiomes.addHighlandsBiome(LighterEndBiomes.BLOSSOM_FOREST, 1.0);
+    }
   }
 
   public static MaterialRule updateSurfaceRules() {
