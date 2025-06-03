@@ -56,7 +56,7 @@ public class Lumecorn extends Block {
             .sounds(BlockSoundGroup.WOOD)
             .strength(0.2F)
             .burnable()
-            .luminance(bs -> 15)
+            .luminance(bs -> bs.get(SHAPE).getLight())
     );
   }
 
