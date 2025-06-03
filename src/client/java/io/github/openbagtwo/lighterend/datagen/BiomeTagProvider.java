@@ -38,10 +38,10 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
         BiomeKeys.END_HIGHLANDS
     );
 
-    builder(LighterEndTags.HAS_MEGALAKES).addTag(
+    builder(LighterEndTags.HAS_END_LAKES).addTag(
         LighterEndTags.VANILLA_END_BIOMES
     );
-    builder(LighterEndTags.HAS_MEGALAKES).add(
+    builder(LighterEndTags.HAS_END_LAKES).add(
         LighterEndBiomes.UMBRELLA_JUNGLE
     );
   }

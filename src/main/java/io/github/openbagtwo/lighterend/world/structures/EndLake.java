@@ -21,41 +21,42 @@ import net.minecraft.world.gen.noise.NoiseConfig;
 import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.structure.StructureType;
 
-public class Megalake extends Structure {
+public class EndLake extends Structure {
 
-  public static final MapCodec<Megalake> CODEC = createCodec(Megalake::new);
+  public static final MapCodec<EndLake> CODEC = createCodec(EndLake::new);
 
-
-  public Megalake(Structure.Config structureSettings) {
+  public EndLake(Structure.Config structureSettings) {
     super(structureSettings);
   }
 
   @Override
-  public StructureType<Megalake> getType() {
-    return LighterEndStructures.MEGALAKE;
+  public StructureType<EndLake> getType() {
+    return LighterEndStructures.END_LAKE;
   }
 
-  protected void generatePieces(StructurePiecesCollector structurePiecesBuilder,
-      Structure.Context context) {
+  protected void generatePieces(StructurePiecesCollector structurePiecesBuilder, Context context) {
     final Random random = context.random();
     final ChunkPos chunkPos = context.chunkPos();
     final ChunkGenerator chunkGenerator = context.chunkGenerator();
-    final NoiseConfig rState = context.noiseConfig();
-
     final HeightLimitView levelHeightAccessor = context.world();
+    final NoiseConfig rState = context.noiseConfig();
 
     int x = chunkPos.getOffsetX(MathHelper.nextInt(random, 4, 12));
     int z = chunkPos.getOffsetZ(MathHelper.nextInt(random, 4, 12));
     int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG, levelHeightAccessor, rState);
 
+    RegistryEntry<Biome> biome = getNoiseBiome(chunkGenerator, rState, x >> 2, y >> 2, z >> 2);
     if (y > 5) {
-      RegistryEntry<Biome> biome = getNoiseBiome(chunkGenerator, rState, x >> 2, y >> 2, z >> 2);
-
-      float radius = MathHelper.nextFloat(random, 32F, 64F);
-      float depth = MathHelper.nextFloat(random, 7F, 15F);
+      float radius = MathHelper.nextFloat(random, 20, 40);
+      float depth = MathHelper.nextFloat(random, 5, 10);
       LakePiece piece = new LakePiece(new BlockPos(x, y, z), radius, depth, random, biome);
       structurePiecesBuilder.addPiece(piece);
     }
+  }
+
+  protected RegistryEntry<Biome> getNoiseBiome(ChunkGenerator cg, NoiseConfig rState, int i, int j,
+      int k) {
+    return cg.getBiomeSource().getBiome(i, j, k, rState.getMultiNoiseSampler());
   }
 
   @Override
@@ -72,11 +73,6 @@ public class Megalake extends Structure {
       }));
     }
     return Optional.empty();
-  }
-
-  protected RegistryEntry<Biome> getNoiseBiome(ChunkGenerator cg, NoiseConfig rState, int i, int j,
-      int k) {
-    return cg.getBiomeSource().getBiome(i, j, k, rState.getMultiNoiseSampler());
   }
 
   private static BlockPos getGenerationHeight(
@@ -120,5 +116,6 @@ public class Megalake extends Structure {
 
     return result;
   }
+
 
 }

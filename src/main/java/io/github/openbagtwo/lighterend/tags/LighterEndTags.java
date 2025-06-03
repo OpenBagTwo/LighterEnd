@@ -50,8 +50,8 @@ public class LighterEndTags {
       LighterEnd.of("end_biomes_vanilla")
   );
 
-  public static final TagKey<Biome> HAS_MEGALAKES = TagKey.of(
+  public static final TagKey<Biome> HAS_END_LAKES = TagKey.of(
       RegistryKeys.BIOME,
-      LighterEnd.of("has_structure/megalake")
+      LighterEnd.of("has_structure/end_lake")
   );
 }
