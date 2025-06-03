@@ -37,7 +37,8 @@ public class UmbrellaJungle {
     GenerationSettings genSettings = new GenerationSettings.LookupBackedBuilder(features, carvers)
         .feature(Feature.SURFACE_STRUCTURES, EndPlacedFeatures.END_GATEWAY_RETURN)
         .feature(Feature.SURFACE_STRUCTURES, LighterEndPlacedFeatures.UMBRELLA_TREE)
-        .feature(Feature.TOP_LAYER_MODIFICATION, LighterEndPlacedFeatures.END_MOSS_VEGETATION)
+        .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.END_MOSS_VEGETATION)
+        .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.MEGALAKE_VEGETATION)
         .build();
 
     return new Biome.Builder()

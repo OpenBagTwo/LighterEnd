@@ -17,6 +17,7 @@ public class LighterEndPlacedFeatures {
   public static final RegistryKey<PlacedFeature> TENANEA_TREE = of("tenanea_tree");
   public static final RegistryKey<PlacedFeature> MOTH_NEST = of("moth_nest");
   public static final RegistryKey<PlacedFeature> UMBRELLA_TREE = of("umbrella_tree");
+  public static final RegistryKey<PlacedFeature> MEGALAKE_VEGETATION = of("megalake_vegetation");
 
 
   public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -47,6 +48,10 @@ public class LighterEndPlacedFeatures {
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
                 PlacedFeatures.createCountExtraModifier(1, 0.1f, 1),
                 LighterEndBlocks.UMBRELLA_TREE_SAPLING)));
+    context.register(MEGALAKE_VEGETATION,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.MEGALAKE_VEGETATION),
+            VegetationPlacedFeatures.modifiers(50)));
   }
 
   public static RegistryKey<PlacedFeature> of(String id) {

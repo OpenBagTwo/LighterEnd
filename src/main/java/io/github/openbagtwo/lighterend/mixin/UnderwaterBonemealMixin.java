@@ -1,20 +1,17 @@
 package io.github.openbagtwo.lighterend.mixin;
 
 import io.github.openbagtwo.lighterend.config.Config;
-import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
-import io.github.openbagtwo.lighterend.tags.LighterEndTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import io.github.openbagtwo.lighterend.world.features.UnderwaterPlants;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -38,37 +35,17 @@ public abstract class UnderwaterBonemealMixin {
         if (!(world instanceof ServerWorld)) {
           cir.setReturnValue(true);
         } else {
-          Random random = world.getRandom();
+          FeatureContext<DefaultFeatureConfig> context = new FeatureContext<>(null,
+              (ServerWorld) world,
+              ((ServerWorld) world).getChunkManager().getChunkGenerator(), world.getRandom(),
+              blockPos,
+              new DefaultFeatureConfig());
 
-          label80:
-          for (int i = 0; i < 128; i++) {
-            BlockPos blockPos2 = blockPos;
-            BlockState blockState = LighterEndBlocks.CHARNIA_CYAN.getDefaultState();
-
-            for (int j = 0; j < i / 16; j++) {
-              blockPos2 = blockPos2.add(random.nextInt(3) - 1,
-                  (random.nextInt(3) - 1) * random.nextInt(3) / 2, random.nextInt(3) - 1);
-              if (world.getBlockState(blockPos2).isFullCube(world, blockPos2)) {
-                continue label80;
-              }
-            }
-
-            blockState = Registries.BLOCK
-                .getRandomEntry(LighterEndTags.AQUATIC_END_VEGETATION, world.random)
-                .map(blockEntry -> (blockEntry.value()).getDefaultState())
-                .orElse(blockState);
-
-            if (blockState.canPlaceAt(world, blockPos2)) {
-              BlockState blockState2 = world.getBlockState(blockPos2);
-              if (blockState2.isOf(Blocks.WATER)
-                  && world.getFluidState(blockPos2).getLevel() == 8) {
-                world.setBlockState(blockPos2, blockState, Block.NOTIFY_ALL);
-              }
-            }
+          boolean success = new UnderwaterPlants().generate(context);
+          if (success) {
+            stack.decrement(1);
           }
-
-          stack.decrement(1);
-          cir.setReturnValue(true);
+          cir.setReturnValue(success);
         }
       } else {
         cir.setReturnValue(false);

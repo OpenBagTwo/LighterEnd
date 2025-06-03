@@ -37,7 +37,8 @@ public class GlowingGrasslands {
     GenerationSettings genSettings = new GenerationSettings.LookupBackedBuilder(features, carvers)
         .feature(Feature.SURFACE_STRUCTURES, EndPlacedFeatures.END_GATEWAY_RETURN)
         .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.LUMECORN)
-        .feature(Feature.TOP_LAYER_MODIFICATION, LighterEndPlacedFeatures.END_MOSS_VEGETATION)
+        .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.END_MOSS_VEGETATION)
+        .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.MEGALAKE_VEGETATION)
         .build();
 
     return new Biome.Builder()

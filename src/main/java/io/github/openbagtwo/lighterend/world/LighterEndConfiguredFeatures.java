@@ -5,6 +5,7 @@ import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest.SilkMothNestFeature;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
+import io.github.openbagtwo.lighterend.world.features.UnderwaterPlants;
 import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
 import io.github.openbagtwo.lighterend.world.features.trees.UmbrellaTree;
 import net.minecraft.block.BlockState;
@@ -65,6 +66,14 @@ public class LighterEndConfiguredFeatures {
       new SilkMothNestFeature()
   );
   public static final RegistryKey<ConfiguredFeature<?, ?>> MOTH_NEST = of("silk_moth_nest");
+
+  public static final Feature<DefaultFeatureConfig> UNDERWATER_PLANTS = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("aquatic_end_plants"),
+      new UnderwaterPlants()
+  );
+  public static final RegistryKey<ConfiguredFeature<?, ?>> MEGALAKE_VEGETATION
+      = of("megalake_vegetation");
 
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
@@ -137,6 +146,12 @@ public class LighterEndConfiguredFeatures {
         context,
         UMBRELLA_TREE,
         UMBRELLA_TREE_FEATURE
+    );
+
+    ConfiguredFeatures.register(
+        context,
+        MEGALAKE_VEGETATION,
+        UNDERWATER_PLANTS
     );
 
 
