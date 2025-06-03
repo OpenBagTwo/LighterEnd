@@ -32,7 +32,7 @@ public class LighterEndPlacedFeatures {
     context.register(LUMECORN,
         new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.LUMECORN),
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
-                PlacedFeatures.createCountExtraModifier(10, 0.1f, 2),
+                PlacedFeatures.createCountExtraModifier(3, 0.5f, 2),
                 LighterEndBlocks.LUMECORN_SEED)));
     context.register(TENANEA_TREE,
         new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.TENANEA_TREE),

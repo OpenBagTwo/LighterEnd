@@ -18,6 +18,13 @@ public class LighterEndWorldGen {
 
   public static void modifyWorldGen(Config config) {
     if (config.generateBiomes()) {
+      TheEndBiomes.addHighlandsBiome(LighterEndBiomes.GLOWING_GRASSLAND, 2.0);
+      TheEndBiomes.addMidlandsBiome(LighterEndBiomes.GLOWING_GRASSLAND,
+          LighterEndBiomes.GLOWING_GRASSLAND, 2.0);
+      TheEndBiomes.addBarrensBiome(LighterEndBiomes.GLOWING_GRASSLAND,
+          LighterEndBiomes.GLOWING_GRASSLAND, 2.0);
+      TheEndBiomes.addSmallIslandsBiome(LighterEndBiomes.GLOWING_GRASSLAND, 1.0);
+
       TheEndBiomes.addHighlandsBiome(LighterEndBiomes.BLOSSOM_FOREST, 1.0);
 
       TheEndBiomes.addHighlandsBiome(LighterEndBiomes.UMBRELLA_JUNGLE, 1.0);
@@ -34,7 +41,8 @@ public class LighterEndWorldGen {
                 condition(
                     biome(
                         LighterEndBiomes.BLOSSOM_FOREST,
-                        LighterEndBiomes.UMBRELLA_JUNGLE
+                        LighterEndBiomes.UMBRELLA_JUNGLE,
+                        LighterEndBiomes.GLOWING_GRASSLAND
                     ),
                     sequence(
                         condition(

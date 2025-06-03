@@ -24,11 +24,13 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
   protected void configure(WrapperLookup lookup) {
     builder(BiomeTags.IS_END).add(
         LighterEndBiomes.BLOSSOM_FOREST,
-        LighterEndBiomes.UMBRELLA_JUNGLE
+        LighterEndBiomes.UMBRELLA_JUNGLE,
+        LighterEndBiomes.GLOWING_GRASSLAND
     );
     builder(BiomeTags.END_CITY_HAS_STRUCTURE).add(
         LighterEndBiomes.BLOSSOM_FOREST,
-        LighterEndBiomes.UMBRELLA_JUNGLE
+        LighterEndBiomes.UMBRELLA_JUNGLE,
+        LighterEndBiomes.GLOWING_GRASSLAND
     );
 
     builder(LighterEndTags.VANILLA_END_BIOMES).add(
@@ -42,7 +44,8 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
         LighterEndTags.VANILLA_END_BIOMES
     );
     builder(LighterEndTags.HAS_END_LAKES).add(
-        LighterEndBiomes.UMBRELLA_JUNGLE
+        LighterEndBiomes.UMBRELLA_JUNGLE,
+        LighterEndBiomes.GLOWING_GRASSLAND
     );
   }
 }
