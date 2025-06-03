@@ -4,14 +4,15 @@ import static io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities
 
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
-import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.loot.LootPool;
@@ -36,24 +37,32 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
 
   @Override
   public void generate() {
-    addDrop(LighterEndBlocks.AURORA_CRYSTAL, auroraCrystalDrops());
-    addDrop(LighterEndBlocks.ENDER_BLOCK);
-    for (Block block : LighterEndBlocks.VIOLECITE.blocks) {
-      addDrop(block);
-    }
-    addDrop(LighterEndBlocks.MISSING_TILE);
-    for (Material jadestone : Arrays.asList(
-        LighterEndBlocks.AZURE_JADESTONE,
-        LighterEndBlocks.SANDY_JADESTONE,
-        LighterEndBlocks.VIRID_JADESTONE
+    for (List<Block> material : Arrays.asList(
+        LighterEndBlocks.VIOLECITE.blocks,
+        LighterEndBlocks.AZURE_JADESTONE.blocks,
+        LighterEndBlocks.SANDY_JADESTONE.blocks,
+        LighterEndBlocks.VIRID_JADESTONE.blocks,
+        LighterEndBlocks.UMBRALITH.blocks,
+        LighterEndBlocks.TENANEA.blocks,
+        LighterEndBlocks.UMBRELLA.blocks
     )) {
-      for (Block block : jadestone.blocks) {
-        addDrop(block);
+      for (Block block : material) {
+        if (block instanceof SlabBlock) {
+          addDrop(block, this::slabDrops);
+        } else {
+          addDrop(block);
+        }
       }
     }
+
+    addDrop(LighterEndBlocks.AURORA_CRYSTAL, auroraCrystalDrops());
+    addDrop(LighterEndBlocks.ENDER_BLOCK);
+
+    addDrop(LighterEndBlocks.MISSING_TILE);
+
     addDrop(LighterEndBlocks.DRAGON_BONE_BLOCK);
     addDrop(LighterEndBlocks.DRAGON_BONE_STAIRS);
-    addDrop(LighterEndBlocks.DRAGON_BONE_SLAB);
+    addDrop(LighterEndBlocks.DRAGON_BONE_SLAB, this::slabDrops);
     addDropWithSilkTouch(LighterEndBlocks.END_MOSS, Blocks.END_STONE);
 
     addDrop(LighterEndBlocks.CREEPING_MOSS, this::dropsWithSilkTouchOrShears);
@@ -63,27 +72,16 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     addDrop(LighterEndBlocks.LUMECORN_STEM, LighterEndBlocks.LUMECORN_SEED);
     addDrop(LighterEndBlocks.LUMECORN, lumecornEarDrops());
 
-    for (Block block : LighterEndBlocks.UMBRALITH.blocks) {
-      addDrop(block);
-    }
-
     addDrop(LighterEndBlocks.TENANEA_FLOWER, this::dropsWithSilkTouch);
     addDrop(LighterEndBlocks.TENANEA_SAPLING);
     addDrop(LighterEndBlocks.TENANEA_LEAVES,
         (leaves) -> this.leavesDrops(leaves, LighterEndBlocks.TENANEA_SAPLING,
             0.025F, 0.03125F, 0.041666668F, 0.05F));
 
-    for (Block block : LighterEndBlocks.TENANEA.blocks) {
-      addDrop(block);
-    }
-
     addDrop(LighterEndBlocks.SILK_MOTH_NEST, mothNestDrops());
     addDrop(LighterEndBlocks.UMBRELLA_TREE_CLUSTER);
     addDrop(LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY);
 
-    for (Block block : LighterEndBlocks.UMBRELLA.blocks) {
-      addDrop(block);
-    }
     addDrop(LighterEndBlocks.UMBRELLA_MEMBRANE);
 
     addDrop(LighterEndBlocks.CHARNIA_CYAN, this::dropsWithSilkTouchOrShears);
