@@ -32,11 +32,17 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
     );
 
     builder(LighterEndTags.VANILLA_END_BIOMES).add(
-        BiomeKeys.THE_END,
         BiomeKeys.END_BARRENS,
         BiomeKeys.SMALL_END_ISLANDS,
         BiomeKeys.END_MIDLANDS,
         BiomeKeys.END_HIGHLANDS
+    );
+
+    builder(LighterEndTags.HAS_MEGALAKES).addTag(
+        LighterEndTags.VANILLA_END_BIOMES
+    );
+    builder(LighterEndTags.HAS_MEGALAKES).add(
+        LighterEndBiomes.UMBRELLA_JUNGLE
     );
   }
 }

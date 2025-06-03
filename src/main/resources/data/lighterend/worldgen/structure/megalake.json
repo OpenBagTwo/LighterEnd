@@ -1,6 +1,24 @@
 {
-  "biomes": "#minecraft:is_end",
-  "spawn_overrides": {},
-  "step": "lakes",
+  "biomes": "#lighterend:has_structure/megalake",
+  "spawn_overrides": {
+    "water_ambient": {
+      "bounding_box": "full",
+      "spawns": [
+        {
+          "maxCount": 8,
+          "minCount": 2,
+          "type": "lighterend:end_fish",
+          "weight": 2
+        },
+        {
+          "maxCount": 1,
+          "minCount": 1,
+          "type": "lighterend:cubozoa",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  "step": "surface_structures",
   "type": "lighterend:megalake"
 }

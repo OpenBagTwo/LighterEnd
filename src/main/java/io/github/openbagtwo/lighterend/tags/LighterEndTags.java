@@ -49,4 +49,9 @@ public class LighterEndTags {
       RegistryKeys.BIOME,
       LighterEnd.of("end_biomes_vanilla")
   );
+
+  public static final TagKey<Biome> HAS_MEGALAKES = TagKey.of(
+      RegistryKeys.BIOME,
+      LighterEnd.of("has_structure/megalake")
+  );
 }
