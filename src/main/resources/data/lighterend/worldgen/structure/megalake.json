@@ -1,5 +1,5 @@
 {
-  "biomes": [],
+  "biomes": "lighterend:megalake",
   "spawn_overrides": {
     "water_ambient": {
       "bounding_box": "piece",

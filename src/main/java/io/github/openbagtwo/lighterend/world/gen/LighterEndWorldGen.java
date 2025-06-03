@@ -30,6 +30,8 @@ public class LighterEndWorldGen {
       TheEndBiomes.addHighlandsBiome(LighterEndBiomes.UMBRELLA_JUNGLE, 1.0);
       TheEndBiomes.addMidlandsBiome(LighterEndBiomes.UMBRELLA_JUNGLE,
           LighterEndBiomes.UMBRELLA_JUNGLE, 1.0);
+
+      TheEndBiomes.addHighlandsBiome(LighterEndBiomes.MEGALAKE, 1.0);
     }
   }
 
@@ -42,7 +44,8 @@ public class LighterEndWorldGen {
                     biome(
                         LighterEndBiomes.BLOSSOM_FOREST,
                         LighterEndBiomes.UMBRELLA_JUNGLE,
-                        LighterEndBiomes.GLOWING_GRASSLAND
+                        LighterEndBiomes.GLOWING_GRASSLAND,
+                        LighterEndBiomes.MEGALAKE
                     ),
                     sequence(
                         condition(

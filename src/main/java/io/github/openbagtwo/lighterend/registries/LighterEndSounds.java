@@ -27,6 +27,11 @@ public class LighterEndSounds {
   public static final RegistryEntry<SoundEvent> GRASSLAND_MUSIC = registerReference(
       "music.grassland");
 
+  public static final RegistryEntry<SoundEvent> LAKE_AMBIENT = registerReference(
+      "ambient.lake.loop");
+  public static final RegistryEntry<SoundEvent> LAKE_MUSIC = registerReference(
+      "music.lake");
+
 
   public static SoundEvent register(String name) {
     Identifier id = LighterEnd.of(name);
