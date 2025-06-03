@@ -30,6 +30,8 @@ import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider;
 
 public class LighterEndConfiguredFeatures {
 
+  public static final RegistryKey<ConfiguredFeature<?, ?>> END_MOSS_PATCH
+      = of("end_moss_patch");
   public static final RegistryKey<ConfiguredFeature<?, ?>> END_MOSS_PATCH_BONEMEAL
       = of("end_moss_patch_bonemeal");
   public static final RegistryKey<ConfiguredFeature<?, ?>> END_MOSS_VEGETATION
@@ -72,7 +74,7 @@ public class LighterEndConfiguredFeatures {
 
     ConfiguredFeatures.register(
         context,
-        END_MOSS_VEGETATION,
+        END_MOSS_PATCH,
         Feature.SIMPLE_BLOCK,
         new SimpleBlockFeatureConfig(
             new WeightedBlockStateProvider(
@@ -86,13 +88,26 @@ public class LighterEndConfiguredFeatures {
 
     ConfiguredFeatures.register(
         context,
+        END_MOSS_VEGETATION,
+        Feature.SIMPLE_BLOCK,
+        new SimpleBlockFeatureConfig(
+            new WeightedBlockStateProvider(
+                Pool.<BlockState>builder()
+                    .add(LighterEndBlocks.CREEPING_MOSS.getDefaultState(), 10)
+                    .add(LighterEndBlocks.UMBRELLA_FERN.getDefaultState(), 10)
+            )
+        )
+    );
+
+    ConfiguredFeatures.register(
+        context,
         END_MOSS_PATCH_BONEMEAL,
         Feature.VEGETATION_PATCH,
         new VegetationPatchFeatureConfig(
             LighterEndTags.END_MOSS_REPLACEABLE,
             BlockStateProvider.of(LighterEndBlocks.END_MOSS),
             PlacedFeatures.createEntry(
-                lookup.getOrThrow(END_MOSS_VEGETATION)
+                lookup.getOrThrow(END_MOSS_PATCH)
             ),
             VerticalSurfaceType.FLOOR,
             ConstantIntProvider.create(1),
