@@ -35,7 +35,9 @@ public class LighterEndBlockEntities {
           LighterEndBlocks.TENANEA.sign,
           LighterEndBlocks.TENANEA.wallSign,
           LighterEndBlocks.UMBRELLA.sign,
-          LighterEndBlocks.UMBRELLA.wallSign
+          LighterEndBlocks.UMBRELLA.wallSign,
+          LighterEndBlocks.LOTUS.sign,
+          LighterEndBlocks.LOTUS.wallSign
       ).build(null));
 
   public static final BlockEntityType<LighterEndHangingSignBlockEntity> HANGING_SIGN = Registry.register(
@@ -45,7 +47,9 @@ public class LighterEndBlockEntities {
           LighterEndBlocks.TENANEA.hangingSign,
           LighterEndBlocks.TENANEA.wallHangingSign,
           LighterEndBlocks.UMBRELLA.hangingSign,
-          LighterEndBlocks.UMBRELLA.wallHangingSign
+          LighterEndBlocks.UMBRELLA.wallHangingSign,
+          LighterEndBlocks.LOTUS.hangingSign,
+          LighterEndBlocks.LOTUS.wallHangingSign
       ).build(null));
 
   public static final BlockEntityType<SilkMothNestEntity> SILK_MOTH_NEST = Registry.register(

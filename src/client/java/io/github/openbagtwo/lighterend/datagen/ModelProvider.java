@@ -137,6 +137,7 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndBlocks.CHARNIA_ORANGE.asItem(),
         LighterEndBlocks.CHARNIA_PURPLE.asItem(),
         LighterEndBlocks.CHARNIA_RED.asItem(),
+        LighterEndBlocks.LOTUS.ladder.asItem(),
         LighterEndBlocks.END_LILY_SEED.asItem(),
         LighterEndBlocks.END_LOTUS_STEM.asItem(),
         LighterEndBlocks.END_LOTUS_SEED.asItem(),
