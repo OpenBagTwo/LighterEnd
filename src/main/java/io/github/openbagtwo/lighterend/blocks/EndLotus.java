@@ -8,6 +8,7 @@ import io.github.openbagtwo.lighterend.utils.PosInfo;
 import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidFillable;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.ShapeContext;
@@ -297,7 +298,7 @@ public class EndLotus extends Block {
       final StructureWorldAccess world = featureConfig.getWorld();
       final Random random = featureConfig.getRandom();
 
-      if (EndLotus.canGrow(world.toServerWorld(), pos)) {
+      if (EndLotus.canGrow(world, pos)) {
         BlockState startLeaf = LighterEndBlocks.END_LOTUS_STEM.getDefaultState()
             .with(Stem.LEAF, true);
         BlockState roots = LighterEndBlocks.END_LOTUS_STEM.getDefaultState()
@@ -432,7 +433,10 @@ public class EndLotus extends Block {
     }
   }
 
-  private static boolean canGrow(World world, BlockPos pos) {
+  private static boolean canGrow(WorldAccess world, BlockPos pos) {
+    if (!world.getBlockState(pos).isOf(Blocks.WATER)) {
+      return false;
+    }
     Mutable bpos = new Mutable();
     bpos.set(pos);
     while (world.getBlockState(bpos).getFluidState().getFluid().equals(Fluids.WATER.getStill())) {

@@ -21,6 +21,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager.Builder;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
@@ -188,7 +189,7 @@ public class EndLily extends Block implements FluidFillable {
       final BlockPos pos = featureConfig.getOrigin();
       final StructureWorldAccess world = featureConfig.getWorld();
 
-      if (canGrow(world.toServerWorld(), pos)) {
+      if (EndLily.canGrow(world, pos)) {
         world.setBlockState(
             pos,
             LighterEndBlocks.END_LILY.getDefaultState().with(EndLily.IS_TOP, false),
@@ -214,12 +215,16 @@ public class EndLily extends Block implements FluidFillable {
     }
   }
 
-  private static boolean canGrow(World world, BlockPos pos) {
-    BlockPos up = pos.up();
-    while (world.getBlockState(up).getFluidState().getFluid().equals(Fluids.WATER.getStill())) {
-      up = up.up();
+  private static boolean canGrow(WorldAccess world, BlockPos pos) {
+    if (!world.getBlockState(pos).isOf(Blocks.WATER)) {
+      return false;
     }
-    return world.isAir(up);
+    Mutable bpos = new Mutable();
+    bpos.set(pos);
+    while (world.getBlockState(bpos).getFluidState().getFluid().equals(Fluids.WATER.getStill())) {
+      bpos.setY(bpos.getY() + 1);
+    }
+    return world.isAir(bpos) && world.isAir(bpos.up());
   }
 
 }
