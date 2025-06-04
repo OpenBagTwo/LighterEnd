@@ -26,7 +26,10 @@ jobs:
         java-version: ${{ matrix.java }}
         distribution: temurin
     - name: run datagen
-      run: sh gradlew runDatagen
+      uses: nick-fields/retry@v3
+      with:
+        max_attempts: 3
+        command: sh gradlew runDatagen
     - name: build
       run: sh gradlew build
     - name: capture build artifacts
