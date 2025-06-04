@@ -31,6 +31,11 @@ public class Config {
   protected boolean generateBiomes;
 
   /**
+   * Whether custom music should play in LighterEnd biomes
+   */
+  protected boolean playEndBiomeMusic;
+
+  /**
    * Whether to add the mod's music discs to End City loot tables
    */
   protected boolean musicDiscsInEndCities;
@@ -45,6 +50,10 @@ public class Config {
     return this.generateBiomes;
   }
 
+  public boolean playEndBiomeMusic() {
+    return this.playEndBiomeMusic;
+  }
+
   public boolean musicDiscsAreFoundInEndCities() {
     return this.musicDiscsInEndCities;
   }
@@ -53,13 +62,14 @@ public class Config {
     return this.bonemealUnderwaterInEndMakesEndVegetation;
   }
 
-
   /**
    * Default values
    */
   private static final boolean DEFAULT_BIOME_GENERATION = true;
+  private static final boolean DEFAULT_PLAY_END_BIOME_MUSIC = true;
   private static final boolean DEFAULT_MUSIC_DISCS_IN_END_CITIES = true;
   private static final boolean DEFAULT_UNDERWATER_BONEMEAL_SETTING = true;
+
 
   /**
    * Load the mod configuration, however you have to
@@ -107,6 +117,7 @@ public class Config {
     }
     Map<String, Object> writeme = new LinkedHashMap<>();
     writeme.put("generate_biomes", this.generateBiomes);
+    writeme.put("play_biome_music", this.playEndBiomeMusic);
     writeme.put("music_discs_found_in_end_cities", this.musicDiscsInEndCities);
     writeme.put("bonemealing_underwater_in_the_end_produces_end_vegetation",
         this.bonemealUnderwaterInEndMakesEndVegetation);
@@ -124,6 +135,7 @@ public class Config {
     LighterEnd.LOGGER.info("Loading default " + LighterEnd.MOD_NAME + " configuration");
     Config config = new Config();
     config.generateBiomes = DEFAULT_BIOME_GENERATION;
+    config.playEndBiomeMusic = DEFAULT_PLAY_END_BIOME_MUSIC;
     config.musicDiscsInEndCities = DEFAULT_MUSIC_DISCS_IN_END_CITIES;
     config.bonemealUnderwaterInEndMakesEndVegetation = DEFAULT_UNDERWATER_BONEMEAL_SETTING;
     return config;
@@ -146,6 +158,7 @@ public class Config {
     }
     Map<String, Object> writeme = new LinkedHashMap<>();
     writeme.put("generate_biomes", DEFAULT_BIOME_GENERATION);
+    writeme.put("play_biome_music", DEFAULT_PLAY_END_BIOME_MUSIC);
     writeme.put("music_discs_found_in_end_cities", DEFAULT_MUSIC_DISCS_IN_END_CITIES);
     writeme.put("bonemealing_underwater_in_the_end_produces_end_vegetation",
         DEFAULT_UNDERWATER_BONEMEAL_SETTING);
@@ -178,6 +191,12 @@ public class Config {
               DEFAULT_BIOME_GENERATION
           ).toString()
       );
+      boolean playEndBiomeMusic = Boolean.parseBoolean(
+          settings.getOrDefault(
+              "play_biome_music",
+              DEFAULT_BIOME_GENERATION
+          ).toString()
+      );
       boolean musicDiscsInEndCities = Boolean.parseBoolean(
           settings.getOrDefault(
               "music_discs_found_in_end_cities",
@@ -193,6 +212,7 @@ public class Config {
 
       Config config = new Config();
       config.generateBiomes = generateBiomes;
+      config.playEndBiomeMusic = playEndBiomeMusic;
       config.musicDiscsInEndCities = musicDiscsInEndCities;
       config.bonemealUnderwaterInEndMakesEndVegetation = underwaterBonemealSetting;
       return config;

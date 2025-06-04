@@ -1,5 +1,6 @@
 package io.github.openbagtwo.lighterend.mixin.client;
 
+import io.github.openbagtwo.lighterend.config.Config;
 import java.util.Optional;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -36,7 +37,8 @@ public abstract class EndBiomeMusicMixin {
   @Inject(method = "getMusicInstance", at = @At("HEAD"), cancellable = true)
   public void checkForEndMusic(CallbackInfoReturnable<MusicInstance> cir) {
     MusicSound musicSound = Nullables.map(this.currentScreen, Screen::getMusic);
-    if (musicSound == null && this.player != null) {
+    Config config = Config.loadConfiguration();
+    if (config.playEndBiomeMusic() && musicSound == null && this.player != null) {
       World world = this.player.getWorld();
       if (
           world.getRegistryKey() == World.END
