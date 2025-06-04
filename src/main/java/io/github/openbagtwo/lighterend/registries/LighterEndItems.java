@@ -54,6 +54,9 @@ public class LighterEndItems {
       .food(FoodComponents.TROPICAL_FISH));
   public static final Item GLOW_BARB = register("glow_barb");
 
+  public static final Item END_LILY_LEAF = register("end_lily_leaf", new Settings());
+  public static final Item DRIED_END_LILY_LEAF = register("end_lily_leaf_dried", new Settings());
+
   public static Item register(String name) {
     return register(name, new Settings());
   }

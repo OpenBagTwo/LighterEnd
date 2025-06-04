@@ -38,7 +38,7 @@ public class UmbrellaJungle {
         .feature(Feature.SURFACE_STRUCTURES, EndPlacedFeatures.END_GATEWAY_RETURN)
         .feature(Feature.SURFACE_STRUCTURES, LighterEndPlacedFeatures.UMBRELLA_TREE)
         .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.END_MOSS_VEGETATION)
-        .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.MEGALAKE_VEGETATION)
+        .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.WATER_PLANTS)
         .build();
 
     return new Biome.Builder()

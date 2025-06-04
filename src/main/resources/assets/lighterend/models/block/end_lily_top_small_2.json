@@ -1,0 +1,44 @@
+{
+  "__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
+  "elements": [
+    {
+      "__comment": "PlaneY6",
+      "faces": {
+        "down": {
+          "rotation": 270,
+          "texture": "#leaf",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#leaf",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        0,
+        0.02,
+        0
+      ],
+      "shade": false,
+      "to": [
+        16,
+        0.02,
+        16
+      ]
+    }
+  ],
+  "textures": {
+    "leaf": "lighterend:block/end_lily_leaf_small",
+    "particle": "lighterend:block/end_lily_leaf"
+  }
+}

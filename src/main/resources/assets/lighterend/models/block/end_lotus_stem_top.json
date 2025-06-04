@@ -1,0 +1,141 @@
+{
+  "__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
+  "elements": [
+    {
+      "__comment": "Box1",
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#texture",
+          "uv": [
+            4,
+            0,
+            8,
+            4
+          ]
+        },
+        "east": {
+          "texture": "#texture",
+          "uv": [
+            0,
+            4,
+            4,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#texture",
+          "uv": [
+            0,
+            4,
+            4,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#texture",
+          "uv": [
+            0,
+            4,
+            4,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#texture",
+          "uv": [
+            0,
+            4,
+            4,
+            16
+          ]
+        }
+      },
+      "from": [
+        6,
+        0,
+        6
+      ],
+      "to": [
+        10,
+        12,
+        10
+      ]
+    },
+    {
+      "__comment": "Box2",
+      "faces": {
+        "down": {
+          "texture": "#texture",
+          "uv": [
+            4,
+            8,
+            10,
+            14
+          ]
+        },
+        "east": {
+          "texture": "#texture",
+          "uv": [
+            4,
+            4,
+            10,
+            8
+          ]
+        },
+        "north": {
+          "texture": "#texture",
+          "uv": [
+            4,
+            4,
+            10,
+            8
+          ]
+        },
+        "south": {
+          "texture": "#texture",
+          "uv": [
+            4,
+            4,
+            10,
+            8
+          ]
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#texture",
+          "uv": [
+            4,
+            8,
+            10,
+            14
+          ]
+        },
+        "west": {
+          "texture": "#texture",
+          "uv": [
+            4,
+            4,
+            10,
+            8
+          ]
+        }
+      },
+      "from": [
+        5,
+        12,
+        5
+      ],
+      "to": [
+        11,
+        16,
+        11
+      ]
+    }
+  ],
+  "parent": "block/block",
+  "textures": {
+    "particle": "lighterend:block/end_lotus_stem",
+    "texture": "lighterend:block/end_lotus_stem"
+  }
+}

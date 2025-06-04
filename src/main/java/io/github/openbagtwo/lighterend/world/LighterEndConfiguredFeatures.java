@@ -1,10 +1,13 @@
 package io.github.openbagtwo.lighterend.world;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.blocks.EndLily.EndLilyFeature;
+import io.github.openbagtwo.lighterend.blocks.EndLotus.EndLotusFeature;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest.SilkMothNestFeature;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
+import io.github.openbagtwo.lighterend.world.features.LotusLeaf;
 import io.github.openbagtwo.lighterend.world.features.UnderwaterPlants;
 import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
 import io.github.openbagtwo.lighterend.world.features.trees.UmbrellaTree;
@@ -72,8 +75,28 @@ public class LighterEndConfiguredFeatures {
       LighterEnd.of("aquatic_end_plants"),
       new UnderwaterPlants()
   );
-  public static final RegistryKey<ConfiguredFeature<?, ?>> MEGALAKE_VEGETATION
-      = of("megalake_vegetation");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> WATER_PLANTS = of("aquatic_end_plants");
+
+  public static final Feature<DefaultFeatureConfig> END_LILY_FEATURE = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("end_lily"),
+      new EndLilyFeature());
+  public static final RegistryKey<ConfiguredFeature<?, ?>> END_LILY = of(
+      "end_lily");
+
+  public static final Feature<DefaultFeatureConfig> END_LOTUS_FEATURE = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("end_lotus"),
+      new EndLotusFeature());
+  public static final RegistryKey<ConfiguredFeature<?, ?>> END_LOTUS = of(
+      "end_lotus");
+
+  public static final Feature<DefaultFeatureConfig> LOTUS_LEAF_FEATURE = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("end_lotus_leaf"),
+      new LotusLeaf());
+  public static final RegistryKey<ConfiguredFeature<?, ?>> LOTUS_LEAF = of(
+      "end_lotus_leaf");
 
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
@@ -127,34 +150,14 @@ public class LighterEndConfiguredFeatures {
             0.25F)
     );
 
-    ConfiguredFeatures.register(
-        context,
-        LUMECORN,
-        LUMECORN_FEATURE
-    );
-    ConfiguredFeatures.register(
-        context,
-        TENANEA_TREE,
-        TENANEA_TREE_FEATURE
-    );
-    ConfiguredFeatures.register(
-        context,
-        MOTH_NEST,
-        MOTH_NEST_FEATURE
-    );
-    ConfiguredFeatures.register(
-        context,
-        UMBRELLA_TREE,
-        UMBRELLA_TREE_FEATURE
-    );
-
-    ConfiguredFeatures.register(
-        context,
-        MEGALAKE_VEGETATION,
-        UNDERWATER_PLANTS
-    );
-
-
+    ConfiguredFeatures.register(context, LUMECORN, LUMECORN_FEATURE);
+    ConfiguredFeatures.register(context, TENANEA_TREE, TENANEA_TREE_FEATURE);
+    ConfiguredFeatures.register(context, MOTH_NEST, MOTH_NEST_FEATURE);
+    ConfiguredFeatures.register(context, UMBRELLA_TREE, UMBRELLA_TREE_FEATURE);
+    ConfiguredFeatures.register(context, WATER_PLANTS, UNDERWATER_PLANTS);
+    ConfiguredFeatures.register(context, END_LILY, END_LILY_FEATURE);
+    ConfiguredFeatures.register(context, END_LOTUS, END_LOTUS_FEATURE);
+    ConfiguredFeatures.register(context, LOTUS_LEAF, LOTUS_LEAF_FEATURE);
   }
 
   public static void initialize() {

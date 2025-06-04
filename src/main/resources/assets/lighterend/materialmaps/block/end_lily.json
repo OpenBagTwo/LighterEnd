@@ -1,0 +1,14 @@
+{
+  "defaultMap": {
+    "spriteMap": [
+      {
+        "material": "lighterend:glow_inc",
+        "sprite": "lighterend:block/end_lily_flower"
+      },
+      {
+        "material": "lighterend:glow_inc",
+        "sprite": "lighterend:block/end_lily_flower_small"
+      }
+    ]
+  }
+}

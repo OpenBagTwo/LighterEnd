@@ -45,7 +45,8 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
     for (Wood wood : Arrays.asList(
         LighterEndBlocks.TENANEA,
-        LighterEndBlocks.UMBRELLA
+        LighterEndBlocks.UMBRELLA,
+        LighterEndBlocks.LOTUS
     )) {
       for (Block block : wood.blocks) {
         valueLookupBuilder(BlockTags.AXE_MINEABLE).add(block);
@@ -92,7 +93,6 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.VIRID_JADESTONE
     )) {
       for (Block block : jadestone.blocks) {
-
         valueLookupBuilder(BlockTags.NEEDS_IRON_TOOL).add(block);
       }
 
@@ -107,12 +107,19 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.CREEPING_MOSS,
         LighterEndBlocks.UMBRELLA_FERN,
         LighterEndBlocks.TALL_UMBRELLA_FERN,
-        LighterEndBlocks.TENANEA_FLOWER
+        LighterEndBlocks.TENANEA_FLOWER,
+        LighterEndBlocks.END_LOTUS_FLOWER
     );
 
-    valueLookupBuilder(BlockTags.AXE_MINEABLE).add(LighterEndBlocks.LUMECORN_STEM);
+    valueLookupBuilder(BlockTags.AXE_MINEABLE).add(
+        LighterEndBlocks.LUMECORN_STEM,
+        LighterEndBlocks.END_LOTUS_STEM
+    );
 
-    valueLookupBuilder(BlockTags.SAPLINGS).add(LighterEndBlocks.TENANEA_SAPLING);
+    valueLookupBuilder(BlockTags.SAPLINGS).add(
+        LighterEndBlocks.TENANEA_SAPLING,
+        LighterEndBlocks.UMBRELLA_TREE_SAPLING
+    );
     valueLookupBuilder(BlockTags.LEAVES).add(LighterEndBlocks.TENANEA_LEAVES);
 
     valueLookupBuilder(BlockTags.AXE_MINEABLE).add(

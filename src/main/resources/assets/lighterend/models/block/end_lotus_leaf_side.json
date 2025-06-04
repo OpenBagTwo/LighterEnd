@@ -1,0 +1,6 @@
+{
+  "parent": "lighterend:block/plane_bottom",
+  "textures": {
+    "texture": "lighterend:block/end_lotus_leaf_side"
+  }
+}

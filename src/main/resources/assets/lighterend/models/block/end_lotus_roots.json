@@ -1,0 +1,254 @@
+{
+  "__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
+  "elements": [
+    {
+      "__comment": "Box1",
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#texture",
+          "uv": [
+            4,
+            0,
+            8,
+            4
+          ]
+        },
+        "east": {
+          "texture": "#texture",
+          "uv": [
+            0,
+            0,
+            4,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#texture",
+          "uv": [
+            0,
+            0,
+            4,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#texture",
+          "uv": [
+            0,
+            0,
+            4,
+            16
+          ]
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#texture",
+          "uv": [
+            4,
+            0,
+            8,
+            4
+          ]
+        },
+        "west": {
+          "texture": "#texture",
+          "uv": [
+            0,
+            0,
+            4,
+            16
+          ]
+        }
+      },
+      "from": [
+        6,
+        0,
+        6
+      ],
+      "to": [
+        10,
+        16,
+        10
+      ]
+    },
+    {
+      "__comment": "PlaneX2",
+      "faces": {
+        "east": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        5,
+        0,
+        1
+      ],
+      "rotation": {
+        "angle": 22.5,
+        "axis": "y",
+        "origin": [
+          5,
+          0,
+          1
+        ]
+      },
+      "shade": false,
+      "to": [
+        5.001,
+        16,
+        17
+      ]
+    },
+    {
+      "__comment": "PlaneX2",
+      "faces": {
+        "east": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        11,
+        0,
+        1
+      ],
+      "rotation": {
+        "angle": -22.5,
+        "axis": "y",
+        "origin": [
+          11,
+          0,
+          1
+        ]
+      },
+      "shade": false,
+      "to": [
+        11.001,
+        16,
+        17
+      ]
+    },
+    {
+      "__comment": "PlaneX2",
+      "faces": {
+        "north": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        0.5,
+        0,
+        4.999
+      ],
+      "rotation": {
+        "angle": -22.5,
+        "axis": "y",
+        "origin": [
+          0.5,
+          0,
+          5
+        ]
+      },
+      "shade": false,
+      "to": [
+        16.5,
+        16,
+        5
+      ]
+    },
+    {
+      "__comment": "PlaneX2",
+      "faces": {
+        "north": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        0.5,
+        0,
+        10.999
+      ],
+      "rotation": {
+        "angle": 22.5,
+        "axis": "y",
+        "origin": [
+          0.5,
+          0,
+          11
+        ]
+      },
+      "shade": false,
+      "to": [
+        16.5,
+        16,
+        11
+      ]
+    }
+  ],
+  "parent": "block/block",
+  "textures": {
+    "particle": "lighterend:block/end_lotus_stem",
+    "roots": "lighterend:block/end_lotus_roots",
+    "texture": "lighterend:block/end_lotus_stem"
+  }
+}

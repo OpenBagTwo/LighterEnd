@@ -1,0 +1,46 @@
+{
+  "variants": {
+    "facing=east,shape=bottom": {
+      "model": "lighterend:block/end_lotus_leaf_center"
+    },
+    "facing=east,shape=middle": {
+      "model": "lighterend:block/end_lotus_leaf_side",
+      "y": 90
+    },
+    "facing=east,shape=top": {
+      "model": "lighterend:block/end_lotus_leaf_corner",
+      "y": 90
+    },
+    "facing=north,shape=bottom": {
+      "model": "lighterend:block/end_lotus_leaf_center"
+    },
+    "facing=north,shape=middle": {
+      "model": "lighterend:block/end_lotus_leaf_side"
+    },
+    "facing=north,shape=top": {
+      "model": "lighterend:block/end_lotus_leaf_corner"
+    },
+    "facing=south,shape=bottom": {
+      "model": "lighterend:block/end_lotus_leaf_center"
+    },
+    "facing=south,shape=middle": {
+      "model": "lighterend:block/end_lotus_leaf_side",
+      "y": 180
+    },
+    "facing=south,shape=top": {
+      "model": "lighterend:block/end_lotus_leaf_corner",
+      "y": 180
+    },
+    "facing=west,shape=bottom": {
+      "model": "lighterend:block/end_lotus_leaf_center"
+    },
+    "facing=west,shape=middle": {
+      "model": "lighterend:block/end_lotus_leaf_side",
+      "y": 270
+    },
+    "facing=west,shape=top": {
+      "model": "lighterend:block/end_lotus_leaf_corner",
+      "y": 270
+    }
+  }
+}

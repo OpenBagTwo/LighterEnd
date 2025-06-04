@@ -23,7 +23,13 @@ public class PlantRenderer {
         LighterEndBlocks.CHARNIA_LIGHT_BLUE,
         LighterEndBlocks.CHARNIA_ORANGE,
         LighterEndBlocks.CHARNIA_PURPLE,
-        LighterEndBlocks.CHARNIA_RED
+        LighterEndBlocks.CHARNIA_RED,
+        LighterEndBlocks.END_LILY,
+        LighterEndBlocks.END_LILY_SEED,
+        LighterEndBlocks.END_LOTUS_FLOWER,
+        LighterEndBlocks.END_LOTUS_STEM,
+        LighterEndBlocks.END_LOTUS_LEAF,
+        LighterEndBlocks.END_LOTUS_SEED
     );
   }
 

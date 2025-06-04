@@ -5,6 +5,8 @@ import io.github.openbagtwo.lighterend.blocks.AuroraCrystal;
 import io.github.openbagtwo.lighterend.blocks.Charnia;
 import io.github.openbagtwo.lighterend.blocks.CreepingMoss;
 import io.github.openbagtwo.lighterend.blocks.DragonBone;
+import io.github.openbagtwo.lighterend.blocks.EndLily;
+import io.github.openbagtwo.lighterend.blocks.EndLotus;
 import io.github.openbagtwo.lighterend.blocks.EndMoss;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.Sapling;
@@ -122,6 +124,15 @@ public class LighterEndBlocks {
   public static final Block CHARNIA_PURPLE = register("charnia_purple", Charnia::new);
   public static final Block CHARNIA_RED = register("charnia_red", Charnia::new);
 
+  public static final Block END_LILY = register("end_lily", EndLily::new, false);
+  public static final Block END_LILY_SEED = register("end_lily_seed", EndLily.Seed::new);
+
+  public static final Block END_LOTUS_FLOWER = register("end_lotus_flower", EndLotus::new, false);
+  public static final Block END_LOTUS_STEM = register("end_lotus_stem", EndLotus.Stem::new);
+  public static final Block END_LOTUS_LEAF = register("end_lotus_leaf", EndLotus.Leaf::new, false);
+  public static final Block END_LOTUS_SEED = register("end_lotus_seed", EndLotus.Seed::new);
+
+  public static final Wood LOTUS = new Wood("end_lotus", MapColor.LIGHT_BLUE, MapColor.CYAN);
 
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);
@@ -152,6 +163,9 @@ public class LighterEndBlocks {
     FlammableBlockRegistry.getDefaultInstance().add(SILK_MOTH_NEST, 30, 20);
     FlammableBlockRegistry.getDefaultInstance().add(UMBRELLA_TREE_CLUSTER, 60, 100);
     FlammableBlockRegistry.getDefaultInstance().add(UMBRELLA_TREE_CLUSTER_EMPTY, 30, 20);
+    FlammableBlockRegistry.getDefaultInstance().add(END_LOTUS_FLOWER, 60, 100);
+    FlammableBlockRegistry.getDefaultInstance().add(END_LOTUS_STEM, 60, 60);
+    FlammableBlockRegistry.getDefaultInstance().add(END_LOTUS_LEAF, 30, 60);
   }
 
   public static class Material {

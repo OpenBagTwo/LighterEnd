@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "lighterend:block/end_lotus_flower"
+      },
+      {
+        "model": "lighterend:block/end_lotus_flower_2"
+      }
+    ]
+  }
+}

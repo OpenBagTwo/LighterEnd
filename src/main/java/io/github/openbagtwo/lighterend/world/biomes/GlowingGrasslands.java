@@ -38,7 +38,7 @@ public class GlowingGrasslands {
         .feature(Feature.SURFACE_STRUCTURES, EndPlacedFeatures.END_GATEWAY_RETURN)
         .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.LUMECORN)
         .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.END_MOSS_VEGETATION)
-        .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.MEGALAKE_VEGETATION)
+        .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.WATER_PLANTS)
         .build();
 
     return new Biome.Builder()

@@ -1,0 +1,6 @@
+{
+  "parent": "lighterend:block/cross_no_distortion",
+  "textures": {
+    "texture": "lighterend:block/end_lily_2"
+  }
+}

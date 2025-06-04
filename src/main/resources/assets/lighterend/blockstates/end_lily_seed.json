@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "stage=0": {
+      "model": "lighterend:block/end_lily_seed_0"
+    },
+    "stage=1": {
+      "model": "lighterend:block/end_lily_seed_1"
+    }
+  }
+}

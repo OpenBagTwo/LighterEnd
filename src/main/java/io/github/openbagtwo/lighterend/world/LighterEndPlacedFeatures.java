@@ -17,7 +17,10 @@ public class LighterEndPlacedFeatures {
   public static final RegistryKey<PlacedFeature> TENANEA_TREE = of("tenanea_tree");
   public static final RegistryKey<PlacedFeature> MOTH_NEST = of("moth_nest");
   public static final RegistryKey<PlacedFeature> UMBRELLA_TREE = of("umbrella_tree");
-  public static final RegistryKey<PlacedFeature> MEGALAKE_VEGETATION = of("megalake_vegetation");
+  public static final RegistryKey<PlacedFeature> WATER_PLANTS = of("aquatic_end_plants");
+  public static final RegistryKey<PlacedFeature> END_LILY = of("end_lily");
+  public static final RegistryKey<PlacedFeature> END_LOTUS = of("end_lotus");
+  public static final RegistryKey<PlacedFeature> LOTUS_LEAF = of("end_lotus_leaf");
 
 
   public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -48,10 +51,19 @@ public class LighterEndPlacedFeatures {
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
                 PlacedFeatures.createCountExtraModifier(1, 0.1f, 1),
                 LighterEndBlocks.UMBRELLA_TREE_SAPLING)));
-    context.register(MEGALAKE_VEGETATION,
+    context.register(WATER_PLANTS,
         new PlacedFeature(
-            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.MEGALAKE_VEGETATION),
-            VegetationPlacedFeatures.modifiers(50)));
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.WATER_PLANTS),
+            VegetationPlacedFeatures.modifiers(10)));
+    context.register(END_LILY,
+        new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.END_LILY),
+            VegetationPlacedFeatures.modifiers(10)));
+    context.register(END_LOTUS,
+        new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.END_LOTUS),
+            VegetationPlacedFeatures.modifiers(10)));
+    context.register(LOTUS_LEAF,
+        new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.LOTUS_LEAF),
+            VegetationPlacedFeatures.modifiers(10)));
   }
 
   public static RegistryKey<PlacedFeature> of(String id) {

@@ -19,7 +19,8 @@ public class SignRenderer {
 
     for (Wood wood : Arrays.asList(
         LighterEndBlocks.TENANEA,
-        LighterEndBlocks.UMBRELLA
+        LighterEndBlocks.UMBRELLA,
+        LighterEndBlocks.LOTUS
     )) {
       TexturedRenderLayers.SIGN_TYPE_TEXTURES.put(wood.woodType,
           TexturedRenderLayers.getSignTextureId(wood.woodType));

@@ -1,0 +1,22 @@
+{
+  "defaultMap": {
+    "spriteMap": [
+      {
+        "material": "lighterend:waving_floor_glow_inc",
+        "sprite": "lighterend:block/end_lotus_petal"
+      },
+      {
+        "material": "lighterend:waving_floor_glow_inc",
+        "sprite": "lighterend:block/end_lotus_petal_2"
+      },
+      {
+        "material": "lighterend:glow_inc",
+        "sprite": "lighterend:block/end_lotus_center"
+      },
+      {
+        "material": "lighterend:glow_inc",
+        "sprite": "lighterend:block/end_lotus_center_2"
+      }
+    ]
+  }
+}

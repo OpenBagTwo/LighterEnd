@@ -207,6 +207,24 @@ public class RecipeProvider extends FabricRecipeProvider {
                 hasItem(LighterEndItems.GLOW_BARB),
                 conditionsFromItem(LighterEndItems.GLOW_BARB)
             ).offerTo(exporter);
+
+        generateSmokingSmeltingRecipes(LighterEndItems.END_LILY_LEAF,
+            LighterEndItems.DRIED_END_LILY_LEAF, RecipeCategory.MISC);
+
+        createShaped(RecipeCategory.MISC, Items.PAPER, 3)
+            .pattern("###")
+            .input('#', LighterEndItems.DRIED_END_LILY_LEAF)
+            .criterion(
+                hasItem(LighterEndItems.DRIED_END_LILY_LEAF),
+                conditionsFromItem(LighterEndItems.DRIED_END_LILY_LEAF)
+            ).offerTo(exporter);
+
+        generateWoodRecipes(LighterEndBlocks.LOTUS, 2);
+        offerCompactingRecipe(
+            RecipeCategory.BUILDING_BLOCKS,
+            LighterEndBlocks.END_LOTUS_STEM,
+            LighterEndBlocks.LOTUS.log
+        );
       }
 
       public void generateMaterialRecipes(Material material) {
@@ -310,6 +328,10 @@ public class RecipeProvider extends FabricRecipeProvider {
       }
 
       public void generateWoodRecipes(Wood wood) {
+        generateWoodRecipes(wood, 4);
+      }
+
+      public void generateWoodRecipes(Wood wood, int planks_per_log) {
         createShaped(RecipeCategory.BUILDING_BLOCKS, wood.wood, 3).pattern("ll").pattern("ll")
             .input('l', wood.log).criterion(
                 hasItem(wood.log),
@@ -320,7 +342,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                 hasItem(wood.strippedLog),
                 conditionsFromItem(wood.strippedLog)
             ).offerTo(exporter);
-        createShapeless(RecipeCategory.BUILDING_BLOCKS, wood.planks, 4).input(
+        createShapeless(RecipeCategory.BUILDING_BLOCKS, wood.planks, planks_per_log).input(
                 Ingredient.ofItems(wood.log, wood.strippedLog, wood.wood, wood.strippedWood))
             .criterion(hasItem(wood.log), conditionsFromItem(wood.log)).offerTo(exporter);
         offerSlabRecipe(RecipeCategory.BUILDING_BLOCKS, wood.slab, wood.planks);

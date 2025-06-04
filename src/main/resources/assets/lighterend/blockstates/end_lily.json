@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "is_top=false": {
+      "model": "lighterend:block/end_lily_stem"
+    },
+    "is_top=true": [
+      {
+        "model": "lighterend:block/end_lily_top"
+      },
+      {
+        "model": "lighterend:block/end_lily_top_small"
+      },
+      {
+        "model": "lighterend:block/end_lily_top_small_2"
+      }
+    ]
+  }
+}

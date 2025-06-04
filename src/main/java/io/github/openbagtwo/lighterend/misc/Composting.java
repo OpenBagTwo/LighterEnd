@@ -22,6 +22,8 @@ public class Composting {
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.CHARNIA_ORANGE, 0.65F);
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.CHARNIA_PURPLE, 0.65F);
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.CHARNIA_RED, 0.65F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.END_LILY_SEED, 0.3F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndItems.END_LILY_LEAF, 0.65F);
   }
 
 }

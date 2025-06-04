@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.datagen;
 
 import static io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities.MOTHS;
 
+import io.github.openbagtwo.lighterend.blocks.EndLily;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
@@ -17,6 +18,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
+import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
+import net.minecraft.loot.condition.LootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.CopyComponentsLootFunction;
@@ -24,9 +27,11 @@ import net.minecraft.loot.function.CopyStateLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
+import net.minecraft.predicate.StatePredicate;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
+import net.minecraft.registry.entry.RegistryEntry.Reference;
 
 public class BlockLootTableProvider extends FabricBlockLootTableProvider {
 
@@ -44,7 +49,8 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
         LighterEndBlocks.VIRID_JADESTONE.blocks,
         LighterEndBlocks.UMBRALITH.blocks,
         LighterEndBlocks.TENANEA.blocks,
-        LighterEndBlocks.UMBRELLA.blocks
+        LighterEndBlocks.UMBRELLA.blocks,
+        LighterEndBlocks.LOTUS.blocks
     )) {
       for (Block block : material) {
         if (block instanceof SlabBlock) {
@@ -90,6 +96,12 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     addDrop(LighterEndBlocks.CHARNIA_ORANGE, this::dropsWithSilkTouchOrShears);
     addDrop(LighterEndBlocks.CHARNIA_PURPLE, this::dropsWithSilkTouchOrShears);
     addDrop(LighterEndBlocks.CHARNIA_RED, this::dropsWithSilkTouchOrShears);
+
+    addDrop(LighterEndBlocks.END_LILY, endLilyDrops());
+    addDrop(LighterEndBlocks.END_LOTUS_FLOWER, lotusFlowerDrops());
+    addDrop(LighterEndBlocks.END_LOTUS_STEM);
+    addDrop(LighterEndBlocks.END_LOTUS_LEAF, LighterEndItems.END_LILY_LEAF);
+    addDrop(LighterEndBlocks.END_LOTUS_SEED);
   }
 
   private LootTable.Builder auroraCrystalDrops() {
@@ -133,6 +145,43 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
                         .apply(CopyStateLootFunction.builder(LighterEndBlocks.SILK_MOTH_NEST)
                             .addProperty(SilkMothNest.FULLNESS))
                 )
+        );
+  }
+
+  public LootTable.Builder endLilyDrops() {
+    Reference<Enchantment> fortune = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT)
+        .getOrThrow(Enchantments.FORTUNE);
+
+    LootCondition.Builder onlyTopDrops = BlockStatePropertyLootCondition.builder(
+            LighterEndBlocks.END_LILY)
+        .properties(StatePredicate.Builder.create().exactMatch(EndLily.IS_TOP, true));
+
+    return this.applyExplosionDecay(
+            LighterEndBlocks.END_LILY,
+            LootTable.builder()
+                .pool(LootPool.builder()
+                    .with(ItemEntry.builder(LighterEndItems.END_LILY_LEAF).conditionally(onlyTopDrops)
+                    ).apply(
+                        ApplyBonusLootFunction.binomialWithBonusCount(
+                            fortune, 0.5714286F, 3))))
+        .pool(
+            LootPool.builder()
+                .conditionally(onlyTopDrops)
+                .with(ItemEntry.builder(LighterEndBlocks.END_LILY_SEED).apply(
+                    ApplyBonusLootFunction.binomialWithBonusCount(
+                        fortune, 0.5714286F, 3)))
+
+        );
+  }
+
+  private LootTable.Builder lotusFlowerDrops() {
+    return LootTable.builder()
+        .pool(
+            this.addSurvivesExplosionCondition(
+                LighterEndBlocks.END_LOTUS_SEED,
+                LootPool.builder().rolls(UniformLootNumberProvider.create(1.0F, 2.0F))
+                    .with(ItemEntry.builder(LighterEndBlocks.END_LOTUS_SEED))
+            )
         );
   }
 }
