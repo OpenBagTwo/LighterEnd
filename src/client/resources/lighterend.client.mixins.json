@@ -1,6 +1,7 @@
 {
   "client": [
-    "ColorProvidingMixin"
+    "ColorProvidingMixin",
+    "EndBiomeMusicMixin"
   ],
   "compatibilityLevel": "JAVA_21",
   "injectors": {

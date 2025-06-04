@@ -1,4 +1,42 @@
 {
+  "ambient.blossom.loop": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "lighterend:ambient/blossoming_spires",
+        "stream": true
+      }
+    ]
+  },
+  "ambient.grassland.loop": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "lighterend:ambient/glowing_grasslands",
+        "stream": true,
+        "volume": 1.0
+      }
+    ]
+  },
+  "ambient.lake.loop": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "lighterend:ambient/megalake",
+        "stream": true
+      }
+    ]
+  },
+  "ambient.umbrella.loop": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "lighterend:ambient/umbrella_jungle",
+        "stream": true,
+        "volume": 1.0
+      }
+    ]
+  },
   "entity.dragonfly.idle": {
     "category": "entity",
     "sounds": [
@@ -30,6 +68,106 @@
       "item/armor/equip_leather6"
     ],
     "subtitle": "lighterend:subtitles.item.armor.equip_silk"
+  },
+  "music.blossom": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "lighterend:music/dan_henig-eternal_garden",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/dan_henig-nebular_focus",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/bobby_richards-two_moons",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/astron-peaceful_mind",
+        "stream": true,
+        "volume": 0.2
+      }
+    ]
+  },
+  "music.grassland": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "lighterend:music/godmode-melancholia",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/asher_fulero-elegy",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/the-tides-ammil",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/vyen-amber",
+        "stream": true,
+        "volume": 0.2
+      }
+    ]
+  },
+  "music.lake": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "lighterend:music/jesse_gallagher-the_blue_pearl",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/jesse_gallagher-venkatesananda",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/the_tides-somnolent",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/benjamin_martins-verve",
+        "stream": true,
+        "volume": 0.2
+      }
+    ]
+  },
+  "music.umbrella": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "lighterend:music/dan_henig-eternal_garden",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/dan_henig-nebular_focus",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/bobby_richards-two_moons",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/astron-peaceful_mind",
+        "stream": true,
+        "volume": 0.2
+      }
+    ]
   },
   "music_disc.endseeker": {
     "category": "record",
