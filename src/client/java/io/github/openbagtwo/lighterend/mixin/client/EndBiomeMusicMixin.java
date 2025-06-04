@@ -8,6 +8,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.sound.MusicInstance;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.MusicSound;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Nullables;
 import net.minecraft.util.collection.Pool;
 import net.minecraft.world.World;
@@ -47,11 +48,15 @@ public abstract class EndBiomeMusicMixin {
         if (biomeMusic.isPresent()) {
           float f = biome.getMusicVolume();
           Optional<MusicSound> music = biomeMusic.get().getOrEmpty(world.random);
-          if (music.isPresent()) {
-            cir.setReturnValue(new MusicInstance(music.get(), f));
-            cir.cancel();
-          }
+          cir.setReturnValue(new MusicInstance(music.orElse(null), f));
+        } else {
+          cir.setReturnValue(
+              new MusicInstance(
+                  new MusicSound(SoundEvents.MUSIC_END, 6000, 24000, false)
+              )
+          );
         }
+        cir.cancel();
       }
     }
 
