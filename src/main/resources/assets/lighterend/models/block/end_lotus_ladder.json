@@ -1,0 +1,6 @@
+{
+  "parent": "lighterend:block/ladder",
+  "textures": {
+    "texture": "lighterend:block/end_lotus_ladder"
+  }
+}
