@@ -1,0 +1,41 @@
+{
+  "elements": [
+    {
+      "__comment": "PlaneY1",
+      "faces": {
+        "down": {
+          "texture": "#texture",
+          "uv": [
+            0,
+            16,
+            16,
+            0
+          ]
+        },
+        "up": {
+          "texture": "#texture",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "shade": false,
+      "to": [
+        16,
+        0.001,
+        16
+      ]
+    }
+  ],
+  "textures": {
+    "particle": "#texture"
+  }
+}
