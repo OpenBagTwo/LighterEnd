@@ -141,7 +141,6 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         );
     valueLookupBuilder(LighterEndTags.END_SOIL)
         .add(
-            Blocks.END_STONE,
             LighterEndBlocks.END_MOSS,
             LighterEndBlocks.UMBRALITH.baseBlock
         );

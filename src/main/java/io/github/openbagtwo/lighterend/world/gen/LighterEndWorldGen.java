@@ -44,8 +44,7 @@ public class LighterEndWorldGen {
                     biome(
                         LighterEndBiomes.BLOSSOM_FOREST,
                         LighterEndBiomes.UMBRELLA_JUNGLE,
-                        LighterEndBiomes.GLOWING_GRASSLAND,
-                        LighterEndBiomes.MEGALAKE
+                        LighterEndBiomes.GLOWING_GRASSLAND
                     ),
                     sequence(
                         condition(

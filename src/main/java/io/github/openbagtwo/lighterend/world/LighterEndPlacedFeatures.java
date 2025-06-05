@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.world;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
+import java.util.List;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
@@ -9,6 +10,10 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.feature.PlacedFeatures;
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures;
+import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;
+import net.minecraft.world.gen.placementmodifier.CountPlacementModifier;
+import net.minecraft.world.gen.placementmodifier.RarityFilterPlacementModifier;
+import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
 
 public class LighterEndPlacedFeatures {
 
@@ -54,16 +59,36 @@ public class LighterEndPlacedFeatures {
     context.register(WATER_PLANTS,
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.WATER_PLANTS),
-            VegetationPlacedFeatures.modifiers(10)));
+            List.of(
+                SquarePlacementModifier.of(),
+                PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP,
+                CountPlacementModifier.of(30),
+                BiomePlacementModifier.of())))
+    ;
     context.register(END_LILY,
         new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.END_LILY),
-            VegetationPlacedFeatures.modifiers(10)));
+            List.of(
+                RarityFilterPlacementModifier.of(2),
+                SquarePlacementModifier.of(),
+                PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP,
+                BiomePlacementModifier.of()
+            )));
     context.register(END_LOTUS,
         new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.END_LOTUS),
-            VegetationPlacedFeatures.modifiers(10)));
+            List.of(
+                RarityFilterPlacementModifier.of(3),
+                SquarePlacementModifier.of(),
+                PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP,
+                BiomePlacementModifier.of()
+            )));
     context.register(LOTUS_LEAF,
         new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.LOTUS_LEAF),
-            VegetationPlacedFeatures.modifiers(10)));
+            List.of(
+                RarityFilterPlacementModifier.of(3),
+                SquarePlacementModifier.of(),
+                PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
+                BiomePlacementModifier.of()
+            )));
   }
 
   public static RegistryKey<PlacedFeature> of(String id) {
