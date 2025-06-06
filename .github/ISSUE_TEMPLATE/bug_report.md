@@ -20,6 +20,9 @@ assignees: OpenBagTwo
 - The contents of your `lighterend.yaml` configuration file
   (inside your `.minecraft` / instance folder, under `config`):
 
+```yaml
+```
+
 ## Steps to Reproduce
 
 <!--Describe in detail how to reproduce the issue. Include any commands you're running and any error messages or stack traces they generate. For long stack traces, please make use of the <details> tag: https://gist.github.com/ericclemmons/b146fe5da72ca1f706b2ef72a20ac39d -->
