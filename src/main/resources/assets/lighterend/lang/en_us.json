@@ -231,5 +231,11 @@
   "lighterend.music.the_tides-somnolent": "The Tides - Somnolent",
   "lighterend.music.vyen-amber": "Vyen - Amber",
   "subtitles.entity.dragonfly.idle": "Dragonfly flutters",
-  "subtitles.item.armor.equip_silk": "Silk armor slides on"
+  "subtitles.item.armor.equip_silk": "Silk armor slides on",
+  "tag.block.lighterend.end_moss_replaceable": "Blocks that End Moss can spread to",
+  "tag.block.lighterend.end_soil": "LighterEnd plants can be planted on these blocks",
+  "tag.block.lighterend.end_soil_aquatic": "Underwater LighterEnd plants can grow on these blocks",
+  "tag.block.lighterend.end_stones": "Blocks considered \"End Stones\" by LighterEnd",
+  "tag.block.lighterend.end_vegetation_aquatic": "Underwater flora that grow in the end",
+  "tag.item.lighterend.repairs_silk_armor": "Items that can repair silk elytra"
 }
