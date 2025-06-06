@@ -7,14 +7,72 @@ import static net.minecraft.world.gen.surfacebuilder.MaterialRules.condition;
 import static net.minecraft.world.gen.surfacebuilder.MaterialRules.noiseThreshold;
 import static net.minecraft.world.gen.surfacebuilder.MaterialRules.sequence;
 
+import com.mojang.datafixers.util.Pair;
 import io.github.openbagtwo.lighterend.config.Config;
 import io.github.openbagtwo.lighterend.registries.LighterEndBiomes;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.world.gen.noise.NoiseParameters;
+import java.util.ArrayList;
+import java.util.List;
 import net.fabricmc.fabric.api.biome.v1.TheEndBiomes;
+import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.source.BiomeSource;
+import net.minecraft.world.biome.source.MultiNoiseBiomeSource;
+import net.minecraft.world.biome.source.util.MultiNoiseUtil;
 import net.minecraft.world.gen.surfacebuilder.MaterialRules.MaterialRule;
 
 public class LighterEndWorldGen {
+
+  public static BiomeSource addBiomesToNoiseSource(MultiNoiseBiomeSource defaultSource,
+      RegistryEntryLookup<Biome> context) {
+    List<Pair<MultiNoiseUtil.NoiseHypercube, RegistryEntry<Biome>>> biomeParams = new ArrayList<>();
+    biomeParams.addAll(
+        List.of(
+            Pair.of(MultiNoiseUtil.createNoiseHypercube(
+                0,
+                0.3F,
+                0.3F,
+                0,
+                0,
+                -0.5F,
+                0.0F
+            ), context.getOrThrow(LighterEndBiomes.BLOSSOM_FOREST)),
+            Pair.of(MultiNoiseUtil.createNoiseHypercube(
+                0,
+                0.8F,
+                0.5F,
+                0,
+                0.5F,
+                0,
+                0.0F
+            ), context.getOrThrow(LighterEndBiomes.UMBRELLA_JUNGLE)),
+            Pair.of(MultiNoiseUtil.createNoiseHypercube(
+                MultiNoiseUtil.ParameterRange.of(-1, 1),
+                MultiNoiseUtil.ParameterRange.of(0, 1),
+                MultiNoiseUtil.ParameterRange.of(0.5F, 1),
+                MultiNoiseUtil.ParameterRange.of(0.8F, 1),
+                MultiNoiseUtil.ParameterRange.of(0),
+                MultiNoiseUtil.ParameterRange.of(-1, 1),
+                0.0F
+            ), context.getOrThrow(LighterEndBiomes.MEGALAKE)),
+            Pair.of(MultiNoiseUtil.createNoiseHypercube(
+                MultiNoiseUtil.ParameterRange.of(-1, 1),
+                MultiNoiseUtil.ParameterRange.of(-1, 1),
+                MultiNoiseUtil.ParameterRange.of(-1, 1),
+                MultiNoiseUtil.ParameterRange.of(0.5F, 1),
+                MultiNoiseUtil.ParameterRange.of(-1.4F, 0),
+                MultiNoiseUtil.ParameterRange.of(-0.5F, 0.5F),
+                0.46F
+            ), context.getOrThrow(LighterEndBiomes.GLOWING_GRASSLAND))
+        )
+    );
+    biomeParams.addAll(defaultSource.getBiomeEntries().getEntries());
+
+    return MultiNoiseBiomeSource.create(new MultiNoiseUtil.Entries<>(biomeParams));
+
+  }
 
   public static void modifyWorldGen(Config config) {
     if (config.generateBiomes()) {

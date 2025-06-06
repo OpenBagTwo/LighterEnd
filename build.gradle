@@ -18,6 +18,7 @@ repositories {
 
 loom {
     splitEnvironmentSourceSets()
+    accessWidenerPath = file("src/main/resources/lighterend.accesswidener")
 
     mods {
         "lighterend" {
