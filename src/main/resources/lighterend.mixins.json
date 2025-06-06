@@ -8,6 +8,8 @@
     "BlocksAreNotTooFarMixin",
     "ChunkGeneratorSettingsAccessor",
     "GlideDecayMixin",
+    "GravityEffectsMixin",
+    "GravityStrengthMixin",
     "SurfaceGenMixin",
     "UnderwaterBonemealMixin"
   ],
