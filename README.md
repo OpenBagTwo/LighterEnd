@@ -36,8 +36,8 @@ Subject, of course, to change
 - [x] **Alpha 4** Bring back the music discs and modify the vanilla loot tables to provide them
 - [ ] **First Beta**: Introduce the first biomes and a start modifying the worldgen so stuff
   naturally spawns
-- [ ] **First Release**: Enough worldgen that the experience can be enjoyed without needing to
-  play in creative or roll one's own custom datapack
+- [ ] **First Release**: A full mod experience where a player can start in The End and "beat the
+  game" from The End
 
 ### Out of Scope
 
@@ -58,13 +58,23 @@ The completed version of LighterEnd:
 
 ### New Features
 
-On the flip side, I do plan on implementing **new** features that were not present in the original
-BetterEnd:
+On the flip side, LighterEnd has or will have features not present in BetterEnd
 
-- The option for gravity in The End to be 1/3 of normal
-- Breeding villagers in The End will produce End Villagers, who will have exclusive professions,
+- [x] The option for gravity in The End to be 1/3 of normal
+- [x] Silk Elytra—a craftable, trimmable and renewable armored elytra
+- [x] New survival-challenge-friendly crafting recipes (such as the ability to get paper from end
+  lily leaves and arrows from cubozoa drops)
+- [ ] Sniffers that sploot on End Moss will dig up rare End saplings
+- [ ] Breeding villagers in The End might produce End Villagers, who will have exclusive
+  professions,
   job sites and trades
-- New trim materials (and possibly trim patterns)
+- [ ] New trim materials (and possibly trim patterns)
+
+### Broad Compatibility
+
+LighterEnd is compatible out-of-the-box with
+both [Nullscape](https://modrinth.com/datapack/nullscape)
+and [Moog's End Structures](https://modrinth.com/mod/mes-moogs-end-structures)
 
 ## Contributing
 
