@@ -7,12 +7,12 @@ import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.feature.PlacedFeatures;
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures;
 import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;
 import net.minecraft.world.gen.placementmodifier.CountPlacementModifier;
-import net.minecraft.world.gen.placementmodifier.RarityFilterPlacementModifier;
 import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
 
 public class LighterEndPlacedFeatures {
@@ -68,7 +68,7 @@ public class LighterEndPlacedFeatures {
     context.register(END_LILY,
         new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.END_LILY),
             List.of(
-                RarityFilterPlacementModifier.of(2),
+                CountPlacementModifier.of(UniformIntProvider.create(6, 18)),
                 SquarePlacementModifier.of(),
                 PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP,
                 BiomePlacementModifier.of()
@@ -76,7 +76,7 @@ public class LighterEndPlacedFeatures {
     context.register(END_LOTUS,
         new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.END_LOTUS),
             List.of(
-                RarityFilterPlacementModifier.of(3),
+                CountPlacementModifier.of(UniformIntProvider.create(4, 12)),
                 SquarePlacementModifier.of(),
                 PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP,
                 BiomePlacementModifier.of()
@@ -84,7 +84,7 @@ public class LighterEndPlacedFeatures {
     context.register(LOTUS_LEAF,
         new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.LOTUS_LEAF),
             List.of(
-                RarityFilterPlacementModifier.of(3),
+                CountPlacementModifier.of(UniformIntProvider.create(4, 12)),
                 SquarePlacementModifier.of(),
                 PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
                 BiomePlacementModifier.of()
