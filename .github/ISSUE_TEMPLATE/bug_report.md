@@ -15,17 +15,32 @@ assignees: OpenBagTwo
 
 - Minecraft version:
 - LighterEnd version:
-- Fabric Loader / API version:
+- Launcher:
+- Fabric API version:
 - Any other relevant mods or datapacks you have installed:
-- The contents of your `lighterend.yaml` configuration file
-  (inside your `.minecraft` / instance folder, under `config`):
+- LighterEnd config:
+
+<!--Paste the contents of your `lighterend.yaml` file (inside your `.minecraft` / instance folder,
+under `config`) into the below code box-->
 
 ```yaml
+
 ```
 
 ## Steps to Reproduce
 
 <!--Describe in detail how to reproduce the issue. Include any commands you're running and any error messages or stack traces they generate. For long stack traces, please make use of the <details> tag: https://gist.github.com/ericclemmons/b146fe5da72ca1f706b2ef72a20ac39d -->
+
+## Relevant Log
+
+<details><summary>Click to reveal</summary>
+<!-- Paste any relevant logs into the code box below-->
+
+```
+
+```
+
+</details>
 
 ## Workaround
 
