@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.config.Config;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
@@ -16,6 +17,7 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
@@ -209,6 +211,9 @@ public class Lumecorn extends Block {
 
     @Override
     public void generate(ServerWorld world, BlockPos pos, BlockState state, Random random) {
+      if (!isAllowedToGrow(world, pos)) {
+        return;
+      }
       if (state.get(AGE) < 3) {
         world.setBlockState(pos, state.cycle(AGE), Block.NO_REDRAW);
       } else {
@@ -237,6 +242,16 @@ public class Lumecorn extends Block {
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
       super.appendProperties(builder);
       builder.add(AGE);
+    }
+
+    @Override
+    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
+      return isAllowedToGrow(world, pos);
+    }
+
+    private static boolean isAllowedToGrow(WorldView world, BlockPos pos) {
+      return !Config.loadConfiguration().endPlantsOnlyGrowInTheEnd()
+          || world.getBiome(pos).isIn(BiomeTags.IS_END);
     }
   }
 

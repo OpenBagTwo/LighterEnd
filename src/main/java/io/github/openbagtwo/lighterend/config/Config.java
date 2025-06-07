@@ -41,6 +41,12 @@ public class Config {
   protected double endGravity;
 
   /**
+   * Whether End trees (including lumecorn, lilies and lotuses) should be prevented from growing in
+   * other dimensions
+   */
+  protected boolean endPlantsOnlyGrowInTheEnd;
+
+  /**
    * Whether to add the mod's music discs to End City loot tables
    */
   protected boolean musicDiscsInEndCities;
@@ -63,6 +69,10 @@ public class Config {
     return this.endGravity;
   }
 
+  public boolean endPlantsOnlyGrowInTheEnd() {
+    return this.endPlantsOnlyGrowInTheEnd;
+  }
+
   public boolean musicDiscsAreFoundInEndCities() {
     return this.musicDiscsInEndCities;
   }
@@ -77,6 +87,7 @@ public class Config {
   private static final boolean DEFAULT_BIOME_GENERATION = true;
   private static final boolean DEFAULT_PLAY_END_BIOME_MUSIC = true;
   private static final double DEFAULT_END_GRAVITY = 0.3;
+  private static final boolean DEFAULT_END_PLANTS_ONLY_GROW_IN_THE_END = true;
   private static final boolean DEFAULT_MUSIC_DISCS_IN_END_CITIES = true;
   private static final boolean DEFAULT_UNDERWATER_BONEMEAL_SETTING = true;
 
@@ -129,6 +140,7 @@ public class Config {
     writeme.put("generate_biomes", this.generateBiomes);
     writeme.put("play_biome_music", this.playEndBiomeMusic);
     writeme.put("end_gravity", this.endGravity);
+    writeme.put("end_plants_only_grow_in_the_end", this.endPlantsOnlyGrowInTheEnd);
     writeme.put("music_discs_found_in_end_cities", this.musicDiscsInEndCities);
     writeme.put("bonemealing_underwater_in_the_end_produces_end_vegetation",
         this.bonemealUnderwaterInEndMakesEndVegetation);
@@ -148,6 +160,7 @@ public class Config {
     config.generateBiomes = DEFAULT_BIOME_GENERATION;
     config.playEndBiomeMusic = DEFAULT_PLAY_END_BIOME_MUSIC;
     config.endGravity = DEFAULT_END_GRAVITY;
+    config.endPlantsOnlyGrowInTheEnd = DEFAULT_END_PLANTS_ONLY_GROW_IN_THE_END;
     config.musicDiscsInEndCities = DEFAULT_MUSIC_DISCS_IN_END_CITIES;
     config.bonemealUnderwaterInEndMakesEndVegetation = DEFAULT_UNDERWATER_BONEMEAL_SETTING;
     return config;
@@ -172,6 +185,7 @@ public class Config {
     writeme.put("generate_biomes", DEFAULT_BIOME_GENERATION);
     writeme.put("play_biome_music", DEFAULT_PLAY_END_BIOME_MUSIC);
     writeme.put("end_gravity", DEFAULT_END_GRAVITY);
+    writeme.put("end_plants_only_grow_in_the_end", DEFAULT_END_PLANTS_ONLY_GROW_IN_THE_END);
     writeme.put("music_discs_found_in_end_cities", DEFAULT_MUSIC_DISCS_IN_END_CITIES);
     writeme.put("bonemealing_underwater_in_the_end_produces_end_vegetation",
         DEFAULT_UNDERWATER_BONEMEAL_SETTING);
@@ -216,6 +230,12 @@ public class Config {
               DEFAULT_END_GRAVITY
           ).toString()
       );
+      boolean endPlantsOnlyGrowInTheEnd = Boolean.parseBoolean(
+          settings.getOrDefault(
+              "end_plants_only_grow_in_the_end",
+              DEFAULT_END_PLANTS_ONLY_GROW_IN_THE_END
+          ).toString()
+      );
       boolean musicDiscsInEndCities = Boolean.parseBoolean(
           settings.getOrDefault(
               "music_discs_found_in_end_cities",
@@ -233,6 +253,7 @@ public class Config {
       config.generateBiomes = generateBiomes;
       config.playEndBiomeMusic = playEndBiomeMusic;
       config.endGravity = endGravity;
+      config.endPlantsOnlyGrowInTheEnd = endPlantsOnlyGrowInTheEnd;
       config.musicDiscsInEndCities = musicDiscsInEndCities;
       config.bonemealUnderwaterInEndMakesEndVegetation = underwaterBonemealSetting;
       return config;
