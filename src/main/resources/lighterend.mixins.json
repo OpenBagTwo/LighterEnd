@@ -4,6 +4,7 @@
     "defaultRequire": 1
   },
   "mixins": [
+    "BiomeAccessor",
     "BiomeProvidingMixin",
     "BlocksAreNotTooFarMixin",
     "ChunkGeneratorSettingsAccessor",

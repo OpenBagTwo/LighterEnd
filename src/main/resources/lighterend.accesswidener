@@ -1,2 +1,0 @@
-accessWidener v2 named
-accessible method net/minecraft/world/biome/source/MultiNoiseBiomeSource getBiomeEntries ()Lnet/minecraft/world/biome/source/util/MultiNoiseUtil$Entries;

@@ -25,8 +25,10 @@ import net.minecraft.world.gen.surfacebuilder.MaterialRules.MaterialRule;
 
 public class LighterEndWorldGen {
 
-  public static BiomeSource addBiomesToNoiseSource(MultiNoiseBiomeSource defaultSource,
-      RegistryEntryLookup<Biome> context) {
+  public static BiomeSource addBiomesToNoiseSource(
+      MultiNoiseUtil.Entries<RegistryEntry<Biome>> defaultBiomes,
+      RegistryEntryLookup<Biome> context
+  ) {
     List<Pair<MultiNoiseUtil.NoiseHypercube, RegistryEntry<Biome>>> biomeParams = new ArrayList<>();
     biomeParams.addAll(
         List.of(
@@ -68,7 +70,7 @@ public class LighterEndWorldGen {
             ), context.getOrThrow(LighterEndBiomes.GLOWING_GRASSLAND))
         )
     );
-    biomeParams.addAll(defaultSource.getBiomeEntries().getEntries());
+    biomeParams.addAll(defaultBiomes.getEntries());
 
     return MultiNoiseBiomeSource.create(new MultiNoiseUtil.Entries<>(biomeParams));
 

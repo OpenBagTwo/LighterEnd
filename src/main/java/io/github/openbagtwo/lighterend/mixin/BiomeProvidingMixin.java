@@ -31,8 +31,8 @@ public abstract class BiomeProvidingMixin {
 
         if (defaultBiomes instanceof MultiNoiseBiomeSource noiseBiomeSource
             && defaultChunkGen instanceof NoiseChunkGenerator noiseChunkGen) {
-
-          BiomeSource patchedBiomes = LighterEndWorldGen.addBiomesToNoiseSource(noiseBiomeSource,
+          BiomeSource patchedBiomes = LighterEndWorldGen.addBiomesToNoiseSource(
+              ((BiomeAccessor) noiseBiomeSource).accessBiomeEntries(),
               server.getRegistryManager().getOrThrow(
                   RegistryKeys.BIOME));
           args.set(5, new DimensionOptions(dimensionOptions.dimensionTypeEntry(),
