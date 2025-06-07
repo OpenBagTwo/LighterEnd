@@ -216,7 +216,7 @@ public class EndLily extends Block implements FluidFillable {
   }
 
   private static boolean canGrow(WorldAccess world, BlockPos pos) {
-    if (!world.getBlockState(pos).isOf(Blocks.WATER)) {
+    if (!world.getBlockState(pos).getFluidState().getFluid().equals(Fluids.WATER.getStill())) {
       return false;
     }
     Mutable bpos = new Mutable();

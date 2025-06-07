@@ -8,7 +8,6 @@ import io.github.openbagtwo.lighterend.utils.PosInfo;
 import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidFillable;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.ShapeContext;
@@ -434,7 +433,7 @@ public class EndLotus extends Block {
   }
 
   private static boolean canGrow(WorldAccess world, BlockPos pos) {
-    if (!world.getBlockState(pos).isOf(Blocks.WATER)) {
+    if (!world.getBlockState(pos).getFluidState().getFluid().equals(Fluids.WATER.getStill())) {
       return false;
     }
     Mutable bpos = new Mutable();
