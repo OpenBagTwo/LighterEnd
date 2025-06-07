@@ -1,7 +1,6 @@
 package io.github.openbagtwo.lighterend.config;
 
 
-import com.mojang.serialization.Codec;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.config.Config.ConfigException;
 import net.minecraft.client.MinecraftClient;
@@ -37,15 +36,14 @@ public class ConfigScreen extends GameOptionsScreen {
               }));
       this.body.addSingleOptionEntry(
           new SimpleOption<>(
-              "End Gravity:",
+              "End Gravity",
               SimpleOption.constantTooltip(Text.of("Set to 1.0 for vanilla")),
-              ConfigScreen::getPercentValueOrOffText,
-              SimpleOption.DoubleSliderCallbacks.INSTANCE.withModifier(MathHelper::square,
-                  Math::sqrt),
-              Codec.doubleRange(0.05, 1.0),
-              LighterEnd.CONFIG.endGravity,
+              (optionText, value) -> GameOptions.getGenericValueText(optionText,
+                  Text.of(String.valueOf(.01 * value))),
+              new SimpleOption.ValidatingIntSliderCallbacks(5, 100, false),
+              MathHelper.floor(100 * LighterEnd.CONFIG.endGravity),
               value -> {
-                LighterEnd.CONFIG.endGravity = value;
+                LighterEnd.CONFIG.endGravity = 0.01 * value;
               }));
       this.body.addSingleOptionEntry(
           SimpleOption.ofBoolean("Modded plants can only grow in The End",
