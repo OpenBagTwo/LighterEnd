@@ -42,13 +42,13 @@ public class LighterEndWorldGen {
                 0.0F
             ), context.getOrThrow(LighterEndBiomes.BLOSSOM_FOREST)),
             Pair.of(MultiNoiseUtil.createNoiseHypercube(
-                0,
-                0.8F,
-                0.5F,
-                0,
-                0.5F,
-                0,
-                0.0F
+                MultiNoiseUtil.ParameterRange.of(0, 1),
+                MultiNoiseUtil.ParameterRange.of(0.5F),
+                MultiNoiseUtil.ParameterRange.of(0.5F),
+                MultiNoiseUtil.ParameterRange.of(0, 1),
+                MultiNoiseUtil.ParameterRange.of(-1, 1),
+                MultiNoiseUtil.ParameterRange.of(-1, 1),
+                0.3F
             ), context.getOrThrow(LighterEndBiomes.UMBRELLA_JUNGLE)),
             Pair.of(MultiNoiseUtil.createNoiseHypercube(
                 MultiNoiseUtil.ParameterRange.of(-1, 1),
@@ -66,7 +66,7 @@ public class LighterEndWorldGen {
                 MultiNoiseUtil.ParameterRange.of(0.5F, 1),
                 MultiNoiseUtil.ParameterRange.of(-1.4F, 0),
                 MultiNoiseUtil.ParameterRange.of(-0.5F, 0.5F),
-                0.46F
+                0.3F
             ), context.getOrThrow(LighterEndBiomes.GLOWING_GRASSLAND))
         )
     );
