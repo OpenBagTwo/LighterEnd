@@ -17,37 +17,37 @@ public class MobTagProvider extends FabricTagProvider.EntityTypeTagProvider {
 
   @Override
   protected void configure(WrapperLookup wrapperLookup) {
-    valueLookupBuilder(EntityTypeTags.ARTHROPOD).add(
+    getOrCreateTagBuilder(EntityTypeTags.ARTHROPOD).add(
         LighterEndMobs.SILK_MOTH.mob,
         LighterEndMobs.DRAGONFLY.mob
     );
-    valueLookupBuilder(EntityTypeTags.AQUATIC).add(
+    getOrCreateTagBuilder(EntityTypeTags.AQUATIC).add(
         LighterEndMobs.END_FISH.mob,
         LighterEndMobs.CUBOZOA.mob
     );
-    valueLookupBuilder(EntityTypeTags.AXOLOTL_HUNT_TARGETS).add(
+    getOrCreateTagBuilder(EntityTypeTags.AXOLOTL_HUNT_TARGETS).add(
         LighterEndMobs.END_FISH.mob,
         LighterEndMobs.CUBOZOA.mob
     );
 
-    valueLookupBuilder(EntityTypeTags.FROG_FOOD).add(
+    getOrCreateTagBuilder(EntityTypeTags.FROG_FOOD).add(
         LighterEndMobs.DRAGONFLY.mob,
         LighterEndMobs.END_SLIME.mob
     );
 
-    valueLookupBuilder(EntityTypeTags.IMMUNE_TO_OOZING).add(
+    getOrCreateTagBuilder(EntityTypeTags.IMMUNE_TO_OOZING).add(
         LighterEndMobs.END_SLIME.mob
     );
 
-    valueLookupBuilder(EntityTypeTags.NON_CONTROLLING_RIDER).add(
+    getOrCreateTagBuilder(EntityTypeTags.NON_CONTROLLING_RIDER).add(
         LighterEndMobs.END_SLIME.mob
     );
     // I like the idea of these weird-looking fish scaring pufferfish
-//    valueLookupBuilder(EntityTypeTags.NOT_SCARY_FOR_PUFFERFISH).add(
+//    getOrCreateTagBuilder(EntityTypeTags.NOT_SCARY_FOR_PUFFERFISH).add(
 //        LighterEndMobs.END_FISH.mob,
 //        LighterEndMobs.CUBOZOA.mob
 //    );
-    valueLookupBuilder(LighterEndTags.MOTH_NEST_INHABITORS).add(
+    getOrCreateTagBuilder(LighterEndTags.MOTH_NEST_INHABITORS).add(
         LighterEndMobs.SILK_MOTH.mob
     );
 

@@ -23,8 +23,8 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
   @Override
   protected void configure(RegistryWrapper.WrapperLookup lookup) {
 
-    valueLookupBuilder(BlockTags.IMPERMEABLE).add(LighterEndBlocks.AURORA_CRYSTAL);
-    valueLookupBuilder(BlockTags.SNIFFER_DIGGABLE_BLOCK).add(LighterEndBlocks.END_MOSS);
+    getOrCreateTagBuilder(BlockTags.IMPERMEABLE).add(LighterEndBlocks.AURORA_CRYSTAL);
+    getOrCreateTagBuilder(BlockTags.SNIFFER_DIGGABLE_BLOCK).add(LighterEndBlocks.END_MOSS);
 
     for (Material material : Arrays.asList(
         LighterEndBlocks.VIOLECITE,
@@ -34,16 +34,16 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.UMBRALITH
     )) {
       for (Block block : material.blocks) {
-        valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(block);
-        valueLookupBuilder(BlockTags.WALLS)
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(block);
+        getOrCreateTagBuilder(BlockTags.WALLS)
             .add(
                 material.baseWall,
                 material.brickWall,
                 material.polishedWall,
                 material.tileWall
             );
-        valueLookupBuilder(BlockTags.STONE_BUTTONS).add(material.button);
-        valueLookupBuilder(BlockTags.STONE_PRESSURE_PLATES).add(material.pressurePlate);
+        getOrCreateTagBuilder(BlockTags.STONE_BUTTONS).add(material.button);
+        getOrCreateTagBuilder(BlockTags.STONE_PRESSURE_PLATES).add(material.pressurePlate);
       }
     }
 
@@ -54,32 +54,32 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.GLOWSHROOM
     )) {
       for (Block block : wood.blocks) {
-        valueLookupBuilder(BlockTags.AXE_MINEABLE).add(block);
+        getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).add(block);
       }
-      valueLookupBuilder(BlockTags.AXE_MINEABLE).add(wood.wallSign, wood.wallHangingSign);
-      valueLookupBuilder(BlockTags.PLANKS).add(wood.planks);
-      valueLookupBuilder(BlockTags.WOODEN_BUTTONS).add(wood.button);
-      valueLookupBuilder(BlockTags.WOODEN_DOORS).add(wood.door);
-      valueLookupBuilder(BlockTags.WOODEN_STAIRS).add(wood.stairs);
-      valueLookupBuilder(BlockTags.WOODEN_SLABS).add(wood.slab);
-      valueLookupBuilder(BlockTags.WOODEN_FENCES).add(wood.fence);
-      valueLookupBuilder(BlockTags.FENCE_GATES).add(wood.gate);
-      valueLookupBuilder(BlockTags.WOODEN_PRESSURE_PLATES).add(wood.pressurePlate);
-      valueLookupBuilder(BlockTags.LOGS_THAT_BURN).add(
+      getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).add(wood.wallSign, wood.wallHangingSign);
+      getOrCreateTagBuilder(BlockTags.PLANKS).add(wood.planks);
+      getOrCreateTagBuilder(BlockTags.WOODEN_BUTTONS).add(wood.button);
+      getOrCreateTagBuilder(BlockTags.WOODEN_DOORS).add(wood.door);
+      getOrCreateTagBuilder(BlockTags.WOODEN_STAIRS).add(wood.stairs);
+      getOrCreateTagBuilder(BlockTags.WOODEN_SLABS).add(wood.slab);
+      getOrCreateTagBuilder(BlockTags.WOODEN_FENCES).add(wood.fence);
+      getOrCreateTagBuilder(BlockTags.FENCE_GATES).add(wood.gate);
+      getOrCreateTagBuilder(BlockTags.WOODEN_PRESSURE_PLATES).add(wood.pressurePlate);
+      getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN).add(
           wood.log,
           wood.strippedLog,
           wood.wood,
           wood.strippedWood
       );
-      valueLookupBuilder(BlockTags.WOODEN_TRAPDOORS).add(wood.trapdoor);
-      valueLookupBuilder(BlockTags.STANDING_SIGNS).add(wood.sign);
-      valueLookupBuilder(BlockTags.WALL_SIGNS).add(wood.wallSign);
-      valueLookupBuilder(BlockTags.CEILING_HANGING_SIGNS).add(wood.hangingSign);
-      valueLookupBuilder(BlockTags.WALL_HANGING_SIGNS).add(wood.wallHangingSign);
-      valueLookupBuilder(BlockTags.CLIMBABLE).add(wood.ladder);
+      getOrCreateTagBuilder(BlockTags.WOODEN_TRAPDOORS).add(wood.trapdoor);
+      getOrCreateTagBuilder(BlockTags.STANDING_SIGNS).add(wood.sign);
+      getOrCreateTagBuilder(BlockTags.WALL_SIGNS).add(wood.wallSign);
+      getOrCreateTagBuilder(BlockTags.CEILING_HANGING_SIGNS).add(wood.hangingSign);
+      getOrCreateTagBuilder(BlockTags.WALL_HANGING_SIGNS).add(wood.wallHangingSign);
+      getOrCreateTagBuilder(BlockTags.CLIMBABLE).add(wood.ladder);
     }
 
-    valueLookupBuilder(BlockTags.PICKAXE_MINEABLE)
+    getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
         .add(LighterEndBlocks.ENDER_BLOCK)
         .add(LighterEndBlocks.MISSING_TILE)
         .add(
@@ -89,7 +89,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.END_MOSS
         );
 
-    valueLookupBuilder(BlockTags.NEEDS_IRON_TOOL)
+    getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL)
         .add(LighterEndBlocks.ENDER_BLOCK);
 
     for (Material jadestone : Arrays.asList(
@@ -98,20 +98,20 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.VIRID_JADESTONE
     )) {
       for (Block block : jadestone.blocks) {
-        valueLookupBuilder(BlockTags.NEEDS_IRON_TOOL).add(block);
+        getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL).add(block);
       }
     }
 
-    valueLookupBuilder(BlockTags.ENDERMAN_HOLDABLE).add(
+    getOrCreateTagBuilder(BlockTags.ENDERMAN_HOLDABLE).add(
         LighterEndBlocks.END_MOSS
     );
-    valueLookupBuilder(BlockTags.ENDERMAN_HOLDABLE).addTag(LighterEndTags.FURS);
+    getOrCreateTagBuilder(BlockTags.ENDERMAN_HOLDABLE).addTag(LighterEndTags.FURS);
 
-    valueLookupBuilder(BlockTags.ANIMALS_SPAWNABLE_ON).add(LighterEndBlocks.END_MOSS);
-    valueLookupBuilder(BlockTags.REPLACEABLE_BY_TREES).add(LighterEndBlocks.END_MOSS);
-    valueLookupBuilder(BlockTags.SCULK_REPLACEABLE).add(LighterEndBlocks.END_MOSS);
+    getOrCreateTagBuilder(BlockTags.ANIMALS_SPAWNABLE_ON).add(LighterEndBlocks.END_MOSS);
+    getOrCreateTagBuilder(BlockTags.REPLACEABLE_BY_TREES).add(LighterEndBlocks.END_MOSS);
+    getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE).add(LighterEndBlocks.END_MOSS);
 
-    valueLookupBuilder(BlockTags.FLOWERS).add(
+    getOrCreateTagBuilder(BlockTags.FLOWERS).add(
         LighterEndBlocks.CREEPING_MOSS,
         LighterEndBlocks.UMBRELLA_FERN,
         LighterEndBlocks.TALL_UMBRELLA_FERN,
@@ -119,23 +119,23 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.END_LOTUS_FLOWER
     );
 
-    valueLookupBuilder(BlockTags.AXE_MINEABLE).add(
+    getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).add(
         LighterEndBlocks.LUMECORN_STEM,
         LighterEndBlocks.END_LOTUS_STEM
     );
 
-    valueLookupBuilder(BlockTags.SAPLINGS).add(
+    getOrCreateTagBuilder(BlockTags.SAPLINGS).add(
         LighterEndBlocks.TENANEA_SAPLING,
         LighterEndBlocks.UMBRELLA_TREE_SAPLING,
         LighterEndBlocks.GLOWSHROOM_SAPLING
     );
-    valueLookupBuilder(BlockTags.LEAVES).add(
+    getOrCreateTagBuilder(BlockTags.LEAVES).add(
         LighterEndBlocks.TENANEA_LEAVES,
         LighterEndBlocks.GLOWSHROOM_FUR,
         LighterEndBlocks.AGAVE_FUR
     );
 
-    valueLookupBuilder(BlockTags.AXE_MINEABLE).add(
+    getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).add(
         LighterEndBlocks.UMBRELLA_TREE_CLUSTER,
         LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY,
         LighterEndBlocks.GLOWSHROOM_CAP,
@@ -150,7 +150,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.POTTED_GLOWSHROOM_SAPLING
     );
 
-    valueLookupBuilder(LighterEndTags.END_MOSS_REPLACEABLE)
+    getOrCreateTagBuilder(LighterEndTags.END_MOSS_REPLACEABLE)
         .add(
             Blocks.END_STONE,
             Blocks.BLACKSTONE,
@@ -162,12 +162,12 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             Blocks.DEAD_TUBE_CORAL_BLOCK,
             LighterEndBlocks.UMBRALITH.baseBlock
         );
-    valueLookupBuilder(LighterEndTags.END_SOIL)
+    getOrCreateTagBuilder(LighterEndTags.END_SOIL)
         .add(
             LighterEndBlocks.END_MOSS,
             LighterEndBlocks.UMBRALITH.baseBlock
         );
-    valueLookupBuilder(LighterEndTags.END_STONES)
+    getOrCreateTagBuilder(LighterEndTags.END_STONES)
         .add(
             Blocks.END_STONE,
             Blocks.BLACKSTONE,
@@ -183,7 +183,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.VIRID_JADESTONE.baseBlock,
             LighterEndBlocks.UMBRALITH.baseBlock
         );
-    valueLookupBuilder(LighterEndTags.AQUATIC_END_SOIL)
+    getOrCreateTagBuilder(LighterEndTags.AQUATIC_END_SOIL)
         .add(
             Blocks.END_STONE,
             Blocks.BLACKSTONE,
@@ -198,7 +198,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.UMBRALITH.baseBlock,
             LighterEndBlocks.END_MOSS  // though pretty sure this won't survive underwater
         );
-    valueLookupBuilder(LighterEndTags.AQUATIC_END_VEGETATION)
+    getOrCreateTagBuilder(LighterEndTags.AQUATIC_END_VEGETATION)
         .add(
             LighterEndBlocks.CHARNIA_CYAN,
             LighterEndBlocks.CHARNIA_GREEN,
@@ -207,13 +207,15 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.CHARNIA_PURPLE,
             LighterEndBlocks.CHARNIA_RED
         );
-    valueLookupBuilder(LighterEndTags.FURS)
+    getOrCreateTagBuilder(LighterEndTags.FURS)
         .add(
             LighterEndBlocks.AGAVE_FUR,
             LighterEndBlocks.GLOWSHROOM_FUR
         );
-    valueLookupBuilder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_STONES);
-    valueLookupBuilder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_SOIL);
+    getOrCreateTagBuilder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_STONES);
+    getOrCreateTagBuilder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_SOIL);
+    getOrCreateTagBuilder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_STONES);
+    getOrCreateTagBuilder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_SOIL);
 
 
   }

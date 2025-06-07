@@ -19,11 +19,10 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.SchoolingFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -73,15 +72,15 @@ public class Cubozoa extends SchoolingFishEntity {
   }
 
   @Override
-  public void writeCustomData(WriteView view) {
-    super.writeCustomData(view);
-    view.putInt("Variant", this.getVariant());
+  public void writeCustomDataToNbt(NbtCompound nbt) {
+    super.writeCustomDataToNbt(nbt);
+    nbt.putInt("Variant", this.getVariant());
   }
 
   @Override
-  protected void readCustomData(ReadView view) {
-    super.readCustomData(view);
-    this.setVariant(view.getInt("Variant", 0));
+  public void readCustomDataFromNbt(NbtCompound nbt) {
+    super.readCustomDataFromNbt(nbt);
+    this.setVariant(nbt.getInt("Variant", 0));
   }
 
   @Override
@@ -125,7 +124,7 @@ public class Cubozoa extends SchoolingFishEntity {
   public void onPlayerCollision(PlayerEntity player) {
     if (player instanceof ServerPlayerEntity serverPlayer
         && player.damage(
-        serverPlayer.getWorld(),
+        serverPlayer.getServerWorld(),
         this.getDamageSources().mobAttack(this), 0.5F)
     ) {
       if (!this.isSilent()) {

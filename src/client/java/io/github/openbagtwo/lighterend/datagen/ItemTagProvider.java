@@ -30,23 +30,23 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
         LighterEndBlocks.LOTUS,
         LighterEndBlocks.GLOWSHROOM
     )) {
-      valueLookupBuilder(ItemTags.LOGS_THAT_BURN).add(
+      getOrCreateTagBuilder(ItemTags.LOGS_THAT_BURN).add(
           wood.log.asItem(),
           wood.strippedLog.asItem(),
           wood.wood.asItem(),
           wood.strippedWood.asItem()
       );
-      valueLookupBuilder(ItemTags.PLANKS).add(wood.planks.asItem());
-      valueLookupBuilder(ItemTags.WOODEN_BUTTONS).add(wood.button.asItem());
-      valueLookupBuilder(ItemTags.WOODEN_DOORS).add(wood.door.asItem());
-      valueLookupBuilder(ItemTags.WOODEN_STAIRS).add(wood.stairs.asItem());
-      valueLookupBuilder(ItemTags.WOODEN_SLABS).add(wood.slab.asItem());
-      valueLookupBuilder(ItemTags.WOODEN_FENCES).add(wood.fence.asItem());
-      valueLookupBuilder(ItemTags.FENCE_GATES).add(wood.gate.asItem());
-      valueLookupBuilder(ItemTags.WOODEN_PRESSURE_PLATES).add(wood.pressurePlate.asItem());
-      valueLookupBuilder(ItemTags.WOODEN_TRAPDOORS).add(wood.trapdoor.asItem());
-      valueLookupBuilder(ItemTags.SIGNS).add(wood.sign.asItem());
-      valueLookupBuilder(ItemTags.HANGING_SIGNS).add(wood.hangingSign.asItem());
+      getOrCreateTagBuilder(ItemTags.PLANKS).add(wood.planks.asItem());
+      getOrCreateTagBuilder(ItemTags.WOODEN_BUTTONS).add(wood.button.asItem());
+      getOrCreateTagBuilder(ItemTags.WOODEN_DOORS).add(wood.door.asItem());
+      getOrCreateTagBuilder(ItemTags.WOODEN_STAIRS).add(wood.stairs.asItem());
+      getOrCreateTagBuilder(ItemTags.WOODEN_SLABS).add(wood.slab.asItem());
+      getOrCreateTagBuilder(ItemTags.WOODEN_FENCES).add(wood.fence.asItem());
+      getOrCreateTagBuilder(ItemTags.FENCE_GATES).add(wood.gate.asItem());
+      getOrCreateTagBuilder(ItemTags.WOODEN_PRESSURE_PLATES).add(wood.pressurePlate.asItem());
+      getOrCreateTagBuilder(ItemTags.WOODEN_TRAPDOORS).add(wood.trapdoor.asItem());
+      getOrCreateTagBuilder(ItemTags.SIGNS).add(wood.sign.asItem());
+      getOrCreateTagBuilder(ItemTags.HANGING_SIGNS).add(wood.hangingSign.asItem());
 
     }
     for (Material material : Arrays.asList(
@@ -56,32 +56,33 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
         LighterEndBlocks.VIRID_JADESTONE,
         LighterEndBlocks.UMBRALITH
     )) {
-      valueLookupBuilder(ItemTags.STONE_BUTTONS).add(material.button.asItem());
+      getOrCreateTagBuilder(ItemTags.STONE_BUTTONS).add(material.button.asItem());
     }
-    valueLookupBuilder(ItemTags.CHICKEN_FOOD).add(LighterEndBlocks.LUMECORN_SEED.asItem());
-    valueLookupBuilder(ItemTags.BEE_FOOD).add(LighterEndBlocks.TENANEA_FLOWER.asItem());
-    valueLookupBuilder(ItemTags.LEAVES).add(
+    getOrCreateTagBuilder(ItemTags.CHICKEN_FOOD).add(LighterEndBlocks.LUMECORN_SEED.asItem());
+    getOrCreateTagBuilder(ItemTags.BEE_FOOD).add(LighterEndBlocks.TENANEA_FLOWER.asItem());
+    getOrCreateTagBuilder(ItemTags.LEAVES).add(
         LighterEndBlocks.TENANEA_LEAVES.asItem(),
         LighterEndItems.GLOWSHROOM_FUR
     );
 
-    valueLookupBuilder(ItemTags.FISHES).add(LighterEndItems.RAW_END_FISH);
-
-    valueLookupBuilder(ItemTags.DYEABLE).add(
+    getOrCreateTagBuilder(ItemTags.DYEABLE).add(
         LighterEndEquipment.SILK_ELYTRA
     );
 
-    valueLookupBuilder(ItemTags.CHEST_ARMOR).add(
+    getOrCreateTagBuilder(ItemTags.FISHES).add(LighterEndItems.RAW_END_FISH);
+
+    getOrCreateTagBuilder(ItemTags.CHEST_ARMOR).add(
         LighterEndEquipment.SILK_ELYTRA
     );  // this makes silk elytra trimmable
 
-    valueLookupBuilder(ItemTags.GAZE_DISGUISE_EQUIPMENT).addTag(LighterEndTags.FUR_ITEMS);
+    getOrCreateTagBuilder(ItemTags.GAZE_DISGUISE_EQUIPMENT).addTag(LighterEndTags.FUR_ITEMS);
 
-    valueLookupBuilder(ItemTags.BREWING_FUEL).add(LighterEndItems.END_POWDER);
+    getOrCreateTagBuilder(ItemTags.BREWING_FUEL).add(LighterEndItems.END_POWDER);
 
-    valueLookupBuilder(LighterEndTags.REPAIRS_SILK_ARMOR).add(LighterEndItems.SILK);
+    getOrCreateTagBuilder(LighterEndTags.REPAIRS_SILK_ARMOR).add(LighterEndItems.SILK);
 
-    valueLookupBuilder(LighterEndTags.FLETCHINGS).add(
+
+    getOrCreateTagBuilder(LighterEndTags.FLETCHINGS).add(
         Items.FEATHER,
         LighterEndBlocks.CHARNIA_CYAN.asItem(),
         LighterEndBlocks.CHARNIA_GREEN.asItem(),
@@ -90,19 +91,19 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
         LighterEndBlocks.CHARNIA_PURPLE.asItem(),
         LighterEndBlocks.CHARNIA_RED.asItem()
     );
-    valueLookupBuilder(LighterEndTags.FLETCHINGS).addTag(LighterEndTags.FUR_ITEMS);
+    getOrCreateTagBuilder(LighterEndTags.FLETCHINGS).addTag(LighterEndTags.FUR_ITEMS);
 
-    valueLookupBuilder(LighterEndTags.FUR_ITEMS).add(
+    getOrCreateTagBuilder(LighterEndTags.FUR_ITEMS).add(
         LighterEndItems.GLOWSHROOM_FUR,
         LighterEndItems.AGAVE_FUR
     );
 
-    valueLookupBuilder(LighterEndTags.POLYPORES).add(
+    getOrCreateTagBuilder(LighterEndTags.POLYPORES).add(
         LighterEndBlocks.AURANT_POLYPORE.asItem(),
         LighterEndBlocks.PURPLE_POLYPORE.asItem()
     );
 
-    valueLookupBuilder(LighterEndTags.MOOSHROOM_FOOD).add(
+    getOrCreateTagBuilder(LighterEndTags.MOOSHROOM_FOOD).add(
         LighterEndItems.LUMECORN_EAR
     );
   }

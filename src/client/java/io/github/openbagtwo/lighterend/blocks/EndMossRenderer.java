@@ -2,10 +2,10 @@ package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.client.render.BlockRenderLayer;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.world.biome.Biome;
@@ -29,8 +29,8 @@ public class EndMossRenderer {
   }
 
   public static void initialize() {
-    BlockRenderLayerMap.putBlocks(
-        BlockRenderLayer.CUTOUT_MIPPED,
+    BlockRenderLayerMap.INSTANCE.putBlocks(
+        RenderLayer.getCutoutMipped(),
         LighterEndBlocks.END_MOSS
     );
   }
