@@ -1,6 +1,6 @@
 package io.github.openbagtwo.lighterend.mixin;
 
-import io.github.openbagtwo.lighterend.config.Config;
+import io.github.openbagtwo.lighterend.LighterEnd;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionTypes;
@@ -18,7 +18,7 @@ public abstract class GravityStrengthMixin {
 
   @Inject(method = "getFinalGravity", at = @At("RETURN"), cancellable = true)
   public void applyEndGravity(CallbackInfoReturnable<Double> cir) {
-    double endGravity = Config.loadConfiguration().getEndGravity();
+    double endGravity = LighterEnd.CONFIG.getEndGravity();
     if (endGravity >= 0.0 && DimensionTypes.THE_END.equals(
         this.getWorld().getDimensionEntry().getKey().orElse(null))) {
       cir.setReturnValue(cir.getReturnValue() * endGravity);

@@ -1,6 +1,6 @@
 package io.github.openbagtwo.lighterend.mixin;
 
-import io.github.openbagtwo.lighterend.config.Config;
+import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.world.features.UnderwaterPlants;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BoneMealItem;
@@ -25,9 +25,8 @@ public abstract class UnderwaterBonemealMixin {
   private static void generateEndPlants(
       ItemStack stack, World world, BlockPos blockPos, @Nullable Direction facing,
       CallbackInfoReturnable<Boolean> cir) {
-    Config config = Config.loadConfiguration();
     if (
-        config.bonemealingUnderwaterInEndProducesEndVegetation()
+        LighterEnd.CONFIG.bonemealingUnderwaterInEndProducesEndVegetation()
             && world.getBiome(blockPos).isIn(BiomeTags.IS_END)
     ) {
       if (world.getBlockState(blockPos).isOf(Blocks.WATER)

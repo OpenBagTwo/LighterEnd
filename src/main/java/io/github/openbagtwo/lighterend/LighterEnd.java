@@ -27,14 +27,14 @@ public class LighterEnd implements ModInitializer {
 
   public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+  public static final Config CONFIG = Config.loadConfiguration();
+
   public static Identifier of(String name) {
     return Identifier.of(MOD_ID, name);
   }
 
   @Override
   public void onInitialize() {
-
-    Config config = Config.loadConfiguration();
 
     LighterEndItems.initialize();
     LighterEndMusicDiscs.initialize();
@@ -50,7 +50,7 @@ public class LighterEnd implements ModInitializer {
     LighterEndConfiguredFeatures.initialize();
     LighterEndStructures.initialize();
 
-    VanillaLootTableModifiers.patchLootTables(config);
-    LighterEndWorldGen.modifyWorldGen(config);
+    VanillaLootTableModifiers.patchLootTables(CONFIG);
+    LighterEndWorldGen.modifyWorldGen(CONFIG);
   }
 }

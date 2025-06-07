@@ -17,11 +17,9 @@ import net.minecraft.util.math.MathHelper;
 public class ConfigScreen extends GameOptionsScreen {
 
   private OptionListWidget widgets;
-  private Config config;
 
   public ConfigScreen(Screen previous) {
     super(previous, MinecraftClient.getInstance().options, Text.of(LighterEnd.MOD_NAME));
-    this.config = Config.loadConfiguration();
   }
 
   @Override
@@ -29,13 +27,13 @@ public class ConfigScreen extends GameOptionsScreen {
     if (this.body != null) {
       this.body.addSingleOptionEntry(
           SimpleOption.ofBoolean("Generate Modded Biomes",
-              this.config.generateBiomes, (value) -> {
-                this.config.generateBiomes = value;
+              LighterEnd.CONFIG.generateBiomes, (value) -> {
+                LighterEnd.CONFIG.generateBiomes = value;
               }));
       this.body.addSingleOptionEntry(
           SimpleOption.ofBoolean("Play Modded Music in End Biomes",
-              this.config.playEndBiomeMusic, (value) -> {
-                this.config.playEndBiomeMusic = value;
+              LighterEnd.CONFIG.playEndBiomeMusic, (value) -> {
+                LighterEnd.CONFIG.playEndBiomeMusic = value;
               }));
       this.body.addSingleOptionEntry(
           new SimpleOption<>(
@@ -45,19 +43,24 @@ public class ConfigScreen extends GameOptionsScreen {
               SimpleOption.DoubleSliderCallbacks.INSTANCE.withModifier(MathHelper::square,
                   Math::sqrt),
               Codec.doubleRange(0.05, 1.0),
-              this.config.endGravity,
+              LighterEnd.CONFIG.endGravity,
               value -> {
-                this.config.endGravity = value;
+                LighterEnd.CONFIG.endGravity = value;
+              }));
+      this.body.addSingleOptionEntry(
+          SimpleOption.ofBoolean("Modded plants can only grow in The End",
+              LighterEnd.CONFIG.endPlantsOnlyGrowInTheEnd, (value) -> {
+                LighterEnd.CONFIG.endPlantsOnlyGrowInTheEnd = value;
               }));
       this.body.addSingleOptionEntry(
           SimpleOption.ofBoolean("Mod Music Discs Can Be Found in End Cities",
-              this.config.musicDiscsInEndCities, (value) -> {
-                this.config.musicDiscsInEndCities = value;
+              LighterEnd.CONFIG.musicDiscsInEndCities, (value) -> {
+                LighterEnd.CONFIG.musicDiscsInEndCities = value;
               }));
       this.body.addSingleOptionEntry(
           SimpleOption.ofBoolean("Bonemealing Underwater in The End Produces End Vegetation",
-              this.config.bonemealUnderwaterInEndMakesEndVegetation, (value) -> {
-                this.config.bonemealUnderwaterInEndMakesEndVegetation = value;
+              LighterEnd.CONFIG.bonemealUnderwaterInEndMakesEndVegetation, (value) -> {
+                LighterEnd.CONFIG.bonemealUnderwaterInEndMakesEndVegetation = value;
               }));
     }
   }
@@ -65,7 +68,7 @@ public class ConfigScreen extends GameOptionsScreen {
   @Override
   public void removed() {
     try {
-      this.config.writeConfigToFile();
+      LighterEnd.CONFIG.writeConfigToFile();
     } catch (ConfigException e) {
       LighterEnd.LOGGER.error(String.valueOf(e));
     }

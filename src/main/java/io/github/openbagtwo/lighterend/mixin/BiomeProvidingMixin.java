@@ -1,6 +1,6 @@
 package io.github.openbagtwo.lighterend.mixin;
 
-import io.github.openbagtwo.lighterend.config.Config;
+import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.world.gen.LighterEndWorldGen;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.MinecraftServer;
@@ -21,7 +21,7 @@ public abstract class BiomeProvidingMixin {
 
   @ModifyArgs(method = "createWorlds", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/world/level/storage/LevelStorage$Session;Lnet/minecraft/world/level/ServerWorldProperties;Lnet/minecraft/registry/RegistryKey;Lnet/minecraft/world/dimension/DimensionOptions;Lnet/minecraft/server/WorldGenerationProgressListener;ZJLjava/util/List;ZLnet/minecraft/util/math/random/RandomSequencesState;)V"))
   private void addModdedBiomes(Args args) {
-    if (Config.loadConfiguration().generateBiomes()) {
+    if (LighterEnd.CONFIG.generateBiomes()) {
       MinecraftServer server = args.get(0);
       DimensionOptions dimensionOptions = args.get(5);
       if (DimensionTypes.THE_END.equals(

@@ -1,7 +1,6 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import io.github.openbagtwo.lighterend.config.Config;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
@@ -250,7 +249,7 @@ public class Lumecorn extends Block {
     }
 
     private static boolean isAllowedToGrow(WorldView world, BlockPos pos) {
-      return !Config.loadConfiguration().endPlantsOnlyGrowInTheEnd()
+      return !LighterEnd.CONFIG.endPlantsOnlyGrowInTheEnd()
           || world.getBiome(pos).isIn(BiomeTags.IS_END);
     }
   }

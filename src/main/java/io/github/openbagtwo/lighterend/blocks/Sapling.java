@@ -1,7 +1,6 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import io.github.openbagtwo.lighterend.config.Config;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -71,7 +70,7 @@ public class Sapling extends SaplingBlock {
   }
 
   protected static boolean isAllowedToGrow(WorldView world, BlockPos pos) {
-    return !Config.loadConfiguration().endPlantsOnlyGrowInTheEnd()
+    return !LighterEnd.CONFIG.endPlantsOnlyGrowInTheEnd()
         || world.getBiome(pos).isIn(BiomeTags.IS_END);
   }
 

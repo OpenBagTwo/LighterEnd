@@ -1,6 +1,6 @@
 package io.github.openbagtwo.lighterend.mixin;
 
-import io.github.openbagtwo.lighterend.config.Config;
+import io.github.openbagtwo.lighterend.LighterEnd;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -21,7 +21,7 @@ public abstract class GravityEffectsMixin extends GravityStrengthMixin {
 
   @Inject(method = "getUnsafeFallDistance", at = @At("RETURN"), cancellable = true)
   public void increaseSafeFallHeight(CallbackInfoReturnable<Double> cir) {
-    double endGravity = Config.loadConfiguration().getEndGravity();
+    double endGravity = LighterEnd.CONFIG.getEndGravity();
     if (endGravity >= 0.0 && DimensionTypes.THE_END.equals(
         this.getWorld().getDimensionEntry().getKey().orElse(null))) {
       cir.setReturnValue(cir.getReturnValue()
@@ -32,7 +32,7 @@ public abstract class GravityEffectsMixin extends GravityStrengthMixin {
 
   @Inject(method = "computeFallDamage", at = @At("RETURN"), cancellable = true)
   public void decreaseFallDamage(CallbackInfoReturnable<Integer> cir) {
-    double endGravity = Config.loadConfiguration().getEndGravity();
+    double endGravity = LighterEnd.CONFIG.getEndGravity();
     if (endGravity >= 0.0 && DimensionTypes.THE_END.equals(
         this.getWorld().getDimensionEntry().getKey().orElse(null))) {
 
