@@ -16,6 +16,7 @@ import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.FireBlock;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.MapColor;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -59,6 +60,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
@@ -79,6 +83,11 @@ public class SilkMothNest extends BlockWithEntity {
   public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
   public static final int MAX_FULLNESS = 3;
   public static final IntProperty FULLNESS = IntProperty.of("fullness", 0, MAX_FULLNESS);
+
+  public static final VoxelShape OUTLINE_SHAPE = VoxelShapes.union(
+      Block.createCuboidShape(0, 0, 0, 16, 13, 16),
+      Block.createCuboidShape(3, 12, 3, 13, 16, 13)
+  );
 
 
   @Override
@@ -285,6 +294,12 @@ public class SilkMothNest extends BlockWithEntity {
   @Override
   public BlockState mirror(BlockState state, BlockMirror mirror) {
     return state.rotate(mirror.getRotation(state.get(FACING)));
+  }
+
+  @Override
+  public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos,
+      ShapeContext context) {
+    return SilkMothNest.OUTLINE_SHAPE;
   }
 
   public static class SilkMothNestFeature extends Feature<DefaultFeatureConfig> {
