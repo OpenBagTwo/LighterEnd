@@ -13,6 +13,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.DoorBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
@@ -55,6 +56,8 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
       for (Block block : material) {
         if (block instanceof SlabBlock) {
           addDrop(block, this::slabDrops);
+        } else if (block instanceof DoorBlock) {
+          addDrop(block, this::doorDrops);
         } else {
           addDrop(block);
         }
