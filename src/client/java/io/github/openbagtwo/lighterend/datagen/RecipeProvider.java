@@ -1,5 +1,6 @@
 package io.github.openbagtwo.lighterend.datagen;
 
+import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
@@ -22,7 +23,6 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
-import net.minecraft.util.Identifier;
 
 public class RecipeProvider extends FabricRecipeProvider {
 
@@ -108,14 +108,26 @@ public class RecipeProvider extends FabricRecipeProvider {
             .criterion(
                 hasItem(LighterEndBlocks.CREEPING_MOSS),
                 conditionsFromItem(LighterEndBlocks.CREEPING_MOSS)
-            ).offerTo(exporter);
+            ).offerTo(
+                exporter,
+                RegistryKey.of(
+                    RegistryKeys.RECIPE,
+                    LighterEnd.of("cyan_dye_from_creeping_moss")
+                )
+            );
 
         createShapeless(RecipeCategory.MISC, Items.ORANGE_DYE)
             .input(LighterEndBlocks.UMBRELLA_FERN)
             .criterion(
                 hasItem(LighterEndBlocks.UMBRELLA_FERN),
                 conditionsFromItem(LighterEndBlocks.UMBRELLA_FERN)
-            ).offerTo(exporter);
+            ).offerTo(
+                exporter,
+                RegistryKey.of(
+                    RegistryKeys.RECIPE,
+                    LighterEnd.of("orange_dye_from_umbrella_fern")
+                )
+            );
 
         generateCookingRecipes(LighterEndItems.LUMECORN_EAR, LighterEndItems.POPPED_LUMECORN);
 
@@ -126,7 +138,13 @@ public class RecipeProvider extends FabricRecipeProvider {
             .criterion(
                 hasItem(LighterEndBlocks.TENANEA_FLOWER),
                 conditionsFromItem(LighterEndBlocks.TENANEA_FLOWER)
-            ).offerTo(exporter);
+            ).offerTo(
+                exporter,
+                RegistryKey.of(
+                    RegistryKeys.RECIPE,
+                    LighterEnd.of("magenta_dye_from_tenanea_flower")
+                )
+            );
 
         generateWoodRecipes(LighterEndBlocks.TENANEA);
 
@@ -135,7 +153,13 @@ public class RecipeProvider extends FabricRecipeProvider {
             .criterion(
                 hasItem(LighterEndItems.SILK),
                 conditionsFromItem(LighterEndItems.SILK)
-            ).offerTo(exporter);
+            ).offerTo(
+                exporter,
+                RegistryKey.of(
+                    RegistryKeys.RECIPE,
+                    LighterEnd.of("string_from_silk")
+                )
+            );
 
         offerReversibleCompactingRecipes(
             RecipeCategory.MISC,
@@ -172,7 +196,13 @@ public class RecipeProvider extends FabricRecipeProvider {
                 Items.SLIME_BALL, 0.1F, 200)
             .criterion(hasItem(LighterEndBlocks.UMBRELLA_MEMBRANE),
                 this.conditionsFromItem(LighterEndBlocks.UMBRELLA_MEMBRANE))
-            .offerTo(this.exporter);
+            .offerTo(
+                exporter,
+                RegistryKey.of(
+                    RegistryKeys.RECIPE,
+                    LighterEnd.of("slime_balls_from_smeling_membranes")
+                )
+            );
 
         generateSmokingSmeltingRecipes(LighterEndItems.RAW_END_FISH, Items.GLOW_INK_SAC,
             RecipeCategory.MISC);
@@ -206,7 +236,13 @@ public class RecipeProvider extends FabricRecipeProvider {
             ).criterion(
                 hasItem(LighterEndItems.GLOW_BARB),
                 conditionsFromItem(LighterEndItems.GLOW_BARB)
-            ).offerTo(exporter);
+            ).offerTo(
+                exporter,
+                RegistryKey.of(
+                    RegistryKeys.RECIPE,
+                    LighterEnd.of("spectral_arrow")
+                )
+            );
 
         generateSmokingSmeltingRecipes(LighterEndItems.END_LILY_LEAF,
             LighterEndItems.DRIED_END_LILY_LEAF, RecipeCategory.MISC);
@@ -217,13 +253,19 @@ public class RecipeProvider extends FabricRecipeProvider {
             .criterion(
                 hasItem(LighterEndItems.DRIED_END_LILY_LEAF),
                 conditionsFromItem(LighterEndItems.DRIED_END_LILY_LEAF)
-            ).offerTo(exporter);
+            ).offerTo(
+                exporter,
+                RegistryKey.of(
+                    RegistryKeys.RECIPE,
+                    LighterEnd.of("paper_from_dried_leaves")
+                )
+            );
 
         generateWoodRecipes(LighterEndBlocks.LOTUS, 2);
         offerCompactingRecipe(
             RecipeCategory.BUILDING_BLOCKS,
-            LighterEndBlocks.END_LOTUS_STEM,
-            LighterEndBlocks.LOTUS.log
+            LighterEndBlocks.LOTUS.log,
+            LighterEndBlocks.END_LOTUS_STEM
         );
       }
 
@@ -401,14 +443,17 @@ public class RecipeProvider extends FabricRecipeProvider {
             exporter,
             RegistryKey.of(
                 RegistryKeys.RECIPE,
-                Registries.ITEM.getId(output.asItem()).withSuffixedPath("_campfire")
+                LighterEnd.of(
+                    Registries.ITEM.getId(output.asItem()).getPath()
+                        + "_campfire_from_"
+                        + Registries.ITEM.getId(input.asItem()).getPath())
             )
         );
       }
 
       public void generateSmokingSmeltingRecipes(ItemConvertible input, ItemConvertible output,
           RecipeCategory category) {
-        Identifier output_key = Registries.ITEM.getId(output.asItem());
+        String output_key = Registries.ITEM.getId(output.asItem()).getPath();
         CookingRecipeJsonBuilder.createSmelting(
             Ingredient.ofItem(input),
             category,
@@ -418,7 +463,13 @@ public class RecipeProvider extends FabricRecipeProvider {
         ).criterion(hasItem(input), conditionsFromItem(input)
         ).offerTo(
             exporter,
-            RegistryKey.of(RegistryKeys.RECIPE, output_key.withSuffixedPath("_smelting"))
+            RegistryKey.of(RegistryKeys.RECIPE,
+                LighterEnd.of(
+                    output_key
+                        + "_smelting_"
+                        + Registries.ITEM.getId(input.asItem()).getPath()
+                )
+            )
         );
         CookingRecipeJsonBuilder.createSmoking(
             Ingredient.ofItem(input),
@@ -430,7 +481,13 @@ public class RecipeProvider extends FabricRecipeProvider {
             conditionsFromItem(input)
         ).offerTo(
             exporter,
-            RegistryKey.of(RegistryKeys.RECIPE, output_key.withSuffixedPath("_smoking"))
+            RegistryKey.of(RegistryKeys.RECIPE,
+                LighterEnd.of(
+                    output_key
+                        + "_smoking_"
+                        + Registries.ITEM.getId(input.asItem()).getPath()
+                )
+            )
         );
       }
     };
