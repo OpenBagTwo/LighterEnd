@@ -1,12 +1,12 @@
 package io.github.openbagtwo.lighterend.Items;
 
+import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import net.minecraft.component.type.ConsumableComponent;
 import net.minecraft.component.type.ConsumableComponents;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
-import net.minecraft.sound.SoundEvents;
 
 public class LighterEndFoodComponents {
 
@@ -32,6 +32,6 @@ public class LighterEndFoodComponents {
 
   public static final ConsumableComponent UMBRELLA_JUICE_EFFECT = ConsumableComponents.drink()
       .consumeSeconds(2.0F)
-      .sound(SoundEvents.ITEM_HONEY_BOTTLE_DRINK)
+      .sound(LighterEndSounds.DRINK_UMBRELLA_JUICE)
       .build();
 }

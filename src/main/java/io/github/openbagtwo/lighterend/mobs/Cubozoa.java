@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.mobs;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
+import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.EntityData;
@@ -20,7 +21,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import net.minecraft.world.LocalDifficulty;
@@ -116,7 +116,7 @@ public class Cubozoa extends SchoolingFishEntity {
 
   @Override
   protected SoundEvent getFlopSound() {
-    return SoundEvents.ENTITY_SALMON_FLOP;
+    return LighterEndSounds.CUBOZOA_FLOP;
   }
 
   @Override

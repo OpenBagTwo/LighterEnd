@@ -10,6 +10,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities.MothsComponent;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
+import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.tags.LighterEndTags;
 import io.netty.buffer.ByteBuf;
 import java.util.Arrays;
@@ -29,7 +30,6 @@ import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.storage.NbtWriteView;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
@@ -128,7 +128,7 @@ public class SilkMothNestEntity extends BlockEntity {
         this.world
             .playSound(
                 null, blockPos.getX(), blockPos.getY(), blockPos.getZ(),
-                SoundEvents.BLOCK_BEEHIVE_ENTER, SoundCategory.BLOCKS, 1.0F, 1.0F
+                LighterEndSounds.MOTH_NEST_ENTER, SoundCategory.BLOCKS, 1.0F, 1.0F
             );
         this.world.emitGameEvent(GameEvent.BLOCK_CHANGE, blockPos,
             GameEvent.Emitter.of(entity, this.getCachedState()));
@@ -190,7 +190,7 @@ public class SilkMothNestEntity extends BlockEntity {
           entity.refreshPositionAndAngles(e, g, h, entity.getYaw(), entity.getPitch());
         }
 
-        world.playSound(null, pos, SoundEvents.BLOCK_BEEHIVE_EXIT, SoundCategory.BLOCKS, 1.0F,
+        world.playSound(null, pos, LighterEndSounds.MOTH_NEST_EXIT, SoundCategory.BLOCKS, 1.0F,
             1.0F);
         world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos,
             GameEvent.Emitter.of(entity, world.getBlockState(pos)));
@@ -228,8 +228,8 @@ public class SilkMothNestEntity extends BlockEntity {
       double d = pos.getX() + 0.5;
       double e = pos.getY();
       double f = pos.getZ() + 0.5;
-      world.playSound(null, d, e, f, SoundEvents.BLOCK_BEEHIVE_WORK, SoundCategory.BLOCKS, 1.0F,
-          1.0F);
+      world.playSound(null, d, e, f, LighterEndSounds.MOTH_NEST_WORK, SoundCategory.BLOCKS,
+          1.0F, 1.0F);
     }
   }
 

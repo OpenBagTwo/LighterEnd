@@ -5,6 +5,7 @@ import io.github.openbagtwo.lighterend.blocks.entities.SilkMothNestEntity;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
+import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.utils.Flags;
 import io.github.openbagtwo.lighterend.utils.GlobalState;
 import io.github.openbagtwo.lighterend.utils.PosInfo;
@@ -44,7 +45,6 @@ import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
@@ -153,7 +153,7 @@ public class SilkMothNest extends BlockWithEntity {
       Item item = stack.getItem();
       if (stack.isOf(Items.SHEARS)) {
         world.playSound(player, player.getX(), player.getY(), player.getZ(),
-            SoundEvents.BLOCK_BEEHIVE_SHEAR, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            LighterEndSounds.MOTH_NEST_SHEAR, SoundCategory.BLOCKS, 1.0F, 1.0F);
         dropSilk(world, pos);
         stack.damage(1, player, LivingEntity.getSlotForHand(hand));
         bl = true;

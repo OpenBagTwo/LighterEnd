@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.mobs;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
+import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import net.minecraft.block.Blocks;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
@@ -18,7 +19,6 @@ import net.minecraft.entity.passive.SchoolingFishEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import net.minecraft.world.LocalDifficulty;
@@ -104,22 +104,22 @@ public class EndFish extends SchoolingFishEntity {
 
   @Override
   protected @NotNull SoundEvent getFlopSound() {
-    return SoundEvents.ENTITY_TROPICAL_FISH_FLOP;
+    return LighterEndSounds.END_FISH_FLOP;
   }
 
   @Override
   protected SoundEvent getAmbientSound() {
-    return SoundEvents.ENTITY_SALMON_AMBIENT;
+    return LighterEndSounds.END_FISH_AMBIENT;
   }
 
   @Override
   protected SoundEvent getDeathSound() {
-    return SoundEvents.ENTITY_SALMON_DEATH;
+    return LighterEndSounds.END_FISH_DEATH;
   }
 
   @Override
   protected SoundEvent getHurtSound(DamageSource source) {
-    return SoundEvents.ENTITY_SALMON_HURT;
+    return LighterEndSounds.END_FISH_HURT;
   }
 
   @Override

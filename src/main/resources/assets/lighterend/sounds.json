@@ -37,6 +37,123 @@
       }
     ]
   },
+  "block.silk_moth_nest.enter": {
+    "sounds": [
+      {
+        "attenuation_distance": 14,
+        "name": "block/beehive/enter",
+        "pitch": 0.7
+      },
+      {
+        "attenuation_distance": 14,
+        "name": "block/beehive/enter",
+        "pitch": 0.8
+      }
+    ],
+    "subtitle": "subtitles.lighterend.block.silk_moth_nest.enter"
+  },
+  "block.silk_moth_nest.exit": {
+    "sounds": [
+      {
+        "attenuation_distance": 14,
+        "name": "block/beehive/exit"
+      },
+      {
+        "attenuation_distance": 14,
+        "name": "block/beehive/exit",
+        "pitch": 0.9
+      },
+      {
+        "attenuation_distance": 14,
+        "name": "block/beehive/exit",
+        "pitch": 1.1
+      }
+    ],
+    "subtitle": "subtitles.lighterend.block.silk_moth_nest.exit"
+  },
+  "block.silk_moth_nest.shear": {
+    "sounds": [
+      {
+        "name": "block/beehive/shear",
+        "volume": 0.8
+      },
+      {
+        "name": "block/beehive/shear",
+        "pitch": 0.8,
+        "volume": 0.8
+      },
+      {
+        "name": "block/beehive/shear",
+        "pitch": 0.9,
+        "volume": 0.8
+      }
+    ],
+    "subtitle": "subtitles.lighterend.block.silk_moth_nest.shear"
+  },
+  "block.silk_moth_nest.work": {
+    "sounds": [
+      {
+        "attenuation_distance": 6,
+        "name": "block/beehive/work1",
+        "volume": 0.3
+      },
+      {
+        "attenuation_distance": 6,
+        "name": "block/beehive/work2",
+        "volume": 0.3
+      },
+      {
+        "attenuation_distance": 6,
+        "name": "block/beehive/work3",
+        "volume": 0.3
+      },
+      {
+        "attenuation_distance": 6,
+        "name": "block/beehive/work4",
+        "volume": 0.3
+      }
+    ],
+    "subtitle": "subtitles.lighterend.block.silk_moth_nest.work"
+  },
+  "entity.cubozoa.death": {
+    "sounds": [
+      "mob/pufferfish/death1",
+      "mob/pufferfish/death2"
+    ],
+    "subtitle": "subtitles.lighterend.entity.cubozoa.death"
+  },
+  "entity.cubozoa.flop": {
+    "sounds": [
+      {
+        "name": "entity/fish/flop1",
+        "pitch": 0.8,
+        "volume": 0.3
+      },
+      {
+        "name": "entity/fish/flop2",
+        "pitch": 0.8,
+        "volume": 0.3
+      },
+      {
+        "name": "entity/fish/flop3",
+        "pitch": 0.8,
+        "volume": 0.3
+      },
+      {
+        "name": "entity/fish/flop4",
+        "pitch": 0.8,
+        "volume": 0.3
+      }
+    ],
+    "subtitle": "subtitles.lighterend.entity.cubozoa.flop"
+  },
+  "entity.cubozoa.hurt": {
+    "sounds": [
+      "mob/pufferfish/hurt1",
+      "mob/pufferfish/hurt2"
+    ],
+    "subtitle": "subtitles.lighterend.entity.cubozoa.hurt"
+  },
   "entity.dragonfly.idle": {
     "category": "entity",
     "sounds": [
@@ -58,6 +175,61 @@
     ],
     "subtitle": "subtitles.lighterend.entity.dragonfly.idle"
   },
+  "entity.end_fish.death": {
+    "sounds": [
+      {
+        "name": "entity/fish/hurt1",
+        "pitch": 0.8
+      },
+      {
+        "name": "entity/fish/hurt2",
+        "pitch": 0.8
+      },
+      {
+        "name": "entity/fish/hurt3",
+        "pitch": 0.8
+      },
+      {
+        "name": "entity/fish/hurt4",
+        "pitch": 0.8
+      }
+    ],
+    "subtitle": "subtitles.lighterend.entity.end_fish.death"
+  },
+  "entity.end_fish.flop": {
+    "sounds": [
+      {
+        "name": "entity/fish/flop1",
+        "volume": 0.3
+      },
+      {
+        "name": "entity/fish/flop2",
+        "volume": 0.3
+      },
+      {
+        "name": "entity/fish/flop3",
+        "volume": 0.3
+      },
+      {
+        "name": "entity/fish/flop4",
+        "volume": 0.3
+      }
+    ],
+    "subtitle": "subtitles.lighterend.entity.end_fish.flop"
+  },
+  "entity.end_fish.hurt": {
+    "sounds": [
+      "entity/fish/hurt1",
+      "entity/fish/hurt2",
+      "entity/fish/hurt3",
+      "entity/fish/hurt4"
+    ],
+    "subtitle": "subtitles.lighterend.entity.end_fish.hurt"
+  },
+  "entity.salmon.ambient": {
+    "sounds": [],
+    "subtitle": "subtitles.lighterend.entity.end_fish.ambient"
+  },
   "item.armor.equip_silk": {
     "sounds": [
       "item/armor/equip_leather1",
@@ -68,6 +240,21 @@
       "item/armor/equip_leather6"
     ],
     "subtitle": "subtitles.lighterend.item.armor.equip_silk"
+  },
+  "item.umbrella_juice.drink": {
+    "sounds": [
+      "item/bottle/drink_honey1",
+      "item/bottle/drink_honey2",
+      {
+        "name": "item/bottle/drink_honey3",
+        "volume": 0.35
+      },
+      {
+        "name": "item/bottle/drink_honey3",
+        "volume": 0.75
+      }
+    ],
+    "subtitle": "subtitles.lighterend.item.umbrella_juice.drink"
   },
   "music.blossom": {
     "category": "music",

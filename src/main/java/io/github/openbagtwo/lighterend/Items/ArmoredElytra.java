@@ -1,12 +1,12 @@
 package io.github.openbagtwo.lighterend.Items;
 
+import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.EquippableComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.equipment.ArmorMaterial;
 import net.minecraft.item.equipment.EquipmentType;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.Unit;
 
@@ -39,7 +39,7 @@ public class ArmoredElytra extends Item {
         .component(
             DataComponentTypes.EQUIPPABLE,
             EquippableComponent.builder(EquipmentSlot.CHEST)
-                .equipSound(SoundEvents.ITEM_ARMOR_EQUIP_ELYTRA)
+                .equipSound(LighterEndSounds.EQUIP_SILK)
                 .model(material.assetId())
                 .damageOnHurt(true)
                 .build()
