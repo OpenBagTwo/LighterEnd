@@ -56,7 +56,7 @@
         "stream": false
       }
     ],
-    "subtitle": "lighterend:subtitles.entity.dragonfly.idle"
+    "subtitle": "subtitles.lighterend.entity.dragonfly.idle"
   },
   "item.armor.equip_silk": {
     "sounds": [
@@ -67,7 +67,7 @@
       "item/armor/equip_leather5",
       "item/armor/equip_leather6"
     ],
-    "subtitle": "lighterend:subtitles.item.armor.equip_silk"
+    "subtitle": "subtitles.lighterend.item.armor.equip_silk"
   },
   "music.blossom": {
     "category": "music",
