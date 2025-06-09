@@ -125,7 +125,6 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndMusicDiscs.GRASPING_AT_STARS,
         LighterEndMusicDiscs.STRANGE_AND_ALIEN,
         LighterEndBlocks.CREEPING_MOSS.asItem(),
-        LighterEndBlocks.END_MOSS.asItem(),
         LighterEndBlocks.UMBRELLA_FERN.asItem(),
         LighterEndBlocks.LUMECORN_SEED.asItem(),
         LighterEndBlocks.TENANEA.ladder.asItem(),
