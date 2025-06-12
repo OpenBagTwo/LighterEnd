@@ -115,13 +115,6 @@
     ],
     "subtitle": "subtitles.lighterend.block.silk_moth_nest.work"
   },
-  "entity.cubozoa.death": {
-    "sounds": [
-      "mob/pufferfish/death1",
-      "mob/pufferfish/death2"
-    ],
-    "subtitle": "subtitles.lighterend.entity.cubozoa.death"
-  },
   "entity.cubozoa.flop": {
     "sounds": [
       {
@@ -146,13 +139,6 @@
       }
     ],
     "subtitle": "subtitles.lighterend.entity.cubozoa.flop"
-  },
-  "entity.cubozoa.hurt": {
-    "sounds": [
-      "mob/pufferfish/hurt1",
-      "mob/pufferfish/hurt2"
-    ],
-    "subtitle": "subtitles.lighterend.entity.cubozoa.hurt"
   },
   "entity.dragonfly.idle": {
     "category": "entity",
@@ -225,10 +211,6 @@
       "entity/fish/hurt4"
     ],
     "subtitle": "subtitles.lighterend.entity.end_fish.hurt"
-  },
-  "entity.salmon.ambient": {
-    "sounds": [],
-    "subtitle": "subtitles.lighterend.entity.end_fish.ambient"
   },
   "item.armor.equip_silk": {
     "sounds": [

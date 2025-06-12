@@ -14,13 +14,10 @@ public class LighterEndSounds {
   public static final SoundEvent MOTH_NEST_EXIT = register("block.silk_moth_nest.exit");
   public static final SoundEvent MOTH_NEST_SHEAR = register("block.silk_moth_nest.shear");
   public static final SoundEvent MOTH_NEST_WORK = register("block.silk_moth_nest.work");
-  public static final SoundEvent END_FISH_AMBIENT = register("entity.end_fish.ambient");
   public static final SoundEvent END_FISH_FLOP = register("entity.end_fish.flop");
   public static final SoundEvent END_FISH_HURT = register("entity.end_fish.hurt");
   public static final SoundEvent END_FISH_DEATH = register("entity.end_fish.death");
   public static final SoundEvent CUBOZOA_FLOP = register("entity.cubozoa.flop");
-  public static final SoundEvent CUBOZOA_HURT = register("entity.cubozoa.hurt");
-  public static final SoundEvent CUBOZOA_DEATH = register("entity.cubozoa.death");
 
   public static final RegistryEntry<SoundEvent> EQUIP_SILK = registerReference(
       "item.armor.equip_silk");
