@@ -14,6 +14,10 @@ base {
 
 repositories {
     mavenCentral()
+    maven {
+        name = "Terraformers"
+        url = "https://maven.terraformersmc.com/"
+    }
 }
 
 loom {
@@ -42,7 +46,7 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-//    modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
+    modCompileOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
 
     compileOnly "org.yaml:snakeyaml:2.2"
     shadow(implementation("org.yaml:snakeyaml:2.2"))
