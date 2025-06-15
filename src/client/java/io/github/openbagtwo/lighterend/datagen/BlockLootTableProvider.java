@@ -72,7 +72,7 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     addDrop(LighterEndBlocks.DRAGON_BONE_BLOCK);
     addDrop(LighterEndBlocks.DRAGON_BONE_STAIRS);
     addDrop(LighterEndBlocks.DRAGON_BONE_SLAB, this::slabDrops);
-    addDropWithSilkTouch(LighterEndBlocks.END_MOSS, Blocks.END_STONE);
+    addDrop(LighterEndBlocks.END_MOSS, this.drops(LighterEndBlocks.END_MOSS, Blocks.END_STONE));
 
     addDrop(LighterEndBlocks.CREEPING_MOSS, this::dropsWithSilkTouchOrShears);
     addDrop(LighterEndBlocks.UMBRELLA_FERN, this::dropsWithSilkTouchOrShears);
