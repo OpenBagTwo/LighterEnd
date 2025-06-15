@@ -23,7 +23,7 @@ public class AuroraCrystal extends TransparentBlock {
             .solidBlock(Blocks::never)
             .suffocates(Blocks::never)
             .blockVision(Blocks::never)
-            .strength(1F)
+            .strength(0.5F)
             .luminance((bs) -> 15)
             .mapColor(MapColor.MAGENTA)
     );
