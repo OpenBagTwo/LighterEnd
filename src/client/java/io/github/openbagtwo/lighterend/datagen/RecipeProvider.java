@@ -161,12 +161,22 @@ public class RecipeProvider extends FabricRecipeProvider {
                 )
             );
 
-        offerReversibleCompactingRecipes(
-            RecipeCategory.MISC,
-            LighterEndItems.SILK,
-            RecipeCategory.MISC,
-            LighterEndItems.SILK_MATRIX
-        );
+        createShaped(RecipeCategory.MISC, LighterEndItems.SILK_MATRIX)
+            .pattern("###")
+            .pattern("###")
+            .pattern("###")
+            .input('#', LighterEndItems.SILK)
+            .criterion(
+                hasItem(LighterEndItems.SILK),
+                conditionsFromItem(LighterEndItems.SILK)
+            ).offerTo(exporter);
+
+        createShapeless(RecipeCategory.MISC, LighterEndItems.SILK, 9)
+            .input(LighterEndItems.SILK_MATRIX)
+            .criterion(
+                hasItem(LighterEndItems.SILK_MATRIX),
+                conditionsFromItem(LighterEndItems.SILK_MATRIX)
+            ).offerTo(exporter);
 
         createShaped(RecipeCategory.DECORATIONS, LighterEndItems.SILK_MOTH_NEST)
             .pattern("PPP")
