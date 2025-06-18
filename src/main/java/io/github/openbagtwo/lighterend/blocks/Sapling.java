@@ -1,7 +1,7 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import io.github.openbagtwo.lighterend.tags.LighterEndTags;
+import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.Optional;
 import java.util.function.Supplier;
 import net.minecraft.block.Block;

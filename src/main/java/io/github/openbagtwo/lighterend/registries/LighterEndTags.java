@@ -1,4 +1,4 @@
-package io.github.openbagtwo.lighterend.tags;
+package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
 import net.minecraft.block.Block;
@@ -54,4 +54,7 @@ public class LighterEndTags {
       RegistryKeys.BIOME,
       LighterEnd.of("has_structure/end_lake")
   );
+
+  public static void initialize() {
+  }
 }

@@ -2,7 +2,7 @@ package io.github.openbagtwo.lighterend.blocks;
 
 import com.google.common.collect.Maps;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
-import io.github.openbagtwo.lighterend.tags.LighterEndTags;
+import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
 import io.github.openbagtwo.lighterend.utils.PosInfo;
 import java.util.Map;

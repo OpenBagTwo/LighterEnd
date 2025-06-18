@@ -3,7 +3,7 @@ package io.github.openbagtwo.lighterend.world.structures.pieces;
 import com.google.common.collect.Maps;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndStructures;
-import io.github.openbagtwo.lighterend.tags.LighterEndTags;
+import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.PosInfo;
 import io.github.openbagtwo.lighterend.world.gen.noise.OpenSimplexNoise;
 import java.util.Map;

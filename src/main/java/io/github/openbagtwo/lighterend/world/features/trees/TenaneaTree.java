@@ -2,7 +2,7 @@ package io.github.openbagtwo.lighterend.world.features.trees;
 
 import com.google.common.collect.Lists;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
-import io.github.openbagtwo.lighterend.tags.LighterEndTags;
+import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
 import io.github.openbagtwo.lighterend.utils.MiscUtils;
 import io.github.openbagtwo.lighterend.utils.PosInfo;

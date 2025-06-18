@@ -12,6 +12,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndMusicDiscs;
 import io.github.openbagtwo.lighterend.registries.LighterEndParticles;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.registries.LighterEndStructures;
+import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.world.LighterEndConfiguredFeatures;
 import io.github.openbagtwo.lighterend.world.VanillaLootTableModifiers;
 import io.github.openbagtwo.lighterend.world.gen.LighterEndWorldGen;
@@ -46,6 +47,7 @@ public class LighterEnd implements ModInitializer {
     LighterEndEquipment.initialize();
     Composting.initialize();
     ItemGroups.initialize();
+    LighterEndTags.initialize();
 
     LighterEndConfiguredFeatures.initialize();
     LighterEndStructures.initialize();

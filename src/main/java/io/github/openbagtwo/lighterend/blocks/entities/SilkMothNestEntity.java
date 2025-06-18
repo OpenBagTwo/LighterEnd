@@ -11,7 +11,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities.MothsC
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
-import io.github.openbagtwo.lighterend.tags.LighterEndTags;
+import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.netty.buffer.ByteBuf;
 import java.util.Arrays;
 import java.util.Iterator;

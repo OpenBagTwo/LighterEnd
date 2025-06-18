@@ -1,7 +1,7 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
-import io.github.openbagtwo.lighterend.tags.LighterEndTags;
+import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.ShortPlantBlock;

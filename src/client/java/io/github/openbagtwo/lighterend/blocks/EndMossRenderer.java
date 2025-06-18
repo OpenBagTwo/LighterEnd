@@ -1,7 +1,7 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
-import io.github.openbagtwo.lighterend.tags.LighterEndTags;
+import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.world.BiomeColors;

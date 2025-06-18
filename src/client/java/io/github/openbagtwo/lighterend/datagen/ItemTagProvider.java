@@ -5,7 +5,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
 import io.github.openbagtwo.lighterend.registries.LighterEndEquipment;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
-import io.github.openbagtwo.lighterend.tags.LighterEndTags;
+import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;

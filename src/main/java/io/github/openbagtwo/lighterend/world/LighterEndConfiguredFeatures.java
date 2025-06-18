@@ -6,7 +6,7 @@ import io.github.openbagtwo.lighterend.blocks.EndLotus.EndLotusFeature;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest.SilkMothNestFeature;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
-import io.github.openbagtwo.lighterend.tags.LighterEndTags;
+import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.world.features.LotusLeaf;
 import io.github.openbagtwo.lighterend.world.features.UnderwaterPlants;
 import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
