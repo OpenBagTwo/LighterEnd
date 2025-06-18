@@ -24,6 +24,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
   protected void configure(RegistryWrapper.WrapperLookup lookup) {
 
     valueLookupBuilder(BlockTags.IMPERMEABLE).add(LighterEndBlocks.AURORA_CRYSTAL);
+    valueLookupBuilder(BlockTags.SNIFFER_DIGGABLE_BLOCK).add(LighterEndBlocks.END_MOSS);
 
     for (Material material : Arrays.asList(
         LighterEndBlocks.VIOLECITE,
