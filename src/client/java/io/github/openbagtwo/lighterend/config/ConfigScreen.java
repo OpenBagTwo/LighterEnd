@@ -56,6 +56,11 @@ public class ConfigScreen extends GameOptionsScreen {
                 LighterEnd.CONFIG.musicDiscsInEndCities = value;
               }));
       this.body.addSingleOptionEntry(
+          SimpleOption.ofBoolean("Use Custom Fishing Loot in The End",
+              LighterEnd.CONFIG.customEndFishing, (value) -> {
+                LighterEnd.CONFIG.customEndFishing = value;
+              }));
+      this.body.addSingleOptionEntry(
           SimpleOption.ofBoolean("Bonemealing Underwater in The End Produces End Vegetation",
               LighterEnd.CONFIG.bonemealUnderwaterInEndMakesEndVegetation, (value) -> {
                 LighterEnd.CONFIG.bonemealUnderwaterInEndMakesEndVegetation = value;

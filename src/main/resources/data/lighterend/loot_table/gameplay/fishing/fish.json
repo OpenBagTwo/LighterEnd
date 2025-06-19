@@ -1,0 +1,17 @@
+{
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "name": "lighterend:end_fish",
+          "type": "minecraft:item",
+          "weight": 100
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "minecraft:gameplay/fishing/fish",
+  "type": "minecraft:fishing"
+}

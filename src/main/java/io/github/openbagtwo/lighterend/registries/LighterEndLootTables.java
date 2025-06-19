@@ -11,6 +11,10 @@ public class LighterEndLootTables {
       "gameplay/sniffer_digging_end_moss"
   );
 
+  public static final RegistryKey<LootTable> END_FISHING = register(
+      "gameplay/fishing"
+  );
+
   private static RegistryKey<LootTable> register(String id) {
     return RegistryKey.of(RegistryKeys.LOOT_TABLE, LighterEnd.of(id));
   }

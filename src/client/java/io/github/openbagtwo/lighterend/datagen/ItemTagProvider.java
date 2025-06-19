@@ -59,6 +59,8 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
     valueLookupBuilder(ItemTags.BEE_FOOD).add(LighterEndBlocks.TENANEA_FLOWER.asItem());
     valueLookupBuilder(ItemTags.LEAVES).add(LighterEndBlocks.TENANEA_LEAVES.asItem());
 
+    valueLookupBuilder(ItemTags.FISHES).add(LighterEndItems.RAW_END_FISH);
+
     valueLookupBuilder(ItemTags.DYEABLE).add(
         LighterEndEquipment.SILK_ELYTRA
     );

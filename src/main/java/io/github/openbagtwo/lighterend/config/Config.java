@@ -52,6 +52,11 @@ public class Config {
   protected boolean musicDiscsInEndCities;
 
   /**
+   * Whether to use a custom loot table when fishing in The End
+   */
+  protected boolean customEndFishing;
+
+  /**
    * Whether using bonemeal underwater in The End should produce modded underwater vegetation
    */
   protected boolean bonemealUnderwaterInEndMakesEndVegetation;
@@ -77,6 +82,10 @@ public class Config {
     return this.musicDiscsInEndCities;
   }
 
+  public boolean endFishingHasCustomLootTable() {
+    return this.customEndFishing;
+  }
+
   public boolean bonemealingUnderwaterInEndProducesEndVegetation() {
     return this.bonemealUnderwaterInEndMakesEndVegetation;
   }
@@ -89,6 +98,7 @@ public class Config {
   private static final double DEFAULT_END_GRAVITY = 0.3;
   private static final boolean DEFAULT_END_PLANTS_ONLY_GROW_IN_THE_END = true;
   private static final boolean DEFAULT_MUSIC_DISCS_IN_END_CITIES = true;
+  private static final boolean DEFAULT_CUSTOM_END_FISHING = true;
   private static final boolean DEFAULT_UNDERWATER_BONEMEAL_SETTING = true;
 
 
@@ -142,6 +152,7 @@ public class Config {
     writeme.put("end_gravity", this.endGravity);
     writeme.put("end_plants_only_grow_in_the_end", this.endPlantsOnlyGrowInTheEnd);
     writeme.put("music_discs_found_in_end_cities", this.musicDiscsInEndCities);
+    writeme.put("customize_end_fishing", this.customEndFishing);
     writeme.put("bonemealing_underwater_in_the_end_produces_end_vegetation",
         this.bonemealUnderwaterInEndMakesEndVegetation);
 
@@ -162,6 +173,7 @@ public class Config {
     config.endGravity = DEFAULT_END_GRAVITY;
     config.endPlantsOnlyGrowInTheEnd = DEFAULT_END_PLANTS_ONLY_GROW_IN_THE_END;
     config.musicDiscsInEndCities = DEFAULT_MUSIC_DISCS_IN_END_CITIES;
+    config.customEndFishing = DEFAULT_CUSTOM_END_FISHING;
     config.bonemealUnderwaterInEndMakesEndVegetation = DEFAULT_UNDERWATER_BONEMEAL_SETTING;
     return config;
   }
@@ -187,6 +199,7 @@ public class Config {
     writeme.put("end_gravity", DEFAULT_END_GRAVITY);
     writeme.put("end_plants_only_grow_in_the_end", DEFAULT_END_PLANTS_ONLY_GROW_IN_THE_END);
     writeme.put("music_discs_found_in_end_cities", DEFAULT_MUSIC_DISCS_IN_END_CITIES);
+    writeme.put("customize_end_fishing", DEFAULT_CUSTOM_END_FISHING);
     writeme.put("bonemealing_underwater_in_the_end_produces_end_vegetation",
         DEFAULT_UNDERWATER_BONEMEAL_SETTING);
 
@@ -242,6 +255,12 @@ public class Config {
               DEFAULT_MUSIC_DISCS_IN_END_CITIES
           ).toString()
       );
+      boolean customEndFishing = Boolean.parseBoolean(
+          settings.getOrDefault(
+              "customize_end_fishing",
+              DEFAULT_CUSTOM_END_FISHING
+          ).toString()
+      );
       boolean underwaterBonemealSetting = Boolean.parseBoolean(
           settings.getOrDefault(
               "bonemealing_underwater_in_the_end_produces_end_vegetation",
@@ -255,6 +274,7 @@ public class Config {
       config.endGravity = endGravity;
       config.endPlantsOnlyGrowInTheEnd = endPlantsOnlyGrowInTheEnd;
       config.musicDiscsInEndCities = musicDiscsInEndCities;
+      config.customEndFishing = customEndFishing;
       config.bonemealUnderwaterInEndMakesEndVegetation = underwaterBonemealSetting;
       return config;
 
