@@ -1,8 +1,10 @@
 {
   "parent": "lighterend:block/end_lotus_flower",
   "textures": {
+    "center": "lighterend:block/end_lotus_center_2",
+    "center_e": "lighterend:block/end_lotus_center_2_e",
     "particle": "lighterend:block/end_lotus_center_2",
     "petal": "lighterend:block/end_lotus_petal_2",
-    "texture": "lighterend:block/end_lotus_center_2"
+    "petal_e": "lighterend:block/end_lotus_petal_2_e"
   }
 }

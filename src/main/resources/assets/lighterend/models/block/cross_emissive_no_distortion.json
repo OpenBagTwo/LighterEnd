@@ -1,8 +1,7 @@
 {
-  "__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
   "elements": [
     {
-      "__comment": "PlaneX2",
+      "__comment": "PlaneX1",
       "faces": {
         "east": {
           "texture": "#texture",
@@ -24,28 +23,28 @@
         }
       },
       "from": [
+        2.375,
         0,
-        0,
-        0
+        2.25
       ],
       "rotation": {
         "angle": 45,
         "axis": "y",
         "origin": [
+          2.375,
           0,
-          0,
-          0
+          2.25
         ]
       },
       "shade": false,
       "to": [
-        0.001,
+        2.376,
         16,
-        22.5
+        18.25
       ]
     },
     {
-      "__comment": "PlaneX2",
+      "__comment": "PlaneX1",
       "faces": {
         "east": {
           "texture": "#texture",
@@ -67,28 +66,28 @@
         }
       },
       "from": [
-        16,
+        13.75,
         0,
-        0
+        2.25
       ],
       "rotation": {
         "angle": -45,
         "axis": "y",
         "origin": [
-          16,
+          13.75,
           0,
-          0
+          2.25
         ]
       },
       "shade": false,
       "to": [
-        16.001,
+        13.751,
         16,
-        22.5
+        18.25
       ]
     },
     {
-      "__comment": "PlaneX2",
+      "__comment": "PlaneX1",
       "faces": {
         "east": {
           "texture": "#emissive",
@@ -110,29 +109,29 @@
         }
       },
       "from": [
+        2.375,
         0,
-        0,
-        0
+        2.25
       ],
       "light_emission": 15,
       "rotation": {
         "angle": 45,
         "axis": "y",
         "origin": [
+          2.375,
           0,
-          0,
-          0
+          2.25
         ]
       },
       "shade": false,
       "to": [
-        0.001,
+        2.376,
         16,
-        22.5
+        18.25
       ]
     },
     {
-      "__comment": "PlaneX2",
+      "__comment": "PlaneX1",
       "faces": {
         "east": {
           "texture": "#emissive",
@@ -154,31 +153,29 @@
         }
       },
       "from": [
-        16,
+        13.75,
         0,
-        0
+        2.25
       ],
       "light_emission": 15,
       "rotation": {
         "angle": -45,
         "axis": "y",
         "origin": [
-          16,
+          13.75,
           0,
-          0
+          2.25
         ]
       },
       "shade": false,
       "to": [
-        16.001,
+        13.751,
         16,
-        22.5
+        18.25
       ]
     }
   ],
   "textures": {
-    "emissive": "lighterend:block/lumecorn_light_middle_e",
-    "particle": "#texture",
-    "texture": "lighterend:block/lumecorn_light_middle"
+    "particle": "#texture"
   }
 }

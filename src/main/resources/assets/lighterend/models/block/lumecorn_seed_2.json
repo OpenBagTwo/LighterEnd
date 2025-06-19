@@ -1,6 +1,7 @@
 {
-  "parent": "lighterend:block/cross_no_distortion",
+  "parent": "lighterend:block/cross_emissive_no_distortion",
   "textures": {
+    "emissive": "lighterend:block/lumecorn_2_e",
     "texture": "lighterend:block/lumecorn_2"
   }
 }

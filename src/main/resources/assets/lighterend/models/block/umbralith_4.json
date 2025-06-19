@@ -1,6 +1,7 @@
 {
-  "parent": "block/cube_all",
+  "parent": "lighterend:block/cube_emissive",
   "textures": {
-    "all": "lighterend:block/umbralith_4"
+    "emissive": "lighterend:block/umbralith_4_e",
+    "texture": "lighterend:block/umbralith_4"
   }
 }

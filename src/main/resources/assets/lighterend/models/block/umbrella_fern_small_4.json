@@ -442,7 +442,6 @@
     "end": "lighterend:block/umbrella_fern_end",
     "particle": "lighterend:block/umbrella_fern_up",
     "small": "lighterend:block/umbrella_fern_small",
-    "spore": "lighterend:block/umbrella_fern_sporophyte",
     "texture": "lighterend:block/umbrella_fern_up"
   }
 }

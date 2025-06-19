@@ -266,6 +266,94 @@
       ]
     },
     {
+      "__comment": "PlaneX6",
+      "faces": {
+        "east": {
+          "texture": "#spore_e",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#spore_e",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        0,
+        0,
+        -6.5
+      ],
+      "light_emission": 15,
+      "rotation": {
+        "angle": -45,
+        "axis": "y",
+        "origin": [
+          0,
+          16,
+          16
+        ]
+      },
+      "shade": false,
+      "to": [
+        0.001,
+        16,
+        16
+      ]
+    },
+    {
+      "__comment": "PlaneX6",
+      "faces": {
+        "north": {
+          "texture": "#spore_e",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#spore_e",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        -6.5,
+        0,
+        15.999
+      ],
+      "light_emission": 15,
+      "rotation": {
+        "angle": -45,
+        "axis": "y",
+        "origin": [
+          16,
+          16,
+          16
+        ]
+      },
+      "shade": false,
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
       "__comment": "PlaneY1",
       "faces": {
         "down": {
@@ -447,6 +535,7 @@
   "textures": {
     "particle": "lighterend:block/creeping_moss_leaves",
     "spore": "lighterend:block/creeping_moss_spores",
+    "spore_e": "lighterend:block/creeping_moss_spores_e",
     "texture": "lighterend:block/creeping_moss_leaves"
   }
 }

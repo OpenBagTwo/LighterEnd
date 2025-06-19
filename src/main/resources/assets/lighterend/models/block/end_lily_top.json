@@ -156,6 +156,164 @@
       ]
     },
     {
+      "__comment": "PlaneX2",
+      "faces": {
+        "east": {
+          "texture": "#flower_e",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#flower_e",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        8,
+        0,
+        0
+      ],
+      "light_emission": 15,
+      "shade": false,
+      "to": [
+        8.001,
+        16,
+        16
+      ]
+    },
+    {
+      "__comment": "PlaneZ3",
+      "faces": {
+        "north": {
+          "texture": "#flower_e",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#flower_e",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        0,
+        0,
+        8
+      ],
+      "light_emission": 15,
+      "shade": false,
+      "to": [
+        16,
+        16,
+        8.001
+      ]
+    },
+    {
+      "__comment": "PlaneX2",
+      "faces": {
+        "east": {
+          "texture": "#flower_e",
+          "uv": [
+            0,
+            0,
+            13.5,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#flower_e",
+          "uv": [
+            2.5,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        2.5,
+        0,
+        2.5
+      ],
+      "light_emission": 15,
+      "rotation": {
+        "angle": 45,
+        "axis": "y",
+        "origin": [
+          2.5,
+          0,
+          2.5
+        ]
+      },
+      "shade": false,
+      "to": [
+        2.501,
+        16,
+        18.5
+      ]
+    },
+    {
+      "__comment": "PlaneZ3",
+      "faces": {
+        "north": {
+          "texture": "#flower_e",
+          "uv": [
+            0,
+            0,
+            14.5,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#flower_e",
+          "uv": [
+            1.5,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        2.5,
+        0,
+        13.5
+      ],
+      "light_emission": 15,
+      "rotation": {
+        "angle": 45,
+        "axis": "y",
+        "origin": [
+          2.5,
+          0,
+          13.5
+        ]
+      },
+      "shade": false,
+      "to": [
+        18.5,
+        16,
+        13.501
+      ]
+    },
+    {
       "__comment": "PlaneY6",
       "faces": {
         "down": {
@@ -300,6 +458,7 @@
   ],
   "textures": {
     "flower": "lighterend:block/end_lily_flower",
+    "flower_e": "lighterend:block/end_lily_flower_e",
     "leaf": "lighterend:block/end_lily_leaf",
     "particle": "lighterend:block/end_lily_leaf"
   }
