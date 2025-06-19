@@ -37,7 +37,13 @@ public class LighterEndPlacedFeatures {
     context.register(END_MOSS_VEGETATION,
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.END_MOSS_VEGETATION),
-            VegetationPlacedFeatures.modifiers(20)));
+            List.of(
+                CountPlacementModifier.of(20),
+                SquarePlacementModifier.of(),
+                PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
+                BiomePlacementModifier.of()
+            )
+        ));
     context.register(LUMECORN,
         new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.LUMECORN),
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
