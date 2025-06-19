@@ -2,10 +2,9 @@ package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.Items.LighterEndFoodComponents;
 import io.github.openbagtwo.lighterend.LighterEnd;
-import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
+import io.github.openbagtwo.lighterend.registries.LighterEndData.SilkLevelComponent;
 import java.util.function.Function;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.BlockStateComponent;
 import net.minecraft.component.type.FoodComponents;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.fluid.Fluids;
@@ -36,8 +35,7 @@ public class LighterEndItems {
           LighterEndBlocks.SILK_MOTH_NEST,
           settings
               .component(LighterEndData.MOTHS, LighterEndData.MothsComponent.DEFAULT)
-              .component(DataComponentTypes.BLOCK_STATE, BlockStateComponent.DEFAULT.with(
-                  SilkMothNest.FULLNESS, 0))
+              .component(LighterEndData.SILK_LEVEL, new SilkLevelComponent(0))
       ),
       new Settings()
   );

@@ -4,6 +4,8 @@ import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.blocks.entities.SilkMothNestEntity;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
+import io.github.openbagtwo.lighterend.registries.LighterEndData;
+import io.github.openbagtwo.lighterend.registries.LighterEndData.SilkLevelComponent;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.utils.Flags;
@@ -21,8 +23,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.NoteBlockInstrument;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.BlockStateComponent;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
@@ -221,7 +221,7 @@ public class SilkMothNest extends BlockWithEntity {
         ItemStack itemStack = new ItemStack(this);
         itemStack.applyComponentsFrom(nestEntity.createComponentMap());
         itemStack.set(
-            DataComponentTypes.BLOCK_STATE, BlockStateComponent.DEFAULT.with(FULLNESS, fullness));
+            LighterEndData.SILK_LEVEL, new SilkLevelComponent(fullness));
         ItemEntity itemEntity = new ItemEntity(
             world,
             pos.getX(),
@@ -259,8 +259,7 @@ public class SilkMothNest extends BlockWithEntity {
       boolean includeData) {
     ItemStack itemStack = super.getPickStack(world, pos, state, includeData);
     if (includeData) {
-      itemStack.set(DataComponentTypes.BLOCK_STATE, BlockStateComponent.DEFAULT.with(FULLNESS,
-          state.get(FULLNESS)));
+      itemStack.set(LighterEndData.SILK_LEVEL, new SilkLevelComponent(state.get(FULLNESS, 0)));
     }
 
     return itemStack;

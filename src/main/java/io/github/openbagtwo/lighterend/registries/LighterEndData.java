@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.registries;
 
 import com.mojang.serialization.Codec;
 import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.blocks.entities.SilkMothNestEntity;
 import io.github.openbagtwo.lighterend.blocks.entities.SilkMothNestEntity.MothData;
 import io.netty.buffer.ByteBuf;
@@ -29,6 +30,13 @@ public class LighterEndData {
           .cache()
   );
 
+  public static final ComponentType<SilkLevelComponent> SILK_LEVEL = registerDataComponent(
+      "silk_level",
+      builder -> builder.codec(SilkLevelComponent.CODEC)
+          .packetCodec(SilkLevelComponent.PACKET_CODEC)
+          .cache()
+  );
+
   public record MothsComponent(List<MothData> moths) implements TooltipAppender {
 
     public static final Codec<MothsComponent> CODEC = MothData.LIST_CODEC.xmap(
@@ -41,13 +49,37 @@ public class LighterEndData {
 
     @Override
     public void appendTooltip(
+        Item.TooltipContext context,
+        Consumer<Text> textConsumer,
+        TooltipType type,
+        ComponentsAccess components
+    ) {
+      textConsumer.accept(
+          Text.translatable(
+              "container." + LighterEnd.MOD_ID + ".silk_moth_nest.moths",
+              this.moths.size(),
+              SilkMothNestEntity.MAX_MOTH_COUNT
+          ).formatted(Formatting.GRAY)
+      );
+    }
+  }
+
+  public record SilkLevelComponent(int silk_level) implements TooltipAppender {
+
+    public static final Codec<SilkLevelComponent> CODEC = Codec.INT.xmap(SilkLevelComponent::new,
+        SilkLevelComponent::silk_level);
+    public static final PacketCodec<ByteBuf, SilkLevelComponent> PACKET_CODEC = PacketCodecs.VAR_INT.xmap(
+        SilkLevelComponent::new, SilkLevelComponent::silk_level);
+
+    @Override
+    public void appendTooltip(
         Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type,
         ComponentsAccess components) {
       textConsumer.accept(
           Text.translatable(
-              "container." + LighterEnd.MOD_ID + "silk_moth_nest.moths",
-              this.moths.size(),
-              SilkMothNestEntity.MAX_MOTH_COUNT
+              "container." + LighterEnd.MOD_ID + ".silk_moth_nest.fullness",
+              this.silk_level(),
+              SilkMothNest.MAX_FULLNESS
           ).formatted(Formatting.GRAY)
       );
     }

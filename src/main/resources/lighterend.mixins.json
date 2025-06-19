@@ -16,6 +16,7 @@
     "GravityEffectsMixin",
     "GravityStrengthMixin",
     "SurfaceGenMixin",
+    "TooltipMixin",
     "UnderwaterBonemealMixin"
   ],
   "package": "io.github.openbagtwo.lighterend.mixin",
