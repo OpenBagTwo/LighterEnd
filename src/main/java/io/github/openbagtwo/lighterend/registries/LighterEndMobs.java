@@ -6,10 +6,15 @@ import io.github.openbagtwo.lighterend.mobs.Dragonfly;
 import io.github.openbagtwo.lighterend.mobs.EndFish;
 import io.github.openbagtwo.lighterend.mobs.SilkMoth;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.SpawnLocationTypes;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.item.SpawnEggItem;
@@ -17,6 +22,11 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.FluidTags;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.Heightmap;
+import net.minecraft.world.WorldAccess;
 
 public class LighterEndMobs {
 
@@ -60,6 +70,25 @@ public class LighterEndMobs {
     FabricDefaultAttributeRegistry.register(DRAGONFLY.mob, Dragonfly.createAttributes());
     FabricDefaultAttributeRegistry.register(END_FISH.mob, EndFish.createAttributes());
     FabricDefaultAttributeRegistry.register(CUBOZOA.mob, Cubozoa.createAttributes());
+
+    SpawnRestriction.register(
+        END_FISH.mob,
+        SpawnLocationTypes.IN_WATER,
+        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+        LighterEndMobs::canAquaticMobSpawn
+    );
+    SpawnRestriction.register(
+        CUBOZOA.mob,
+        SpawnLocationTypes.IN_WATER,
+        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+        LighterEndMobs::canAquaticMobSpawn
+    );
+  }
+
+  public static boolean canAquaticMobSpawn(EntityType<? extends WaterCreatureEntity> type,
+      WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
+    return world.getFluidState(pos.down()).isIn(FluidTags.WATER)
+        && world.getBlockState(pos.up()).isOf(Blocks.WATER);
   }
 
 }
