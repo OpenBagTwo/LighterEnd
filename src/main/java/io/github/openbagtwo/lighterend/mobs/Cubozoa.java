@@ -1,9 +1,10 @@
 package io.github.openbagtwo.lighterend.mobs;
 
+import io.github.openbagtwo.lighterend.registries.LighterEndData;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
+import net.minecraft.component.ComponentType;
+import net.minecraft.component.ComponentsAccess;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -35,10 +36,6 @@ public class Cubozoa extends SchoolingFishEntity {
       Cubozoa.class,
       TrackedDataHandlerRegistry.INTEGER
   );
-  private static final TrackedData<Integer> SCALE = DataTracker.registerData(
-      Cubozoa.class,
-      TrackedDataHandlerRegistry.INTEGER
-  );
 
   public Cubozoa(EntityType<Cubozoa> entityType, World world) {
     super(entityType, world);
@@ -52,13 +49,18 @@ public class Cubozoa extends SchoolingFishEntity {
       SpawnReason spawnReason,
       @Nullable EntityData entityData
   ) {
-    EntityData data = super.initialize(world, difficulty, spawnReason, entityData);
+    if (spawnReason == SpawnReason.BUCKET) {
+      return entityData;
+    }
+    this.setVariant(0);
 
     // TODO: reenable once sulphur springs are back in the game
 //    RegistryEntry<Biome> biome = world.getBiome(getBlockPos());
 //    if (biome.matchesKey(EndBiomes.SULPHUR_SPRINGS.key)) {
 //      this.dataTracker.set(VARIANT, 1);
 //    }
+
+    EntityData data = super.initialize(world, difficulty, spawnReason, entityData);
 
     this.calculateDimensions();
     return data;
@@ -68,34 +70,30 @@ public class Cubozoa extends SchoolingFishEntity {
   protected void initDataTracker(DataTracker.Builder builder) {
     super.initDataTracker(builder);
     builder.add(VARIANT, 0);
-    builder.add(SCALE, this.getRandom().nextInt(16));
   }
 
   @Override
   public void writeCustomData(WriteView view) {
     super.writeCustomData(view);
-    view.putInt("Variant", getVariant());
-    view.putInt("Scale", this.dataTracker.get(SCALE));
+    view.putInt("Variant", this.getVariant());
   }
 
   @Override
   protected void readCustomData(ReadView view) {
     super.readCustomData(view);
-    if (view.getInt("Variant", -1) != -1) {
-      this.dataTracker.set(VARIANT, view.getInt("Variant", -1));
-    }
-    if (view.getInt("Scale", -1) != -1) {
-      this.dataTracker.set(SCALE, view.getInt("Scale", -1));
-    }
+    this.setVariant(view.getInt("Variant", 0));
   }
 
   @Override
-  public void copyDataToStack(ItemStack itemStack) {
-    super.copyDataToStack(itemStack);
-    NbtComponent.set(DataComponentTypes.BUCKET_ENTITY_DATA, itemStack, (tag) -> {
-      tag.putInt("Variant", dataTracker.get(VARIANT));
-      tag.putInt("Scale", dataTracker.get(SCALE));
-    });
+  public void copyDataToStack(ItemStack stack) {
+    super.copyDataToStack(stack);
+    stack.copy(LighterEndData.VARIANT, this);
+  }
+
+  @Override
+  protected void copyComponentsFrom(ComponentsAccess from) {
+    this.copyComponentFrom(from, LighterEndData.VARIANT);
+    super.copyComponentsFrom(from);
   }
 
   @Override
@@ -111,7 +109,11 @@ public class Cubozoa extends SchoolingFishEntity {
   }
 
   public int getVariant() {
-    return (int) this.dataTracker.get(VARIANT);
+    return this.dataTracker.get(VARIANT);
+  }
+
+  public void setVariant(int variant) {
+    this.dataTracker.set(VARIANT, variant % 2);
   }
 
   @Override
@@ -138,6 +140,23 @@ public class Cubozoa extends SchoolingFishEntity {
       if (random.nextBoolean()) {
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 20, 0));
       }
+    }
+  }
+
+  @Nullable
+  @Override
+  public <T> T get(ComponentType<? extends T> type) {
+    return type == LighterEndData.VARIANT ?
+        castComponentValue(type, new LighterEndData.Variant(this.getVariant())) : super.get(type);
+  }
+
+  @Override
+  protected <T> boolean setApplicableComponent(ComponentType<T> type, T value) {
+    if (type == LighterEndData.VARIANT) {
+      this.setVariant(castComponentValue(LighterEndData.VARIANT, value).variant());
+      return true;
+    } else {
+      return super.setApplicableComponent(type, value);
     }
   }
 }

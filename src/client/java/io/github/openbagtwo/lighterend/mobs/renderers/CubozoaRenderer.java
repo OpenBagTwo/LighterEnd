@@ -28,7 +28,7 @@ public class CubozoaRenderer extends
       RenderLayer.getEyes(
           LighterEnd.of("textures/entity/cubozoa/cubozoa_glow.png")),
       RenderLayer.getEyes(
-          LighterEnd.of("extures/entity/cubozoa/cubozoa_sulphur_glow.png"))
+          LighterEnd.of("textures/entity/cubozoa/cubozoa_sulphur_glow.png"))
   );
 
   public CubozoaRenderer(EntityRendererFactory.Context ctx) {

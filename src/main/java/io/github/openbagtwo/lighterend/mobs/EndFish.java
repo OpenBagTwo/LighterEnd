@@ -1,10 +1,11 @@
 package io.github.openbagtwo.lighterend.mobs;
 
+import io.github.openbagtwo.lighterend.registries.LighterEndData;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import net.minecraft.block.Blocks;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
+import net.minecraft.component.ComponentType;
+import net.minecraft.component.ComponentsAccess;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -25,6 +26,7 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class EndFish extends SchoolingFishEntity {
 
@@ -34,10 +36,6 @@ public class EndFish extends SchoolingFishEntity {
   private static final TrackedData<Integer> VARIANT = DataTracker.registerData(
       EndFish.class,
       TrackedDataHandlerRegistry.INTEGER
-  );
-  private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(
-      EndFish.class,
-      TrackedDataHandlerRegistry.BOOLEAN
   );
 
   public EndFish(EntityType<EndFish> entityType, World world) {
@@ -49,15 +47,21 @@ public class EndFish extends SchoolingFishEntity {
       ServerWorldAccess world,
       LocalDifficulty difficulty,
       SpawnReason spawnReason,
-      EntityData entityData
+      @Nullable EntityData entityData
   ) {
-    EntityData data = super.initialize(world, difficulty, spawnReason, entityData);
+    if (spawnReason == SpawnReason.BUCKET) {
+      return entityData;
+    }
+
+    this.setVariant(random.nextInt(VARIANTS_NORMAL));
 
     // TODO: reenable once sulphur springs are back in the game
 //    RegistryEntry<Biome> biome = world.getBiome(getBlockPos());
 //    if (biome.matchesKey(EndBiomes.SULPHUR_SPRINGS.key)) {
-//      this.dataTracker.set(VARIANT, (random.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL));
+//      this.setVariant(random.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL));
 //    }
+
+    EntityData data = super.initialize(world, difficulty, spawnReason, entityData);
 
     this.calculateDimensions();
     return data;
@@ -66,32 +70,31 @@ public class EndFish extends SchoolingFishEntity {
   @Override
   protected void initDataTracker(DataTracker.Builder builder) {
     super.initDataTracker(builder);
-    builder.add(VARIANT, this.getRandom().nextInt(VARIANTS_NORMAL));
-    builder.add(FROM_BUCKET, false);
+    builder.add(VARIANT, 0);
   }
 
   @Override
   public void writeCustomData(WriteView view) {
     super.writeCustomData(view);
-    view.putInt("Variant", getVariant());
-    view.putBoolean("FromBucket", this.isFromBucket());
+    view.putInt("Variant", this.getVariant());
   }
 
   @Override
   protected void readCustomData(ReadView view) {
     super.readCustomData(view);
-    if (view.getInt("Variant", -1) != -1) {
-      this.dataTracker.set(VARIANT, view.getInt("Variant", -1));
-    }
-    this.setFromBucket(view.getBoolean("FromBucket", false));
+    this.setVariant(view.getInt("Variant", 0));
   }
 
   @Override
-  public void copyDataToStack(ItemStack itemStack) {
-    super.copyDataToStack(itemStack);
-    NbtComponent.set(DataComponentTypes.BUCKET_ENTITY_DATA, itemStack, (tag) -> {
-      tag.putInt("variant", dataTracker.get(VARIANT));
-    });
+  public void copyDataToStack(ItemStack stack) {
+    super.copyDataToStack(stack);
+    stack.copy(LighterEndData.VARIANT, this);
+  }
+
+  @Override
+  protected void copyComponentsFrom(ComponentsAccess from) {
+    this.copyComponentFrom(from, LighterEndData.VARIANT);
+    super.copyComponentsFrom(from);
   }
 
   @Override
@@ -134,5 +137,26 @@ public class EndFish extends SchoolingFishEntity {
 
   public int getVariant() {
     return this.dataTracker.get(VARIANT);
+  }
+
+  public void setVariant(int variant) {
+    this.dataTracker.set(VARIANT, variant % VARIANTS);
+  }
+
+  @Nullable
+  @Override
+  public <T> T get(ComponentType<? extends T> type) {
+    return type == LighterEndData.VARIANT ?
+        castComponentValue(type, new LighterEndData.Variant(this.getVariant())) : super.get(type);
+  }
+
+  @Override
+  protected <T> boolean setApplicableComponent(ComponentType<T> type, T value) {
+    if (type == LighterEndData.VARIANT) {
+      this.setVariant(castComponentValue(LighterEndData.VARIANT, value).variant());
+      return true;
+    } else {
+      return super.setApplicableComponent(type, value);
+    }
   }
 }

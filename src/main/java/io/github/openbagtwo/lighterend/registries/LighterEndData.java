@@ -37,6 +37,13 @@ public class LighterEndData {
           .cache()
   );
 
+  public static final ComponentType<Variant> VARIANT = registerDataComponent(
+      "lighterend_variant",
+      builder -> builder.codec(Variant.CODEC)
+          .packetCodec(Variant.PACKET_CODEC)
+          .cache()
+  );
+
   public record MothsComponent(List<MothData> moths) implements TooltipAppender {
 
     public static final Codec<MothsComponent> CODEC = MothData.LIST_CODEC.xmap(
@@ -83,6 +90,14 @@ public class LighterEndData {
           ).formatted(Formatting.GRAY)
       );
     }
+  }
+
+  public record Variant(int variant) {
+
+    public static final Codec<Variant> CODEC = Codec.INT.xmap(Variant::new, Variant::variant);
+    public static final PacketCodec<ByteBuf, Variant> PACKET_CODEC = PacketCodecs.VAR_INT.xmap(
+        Variant::new, Variant::variant
+    );
   }
 
   private static <T> ComponentType<T> registerDataComponent(String id,
