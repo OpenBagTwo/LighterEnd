@@ -9,12 +9,6 @@ import net.minecraft.world.WorldAccess;
 
 public class PosInfo implements Comparable<PosInfo> {
 
-  public static final Direction[] HORIZONTAL = new Direction[]{
-      Direction.NORTH,
-      Direction.EAST,
-      Direction.SOUTH,
-      Direction.WEST
-  };
   private static final BlockState AIR = Blocks.AIR.getDefaultState();
   private final Map<BlockPos, PosInfo> blocks;
   private final Map<BlockPos, PosInfo> add;

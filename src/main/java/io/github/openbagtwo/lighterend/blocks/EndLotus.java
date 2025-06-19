@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
-import io.github.openbagtwo.lighterend.utils.PosInfo;
 import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -317,7 +316,7 @@ public class EndLotus extends Block {
         int height =
             random.nextBoolean() ? 0 : random.nextBoolean() ? 1 : random.nextBoolean() ? 1 : -1;
         Shape shape = (height == 0) ? Shape.TOP : Shape.MIDDLE;
-        Direction dir = PosInfo.HORIZONTAL[random.nextInt(4)];
+        Direction dir = Direction.Type.HORIZONTAL.random(random);
         BlockPos leafCenter = bpos.toImmutable().offset(dir);
         if (hasLeaf(world, leafCenter)) {
           generateLeaf(world, leafCenter);
@@ -372,7 +371,7 @@ public class EndLotus extends Block {
       Mutable p = new Mutable();
       BlockState leaf = LighterEndBlocks.END_LOTUS_LEAF.getDefaultState();
       world.setBlockState(pos, leaf.with(Leaf.SHAPE, Shape.BOTTOM), Flags.SILENT);
-      for (Direction move : PosInfo.HORIZONTAL) {
+      for (Direction move : Direction.Type.HORIZONTAL) {
         world.setBlockState(
             p.set(pos).move(move),
             leaf.with(Leaf.HORIZONTAL_FACING, move)
@@ -381,8 +380,8 @@ public class EndLotus extends Block {
         );
       }
       for (int i = 0; i < 4; i++) {
-        Direction d1 = PosInfo.HORIZONTAL[i];
-        Direction d2 = PosInfo.HORIZONTAL[(i + 1) & 3];
+        Direction d1 = Direction.Type.HORIZONTAL.stream().toList().get(i);
+        Direction d2 = Direction.Type.HORIZONTAL.stream().toList().get((i + 1) & 3);
         world.setBlockState(
             p.set(pos).move(d1).move(d2),
             leaf.with(Leaf.HORIZONTAL_FACING, d1)

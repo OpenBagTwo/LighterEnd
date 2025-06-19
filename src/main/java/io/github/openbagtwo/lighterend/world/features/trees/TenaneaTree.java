@@ -5,7 +5,6 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
 import io.github.openbagtwo.lighterend.utils.MiscUtils;
-import io.github.openbagtwo.lighterend.utils.PosInfo;
 import io.github.openbagtwo.lighterend.utils.math.MathUtils;
 import io.github.openbagtwo.lighterend.utils.math.sdf.SDF;
 import io.github.openbagtwo.lighterend.utils.math.sdf.operators.SDFDisplace;
@@ -100,10 +99,10 @@ public class TenaneaTree extends Feature<DefaultFeatureConfig> {
         .setSource(sphere);
 
     Mutable mut = new Mutable();
-    for (Direction d1 : PosInfo.HORIZONTAL) {
+    for (Direction d1 : Direction.Type.HORIZONTAL) {
       BlockPos p = mut.set(pos).move(Direction.UP).move(d1).toImmutable();
       world.setBlockState(p, LighterEndBlocks.TENANEA.wood.getDefaultState(), Flags.SILENT);
-      for (Direction d2 : PosInfo.HORIZONTAL) {
+      for (Direction d2 : Direction.Type.HORIZONTAL) {
         mut.set(p).move(Direction.UP).move(d2);
         world.setBlockState(p, LighterEndBlocks.TENANEA.wood.getDefaultState(), Flags.SILENT);
       }

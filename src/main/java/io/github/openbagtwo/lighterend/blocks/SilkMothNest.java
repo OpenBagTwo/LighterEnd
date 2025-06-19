@@ -8,7 +8,6 @@ import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.utils.Flags;
 import io.github.openbagtwo.lighterend.utils.GlobalState;
-import io.github.openbagtwo.lighterend.utils.PosInfo;
 import java.util.List;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -59,6 +58,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Type;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -313,7 +313,7 @@ public class SilkMothNest extends BlockWithEntity {
       if (state.isIn(BlockTags.LEAVES) || state.isIn(BlockTags.LOGS)) {
         state = world.getBlockState(pos);
         if (state.isAir() && world.isAir(pos.down())) {
-          for (Direction dir : PosInfo.HORIZONTAL) {
+          for (Direction dir : Type.HORIZONTAL) {
             return !world.getBlockState(pos.down().offset(dir)).blocksMovement();
           }
         }
@@ -333,7 +333,7 @@ public class SilkMothNest extends BlockWithEntity {
       for (int y = maxY; y > minY; y--) {
         POS.setY(y);
         if (canGenerate(world, POS)) {
-          Direction dir = PosInfo.HORIZONTAL[random.nextInt(4)];
+          Direction dir = Type.HORIZONTAL.random(random);
           world.setBlockState(
               POS,
               LighterEndBlocks.SILK_MOTH_NEST.getDefaultState()

@@ -3,7 +3,6 @@ package io.github.openbagtwo.lighterend.world.features;
 import io.github.openbagtwo.lighterend.blocks.EndLotus;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.utils.Flags;
-import io.github.openbagtwo.lighterend.utils.PosInfo;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -33,7 +32,7 @@ public class LotusLeaf extends Feature<DefaultFeatureConfig> {
     Mutable p = new Mutable();
     BlockState leaf = LighterEndBlocks.END_LOTUS_LEAF.getDefaultState();
     world.setBlockState(pos, leaf.with(EndLotus.Leaf.SHAPE, EndLotus.Shape.BOTTOM), Flags.SILENT);
-    for (Direction move : PosInfo.HORIZONTAL) {
+    for (Direction move : Direction.Type.HORIZONTAL) {
       world.setBlockState(
           p.set(pos).move(move),
           leaf.with(EndLotus.Leaf.HORIZONTAL_FACING, move)
@@ -42,8 +41,8 @@ public class LotusLeaf extends Feature<DefaultFeatureConfig> {
       );
     }
     for (int i = 0; i < 4; i++) {
-      Direction d1 = PosInfo.HORIZONTAL[i];
-      Direction d2 = PosInfo.HORIZONTAL[(i + 1) & 3];
+      Direction d1 = Direction.Type.HORIZONTAL.stream().toList().get(i);
+      Direction d2 = Direction.Type.HORIZONTAL.stream().toList().get((i + 1) & 3);
       world.setBlockState(
           p.set(pos).move(d1).move(d2),
           leaf.with(EndLotus.Leaf.HORIZONTAL_FACING, d1)

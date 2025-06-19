@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndStructures;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
-import io.github.openbagtwo.lighterend.utils.PosInfo;
 import io.github.openbagtwo.lighterend.world.gen.noise.OpenSimplexNoise;
 import java.util.Map;
 import net.minecraft.block.BlockState;
@@ -194,7 +193,7 @@ public class LakePiece extends BasePiece {
               makeEndstonePillar(chunk, mut, bState);
             } else if (x > 1 && x < 15 && z > 1 && z < 15) {
               mut.setY(y);
-              for (Direction dir : PosInfo.HORIZONTAL) {
+              for (Direction dir : Direction.Type.HORIZONTAL) {
                 BlockPos wPos = mut.add(dir.getOffsetX(), 0, dir.getOffsetZ());
                 if (chunk.getBlockState(wPos).isAir()) {
                   mut.setY(y + 1);
