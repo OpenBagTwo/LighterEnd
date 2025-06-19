@@ -2,9 +2,10 @@ package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.Items.LighterEndFoodComponents;
 import io.github.openbagtwo.lighterend.LighterEnd;
-import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities.MothsComponent;
+import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import java.util.function.Function;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BlockStateComponent;
 import net.minecraft.component.type.FoodComponents;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.fluid.Fluids;
@@ -31,8 +32,15 @@ public class LighterEndItems {
   public static final Item SILK = register("silk_fiber");
   public static final Item SILK_MATRIX = register("silk_matrix");
   public static Item SILK_MOTH_NEST = register("silk_moth_nest",
-      settings -> new BlockItem(LighterEndBlocks.SILK_MOTH_NEST, settings.component(
-          LighterEndBlockEntities.MOTHS, MothsComponent.DEFAULT)), new Settings());
+      settings -> new BlockItem(
+          LighterEndBlocks.SILK_MOTH_NEST,
+          settings
+              .component(LighterEndData.MOTHS, LighterEndData.MothsComponent.DEFAULT)
+              .component(DataComponentTypes.BLOCK_STATE, BlockStateComponent.DEFAULT.with(
+                  SilkMothNest.FULLNESS, 0))
+      ),
+      new Settings()
+  );
 
   public static final Item UMBRELLA_JUICE = register("umbrella_juice", new Settings()
       .food(LighterEndFoodComponents.UMBRELLA_JUICE_NUTRITION,

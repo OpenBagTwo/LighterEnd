@@ -35,9 +35,9 @@ public class EndFish extends SchoolingFishEntity {
       EndFish.class,
       TrackedDataHandlerRegistry.INTEGER
   );
-  private static final TrackedData<Integer> SCALE = DataTracker.registerData(
+  private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(
       EndFish.class,
-      TrackedDataHandlerRegistry.INTEGER
+      TrackedDataHandlerRegistry.BOOLEAN
   );
 
   public EndFish(EntityType<EndFish> entityType, World world) {
@@ -67,14 +67,14 @@ public class EndFish extends SchoolingFishEntity {
   protected void initDataTracker(DataTracker.Builder builder) {
     super.initDataTracker(builder);
     builder.add(VARIANT, this.getRandom().nextInt(VARIANTS_NORMAL));
-    builder.add(SCALE, this.getRandom().nextInt(16));
+    builder.add(FROM_BUCKET, false);
   }
 
   @Override
   public void writeCustomData(WriteView view) {
     super.writeCustomData(view);
     view.putInt("Variant", getVariant());
-    view.putInt("Scale", this.dataTracker.get(SCALE));
+    view.putBoolean("FromBucket", this.isFromBucket());
   }
 
   @Override
@@ -83,9 +83,7 @@ public class EndFish extends SchoolingFishEntity {
     if (view.getInt("Variant", -1) != -1) {
       this.dataTracker.set(VARIANT, view.getInt("Variant", -1));
     }
-    if (view.getInt("Scale", -1) != -1) {
-      this.dataTracker.set(SCALE, view.getInt("Scale", -1));
-    }
+    this.setFromBucket(view.getBoolean("FromBucket", false));
   }
 
   @Override
@@ -93,7 +91,6 @@ public class EndFish extends SchoolingFishEntity {
     super.copyDataToStack(itemStack);
     NbtComponent.set(DataComponentTypes.BUCKET_ENTITY_DATA, itemStack, (tag) -> {
       tag.putInt("variant", dataTracker.get(VARIANT));
-      tag.putInt("scale", dataTracker.get(SCALE));
     });
   }
 

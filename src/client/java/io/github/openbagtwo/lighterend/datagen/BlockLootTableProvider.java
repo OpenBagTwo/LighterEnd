@@ -1,10 +1,9 @@
 package io.github.openbagtwo.lighterend.datagen;
 
-import static io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities.MOTHS;
-
 import io.github.openbagtwo.lighterend.blocks.EndLily;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
+import io.github.openbagtwo.lighterend.registries.LighterEndData;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import java.util.Arrays;
 import java.util.List;
@@ -143,8 +142,9 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
                 .with(
                     ItemEntry.builder(LighterEndItems.SILK_MOTH_NEST)
                         .apply(CopyComponentsLootFunction.builder(
-                            CopyComponentsLootFunction.Source.BLOCK_ENTITY).include(MOTHS
-                        ))
+                                CopyComponentsLootFunction.Source.BLOCK_ENTITY)
+                            .include(LighterEndData.MOTHS
+                            ))
                         .apply(CopyStateLootFunction.builder(LighterEndBlocks.SILK_MOTH_NEST)
                             .addProperty(SilkMothNest.FULLNESS))
                 )

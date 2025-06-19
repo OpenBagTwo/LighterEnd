@@ -7,8 +7,9 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.mobs.SilkMoth;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
-import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities.MothsComponent;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
+import io.github.openbagtwo.lighterend.registries.LighterEndData;
+import io.github.openbagtwo.lighterend.registries.LighterEndData.MothsComponent;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
@@ -254,14 +255,14 @@ public class SilkMothNestEntity extends BlockEntity {
     super.readComponents(components);
     this.moths.clear();
     List<MothData> list = components.getOrDefault(
-        LighterEndBlockEntities.MOTHS, MothsComponent.DEFAULT).moths();
+        LighterEndData.MOTHS, LighterEndData.MothsComponent.DEFAULT).moths();
     list.forEach(this::addMoth);
   }
 
   @Override
   protected void addComponents(ComponentMap.Builder builder) {
     super.addComponents(builder);
-    builder.add(LighterEndBlockEntities.MOTHS, new MothsComponent(this.createMothData()));
+    builder.add(LighterEndData.MOTHS, new MothsComponent(this.createMothData()));
   }
 
   @Override
