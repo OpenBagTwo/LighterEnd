@@ -23,9 +23,7 @@ import net.minecraft.world.ServerWorldAccess;
 public abstract class SDF {
 
   private final List<Function<PosInfo, BlockState>> postProcesses = Lists.newArrayList();
-  private Function<BlockState, Boolean> canReplace = (state) -> {
-    return state.isReplaceable();
-  };
+  private Function<BlockState, Boolean> canReplace = (state) -> state.isReplaceable();
 
   public abstract float getDistance(float x, float y, float z);
 

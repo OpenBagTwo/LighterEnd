@@ -303,4 +303,11 @@ public class MathUtils {
       v.set(offset.x() + v.x(), offset.y() + v.y(), offset.z() + v.z());
     }
   }
+
+  public static Vector3f randomHorizontal(net.minecraft.util.math.random.Random random) {
+    float angleY = MathHelper.nextFloat(random, 0, PI2);
+    float vx = (float) Math.sin(angleY);
+    float vz = (float) Math.cos(angleY);
+    return new Vector3f(vx, 0, vz);
+  }
 }

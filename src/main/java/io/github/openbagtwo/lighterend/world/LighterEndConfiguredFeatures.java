@@ -8,6 +8,7 @@ import io.github.openbagtwo.lighterend.blocks.SilkMothNest.SilkMothNestFeature;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.world.features.LotusLeaf;
+import io.github.openbagtwo.lighterend.world.features.UmbralithArch;
 import io.github.openbagtwo.lighterend.world.features.UnderwaterPlants;
 import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
 import io.github.openbagtwo.lighterend.world.features.trees.UmbrellaTree;
@@ -98,6 +99,20 @@ public class LighterEndConfiguredFeatures {
   public static final RegistryKey<ConfiguredFeature<?, ?>> LOTUS_LEAF = of(
       "end_lotus_leaf");
 
+  public static final Feature<DefaultFeatureConfig> ARCH_FEATURE = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("umbralith_arch"),
+      new UmbralithArch());
+  public static final RegistryKey<ConfiguredFeature<?, ?>> UMRBALITH_ARCH = of(
+      "umbralith_arch");
+
+  public static final Feature<DefaultFeatureConfig> THIN_ARCH_FEATURE = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("umbralith_arch_thin"),
+      new UmbralithArch.Thin());
+  public static final RegistryKey<ConfiguredFeature<?, ?>> UMRBALITH_ARCH_THIN = of(
+      "umbralith_arch_thin");
+
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
     RegistryEntryLookup<ConfiguredFeature<?, ?>> lookup = context.getRegistryLookup(
@@ -158,6 +173,8 @@ public class LighterEndConfiguredFeatures {
     ConfiguredFeatures.register(context, END_LILY, END_LILY_FEATURE);
     ConfiguredFeatures.register(context, END_LOTUS, END_LOTUS_FEATURE);
     ConfiguredFeatures.register(context, LOTUS_LEAF, LOTUS_LEAF_FEATURE);
+    ConfiguredFeatures.register(context, UMRBALITH_ARCH, ARCH_FEATURE);
+    ConfiguredFeatures.register(context, UMRBALITH_ARCH_THIN, THIN_ARCH_FEATURE);
   }
 
   public static void initialize() {

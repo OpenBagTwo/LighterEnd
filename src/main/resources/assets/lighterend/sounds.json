@@ -27,6 +27,16 @@
       }
     ]
   },
+  "ambient.umbra_valley.loop": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "lighterend:ambient/umbra_valley",
+        "stream": true,
+        "volume": 1.0
+      }
+    ]
+  },
   "ambient.umbrella.loop": {
     "category": "ambient",
     "sounds": [
@@ -308,6 +318,31 @@
       },
       {
         "name": "lighterend:music/benjamin_martins-verve",
+        "stream": true,
+        "volume": 0.2
+      }
+    ]
+  },
+  "music.umbra_valley": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "lighterend:music/emmit_fenn-creep",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/jesse_gallagher-the_anunnaki_return",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/i_think_i_can_help_you-the_six_realms",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/jesse_gallagher-maestro_tlakaelel",
         "stream": true,
         "volume": 0.2
       }
