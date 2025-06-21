@@ -19,6 +19,7 @@ import io.github.openbagtwo.lighterend.blocks.UmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern.TallUmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaMembrane;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaTreeCluster;
+import io.github.openbagtwo.lighterend.world.features.trees.Glowshroom;
 import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
 import io.github.openbagtwo.lighterend.world.features.trees.UmbrellaTree;
 import java.util.Arrays;
@@ -136,6 +137,8 @@ public class LighterEndBlocks {
 
   public static final Wood LOTUS = new Wood("end_lotus", MapColor.LIGHT_BLUE, MapColor.CYAN);
 
+  public static final Block GLOWSHROOM_SAPLING = register("mossy_glowshroom_sapling",
+      settings -> new Sapling(Glowshroom::new, settings.luminance((bs) -> 7)));
   public static final Wood GLOWSHROOM = new Wood(
       "mossy_glowshroom",
       MapColor.GRAY,

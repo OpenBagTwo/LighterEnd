@@ -70,6 +70,11 @@ public class ModelProvider extends FabricModelProvider {
     generateWoodModels(blockModelGenerator, LighterEndBlocks.LOTUS);
 
     generateWoodModels(blockModelGenerator, LighterEndBlocks.GLOWSHROOM);
+
+    blockModelGenerator.registerTintableCrossBlockState(
+        LighterEndBlocks.GLOWSHROOM_SAPLING,
+        CrossType.EMISSIVE_NOT_TINTED
+    );
   }
 
   public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator,
@@ -147,6 +152,7 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndBlocks.END_LOTUS_SEED.asItem(),
         LighterEndBlocks.GLOWSHROOM.ladder.asItem(),
         LighterEndBlocks.GLOWSHROOM_HYMENOPHORE.asItem(),
+        LighterEndBlocks.GLOWSHROOM_SAPLING.asItem(),
         LighterEndMobs.SILK_MOTH.spawnEgg,
         LighterEndMobs.DRAGONFLY.spawnEgg,
         LighterEndMobs.END_FISH.spawnEgg,

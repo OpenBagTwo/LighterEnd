@@ -10,6 +10,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.world.features.LotusLeaf;
 import io.github.openbagtwo.lighterend.world.features.UmbralithArch;
 import io.github.openbagtwo.lighterend.world.features.UnderwaterPlants;
+import io.github.openbagtwo.lighterend.world.features.trees.Glowshroom;
 import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
 import io.github.openbagtwo.lighterend.world.features.trees.UmbrellaTree;
 import net.minecraft.block.BlockState;
@@ -113,6 +114,13 @@ public class LighterEndConfiguredFeatures {
   public static final RegistryKey<ConfiguredFeature<?, ?>> UMRBALITH_ARCH_THIN = of(
       "umbralith_arch_thin");
 
+  public static final Feature<DefaultFeatureConfig> GLOWSHROOM_FEATURE = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("glowshroom"),
+      new Glowshroom());
+  public static final RegistryKey<ConfiguredFeature<?, ?>> GLOWSHROOM = of(
+      "glowshroom");
+
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
     RegistryEntryLookup<ConfiguredFeature<?, ?>> lookup = context.getRegistryLookup(
@@ -175,6 +183,7 @@ public class LighterEndConfiguredFeatures {
     ConfiguredFeatures.register(context, LOTUS_LEAF, LOTUS_LEAF_FEATURE);
     ConfiguredFeatures.register(context, UMRBALITH_ARCH, ARCH_FEATURE);
     ConfiguredFeatures.register(context, UMRBALITH_ARCH_THIN, THIN_ARCH_FEATURE);
+    ConfiguredFeatures.register(context, GLOWSHROOM, GLOWSHROOM_FEATURE);
   }
 
   public static void initialize() {

@@ -1,5 +1,6 @@
 package io.github.openbagtwo.lighterend.utils.math;
 
+import com.google.common.collect.Lists;
 import io.github.openbagtwo.lighterend.utils.Flags;
 import io.github.openbagtwo.lighterend.utils.math.sdf.SDF;
 import io.github.openbagtwo.lighterend.utils.math.sdf.operators.SDFUnion;
@@ -18,6 +19,22 @@ import org.joml.Vector3f;
 public class MathUtils {
 
   public static final float PI2 = (float) Math.PI * 2.0f;
+
+  public static List<Vector3f> makeSpline(float x1, float y1, float z1, float x2, float y2,
+      float z2, int points) {
+    List<Vector3f> spline = Lists.newArrayList();
+    spline.add(new Vector3f(x1, y1, z1));
+    int count = points - 1;
+    for (int i = 1; i < count; i++) {
+      float delta = (float) i / (float) count;
+      float x = MathHelper.lerp(delta, x1, x2);
+      float y = MathHelper.lerp(delta, y1, y2);
+      float z = MathHelper.lerp(delta, z1, z2);
+      spline.add(new Vector3f(x, y, z));
+    }
+    spline.add(new Vector3f(x2, y2, z2));
+    return spline;
+  }
 
   public static List<Vector3f> copySpline(List<Vector3f> spline) {
     List<Vector3f> result = new ArrayList<>(spline.size());

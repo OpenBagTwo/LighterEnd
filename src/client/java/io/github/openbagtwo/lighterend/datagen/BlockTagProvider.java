@@ -125,7 +125,8 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
     valueLookupBuilder(BlockTags.SAPLINGS).add(
         LighterEndBlocks.TENANEA_SAPLING,
-        LighterEndBlocks.UMBRELLA_TREE_SAPLING
+        LighterEndBlocks.UMBRELLA_TREE_SAPLING,
+        LighterEndBlocks.GLOWSHROOM_SAPLING
     );
     valueLookupBuilder(BlockTags.LEAVES).add(
         LighterEndBlocks.TENANEA_LEAVES,

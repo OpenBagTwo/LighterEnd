@@ -28,6 +28,7 @@ public class LighterEndPlacedFeatures {
   public static final RegistryKey<PlacedFeature> LOTUS_LEAF = of("end_lotus_leaf");
   public static final RegistryKey<PlacedFeature> UMBRALITH_ARCH = of("umbralith_arch");
   public static final RegistryKey<PlacedFeature> UMBRALITH_ARCH_THIN = of("umbralith_arch_thin");
+  public static final RegistryKey<PlacedFeature> GLOWSHROOM = of("glowshroom");
 
 
   public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -142,6 +143,15 @@ public class LighterEndPlacedFeatures {
                 RarityFilterPlacementModifier.of(20),
                 PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
                 BiomePlacementModifier.of()
+            )
+        )
+    );
+    context.register(
+        GLOWSHROOM,
+        new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.GLOWSHROOM),
+            VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
+                RarityFilterPlacementModifier.of(5),
+                LighterEndBlocks.GLOWSHROOM_SAPLING
             )
         )
     );
