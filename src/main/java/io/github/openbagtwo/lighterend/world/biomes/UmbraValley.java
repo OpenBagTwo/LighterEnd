@@ -1,5 +1,6 @@
 package io.github.openbagtwo.lighterend.world.biomes;
 
+import io.github.openbagtwo.lighterend.registries.LighterEndParticles;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.world.LighterEndPlacedFeatures;
 import net.minecraft.entity.EntityType;
@@ -10,6 +11,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.MusicType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
+import net.minecraft.world.biome.BiomeParticleConfig;
 import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.biome.SpawnSettings;
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry;
@@ -54,6 +56,7 @@ public class UmbraValley {
         .temperature(0.5F)
         .downfall(0.5F)
         .effects(new BiomeEffects.Builder()
+            .particleConfig(new BiomeParticleConfig(LighterEndParticles.AMBER_SPHERE, 0.0001F))
             .skyColor(0x000000)
             .fogColor(0x646464)
             .waterColor(0x45C286)

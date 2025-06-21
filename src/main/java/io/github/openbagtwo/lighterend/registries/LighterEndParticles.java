@@ -13,6 +13,11 @@ public class LighterEndParticles {
       FabricParticleTypes.simple()
   );
 
+  public static final SimpleParticleType AMBER_SPHERE = register(
+      "amber_sphere",
+      FabricParticleTypes.simple()
+  );
+
   public static SimpleParticleType register(String name, SimpleParticleType particleType) {
     return Registry.register(
         Registries.PARTICLE_TYPE,
