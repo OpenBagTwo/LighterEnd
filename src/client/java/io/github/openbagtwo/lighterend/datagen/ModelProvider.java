@@ -68,6 +68,8 @@ public class ModelProvider extends FabricModelProvider {
     );
     generateWoodModels(blockModelGenerator, LighterEndBlocks.UMBRELLA);
     generateWoodModels(blockModelGenerator, LighterEndBlocks.LOTUS);
+
+    generateWoodModels(blockModelGenerator, LighterEndBlocks.GLOWSHROOM);
   }
 
   public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator,
@@ -120,6 +122,7 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndItems.GLOW_BARB,
         LighterEndItems.END_LILY_LEAF,
         LighterEndItems.DRIED_END_LILY_LEAF,
+        LighterEndItems.GLOWSHROOM_FUR,
         LighterEndMusicDiscs.ENDSEEKER,
         LighterEndMusicDiscs.EO_DRACONA,
         LighterEndMusicDiscs.GRASPING_AT_STARS,
@@ -142,11 +145,11 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndBlocks.END_LILY_SEED.asItem(),
         LighterEndBlocks.END_LOTUS_STEM.asItem(),
         LighterEndBlocks.END_LOTUS_SEED.asItem(),
+        LighterEndBlocks.GLOWSHROOM.ladder.asItem(),
         LighterEndMobs.SILK_MOTH.spawnEgg,
         LighterEndMobs.DRAGONFLY.spawnEgg,
         LighterEndMobs.END_FISH.spawnEgg,
         LighterEndMobs.CUBOZOA.spawnEgg
-
     )) {
       itemModelGenerator.register(
           item, Models.GENERATED

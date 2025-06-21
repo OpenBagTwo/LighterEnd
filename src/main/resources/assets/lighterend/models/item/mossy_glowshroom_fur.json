@@ -1,0 +1,95 @@
+{
+  "credit": "Made by OpenBagTwo with Blockbench",
+  "display": {
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        0,
+        -180
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "translation": [
+        0,
+        2.75,
+        0
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        0,
+        -180
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "translation": [
+        0,
+        2.75,
+        0
+      ]
+    },
+    "head": {
+      "rotation": [
+        0,
+        0,
+        -180
+      ],
+      "scale": [
+        0.66,
+        0.66,
+        0.66
+      ],
+      "translation": [
+        0,
+        11,
+        -4
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        0,
+        0,
+        -180
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "translation": [
+        0,
+        2.75,
+        0
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        0,
+        0,
+        180
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "translation": [
+        0,
+        2.75,
+        0
+      ]
+    }
+  },
+  "format_version": "1.21.6",
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "lighterend:block/mossy_glowshroom_fur"
+  }
+}

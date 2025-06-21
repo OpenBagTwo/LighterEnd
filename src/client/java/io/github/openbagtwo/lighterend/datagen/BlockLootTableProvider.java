@@ -50,7 +50,8 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
         LighterEndBlocks.UMBRALITH.blocks,
         LighterEndBlocks.TENANEA.blocks,
         LighterEndBlocks.UMBRELLA.blocks,
-        LighterEndBlocks.LOTUS.blocks
+        LighterEndBlocks.LOTUS.blocks,
+        LighterEndBlocks.GLOWSHROOM.blocks
     )) {
       for (Block block : material) {
         if (block instanceof SlabBlock) {
@@ -104,6 +105,11 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     addDrop(LighterEndBlocks.END_LOTUS_STEM);
     addDrop(LighterEndBlocks.END_LOTUS_LEAF, LighterEndItems.END_LILY_LEAF);
     addDrop(LighterEndBlocks.END_LOTUS_SEED);
+
+    addDrop(
+        LighterEndBlocks.GLOWSHROOM_FUR,
+        (block -> this.dropsWithSilkTouchOrShears(LighterEndItems.GLOWSHROOM_FUR))
+    );
   }
 
   private LootTable.Builder auroraCrystalDrops() {

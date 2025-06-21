@@ -21,6 +21,8 @@ public class LighterEndSounds {
 
   public static final RegistryEntry<SoundEvent> EQUIP_SILK = registerReference(
       "item.armor.equip_silk");
+  public static final RegistryEntry<SoundEvent> EQUIP_FUR = registerReference(
+      "item.armor.equip_fur");
   public static final RegistryEntry<SoundEvent> DRINK_UMBRELLA_JUICE = registerReference(
       "item.umbrella_juice.drink");
 

@@ -29,7 +29,8 @@ public class PlantRenderer {
         LighterEndBlocks.END_LOTUS_FLOWER,
         LighterEndBlocks.END_LOTUS_STEM,
         LighterEndBlocks.END_LOTUS_LEAF,
-        LighterEndBlocks.END_LOTUS_SEED
+        LighterEndBlocks.END_LOTUS_SEED,
+        LighterEndBlocks.GLOWSHROOM_FUR
     );
   }
 

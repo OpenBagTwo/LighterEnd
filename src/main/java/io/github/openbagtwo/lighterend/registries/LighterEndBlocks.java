@@ -8,6 +8,7 @@ import io.github.openbagtwo.lighterend.blocks.DragonBone;
 import io.github.openbagtwo.lighterend.blocks.EndLily;
 import io.github.openbagtwo.lighterend.blocks.EndLotus;
 import io.github.openbagtwo.lighterend.blocks.EndMoss;
+import io.github.openbagtwo.lighterend.blocks.Fur;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.Sapling;
 import io.github.openbagtwo.lighterend.blocks.Signs;
@@ -133,6 +134,15 @@ public class LighterEndBlocks {
   public static final Block END_LOTUS_SEED = register("end_lotus_seed", EndLotus.Seed::new);
 
   public static final Wood LOTUS = new Wood("end_lotus", MapColor.LIGHT_BLUE, MapColor.CYAN);
+
+  public static final Block GLOWSHROOM_FUR = register(
+      "mossy_glowshroom_fur", settings -> new Fur(settings, MapColor.LIGHT_BLUE, 4, true), false
+  );
+  public static final Wood GLOWSHROOM = new Wood(
+      "mossy_glowshroom",
+      MapColor.GRAY,
+      MapColor.OAK_TAN
+  );
 
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);

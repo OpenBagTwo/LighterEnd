@@ -222,6 +222,10 @@
     ],
     "subtitle": "subtitles.lighterend.entity.end_fish.hurt"
   },
+  "item.armor.equip_fur": {
+    "sounds": [],
+    "subtitle": "subtitles.lighterend.item.armor.equip_fur"
+  },
   "item.armor.equip_silk": {
     "sounds": [
       "item/armor/equip_leather1",

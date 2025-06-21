@@ -2,11 +2,11 @@
   "parent": "block/cube",
   "textures": {
     "down": "lighterend:block/mossy_glowshroom_stripped_log_top",
-    "east": "lighterend:block/mossy_glowshroom_stripped_log_side",
-    "north": "lighterend:block/mossy_glowshroom_stripped_log_side",
-    "particle": "lighterend:block/mossy_glowshroom_stripped_log_side",
-    "south": "lighterend:block/mossy_glowshroom_stripped_log_side",
+    "east": "lighterend:block/mossy_glowshroom_stripped_log",
+    "north": "lighterend:block/mossy_glowshroom_stripped_log",
+    "particle": "lighterend:block/mossy_glowshroom_stripped_log",
+    "south": "lighterend:block/mossy_glowshroom_stripped_log",
     "up": "lighterend:block/mossy_glowshroom_stripped_log_top",
-    "west": "lighterend:block/mossy_glowshroom_stripped_log_side"
+    "west": "lighterend:block/mossy_glowshroom_stripped_log"
   }
 }

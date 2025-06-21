@@ -50,7 +50,8 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     for (Wood wood : Arrays.asList(
         LighterEndBlocks.TENANEA,
         LighterEndBlocks.UMBRELLA,
-        LighterEndBlocks.LOTUS
+        LighterEndBlocks.LOTUS,
+        LighterEndBlocks.GLOWSHROOM
     )) {
       for (Block block : wood.blocks) {
         valueLookupBuilder(BlockTags.AXE_MINEABLE).add(block);
@@ -102,7 +103,9 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
     }
 
-    valueLookupBuilder(BlockTags.ENDERMAN_HOLDABLE).add(LighterEndBlocks.END_MOSS);
+    valueLookupBuilder(BlockTags.ENDERMAN_HOLDABLE).add(
+        LighterEndBlocks.END_MOSS,
+        LighterEndBlocks.GLOWSHROOM_FUR);
     valueLookupBuilder(BlockTags.ANIMALS_SPAWNABLE_ON).add(LighterEndBlocks.END_MOSS);
     valueLookupBuilder(BlockTags.REPLACEABLE_BY_TREES).add(LighterEndBlocks.END_MOSS);
     valueLookupBuilder(BlockTags.SCULK_REPLACEABLE).add(LighterEndBlocks.END_MOSS);
@@ -124,7 +127,10 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.TENANEA_SAPLING,
         LighterEndBlocks.UMBRELLA_TREE_SAPLING
     );
-    valueLookupBuilder(BlockTags.LEAVES).add(LighterEndBlocks.TENANEA_LEAVES);
+    valueLookupBuilder(BlockTags.LEAVES).add(
+        LighterEndBlocks.TENANEA_LEAVES,
+        LighterEndBlocks.GLOWSHROOM_FUR
+    );
 
     valueLookupBuilder(BlockTags.AXE_MINEABLE).add(
         LighterEndBlocks.UMBRELLA_TREE_CLUSTER,

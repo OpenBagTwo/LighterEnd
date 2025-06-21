@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "lighterend:block/mossy_glowshroom_ladder",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "lighterend:block/mossy_glowshroom_ladder"
+    },
+    "facing=south": {
+      "model": "lighterend:block/mossy_glowshroom_ladder",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "lighterend:block/mossy_glowshroom_ladder",
+      "y": 270
+    }
+  }
+}

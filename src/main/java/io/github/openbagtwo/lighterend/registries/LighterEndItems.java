@@ -1,5 +1,6 @@
 package io.github.openbagtwo.lighterend.registries;
 
+import io.github.openbagtwo.lighterend.Items.Fur;
 import io.github.openbagtwo.lighterend.Items.LighterEndFoodComponents;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndData.SilkLevelComponent;
@@ -40,11 +41,13 @@ public class LighterEndItems {
       new Settings()
   );
 
-  public static final Item UMBRELLA_JUICE = register("umbrella_juice", new Settings()
-      .food(LighterEndFoodComponents.UMBRELLA_JUICE_NUTRITION,
-          LighterEndFoodComponents.UMBRELLA_JUICE_EFFECT)
-      .useRemainder(Items.GLASS_BOTTLE)
-      .maxCount(16)
+  public static final Item UMBRELLA_JUICE = register(
+      "umbrella_juice",
+      new Settings()
+          .food(LighterEndFoodComponents.UMBRELLA_JUICE_NUTRITION,
+              LighterEndFoodComponents.UMBRELLA_JUICE_EFFECT)
+          .useRemainder(Items.GLASS_BOTTLE)
+          .maxCount(16)
   );
   public static final Item END_FISH_BUCKET = register("bucket_end_fish",
       settings -> new EntityBucketItem(
@@ -60,8 +63,13 @@ public class LighterEndItems {
       .food(FoodComponents.TROPICAL_FISH));
   public static final Item GLOW_BARB = register("glow_barb");
 
-  public static final Item END_LILY_LEAF = register("end_lily_leaf", new Settings());
-  public static final Item DRIED_END_LILY_LEAF = register("end_lily_leaf_dried", new Settings());
+  public static final Item END_LILY_LEAF = register("end_lily_leaf");
+  public static final Item DRIED_END_LILY_LEAF = register("end_lily_leaf_dried");
+
+  public static final Item GLOWSHROOM_FUR = register(
+      "mossy_glowshroom_fur",
+      settings -> new Fur(LighterEndBlocks.GLOWSHROOM_FUR, settings),
+      new Settings());
 
   public static Item register(String name) {
     return register(name, new Settings());
