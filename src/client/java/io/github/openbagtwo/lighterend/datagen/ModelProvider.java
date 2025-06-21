@@ -146,6 +146,7 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndBlocks.END_LOTUS_STEM.asItem(),
         LighterEndBlocks.END_LOTUS_SEED.asItem(),
         LighterEndBlocks.GLOWSHROOM.ladder.asItem(),
+        LighterEndBlocks.GLOWSHROOM_HYMENOPHORE.asItem(),
         LighterEndMobs.SILK_MOTH.spawnEgg,
         LighterEndMobs.DRAGONFLY.spawnEgg,
         LighterEndMobs.END_FISH.spawnEgg,

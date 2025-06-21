@@ -25,6 +25,8 @@ public class Composting {
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.END_LILY_SEED, 0.3F);
     CompostingChanceRegistry.INSTANCE.add(LighterEndItems.END_LILY_LEAF, 0.65F);
     CompostingChanceRegistry.INSTANCE.add(LighterEndItems.GLOWSHROOM_FUR, 0.65F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.GLOWSHROOM_CAP, 0.65F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.GLOWSHROOM_HYMENOPHORE, 0.65F);
   }
 
 }

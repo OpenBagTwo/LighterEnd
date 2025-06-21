@@ -277,6 +277,8 @@ public class RecipeProvider extends FabricRecipeProvider {
             LighterEndBlocks.LOTUS.log,
             LighterEndBlocks.END_LOTUS_STEM
         );
+
+        generateWoodRecipes(LighterEndBlocks.GLOWSHROOM);
       }
 
       public void generateMaterialRecipes(Material material) {

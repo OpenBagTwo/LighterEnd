@@ -4,7 +4,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.minecraft.client.render.BlockRenderLayer;
 
-public class PlantRenderer {
+public class CutoutRenderer {
 
   public static void initialize() {
     BlockRenderLayerMap.putBlocks(
@@ -30,7 +30,10 @@ public class PlantRenderer {
         LighterEndBlocks.END_LOTUS_STEM,
         LighterEndBlocks.END_LOTUS_LEAF,
         LighterEndBlocks.END_LOTUS_SEED,
-        LighterEndBlocks.GLOWSHROOM_FUR
+        LighterEndBlocks.GLOWSHROOM_FUR,
+        LighterEndBlocks.LOTUS.trapdoor,
+        LighterEndBlocks.GLOWSHROOM.door,
+        LighterEndBlocks.GLOWSHROOM.trapdoor
     );
   }
 

@@ -9,6 +9,7 @@ import io.github.openbagtwo.lighterend.blocks.EndLily;
 import io.github.openbagtwo.lighterend.blocks.EndLotus;
 import io.github.openbagtwo.lighterend.blocks.EndMoss;
 import io.github.openbagtwo.lighterend.blocks.Fur;
+import io.github.openbagtwo.lighterend.blocks.GlowshroomCap;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.Sapling;
 import io.github.openbagtwo.lighterend.blocks.Signs;
@@ -135,13 +136,24 @@ public class LighterEndBlocks {
 
   public static final Wood LOTUS = new Wood("end_lotus", MapColor.LIGHT_BLUE, MapColor.CYAN);
 
-  public static final Block GLOWSHROOM_FUR = register(
-      "mossy_glowshroom_fur", settings -> new Fur(settings, MapColor.LIGHT_BLUE, 4, true), false
-  );
   public static final Wood GLOWSHROOM = new Wood(
       "mossy_glowshroom",
       MapColor.GRAY,
       MapColor.OAK_TAN
+  );
+  public static final Block GLOWSHROOM_CAP = register("mossy_glowshroom_cap", GlowshroomCap::new);
+  public static final Block GLOWSHROOM_HYMENOPHORE = register(
+      "mossy_glowshroom_hymenophore",
+      settings -> new Block(
+          settings
+              .mapColor(MapColor.LIGHT_BLUE)
+              .strength(1.0F)
+              .luminance((bs) -> 15)
+              .sounds(BlockSoundGroup.WART_BLOCK)
+      )
+  );
+  public static final Block GLOWSHROOM_FUR = register(
+      "mossy_glowshroom_fur", settings -> new Fur(settings, MapColor.LIGHT_BLUE, 4, true), false
   );
 
   public static Block register(String name, Function<Settings, Block> factory) {
@@ -176,6 +188,7 @@ public class LighterEndBlocks {
     FlammableBlockRegistry.getDefaultInstance().add(END_LOTUS_FLOWER, 60, 100);
     FlammableBlockRegistry.getDefaultInstance().add(END_LOTUS_STEM, 60, 60);
     FlammableBlockRegistry.getDefaultInstance().add(END_LOTUS_LEAF, 30, 60);
+    FlammableBlockRegistry.getDefaultInstance().add(GLOWSHROOM_FUR, 60, 100);
   }
 
   public static class Material {

@@ -100,12 +100,12 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
       for (Block block : jadestone.blocks) {
         valueLookupBuilder(BlockTags.NEEDS_IRON_TOOL).add(block);
       }
-
     }
 
     valueLookupBuilder(BlockTags.ENDERMAN_HOLDABLE).add(
         LighterEndBlocks.END_MOSS,
-        LighterEndBlocks.GLOWSHROOM_FUR);
+        LighterEndBlocks.GLOWSHROOM_FUR
+    );
     valueLookupBuilder(BlockTags.ANIMALS_SPAWNABLE_ON).add(LighterEndBlocks.END_MOSS);
     valueLookupBuilder(BlockTags.REPLACEABLE_BY_TREES).add(LighterEndBlocks.END_MOSS);
     valueLookupBuilder(BlockTags.SCULK_REPLACEABLE).add(LighterEndBlocks.END_MOSS);
@@ -134,7 +134,9 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
     valueLookupBuilder(BlockTags.AXE_MINEABLE).add(
         LighterEndBlocks.UMBRELLA_TREE_CLUSTER,
-        LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY
+        LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY,
+        LighterEndBlocks.GLOWSHROOM_CAP,
+        LighterEndBlocks.GLOWSHROOM_HYMENOPHORE
     );
 
     valueLookupBuilder(LighterEndTags.END_MOSS_REPLACEABLE)
