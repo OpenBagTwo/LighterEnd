@@ -5,7 +5,6 @@ import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidFillable;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.ShapeContext;
@@ -17,6 +16,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.FluidTags;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager.Builder;
 import net.minecraft.state.property.BooleanProperty;
@@ -79,11 +79,15 @@ public class EndLily extends Block implements FluidFillable {
       Random random
   ) {
     if (!canPlaceAt(state, world, pos)) {
-      return state.get(IS_TOP)
-          ? Blocks.AIR.getDefaultState()
-          : Blocks.WATER.getDefaultState();
-    } else {
-      return state;
+      tickView.scheduleBlockTick(pos, this, 1);
+    }
+    return state;
+  }
+
+  @Override
+  protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    if (!state.canPlaceAt(world, pos)) {
+      world.breakBlock(pos, true);
     }
   }
 

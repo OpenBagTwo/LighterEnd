@@ -21,6 +21,7 @@ import net.minecraft.fluid.WaterFluid;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.FluidTags;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.StateManager.Builder;
@@ -65,6 +66,30 @@ public class EndLotus extends Block {
             .breakInstantly()
             .luminance(bs -> 15)
     );
+  }
+
+  @Override
+  protected BlockState getStateForNeighborUpdate(
+      BlockState state,
+      WorldView world,
+      ScheduledTickView tickView,
+      BlockPos pos,
+      Direction direction,
+      BlockPos neighborPos,
+      BlockState neighborState,
+      Random random
+  ) {
+    if (!canPlaceAt(state, world, pos)) {
+      tickView.scheduleBlockTick(pos, this, 1);
+    }
+    return state;
+  }
+
+  @Override
+  protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    if (!state.canPlaceAt(world, pos)) {
+      world.breakBlock(pos, true);
+    }
   }
 
   @Override
@@ -172,7 +197,23 @@ public class EndLotus extends Block {
       if (state.get(WATERLOGGED)) {
         tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
       }
+      if (!canPlaceAt(state, world, pos)) {
+        tickView.scheduleBlockTick(pos, this, 1);
+      }
       return state;
+    }
+
+    @Override
+    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+      if (!state.canPlaceAt(world, pos)) {
+        world.breakBlock(pos, true);
+      }
+    }
+
+    @Override
+    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+      BlockState down = world.getBlockState(pos.down());
+      return down.isIn(LighterEndTags.AQUATIC_END_SOIL) || down.getBlock() == this;
     }
 
     static {
