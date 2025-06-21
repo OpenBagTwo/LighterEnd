@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "stage=0": {
+      "model": "lighterend:block/blue_vine_seed_0"
+    },
+    "stage=1": {
+      "model": "lighterend:block/blue_vine_seed_1"
+    }
+  }
+}

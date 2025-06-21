@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.blocks.Agave;
 import io.github.openbagtwo.lighterend.blocks.AuroraCrystal;
 import io.github.openbagtwo.lighterend.blocks.Charnia;
 import io.github.openbagtwo.lighterend.blocks.CreepingMoss;
@@ -159,6 +160,17 @@ public class LighterEndBlocks {
       "mossy_glowshroom_fur", settings -> new Fur(settings, MapColor.LIGHT_BLUE, 4, true), false
   );
 
+  public static final Block AGAVE = register("blue_vine", Agave::new, false);
+  public static final Block AGAVE_BULB = register("blue_vine_lantern", Agave.Bulb::new);
+  public static final Block AGAVE_FUR = register(
+      "blue_vine_fur",
+      settings -> new Fur(settings, MapColor.BRIGHT_TEAL, 0, false),
+      false
+  );
+  public static final Block AGAVE_SEED = register(
+      "blue_vine_seed", settings -> new Sapling(Agave.AgaveFeature::new, settings)
+  );
+
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);
   }
@@ -178,20 +190,6 @@ public class LighterEndBlocks {
   }
 
   public static void initialize() {
-    FlammableBlockRegistry.getDefaultInstance().add(CREEPING_MOSS, 60, 100);
-    FlammableBlockRegistry.getDefaultInstance().add(UMBRELLA_FERN, 60, 100);
-    FlammableBlockRegistry.getDefaultInstance().add(TALL_UMBRELLA_FERN, 60, 100);
-    FlammableBlockRegistry.getDefaultInstance().add(LUMECORN, 60, 100);
-    FlammableBlockRegistry.getDefaultInstance().add(LUMECORN_STEM, 60, 100);
-    FlammableBlockRegistry.getDefaultInstance().add(TENANEA_FLOWER, 15, 100);
-    FlammableBlockRegistry.getDefaultInstance().add(TENANEA_LEAVES, 30, 60);
-    FlammableBlockRegistry.getDefaultInstance().add(SILK_MOTH_NEST, 30, 20);
-    FlammableBlockRegistry.getDefaultInstance().add(UMBRELLA_TREE_CLUSTER, 60, 100);
-    FlammableBlockRegistry.getDefaultInstance().add(UMBRELLA_TREE_CLUSTER_EMPTY, 30, 20);
-    FlammableBlockRegistry.getDefaultInstance().add(END_LOTUS_FLOWER, 60, 100);
-    FlammableBlockRegistry.getDefaultInstance().add(END_LOTUS_STEM, 60, 60);
-    FlammableBlockRegistry.getDefaultInstance().add(END_LOTUS_LEAF, 30, 60);
-    FlammableBlockRegistry.getDefaultInstance().add(GLOWSHROOM_FUR, 60, 100);
   }
 
   public static class Material {

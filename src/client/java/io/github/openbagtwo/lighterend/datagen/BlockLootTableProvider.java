@@ -113,6 +113,12 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     addDrop(LighterEndBlocks.GLOWSHROOM_CAP);
     addDrop(LighterEndBlocks.GLOWSHROOM_HYMENOPHORE);
     addDrop(LighterEndBlocks.GLOWSHROOM_SAPLING);
+    addDrop(LighterEndBlocks.AGAVE, LighterEndBlocks.AGAVE_SEED);
+    addDrop(LighterEndBlocks.AGAVE_BULB);
+    addDrop(
+        LighterEndBlocks.AGAVE_FUR,
+        (block -> this.dropsWithSilkTouchOrShears(LighterEndItems.AGAVE_FUR))
+    );
   }
 
   private LootTable.Builder auroraCrystalDrops() {

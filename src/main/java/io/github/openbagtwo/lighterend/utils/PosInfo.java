@@ -35,6 +35,14 @@ public class PosInfo implements Comparable<PosInfo> {
     return length;
   }
 
+  public static int upRay(WorldAccess world, BlockPos pos, int maxDist) {
+    int length = 0;
+    for (int j = 1; j < maxDist && (world.isAir(pos.up(j))); j++) {
+      length++;
+    }
+    return length;
+  }
+
   public BlockState getState() {
     return state;
   }

@@ -69,7 +69,13 @@ public class LighterEndItems {
   public static final Item GLOWSHROOM_FUR = register(
       "mossy_glowshroom_fur",
       settings -> new Fur(LighterEndBlocks.GLOWSHROOM_FUR, settings),
-      new Settings());
+      new Settings()
+  );
+  public static final Item AGAVE_FUR = register(
+      "blue_vine_fur",
+      settings -> new Fur(LighterEndBlocks.AGAVE_FUR, settings),
+      new Settings()
+  );
 
   public static Item register(String name) {
     return register(name, new Settings());

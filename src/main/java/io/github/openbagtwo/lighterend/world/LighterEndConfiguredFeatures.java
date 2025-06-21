@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.world;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.blocks.Agave.AgaveFeature;
 import io.github.openbagtwo.lighterend.blocks.EndLily.EndLilyFeature;
 import io.github.openbagtwo.lighterend.blocks.EndLotus.EndLotusFeature;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
@@ -118,8 +119,14 @@ public class LighterEndConfiguredFeatures {
       Registries.FEATURE,
       LighterEnd.of("glowshroom"),
       new Glowshroom());
-  public static final RegistryKey<ConfiguredFeature<?, ?>> GLOWSHROOM = of(
-      "glowshroom");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> GLOWSHROOM = of("glowshroom");
+
+  public static final Feature<DefaultFeatureConfig> AGAVE_FEATURE = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("agave"),
+      new AgaveFeature()
+  );
+  public static final RegistryKey<ConfiguredFeature<?, ?>> AGAVE = of("agave");
 
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
@@ -184,6 +191,7 @@ public class LighterEndConfiguredFeatures {
     ConfiguredFeatures.register(context, UMRBALITH_ARCH, ARCH_FEATURE);
     ConfiguredFeatures.register(context, UMRBALITH_ARCH_THIN, THIN_ARCH_FEATURE);
     ConfiguredFeatures.register(context, GLOWSHROOM, GLOWSHROOM_FEATURE);
+    ConfiguredFeatures.register(context, AGAVE, AGAVE_FEATURE);
   }
 
   public static void initialize() {

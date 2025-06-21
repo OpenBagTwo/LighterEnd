@@ -75,6 +75,11 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndBlocks.GLOWSHROOM_SAPLING,
         CrossType.EMISSIVE_NOT_TINTED
     );
+
+    blockModelGenerator.registerTintableCrossBlockState(
+        LighterEndBlocks.AGAVE_SEED,
+        CrossType.NOT_TINTED
+    );
   }
 
   public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator,
@@ -128,6 +133,7 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndItems.END_LILY_LEAF,
         LighterEndItems.DRIED_END_LILY_LEAF,
         LighterEndItems.GLOWSHROOM_FUR,
+        LighterEndItems.AGAVE_FUR,
         LighterEndMusicDiscs.ENDSEEKER,
         LighterEndMusicDiscs.EO_DRACONA,
         LighterEndMusicDiscs.GRASPING_AT_STARS,
@@ -153,6 +159,8 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndBlocks.GLOWSHROOM.ladder.asItem(),
         LighterEndBlocks.GLOWSHROOM_HYMENOPHORE.asItem(),
         LighterEndBlocks.GLOWSHROOM_SAPLING.asItem(),
+        LighterEndBlocks.AGAVE_SEED.asItem(),
+        LighterEndBlocks.AGAVE_BULB.asItem(),
         LighterEndMobs.SILK_MOTH.spawnEgg,
         LighterEndMobs.DRAGONFLY.spawnEgg,
         LighterEndMobs.END_FISH.spawnEgg,

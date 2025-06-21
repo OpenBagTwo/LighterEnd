@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "shape=bottom": {
+      "model": "lighterend:block/blue_vine_roots"
+    },
+    "shape=middle": {
+      "model": "lighterend:block/blue_vine"
+    },
+    "shape=top": {
+      "model": "lighterend:block/blue_vine_top"
+    }
+  }
+}

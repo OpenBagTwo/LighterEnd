@@ -1,0 +1,6 @@
+{
+  "parent": "lighterend:block/cube_noshade",
+  "textures": {
+    "texture": "lighterend:block/blue_vine_lantern"
+  }
+}

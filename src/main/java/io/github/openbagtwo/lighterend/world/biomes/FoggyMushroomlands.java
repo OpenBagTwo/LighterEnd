@@ -40,6 +40,7 @@ public class FoggyMushroomlands {
         .feature(Feature.SURFACE_STRUCTURES, EndPlacedFeatures.END_GATEWAY_RETURN)
         .feature(Feature.SURFACE_STRUCTURES, LighterEndPlacedFeatures.GLOWSHROOM)
         .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.END_MOSS_VEGETATION)
+        .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.AGAVE)
         .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.WATER_PLANTS)
         .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.END_LILY)
         .build();

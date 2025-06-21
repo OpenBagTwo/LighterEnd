@@ -34,7 +34,10 @@ public class CutoutRenderer {
         LighterEndBlocks.LOTUS.trapdoor,
         LighterEndBlocks.GLOWSHROOM.door,
         LighterEndBlocks.GLOWSHROOM.trapdoor,
-        LighterEndBlocks.GLOWSHROOM_SAPLING
+        LighterEndBlocks.GLOWSHROOM_SAPLING,
+        LighterEndBlocks.AGAVE,
+        LighterEndBlocks.AGAVE_FUR,
+        LighterEndBlocks.AGAVE_SEED
     );
   }
 

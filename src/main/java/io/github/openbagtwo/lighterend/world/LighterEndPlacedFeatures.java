@@ -29,6 +29,7 @@ public class LighterEndPlacedFeatures {
   public static final RegistryKey<PlacedFeature> UMBRALITH_ARCH = of("umbralith_arch");
   public static final RegistryKey<PlacedFeature> UMBRALITH_ARCH_THIN = of("umbralith_arch_thin");
   public static final RegistryKey<PlacedFeature> GLOWSHROOM = of("glowshroom");
+  public static final RegistryKey<PlacedFeature> AGAVE = of("agave");
 
 
   public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -153,6 +154,14 @@ public class LighterEndPlacedFeatures {
                 RarityFilterPlacementModifier.of(8),
                 LighterEndBlocks.GLOWSHROOM_SAPLING
             )
+        )
+    );
+    context.register(
+        AGAVE,
+        new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.AGAVE),
+            VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
+                PlacedFeatures.createCountExtraModifier(3, 0.5f, 2),
+                LighterEndBlocks.AGAVE_SEED)
         )
     );
   }

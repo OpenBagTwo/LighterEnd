@@ -1,0 +1,268 @@
+{
+  "__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
+  "elements": [
+    {
+      "__comment": "PlaneX1",
+      "faces": {
+        "east": {
+          "texture": "#texture",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#texture",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        2.375,
+        0,
+        2.25
+      ],
+      "rotation": {
+        "angle": 45,
+        "axis": "y",
+        "origin": [
+          2.375,
+          0,
+          2.25
+        ]
+      },
+      "shade": false,
+      "to": [
+        2.376,
+        16,
+        18.25
+      ]
+    },
+    {
+      "__comment": "PlaneX1",
+      "faces": {
+        "east": {
+          "texture": "#texture",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#texture",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        13.75,
+        0,
+        2.25
+      ],
+      "rotation": {
+        "angle": -45,
+        "axis": "y",
+        "origin": [
+          13.75,
+          0,
+          2.25
+        ]
+      },
+      "shade": false,
+      "to": [
+        13.751,
+        16,
+        18.25
+      ]
+    },
+    {
+      "__comment": "PlaneX4",
+      "faces": {
+        "east": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            16,
+            16,
+            0
+          ]
+        },
+        "west": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            16,
+            16,
+            0
+          ]
+        }
+      },
+      "from": [
+        5,
+        0,
+        0.5
+      ],
+      "rotation": {
+        "angle": 22.5,
+        "axis": "y",
+        "origin": [
+          5,
+          0,
+          0.5
+        ]
+      },
+      "shade": false,
+      "to": [
+        5.001,
+        16,
+        16.5
+      ]
+    },
+    {
+      "__comment": "PlaneZ5",
+      "faces": {
+        "north": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            16,
+            16,
+            0
+          ]
+        },
+        "south": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            16,
+            16,
+            0
+          ]
+        }
+      },
+      "from": [
+        0.5,
+        0,
+        11
+      ],
+      "rotation": {
+        "angle": 22.5,
+        "axis": "y",
+        "origin": [
+          0.5,
+          0,
+          11
+        ]
+      },
+      "shade": false,
+      "to": [
+        16.5,
+        16,
+        11.001
+      ]
+    },
+    {
+      "__comment": "PlaneX4",
+      "faces": {
+        "east": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            16,
+            16,
+            0
+          ]
+        },
+        "west": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            16,
+            16,
+            0
+          ]
+        }
+      },
+      "from": [
+        11,
+        0,
+        0.5
+      ],
+      "rotation": {
+        "angle": -22.5,
+        "axis": "y",
+        "origin": [
+          11,
+          0,
+          0.5
+        ]
+      },
+      "shade": false,
+      "to": [
+        11.001,
+        16,
+        16.5
+      ]
+    },
+    {
+      "__comment": "PlaneZ5",
+      "faces": {
+        "north": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            16,
+            16,
+            0
+          ]
+        },
+        "south": {
+          "texture": "#roots",
+          "uv": [
+            0,
+            16,
+            16,
+            0
+          ]
+        }
+      },
+      "from": [
+        0.5,
+        0,
+        5
+      ],
+      "rotation": {
+        "angle": -22.5,
+        "axis": "y",
+        "origin": [
+          0.5,
+          0,
+          5
+        ]
+      },
+      "shade": false,
+      "to": [
+        16.5,
+        16,
+        5.001
+      ]
+    }
+  ],
+  "textures": {
+    "particle": "lighterend:block/blue_vine",
+    "roots": "lighterend:block/blue_vine_roots",
+    "texture": "lighterend:block/blue_vine"
+  }
+}

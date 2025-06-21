@@ -31,7 +31,7 @@
     "category": "ambient",
     "sounds": [
       {
-        "name": "betterend:ambient/foggy_mushroomland",
+        "name": "lighterend:ambient/foggy_mushroomland",
         "stream": true
       }
     ]
@@ -340,22 +340,22 @@
     "category": "music",
     "sounds": [
       {
-        "name": "betterend:music/dan_henig-eternal_garden",
+        "name": "lighterend:music/dan_henig-eternal_garden",
         "stream": true,
         "volume": 0.2
       },
       {
-        "name": "betterend:music/dan_henig-nebular_focus",
+        "name": "lighterend:music/dan_henig-nebular_focus",
         "stream": true,
         "volume": 0.2
       },
       {
-        "name": "betterend:music/bobby_richards-two_moons",
+        "name": "lighterend:music/bobby_richards-two_moons",
         "stream": true,
         "volume": 0.2
       },
       {
-        "name": "betterend:music/astron-peaceful_mind",
+        "name": "lighterend:music/astron-peaceful_mind",
         "stream": true,
         "volume": 0.2
       }

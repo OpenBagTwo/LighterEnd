@@ -130,14 +130,18 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     );
     valueLookupBuilder(BlockTags.LEAVES).add(
         LighterEndBlocks.TENANEA_LEAVES,
-        LighterEndBlocks.GLOWSHROOM_FUR
+        LighterEndBlocks.GLOWSHROOM_FUR,
+        LighterEndBlocks.AGAVE_FUR
     );
 
     valueLookupBuilder(BlockTags.AXE_MINEABLE).add(
         LighterEndBlocks.UMBRELLA_TREE_CLUSTER,
         LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY,
         LighterEndBlocks.GLOWSHROOM_CAP,
-        LighterEndBlocks.GLOWSHROOM_HYMENOPHORE
+        LighterEndBlocks.GLOWSHROOM_HYMENOPHORE,
+        LighterEndBlocks.END_LOTUS_STEM,
+        LighterEndBlocks.AGAVE,
+        LighterEndBlocks.AGAVE_BULB
     );
 
     valueLookupBuilder(LighterEndTags.END_MOSS_REPLACEABLE)

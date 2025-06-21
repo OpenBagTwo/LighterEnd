@@ -10,6 +10,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.utils.Flags;
 import io.github.openbagtwo.lighterend.utils.GlobalState;
+import io.github.openbagtwo.lighterend.utils.PosInfo;
 import java.util.List;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -67,7 +68,6 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
@@ -327,7 +327,7 @@ public class SilkMothNest extends BlockWithEntity {
       final BlockPos center = generator.getOrigin();
       final StructureWorldAccess world = generator.getWorld();
       int maxY = world.getTopY(Heightmap.Type.WORLD_SURFACE, center.getX(), center.getZ());
-      int minY = upRay(world, new BlockPos(center.getX(), 0, center.getZ()), maxY);
+      int minY = PosInfo.upRay(world, new BlockPos(center.getX(), 0, center.getZ()), maxY);
       POS.set(center);
       for (int y = maxY; y > minY; y--) {
         POS.setY(y);
@@ -358,14 +358,5 @@ public class SilkMothNest extends BlockWithEntity {
       }
       return false;
     }
-  }
-
-  // Utils (TODO: Refactor as needed)
-  public static int upRay(WorldAccess world, BlockPos pos, int maxDist) {
-    int length = 0;
-    for (int j = 1; j < maxDist && (world.isAir(pos.up(j))); j++) {
-      length++;
-    }
-    return length;
   }
 }
