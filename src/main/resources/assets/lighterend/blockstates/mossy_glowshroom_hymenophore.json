@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "lighterend:block/mossy_glowshroom_hymenophore_1"
+      },
+      {
+        "model": "lighterend:block/mossy_glowshroom_hymenophore_2"
+      },
+      {
+        "model": "lighterend:block/mossy_glowshroom_hymenophore_3"
+      },
+      {
+        "model": "lighterend:block/mossy_glowshroom_hymenophore_4"
+      }
+    ]
+  }
+}

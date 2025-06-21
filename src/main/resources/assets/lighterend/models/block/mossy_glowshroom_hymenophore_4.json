@@ -1,0 +1,6 @@
+{
+  "parent": "lighterend:block/cube_noshade",
+  "textures": {
+    "texture": "lighterend:block/mossy_glowshroom_hymenophore_4"
+  }
+}

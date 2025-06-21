@@ -1,0 +1,70 @@
+{
+  "variants": {
+    "axis=x": [
+      {
+        "model": "lighterend:block/mossy_glowshroom_stripped_log",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "lighterend:block/mossy_glowshroom_stripped_log_2",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "lighterend:block/mossy_glowshroom_stripped_log_3",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "lighterend:block/mossy_glowshroom_stripped_log_4",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "lighterend:block/mossy_glowshroom_stripped_log_5",
+        "x": 90,
+        "y": 90
+      }
+    ],
+    "axis=y": [
+      {
+        "model": "lighterend:block/mossy_glowshroom_stripped_log"
+      },
+      {
+        "model": "lighterend:block/mossy_glowshroom_stripped_log_2"
+      },
+      {
+        "model": "lighterend:block/mossy_glowshroom_stripped_log_3"
+      },
+      {
+        "model": "lighterend:block/mossy_glowshroom_stripped_log_4"
+      },
+      {
+        "model": "lighterend:block/mossy_glowshroom_stripped_log_5"
+      }
+    ],
+    "axis=z": [
+      {
+        "model": "lighterend:block/mossy_glowshroom_stripped_log",
+        "x": 90
+      },
+      {
+        "model": "lighterend:block/mossy_glowshroom_stripped_log_2",
+        "x": 90
+      },
+      {
+        "model": "lighterend:block/mossy_glowshroom_stripped_log_3",
+        "x": 90
+      },
+      {
+        "model": "lighterend:block/mossy_glowshroom_stripped_log_4",
+        "x": 90
+      },
+      {
+        "model": "lighterend:block/mossy_glowshroom_stripped_log_5",
+        "x": 90
+      }
+    ]
+  }
+}

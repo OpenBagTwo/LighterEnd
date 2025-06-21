@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "lighterend:block/mossy_glowshroom_stripped_log_side_5"
+  }
+}

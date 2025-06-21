@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "lighterend:block/mossy_glowshroom_fur",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "lighterend:block/mossy_glowshroom_fur",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "lighterend:block/mossy_glowshroom_fur",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "lighterend:block/mossy_glowshroom_fur",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "lighterend:block/mossy_glowshroom_fur"
+    },
+    "facing=west": {
+      "model": "lighterend:block/mossy_glowshroom_fur",
+      "x": 90,
+      "y": 270
+    }
+  }
+}
