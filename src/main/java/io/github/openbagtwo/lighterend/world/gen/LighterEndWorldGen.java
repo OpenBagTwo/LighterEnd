@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.world.gen;
 
 import static net.minecraft.world.gen.surfacebuilder.MaterialRules.STONE_DEPTH_FLOOR;
+import static net.minecraft.world.gen.surfacebuilder.MaterialRules.STONE_DEPTH_FLOOR_WITH_SURFACE_DEPTH_RANGE_30;
 import static net.minecraft.world.gen.surfacebuilder.MaterialRules.biome;
 import static net.minecraft.world.gen.surfacebuilder.MaterialRules.block;
 import static net.minecraft.world.gen.surfacebuilder.MaterialRules.condition;
@@ -127,7 +128,12 @@ public class LighterEndWorldGen {
                             block(LighterEndBlocks.END_MOSS.getDefaultState())
                         )
                     )
-                ),
+                )
+            )
+        ),
+        condition(
+            STONE_DEPTH_FLOOR_WITH_SURFACE_DEPTH_RANGE_30,
+            sequence(
                 condition(
                     biome(
                         LighterEndBiomes.UMBRA_VALLEY
