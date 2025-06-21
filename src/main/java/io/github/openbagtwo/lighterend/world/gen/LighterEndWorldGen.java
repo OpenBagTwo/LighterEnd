@@ -71,6 +71,15 @@ public class LighterEndWorldGen {
             ), context.getOrThrow(LighterEndBiomes.UMBRA_VALLEY)),
             Pair.of(MultiNoiseUtil.createNoiseHypercube(
                 MultiNoiseUtil.ParameterRange.of(-1, 1),
+                MultiNoiseUtil.ParameterRange.of(0.5F, 1),
+                MultiNoiseUtil.ParameterRange.of(0.5F, 1),
+                MultiNoiseUtil.ParameterRange.of(0, 0.5F),
+                MultiNoiseUtil.ParameterRange.of(0),
+                MultiNoiseUtil.ParameterRange.of(-1F, 1F),
+                0.2F
+            ), context.getOrThrow(LighterEndBiomes.FOGGY_MUSHROOMLANDS)),
+            Pair.of(MultiNoiseUtil.createNoiseHypercube(
+                MultiNoiseUtil.ParameterRange.of(-1, 1),
                 MultiNoiseUtil.ParameterRange.of(-1, 1),
                 MultiNoiseUtil.ParameterRange.of(-1, 1),
                 MultiNoiseUtil.ParameterRange.of(0.5F, 1),
@@ -97,6 +106,8 @@ public class LighterEndWorldGen {
 
       TheEndBiomes.addHighlandsBiome(LighterEndBiomes.BLOSSOM_FOREST, 1.0);
 
+      TheEndBiomes.addHighlandsBiome(LighterEndBiomes.FOGGY_MUSHROOMLANDS, 0.5);
+
       TheEndBiomes.addHighlandsBiome(LighterEndBiomes.UMBRELLA_JUNGLE, 1.0);
       TheEndBiomes.addMidlandsBiome(LighterEndBiomes.UMBRELLA_JUNGLE,
           LighterEndBiomes.UMBRELLA_JUNGLE, 1.0);
@@ -120,7 +131,8 @@ public class LighterEndWorldGen {
                     biome(
                         LighterEndBiomes.BLOSSOM_FOREST,
                         LighterEndBiomes.UMBRELLA_JUNGLE,
-                        LighterEndBiomes.GLOWING_GRASSLAND
+                        LighterEndBiomes.GLOWING_GRASSLAND,
+                        LighterEndBiomes.FOGGY_MUSHROOMLANDS
                     ),
                     sequence(
                         condition(

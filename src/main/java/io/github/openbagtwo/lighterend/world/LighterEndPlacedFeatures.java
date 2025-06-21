@@ -150,7 +150,7 @@ public class LighterEndPlacedFeatures {
         GLOWSHROOM,
         new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.GLOWSHROOM),
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
-                RarityFilterPlacementModifier.of(5),
+                RarityFilterPlacementModifier.of(8),
                 LighterEndBlocks.GLOWSHROOM_SAPLING
             )
         )

@@ -27,13 +27,15 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
         LighterEndBiomes.UMBRELLA_JUNGLE,
         LighterEndBiomes.GLOWING_GRASSLAND,
         LighterEndBiomes.MEGALAKE,
-        LighterEndBiomes.UMBRA_VALLEY
+        LighterEndBiomes.UMBRA_VALLEY,
+        LighterEndBiomes.FOGGY_MUSHROOMLANDS
     );
     builder(BiomeTags.END_CITY_HAS_STRUCTURE).add(
         LighterEndBiomes.BLOSSOM_FOREST,
         LighterEndBiomes.UMBRELLA_JUNGLE,
         LighterEndBiomes.GLOWING_GRASSLAND,
-        LighterEndBiomes.UMBRA_VALLEY
+        LighterEndBiomes.UMBRA_VALLEY,
+        LighterEndBiomes.FOGGY_MUSHROOMLANDS
     );
 
     builder(LighterEndTags.VANILLA_END_BIOMES).add(
@@ -48,7 +50,8 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
     );
     builder(LighterEndTags.HAS_END_LAKES).add(
         LighterEndBiomes.UMBRELLA_JUNGLE,
-        LighterEndBiomes.GLOWING_GRASSLAND
+        LighterEndBiomes.GLOWING_GRASSLAND,
+        LighterEndBiomes.FOGGY_MUSHROOMLANDS
     );
   }
 }

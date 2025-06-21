@@ -26,6 +26,8 @@ public class LighterEndClient implements ClientModInitializer {
         .register(LighterEndParticles.TENANEA_PETAL, TenaneaPetal.Factory::new);
     ParticleFactoryRegistry.getInstance()
         .register(LighterEndParticles.AMBER_SPHERE, GlowingSphere.Factory::new);
+    ParticleFactoryRegistry.getInstance()
+        .register(LighterEndParticles.GLOWING_SPHERE, GlowingSphere.Factory::new);
     SignRenderer.initialize();
     EntityModels.initialize();
   }

@@ -27,6 +27,15 @@
       }
     ]
   },
+  "ambient.mushroomlands.loop": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "betterend:ambient/foggy_mushroomland",
+        "stream": true
+      }
+    ]
+  },
   "ambient.umbra_valley.loop": {
     "category": "ambient",
     "sounds": [
@@ -322,6 +331,31 @@
       },
       {
         "name": "lighterend:music/benjamin_martins-verve",
+        "stream": true,
+        "volume": 0.2
+      }
+    ]
+  },
+  "music.mushroomlands": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "betterend:music/dan_henig-eternal_garden",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "betterend:music/dan_henig-nebular_focus",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "betterend:music/bobby_richards-two_moons",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "betterend:music/astron-peaceful_mind",
         "stream": true,
         "volume": 0.2
       }
