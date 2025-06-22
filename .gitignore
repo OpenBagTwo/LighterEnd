@@ -47,3 +47,6 @@ Nullscape-Lightened
 
 # blockbench
 *.bbmodel
+
+# GIMP
+*.xcf
