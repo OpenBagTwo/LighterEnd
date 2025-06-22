@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.registry.tag.ItemTags;
@@ -74,7 +75,25 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
         LighterEndEquipment.SILK_ELYTRA
     );  // this makes silk elytra trimmable
 
+    valueLookupBuilder(ItemTags.GAZE_DISGUISE_EQUIPMENT).addTag(LighterEndTags.FURS);
+
     valueLookupBuilder(LighterEndTags.REPAIRS_SILK_ARMOR).add(LighterEndItems.SILK);
+
+    valueLookupBuilder(LighterEndTags.FLETCHINGS).add(
+        Items.FEATHER,
+        LighterEndBlocks.CHARNIA_CYAN.asItem(),
+        LighterEndBlocks.CHARNIA_GREEN.asItem(),
+        LighterEndBlocks.CHARNIA_LIGHT_BLUE.asItem(),
+        LighterEndBlocks.CHARNIA_ORANGE.asItem(),
+        LighterEndBlocks.CHARNIA_PURPLE.asItem(),
+        LighterEndBlocks.CHARNIA_RED.asItem()
+    );
+    valueLookupBuilder(LighterEndTags.FLETCHINGS).addTag(LighterEndTags.FURS);
+
+    valueLookupBuilder(LighterEndTags.FURS).add(
+        LighterEndItems.GLOWSHROOM_FUR,
+        LighterEndItems.AGAVE_FUR
+    );
   }
 
 

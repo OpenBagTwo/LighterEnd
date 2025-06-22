@@ -12,6 +12,7 @@
     "ChunkGeneratorSettingsAccessor",
     "EndFishingMixin",
     "EndMossSplootMixin",
+    "EndVeilMixin",
     "GlideDecayMixin",
     "GravityEffectsMixin",
     "GravityStrengthMixin",

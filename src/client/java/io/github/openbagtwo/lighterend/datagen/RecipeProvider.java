@@ -6,6 +6,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
 import io.github.openbagtwo.lighterend.registries.LighterEndEquipment;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
+import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -236,13 +237,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             .pattern("Y")
             .input('X', LighterEndItems.GLOW_BARB)
             .input('#', Items.STICK)
-            .input('Y', Ingredient.ofItems(
-                LighterEndBlocks.CHARNIA_CYAN,
-                LighterEndBlocks.CHARNIA_GREEN,
-                LighterEndBlocks.CHARNIA_LIGHT_BLUE,
-                LighterEndBlocks.CHARNIA_ORANGE,
-                LighterEndBlocks.CHARNIA_PURPLE,
-                LighterEndBlocks.CHARNIA_RED)
+            .input('Y', LighterEndTags.FLETCHINGS
             ).criterion(
                 hasItem(LighterEndItems.GLOW_BARB),
                 conditionsFromItem(LighterEndItems.GLOW_BARB)

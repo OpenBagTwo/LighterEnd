@@ -45,6 +45,16 @@ public class LighterEndTags {
       LighterEnd.of("repairs_silk_armor")
   );
 
+  public static final TagKey<Item> FLETCHINGS = TagKey.of(
+      RegistryKeys.ITEM,
+      LighterEnd.of("fletchings")
+  );
+
+  public static final TagKey<Item> FURS = TagKey.of(
+      RegistryKeys.ITEM,
+      LighterEnd.of("furs")
+  );
+
   public static final TagKey<EntityType<?>> MOTH_NEST_INHABITORS = TagKey.of(
       RegistryKeys.ENTITY_TYPE,
       LighterEnd.of("lives_in_moth_nests")

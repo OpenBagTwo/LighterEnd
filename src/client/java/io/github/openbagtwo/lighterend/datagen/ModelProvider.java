@@ -134,6 +134,7 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndItems.DRIED_END_LILY_LEAF,
         LighterEndItems.GLOWSHROOM_FUR,
         LighterEndItems.AGAVE_FUR,
+        LighterEndItems.END_CREAM,
         LighterEndMusicDiscs.ENDSEEKER,
         LighterEndMusicDiscs.EO_DRACONA,
         LighterEndMusicDiscs.GRASPING_AT_STARS,

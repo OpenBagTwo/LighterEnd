@@ -4,6 +4,8 @@ import io.github.openbagtwo.lighterend.Items.ItemGroups;
 import io.github.openbagtwo.lighterend.config.Config;
 import io.github.openbagtwo.lighterend.misc.Composting;
 import io.github.openbagtwo.lighterend.misc.Fire;
+import io.github.openbagtwo.lighterend.misc.LighterEndPotions;
+import io.github.openbagtwo.lighterend.misc.StatusEffects;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndData;
@@ -51,6 +53,8 @@ public class LighterEnd implements ModInitializer {
     LighterEndEquipment.initialize();
     Composting.initialize();
     Fire.initalize();
+    StatusEffects.initialize();
+    LighterEndPotions.initialize();
     ItemGroups.initialize();
     LighterEndTags.initialize();
     LighterEndLootTables.initialize();
