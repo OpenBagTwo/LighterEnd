@@ -70,13 +70,13 @@ public class LighterEndWorldGen {
                 0.01F
             ), context.getOrThrow(LighterEndBiomes.UMBRA_VALLEY)),
             Pair.of(MultiNoiseUtil.createNoiseHypercube(
-                MultiNoiseUtil.ParameterRange.of(-1, 1),
+                MultiNoiseUtil.ParameterRange.of(-0.5F, 0.2F),
                 MultiNoiseUtil.ParameterRange.of(0.5F, 1),
                 MultiNoiseUtil.ParameterRange.of(0.5F, 1),
                 MultiNoiseUtil.ParameterRange.of(0, 0.5F),
                 MultiNoiseUtil.ParameterRange.of(0),
                 MultiNoiseUtil.ParameterRange.of(-1F, 1F),
-                0.2F
+                0.4F
             ), context.getOrThrow(LighterEndBiomes.FOGGY_MUSHROOMLANDS)),
             Pair.of(MultiNoiseUtil.createNoiseHypercube(
                 MultiNoiseUtil.ParameterRange.of(-1, 1),
