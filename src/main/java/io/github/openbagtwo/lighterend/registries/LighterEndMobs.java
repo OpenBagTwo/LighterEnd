@@ -5,6 +5,7 @@ import io.github.openbagtwo.lighterend.mobs.Cubozoa;
 import io.github.openbagtwo.lighterend.mobs.Dragonfly;
 import io.github.openbagtwo.lighterend.mobs.EndFish;
 import io.github.openbagtwo.lighterend.mobs.EndSlime;
+import io.github.openbagtwo.lighterend.mobs.GlossyMooshroom;
 import io.github.openbagtwo.lighterend.mobs.SilkMoth;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.block.Blocks;
@@ -17,6 +18,7 @@ import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.entity.mob.WaterCreatureEntity;
+import net.minecraft.entity.passive.AbstractCowEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.item.SpawnEggItem;
@@ -47,10 +49,20 @@ public class LighterEndMobs {
   public static final LighterEndMob<Cubozoa> CUBOZOA = new LighterEndMob<>("cubozoa",
       EntityType.Builder.create(Cubozoa::new, SpawnGroup.WATER_AMBIENT).dimensions(
           0.6F, 1.0F).eyeHeight(0.5F).maxTrackingRange(4));
+
   public static final LighterEndMob<EndSlime> END_SLIME = new LighterEndMob<>(
       "end_slime",
       EntityType.Builder.create(EndSlime::new, SpawnGroup.MONSTER).dimensions(0.5F, 0.5F)
           .eyeHeight(0.325F).spawnBoxScale(4.0F).maxTrackingRange(10)
+  );
+
+  public static final LighterEndMob<GlossyMooshroom> MOOSHROOM = new LighterEndMob<>(
+      "glossy_mooshroom",
+      EntityType.Builder.create(GlossyMooshroom::new, SpawnGroup.CREATURE)
+          .dimensions(0.9F, 1.4F)
+          .eyeHeight(1.3F)
+          .passengerAttachments(1.36875F)
+          .maxTrackingRange(10)
   );
 
   public static class LighterEndMob<T extends Entity> {
@@ -78,6 +90,7 @@ public class LighterEndMobs {
     FabricDefaultAttributeRegistry.register(END_FISH.mob, EndFish.createAttributes());
     FabricDefaultAttributeRegistry.register(CUBOZOA.mob, Cubozoa.createAttributes());
     FabricDefaultAttributeRegistry.register(END_SLIME.mob, EndSlime.createAttributes());
+    FabricDefaultAttributeRegistry.register(MOOSHROOM.mob, AbstractCowEntity.createCowAttributes());
 
     SpawnRestriction.register(
         END_FISH.mob,
@@ -97,6 +110,12 @@ public class LighterEndMobs {
         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
         LighterEndMobs::canSlimeSpawn
     );
+    SpawnRestriction.register(
+        MOOSHROOM.mob,
+        SpawnLocationTypes.ON_GROUND,
+        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+        LighterEndMobs::canPassiveSpawn
+    );
   }
 
   public static boolean canAquaticMobSpawn(EntityType<? extends WaterCreatureEntity> type,
@@ -113,6 +132,13 @@ public class LighterEndMobs {
       return false;
     }
     return random.nextInt(4) == 0;
+  }
+
+  public static boolean canPassiveSpawn(
+      EntityType<? extends Entity> type,
+      WorldAccess world, SpawnReason reason, BlockPos pos, Random random
+  ) {
+    return true;
   }
 
 }

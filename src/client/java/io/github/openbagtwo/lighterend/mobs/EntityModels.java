@@ -10,6 +10,7 @@ import io.github.openbagtwo.lighterend.mobs.renderers.CubozoaRenderer;
 import io.github.openbagtwo.lighterend.mobs.renderers.DragonflyRenderer;
 import io.github.openbagtwo.lighterend.mobs.renderers.EndFishRenderer;
 import io.github.openbagtwo.lighterend.mobs.renderers.EndSlimeRenderer;
+import io.github.openbagtwo.lighterend.mobs.renderers.GlossyMooshroomRenderer;
 import io.github.openbagtwo.lighterend.mobs.renderers.SilkMothRenderer;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import java.util.function.Function;
@@ -17,6 +18,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.render.entity.EntityRendererFactory.Context;
 import net.minecraft.client.render.entity.MobEntityRenderer;
+import net.minecraft.client.render.entity.model.CowEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.entity.EntityType;
 
@@ -29,6 +31,8 @@ public class EntityModels {
   public static final EntityModelLayer CUBOZOA_MODEL = makeLayer("cubozoa");
   public static final EntityModelLayer END_SLIME_MODEL = makeLayer("end_slime");
   public static final EntityModelLayer END_SLIME_SHELL_MODEL = makeLayer("end_slime_shell");
+
+  public static final EntityModelLayer MOOSHROOM_MODEL = makeLayer("mooshroom");
 
   public static void initialize() {
     EntityModelLayerRegistry.registerModelLayer(EntityModels.SILK_MOTH_MODEL,
@@ -57,6 +61,10 @@ public class EntityModels {
         EndSlimeModel::getOuterTexturedModelData
     );
     register(LighterEndMobs.END_SLIME.mob, EndSlimeRenderer::new);
+
+    EntityModelLayerRegistry.registerModelLayer(EntityModels.MOOSHROOM_MODEL,
+        CowEntityModel::getTexturedModelData);
+    register(LighterEndMobs.MOOSHROOM.mob, GlossyMooshroomRenderer::new);
   }
 
   private static void register(EntityType<?> type, Function<Context, MobEntityRenderer> renderer) {
