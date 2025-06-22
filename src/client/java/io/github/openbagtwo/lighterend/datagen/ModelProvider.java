@@ -164,7 +164,8 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndMobs.SILK_MOTH.spawnEgg,
         LighterEndMobs.DRAGONFLY.spawnEgg,
         LighterEndMobs.END_FISH.spawnEgg,
-        LighterEndMobs.CUBOZOA.spawnEgg
+        LighterEndMobs.CUBOZOA.spawnEgg,
+        LighterEndMobs.END_SLIME.spawnEgg
     )) {
       itemModelGenerator.register(
           item, Models.GENERATED

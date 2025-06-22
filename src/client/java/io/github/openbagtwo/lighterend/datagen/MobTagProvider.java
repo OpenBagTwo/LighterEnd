@@ -29,6 +29,19 @@ public class MobTagProvider extends FabricTagProvider.EntityTypeTagProvider {
         LighterEndMobs.END_FISH.mob,
         LighterEndMobs.CUBOZOA.mob
     );
+
+    valueLookupBuilder(EntityTypeTags.FROG_FOOD).add(
+        LighterEndMobs.DRAGONFLY.mob,
+        LighterEndMobs.END_SLIME.mob
+    );
+
+    valueLookupBuilder(EntityTypeTags.IMMUNE_TO_OOZING).add(
+        LighterEndMobs.END_SLIME.mob
+    );
+
+    valueLookupBuilder(EntityTypeTags.NON_CONTROLLING_RIDER).add(
+        LighterEndMobs.END_SLIME.mob
+    );
     // I like the idea of these weird-looking fish scaring pufferfish
 //    valueLookupBuilder(EntityTypeTags.NOT_SCARY_FOR_PUFFERFISH).add(
 //        LighterEndMobs.END_FISH.mob,
@@ -37,5 +50,6 @@ public class MobTagProvider extends FabricTagProvider.EntityTypeTagProvider {
     valueLookupBuilder(LighterEndTags.MOTH_NEST_INHABITORS).add(
         LighterEndMobs.SILK_MOTH.mob
     );
+
   }
 }
