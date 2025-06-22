@@ -4,6 +4,7 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.mobs.Cubozoa;
 import io.github.openbagtwo.lighterend.mobs.Dragonfly;
 import io.github.openbagtwo.lighterend.mobs.EndFish;
+import io.github.openbagtwo.lighterend.mobs.EndSlime;
 import io.github.openbagtwo.lighterend.mobs.SilkMoth;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.block.Blocks;
@@ -14,6 +15,7 @@ import net.minecraft.entity.SpawnLocationTypes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
@@ -45,6 +47,11 @@ public class LighterEndMobs {
   public static final LighterEndMob<Cubozoa> CUBOZOA = new LighterEndMob<>("cubozoa",
       EntityType.Builder.create(Cubozoa::new, SpawnGroup.WATER_AMBIENT).dimensions(
           0.6F, 1.0F).eyeHeight(0.5F).maxTrackingRange(4));
+  public static final LighterEndMob<EndSlime> END_SLIME = new LighterEndMob<>(
+      "end_slime",
+      EntityType.Builder.create(EndSlime::new, SpawnGroup.MONSTER).dimensions(0.5F, 0.5F)
+          .eyeHeight(0.325F).spawnBoxScale(4.0F).maxTrackingRange(10)
+  );
 
   public static class LighterEndMob<T extends Entity> {
 
@@ -70,6 +77,7 @@ public class LighterEndMobs {
     FabricDefaultAttributeRegistry.register(DRAGONFLY.mob, Dragonfly.createAttributes());
     FabricDefaultAttributeRegistry.register(END_FISH.mob, EndFish.createAttributes());
     FabricDefaultAttributeRegistry.register(CUBOZOA.mob, Cubozoa.createAttributes());
+    FabricDefaultAttributeRegistry.register(END_SLIME.mob, EndSlime.createAttributes());
 
     SpawnRestriction.register(
         END_FISH.mob,
@@ -83,12 +91,28 @@ public class LighterEndMobs {
         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
         LighterEndMobs::canAquaticMobSpawn
     );
+    SpawnRestriction.register(
+        END_SLIME.mob,
+        SpawnLocationTypes.ON_GROUND,
+        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+        LighterEndMobs::canSlimeSpawn
+    );
   }
 
   public static boolean canAquaticMobSpawn(EntityType<? extends WaterCreatureEntity> type,
       WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
     return world.getFluidState(pos.down()).isIn(FluidTags.WATER)
         && world.getBlockState(pos.up()).isOf(Blocks.WATER);
+  }
+
+  public static boolean canSlimeSpawn(
+      EntityType<? extends SlimeEntity> type,
+      WorldAccess world, SpawnReason reason, BlockPos pos, Random random
+  ) {
+    if (!world.getBlockState(pos.down()).isIn(LighterEndTags.SLIME_SPAWNABLE)) {
+      return false;
+    }
+    return random.nextInt(4) == 0;
   }
 
 }

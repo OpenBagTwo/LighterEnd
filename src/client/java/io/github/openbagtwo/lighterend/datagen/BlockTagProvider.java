@@ -201,6 +201,8 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.CHARNIA_PURPLE,
             LighterEndBlocks.CHARNIA_RED
         );
+    valueLookupBuilder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_STONES);
+    valueLookupBuilder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_SOIL);
 
 
   }

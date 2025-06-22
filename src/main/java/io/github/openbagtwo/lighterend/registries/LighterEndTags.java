@@ -35,6 +35,11 @@ public class LighterEndTags {
       LighterEnd.of("end_vegetation_aquatic")
   );
 
+  public static final TagKey<Block> SLIME_SPAWNABLE = TagKey.of(
+      RegistryKeys.BLOCK,
+      LighterEnd.of("slime_spawnable")
+  );
+
   public static final TagKey<Item> REPAIRS_SILK_ARMOR = TagKey.of(
       RegistryKeys.ITEM,
       LighterEnd.of("repairs_silk_armor")

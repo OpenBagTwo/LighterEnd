@@ -30,11 +30,18 @@ public class FoggyMushroomlands {
         RegistryKeys.CONFIGURED_CARVER
     );
 
-    SpawnSettings spawns = new SpawnSettings.Builder().spawn(
-        SpawnGroup.AMBIENT,
-        1,
-        new SpawnEntry(LighterEndMobs.DRAGONFLY.mob, 1, 1)
-    ).build();
+    SpawnSettings spawns = new SpawnSettings.Builder()
+        .spawn(
+            SpawnGroup.AMBIENT,
+            1,
+            new SpawnEntry(LighterEndMobs.DRAGONFLY.mob, 1, 1)
+        )
+        .spawn(
+            SpawnGroup.MONSTER,
+            10,
+            new SpawnEntry(LighterEndMobs.END_SLIME.mob, 1, 2)
+        )
+        .build();
 
     GenerationSettings genSettings = new GenerationSettings.LookupBackedBuilder(features, carvers)
         .feature(Feature.SURFACE_STRUCTURES, EndPlacedFeatures.END_GATEWAY_RETURN)

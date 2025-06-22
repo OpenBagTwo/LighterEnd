@@ -4,10 +4,12 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.mobs.models.CubozoaModel;
 import io.github.openbagtwo.lighterend.mobs.models.DragonflyModel;
 import io.github.openbagtwo.lighterend.mobs.models.EndFishModel;
+import io.github.openbagtwo.lighterend.mobs.models.EndSlimeModel;
 import io.github.openbagtwo.lighterend.mobs.models.SilkMothModel;
 import io.github.openbagtwo.lighterend.mobs.renderers.CubozoaRenderer;
 import io.github.openbagtwo.lighterend.mobs.renderers.DragonflyRenderer;
 import io.github.openbagtwo.lighterend.mobs.renderers.EndFishRenderer;
+import io.github.openbagtwo.lighterend.mobs.renderers.EndSlimeRenderer;
 import io.github.openbagtwo.lighterend.mobs.renderers.SilkMothRenderer;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import java.util.function.Function;
@@ -25,6 +27,8 @@ public class EntityModels {
   public static final EntityModelLayer DRAGONFLY_MODEL = makeLayer("dragonfly");
   public static final EntityModelLayer END_FISH_MODEL = makeLayer("end_fish");
   public static final EntityModelLayer CUBOZOA_MODEL = makeLayer("cubozoa");
+  public static final EntityModelLayer END_SLIME_MODEL = makeLayer("end_slime");
+  public static final EntityModelLayer END_SLIME_SHELL_MODEL = makeLayer("end_slime_shell");
 
   public static void initialize() {
     EntityModelLayerRegistry.registerModelLayer(EntityModels.SILK_MOTH_MODEL,
@@ -45,6 +49,14 @@ public class EntityModels {
     EntityModelLayerRegistry.registerModelLayer(EntityModels.CUBOZOA_MODEL,
         CubozoaModel::getTexturedModelData);
     register(LighterEndMobs.CUBOZOA.mob, CubozoaRenderer::new);
+
+    EntityModelLayerRegistry.registerModelLayer(END_SLIME_MODEL,
+        EndSlimeModel::getInnerTexturedModelData);
+    EntityModelLayerRegistry.registerModelLayer(
+        END_SLIME_SHELL_MODEL,
+        EndSlimeModel::getOuterTexturedModelData
+    );
+    register(LighterEndMobs.END_SLIME.mob, EndSlimeRenderer::new);
   }
 
   private static void register(EntityType<?> type, Function<Context, MobEntityRenderer> renderer) {
