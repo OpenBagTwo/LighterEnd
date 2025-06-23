@@ -37,7 +37,8 @@ public class CutoutRenderer {
         LighterEndBlocks.GLOWSHROOM_SAPLING,
         LighterEndBlocks.AGAVE,
         LighterEndBlocks.AGAVE_FUR,
-        LighterEndBlocks.AGAVE_SEED
+        LighterEndBlocks.AGAVE_SEED,
+        LighterEndBlocks.AURANT_POLYPORE
     );
   }
 
