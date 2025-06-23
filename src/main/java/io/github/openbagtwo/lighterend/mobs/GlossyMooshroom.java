@@ -62,6 +62,15 @@ public class GlossyMooshroom extends AbstractCowEntity implements Shearable {
   }
 
   @Override
+  protected void mobTick(ServerWorld world) {
+    if (this.isSheared()) {
+      if (world.getRandom().nextInt(1024) == 0) {
+        this.setSheared(false);
+      }
+    }
+  }
+
+  @Override
   public boolean isBreedingItem(ItemStack stack) {
     return stack.isIn(LighterEndTags.MOOSHROOM_FOOD);
   }
