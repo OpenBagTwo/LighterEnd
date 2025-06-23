@@ -78,6 +78,7 @@ public class LighterEndItems {
   );
 
   public static final Item END_CREAM = register("end_cream");
+  public static final Item END_POWDER = register("end_powder");
 
   public static Item register(String name) {
     return register(name, new Settings());

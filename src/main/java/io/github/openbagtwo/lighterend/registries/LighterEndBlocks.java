@@ -12,6 +12,7 @@ import io.github.openbagtwo.lighterend.blocks.EndMoss;
 import io.github.openbagtwo.lighterend.blocks.Fur;
 import io.github.openbagtwo.lighterend.blocks.GlowshroomCap;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
+import io.github.openbagtwo.lighterend.blocks.Polypore;
 import io.github.openbagtwo.lighterend.blocks.Sapling;
 import io.github.openbagtwo.lighterend.blocks.Signs;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
@@ -169,6 +170,15 @@ public class LighterEndBlocks {
   );
   public static final Block AGAVE_SEED = register(
       "blue_vine_seed", settings -> new Sapling(Agave.AgaveFeature::new, settings)
+  );
+
+  public static final Block AURANT_POLYPORE = register(
+      "aurant_polypore",
+      settings -> new Polypore(settings, MapColor.DARK_CRIMSON, 13)
+  );
+  public static final Block PURPLE_POLYPORE = register(
+      "purple_polypore",
+      settings -> new Polypore(settings, MapColor.MAGENTA, 0)
   );
 
   public static Block register(String name, Function<Settings, Block> factory) {

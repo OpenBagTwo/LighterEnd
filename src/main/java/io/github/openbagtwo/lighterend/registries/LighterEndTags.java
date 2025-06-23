@@ -55,6 +55,16 @@ public class LighterEndTags {
       LighterEnd.of("furs")
   );
 
+  public static final TagKey<Item> POLYPORES = TagKey.of(
+      RegistryKeys.ITEM,
+      LighterEnd.of("polypores")
+  );
+
+  public static final TagKey<Item> MOOSHROOM_FOOD = TagKey.of(
+      RegistryKeys.ITEM,
+      LighterEnd.of("glossy_mooshroom_food")
+  );
+
   public static final TagKey<EntityType<?>> MOTH_NEST_INHABITORS = TagKey.of(
       RegistryKeys.ENTITY_TYPE,
       LighterEnd.of("lives_in_moth_nests")

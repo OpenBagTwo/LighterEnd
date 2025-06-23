@@ -20,7 +20,9 @@
   "entity.lighterend.dragonfly": "Dragonfly",
   "entity.lighterend.end_fish": "End Fish",
   "entity.lighterend.end_slime": "End Slime",
+  "entity.lighterend.glossy_mooshroom": "Glossy Mooshroom",
   "entity.lighterend.silk_moth": "Silk Moth",
+  "item.lighterend.aurant_polypore": "Aurant Polypore",
   "item.lighterend.aurora_crystal": "Aurora Crystal",
   "item.lighterend.aurora_crystal_shard": "Aurora Crystal Shard",
   "item.lighterend.azure_jadestone": "Azure Jadestone",
@@ -85,6 +87,7 @@
   "item.lighterend.end_lotus_trapdoor": "Lotus Wood Trapdoor",
   "item.lighterend.end_lotus_wood": "Lotus Wood",
   "item.lighterend.end_moss": "End Moss",
+  "item.lighterend.end_powder": "End Powder",
   "item.lighterend.end_slime_spawn_egg": "End Slime Spawn Egg",
   "item.lighterend.ender_block": "Ender Block",
   "item.lighterend.glow_barb": "Glow Barb",
@@ -122,6 +125,7 @@
   "item.lighterend.music_disc_grasping_at_stars.desc": "Firel - Grasping at Stars",
   "item.lighterend.music_disc_strange_and_alien": "Music Disc",
   "item.lighterend.music_disc_strange_and_alien.desc": "Firel - Strange and Alien",
+  "item.lighterend.purple_polypore": "Purple Polypore",
   "item.lighterend.sandy_jadestone": "Sandy Jadestone",
   "item.lighterend.sandy_jadestone_brick_slab": "Sandy Jadestone Brick Slab",
   "item.lighterend.sandy_jadestone_brick_stairs": "Sandy Jadestone Brick Stairs",
@@ -291,5 +295,7 @@
   "tag.block.lighterend.slime_spawnable": "Blocks that End Slimes can spawn on",
   "tag.item.lighterend.fletchings": "Items that can be used to craft the backs of arrows",
   "tag.item.lighterend.furs": "Fluffy outer plant leaves with some fun uses",
+  "tag.item.lighterend.glossy_mooshroom_food": "Can be fed to Glossy Mooshrooms",
+  "tag.item.lighterend.polypores": "LighterEnd bark-dwelling mushrooms that can be brewed into awkward potions",
   "tag.item.lighterend.repairs_silk_armor": "Items that can repair silk elytra"
 }

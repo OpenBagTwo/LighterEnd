@@ -77,6 +77,8 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
     valueLookupBuilder(ItemTags.GAZE_DISGUISE_EQUIPMENT).addTag(LighterEndTags.FURS);
 
+    valueLookupBuilder(ItemTags.BREWING_FUEL).add(LighterEndItems.END_POWDER);
+
     valueLookupBuilder(LighterEndTags.REPAIRS_SILK_ARMOR).add(LighterEndItems.SILK);
 
     valueLookupBuilder(LighterEndTags.FLETCHINGS).add(
@@ -93,6 +95,15 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
     valueLookupBuilder(LighterEndTags.FURS).add(
         LighterEndItems.GLOWSHROOM_FUR,
         LighterEndItems.AGAVE_FUR
+    );
+
+    valueLookupBuilder(LighterEndTags.POLYPORES).add(
+        LighterEndBlocks.AURANT_POLYPORE.asItem(),
+        LighterEndBlocks.PURPLE_POLYPORE.asItem()
+    );
+
+    valueLookupBuilder(LighterEndTags.MOOSHROOM_FOOD).add(
+        LighterEndItems.LUMECORN_EAR
     );
   }
 

@@ -211,7 +211,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                 exporter,
                 RegistryKey.of(
                     RegistryKeys.RECIPE,
-                    LighterEnd.of("slime_balls_from_smeling_membranes")
+                    LighterEnd.of("slime_balls_from_smelting_membranes")
                 )
             );
 
@@ -274,6 +274,19 @@ public class RecipeProvider extends FabricRecipeProvider {
         );
 
         generateWoodRecipes(LighterEndBlocks.GLOWSHROOM);
+
+        CookingRecipeJsonBuilder.createSmelting(
+                Ingredient.ofItem(LighterEndItems.END_CREAM), RecipeCategory.BREWING,
+                LighterEndItems.END_POWDER, 0.1F, 200)
+            .criterion(hasItem(LighterEndBlocks.UMBRELLA_MEMBRANE),
+                this.conditionsFromItem(LighterEndBlocks.UMBRELLA_MEMBRANE))
+            .offerTo(
+                exporter,
+                RegistryKey.of(
+                    RegistryKeys.RECIPE,
+                    LighterEnd.of("end_powder_from_smelting_end_cream")
+                )
+            );
       }
 
       public void generateMaterialRecipes(Material material) {
