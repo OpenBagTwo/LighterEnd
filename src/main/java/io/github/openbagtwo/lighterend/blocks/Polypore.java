@@ -30,7 +30,9 @@ public class Polypore extends Block {
       Direction.NORTH, createCuboidShape(1, 1, 8, 15, 15, 16),
       Direction.SOUTH, createCuboidShape(1, 1, 0, 15, 15, 8),
       Direction.WEST, createCuboidShape(8, 1, 1, 16, 15, 15),
-      Direction.EAST, createCuboidShape(0, 1, 1, 8, 15, 15)
+      Direction.EAST, createCuboidShape(0, 1, 1, 8, 15, 15),
+      Direction.UP, createCuboidShape(0, 0, 0, 0, 0, 0),
+      Direction.DOWN, createCuboidShape(0, 0, 0, 0, 0, 0)
   ));
   public static final EnumProperty<Direction> FACING = Properties.FACING;
 
