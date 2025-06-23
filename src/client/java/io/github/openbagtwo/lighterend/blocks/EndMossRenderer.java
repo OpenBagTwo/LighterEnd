@@ -22,8 +22,9 @@ public class EndMossRenderer {
           }
           return BiomeColors.getGrassColor(world, pos);
         }
+        return 0xFFFFFF;
       }
-      return 0xFFFFFF;
+      return 0x4ad6d5;
     };
   }
 
