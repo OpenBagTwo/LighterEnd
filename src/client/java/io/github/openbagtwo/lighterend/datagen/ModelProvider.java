@@ -53,28 +53,31 @@ public class ModelProvider extends FabricModelProvider {
 
     generateMaterialModels(blockModelGenerator, LighterEndBlocks.UMBRALITH);
 
-    blockModelGenerator.registerTintableCrossBlockState(
+    generateWoodModels(blockModelGenerator, LighterEndBlocks.TENANEA);
+    blockModelGenerator.registerFlowerPotPlant(
         LighterEndBlocks.TENANEA_SAPLING,
+        LighterEndBlocks.POTTED_TENANEA_SAPLING,
         CrossType.NOT_TINTED
     );
-    generateWoodModels(blockModelGenerator, LighterEndBlocks.TENANEA);
     blockModelGenerator.registerSingleton(LighterEndBlocks.TENANEA_LEAVES, TexturedModel.LEAVES);
 
     blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.UMBRELLA_TREE_CLUSTER);
     blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY);
-    blockModelGenerator.registerTintableCrossBlockState(
+    blockModelGenerator.registerFlowerPotPlant(
         LighterEndBlocks.UMBRELLA_TREE_SAPLING,
+        LighterEndBlocks.POTTED_UMBRELLA_SAPLING,
         CrossType.NOT_TINTED
     );
     generateWoodModels(blockModelGenerator, LighterEndBlocks.UMBRELLA);
+
     generateWoodModels(blockModelGenerator, LighterEndBlocks.LOTUS);
 
-    generateWoodModels(blockModelGenerator, LighterEndBlocks.GLOWSHROOM);
-
-    blockModelGenerator.registerTintableCrossBlockState(
+    blockModelGenerator.registerFlowerPotPlant(
         LighterEndBlocks.GLOWSHROOM_SAPLING,
+        LighterEndBlocks.POTTED_GLOWSHROOM_SAPLING,
         CrossType.EMISSIVE_NOT_TINTED
     );
+    generateWoodModels(blockModelGenerator, LighterEndBlocks.GLOWSHROOM);
 
     blockModelGenerator.registerTintableCrossBlockState(
         LighterEndBlocks.AGAVE_SEED,

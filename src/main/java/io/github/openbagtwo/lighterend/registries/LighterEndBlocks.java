@@ -38,6 +38,7 @@ import net.minecraft.block.ButtonBlock;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
+import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.block.LadderBlock;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.PillarBlock;
@@ -91,6 +92,7 @@ public class LighterEndBlocks {
   public static Block CREEPING_MOSS = register("creeping_moss", CreepingMoss::new);
 
   public static Block UMBRELLA_FERN = register("umbrella_fern", UmbrellaFern::new);
+
   public static Block TALL_UMBRELLA_FERN = register("umbrella_fern_tall", TallUmbrellaFern::new,
       false);
 
@@ -103,6 +105,11 @@ public class LighterEndBlocks {
   public static Block TENANEA_FLOWER = register("tenanea_flower", TenaneaFlower::new);
   public static Block TENANEA_SAPLING = register("tenanea_sapling",
       settings -> new Sapling(TenaneaTree::new, settings.mapColor(MapColor.PINK)));
+  public static Block POTTED_TENANEA_SAPLING = register(
+      "potted_tenanea_sapling",
+      settings -> new FlowerPotBlock(TENANEA_SAPLING, applyFlowerPotSettings(settings)),
+      false
+  );
   public static Wood TENANEA = new Wood("tenanea", MapColor.TERRACOTTA_YELLOW, MapColor.MAGENTA);
   public static Block TENANEA_LEAVES = register(
       "tenanea_leaves",
@@ -119,6 +126,11 @@ public class LighterEndBlocks {
       UmbrellaTreeCluster.EmptyCluster::new);
   public static Block UMBRELLA_TREE_SAPLING = register("umbrella_tree_sapling",
       settings -> new Sapling(UmbrellaTree::new, settings.mapColor(MapColor.BRIGHT_TEAL)));
+  public static Block POTTED_UMBRELLA_SAPLING = register(
+      "potted_umbrella_tree_sapling",
+      settings -> new FlowerPotBlock(UMBRELLA_TREE_SAPLING, applyFlowerPotSettings(settings)),
+      false
+  );
   public static Wood UMBRELLA = new Wood("umbrella", MapColor.BLUE, MapColor.GREEN);
   public static Block UMBRELLA_MEMBRANE = register("umbrella_membrane", UmbrellaMembrane::new);
 
@@ -141,6 +153,11 @@ public class LighterEndBlocks {
 
   public static final Block GLOWSHROOM_SAPLING = register("mossy_glowshroom_sapling",
       settings -> new Sapling(Glowshroom::new, settings.luminance((bs) -> 7)));
+  public static Block POTTED_GLOWSHROOM_SAPLING = register(
+      "potted_mossy_glowshroom_sapling",
+      settings -> new FlowerPotBlock(GLOWSHROOM_SAPLING, applyFlowerPotSettings(settings)),
+      false
+  );
   public static final Wood GLOWSHROOM = new Wood(
       "mossy_glowshroom",
       MapColor.GRAY,
@@ -449,6 +466,10 @@ public class LighterEndBlocks {
         .burnable()
         .pistonBehavior(PistonBehavior.DESTROY)
         .solidBlock(Blocks::never);
+  }
+
+  public static Settings applyFlowerPotSettings(Settings settings) {
+    return settings.breakInstantly().nonOpaque().pistonBehavior(PistonBehavior.DESTROY);
   }
 
 }

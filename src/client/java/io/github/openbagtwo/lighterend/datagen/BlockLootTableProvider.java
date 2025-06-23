@@ -64,6 +64,14 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
       }
     }
 
+    for (Block pot : Arrays.asList(
+        LighterEndBlocks.POTTED_TENANEA_SAPLING,
+        LighterEndBlocks.POTTED_UMBRELLA_SAPLING,
+        LighterEndBlocks.POTTED_GLOWSHROOM_SAPLING
+    )) {
+      addPottedPlantDrops(pot);
+    }
+
     addDrop(LighterEndBlocks.AURORA_CRYSTAL, auroraCrystalDrops());
     addDrop(LighterEndBlocks.ENDER_BLOCK);
 

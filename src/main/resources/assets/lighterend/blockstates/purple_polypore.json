@@ -1,5 +1,10 @@
 {
   "variants": {
+    "facing=down": [
+      {
+        "model": "lighterend:block/purple_polypore_01"
+      }
+    ],
     "facing=east": [
       {
         "model": "lighterend:block/purple_polypore_01",
@@ -37,6 +42,11 @@
       },
       {
         "model": "lighterend:block/purple_polypore_03"
+      }
+    ],
+    "facing=up": [
+      {
+        "model": "lighterend:block/purple_polypore_01"
       }
     ],
     "facing=west": [
