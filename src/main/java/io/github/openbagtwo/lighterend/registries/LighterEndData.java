@@ -38,7 +38,7 @@ public class LighterEndData {
   );
 
   public static final ComponentType<Variant> VARIANT = registerDataComponent(
-      "lighterend_variant",
+      "variant",
       builder -> builder.codec(Variant.CODEC)
           .packetCodec(Variant.PACKET_CODEC)
           .cache()
@@ -100,11 +100,11 @@ public class LighterEndData {
     );
   }
 
-  private static <T> ComponentType<T> registerDataComponent(String id,
+  private static <T> ComponentType<T> registerDataComponent(String name,
       UnaryOperator<Builder<T>> builderOperator) {
     return Registry.register(
         Registries.DATA_COMPONENT_TYPE,
-        id,
+        LighterEnd.of(name),
         builderOperator.apply(ComponentType.builder()).build()
     );
   }
