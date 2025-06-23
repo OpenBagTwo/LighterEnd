@@ -15,6 +15,16 @@ public class LighterEndLootTables {
       "gameplay/fishing"
   );
 
+  public static final RegistryKey<LootTable> MOOSHROOM_SHEARING = register(
+      "shearing/glossy_mooshroom"
+  );
+  public static final RegistryKey<LootTable> MOOSHROOM_AURANT_SHEARING = register(
+      "shearing/mooshroom/aurant"
+  );
+  public static final RegistryKey<LootTable> MOOSHROOM_PURPLE_SHEARING = register(
+      "shearing/mooshroom/purple"
+  );
+
   private static RegistryKey<LootTable> register(String id) {
     return RegistryKey.of(RegistryKeys.LOOT_TABLE, LighterEnd.of(id));
   }

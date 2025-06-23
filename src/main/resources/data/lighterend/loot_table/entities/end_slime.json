@@ -9,7 +9,7 @@
           "predicate": {
             "type_specific": {
               "size": 1,
-              "type": "lighterend:end_cream"
+              "type": "minecraft:slime"
             }
           }
         }

@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.mobs;
 
 import io.github.openbagtwo.lighterend.misc.StatusEffects;
 import io.github.openbagtwo.lighterend.registries.LighterEndData;
+import io.github.openbagtwo.lighterend.registries.LighterEndLootTables;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.List;
@@ -29,6 +30,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -65,6 +67,8 @@ public class GlossyMooshroom extends AbstractCowEntity implements Shearable {
   protected void mobTick(ServerWorld world) {
     if (this.isSheared()) {
       if (world.getRandom().nextInt(1024) == 0) {
+        world.spawnParticles(ParticleTypes.POOF, this.getX(), this.getBodyY(0.5), this.getZ(), 4,
+            0.0, 0.0, 0.0, 0.0);
         this.setSheared(false);
       }
     }
@@ -131,7 +135,17 @@ public class GlossyMooshroom extends AbstractCowEntity implements Shearable {
   public void sheared(ServerWorld world, SoundCategory shearedSoundCategory, ItemStack shears) {
     world.playSoundFromEntity(null, this, SoundEvents.ENTITY_MOOSHROOM_SHEAR, shearedSoundCategory,
         1.0F, 1.0F);
+    this.dropShearedItems(world, shears);
     this.setSheared(true);
+  }
+
+  private void dropShearedItems(ServerWorld world, ItemStack shears) {
+    this.forEachShearedItem(
+        world,
+        LighterEndLootTables.MOOSHROOM_SHEARING,
+        shears,
+        (worldx, stack) -> this.dropStack(worldx, stack, this.getHeight())
+    );
   }
 
   @Override
@@ -179,7 +193,7 @@ public class GlossyMooshroom extends AbstractCowEntity implements Shearable {
 
   @Override
   protected void copyComponentsFrom(ComponentsAccess from) {
-    this.copyComponentFrom(from, DataComponentTypes.MOOSHROOM_VARIANT);
+    this.copyComponentFrom(from, LighterEndData.VARIANT);
     super.copyComponentsFrom(from);
   }
 

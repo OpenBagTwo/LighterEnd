@@ -103,9 +103,10 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     }
 
     valueLookupBuilder(BlockTags.ENDERMAN_HOLDABLE).add(
-        LighterEndBlocks.END_MOSS,
-        LighterEndBlocks.GLOWSHROOM_FUR
+        LighterEndBlocks.END_MOSS
     );
+    valueLookupBuilder(BlockTags.ENDERMAN_HOLDABLE).addTag(LighterEndTags.FURS);
+
     valueLookupBuilder(BlockTags.ANIMALS_SPAWNABLE_ON).add(LighterEndBlocks.END_MOSS);
     valueLookupBuilder(BlockTags.REPLACEABLE_BY_TREES).add(LighterEndBlocks.END_MOSS);
     valueLookupBuilder(BlockTags.SCULK_REPLACEABLE).add(LighterEndBlocks.END_MOSS);
@@ -200,6 +201,11 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.CHARNIA_ORANGE,
             LighterEndBlocks.CHARNIA_PURPLE,
             LighterEndBlocks.CHARNIA_RED
+        );
+    valueLookupBuilder(LighterEndTags.FURS)
+        .add(
+            LighterEndBlocks.AGAVE_FUR,
+            LighterEndBlocks.GLOWSHROOM_FUR
         );
     valueLookupBuilder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_STONES);
     valueLookupBuilder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_SOIL);

@@ -75,7 +75,7 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
         LighterEndEquipment.SILK_ELYTRA
     );  // this makes silk elytra trimmable
 
-    valueLookupBuilder(ItemTags.GAZE_DISGUISE_EQUIPMENT).addTag(LighterEndTags.FURS);
+    valueLookupBuilder(ItemTags.GAZE_DISGUISE_EQUIPMENT).addTag(LighterEndTags.FUR_ITEMS);
 
     valueLookupBuilder(ItemTags.BREWING_FUEL).add(LighterEndItems.END_POWDER);
 
@@ -90,9 +90,9 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
         LighterEndBlocks.CHARNIA_PURPLE.asItem(),
         LighterEndBlocks.CHARNIA_RED.asItem()
     );
-    valueLookupBuilder(LighterEndTags.FLETCHINGS).addTag(LighterEndTags.FURS);
+    valueLookupBuilder(LighterEndTags.FLETCHINGS).addTag(LighterEndTags.FUR_ITEMS);
 
-    valueLookupBuilder(LighterEndTags.FURS).add(
+    valueLookupBuilder(LighterEndTags.FUR_ITEMS).add(
         LighterEndItems.GLOWSHROOM_FUR,
         LighterEndItems.AGAVE_FUR
     );

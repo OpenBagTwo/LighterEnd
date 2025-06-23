@@ -93,6 +93,12 @@ public class LighterEndMobs {
     FabricDefaultAttributeRegistry.register(MOOSHROOM.mob, AbstractCowEntity.createCowAttributes());
 
     SpawnRestriction.register(
+        DRAGONFLY.mob,
+        SpawnLocationTypes.UNRESTRICTED,
+        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+        LighterEndMobs::canDragonflySpawn
+    );
+    SpawnRestriction.register(
         END_FISH.mob,
         SpawnLocationTypes.IN_WATER,
         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
@@ -132,6 +138,13 @@ public class LighterEndMobs {
       return false;
     }
     return random.nextInt(4) == 0;
+  }
+
+  public static boolean canDragonflySpawn(
+      EntityType<? extends Entity> type,
+      WorldAccess world, SpawnReason reason, BlockPos pos, Random random
+  ) {
+    return random.nextInt(8) == 0;
   }
 
   public static boolean canPassiveSpawn(

@@ -35,6 +35,11 @@ public class LighterEndTags {
       LighterEnd.of("end_vegetation_aquatic")
   );
 
+  public static final TagKey<Block> FURS = TagKey.of(
+      RegistryKeys.BLOCK,
+      LighterEnd.of("furs")
+  );
+
   public static final TagKey<Block> SLIME_SPAWNABLE = TagKey.of(
       RegistryKeys.BLOCK,
       LighterEnd.of("slime_spawnable")
@@ -50,7 +55,7 @@ public class LighterEndTags {
       LighterEnd.of("fletchings")
   );
 
-  public static final TagKey<Item> FURS = TagKey.of(
+  public static final TagKey<Item> FUR_ITEMS = TagKey.of(
       RegistryKeys.ITEM,
       LighterEnd.of("furs")
   );

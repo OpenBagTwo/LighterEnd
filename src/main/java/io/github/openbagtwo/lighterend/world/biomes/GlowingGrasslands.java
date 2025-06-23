@@ -28,11 +28,18 @@ public class GlowingGrasslands {
         RegistryKeys.CONFIGURED_CARVER
     );
 
-    SpawnSettings spawns = new SpawnSettings.Builder().spawn(
-        SpawnGroup.AMBIENT,
-        1,
-        new SpawnEntry(LighterEndMobs.DRAGONFLY.mob, 1, 1)
-    ).build();
+    SpawnSettings spawns = new SpawnSettings.Builder()
+        .spawn(
+            SpawnGroup.CREATURE,
+            1,
+            new SpawnEntry(LighterEndMobs.MOOSHROOM.mob, 2, 4)
+        )
+        .spawn(
+            SpawnGroup.AMBIENT,
+            1,
+            new SpawnEntry(LighterEndMobs.DRAGONFLY.mob, 1, 1)
+        )
+        .build();
 
     GenerationSettings genSettings = new GenerationSettings.LookupBackedBuilder(features, carvers)
         .feature(Feature.SURFACE_STRUCTURES, EndPlacedFeatures.END_GATEWAY_RETURN)

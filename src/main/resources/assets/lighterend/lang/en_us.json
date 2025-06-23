@@ -292,9 +292,10 @@
   "tag.block.lighterend.end_soil_aquatic": "Underwater LighterEnd plants can grow on these blocks",
   "tag.block.lighterend.end_stones": "Blocks considered \"End Stones\" by LighterEnd",
   "tag.block.lighterend.end_vegetation_aquatic": "Underwater flora that grow in the end",
+  "tag.block.lighterend.furs": "Fluffy outer plant leaves that Endermen find simply hilarious",
   "tag.block.lighterend.slime_spawnable": "Blocks that End Slimes can spawn on",
   "tag.item.lighterend.fletchings": "Items that can be used to craft the backs of arrows",
-  "tag.item.lighterend.furs": "Fluffy outer plant leaves with some fun uses",
+  "tag.item.lighterend.furs": "Fluffy outer plant leaves that Endermen find simply hilarious",
   "tag.item.lighterend.glossy_mooshroom_food": "Can be fed to Glossy Mooshrooms",
   "tag.item.lighterend.polypores": "LighterEnd bark-dwelling mushrooms that can be brewed into awkward potions",
   "tag.item.lighterend.repairs_silk_armor": "Items that can repair silk elytra"

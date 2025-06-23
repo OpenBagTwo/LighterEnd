@@ -32,6 +32,11 @@ public class FoggyMushroomlands {
 
     SpawnSettings spawns = new SpawnSettings.Builder()
         .spawn(
+            SpawnGroup.CREATURE,
+            1,
+            new SpawnEntry(LighterEndMobs.MOOSHROOM.mob, 4, 8)
+        )
+        .spawn(
             SpawnGroup.AMBIENT,
             1,
             new SpawnEntry(LighterEndMobs.DRAGONFLY.mob, 1, 1)
