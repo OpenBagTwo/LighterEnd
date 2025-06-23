@@ -9,7 +9,6 @@ import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.gui.widget.OptionListWidget;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.SimpleOption;
-import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 
@@ -46,7 +45,13 @@ public class ConfigScreen extends GameOptionsScreen {
                 LighterEnd.CONFIG.endGravity = 0.01 * value;
               }));
       this.body.addSingleOptionEntry(
-          SimpleOption.ofBoolean("Modded plants can only grow in The End",
+          SimpleOption.ofBoolean("Disable End Gravity While Flying",
+              SimpleOption.constantTooltip(Text.of("Lowering gravity nerfs unpowered glide speed")),
+              LighterEnd.CONFIG.disableEndGravityWhileFlying, (value) -> {
+                LighterEnd.CONFIG.disableEndGravityWhileFlying = value;
+              }));
+      this.body.addSingleOptionEntry(
+          SimpleOption.ofBoolean("Modded Plants Can Only Grow in The End",
               LighterEnd.CONFIG.endPlantsOnlyGrowInTheEnd, (value) -> {
                 LighterEnd.CONFIG.endPlantsOnlyGrowInTheEnd = value;
               }));
@@ -61,7 +66,10 @@ public class ConfigScreen extends GameOptionsScreen {
                 LighterEnd.CONFIG.customEndFishing = value;
               }));
       this.body.addSingleOptionEntry(
-          SimpleOption.ofBoolean("Bonemealing Underwater in The End Produces End Vegetation",
+          SimpleOption.ofBoolean("Custom Aquatic Vegetation Bonemealing",
+              SimpleOption.constantTooltip(Text.of(
+                  "With this option enabled, bonemealing underwater in The End will grow modded flora"
+              )),
               LighterEnd.CONFIG.bonemealUnderwaterInEndMakesEndVegetation, (value) -> {
                 LighterEnd.CONFIG.bonemealUnderwaterInEndMakesEndVegetation = value;
               }));
@@ -75,9 +83,5 @@ public class ConfigScreen extends GameOptionsScreen {
     } catch (ConfigException e) {
       LighterEnd.LOGGER.error(String.valueOf(e));
     }
-  }
-
-  private static Text getPercentValueOrOffText(Text prefix, double value) {
-    return value == 0.0 ? GameOptions.getGenericValueText(prefix, ScreenTexts.OFF) : Text.of("");
   }
 }

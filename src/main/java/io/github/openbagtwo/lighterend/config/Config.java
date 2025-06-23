@@ -41,6 +41,12 @@ public class Config {
   protected double endGravity;
 
   /**
+   * Whether the above gravity modification should be disabled while flying with elytra
+   */
+  protected boolean disableEndGravityWhileFlying;
+
+
+  /**
    * Whether End trees (including lumecorn, lilies and lotuses) should be prevented from growing in
    * other dimensions
    */
@@ -74,6 +80,10 @@ public class Config {
     return this.endGravity;
   }
 
+  public boolean disableEndGravityWhileFlying() {
+    return this.disableEndGravityWhileFlying;
+  }
+
   public boolean endPlantsOnlyGrowInTheEnd() {
     return this.endPlantsOnlyGrowInTheEnd;
   }
@@ -96,6 +106,7 @@ public class Config {
   private static final boolean DEFAULT_BIOME_GENERATION = true;
   private static final boolean DEFAULT_PLAY_END_BIOME_MUSIC = true;
   private static final double DEFAULT_END_GRAVITY = 0.3;
+  private static final boolean DEFAULT_END_GRAVITY_DISABLED_WHILE_FLYING = false;
   private static final boolean DEFAULT_END_PLANTS_ONLY_GROW_IN_THE_END = true;
   private static final boolean DEFAULT_MUSIC_DISCS_IN_END_CITIES = true;
   private static final boolean DEFAULT_CUSTOM_END_FISHING = true;
@@ -150,6 +161,7 @@ public class Config {
     writeme.put("generate_biomes", this.generateBiomes);
     writeme.put("play_biome_music", this.playEndBiomeMusic);
     writeme.put("end_gravity", this.endGravity);
+    writeme.put("disable_end_gravity_while_flying", this.disableEndGravityWhileFlying);
     writeme.put("end_plants_only_grow_in_the_end", this.endPlantsOnlyGrowInTheEnd);
     writeme.put("music_discs_found_in_end_cities", this.musicDiscsInEndCities);
     writeme.put("customize_end_fishing", this.customEndFishing);
@@ -171,6 +183,7 @@ public class Config {
     config.generateBiomes = DEFAULT_BIOME_GENERATION;
     config.playEndBiomeMusic = DEFAULT_PLAY_END_BIOME_MUSIC;
     config.endGravity = DEFAULT_END_GRAVITY;
+    config.disableEndGravityWhileFlying = DEFAULT_END_GRAVITY_DISABLED_WHILE_FLYING;
     config.endPlantsOnlyGrowInTheEnd = DEFAULT_END_PLANTS_ONLY_GROW_IN_THE_END;
     config.musicDiscsInEndCities = DEFAULT_MUSIC_DISCS_IN_END_CITIES;
     config.customEndFishing = DEFAULT_CUSTOM_END_FISHING;
@@ -185,28 +198,7 @@ public class Config {
    * @throws ConfigException If the writer encounters any sort of IO error (permissions?)
    */
   private static void writeDefaultConfigFile() throws ConfigException {
-    FileWriter configWriter;
-    try {
-      configWriter = new FileWriter(config_path.toFile());
-    } catch (IOException e) {
-      throw new ConfigException(
-          "Could not open " + config_path + " for writing.", e
-      );
-    }
-    Map<String, Object> writeme = new LinkedHashMap<>();
-    writeme.put("generate_biomes", DEFAULT_BIOME_GENERATION);
-    writeme.put("play_biome_music", DEFAULT_PLAY_END_BIOME_MUSIC);
-    writeme.put("end_gravity", DEFAULT_END_GRAVITY);
-    writeme.put("end_plants_only_grow_in_the_end", DEFAULT_END_PLANTS_ONLY_GROW_IN_THE_END);
-    writeme.put("music_discs_found_in_end_cities", DEFAULT_MUSIC_DISCS_IN_END_CITIES);
-    writeme.put("customize_end_fishing", DEFAULT_CUSTOM_END_FISHING);
-    writeme.put("bonemealing_underwater_in_the_end_produces_end_vegetation",
-        DEFAULT_UNDERWATER_BONEMEAL_SETTING);
-
-    (new Yaml(configFormat)).dump(writeme, configWriter);
-    LighterEnd.LOGGER.info(
-        "Wrote " + LighterEnd.MOD_NAME + " configuration file to " + config_path
-    );
+    getDefaultConfiguration().writeConfigToFile();
   }
 
   /**
@@ -224,58 +216,58 @@ public class Config {
     HashMap<String, Object> settings = new HashMap<>((new Yaml()).load(configReader));
 
     try {
+      Config config = new Config();
+
       // Now we actually construct the thing
-      boolean generateBiomes = Boolean.parseBoolean(
+      config.generateBiomes = Boolean.parseBoolean(
           settings.getOrDefault(
               "generate_biomes",
               DEFAULT_BIOME_GENERATION
           ).toString()
       );
-      boolean playEndBiomeMusic = Boolean.parseBoolean(
+      config.playEndBiomeMusic = Boolean.parseBoolean(
           settings.getOrDefault(
               "play_biome_music",
               DEFAULT_BIOME_GENERATION
           ).toString()
       );
-      double endGravity = Double.parseDouble(
+      config.endGravity = Double.parseDouble(
           settings.getOrDefault(
               "end_gravity",
               DEFAULT_END_GRAVITY
           ).toString()
       );
-      boolean endPlantsOnlyGrowInTheEnd = Boolean.parseBoolean(
+      config.disableEndGravityWhileFlying = Boolean.parseBoolean(
+          settings.getOrDefault(
+              "disable_end_gravity_while_flying",
+              DEFAULT_END_GRAVITY_DISABLED_WHILE_FLYING
+          ).toString()
+      );
+      config.endPlantsOnlyGrowInTheEnd = Boolean.parseBoolean(
           settings.getOrDefault(
               "end_plants_only_grow_in_the_end",
               DEFAULT_END_PLANTS_ONLY_GROW_IN_THE_END
           ).toString()
       );
-      boolean musicDiscsInEndCities = Boolean.parseBoolean(
+      config.musicDiscsInEndCities = Boolean.parseBoolean(
           settings.getOrDefault(
               "music_discs_found_in_end_cities",
               DEFAULT_MUSIC_DISCS_IN_END_CITIES
           ).toString()
       );
-      boolean customEndFishing = Boolean.parseBoolean(
+      config.customEndFishing = Boolean.parseBoolean(
           settings.getOrDefault(
               "customize_end_fishing",
               DEFAULT_CUSTOM_END_FISHING
           ).toString()
       );
-      boolean underwaterBonemealSetting = Boolean.parseBoolean(
+      config.bonemealUnderwaterInEndMakesEndVegetation = Boolean.parseBoolean(
           settings.getOrDefault(
               "bonemealing_underwater_in_the_end_produces_end_vegetation",
               DEFAULT_UNDERWATER_BONEMEAL_SETTING
           ).toString()
       );
 
-      Config config = new Config();
-      config.generateBiomes = generateBiomes;
-      config.playEndBiomeMusic = playEndBiomeMusic;
-      config.endGravity = endGravity;
-      config.endPlantsOnlyGrowInTheEnd = endPlantsOnlyGrowInTheEnd;
-      config.musicDiscsInEndCities = musicDiscsInEndCities;
-      config.customEndFishing = customEndFishing;
-      config.bonemealUnderwaterInEndMakesEndVegetation = underwaterBonemealSetting;
       return config;
 
     } catch (Exception e) {
