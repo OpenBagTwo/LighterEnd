@@ -21,7 +21,6 @@ public class EndSlimeModel extends EntityModel<EndSlimeRenderState> {
 
   public EndSlimeModel(ModelPart modelPart, boolean outer) {
     super(modelPart);
-    System.out.println(this.getParts());
     if (outer) {
       flower = null;
       crop = null;
