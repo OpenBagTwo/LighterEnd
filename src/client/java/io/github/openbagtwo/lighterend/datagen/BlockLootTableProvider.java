@@ -119,6 +119,8 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
         LighterEndBlocks.AGAVE_FUR,
         (block -> this.dropsWithSilkTouchOrShears(LighterEndItems.AGAVE_FUR))
     );
+    addDrop(LighterEndBlocks.AURANT_POLYPORE);
+    addDrop(LighterEndBlocks.PURPLE_POLYPORE);
   }
 
   private LootTable.Builder auroraCrystalDrops() {
