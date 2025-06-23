@@ -30,12 +30,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -162,19 +161,18 @@ public class GlossyMooshroom extends AbstractCowEntity implements Shearable {
   }
 
   @Override
-  protected void writeCustomData(WriteView view) {
-    super.writeCustomData(view);
-    view.putInt("Variant", this.getVariant());
-    view.putBoolean("Sheared", this.isSheared());
+  public void writeCustomDataToNbt(NbtCompound nbt) {
+    super.writeCustomDataToNbt(nbt);
+    nbt.putInt("Variant", this.getVariant());
+    nbt.putBoolean("Sheared", this.isSheared());
   }
 
   @Override
-  protected void readCustomData(ReadView view) {
-    super.readCustomData(view);
-    this.setVariant(view.getInt("Variant", 0));
-    this.setSheared(view.getBoolean("Sheared", false));
+  public void readCustomDataFromNbt(NbtCompound nbt) {
+    super.readCustomDataFromNbt(nbt);
+    this.setVariant(nbt.getInt("Variant", 0));
+    this.setSheared(nbt.getBoolean("Sheared", false));
   }
-
 
   private void setVariant(int variant) {
     this.dataTracker.set(VARIANT, variant);

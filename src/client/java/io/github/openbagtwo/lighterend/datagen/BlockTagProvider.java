@@ -144,7 +144,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.AGAVE,
         LighterEndBlocks.AGAVE_BULB
     );
-    valueLookupBuilder(BlockTags.FLOWER_POTS).add(
+    getOrCreateTagBuilder(BlockTags.FLOWER_POTS).add(
         LighterEndBlocks.POTTED_TENANEA_SAPLING,
         LighterEndBlocks.POTTED_UMBRELLA_SAPLING,
         LighterEndBlocks.POTTED_GLOWSHROOM_SAPLING
