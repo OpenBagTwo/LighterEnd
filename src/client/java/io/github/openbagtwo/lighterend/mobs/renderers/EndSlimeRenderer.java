@@ -60,7 +60,9 @@ public class EndSlimeRenderer extends
           float limbAngle,
           float limbDistance
       ) {
-        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(GLOW.get(state.variant));
+        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(
+            GLOW.get(state.variant % GLOW.size())
+        );
         this.getContextModel()
             .render(
                 matrices,
@@ -94,7 +96,7 @@ public class EndSlimeRenderer extends
   }
 
   public Identifier getTexture(EndSlimeRenderState state) {
-    return TEXTURES.get(state.variant);
+    return TEXTURES.get(state.variant % TEXTURES.size());
   }
 
   public EndSlimeRenderState createRenderState() {

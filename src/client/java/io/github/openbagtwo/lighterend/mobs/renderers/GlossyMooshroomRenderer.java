@@ -63,7 +63,9 @@ public class GlossyMooshroomRenderer extends
               float limbDistance
           ) {
             if (state instanceof GlossyMooshroomRenderState cowState) {
-              VertexConsumer vertexConsumer = vertexConsumers.getBuffer(GLOW.get(cowState.variant));
+              VertexConsumer vertexConsumer = vertexConsumers.getBuffer(
+                  GLOW.get(cowState.variant % GLOW.size())
+              );
               this.getContextModel()
                   .render(
                       matrices,
@@ -82,7 +84,7 @@ public class GlossyMooshroomRenderer extends
     if (state instanceof GlossyMooshroomRenderState cowState) {
       variant = cowState.variant;
     }
-    return TEXTURES.get(variant);
+    return TEXTURES.get(variant % TEXTURES.size());
   }
 
   public GlossyMooshroomRenderState createRenderState() {
@@ -173,8 +175,13 @@ public class GlossyMooshroomRenderer extends
             mushroomModel, 0.0F, 0.0F, 0.0F, light, overlay
         );
       } else {
-        this.blockRenderManager.renderBlockAsEntity(mushroomState, matrices, vertexConsumers, light,
-            overlay);
+        this.blockRenderManager.renderBlockAsEntity(
+            mushroomState,
+            matrices,
+            vertexConsumers,
+            light,
+            overlay
+        );
       }
     }
   }

@@ -48,7 +48,9 @@ public class CubozoaRenderer extends
           float limbAngle,
           float limbDistance
       ) {
-        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(GLOW.get(state.variant));
+        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(
+            GLOW.get(state.variant % GLOW.size())
+        );
         this.getContextModel()
             .renderOverride(
                 matrices,
@@ -68,7 +70,7 @@ public class CubozoaRenderer extends
 
   @Override
   public Identifier getTexture(CubozoaRenderState state) {
-    return TEXTURES.get(state.variant);
+    return TEXTURES.get(state.variant % TEXTURES.size());
   }
 
   @Override

@@ -66,7 +66,9 @@ public class EndFishRenderer extends
           float limbAngle,
           float limbDistance
       ) {
-        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(GLOW.get(state.variant));
+        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(
+            GLOW.get(state.variant % GLOW.size())
+        );
         this.getContextModel()
             .render(
                 matrices,
@@ -87,7 +89,7 @@ public class EndFishRenderer extends
 
   @Override
   public Identifier getTexture(EndFishRenderState state) {
-    return TEXTURES.get(state.variant);
+    return TEXTURES.get(state.variant % TEXTURES.size());
   }
 
   @Override
