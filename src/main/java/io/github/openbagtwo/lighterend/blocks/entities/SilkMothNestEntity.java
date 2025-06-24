@@ -3,6 +3,7 @@ package io.github.openbagtwo.lighterend.blocks.entities;
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.mobs.SilkMoth;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
@@ -20,18 +21,17 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FireBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.ComponentMap;
-import net.minecraft.component.ComponentsAccess;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.ErrorReporter;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -235,15 +235,20 @@ public class SilkMothNestEntity extends BlockEntity {
   protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
     super.readNbt(nbt, registries);
     this.moths.clear();
-    for (MothData data : nbt.get("moths", MothData.LIST_CODEC).orElse(List.of())) {
-      this.addMoth(data);
+    if (nbt.contains("moths")) {
+      MothData.LIST_CODEC.parse(NbtOps.INSTANCE, nbt.get("bees"))
+          .resultOrPartial(string -> LighterEnd.LOGGER.error("Failed to parse moths: '{}'", string))
+          .ifPresent(list -> list.forEach(this::addMoth));
     }
   }
 
   @Override
   protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
     super.writeNbt(nbt, registries);
-    nbt.put("moths", MothData.LIST_CODEC, this.createMothData());
+    nbt.put(
+        "moths",
+        MothData.LIST_CODEC.encodeStart(NbtOps.INSTANCE, this.createMothData()).getOrThrow()
+    );
   }
 
   @Override

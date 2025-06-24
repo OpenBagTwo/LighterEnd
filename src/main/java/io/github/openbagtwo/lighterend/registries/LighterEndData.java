@@ -11,8 +11,7 @@ import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.ComponentType.Builder;
-import net.minecraft.component.ComponentsAccess;
-import net.minecraft.item.Item;
+import net.minecraft.item.Item.TooltipContext;
 import net.minecraft.item.tooltip.TooltipAppender;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.network.codec.PacketCodec;
@@ -55,13 +54,8 @@ public class LighterEndData {
     public static final MothsComponent DEFAULT = new MothsComponent(List.of());
 
     @Override
-    public void appendTooltip(
-        Item.TooltipContext context,
-        Consumer<Text> textConsumer,
-        TooltipType type,
-        ComponentsAccess components
-    ) {
-      textConsumer.accept(
+    public void appendTooltip(TooltipContext context, Consumer<Text> tooltip, TooltipType type) {
+      tooltip.accept(
           Text.translatable(
               "container." + LighterEnd.MOD_ID + ".silk_moth_nest.moths",
               this.moths.size(),
@@ -79,10 +73,8 @@ public class LighterEndData {
         SilkLevelComponent::new, SilkLevelComponent::silk_level);
 
     @Override
-    public void appendTooltip(
-        Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type,
-        ComponentsAccess components) {
-      textConsumer.accept(
+    public void appendTooltip(TooltipContext context, Consumer<Text> tooltip, TooltipType type) {
+      tooltip.accept(
           Text.translatable(
               "container." + LighterEnd.MOD_ID + ".silk_moth_nest.fullness",
               this.silk_level(),

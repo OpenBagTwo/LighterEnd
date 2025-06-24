@@ -18,7 +18,7 @@ import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.entity.mob.WaterCreatureEntity;
-import net.minecraft.entity.passive.AbstractCowEntity;
+import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.item.SpawnEggItem;
@@ -90,7 +90,7 @@ public class LighterEndMobs {
     FabricDefaultAttributeRegistry.register(END_FISH.mob, EndFish.createAttributes());
     FabricDefaultAttributeRegistry.register(CUBOZOA.mob, Cubozoa.createAttributes());
     FabricDefaultAttributeRegistry.register(END_SLIME.mob, EndSlime.createAttributes());
-    FabricDefaultAttributeRegistry.register(MOOSHROOM.mob, AbstractCowEntity.createCowAttributes());
+    FabricDefaultAttributeRegistry.register(MOOSHROOM.mob, CowEntity.createCowAttributes());
 
     SpawnRestriction.register(
         DRAGONFLY.mob,

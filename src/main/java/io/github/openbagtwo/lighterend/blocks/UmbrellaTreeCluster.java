@@ -53,7 +53,7 @@ public class UmbrellaTreeCluster extends Block {
       }
       stack = new ItemStack(LighterEndItems.UMBRELLA_JUICE);
       player.giveItemStack(stack);
-      world.playSoundClient(
+      world.playSound(
           pos.getX() + 0.5,
           pos.getY() + 0.5,
           pos.getZ() + 0.5,

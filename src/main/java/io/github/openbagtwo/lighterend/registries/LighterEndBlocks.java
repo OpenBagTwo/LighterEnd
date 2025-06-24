@@ -40,12 +40,12 @@ import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.block.LadderBlock;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
-import net.minecraft.block.TintedParticleLeavesBlock;
 import net.minecraft.block.TrapdoorBlock;
 import net.minecraft.block.WallBlock;
 import net.minecraft.block.WoodType;
@@ -113,8 +113,7 @@ public class LighterEndBlocks {
   public static Wood TENANEA = new Wood("tenanea", MapColor.TERRACOTTA_YELLOW, MapColor.MAGENTA);
   public static Block TENANEA_LEAVES = register(
       "tenanea_leaves",
-      settings -> new TintedParticleLeavesBlock(
-          0.01F,
+      settings -> new LeavesBlock(
           applyLeafSettings(settings.mapColor(MapColor.PINK))
       )
   );

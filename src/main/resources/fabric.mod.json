@@ -8,10 +8,10 @@
     "sources": "https://github.com/OpenBagTwo/LighterEnd"
   },
   "depends": {
-    "fabric-api": ">=0.118.6",
+    "fabric-api": ">=0.118.5",
     "fabricloader": ">=0.16.14",
     "java": ">=21",
-    "minecraft": "=1.21.5"
+    "minecraft": "=1.21.4"
   },
   "description": "Bringing light and life to the most desolate dimension. A continuation of BetterEnd",
   "entrypoints": {

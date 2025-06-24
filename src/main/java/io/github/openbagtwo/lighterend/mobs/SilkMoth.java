@@ -34,6 +34,7 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtHelper;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -128,13 +129,15 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
   @Override
   public void writeCustomDataToNbt(NbtCompound nbt) {
     super.writeCustomDataToNbt(nbt);
-    nbt.putNullable("hive_pos", BlockPos.CODEC, this.hivePos);
+    if (this.hivePos != null) {
+      nbt.put("hive_pos", NbtHelper.fromBlockPos(this.hivePos));
+    }
   }
 
   @Override
   public void readCustomDataFromNbt(NbtCompound nbt) {
     super.readCustomDataFromNbt(nbt);
-    this.hivePos = nbt.get("hive_pos", BlockPos.CODEC).orElse(null);
+    this.hivePos = NbtHelper.toBlockPos(nbt, "hive_pos").orElse(null);
   }
 
   @Override

@@ -4,7 +4,6 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.Optional;
 import java.util.function.Supplier;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SaplingBlock;
 import net.minecraft.block.SaplingGenerator;
@@ -43,8 +42,7 @@ public class Sapling extends SaplingBlock {
       return;
     }
     if (state.get(STAGE) == 0) {
-      world.setBlockState(pos, state.cycle(STAGE),
-          Block.SKIP_REDRAW_AND_BLOCK_ENTITY_REPLACED_CALLBACK);
+      world.setBlockState(pos, state.cycle(STAGE), 260);
     } else {
       FeatureContext<DefaultFeatureConfig> context = new FeatureContext<>(null, world,
           world.getChunkManager().getChunkGenerator(), random, pos, new DefaultFeatureConfig());

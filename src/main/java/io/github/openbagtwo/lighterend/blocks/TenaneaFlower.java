@@ -134,7 +134,7 @@ public class TenaneaFlower extends AbstractPlantStemBlock {
       double x = (double) pos.getX() + random.nextGaussian() + 0.5;
       double z = (double) pos.getZ() + random.nextGaussian() + 0.5;
       double y = (double) pos.getY() + random.nextDouble();
-      world.addParticleClient(LighterEndParticles.TENANEA_PETAL, x, y, z, 0, 0, 0);
+      world.addParticle(LighterEndParticles.TENANEA_PETAL, x, y, z, 0, 0, 0);
     }
 
   }

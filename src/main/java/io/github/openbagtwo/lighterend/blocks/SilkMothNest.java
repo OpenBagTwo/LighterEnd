@@ -54,7 +54,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
@@ -134,8 +133,6 @@ public class SilkMothNest extends BlockWithEntity {
           tool, EnchantmentTags.PREVENTS_BEE_SPAWNS_WHEN_MINING
       )) {
         nestEntity.tryReleaseMoths(state);
-        ItemScatterer.onStateReplaced(state, world, pos);
-
       }
     }
   }
@@ -211,7 +208,7 @@ public class SilkMothNest extends BlockWithEntity {
   public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
     if (
         world instanceof ServerWorld serverWorld
-            && player.shouldSkipBlockDrops()
+            && player.isCreative()
             && serverWorld.getGameRules().getBoolean(GameRules.DO_TILE_DROPS)
             && world.getBlockEntity(pos) instanceof SilkMothNestEntity nestEntity
     ) {

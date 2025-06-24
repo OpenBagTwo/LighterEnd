@@ -9,7 +9,7 @@ import net.minecraft.block.FluidFillable;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -126,7 +126,7 @@ public class EndLily extends Block implements FluidFillable {
   }
 
   @Override
-  public boolean canFillWithFluid(@Nullable LivingEntity filler, BlockView world, BlockPos pos,
+  public boolean canFillWithFluid(@Nullable PlayerEntity player, BlockView world, BlockPos pos,
       BlockState state, Fluid fluid) {
     return false;
   }
@@ -164,7 +164,7 @@ public class EndLily extends Block implements FluidFillable {
     }
 
     @Override
-    public boolean canFillWithFluid(@Nullable LivingEntity filler, BlockView world, BlockPos pos,
+    public boolean canFillWithFluid(@Nullable PlayerEntity player, BlockView world, BlockPos pos,
         BlockState state, Fluid fluid) {
       return false;
     }

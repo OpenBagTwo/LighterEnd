@@ -1,13 +1,10 @@
 package io.github.openbagtwo.lighterend.mobs;
 
 import io.github.openbagtwo.lighterend.misc.StatusEffects;
-import io.github.openbagtwo.lighterend.registries.LighterEndData;
 import io.github.openbagtwo.lighterend.registries.LighterEndLootTables;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.List;
-import net.minecraft.component.ComponentType;
-import net.minecraft.component.ComponentsAccess;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.SuspiciousStewEffectsComponent;
 import net.minecraft.entity.EntityType;
@@ -24,7 +21,7 @@ import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.passive.AbstractCowEntity;
+import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -43,7 +40,7 @@ import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
-public class GlossyMooshroom extends AbstractCowEntity implements Shearable {
+public class GlossyMooshroom extends CowEntity implements Shearable {
 
   private static final TrackedData<Integer> VARIANT = DataTracker.registerData(
       GlossyMooshroom.class,
@@ -170,8 +167,8 @@ public class GlossyMooshroom extends AbstractCowEntity implements Shearable {
   @Override
   public void readCustomDataFromNbt(NbtCompound nbt) {
     super.readCustomDataFromNbt(nbt);
-    this.setVariant(nbt.getInt("Variant", 0));
-    this.setSheared(nbt.getBoolean("Sheared", false));
+    this.setVariant(nbt.getInt("Variant"));
+    this.setSheared(nbt.getBoolean("Sheared"));
   }
 
   private void setVariant(int variant) {
@@ -180,29 +177,6 @@ public class GlossyMooshroom extends AbstractCowEntity implements Shearable {
 
   public int getVariant() {
     return this.dataTracker.get(VARIANT);
-  }
-
-  @Nullable
-  @Override
-  public <T> T get(ComponentType<? extends T> type) {
-    return type == LighterEndData.VARIANT ?
-        castComponentValue(type, new LighterEndData.Variant(this.getVariant())) : super.get(type);
-  }
-
-  @Override
-  protected void copyComponentsFrom(ComponentsAccess from) {
-    this.copyComponentFrom(from, LighterEndData.VARIANT);
-    super.copyComponentsFrom(from);
-  }
-
-  @Override
-  protected <T> boolean setApplicableComponent(ComponentType<T> type, T value) {
-    if (type == LighterEndData.VARIANT) {
-      this.setVariant(castComponentValue(LighterEndData.VARIANT, value).variant());
-      return true;
-    } else {
-      return super.setApplicableComponent(type, value);
-    }
   }
 
   @Nullable
