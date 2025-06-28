@@ -85,7 +85,7 @@
           ],
           "name": "lighterend:silk_elytra",
           "type": "minecraft:item",
-          "weight": 10000
+          "weight": 1
         }
       ],
       "rolls": 1.0
