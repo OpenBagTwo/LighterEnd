@@ -266,7 +266,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                 )
             );
 
-        generateWoodRecipes(LighterEndBlocks.LOTUS, 2);
+        generateWoodRecipes(LighterEndBlocks.LOTUS, 4);
         offerCompactingRecipe(
             RecipeCategory.BUILDING_BLOCKS,
             LighterEndBlocks.LOTUS.log,
