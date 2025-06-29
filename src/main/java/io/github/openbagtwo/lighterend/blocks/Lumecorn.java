@@ -232,7 +232,7 @@ public class Lumecorn extends Block {
 
     @Override
     protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-      if (random.nextInt(15) == 0) {
+      if (random.nextInt(3) == 0) {
         this.generate(world, pos, state, random);
       }
     }

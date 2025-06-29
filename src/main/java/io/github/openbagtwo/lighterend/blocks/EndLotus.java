@@ -283,7 +283,7 @@ public class EndLotus extends Block {
   public static class Seed extends Sapling implements FluidFillable {
 
     public Seed(Settings settings) {
-      super(EndLotusFeature::new, settings);
+      super(EndLotusFeature::new, settings, 7);
     }
 
     @Override

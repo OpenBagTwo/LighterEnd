@@ -23,8 +23,20 @@ import net.minecraft.world.gen.feature.util.FeatureContext;
 public class Sapling extends SaplingBlock {
 
   public final Supplier<Feature<DefaultFeatureConfig>> treeConstructor;
+  public final int growChance;
 
-  public Sapling(Supplier<Feature<DefaultFeatureConfig>> treeConstructor, Settings settings) {
+  public Sapling(
+      Supplier<Feature<DefaultFeatureConfig>> treeConstructor,
+      Settings settings
+  ) {
+    this(treeConstructor, settings, 15);
+  }
+
+  public Sapling(
+      Supplier<Feature<DefaultFeatureConfig>> treeConstructor,
+      Settings settings,
+      int growChance
+  ) {
     super(SAPLING_GENERATOR,
         settings
             .noCollision()
@@ -35,6 +47,7 @@ public class Sapling extends SaplingBlock {
             .ticksRandomly()
     );
     this.treeConstructor = treeConstructor;
+    this.growChance = growChance;
   }
 
   @Override
@@ -59,7 +72,7 @@ public class Sapling extends SaplingBlock {
 
   @Override
   protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-    if (random.nextInt(15) == 0) {
+    if (random.nextInt(this.growChance) == 0) {
       this.generate(world, pos, state, random);
     }
   }

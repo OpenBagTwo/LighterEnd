@@ -140,7 +140,7 @@ public class EndLily extends Block implements FluidFillable {
   public static class Seed extends Sapling implements FluidFillable {
 
     public Seed(Settings settings) {
-      super(EndLilyFeature::new, settings);
+      super(EndLilyFeature::new, settings, 7);
     }
 
     @Override
