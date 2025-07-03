@@ -10,6 +10,8 @@ import net.minecraft.block.WallHangingSignBlock;
 import net.minecraft.block.WallSignBlock;
 import net.minecraft.block.WoodType;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.entity.HangingSignBlockEntity;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.util.math.BlockPos;
@@ -155,10 +157,20 @@ public class Signs {
     }
   }
 
-  public static class LighterEndHangingSignBlockEntity extends SignBlockEntity {
+  public static class LighterEndHangingSignBlockEntity extends HangingSignBlockEntity {
 
     public LighterEndHangingSignBlockEntity(BlockPos pos, BlockState state) {
-      super(LighterEndBlockEntities.HANGING_SIGN, pos, state);
+      super(pos, state);
+    }
+
+    @Override
+    public BlockEntityType<?> getType() {
+      return LighterEndBlockEntities.HANGING_SIGN;
+    }
+
+    @Override
+    public boolean supports(BlockState blockState) {
+      return this.getType().supports(blockState);
     }
   }
 }
