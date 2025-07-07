@@ -34,12 +34,12 @@ public class LighterEndWorldGen {
     biomeParams.addAll(
         List.of(
             Pair.of(MultiNoiseUtil.createNoiseHypercube(
-                0,
-                0.3F,
-                0.3F,
-                0,
-                0,
-                -0.5F,
+                MultiNoiseUtil.ParameterRange.of(0),
+                MultiNoiseUtil.ParameterRange.of(0.3F),
+                MultiNoiseUtil.ParameterRange.of(0.3F),
+                MultiNoiseUtil.ParameterRange.of(0),
+                MultiNoiseUtil.ParameterRange.of(0),
+                MultiNoiseUtil.ParameterRange.of(-0.5F),
                 0.0F
             ), context.getOrThrow(LighterEndBiomes.BLOSSOM_FOREST)),
             Pair.of(MultiNoiseUtil.createNoiseHypercube(
