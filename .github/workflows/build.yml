@@ -25,12 +25,16 @@ jobs:
       with:
         java-version: ${{ matrix.java }}
         distribution: temurin
+    - name: pause momentarily
+      run: sleep 2s
     - name: run datagen
       uses: nick-fields/retry@v3
       with:
         max_attempts: 3
         timeout_seconds: 240
         command: sh gradlew runDatagen
+    - name: pause again
+      run: sleep 2s
     - name: build
       run: sh gradlew build
     - name: capture build artifacts
