@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.mobs.ChorusCrab;
 import io.github.openbagtwo.lighterend.mobs.Cubozoa;
 import io.github.openbagtwo.lighterend.mobs.Dragonfly;
 import io.github.openbagtwo.lighterend.mobs.EndFish;
@@ -65,6 +66,15 @@ public class LighterEndMobs {
           .maxTrackingRange(10)
   );
 
+  public static final LighterEndMob<ChorusCrab> CHORUS_CRAB = new LighterEndMob<>(
+      "chorus_crab",
+      EntityType.Builder.create(ChorusCrab::new, SpawnGroup.CREATURE)
+          .dimensions(2.8F, 0.75F)
+          .eyeHeight(1.0F)
+          .passengerAttachments(0.7F)
+          .maxTrackingRange(4)
+  );
+
   public static class LighterEndMob<T extends Entity> {
 
     public final EntityType<T> mob;
@@ -91,6 +101,7 @@ public class LighterEndMobs {
     FabricDefaultAttributeRegistry.register(CUBOZOA.mob, Cubozoa.createAttributes());
     FabricDefaultAttributeRegistry.register(END_SLIME.mob, EndSlime.createAttributes());
     FabricDefaultAttributeRegistry.register(MOOSHROOM.mob, AbstractCowEntity.createCowAttributes());
+    FabricDefaultAttributeRegistry.register(CHORUS_CRAB.mob, ChorusCrab.createCrabAttributes());
 
     SpawnRestriction.register(
         DRAGONFLY.mob,
@@ -118,6 +129,12 @@ public class LighterEndMobs {
     );
     SpawnRestriction.register(
         MOOSHROOM.mob,
+        SpawnLocationTypes.ON_GROUND,
+        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+        LighterEndMobs::canPassiveSpawn
+    );
+    SpawnRestriction.register(
+        CHORUS_CRAB.mob,
         SpawnLocationTypes.ON_GROUND,
         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
         LighterEndMobs::canPassiveSpawn

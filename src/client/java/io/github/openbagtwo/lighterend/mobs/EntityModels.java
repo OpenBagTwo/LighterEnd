@@ -1,11 +1,13 @@
 package io.github.openbagtwo.lighterend.mobs;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.mobs.models.CrabModel;
 import io.github.openbagtwo.lighterend.mobs.models.CubozoaModel;
 import io.github.openbagtwo.lighterend.mobs.models.DragonflyModel;
 import io.github.openbagtwo.lighterend.mobs.models.EndFishModel;
 import io.github.openbagtwo.lighterend.mobs.models.EndSlimeModel;
 import io.github.openbagtwo.lighterend.mobs.models.SilkMothModel;
+import io.github.openbagtwo.lighterend.mobs.renderers.CrabRenderer;
 import io.github.openbagtwo.lighterend.mobs.renderers.CubozoaRenderer;
 import io.github.openbagtwo.lighterend.mobs.renderers.DragonflyRenderer;
 import io.github.openbagtwo.lighterend.mobs.renderers.EndFishRenderer;
@@ -31,8 +33,8 @@ public class EntityModels {
   public static final EntityModelLayer CUBOZOA_MODEL = makeLayer("cubozoa");
   public static final EntityModelLayer END_SLIME_MODEL = makeLayer("end_slime");
   public static final EntityModelLayer END_SLIME_SHELL_MODEL = makeLayer("end_slime_shell");
-
   public static final EntityModelLayer MOOSHROOM_MODEL = makeLayer("mooshroom");
+  public static final EntityModelLayer CRAB_MODEL = makeLayer("chorus_crab");
 
   public static void initialize() {
     EntityModelLayerRegistry.registerModelLayer(EntityModels.SILK_MOTH_MODEL,
@@ -65,6 +67,10 @@ public class EntityModels {
     EntityModelLayerRegistry.registerModelLayer(EntityModels.MOOSHROOM_MODEL,
         CowEntityModel::getTexturedModelData);
     register(LighterEndMobs.MOOSHROOM.mob, GlossyMooshroomRenderer::new);
+
+    EntityModelLayerRegistry.registerModelLayer(EntityModels.CRAB_MODEL,
+        CrabModel::getTexturedModelData);
+    register(LighterEndMobs.CHORUS_CRAB.mob, CrabRenderer::new);
   }
 
   private static void register(EntityType<?> type, Function<Context, MobEntityRenderer> renderer) {
