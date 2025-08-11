@@ -9,6 +9,7 @@ import net.minecraft.entity.ai.goal.FleeEntityGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -50,11 +51,12 @@ public class ChorusCrab extends SpiderEntity {
   @Override
   protected void initGoals() {
     this.goalSelector.add(1, new SwimGoal(this));
-    this.goalSelector.add(2,
-        new FleeEntityGoal(this, PlayerEntity.class, 3.0F, 0.1F, 0.3, (entity) -> true)
+    this.goalSelector.add(1, new RevengeGoal(this));
+    this.goalSelector.add(2, new MeleeAttackGoal(this, 0.5, false));
+    this.goalSelector.add(
+        3,
+        new FleeEntityGoal(this, PlayerEntity.class, 3.0F, 0.25F, 1F, (entity) -> true)
     );
-
-    this.goalSelector.add(4, new MeleeAttackGoal(this, 0.5, false));
     this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.8));
     this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
     this.goalSelector.add(6, new LookAroundGoal(this));

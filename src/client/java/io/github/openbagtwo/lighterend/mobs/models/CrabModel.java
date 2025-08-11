@@ -69,8 +69,8 @@ public class CrabModel extends EntityModel<CrabRenderState> {
         ModelTransform.origin(0.0F, 24.0F, 0.0F));
 
     ModelPartData face_r1 = bb_main.addChild("face_r1", ModelPartBuilder.create().uv(49, 25)
-            .cuboid(-17.0F, 0.0F, 0.0F, 24.0F, 0.0F, 7.0F, new Dilation(0.0F)),
-        ModelTransform.of(5.0F, -12.0F, -5.0F, 2.1817F, 0.0F, 0.0F));
+            .cuboid(-12.0F, 0.0F, 0.0F, 24.0F, 0.0F, 7.0F, new Dilation(0.0F)),
+        ModelTransform.of(0.0F, -12.0F, -5.0F, 2.1817F, 0.0F, 0.0F));
     return TexturedModelData.of(modelData, 128, 128);
   }
 
