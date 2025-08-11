@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.mobs;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
+import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -21,12 +22,14 @@ import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.SpiderEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 public class ChorusCrab extends SpiderEntity {
@@ -37,12 +40,14 @@ public class ChorusCrab extends SpiderEntity {
 
   public static DefaultAttributeContainer.Builder createCrabAttributes() {
     return HostileEntity.createHostileAttributes()
-        .add(EntityAttributes.MAX_HEALTH, 32.)
+        .add(EntityAttributes.MAX_HEALTH, 32.0)
         .add(EntityAttributes.MOVEMENT_SPEED, 0.1)
+        .add(EntityAttributes.JUMP_STRENGTH, 0)
+        .add(EntityAttributes.STEP_HEIGHT, 2.0)
         .add(EntityAttributes.ATTACK_DAMAGE, 2.0)
         .add(EntityAttributes.ATTACK_KNOCKBACK, 3.0)
         .add(EntityAttributes.ATTACK_SPEED, 0.1)
-        .add(EntityAttributes.ARMOR, 8.)
+        .add(EntityAttributes.ARMOR, 8.0)
         .add(EntityAttributes.ENTITY_INTERACTION_RANGE, 1.5)
         .add(EntityAttributes.BLOCK_INTERACTION_RANGE, 1.5)
         .add(EntityAttributes.KNOCKBACK_RESISTANCE, 5.0);
@@ -110,6 +115,13 @@ public class ChorusCrab extends SpiderEntity {
     }
 
     return entityData;
+  }
+
+  @Override
+  public float getPathfindingFavor(BlockPos pos, WorldView world) {
+    return world.getBlockState(pos.down()).isIn(BlockTags.SAND) ? 10.0F
+        : world.getBlockState(pos.down()).isIn(LighterEndTags.END_SOIL) ? 8.0F
+            : 0F;
   }
 
 }
