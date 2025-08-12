@@ -13,17 +13,25 @@ import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
+import net.minecraft.entity.ai.pathing.EntityNavigation;
+import net.minecraft.entity.ai.pathing.SpiderNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.SpiderEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.EntityTypeTags;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LocalDifficulty;
@@ -32,7 +40,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
-public class ChorusCrab extends SpiderEntity {
+public class ChorusCrab extends AnimalEntity {
+
+  private static final TrackedData<Byte> CLIMBING = DataTracker.registerData(
+      ChorusCrab.class,
+      TrackedDataHandlerRegistry.BYTE
+  );
 
   public ChorusCrab(EntityType<? extends ChorusCrab> entityType, World world) {
     super(entityType, world);
@@ -118,10 +131,50 @@ public class ChorusCrab extends SpiderEntity {
   }
 
   @Override
+  public @Nullable PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
+    return null;
+  }
+
+  @Override
   public float getPathfindingFavor(BlockPos pos, WorldView world) {
     return world.getBlockState(pos.down()).isIn(BlockTags.SAND) ? 10.0F
         : world.getBlockState(pos.down()).isIn(LighterEndTags.END_SOIL) ? 8.0F
             : 0F;
+  }
+
+  @Override
+  public boolean isBreedingItem(ItemStack stack) {
+    return false;
+  }
+
+  @Override
+  protected EntityNavigation createNavigation(World world) {
+    return new SpiderNavigation(this, world);
+  }
+
+  @Override
+  protected void initDataTracker(DataTracker.Builder builder) {
+    super.initDataTracker(builder);
+    builder.add(CLIMBING, (byte) 0);
+  }
+
+  @Override
+  public void tick() {
+    super.tick();
+    if (!this.getWorld().isClient) {
+      this.setClimbingWall(this.horizontalCollision);
+    }
+  }
+
+  public void setClimbingWall(boolean climbing) {
+    byte b = this.dataTracker.get(CLIMBING);
+    if (climbing) {
+      b = (byte) (b | 1);
+    } else {
+      b = (byte) (b & -2);
+    }
+
+    this.dataTracker.set(CLIMBING, b);
   }
 
 }
