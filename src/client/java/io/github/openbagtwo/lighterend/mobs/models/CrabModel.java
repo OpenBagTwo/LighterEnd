@@ -19,19 +19,17 @@ public class CrabModel extends EntityModel<LivingEntityRenderState> {
 
   private final ModelPart body;
   private final ModelPart righthind;
-  private final ModelPart rightfore;
-  private final ModelPart leftfore;
   private final ModelPart lefthind;
-  private final ModelPart bb_main;
+  private final ModelPart leftfore;
+  private final ModelPart rightfore;
 
   public CrabModel(ModelPart root) {
     super(root);
     this.body = root.getChild("body");
-    this.righthind = root.getChild("righthind");
-    this.rightfore = root.getChild("rightfore");
-    this.leftfore = root.getChild("leftfore");
-    this.lefthind = root.getChild("lefthind");
-    this.bb_main = root.getChild("bb_main");
+    this.righthind = this.body.getChild("righthind");
+    this.lefthind = this.body.getChild("lefthind");
+    this.leftfore = this.body.getChild("leftfore");
+    this.rightfore = this.body.getChild("rightfore");
   }
 
   public static TexturedModelData getTexturedModelData() {
@@ -39,52 +37,49 @@ public class CrabModel extends EntityModel<LivingEntityRenderState> {
     ModelPartData modelPartData = modelData.getRoot();
     ModelPartData body = modelPartData.addChild("body", ModelPartBuilder.create().uv(0, 0)
             .cuboid(-8.0F, -11.0F, 4.0F, 24.0F, 8.0F, 16.0F, new Dilation(0.0F))
-            .uv(48, 32).cuboid(-4.0F, -11.0F, 20.0F, 16.0F, 8.0F, 8.0F, new Dilation(0.0F)),
+            .uv(48, 31).cuboid(-4.0F, -11.0F, 20.0F, 16.0F, 8.0F, 8.0F, new Dilation(0.0F))
+            .uv(0, 24).cuboid(-8.0F, -7.0F, -12.0F, 8.0F, 8.0F, 16.0F, new Dilation(0.0F))
+            .uv(0, 48).cuboid(8.0F, -7.0F, -12.0F, 8.0F, 8.0F, 16.0F, new Dilation(0.0F)),
         ModelTransform.origin(-4.0F, 23.0F, -10.0F));
 
-    ModelPartData righthind = modelPartData.addChild("righthind",
-        ModelPartBuilder.create().uv(48, 64)
-            .cuboid(-12.0F, -7.0F, 0.0F, 12.0F, 4.0F, 4.0F, new Dilation(0.0F))
-            .uv(64, 72).cuboid(-12.0F, -3.0F, 0.0F, 4.0F, 4.0F, 4.0F, new Dilation(0.0F)),
-        ModelTransform.origin(-12.0F, 23.0F, 6.0F));
-
-    ModelPartData rightfore = modelPartData.addChild("rightfore",
-        ModelPartBuilder.create().uv(48, 56)
-            .cuboid(-4.0F, -7.0F, -8.0F, 12.0F, 4.0F, 4.0F, new Dilation(0.0F))
-            .uv(48, 72).cuboid(-4.0F, -3.0F, -8.0F, 4.0F, 4.0F, 4.0F, new Dilation(0.0F)),
-        ModelTransform.origin(-20.0F, 23.0F, 6.0F));
-
-    ModelPartData leftfore = modelPartData.addChild("leftfore", ModelPartBuilder.create().uv(48, 48)
-            .cuboid(32.0F, -7.0F, -8.0F, 12.0F, 4.0F, 4.0F, new Dilation(0.0F))
-            .uv(32, 72).cuboid(40.0F, -3.0F, -8.0F, 4.0F, 4.0F, 4.0F, new Dilation(0.0F)),
-        ModelTransform.origin(-20.0F, 23.0F, 6.0F));
-
-    ModelPartData lefthind = modelPartData.addChild("lefthind", ModelPartBuilder.create().uv(0, 72)
-            .cuboid(24.0F, -7.0F, 0.0F, 12.0F, 4.0F, 4.0F, new Dilation(0.0F))
-            .uv(0, 80).cuboid(32.0F, -3.0F, 0.0F, 4.0F, 4.0F, 4.0F, new Dilation(0.0F)),
-        ModelTransform.origin(-12.0F, 23.0F, 6.0F));
-
-    ModelPartData bb_main = modelPartData.addChild("bb_main", ModelPartBuilder.create().uv(0, 24)
-            .cuboid(-12.0F, -8.0F, -22.0F, 8.0F, 8.0F, 16.0F, new Dilation(0.0F))
-            .uv(0, 48).cuboid(4.0F, -8.0F, -22.0F, 8.0F, 8.0F, 16.0F, new Dilation(0.0F)),
-        ModelTransform.origin(0.0F, 24.0F, 0.0F));
-
-    ModelPartData face_r1 = bb_main.addChild("face_r1", ModelPartBuilder.create().uv(49, 25)
+    ModelPartData face_r1 = body.addChild("face_r1", ModelPartBuilder.create().uv(48, 24)
             .cuboid(-12.0F, 0.0F, 0.0F, 24.0F, 0.0F, 7.0F, new Dilation(0.0F)),
-        ModelTransform.of(0.0F, -12.0F, -5.0F, 2.1817F, 0.0F, 0.0F));
+        ModelTransform.of(4.0F, -11.0F, 5.0F, 2.1817F, 0.0F, 0.0F));
+
+    ModelPartData righthind = body.addChild("righthind", ModelPartBuilder.create().uv(48, 63)
+            .cuboid(-12.0F, -2.0F, -2.1F, 14.0F, 4.0F, 4.0F, new Dilation(0.0F))
+            .uv(32, 72).cuboid(-12.0F, 2.0F, -2.1F, 4.0F, 4.0F, 4.0F, new Dilation(0.0F)),
+        ModelTransform.origin(-8.0F, -5.0F, 18.0F));
+
+    ModelPartData lefthind = body.addChild("lefthind", ModelPartBuilder.create().uv(48, 71)
+            .cuboid(-2.0F, -2.0F, -2.1F, 14.0F, 4.0F, 4.0F, new Dilation(0.0F))
+            .uv(48, 79).cuboid(8.0F, 2.0F, -2.1F, 4.0F, 4.0F, 4.0F, new Dilation(0.0F)),
+        ModelTransform.origin(16.0F, -5.0F, 18.0F));
+
+    ModelPartData leftfore = body.addChild("leftfore", ModelPartBuilder.create().uv(48, 47)
+            .cuboid(-2.0F, -2.0F, -2.0F, 14.0F, 4.0F, 4.0F, new Dilation(0.0F))
+            .uv(0, 72).cuboid(8.0F, 2.0F, -2.0F, 4.0F, 4.0F, 4.0F, new Dilation(0.0F)),
+        ModelTransform.origin(16.0F, -5.0F, 10.0F));
+
+    ModelPartData rightfore = body.addChild("rightfore", ModelPartBuilder.create().uv(48, 55)
+            .cuboid(-12.0F, -2.0F, -8.0F, 14.0F, 4.0F, 4.0F, new Dilation(0.0F))
+            .uv(16, 72).cuboid(-12.0F, 2.0F, -8.0F, 4.0F, 4.0F, 4.0F, new Dilation(0.0F)),
+        ModelTransform.origin(-8.0F, -5.0F, 16.0F));
     return TexturedModelData.of(modelData, 128, 128);
   }
 
   @Override
   public void setAngles(LivingEntityRenderState state) {
     super.setAngles(state);
-    float f = state.limbSwingAnimationProgress * 0.6662F;
-    float g = state.limbSwingAmplitude;
+    float f = state.limbSwingAnimationProgress * 4;
+    float g = state.limbSwingAmplitude * 6;
     float h = -(MathHelper.cos(f * 2.0F + 0.0F) * 0.4F) * g;
+    float i = -(MathHelper.cos(f * 2.0F + (float) Math.PI) * 0.4F) * g;
+    float j = -(MathHelper.cos(f * 2.0F + (float) (Math.PI / 2)) * 0.4F) * g;
 
     leftfore.yaw += h;
-    lefthind.yaw -= h;
-    rightfore.yaw -= h;
-    righthind.yaw += h;
+    lefthind.yaw += i;
+    rightfore.yaw -= i;
+    righthind.yaw -= j;
   }
 }
