@@ -1,7 +1,9 @@
 package io.github.openbagtwo.lighterend.world.biomes;
 
+import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.world.LighterEndPlacedFeatures;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKeys;
@@ -10,6 +12,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.biome.SpawnSettings;
+import net.minecraft.world.biome.SpawnSettings.SpawnEntry;
 import net.minecraft.world.gen.GenerationStep.Feature;
 import net.minecraft.world.gen.carver.ConfiguredCarver;
 import net.minecraft.world.gen.feature.EndPlacedFeatures;
@@ -25,7 +28,13 @@ public class Megalake {
         RegistryKeys.CONFIGURED_CARVER
     );
 
-    SpawnSettings spawns = new SpawnSettings.Builder().build();
+    SpawnSettings spawns = new SpawnSettings.Builder()
+        .spawn(
+            SpawnGroup.CREATURE,
+            1,
+            new SpawnEntry(LighterEndMobs.CHORUS_CRAB.mob, 1, 4)
+        )
+        .build();
 
     GenerationSettings genSettings = new GenerationSettings.LookupBackedBuilder(features, carvers)
         .feature(Feature.SURFACE_STRUCTURES, EndPlacedFeatures.END_GATEWAY_RETURN)

@@ -34,4 +34,9 @@ public class LighterEndFoodComponents {
       .consumeSeconds(2.0F)
       .sound(LighterEndSounds.DRINK_UMBRELLA_JUICE)
       .build();
+
+  public static final FoodComponent CRAB_MEAT = new FoodComponent.Builder().nutrition(2)
+      .saturationModifier(0.3F).build();
+  public static final FoodComponent CRAB_CAKE = new FoodComponent.Builder().nutrition(7)
+      .saturationModifier(0.7F).build();
 }

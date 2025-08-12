@@ -80,6 +80,12 @@ public class LighterEndItems {
   public static final Item END_CREAM = register("end_cream");
   public static final Item END_POWDER = register("end_powder");
 
+  public static final Item CRAB_CLAW = register("crab_claw");
+  public static final Item CRAB_MEAT = register("crab_meat",
+      new Settings().food(LighterEndFoodComponents.CRAB_MEAT));
+  public static final Item CRAB_CAKE = register("crab_cake",
+      new Settings().food(LighterEndFoodComponents.CRAB_CAKE));
+
   public static Item register(String name) {
     return register(name, new Settings());
   }

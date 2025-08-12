@@ -6,7 +6,17 @@
         {
           "name": "lighterend:end_fish",
           "type": "minecraft:item",
-          "weight": 100
+          "weight": 70
+        },
+        {
+          "name": "lighterend:crab_meat",
+          "type": "minecraft:item",
+          "weight": 20
+        },
+        {
+          "name": "lighterend:crab_claw",
+          "type": "minecraft:item",
+          "weight": 10
         }
       ],
       "rolls": 1.0

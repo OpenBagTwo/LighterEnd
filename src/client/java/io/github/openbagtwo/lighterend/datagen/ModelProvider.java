@@ -139,6 +139,9 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndItems.AGAVE_FUR,
         LighterEndItems.END_CREAM,
         LighterEndItems.END_POWDER,
+        LighterEndItems.CRAB_CLAW,
+        LighterEndItems.CRAB_MEAT,
+        LighterEndItems.CRAB_CAKE,
         LighterEndMusicDiscs.ENDSEEKER,
         LighterEndMusicDiscs.EO_DRACONA,
         LighterEndMusicDiscs.GRASPING_AT_STARS,
@@ -172,7 +175,8 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndMobs.DRAGONFLY.spawnEgg,
         LighterEndMobs.END_FISH.spawnEgg,
         LighterEndMobs.CUBOZOA.spawnEgg,
-        LighterEndMobs.END_SLIME.spawnEgg
+        LighterEndMobs.END_SLIME.spawnEgg,
+        LighterEndMobs.CHORUS_CRAB.spawnEgg
     )) {
       itemModelGenerator.register(
           item, Models.GENERATED

@@ -79,6 +79,16 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
     valueLookupBuilder(ItemTags.BREWING_FUEL).add(LighterEndItems.END_POWDER);
 
+    valueLookupBuilder(ItemTags.MEAT).add(
+        LighterEndItems.CRAB_MEAT,
+        LighterEndItems.CRAB_CAKE
+    );
+
+    valueLookupBuilder(ItemTags.PIGLIN_FOOD).add(
+        LighterEndItems.CRAB_MEAT,
+        LighterEndItems.CRAB_CAKE
+    );
+
     valueLookupBuilder(LighterEndTags.REPAIRS_SILK_ARMOR).add(LighterEndItems.SILK);
 
     valueLookupBuilder(LighterEndTags.FLETCHINGS).add(

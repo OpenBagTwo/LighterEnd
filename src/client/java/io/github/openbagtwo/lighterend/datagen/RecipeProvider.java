@@ -287,6 +287,26 @@ public class RecipeProvider extends FabricRecipeProvider {
                     LighterEnd.of("end_powder_from_smelting_end_cream")
                 )
             );
+
+        createShaped(RecipeCategory.TOOLS, Items.SHEARS)
+            .pattern(" #")
+            .pattern("# ")
+            .input('#', LighterEndItems.CRAB_CLAW)
+            .criterion(
+                hasItem(LighterEndItems.CRAB_CLAW),
+                conditionsFromItem(LighterEndItems.CRAB_CLAW)
+            ).offerTo(
+                exporter,
+                RegistryKey.of(
+                    RegistryKeys.RECIPE,
+                    LighterEnd.of("shears_from_claws")
+                )
+            );
+        generateSmokingSmeltingRecipes(
+            LighterEndItems.CRAB_MEAT,
+            LighterEndItems.CRAB_CAKE,
+            RecipeCategory.FOOD
+        );
       }
 
       public void generateMaterialRecipes(Material material) {

@@ -19,7 +19,8 @@ public class MobTagProvider extends FabricTagProvider.EntityTypeTagProvider {
   protected void configure(WrapperLookup wrapperLookup) {
     valueLookupBuilder(EntityTypeTags.ARTHROPOD).add(
         LighterEndMobs.SILK_MOTH.mob,
-        LighterEndMobs.DRAGONFLY.mob
+        LighterEndMobs.DRAGONFLY.mob,
+        LighterEndMobs.CHORUS_CRAB.mob
     );
     valueLookupBuilder(EntityTypeTags.AQUATIC).add(
         LighterEndMobs.END_FISH.mob,
