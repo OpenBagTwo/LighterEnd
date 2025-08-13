@@ -1,5 +1,6 @@
 package io.github.openbagtwo.lighterend.mobs;
 
+import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import net.minecraft.block.BlockState;
@@ -132,14 +133,14 @@ public class ChorusCrab extends AnimalEntity {
 
   @Override
   public @Nullable PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-    return null;
+    return LighterEndMobs.CHORUS_CRAB.mob.create(world, SpawnReason.BREEDING);
   }
 
   @Override
   public float getPathfindingFavor(BlockPos pos, WorldView world) {
-    return world.getBlockState(pos.down()).isIn(BlockTags.SAND) ? 10.0F
-        : world.getBlockState(pos.down()).isIn(LighterEndTags.END_SOIL) ? 8.0F
-            : 0F;
+    return world.getBlockState(pos.down()).isIn(BlockTags.SAND) ? 12.0F
+        : world.getBlockState(pos.down()).isIn(LighterEndTags.END_SOIL) ? 10.0F
+            : world.getPhototaxisFavor(pos);
   }
 
   @Override
@@ -176,5 +177,4 @@ public class ChorusCrab extends AnimalEntity {
 
     this.dataTracker.set(CLIMBING, b);
   }
-
 }
