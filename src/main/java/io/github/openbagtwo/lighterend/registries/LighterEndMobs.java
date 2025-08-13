@@ -70,7 +70,7 @@ public class LighterEndMobs {
       "chorus_crab",
       EntityType.Builder.create(ChorusCrab::new, SpawnGroup.CREATURE)
           .dimensions(2.8F, 0.75F)
-          .eyeHeight(1.0F)
+          .eyeHeight(0.75F)
           .passengerAttachments(0.75F)
           .maxTrackingRange(4)
   );
@@ -169,7 +169,7 @@ public class LighterEndMobs {
       WorldAccess world, SpawnReason reason, BlockPos pos, Random random
   ) {
     //TODO: check for nearby water
-    return random.nextInt(8) == 0;
+    return random.nextInt(16) == 0;
   }
 
   public static boolean canPassiveSpawn(
