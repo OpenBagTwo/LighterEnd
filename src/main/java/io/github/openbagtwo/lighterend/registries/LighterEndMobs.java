@@ -137,7 +137,7 @@ public class LighterEndMobs {
         CHORUS_CRAB.mob,
         SpawnLocationTypes.ON_GROUND,
         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-        LighterEndMobs::canPassiveSpawn
+        LighterEndMobs::canCrabSpawn
     );
   }
 
@@ -161,6 +161,14 @@ public class LighterEndMobs {
       EntityType<? extends Entity> type,
       WorldAccess world, SpawnReason reason, BlockPos pos, Random random
   ) {
+    return random.nextInt(32) == 0;
+  }
+
+  public static boolean canCrabSpawn(
+      EntityType<? extends Entity> type,
+      WorldAccess world, SpawnReason reason, BlockPos pos, Random random
+  ) {
+    //TODO: check for nearby water
     return random.nextInt(8) == 0;
   }
 

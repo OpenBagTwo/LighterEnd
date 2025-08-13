@@ -30,7 +30,7 @@ public class Megalake {
 
     SpawnSettings spawns = new SpawnSettings.Builder()
         .spawn(
-            SpawnGroup.CREATURE,
+            SpawnGroup.AMBIENT,  //dirty hack for issues with the creature group
             1,
             new SpawnEntry(LighterEndMobs.CHORUS_CRAB.mob, 1, 4)
         )
