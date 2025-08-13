@@ -1,7 +1,7 @@
 package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import io.github.openbagtwo.lighterend.blocks.Signs;
+import io.github.openbagtwo.lighterend.blocks.Furnaces.EndFurnaceEntity;
 import io.github.openbagtwo.lighterend.blocks.Signs.LighterEndHangingSignBlockEntity;
 import io.github.openbagtwo.lighterend.blocks.Signs.LighterEndSignBlockEntity;
 import io.github.openbagtwo.lighterend.blocks.entities.SilkMothNestEntity;
@@ -13,9 +13,10 @@ import net.minecraft.registry.Registry;
 public class LighterEndBlockEntities {
 
   public static final BlockEntityType<LighterEndSignBlockEntity> SIGN = Registry.register(
-      Registries.BLOCK_ENTITY_TYPE, LighterEnd.of("sign"),
+      Registries.BLOCK_ENTITY_TYPE,
+      LighterEnd.of("sign"),
       FabricBlockEntityTypeBuilder.create(
-          Signs.LighterEndSignBlockEntity::new,
+          LighterEndSignBlockEntity::new,
           LighterEndBlocks.TENANEA.sign,
           LighterEndBlocks.TENANEA.wallSign,
           LighterEndBlocks.UMBRELLA.sign,
@@ -27,9 +28,10 @@ public class LighterEndBlockEntities {
       ).build(null));
 
   public static final BlockEntityType<LighterEndHangingSignBlockEntity> HANGING_SIGN = Registry.register(
-      Registries.BLOCK_ENTITY_TYPE, LighterEnd.of("hanging_sign"),
+      Registries.BLOCK_ENTITY_TYPE,
+      LighterEnd.of("hanging_sign"),
       FabricBlockEntityTypeBuilder.create(
-          Signs.LighterEndHangingSignBlockEntity::new,
+          LighterEndHangingSignBlockEntity::new,
           LighterEndBlocks.TENANEA.hangingSign,
           LighterEndBlocks.TENANEA.wallHangingSign,
           LighterEndBlocks.UMBRELLA.hangingSign,
@@ -40,10 +42,19 @@ public class LighterEndBlockEntities {
           LighterEndBlocks.GLOWSHROOM.wallHangingSign
       ).build(null));
 
+  public static final BlockEntityType<EndFurnaceEntity> END_FURNACE = Registry.register(
+      Registries.BLOCK_ENTITY_TYPE,
+      LighterEnd.of("end_furnace"),
+      FabricBlockEntityTypeBuilder.create(
+          EndFurnaceEntity::new, LighterEndBlocks.END_FURNACE
+      ).build(null));
+
   public static final BlockEntityType<SilkMothNestEntity> SILK_MOTH_NEST = Registry.register(
-      Registries.BLOCK_ENTITY_TYPE, LighterEnd.of("silk_moth_nest"),
-      FabricBlockEntityTypeBuilder.create(SilkMothNestEntity::new, LighterEndBlocks.SILK_MOTH_NEST)
-          .build(null)
+      Registries.BLOCK_ENTITY_TYPE,
+      LighterEnd.of("silk_moth_nest"),
+      FabricBlockEntityTypeBuilder.create(
+          SilkMothNestEntity::new, LighterEndBlocks.SILK_MOTH_NEST
+      ).build(null)
   );
 
   public static void initialize() {

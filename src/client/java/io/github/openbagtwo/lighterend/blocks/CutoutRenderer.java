@@ -41,7 +41,8 @@ public class CutoutRenderer {
         LighterEndBlocks.AGAVE,
         LighterEndBlocks.AGAVE_FUR,
         LighterEndBlocks.AGAVE_SEED,
-        LighterEndBlocks.AURANT_POLYPORE
+        LighterEndBlocks.AURANT_POLYPORE,
+        LighterEndBlocks.END_FURNACE
     );
   }
 

@@ -279,7 +279,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                 Ingredient.ofItem(LighterEndItems.END_CREAM), RecipeCategory.BREWING,
                 LighterEndItems.END_POWDER, 0.1F, 200)
             .criterion(hasItem(LighterEndBlocks.UMBRELLA_MEMBRANE),
-                this.conditionsFromItem(LighterEndBlocks.UMBRELLA_MEMBRANE))
+                conditionsFromItem(LighterEndBlocks.UMBRELLA_MEMBRANE))
             .offerTo(
                 exporter,
                 RegistryKey.of(
@@ -307,6 +307,14 @@ public class RecipeProvider extends FabricRecipeProvider {
             LighterEndItems.CRAB_CAKE,
             RecipeCategory.FOOD
         );
+
+        createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.END_FURNACE)
+            .input('#', Blocks.END_STONE)
+            .pattern("###")
+            .pattern("# #")
+            .pattern("###")
+            .criterion(hasItem(Blocks.END_STONE), this.conditionsFromItem(Blocks.END_STONE))
+            .offerTo(this.exporter);
       }
 
       public void generateMaterialRecipes(Material material) {
@@ -426,7 +434,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             ).offerTo(exporter);
         createShapeless(RecipeCategory.BUILDING_BLOCKS, wood.planks, planks_per_log).input(
                 Ingredient.ofItems(wood.log, wood.strippedLog, wood.wood, wood.strippedWood))
-            .criterion(hasItem(wood.log), conditionsFromItem(wood.log)).offerTo(exporter);
+            .criterion(hasItem(wood.log), this.conditionsFromItem(wood.log)).offerTo(exporter);
         offerSlabRecipe(RecipeCategory.BUILDING_BLOCKS, wood.slab, wood.planks);
         offerStairsRecipe(wood.stairs, wood.planks);
         createDoorRecipe(wood.door, Ingredient.ofItem(wood.planks)).criterion(hasItem(wood.planks),
@@ -460,13 +468,13 @@ public class RecipeProvider extends FabricRecipeProvider {
       public void offerStairsRecipe(ItemConvertible output, ItemConvertible input) {
         createStairsRecipe(
             output, Ingredient.ofItem(input)
-        ).criterion(hasItem(input), conditionsFromItem(input)).offerTo(exporter);
+        ).criterion(hasItem(input), this.conditionsFromItem(input)).offerTo(exporter);
       }
 
       public void offerButtonRecipe(ItemConvertible output, ItemConvertible input) {
         createButtonRecipe(
             output, Ingredient.ofItem(input)
-        ).criterion(hasItem(input), conditionsFromItem(input)).offerTo(exporter);
+        ).criterion(hasItem(input), this.conditionsFromItem(input)).offerTo(exporter);
       }
 
       public void generateCookingRecipes(ItemConvertible input, ItemConvertible output) {
@@ -478,7 +486,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             output,
             0.35F,
             600
-        ).criterion(hasItem(input), conditionsFromItem(input)
+        ).criterion(hasItem(input), this.conditionsFromItem(input)
         ).offerTo(
             exporter,
             RegistryKey.of(
@@ -500,7 +508,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             output,
             0.35F,
             200
-        ).criterion(hasItem(input), conditionsFromItem(input)
+        ).criterion(hasItem(input), this.conditionsFromItem(input)
         ).offerTo(
             exporter,
             RegistryKey.of(RegistryKeys.RECIPE,

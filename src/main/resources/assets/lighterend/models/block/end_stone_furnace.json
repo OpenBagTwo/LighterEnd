@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "lighterend:block/end_stone_furnace_top",
+    "front": "lighterend:block/end_stone_furnace_front",
+    "side": "lighterend:block/end_stone_furnace_side",
+    "top": "lighterend:block/end_stone_furnace_top"
+  }
+}

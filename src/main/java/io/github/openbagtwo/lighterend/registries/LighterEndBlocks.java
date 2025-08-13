@@ -10,6 +10,7 @@ import io.github.openbagtwo.lighterend.blocks.EndLily;
 import io.github.openbagtwo.lighterend.blocks.EndLotus;
 import io.github.openbagtwo.lighterend.blocks.EndMoss;
 import io.github.openbagtwo.lighterend.blocks.Fur;
+import io.github.openbagtwo.lighterend.blocks.Furnaces;
 import io.github.openbagtwo.lighterend.blocks.GlowshroomCap;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.Polypore;
@@ -197,6 +198,8 @@ public class LighterEndBlocks {
       "purple_polypore",
       settings -> new Polypore(settings, MapColor.MAGENTA, 0)
   );
+
+  public static final Block END_FURNACE = register("end_stone_furnace", Furnaces.EndFurnace::new);
 
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);
