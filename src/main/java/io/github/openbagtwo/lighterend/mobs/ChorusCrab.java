@@ -7,12 +7,14 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.goal.AnimalMateGoal;
 import net.minecraft.entity.ai.goal.FleeEntityGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.SpiderNavigation;
@@ -30,6 +32,8 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.server.world.ServerWorld;
@@ -58,6 +62,7 @@ public class ChorusCrab extends AnimalEntity {
         .add(EntityAttributes.MOVEMENT_SPEED, 0.1)
         .add(EntityAttributes.JUMP_STRENGTH, 0)
         .add(EntityAttributes.STEP_HEIGHT, 2.0)
+        .add(EntityAttributes.TEMPT_RANGE, 8.0)
         .add(EntityAttributes.ATTACK_DAMAGE, 2.0)
         .add(EntityAttributes.ATTACK_KNOCKBACK, 3.0)
         .add(EntityAttributes.ATTACK_SPEED, 0.1)
@@ -72,13 +77,18 @@ public class ChorusCrab extends AnimalEntity {
     this.goalSelector.add(1, new SwimGoal(this));
     this.goalSelector.add(1, new RevengeGoal(this));
     this.goalSelector.add(2, new MeleeAttackGoal(this, 0.5, false));
+    this.goalSelector.add(3, new MateGoal(this));
     this.goalSelector.add(
-        3,
+        4,
+        new TemptGoal(this, 0.8F, Ingredient.ofItems(Items.CHORUS_FLOWER), true)
+    );
+    this.goalSelector.add(
+        5,
         new FleeEntityGoal(this, PlayerEntity.class, 3.0F, 0.25F, 1F, (entity) -> true)
     );
-    this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.8));
-    this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
-    this.goalSelector.add(6, new LookAroundGoal(this));
+    this.goalSelector.add(8, new WanderAroundFarGoal(this, 0.8));
+    this.goalSelector.add(10, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
+    this.goalSelector.add(10, new LookAroundGoal(this));
   }
 
   @Override
@@ -114,7 +124,7 @@ public class ChorusCrab extends AnimalEntity {
   ) {
     entityData = super.initialize(world, difficulty, spawnReason, entityData);
 
-    if (world.getRandom().nextInt(512) == 0) {
+    if (world.getRandom().nextInt(512) == 0 && (spawnReason != SpawnReason.BREEDING)) {
       EndermanEntity rider = EntityType.ENDERMAN.create(this.getWorld(), SpawnReason.JOCKEY);
       if (rider != null) {
         rider.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), 0.0F);
@@ -140,7 +150,7 @@ public class ChorusCrab extends AnimalEntity {
 
   @Override
   public boolean isBreedingItem(ItemStack stack) {
-    return false;
+    return stack.isOf(Items.CHORUS_FLOWER);
   }
 
   @Override
@@ -160,6 +170,25 @@ public class ChorusCrab extends AnimalEntity {
     if (!this.getWorld().isClient) {
       this.setClimbingWall(this.horizontalCollision);
     }
+    if (this.getBreedingAge() >= 0 && this.hasVehicle()) {
+      this.dismountVehicle();
+    }
+  }
+
+  @Override
+  public boolean canBreedWith(AnimalEntity other) {
+    if (this.hasPassengers() || other.hasPassengers()) {
+      return false;
+    }
+    return super.canBreedWith(other);
+  }
+
+  @Override
+  public void breed(ServerWorld world, AnimalEntity other, @Nullable PassiveEntity baby) {
+    super.breed(world, other, baby);
+    if (baby != null) {
+      baby.startRiding(this, true);
+    }
   }
 
   public void setClimbingWall(boolean climbing) {
@@ -171,5 +200,36 @@ public class ChorusCrab extends AnimalEntity {
     }
 
     this.dataTracker.set(CLIMBING, b);
+  }
+
+  class MateGoal extends AnimalMateGoal {
+
+    public MateGoal(AnimalEntity crab) {
+      super(crab, 1.0F);
+    }
+
+    @Override
+    public boolean canStart() {
+      if (this.animal.hasPassengers()) {
+        return false;
+      }
+      return super.canStart();
+    }
+
+    @Override
+    public boolean shouldContinue() {
+      if (!this.mate.hasPassengers()) {
+        return false;
+      }
+      return super.shouldContinue();
+    }
+
+    @Override
+    public void tick() {
+      super.tick();
+      if (this.animal.squaredDistanceTo(this.mate) < 9.0) {  // kludge to fix failure to breed
+        this.breed();
+      }
+    }
   }
 }

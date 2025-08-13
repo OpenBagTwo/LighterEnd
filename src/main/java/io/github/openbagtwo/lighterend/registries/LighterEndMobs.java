@@ -71,7 +71,7 @@ public class LighterEndMobs {
       EntityType.Builder.create(ChorusCrab::new, SpawnGroup.CREATURE)
           .dimensions(2.8F, 0.75F)
           .eyeHeight(1.0F)
-          .passengerAttachments(0.7F)
+          .passengerAttachments(0.75F)
           .maxTrackingRange(4)
   );
 

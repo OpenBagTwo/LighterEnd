@@ -35,6 +35,7 @@ public class EntityModels {
   public static final EntityModelLayer END_SLIME_SHELL_MODEL = makeLayer("end_slime_shell");
   public static final EntityModelLayer MOOSHROOM_MODEL = makeLayer("mooshroom");
   public static final EntityModelLayer CRAB_MODEL = makeLayer("chorus_crab");
+  public static final EntityModelLayer CRAB_BABY = makeLayer("chorus_crab_baby");
 
   public static void initialize() {
     EntityModelLayerRegistry.registerModelLayer(EntityModels.SILK_MOTH_MODEL,
@@ -71,6 +72,9 @@ public class EntityModels {
     EntityModelLayerRegistry.registerModelLayer(EntityModels.CRAB_MODEL,
         CrabModel::getTexturedModelData);
     register(LighterEndMobs.CHORUS_CRAB.mob, CrabRenderer::new);
+
+    EntityModelLayerRegistry.registerModelLayer(CRAB_BABY,
+        () -> CrabModel.getTexturedModelData().transform(CrabModel.BABY_TRANSFORMER));
   }
 
   private static void register(EntityType<?> type, Function<Context, MobEntityRenderer> renderer) {
