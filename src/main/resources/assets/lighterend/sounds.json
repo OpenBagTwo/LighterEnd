@@ -134,6 +134,61 @@
     ],
     "subtitle": "subtitles.lighterend.block.silk_moth_nest.work"
   },
+  "entity.crab.death": {
+    "sounds": [
+      {
+        "name": "mob/silverfish/kill",
+        "pitch": 0.1
+      }
+    ],
+    "subtitle": "subtitles.lighterend.entity.crab.death"
+  },
+  "entity.crab.hurt": {
+    "sounds": [
+      {
+        "name": "entity/armorstand/hit1",
+        "pitch": 0.5
+      },
+      {
+        "name": "entity/armorstand/hit2",
+        "pitch": 0.5
+      },
+      {
+        "name": "entity/armorstand/hit3",
+        "pitch": 0.5
+      },
+      {
+        "name": "entity/armorstand/hit4",
+        "pitch": 0.5
+      }
+    ],
+    "subtitle": "subtitles.lighterend.entity.crab.hurt"
+  },
+  "entity.crab.step": {
+    "sounds": [
+      {
+        "name": "mob/spider/step1",
+        "pitch": 0.4,
+        "volume": 0.8
+      },
+      {
+        "name": "mob/spider/step2",
+        "pitch": 0.4,
+        "volume": 0.8
+      },
+      {
+        "name": "mob/spider/step3",
+        "pitch": 0.4,
+        "volume": 0.8
+      },
+      {
+        "name": "mob/spider/step4",
+        "pitch": 0.4,
+        "volume": 0.8
+      }
+    ],
+    "subtitle": "subtitles.lighterend.entity.crab.step"
+  },
   "entity.cubozoa.flop": {
     "sounds": [
       {

@@ -18,7 +18,6 @@ public class LighterEndSounds {
   public static final SoundEvent END_FISH_HURT = register("entity.end_fish.hurt");
   public static final SoundEvent END_FISH_DEATH = register("entity.end_fish.death");
   public static final SoundEvent CUBOZOA_FLOP = register("entity.cubozoa.flop");
-  public static final SoundEvent CRAB_IDLE = register("entity.crab.flop");
   public static final SoundEvent CRAB_HURT = register("entity.crab.hurt");
   public static final SoundEvent CRAB_DEATH = register("entity.crab.death");
   public static final SoundEvent CRAB_STEP = register("entity.crab.step");

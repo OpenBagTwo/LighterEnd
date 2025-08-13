@@ -82,11 +82,6 @@ public class ChorusCrab extends AnimalEntity {
   }
 
   @Override
-  protected SoundEvent getAmbientSound() {
-    return LighterEndSounds.CRAB_IDLE;
-  }
-
-  @Override
   protected SoundEvent getHurtSound(DamageSource source) {
     return LighterEndSounds.CRAB_HURT;
   }
