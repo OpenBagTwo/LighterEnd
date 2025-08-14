@@ -3,6 +3,7 @@ package io.github.openbagtwo.lighterend.registries;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.items.Fur;
 import io.github.openbagtwo.lighterend.items.LighterEndFoodComponents;
+import io.github.openbagtwo.lighterend.items.TPTotem;
 import io.github.openbagtwo.lighterend.registries.LighterEndData.SilkLevelComponent;
 import java.util.function.Function;
 import net.minecraft.component.DataComponentTypes;
@@ -81,14 +82,23 @@ public class LighterEndItems {
   public static final Item END_POWDER = register("end_powder");
 
   public static final Item CRAB_CLAW = register("crab_claw");
-  public static final Item CRAB_MEAT = register("crab_meat",
+  public static final Item CRAB_MEAT = register(
+      "crab_meat",
       new Settings().food(
           LighterEndFoodComponents.CRAB_MEAT,
           LighterEndFoodComponents.RAW_CRAB_MEAT_EFFECT
       )
   );
-  public static final Item CRAB_CAKE = register("crab_cake",
-      new Settings().food(LighterEndFoodComponents.CRAB_CAKE));
+  public static final Item CRAB_CAKE = register(
+      "crab_cake",
+      new Settings().food(LighterEndFoodComponents.CRAB_CAKE)
+  );
+
+  public static final Item TOTEM_OF_TELEPORTATION = register(
+      "totem_of_teleportation",
+      TPTotem::new,
+      new Settings()
+  );
 
   public static Item register(String name) {
     return register(name, new Settings());

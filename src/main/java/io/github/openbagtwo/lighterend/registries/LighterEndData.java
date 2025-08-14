@@ -1,10 +1,12 @@
 package io.github.openbagtwo.lighterend.registries;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.blocks.entities.SilkMothNestEntity;
 import io.github.openbagtwo.lighterend.blocks.entities.SilkMothNestEntity.MothData;
+import io.github.openbagtwo.lighterend.items.TPTotem.FixedTeleport;
 import io.netty.buffer.ByteBuf;
 import java.util.List;
 import java.util.function.Consumer;
@@ -13,8 +15,10 @@ import net.minecraft.component.ComponentType;
 import net.minecraft.component.ComponentType.Builder;
 import net.minecraft.component.ComponentsAccess;
 import net.minecraft.item.Item;
+import net.minecraft.item.consume.ConsumeEffect;
 import net.minecraft.item.tooltip.TooltipAppender;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
@@ -100,6 +104,10 @@ public class LighterEndData {
     );
   }
 
+  public static final ConsumeEffect.Type<FixedTeleport> TOTEM_TELEPORT = registerConsumeComponent(
+      "totem_teleport", FixedTeleport.CODEC, FixedTeleport.PACKET_CODEC
+  );
+
   private static <T> ComponentType<T> registerDataComponent(String name,
       UnaryOperator<Builder<T>> builderOperator) {
     return Registry.register(
@@ -107,6 +115,12 @@ public class LighterEndData {
         LighterEnd.of(name),
         builderOperator.apply(ComponentType.builder()).build()
     );
+  }
+
+  private static <T extends ConsumeEffect> ConsumeEffect.Type<T> registerConsumeComponent(String id,
+      MapCodec<T> codec, PacketCodec<RegistryByteBuf, T> packetCodec) {
+    return Registry.register(Registries.CONSUME_EFFECT_TYPE, id,
+        new ConsumeEffect.Type<>(codec, packetCodec));
   }
 
   public static void initialize() {

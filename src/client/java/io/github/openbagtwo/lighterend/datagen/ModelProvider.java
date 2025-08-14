@@ -142,6 +142,7 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndItems.CRAB_CLAW,
         LighterEndItems.CRAB_MEAT,
         LighterEndItems.CRAB_CAKE,
+        LighterEndItems.TOTEM_OF_TELEPORTATION,
         LighterEndMusicDiscs.ENDSEEKER,
         LighterEndMusicDiscs.EO_DRACONA,
         LighterEndMusicDiscs.GRASPING_AT_STARS,
