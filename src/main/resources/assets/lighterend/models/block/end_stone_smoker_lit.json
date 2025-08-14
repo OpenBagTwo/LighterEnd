@@ -23,7 +23,7 @@
       "faces": {
         "down": {
           "cullface": "down",
-          "texture": "#top"
+          "texture": "#bottom"
         },
         "east": {
           "cullface": "east",
@@ -99,11 +99,12 @@
   ],
   "parent": "block/block",
   "textures": {
+    "bottom": "lighterend:block/end_stone_smoker_bottom",
     "emissive": "lighterend:block/end_stone_furnace_glow_e",
-    "front": "lighterend:block/end_stone_furnace_front_on",
+    "front": "lighterend:block/end_stone_smoker_front",
     "glow": "lighterend:block/end_stone_furnace_glow",
     "particle": "minecraft:block/end_stone",
-    "side": "lighterend:block/end_stone_furnace_side",
-    "top": "lighterend:block/end_stone_furnace_top"
+    "side": "lighterend:block/end_stone_smoker_side",
+    "top": "lighterend:block/end_stone_smoker_top"
   }
 }

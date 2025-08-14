@@ -130,6 +130,7 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     addDrop(LighterEndBlocks.AURANT_POLYPORE);
     addDrop(LighterEndBlocks.PURPLE_POLYPORE);
     addDrop(LighterEndBlocks.END_FURNACE, this::nameableContainerDrops);
+    addDrop(LighterEndBlocks.END_SMOKER, this::nameableContainerDrops);
   }
 
   private LootTable.Builder auroraCrystalDrops() {

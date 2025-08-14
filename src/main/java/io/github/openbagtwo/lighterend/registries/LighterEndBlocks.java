@@ -200,6 +200,7 @@ public class LighterEndBlocks {
   );
 
   public static final Block END_FURNACE = register("end_stone_furnace", Furnaces.EndFurnace::new);
+  public static final Block END_SMOKER = register("end_stone_smoker", Furnaces.EndSmoker::new);
 
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);

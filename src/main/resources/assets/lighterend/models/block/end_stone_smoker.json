@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "lighterend:block/end_stone_smoker_bottom",
+    "front": "lighterend:block/end_stone_smoker_front",
+    "side": "lighterend:block/end_stone_smoker_side",
+    "top": "lighterend:block/end_stone_smoker_top"
+  }
+}

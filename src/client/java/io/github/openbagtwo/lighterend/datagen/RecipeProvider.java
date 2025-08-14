@@ -24,6 +24,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
+import net.minecraft.registry.tag.ItemTags;
 
 public class RecipeProvider extends FabricRecipeProvider {
 
@@ -315,6 +316,30 @@ public class RecipeProvider extends FabricRecipeProvider {
             .pattern("###")
             .criterion(hasItem(Blocks.END_STONE), this.conditionsFromItem(Blocks.END_STONE))
             .offerTo(this.exporter);
+        this.createShapeless(RecipeCategory.TRANSPORTATION, Items.FURNACE_MINECART)
+            .input(LighterEndBlocks.END_FURNACE)
+            .input(Items.MINECART)
+            .criterion(
+                hasItem(LighterEndBlocks.END_FURNACE),
+                this.conditionsFromItem(LighterEndBlocks.END_FURNACE)
+            ).offerTo(
+                exporter,
+                RegistryKey.of(
+                    RegistryKeys.RECIPE,
+                    LighterEnd.of("furnace_minecart_from_end_stone_furnace")
+                )
+            );
+        this.createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.END_SMOKER)
+            .input('#', ItemTags.LOGS)
+            .input('X', LighterEndBlocks.END_FURNACE)
+            .pattern(" # ")
+            .pattern("#X#")
+            .pattern(" # ")
+            .criterion(
+                hasItem(LighterEndBlocks.END_FURNACE),
+                this.conditionsFromItem(LighterEndBlocks.END_FURNACE)
+            ).offerTo(this.exporter);
+
       }
 
       public void generateMaterialRecipes(Material material) {
