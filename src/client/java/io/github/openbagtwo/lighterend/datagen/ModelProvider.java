@@ -172,6 +172,7 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndBlocks.AURANT_POLYPORE.asItem(),
         LighterEndBlocks.PURPLE_POLYPORE.asItem(),
         LighterEndBlocks.END_LEVER.asItem(),
+        LighterEndBlocks.OBELISK.asItem(),
         LighterEndMobs.SILK_MOTH.spawnEgg,
         LighterEndMobs.DRAGONFLY.spawnEgg,
         LighterEndMobs.END_FISH.spawnEgg,

@@ -13,6 +13,7 @@ import io.github.openbagtwo.lighterend.blocks.Fur;
 import io.github.openbagtwo.lighterend.blocks.Furnaces;
 import io.github.openbagtwo.lighterend.blocks.GlowshroomCap;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
+import io.github.openbagtwo.lighterend.blocks.Obelisk;
 import io.github.openbagtwo.lighterend.blocks.Polypore;
 import io.github.openbagtwo.lighterend.blocks.Sapling;
 import io.github.openbagtwo.lighterend.blocks.Signs;
@@ -211,6 +212,8 @@ public class LighterEndBlocks {
               .pistonBehavior(PistonBehavior.DESTROY)
       )
   );
+
+  public static final Block OBELISK = register("obelisk", Obelisk::new);
 
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);

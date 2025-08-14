@@ -25,6 +25,8 @@ public abstract class ColorProvidingMixin {
   private void provideColors(RunArgs args, CallbackInfo info) {
     blockColors.registerColorProvider(AuroraCrystalRenderer.getBlockColor(),
         LighterEndBlocks.AURORA_CRYSTAL);
+    blockColors.registerColorProvider(AuroraCrystalRenderer.getBlockColor(),
+        LighterEndBlocks.OBELISK);
     blockColors.registerColorProvider(TenaneaFlowerRenderer.getBlockColor(),
         LighterEndBlocks.TENANEA_FLOWER);
     blockColors.registerColorProvider(EndMossRenderer.getBlockColor(),

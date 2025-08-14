@@ -1,0 +1,126 @@
+{
+  "__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
+  "elements": [
+    {
+      "__comment": "Box1",
+      "faces": {
+        "east": {
+          "texture": "#texture",
+          "uv": [
+            2,
+            14,
+            14,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#texture",
+          "uv": [
+            2,
+            14,
+            14,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#texture",
+          "uv": [
+            2,
+            14,
+            14,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#texture",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        },
+        "west": {
+          "texture": "#texture",
+          "uv": [
+            2,
+            14,
+            14,
+            16
+          ]
+        }
+      },
+      "from": [
+        2,
+        0,
+        2
+      ],
+      "to": [
+        14,
+        2,
+        14
+      ]
+    },
+    {
+      "__comment": "Box1",
+      "faces": {
+        "east": {
+          "texture": "#crystal",
+          "tintindex": 0,
+          "uv": [
+            3,
+            0,
+            13,
+            14
+          ]
+        },
+        "north": {
+          "texture": "#crystal",
+          "tintindex": 0,
+          "uv": [
+            3,
+            0,
+            13,
+            14
+          ]
+        },
+        "south": {
+          "texture": "#crystal",
+          "tintindex": 0,
+          "uv": [
+            3,
+            0,
+            13,
+            14
+          ]
+        },
+        "west": {
+          "texture": "#crystal",
+          "tintindex": 0,
+          "uv": [
+            3,
+            0,
+            13,
+            14
+          ]
+        }
+      },
+      "from": [
+        3,
+        2,
+        3
+      ],
+      "shade": false,
+      "to": [
+        13,
+        16,
+        13
+      ]
+    }
+  ],
+  "textures": {
+    "crystal": "lighterend:block/aurora_crystal",
+    "particle": "lighterend:block/amber_block",
+    "texture": "lighterend:block/respawn_obelisk_top_and_side"
+  }
+}

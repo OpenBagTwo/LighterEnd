@@ -150,6 +150,22 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.POTTED_GLOWSHROOM_SAPLING
     );
 
+    valueLookupBuilder(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).add(
+        LighterEndBlocks.OBELISK
+    );
+    valueLookupBuilder(BlockTags.DRAGON_IMMUNE).add(
+        LighterEndBlocks.OBELISK
+    );
+    valueLookupBuilder(BlockTags.FEATURES_CANNOT_REPLACE).add(
+        LighterEndBlocks.OBELISK
+    );
+    valueLookupBuilder(BlockTags.GEODE_INVALID_BLOCKS).add(
+        LighterEndBlocks.OBELISK
+    );
+    valueLookupBuilder(BlockTags.WITHER_IMMUNE).add(
+        LighterEndBlocks.OBELISK
+    );
+
     valueLookupBuilder(LighterEndTags.END_MOSS_REPLACEABLE)
         .add(
             Blocks.END_STONE,

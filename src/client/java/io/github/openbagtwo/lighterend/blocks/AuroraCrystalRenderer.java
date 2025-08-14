@@ -44,7 +44,8 @@ public class AuroraCrystalRenderer {
   public static void initialize() {
     BlockRenderLayerMap.putBlocks(
         BlockRenderLayer.TRANSLUCENT,
-        LighterEndBlocks.AURORA_CRYSTAL
+        LighterEndBlocks.AURORA_CRYSTAL,
+        LighterEndBlocks.OBELISK
     );
   }
 

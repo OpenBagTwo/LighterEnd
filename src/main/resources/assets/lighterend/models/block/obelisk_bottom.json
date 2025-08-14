@@ -1,0 +1,200 @@
+{
+  "__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
+  "elements": [
+    {
+      "__comment": "Box1",
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#texture",
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ]
+        },
+        "east": {
+          "texture": "#side",
+          "uv": [
+            1,
+            12,
+            15,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#side",
+          "uv": [
+            1,
+            12,
+            15,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#side",
+          "uv": [
+            1,
+            12,
+            15,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#texture",
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ]
+        },
+        "west": {
+          "texture": "#side",
+          "uv": [
+            1,
+            12,
+            15,
+            16
+          ]
+        }
+      },
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        15,
+        4,
+        15
+      ]
+    },
+    {
+      "__comment": "Box1",
+      "faces": {
+        "east": {
+          "texture": "#side",
+          "uv": [
+            2,
+            2,
+            14,
+            12
+          ]
+        },
+        "north": {
+          "texture": "#side",
+          "uv": [
+            2,
+            2,
+            14,
+            12
+          ]
+        },
+        "south": {
+          "texture": "#side",
+          "uv": [
+            2,
+            2,
+            14,
+            12
+          ]
+        },
+        "west": {
+          "texture": "#side",
+          "uv": [
+            2,
+            2,
+            14,
+            12
+          ]
+        }
+      },
+      "from": [
+        2,
+        4,
+        2
+      ],
+      "to": [
+        14,
+        14,
+        14
+      ]
+    },
+    {
+      "__comment": "Box1",
+      "faces": {
+        "down": {
+          "texture": "#texture",
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ]
+        },
+        "east": {
+          "texture": "#side",
+          "uv": [
+            1,
+            0,
+            15,
+            2
+          ]
+        },
+        "north": {
+          "texture": "#side",
+          "uv": [
+            1,
+            0,
+            15,
+            2
+          ]
+        },
+        "south": {
+          "texture": "#side",
+          "uv": [
+            1,
+            0,
+            15,
+            2
+          ]
+        },
+        "up": {
+          "texture": "#texture",
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ]
+        },
+        "west": {
+          "texture": "#side",
+          "uv": [
+            1,
+            0,
+            15,
+            2
+          ]
+        }
+      },
+      "from": [
+        1,
+        14,
+        1
+      ],
+      "to": [
+        15,
+        16,
+        15
+      ]
+    }
+  ],
+  "textures": {
+    "particle": "lighterend:block/amber_block",
+    "side": "lighterend:block/respawn_obelisk_bottom_side",
+    "texture": "lighterend:block/amber_block"
+  }
+}
