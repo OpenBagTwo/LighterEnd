@@ -41,6 +41,7 @@ import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.block.LadderBlock;
+import net.minecraft.block.LeverBlock;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.block.PressurePlateBlock;
@@ -201,6 +202,15 @@ public class LighterEndBlocks {
 
   public static final Block END_FURNACE = register("end_stone_furnace", Furnaces.EndFurnace::new);
   public static final Block END_SMOKER = register("end_stone_smoker", Furnaces.EndSmoker::new);
+
+  public static final Block END_LEVER = register("end_stone_lever", settings -> new LeverBlock(
+          settings
+              .noCollision()
+              .strength(1.0F)
+              .sounds(BlockSoundGroup.STONE)
+              .pistonBehavior(PistonBehavior.DESTROY)
+      )
+  );
 
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);

@@ -340,6 +340,13 @@ public class RecipeProvider extends FabricRecipeProvider {
                 this.conditionsFromItem(LighterEndBlocks.END_FURNACE)
             ).offerTo(this.exporter);
 
+        this.createShaped(RecipeCategory.REDSTONE, LighterEndBlocks.END_LEVER)
+            .input('#', Blocks.END_STONE)
+            .input('X', Items.STICK)
+            .pattern("X")
+            .pattern("#")
+            .criterion(hasItem(Blocks.END_STONE), this.conditionsFromItem(Blocks.END_STONE))
+            .offerTo(this.exporter);
       }
 
       public void generateMaterialRecipes(Material material) {

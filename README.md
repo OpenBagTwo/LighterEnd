@@ -137,6 +137,8 @@ Many thanks:
   example of adding custom signs
 - to the [Enderscape](https://github.com/they-made-enderscape/enderscape) team for great modern
   examples of library-free worldgen and terrain modification
+- to [Vanilla Tweaks](https://vanillatweaks.net/picker/resource-packs/) for the concept of grooved
+  levers
 
 You **may** use, modify and redistribute this mod, and you **may** include this mod within your
 modpack or run it on a server, so long as you abide by the terms of

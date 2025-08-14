@@ -1,0 +1,171 @@
+{
+  "ambientocclusion": false,
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#base",
+          "uv": [
+            5,
+            4,
+            11,
+            12
+          ]
+        },
+        "east": {
+          "texture": "#base",
+          "uv": [
+            4,
+            0,
+            12,
+            3
+          ]
+        },
+        "north": {
+          "texture": "#base",
+          "uv": [
+            5,
+            0,
+            11,
+            3
+          ]
+        },
+        "south": {
+          "texture": "#base",
+          "uv": [
+            5,
+            0,
+            11,
+            3
+          ]
+        },
+        "up": {
+          "texture": "#base",
+          "uv": [
+            5,
+            4,
+            11,
+            12
+          ]
+        },
+        "west": {
+          "texture": "#base",
+          "uv": [
+            4,
+            0,
+            12,
+            3
+          ]
+        }
+      },
+      "from": [
+        5,
+        -0.02,
+        4
+      ],
+      "to": [
+        11,
+        2.98,
+        12
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#lever",
+          "uv": [
+            7,
+            6,
+            9,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#lever",
+          "uv": [
+            7,
+            6,
+            9,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#lever",
+          "uv": [
+            7,
+            6,
+            9,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#lever",
+          "uv": [
+            7,
+            6,
+            9,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#lever",
+          "uv": [
+            7,
+            6,
+            9,
+            16
+          ]
+        }
+      },
+      "from": [
+        7,
+        1,
+        7
+      ],
+      "rotation": {
+        "angle": 45,
+        "axis": "x",
+        "origin": [
+          8,
+          1,
+          8
+        ]
+      },
+      "to": [
+        9,
+        11,
+        9
+      ]
+    },
+    {
+      "faces": {
+        "up": {
+          "texture": "#groove",
+          "uv": [
+            0,
+            0,
+            2,
+            6
+          ]
+        }
+      },
+      "from": [
+        7,
+        3.001,
+        5
+      ],
+      "to": [
+        9,
+        3.001,
+        11
+      ]
+    }
+  ],
+  "textures": {
+    "base": "minecraft:block/end_stone",
+    "groove": "lighterend:block/end_stone_lever_groove_unpowered",
+    "lever": "lighterend:item/end_stone_lever",
+    "particle": "minecraft:block/end_stone"
+  }
+}
