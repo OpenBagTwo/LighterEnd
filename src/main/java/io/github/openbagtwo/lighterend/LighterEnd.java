@@ -1,7 +1,7 @@
 package io.github.openbagtwo.lighterend;
 
-import io.github.openbagtwo.lighterend.Items.ItemGroups;
 import io.github.openbagtwo.lighterend.config.Config;
+import io.github.openbagtwo.lighterend.items.ItemGroups;
 import io.github.openbagtwo.lighterend.misc.Composting;
 import io.github.openbagtwo.lighterend.misc.Fire;
 import io.github.openbagtwo.lighterend.misc.LighterEndPotions;

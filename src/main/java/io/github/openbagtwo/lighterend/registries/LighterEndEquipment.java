@@ -1,8 +1,8 @@
 package io.github.openbagtwo.lighterend.registries;
 
 import com.google.common.collect.Maps;
-import io.github.openbagtwo.lighterend.Items.ArmoredElytra;
 import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.items.ArmoredElytra;
 import java.util.Map;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;

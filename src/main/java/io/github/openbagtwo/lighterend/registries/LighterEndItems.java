@@ -1,8 +1,8 @@
 package io.github.openbagtwo.lighterend.registries;
 
-import io.github.openbagtwo.lighterend.Items.Fur;
-import io.github.openbagtwo.lighterend.Items.LighterEndFoodComponents;
 import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.items.Fur;
+import io.github.openbagtwo.lighterend.items.LighterEndFoodComponents;
 import io.github.openbagtwo.lighterend.registries.LighterEndData.SilkLevelComponent;
 import java.util.function.Function;
 import net.minecraft.component.DataComponentTypes;

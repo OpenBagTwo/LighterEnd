@@ -1,4 +1,4 @@
-package io.github.openbagtwo.lighterend.Items;
+package io.github.openbagtwo.lighterend.items;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import net.minecraft.component.DataComponentTypes;

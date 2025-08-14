@@ -1,7 +1,7 @@
 package io.github.openbagtwo.lighterend.mixin;
 
 
-import io.github.openbagtwo.lighterend.Items.ArmoredElytra;
+import io.github.openbagtwo.lighterend.items.ArmoredElytra;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
