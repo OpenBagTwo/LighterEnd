@@ -39,4 +39,11 @@ public class LighterEndFoodComponents {
       .saturationModifier(0.3F).build();
   public static final FoodComponent CRAB_CAKE = new FoodComponent.Builder().nutrition(7)
       .saturationModifier(0.7F).build();
+
+  public static final ConsumableComponent RAW_CRAB_MEAT_EFFECT = ConsumableComponents.food()
+      .consumeEffect(
+          new ApplyEffectsConsumeEffect(
+              new StatusEffectInstance(StatusEffects.HUNGER, 600, 0),
+              0.5F)
+      ).build();
 }

@@ -82,7 +82,11 @@ public class LighterEndItems {
 
   public static final Item CRAB_CLAW = register("crab_claw");
   public static final Item CRAB_MEAT = register("crab_meat",
-      new Settings().food(LighterEndFoodComponents.CRAB_MEAT));
+      new Settings().food(
+          LighterEndFoodComponents.CRAB_MEAT,
+          LighterEndFoodComponents.RAW_CRAB_MEAT_EFFECT
+      )
+  );
   public static final Item CRAB_CAKE = register("crab_cake",
       new Settings().food(LighterEndFoodComponents.CRAB_CAKE));
 
