@@ -19,16 +19,19 @@ import net.minecraft.item.consume.ClearAllEffectsConsumeEffect;
 import net.minecraft.item.consume.ConsumeEffect;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Rarity;
+import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+import org.jetbrains.annotations.Nullable;
 
 public class TPTotem extends Item {
 
@@ -41,6 +44,12 @@ public class TPTotem extends Item {
     );
   }
 
+  @Nullable
+  public BlockPos getTPTarget() {
+    return new BlockPos(3000, 100, 8);
+  }
+
+
   public static final DeathProtectionComponent TOTEM_EFFECTS = new DeathProtectionComponent(
       List.of(
           new ClearAllEffectsConsumeEffect(),
@@ -51,23 +60,27 @@ public class TPTotem extends Item {
                   new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0)
               )
           ),
-          new FixedTeleport(new BlockPos(3000, 100, 8))
+          new FixedTeleport()
       )
   );
 
-  public record FixedTeleport(BlockPos pos) implements ConsumeEffect {
+  public record FixedTeleport(float diameter) implements ConsumeEffect {
 
-    private static final float DIAMETER = 4F;
+    private static final float DEFAULT_DIAMETER = 16F;
     public static final MapCodec<FixedTeleport> CODEC = RecordCodecBuilder.mapCodec(
         instance -> instance.group(
-                BlockPos.CODEC.fieldOf("pos").forGetter(
-                    FixedTeleport::pos))
-            .apply(instance, FixedTeleport::new)
+            Codecs.POSITIVE_FLOAT.optionalFieldOf("diameter", DEFAULT_DIAMETER)
+                .forGetter(FixedTeleport::diameter)
+        ).apply(instance, FixedTeleport::new)
     );
     public static final PacketCodec<RegistryByteBuf, FixedTeleport> PACKET_CODEC = PacketCodec.tuple(
-        BlockPos.PACKET_CODEC, FixedTeleport::pos,
+        PacketCodecs.FLOAT, FixedTeleport::diameter,
         FixedTeleport::new
     );
+
+    public FixedTeleport() {
+      this(DEFAULT_DIAMETER);
+    }
 
     @Override
     public ConsumeEffect.Type<FixedTeleport> getType() {
@@ -77,15 +90,23 @@ public class TPTotem extends Item {
     @Override
     public boolean onConsume(World world, ItemStack stack, LivingEntity user) {
       boolean bl = false;
-      world.getWorldChunk(this.pos).setLoadedToWorld(true);
+      @Nullable BlockPos tpTarget = null;
+      if (stack.getItem() instanceof TPTotem totem) {
+        tpTarget = totem.getTPTarget();
+      }
+      if (tpTarget == null) {
+        System.out.println("NO target??");
+        return false;
+      }
+      world.getWorldChunk(tpTarget).setLoadedToWorld(true);
       for (int i = 0; i < 16; i++) {
-        double d = this.pos.getX() + (user.getRandom().nextDouble() - 0.5) * DIAMETER;
+        double d = tpTarget.getX() + (user.getRandom().nextDouble() - 0.5) * this.diameter;
         double e = MathHelper.clamp(
-            this.pos.getY() + (user.getRandom().nextDouble() - 0.5) * DIAMETER,
+            tpTarget.getY() + (user.getRandom().nextDouble() - 0.5) * this.diameter,
             world.getBottomY(),
             (world.getBottomY() + ((ServerWorld) world).getLogicalHeight() - 1)
         );
-        double f = this.pos.getZ() + (user.getRandom().nextDouble() - 0.5) * DIAMETER;
+        double f = tpTarget.getZ() + (user.getRandom().nextDouble() - 0.5) * this.diameter;
         if (user.hasVehicle()) {
           user.stopRiding();
         }
@@ -107,8 +128,6 @@ public class TPTotem extends Item {
           user.onLanding();
           bl = true;
           break;
-        } else {
-          System.out.println("TP Failed :(");
         }
       }
 
