@@ -34,7 +34,7 @@ Subject, of course, to change
   `/place`d into a world, along with their associated blocks (read: wood sets) and at least one mob
 - [x] **Alpha 3**: An armored elytra (see below)
 - [x] **Alpha 4** Bring back the music discs and modify the vanilla loot tables to provide them
-- [ ] **First Beta**: Introduce the first biomes and a start modifying the worldgen so stuff
+- [x] **First Beta**: Introduce the first biomes and a start modifying the worldgen so stuff
   naturally spawns
 - [ ] **First Release**: A full mod experience where a player can start in The End and "beat the
   game" from The End
@@ -64,10 +64,9 @@ On the flip side, LighterEnd has or will have features not present in BetterEnd
 - [x] Silk Elytra—a craftable, trimmable and renewable armored elytra
 - [x] New survival-challenge-friendly crafting recipes (such as the ability to get paper from end
   lily leaves and arrows from cubozoa drops)
-- [ ] Sniffers that sploot on End Moss will dig up rare End saplings
-- [ ] Breeding villagers in The End might produce End Villagers, who will have exclusive
-  professions,
-  job sites and trades
+- [x] Sniffers that sploot on End Moss will dig up rare End saplings
+- [ ] Obelisks that you can teleport to upon almost dying (meaning your stuff is safe even if you
+  fall into The Void)
 - [ ] New trim materials (and possibly trim patterns)
 
 ### Broad Compatibility
