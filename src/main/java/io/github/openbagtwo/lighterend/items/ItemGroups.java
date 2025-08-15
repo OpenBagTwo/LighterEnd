@@ -25,6 +25,7 @@ public final class ItemGroups {
            */
           .entries((displayContext, entries) -> Registries.ITEM.getIds()
               .stream()
+              .sorted()
               .filter(key -> key.getNamespace().equals(LighterEnd.MOD_ID) && !key.getPath()
                   .endsWith("wall_sign") && !key.getPath().endsWith("wall_hanging_sign"))
               .map(Registries.ITEM::get)
