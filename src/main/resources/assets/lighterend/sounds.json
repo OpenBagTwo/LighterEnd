@@ -301,6 +301,24 @@
     ],
     "subtitle": "subtitles.lighterend.item.armor.equip_silk"
   },
+  "item.totem_of_teleportation.set": {
+    "sounds": [
+      {
+        "name": "block.respawn_anchor.charge",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.lighterend.item.totem_of_teleportation.set"
+  },
+  "item.totem_of_teleportation.teleport": {
+    "sounds": [
+      {
+        "name": "block.respawn_anchor.deplete",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.lighterend.item.totem_of_teleportation.teleport"
+  },
   "item.umbrella_juice.drink": {
     "sounds": [
       "item/bottle/drink_honey1",
