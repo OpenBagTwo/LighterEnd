@@ -52,6 +52,13 @@ public abstract class TooltipMixin {
         textConsumer,
         type
     );
+    this.appendComponentTooltip(
+        LighterEndData.TOTEM_TARGET,
+        context,
+        displayComponent,
+        textConsumer,
+        type
+    );
 
   }
 

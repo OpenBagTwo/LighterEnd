@@ -3,6 +3,7 @@ package io.github.openbagtwo.lighterend.items;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.Obelisk;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndData;
@@ -11,7 +12,9 @@ import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.netty.buffer.ByteBuf;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import net.minecraft.block.BlockState;
+import net.minecraft.component.ComponentsAccess;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DeathProtectionComponent;
 import net.minecraft.entity.LivingEntity;
@@ -25,13 +28,17 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
 import net.minecraft.item.consume.ClearAllEffectsConsumeEffect;
 import net.minecraft.item.consume.ConsumeEffect;
+import net.minecraft.item.tooltip.TooltipAppender;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.BlockPos;
@@ -188,7 +195,7 @@ public class TPTotem extends Item {
     }
   }
 
-  public record Target(Optional<GlobalPos> target) {
+  public record Target(Optional<GlobalPos> target) implements TooltipAppender {
 
     public static final Codec<Target> CODEC = RecordCodecBuilder.create(
         instance -> instance.group(
@@ -202,5 +209,30 @@ public class TPTotem extends Item {
         Target::target,
         Target::new
     );
+
+    @Override
+    public void appendTooltip(
+        Item.TooltipContext context,
+        Consumer<Text> textConsumer,
+        TooltipType type,
+        ComponentsAccess components
+    ) {
+
+      if (this.target.isEmpty()) {
+        textConsumer.accept(
+            Text.translatable(
+                "item." + LighterEnd.MOD_ID + ".totem_of_teleportation.no_target"
+            ).formatted(Formatting.GRAY)
+        );
+      } else {
+        textConsumer.accept(
+            Text.translatable(
+                "item." + LighterEnd.MOD_ID + ".totem_of_teleportation.targeting",
+                this.target.get().pos().toShortString(),
+                Text.translatable(this.target.get().dimension().getValue().toTranslationKey())
+            ).formatted(Formatting.GRAY, Formatting.ITALIC)
+        );
+      }
+    }
   }
 }
