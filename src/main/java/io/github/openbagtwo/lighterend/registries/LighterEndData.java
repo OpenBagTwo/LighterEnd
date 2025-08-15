@@ -6,7 +6,8 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.blocks.entities.SilkMothNestEntity;
 import io.github.openbagtwo.lighterend.blocks.entities.SilkMothNestEntity.MothData;
-import io.github.openbagtwo.lighterend.items.TPTotem.FixedTeleport;
+import io.github.openbagtwo.lighterend.items.TPTotem;
+import io.github.openbagtwo.lighterend.items.TPTotem.Target;
 import io.netty.buffer.ByteBuf;
 import java.util.List;
 import java.util.function.Consumer;
@@ -104,8 +105,16 @@ public class LighterEndData {
     );
   }
 
-  public static final ConsumeEffect.Type<FixedTeleport> TOTEM_TELEPORT = registerConsumeComponent(
-      "totem_teleport", FixedTeleport.CODEC, FixedTeleport.PACKET_CODEC
+  public static final ConsumeEffect.Type<TPTotem.FixedTeleport> TOTEM_TELEPORT = registerConsumeComponent(
+      "totem_teleport", TPTotem.FixedTeleport.CODEC, TPTotem.FixedTeleport.PACKET_CODEC
+  );
+
+  public static final ComponentType<Target> TOTEM_TARGET = registerDataComponent(
+      "teleportation_target",
+      builder -> builder
+          .codec(Target.CODEC)
+          .packetCodec(Target.PACKET_CODEC)
+          .cache()
   );
 
   private static <T> ComponentType<T> registerDataComponent(String name,
@@ -117,8 +126,11 @@ public class LighterEndData {
     );
   }
 
-  private static <T extends ConsumeEffect> ConsumeEffect.Type<T> registerConsumeComponent(String id,
-      MapCodec<T> codec, PacketCodec<RegistryByteBuf, T> packetCodec) {
+  private static <T extends ConsumeEffect> ConsumeEffect.Type<T> registerConsumeComponent(
+      String id,
+      MapCodec<T> codec,
+      PacketCodec<RegistryByteBuf, T> packetCodec
+  ) {
     return Registry.register(Registries.CONSUME_EFFECT_TYPE, id,
         new ConsumeEffect.Type<>(codec, packetCodec));
   }

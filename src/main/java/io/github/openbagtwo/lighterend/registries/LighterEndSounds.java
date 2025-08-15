@@ -22,6 +22,7 @@ public class LighterEndSounds {
   public static final SoundEvent CRAB_DEATH = register("entity.crab.death");
   public static final SoundEvent CRAB_STEP = register("entity.crab.step");
   public static final SoundEvent TOTEM_TELEPORT = register("item.totem_of_teleportation.teleport");
+  public static final SoundEvent TP_TOTEM_TARGET_SET = register("item.totem_of_teleportation.set");
 
   public static final RegistryEntry<SoundEvent> EQUIP_SILK = registerReference(
       "item.armor.equip_silk");
