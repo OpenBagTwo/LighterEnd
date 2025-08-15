@@ -43,7 +43,9 @@ public class CutoutRenderer {
         LighterEndBlocks.AGAVE_SEED,
         LighterEndBlocks.AURANT_POLYPORE,
         LighterEndBlocks.END_FURNACE,
-        LighterEndBlocks.END_SMOKER
+        LighterEndBlocks.END_SMOKER,
+        LighterEndBlocks.GOLD_CHANDELIER,
+        LighterEndBlocks.IRON_CHANDELIER
     );
   }
 

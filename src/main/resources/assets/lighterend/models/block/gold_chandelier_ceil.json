@@ -1,0 +1,8 @@
+{
+  "parent": "lighterend:block/chandelier_ceil",
+  "textures": {
+    "ceil": "lighterend:block/gold_chandelier_ceil",
+    "emissive": "lighterend:block/gold_chandelier_floor_e",
+    "floor": "lighterend:block/gold_chandelier_floor"
+  }
+}

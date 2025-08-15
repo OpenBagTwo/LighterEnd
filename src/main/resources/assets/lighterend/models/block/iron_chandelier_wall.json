@@ -1,0 +1,7 @@
+{
+  "parent": "lighterend:block/chandelier_wall",
+  "textures": {
+    "emissive": "lighterend:block/iron_chandelier_wall_e",
+    "wall": "lighterend:block/iron_chandelier_wall"
+  }
+}

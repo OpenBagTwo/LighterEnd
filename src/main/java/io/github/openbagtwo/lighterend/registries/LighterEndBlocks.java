@@ -3,6 +3,7 @@ package io.github.openbagtwo.lighterend.registries;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.Agave;
 import io.github.openbagtwo.lighterend.blocks.AuroraCrystal;
+import io.github.openbagtwo.lighterend.blocks.Chandelier;
 import io.github.openbagtwo.lighterend.blocks.Charnia;
 import io.github.openbagtwo.lighterend.blocks.CreepingMoss;
 import io.github.openbagtwo.lighterend.blocks.DragonBone;
@@ -214,6 +215,9 @@ public class LighterEndBlocks {
   );
 
   public static final Block OBELISK = register("obelisk", Obelisk::new);
+
+  public static final Block GOLD_CHANDELIER = register("gold_chandelier", Chandelier::new);
+  public static final Block IRON_CHANDELIER = register("iron_chandelier", Chandelier::new);
 
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);

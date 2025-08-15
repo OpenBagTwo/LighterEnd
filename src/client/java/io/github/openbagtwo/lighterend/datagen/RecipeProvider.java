@@ -315,8 +315,8 @@ public class RecipeProvider extends FabricRecipeProvider {
             .pattern("# #")
             .pattern("###")
             .criterion(hasItem(Blocks.END_STONE), this.conditionsFromItem(Blocks.END_STONE))
-            .offerTo(this.exporter);
-        this.createShapeless(RecipeCategory.TRANSPORTATION, Items.FURNACE_MINECART)
+            .offerTo(exporter);
+        createShapeless(RecipeCategory.TRANSPORTATION, Items.FURNACE_MINECART)
             .input(LighterEndBlocks.END_FURNACE)
             .input(Items.MINECART)
             .criterion(
@@ -329,7 +329,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                     LighterEnd.of("furnace_minecart_from_end_stone_furnace")
                 )
             );
-        this.createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.END_SMOKER)
+        createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.END_SMOKER)
             .input('#', ItemTags.LOGS)
             .input('X', LighterEndBlocks.END_FURNACE)
             .pattern(" # ")
@@ -338,15 +338,41 @@ public class RecipeProvider extends FabricRecipeProvider {
             .criterion(
                 hasItem(LighterEndBlocks.END_FURNACE),
                 this.conditionsFromItem(LighterEndBlocks.END_FURNACE)
-            ).offerTo(this.exporter);
+            ).offerTo(exporter);
 
-        this.createShaped(RecipeCategory.REDSTONE, LighterEndBlocks.END_LEVER)
+        createShaped(RecipeCategory.REDSTONE, LighterEndBlocks.END_LEVER)
             .input('#', Blocks.END_STONE)
             .input('X', Items.STICK)
             .pattern("X")
             .pattern("#")
             .criterion(hasItem(Blocks.END_STONE), this.conditionsFromItem(Blocks.END_STONE))
-            .offerTo(this.exporter);
+            .offerTo(exporter);
+
+        createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.GOLD_CHANDELIER)
+            .input('r', LighterEndItems.LUMECORN_EAR)
+            .input('n', Items.GOLD_NUGGET)
+            .input('i', Items.GOLD_INGOT)
+            .pattern("r r")
+            .pattern("n n")
+            .pattern(" i ")
+            .criterion(
+                hasItem(LighterEndItems.LUMECORN_EAR),
+                this.conditionsFromItem(LighterEndItems.LUMECORN_EAR)
+            )
+            .offerTo(exporter);
+
+        createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.IRON_CHANDELIER)
+            .input('r', LighterEndItems.LUMECORN_EAR)
+            .input('n', Items.IRON_NUGGET)
+            .input('i', Items.IRON_INGOT)
+            .pattern("r r")
+            .pattern("n n")
+            .pattern(" i ")
+            .criterion(
+                hasItem(LighterEndItems.LUMECORN_EAR),
+                this.conditionsFromItem(LighterEndItems.LUMECORN_EAR)
+            )
+            .offerTo(exporter);
       }
 
       public void generateMaterialRecipes(Material material) {
