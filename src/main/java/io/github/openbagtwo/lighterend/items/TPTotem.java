@@ -119,8 +119,7 @@ public class TPTotem extends Item {
           new ApplyEffectsConsumeEffect(
               List.of(
                   new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1),
-                  new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1),
-                  new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0)
+                  new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1)
               )
           ),
           new FixedTeleport()
