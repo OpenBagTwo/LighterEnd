@@ -40,7 +40,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
-import org.jetbrains.annotations.Nullable;
 
 public class TPTotem extends Item {
 
@@ -101,15 +100,6 @@ public class TPTotem extends Item {
     }
     return ActionResult.SUCCESS;
 
-  }
-
-  @Nullable
-  public GlobalPos getTPTarget() {
-    Target target = this.getComponents().get(LighterEndData.TOTEM_TARGET);
-    if (target == null) {
-      return null;
-    }
-    return target.target().orElse(null);
   }
 
 
@@ -212,9 +202,5 @@ public class TPTotem extends Item {
         Target::target,
         Target::new
     );
-
-    public Target forWorld(ServerWorld world) {
-      return this;
-    }
   }
 }

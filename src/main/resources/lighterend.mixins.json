@@ -17,6 +17,7 @@
     "GravityEffectsMixin",
     "GravityStrengthMixin",
     "SurfaceGenMixin",
+    "TeleportFromVoidMixin",
     "TooltipMixin",
     "UnderwaterBonemealMixin"
   ],
