@@ -53,5 +53,14 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
         LighterEndBiomes.GLOWING_GRASSLAND,
         LighterEndBiomes.FOGGY_MUSHROOMLANDS
     );
+
+    builder(LighterEndTags.HAS_OBELISKS).add(
+        BiomeKeys.END_HIGHLANDS,
+        LighterEndBiomes.GLOWING_GRASSLAND,
+        LighterEndBiomes.UMBRELLA_JUNGLE,
+        LighterEndBiomes.BLOSSOM_FOREST,
+        LighterEndBiomes.UMBRA_VALLEY,
+        LighterEndBiomes.FOGGY_MUSHROOMLANDS
+    );
   }
 }

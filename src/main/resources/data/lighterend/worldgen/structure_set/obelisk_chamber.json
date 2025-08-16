@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "salt": 683147144,
+    "separation": 8,
+    "spacing": 64,
+    "type": "minecraft:random_spread"
+  },
+  "structures": [
+    {
+      "structure": "lighterend:obelisk_chamber",
+      "weight": 1
+    }
+  ]
+}

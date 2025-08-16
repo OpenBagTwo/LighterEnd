@@ -85,6 +85,11 @@ public class LighterEndTags {
       LighterEnd.of("has_structure/end_lake")
   );
 
+  public static final TagKey<Biome> HAS_OBELISKS = TagKey.of(
+      RegistryKeys.BIOME,
+      LighterEnd.of("has_structure/obelisk_chamber")
+  );
+
   public static void initialize() {
   }
 }
