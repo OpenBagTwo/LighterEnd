@@ -1,0 +1,16 @@
+{
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "name": "lighterend:totem_of_teleportation",
+          "type": "minecraft:item"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "lighterend:spawners/trial_chamber/totem",
+  "type": "minecraft:chest"
+}
