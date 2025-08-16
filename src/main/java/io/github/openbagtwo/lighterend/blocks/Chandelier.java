@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.registry.tag.BlockTags;
@@ -37,6 +38,8 @@ public class Chandelier extends Block {
             .solid()
             .nonOpaque()
             .requiresTool()
+            .pistonBehavior(PistonBehavior.DESTROY)
+            .strength(2.5F)
     );
     setDefaultState(getDefaultState().with(FACING, Direction.UP));
   }
