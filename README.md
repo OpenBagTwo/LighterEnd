@@ -65,7 +65,7 @@ On the flip side, LighterEnd has or will have features not present in BetterEnd
 - [x] New survival-challenge-friendly crafting recipes (such as the ability to get paper from end
   lily leaves and arrows from cubozoa drops)
 - [x] Sniffers that sploot on End Moss will dig up rare End saplings
-- [ ] Obelisks that you can teleport to upon almost dying (meaning your stuff is safe even if you
+- [x] Obelisks that you can teleport to upon almost dying (meaning your stuff is safe even if you
   fall into The Void)
 - [ ] New trim materials (and possibly trim patterns)
 
