@@ -115,8 +115,7 @@ public class TPTotem extends Item {
           new ClearAllEffectsConsumeEffect(),
           new ApplyEffectsConsumeEffect(
               List.of(
-                  new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1),
-                  new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1)
+                  new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1)
               )
           ),
           new FixedTeleport()
@@ -133,7 +132,8 @@ public class TPTotem extends Item {
         ).apply(instance, FixedTeleport::new)
     );
     public static final PacketCodec<RegistryByteBuf, FixedTeleport> PACKET_CODEC = PacketCodec.tuple(
-        PacketCodecs.FLOAT, FixedTeleport::diameter,
+        PacketCodecs.FLOAT,
+        FixedTeleport::diameter,
         FixedTeleport::new
     );
 
