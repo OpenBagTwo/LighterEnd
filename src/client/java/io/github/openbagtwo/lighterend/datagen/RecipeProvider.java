@@ -28,14 +28,18 @@ import net.minecraft.registry.tag.ItemTags;
 
 public class RecipeProvider extends FabricRecipeProvider {
 
-  protected RecipeProvider(FabricDataOutput output,
-      CompletableFuture<WrapperLookup> registriesFuture) {
+  protected RecipeProvider(
+      FabricDataOutput output,
+      CompletableFuture<WrapperLookup> registriesFuture
+  ) {
     super(output, registriesFuture);
   }
 
   @Override
-  protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup,
-      RecipeExporter exporter) {
+  protected RecipeGenerator getRecipeGenerator(
+      RegistryWrapper.WrapperLookup registryLookup,
+      RecipeExporter exporter
+  ) {
     return new RecipeGenerator(registryLookup, exporter) {
       @Override
       public void generate() {

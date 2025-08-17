@@ -10,8 +10,10 @@ import net.minecraft.registry.tag.EntityTypeTags;
 
 public class MobTagProvider extends FabricTagProvider.EntityTypeTagProvider {
 
-  public MobTagProvider(FabricDataOutput dataOutput,
-      CompletableFuture<WrapperLookup> registriesFuture) {
+  public MobTagProvider(
+      FabricDataOutput dataOutput,
+      CompletableFuture<WrapperLookup> registriesFuture
+  ) {
     super(dataOutput, registriesFuture);
   }
 

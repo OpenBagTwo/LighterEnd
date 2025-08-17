@@ -16,7 +16,9 @@ import net.minecraft.registry.tag.BlockTags;
 
 public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
-  protected BlockTagProvider(FabricDataOutput output, CompletableFuture<WrapperLookup> future) {
+  protected BlockTagProvider(
+      FabricDataOutput output, CompletableFuture<WrapperLookup> future
+  ) {
     super(output, future);
   }
 

@@ -35,8 +35,10 @@ import net.minecraft.registry.entry.RegistryEntry.Reference;
 
 public class BlockLootTableProvider extends FabricBlockLootTableProvider {
 
-  protected BlockLootTableProvider(FabricDataOutput dataOutput,
-      CompletableFuture<WrapperLookup> registryLookup) {
+  protected BlockLootTableProvider(
+      FabricDataOutput dataOutput,
+      CompletableFuture<WrapperLookup> registryLookup
+  ) {
     super(dataOutput, registryLookup);
   }
 
@@ -177,6 +179,7 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
                             ))
                         .apply(CopyStateLootFunction.builder(LighterEndBlocks.SILK_MOTH_NEST)
                             .addProperty(SilkMothNest.FULLNESS))
+                        .alternatively(ItemEntry.builder(LighterEndBlocks.SILK_MOTH_NEST))
                 )
         );
   }

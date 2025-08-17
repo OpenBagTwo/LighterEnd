@@ -9,8 +9,10 @@ import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 
 public class RegistryProvider extends FabricDynamicRegistryProvider {
 
-  protected RegistryProvider(FabricDataOutput output,
-      CompletableFuture<WrapperLookup> registriesFuture) {
+  protected RegistryProvider(
+      FabricDataOutput output,
+      CompletableFuture<WrapperLookup> registriesFuture
+  ) {
     super(output, registriesFuture);
   }
 

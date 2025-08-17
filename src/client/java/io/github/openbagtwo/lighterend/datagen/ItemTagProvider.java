@@ -17,8 +17,10 @@ import net.minecraft.registry.tag.ItemTags;
 
 public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
-  public ItemTagProvider(FabricDataOutput output,
-      CompletableFuture<WrapperLookup> future) {
+  public ItemTagProvider(
+      FabricDataOutput output,
+      CompletableFuture<WrapperLookup> future
+  ) {
     super(output, future);
   }
 

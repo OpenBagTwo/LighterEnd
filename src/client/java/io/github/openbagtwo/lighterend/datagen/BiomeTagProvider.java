@@ -14,8 +14,10 @@ import net.minecraft.world.biome.BiomeKeys;
 
 public class BiomeTagProvider extends FabricTagProvider<Biome> {
 
-  public BiomeTagProvider(FabricDataOutput output,
-      CompletableFuture<RegistryWrapper.WrapperLookup> future) {
+  public BiomeTagProvider(
+      FabricDataOutput output,
+      CompletableFuture<RegistryWrapper.WrapperLookup> future
+  ) {
     super(output, RegistryKeys.BIOME, future);
   }
 

@@ -23,6 +23,7 @@ public class LighterEndDataGenerator implements DataGeneratorEntrypoint {
     pack.addProvider(MobTagProvider::new);
     pack.addProvider(BiomeTagProvider::new);
     pack.addProvider(RegistryProvider::new);
+    pack.addProvider(AdvancementProvider::new);
   }
 
   @Override
