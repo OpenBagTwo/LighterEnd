@@ -283,8 +283,8 @@ public class RecipeProvider extends FabricRecipeProvider {
         CookingRecipeJsonBuilder.createSmelting(
                 Ingredient.ofItem(LighterEndItems.END_CREAM), RecipeCategory.BREWING,
                 LighterEndItems.END_POWDER, 0.1F, 200)
-            .criterion(hasItem(LighterEndBlocks.UMBRELLA_MEMBRANE),
-                conditionsFromItem(LighterEndBlocks.UMBRELLA_MEMBRANE))
+            .criterion(hasItem(LighterEndItems.END_CREAM),
+                conditionsFromItem(LighterEndItems.END_CREAM))
             .offerTo(
                 exporter,
                 RegistryKey.of(
@@ -377,6 +377,42 @@ public class RecipeProvider extends FabricRecipeProvider {
                 this.conditionsFromItem(LighterEndItems.LUMECORN_EAR)
             )
             .offerTo(exporter);
+
+        CookingRecipeJsonBuilder.createSmelting(
+            Ingredient.ofItem(LighterEndBlocks.FERROUS_ICE),
+            RecipeCategory.MISC,
+            Items.IRON_NUGGET,
+            0.1F,
+            200
+        ).criterion(
+            hasItem(LighterEndBlocks.FERROUS_ICE),
+            conditionsFromItem(LighterEndBlocks.FERROUS_ICE)
+        ).offerTo(
+            exporter,
+            RegistryKey.of(
+                RegistryKeys.RECIPE,
+                LighterEnd.of("smelting_iron_from_ice")
+            )
+        );
+
+//        TODO: enable in 1.21.9+
+//        CookingRecipeJsonBuilder.createSmelting(
+//            Ingredient.ofItem(LighterEndBlocks.EMERALD_ICE),
+//            RecipeCategory.MISC,
+//            Items.COPPER_NUGGET,
+//            0.1F,
+//            200
+//        ).criterion(
+//            hasItem(LighterEndBlocks.EMERALD_ICE),
+//            conditionsFromItem(LighterEndBlocks.EMERALD_ICE)
+//        ).offerTo(
+//            exporter,
+//            RegistryKey.of(
+//                RegistryKeys.RECIPE,
+//                LighterEnd.of("smelting_copper_from_ice")
+//            )
+//        );
+
       }
 
       public void generateMaterialRecipes(Material material) {

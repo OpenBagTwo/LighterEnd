@@ -136,6 +136,9 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
 
     addDrop(LighterEndBlocks.GOLD_CHANDELIER);
     addDrop(LighterEndBlocks.IRON_CHANDELIER);
+
+    addDrop(LighterEndBlocks.EMERALD_ICE);
+    addDrop(LighterEndBlocks.FERROUS_ICE);
   }
 
   private LootTable.Builder auroraCrystalDrops() {

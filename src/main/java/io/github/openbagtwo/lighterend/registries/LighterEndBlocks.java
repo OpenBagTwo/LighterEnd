@@ -219,6 +219,34 @@ public class LighterEndBlocks {
   public static final Block GOLD_CHANDELIER = register("gold_chandelier", Chandelier::new);
   public static final Block IRON_CHANDELIER = register("iron_chandelier", Chandelier::new);
 
+  public static final Block EMERALD_ICE = register(
+      "emerald_ice",
+      settings -> new Block(
+          settings
+              .mapColor(MapColor.PALE_GREEN)
+              .instrument(NoteBlockInstrument.CHIME)
+              .slipperiness(0.95F)
+              .strength(0.75F)
+              .sounds(BlockSoundGroup.GLASS)
+              .requiresTool()
+              .nonOpaque()
+      )
+  );
+
+  public static final Block FERROUS_ICE = register(
+      "ferrous_ice",
+      settings -> new Block(
+          settings
+              .mapColor(MapColor.DULL_PINK)
+              .instrument(NoteBlockInstrument.CHIME)
+              .slipperiness(0.95F)
+              .strength(0.75F)
+              .sounds(BlockSoundGroup.GLASS)
+              .requiresTool()
+              .nonOpaque()
+      )
+  );
+
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);
   }

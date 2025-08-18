@@ -45,7 +45,9 @@ public class AuroraCrystalRenderer {
     BlockRenderLayerMap.putBlocks(
         BlockRenderLayer.TRANSLUCENT,
         LighterEndBlocks.AURORA_CRYSTAL,
-        LighterEndBlocks.OBELISK
+        LighterEndBlocks.OBELISK,
+        LighterEndBlocks.FERROUS_ICE,
+        LighterEndBlocks.EMERALD_ICE
     );
   }
 

@@ -83,6 +83,9 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndBlocks.AGAVE_SEED,
         CrossType.NOT_TINTED
     );
+
+    blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.EMERALD_ICE);
+    blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.FERROUS_ICE);
   }
 
   public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator,

@@ -90,7 +90,9 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.DRAGON_BONE_SLAB,
             LighterEndBlocks.END_MOSS,
             LighterEndBlocks.GOLD_CHANDELIER,
-            LighterEndBlocks.IRON_CHANDELIER
+            LighterEndBlocks.IRON_CHANDELIER,
+            LighterEndBlocks.EMERALD_ICE,
+            LighterEndBlocks.FERROUS_ICE
         );
 
     valueLookupBuilder(BlockTags.NEEDS_IRON_TOOL)
@@ -125,7 +127,14 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
     valueLookupBuilder(BlockTags.AXE_MINEABLE).add(
         LighterEndBlocks.LUMECORN_STEM,
-        LighterEndBlocks.END_LOTUS_STEM
+        LighterEndBlocks.END_LOTUS_STEM,
+        LighterEndBlocks.UMBRELLA_TREE_CLUSTER,
+        LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY,
+        LighterEndBlocks.GLOWSHROOM_CAP,
+        LighterEndBlocks.GLOWSHROOM_HYMENOPHORE,
+        LighterEndBlocks.END_LOTUS_STEM,
+        LighterEndBlocks.AGAVE,
+        LighterEndBlocks.AGAVE_BULB
     );
 
     valueLookupBuilder(BlockTags.SAPLINGS).add(
@@ -139,15 +148,6 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.AGAVE_FUR
     );
 
-    valueLookupBuilder(BlockTags.AXE_MINEABLE).add(
-        LighterEndBlocks.UMBRELLA_TREE_CLUSTER,
-        LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY,
-        LighterEndBlocks.GLOWSHROOM_CAP,
-        LighterEndBlocks.GLOWSHROOM_HYMENOPHORE,
-        LighterEndBlocks.END_LOTUS_STEM,
-        LighterEndBlocks.AGAVE,
-        LighterEndBlocks.AGAVE_BULB
-    );
     valueLookupBuilder(BlockTags.FLOWER_POTS).add(
         LighterEndBlocks.POTTED_TENANEA_SAPLING,
         LighterEndBlocks.POTTED_UMBRELLA_SAPLING,
@@ -168,6 +168,11 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     );
     valueLookupBuilder(BlockTags.WITHER_IMMUNE).add(
         LighterEndBlocks.OBELISK
+    );
+
+    valueLookupBuilder(BlockTags.ICE).add(
+        LighterEndBlocks.EMERALD_ICE,
+        LighterEndBlocks.FERROUS_ICE
     );
 
     valueLookupBuilder(LighterEndTags.END_MOSS_REPLACEABLE)
