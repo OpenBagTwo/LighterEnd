@@ -30,6 +30,7 @@ import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.biome.source.MultiNoiseBiomeSource;
 import net.minecraft.world.biome.source.util.MultiNoiseUtil;
 import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.surfacebuilder.MaterialRules.MaterialRule;
 
 public class LighterEndWorldGen {
@@ -87,6 +88,15 @@ public class LighterEndWorldGen {
                 0.4F
             ), context.getOrThrow(LighterEndBiomes.FOGGY_MUSHROOMLANDS)),
             Pair.of(MultiNoiseUtil.createNoiseHypercube(
+                MultiNoiseUtil.ParameterRange.of(-1, 0),
+                MultiNoiseUtil.ParameterRange.of(1),
+                MultiNoiseUtil.ParameterRange.of(0.3F, 1),
+                MultiNoiseUtil.ParameterRange.of(-1, -0.15F),
+                MultiNoiseUtil.ParameterRange.of(-1.4F, 1),
+                MultiNoiseUtil.ParameterRange.of(-1, 1),
+                0.1F
+            ), context.getOrThrow(LighterEndBiomes.STARFIELD)),
+            Pair.of(MultiNoiseUtil.createNoiseHypercube(
                 MultiNoiseUtil.ParameterRange.of(-1, 1),
                 MultiNoiseUtil.ParameterRange.of(-1, 1),
                 MultiNoiseUtil.ParameterRange.of(-1, 1),
@@ -108,8 +118,6 @@ public class LighterEndWorldGen {
       TheEndBiomes.addHighlandsBiome(LighterEndBiomes.GLOWING_GRASSLAND, 2.0);
       TheEndBiomes.addMidlandsBiome(LighterEndBiomes.GLOWING_GRASSLAND,
           LighterEndBiomes.GLOWING_GRASSLAND, 2.0);
-      TheEndBiomes.addBarrensBiome(LighterEndBiomes.GLOWING_GRASSLAND,
-          LighterEndBiomes.GLOWING_GRASSLAND, 2.0);
       TheEndBiomes.addSmallIslandsBiome(LighterEndBiomes.GLOWING_GRASSLAND, 1.0);
 
       TheEndBiomes.addHighlandsBiome(LighterEndBiomes.BLOSSOM_FOREST, 1.0);
@@ -123,45 +131,41 @@ public class LighterEndWorldGen {
       TheEndBiomes.addHighlandsBiome(LighterEndBiomes.UMBRA_VALLEY, 1.0);
       TheEndBiomes.addMidlandsBiome(LighterEndBiomes.UMBRA_VALLEY,
           LighterEndBiomes.UMBRA_VALLEY, 1.0);
-      TheEndBiomes.addBarrensBiome(LighterEndBiomes.UMBRA_VALLEY,
-          LighterEndBiomes.UMBRA_VALLEY, 1.0);
 
       TheEndBiomes.addHighlandsBiome(LighterEndBiomes.MEGALAKE, 1.0);
+
+      TheEndBiomes.addSmallIslandsBiome(LighterEndBiomes.STARFIELD, 0.1);
+      for (RegistryKey<Biome> parentBiome : List.of(
+          BiomeKeys.END_HIGHLANDS,
+          LighterEndBiomes.GLOWING_GRASSLAND,
+          LighterEndBiomes.FOGGY_MUSHROOMLANDS,
+          LighterEndBiomes.UMBRA_VALLEY,
+          LighterEndBiomes.MEGALAKE
+      )) {
+        TheEndBiomes.addBarrensBiome(parentBiome, LighterEndBiomes.STARFIELD, 0.18);
+        TheEndBiomes.addBarrensBiome(parentBiome, BiomeKeys.END_BARRENS, 1);
+      }
     }
   }
 
   public static void addIceStars(Config config) {
-    List<RegistryKey<Biome>> iceStarBiomes = new ArrayList<>();
-    iceStarBiomes.add(BiomeKeys.END_BARRENS);
-    iceStarBiomes.add(BiomeKeys.SMALL_END_ISLANDS);
+    List<RegistryKey<Biome>> barrensBiomes = new ArrayList<>();
+    barrensBiomes.add(BiomeKeys.END_BARRENS);
     try {
-      iceStarBiomes.add(
+      barrensBiomes.add(
           RegistryKey.of(RegistryKeys.BIOME, Identifier.of("nullscape", "void_barrens"))
       );
     } catch (NullPointerException e) {
     }
 
     if (config.generateBiomes()) {
-      BiomeModifications.addFeature(
-          BiomeSelectors.includeByKey(iceStarBiomes),
-          GenerationStep.Feature.SURFACE_STRUCTURES,
-          LighterEndPlacedFeatures.ICE_STAR_COPPER
-      );
-      BiomeModifications.addFeature(
-          BiomeSelectors.includeByKey(iceStarBiomes),
-          GenerationStep.Feature.SURFACE_STRUCTURES,
-          LighterEndPlacedFeatures.ICE_STAR_COPPER_SMALL
-      );
-      BiomeModifications.addFeature(
-          BiomeSelectors.includeByKey(iceStarBiomes),
-          GenerationStep.Feature.SURFACE_STRUCTURES,
-          LighterEndPlacedFeatures.ICE_STAR_IRON
-      );
-      BiomeModifications.addFeature(
-          BiomeSelectors.includeByKey(iceStarBiomes),
-          GenerationStep.Feature.SURFACE_STRUCTURES,
-          LighterEndPlacedFeatures.ICE_STAR_IRON_SMALL
-      );
+      for (RegistryKey<PlacedFeature> star : LighterEndPlacedFeatures.BARRENS_ICE_STARS) {
+        BiomeModifications.addFeature(
+            BiomeSelectors.includeByKey(barrensBiomes),
+            GenerationStep.Feature.SURFACE_STRUCTURES,
+            star
+        );
+      }
     }
   }
 

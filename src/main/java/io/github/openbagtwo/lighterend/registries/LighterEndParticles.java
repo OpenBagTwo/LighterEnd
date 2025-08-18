@@ -23,6 +23,11 @@ public class LighterEndParticles {
       FabricParticleTypes.simple()
   );
 
+  public static final SimpleParticleType SNOWFLAKE = register(
+      "snowflake",
+      FabricParticleTypes.simple()
+  );
+
   public static SimpleParticleType register(String name, SimpleParticleType particleType) {
     return Registry.register(
         Registries.PARTICLE_TYPE,

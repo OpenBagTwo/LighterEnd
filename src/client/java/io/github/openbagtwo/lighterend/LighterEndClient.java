@@ -7,6 +7,7 @@ import io.github.openbagtwo.lighterend.blocks.UmbralithRenderer;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaMembraneRenderer;
 import io.github.openbagtwo.lighterend.mobs.EntityModels;
 import io.github.openbagtwo.lighterend.particles.GlowingSphere;
+import io.github.openbagtwo.lighterend.particles.Snowflake;
 import io.github.openbagtwo.lighterend.particles.TenaneaPetal;
 import io.github.openbagtwo.lighterend.registries.LighterEndParticles;
 import net.fabricmc.api.ClientModInitializer;
@@ -26,6 +27,8 @@ public class LighterEndClient implements ClientModInitializer {
         .register(LighterEndParticles.AMBER_SPHERE, GlowingSphere.Factory::new);
     ParticleFactoryRegistry.getInstance()
         .register(LighterEndParticles.GLOWING_SPHERE, GlowingSphere.Factory::new);
+    ParticleFactoryRegistry.getInstance()
+        .register(LighterEndParticles.SNOWFLAKE, Snowflake.Factory::new);
     SignRenderer.initialize();
     EntityModels.initialize();
   }

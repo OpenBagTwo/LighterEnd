@@ -1,5 +1,6 @@
 package io.github.openbagtwo.lighterend.world;
 
+import com.mojang.datafixers.util.Pair;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import java.util.List;
@@ -32,11 +33,18 @@ public class LighterEndPlacedFeatures {
   public static final RegistryKey<PlacedFeature> UMBRALITH_ARCH_THIN = of("umbralith_arch_thin");
   public static final RegistryKey<PlacedFeature> GLOWSHROOM = of("glowshroom");
   public static final RegistryKey<PlacedFeature> AGAVE = of("agave");
-  public static final RegistryKey<PlacedFeature> ICE_STAR_COPPER = of("ice_star_copper");
-  public static final RegistryKey<PlacedFeature> ICE_STAR_COPPER_SMALL = of(
-      "ice_star_copper_small");
-  public static final RegistryKey<PlacedFeature> ICE_STAR_IRON = of("ice_star_iron");
-  public static final RegistryKey<PlacedFeature> ICE_STAR_IRON_SMALL = of("ice_star_iron_small");
+  public static final List<RegistryKey<PlacedFeature>> BARRENS_ICE_STARS = List.of(
+      of("barrens_ice_star_copper"),
+      of("barrens_ice_star_copper_small"),
+      of("barrens_ice_star_iron"),
+      of("barrens_ice_star_iron_small")
+  );
+  public static final List<RegistryKey<PlacedFeature>> STARFIELD_ICE_STARS = List.of(
+      of("starfield_ice_star_copper"),
+      of("starfield_ice_star_copper_small"),
+      of("starfield_ice_star_iron"),
+      of("starfield_ice_star_iron_small")
+  );
 
 
   public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -180,46 +188,56 @@ public class LighterEndPlacedFeatures {
         )
     );
 
-    context.register(
-        ICE_STAR_COPPER,
-        new PlacedFeature(
-            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_COPPER),
-            List.of(
-                RarityFilterPlacementModifier.of(1024),
-                HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
-            )
-        )
-    );
-    context.register(
-        ICE_STAR_COPPER_SMALL,
-        new PlacedFeature(
-            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_COPPER_SMALL),
-            List.of(
-                RarityFilterPlacementModifier.of(512),
-                HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
-            )
-        )
-    );
-    context.register(
-        ICE_STAR_IRON,
-        new PlacedFeature(
-            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_IRON),
-            List.of(
-                RarityFilterPlacementModifier.of(1024),
-                HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
-            )
-        )
-    );
-    context.register(
-        ICE_STAR_IRON_SMALL,
-        new PlacedFeature(
-            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_IRON_SMALL),
-            List.of(
-                RarityFilterPlacementModifier.of(512),
-                HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
-            )
-        )
-    );
+    for (Pair<Integer, List<RegistryKey<PlacedFeature>>> pair : List.of(
+        Pair.of(32, STARFIELD_ICE_STARS),
+        Pair.of(1024, BARRENS_ICE_STARS)
+    )) {
+      int rarity = pair.getFirst();
+      List<RegistryKey<PlacedFeature>> features = pair.getSecond();
+
+      context.register(
+          features.get(0),
+          new PlacedFeature(
+              configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_COPPER),
+              List.of(
+                  RarityFilterPlacementModifier.of(rarity * 2),
+                  HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
+              )
+          )
+      );
+      context.register(
+          features.get(1),
+          new PlacedFeature(
+              configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_COPPER_SMALL),
+              List.of(
+                  RarityFilterPlacementModifier.of(rarity),
+                  HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
+              )
+          )
+      );
+      context.register(
+          features.get(2),
+          new PlacedFeature(
+              configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_IRON),
+              List.of(
+                  RarityFilterPlacementModifier.of(rarity * 2),
+                  HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
+              )
+          )
+      );
+      context.register(
+          features.get(3),
+          new PlacedFeature(
+              configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_IRON_SMALL),
+              List.of(
+                  RarityFilterPlacementModifier.of(rarity),
+                  HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
+              )
+          )
+      );
+    }
+
+
   }
 
   public static RegistryKey<PlacedFeature> of(String id) {

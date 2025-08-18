@@ -30,7 +30,8 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
         LighterEndBiomes.GLOWING_GRASSLAND,
         LighterEndBiomes.MEGALAKE,
         LighterEndBiomes.UMBRA_VALLEY,
-        LighterEndBiomes.FOGGY_MUSHROOMLANDS
+        LighterEndBiomes.FOGGY_MUSHROOMLANDS,
+        LighterEndBiomes.STARFIELD
     );
     builder(BiomeTags.END_CITY_HAS_STRUCTURE).add(
         LighterEndBiomes.BLOSSOM_FOREST,
