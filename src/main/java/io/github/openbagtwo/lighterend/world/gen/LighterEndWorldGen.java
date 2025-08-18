@@ -12,16 +12,21 @@ import com.mojang.datafixers.util.Pair;
 import io.github.openbagtwo.lighterend.config.Config;
 import io.github.openbagtwo.lighterend.registries.LighterEndBiomes;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
+import io.github.openbagtwo.lighterend.world.LighterEndPlacedFeatures;
 import io.github.openbagtwo.lighterend.world.gen.noise.NoiseParameters;
 import java.util.ArrayList;
 import java.util.List;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.biome.v1.TheEndBiomes;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.biome.source.MultiNoiseBiomeSource;
 import net.minecraft.world.biome.source.util.MultiNoiseUtil;
+import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.surfacebuilder.MaterialRules.MaterialRule;
 
 public class LighterEndWorldGen {
@@ -119,6 +124,43 @@ public class LighterEndWorldGen {
           LighterEndBiomes.UMBRA_VALLEY, 1.0);
 
       TheEndBiomes.addHighlandsBiome(LighterEndBiomes.MEGALAKE, 1.0);
+    }
+  }
+
+  public static void addIceStars(Config config) {
+    if (config.generateBiomes()) {
+      BiomeModifications.addFeature(
+          BiomeSelectors.includeByKey(
+              BiomeKeys.END_BARRENS,
+              BiomeKeys.SMALL_END_ISLANDS
+          ),
+          GenerationStep.Feature.SURFACE_STRUCTURES,
+          LighterEndPlacedFeatures.ICE_STAR_COPPER
+      );
+      BiomeModifications.addFeature(
+          BiomeSelectors.includeByKey(
+              BiomeKeys.END_BARRENS,
+              BiomeKeys.SMALL_END_ISLANDS
+          ),
+          GenerationStep.Feature.SURFACE_STRUCTURES,
+          LighterEndPlacedFeatures.ICE_STAR_COPPER_SMALL
+      );
+      BiomeModifications.addFeature(
+          BiomeSelectors.includeByKey(
+              BiomeKeys.END_BARRENS,
+              BiomeKeys.SMALL_END_ISLANDS
+          ),
+          GenerationStep.Feature.SURFACE_STRUCTURES,
+          LighterEndPlacedFeatures.ICE_STAR_IRON
+      );
+      BiomeModifications.addFeature(
+          BiomeSelectors.includeByKey(
+              BiomeKeys.END_BARRENS,
+              BiomeKeys.SMALL_END_ISLANDS
+          ),
+          GenerationStep.Feature.SURFACE_STRUCTURES,
+          LighterEndPlacedFeatures.ICE_STAR_IRON_SMALL
+      );
     }
   }
 

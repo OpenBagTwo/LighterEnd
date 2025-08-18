@@ -7,11 +7,13 @@ import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
+import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.feature.PlacedFeatures;
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures;
 import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;
 import net.minecraft.world.gen.placementmodifier.CountPlacementModifier;
+import net.minecraft.world.gen.placementmodifier.HeightRangePlacementModifier;
 import net.minecraft.world.gen.placementmodifier.RarityFilterPlacementModifier;
 import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
 
@@ -30,6 +32,11 @@ public class LighterEndPlacedFeatures {
   public static final RegistryKey<PlacedFeature> UMBRALITH_ARCH_THIN = of("umbralith_arch_thin");
   public static final RegistryKey<PlacedFeature> GLOWSHROOM = of("glowshroom");
   public static final RegistryKey<PlacedFeature> AGAVE = of("agave");
+  public static final RegistryKey<PlacedFeature> ICE_STAR_COPPER = of("ice_star_copper");
+  public static final RegistryKey<PlacedFeature> ICE_STAR_COPPER_SMALL = of(
+      "ice_star_copper_small");
+  public static final RegistryKey<PlacedFeature> ICE_STAR_IRON = of("ice_star_iron");
+  public static final RegistryKey<PlacedFeature> ICE_STAR_IRON_SMALL = of("ice_star_iron_small");
 
 
   public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -50,7 +57,8 @@ public class LighterEndPlacedFeatures {
     );
     context.register(
         LUMECORN,
-        new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.LUMECORN),
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.LUMECORN),
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
                 PlacedFeatures.createCountExtraModifier(3, 0.5f, 2),
                 LighterEndBlocks.LUMECORN_SEED)
@@ -58,7 +66,8 @@ public class LighterEndPlacedFeatures {
     );
     context.register(
         TENANEA_TREE,
-        new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.TENANEA_TREE),
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.TENANEA_TREE),
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
                 PlacedFeatures.createCountExtraModifier(10, 0.5f, 2),
                 LighterEndBlocks.TENANEA_SAPLING)
@@ -66,13 +75,15 @@ public class LighterEndPlacedFeatures {
     );
     context.register(
         MOTH_NEST,
-        new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.MOTH_NEST),
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.MOTH_NEST),
             VegetationPlacedFeatures.modifiers(2)
         )
     );
     context.register(
         UMBRELLA_TREE,
-        new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.UMBRELLA_TREE),
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.UMBRELLA_TREE),
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
                 PlacedFeatures.createCountExtraModifier(1, 0.1f, 1),
                 LighterEndBlocks.UMBRELLA_TREE_SAPLING
@@ -93,7 +104,8 @@ public class LighterEndPlacedFeatures {
     );
     context.register(
         END_LILY,
-        new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.END_LILY),
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.END_LILY),
             List.of(
                 CountPlacementModifier.of(UniformIntProvider.create(6, 18)),
                 SquarePlacementModifier.of(),
@@ -116,7 +128,8 @@ public class LighterEndPlacedFeatures {
     );
     context.register(
         LOTUS_LEAF,
-        new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.LOTUS_LEAF),
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.LOTUS_LEAF),
             List.of(
                 CountPlacementModifier.of(UniformIntProvider.create(4, 12)),
                 SquarePlacementModifier.of(),
@@ -149,7 +162,8 @@ public class LighterEndPlacedFeatures {
     );
     context.register(
         GLOWSHROOM,
-        new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.GLOWSHROOM),
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.GLOWSHROOM),
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
                 RarityFilterPlacementModifier.of(8),
                 LighterEndBlocks.GLOWSHROOM_SAPLING
@@ -158,10 +172,52 @@ public class LighterEndPlacedFeatures {
     );
     context.register(
         AGAVE,
-        new PlacedFeature(configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.AGAVE),
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.AGAVE),
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
                 PlacedFeatures.createCountExtraModifier(3, 0.5f, 2),
                 LighterEndBlocks.AGAVE_SEED)
+        )
+    );
+
+    context.register(
+        ICE_STAR_COPPER,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_COPPER),
+            List.of(
+                RarityFilterPlacementModifier.of(256),
+                HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
+            )
+        )
+    );
+    context.register(
+        ICE_STAR_COPPER_SMALL,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_COPPER_SMALL),
+            List.of(
+                RarityFilterPlacementModifier.of(128),
+                HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
+            )
+        )
+    );
+    context.register(
+        ICE_STAR_IRON,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_IRON),
+            List.of(
+                RarityFilterPlacementModifier.of(256),
+                HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
+            )
+        )
+    );
+    context.register(
+        ICE_STAR_IRON_SMALL,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_IRON_SMALL),
+            List.of(
+                RarityFilterPlacementModifier.of(128),
+                HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
+            )
         )
     );
   }
