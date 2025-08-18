@@ -50,7 +50,7 @@
       "model": "lighterend:block/end_stone_lever_unpowered"
     },
     "face=floor,facing=north,powered=true": {
-      "model": "lighterend:block/end_stone_lever"
+      "model": "lighterend:block/end_stone_lever_powered"
     },
     "face=floor,facing=south,powered=false": {
       "model": "lighterend:block/end_stone_lever_unpowered",
