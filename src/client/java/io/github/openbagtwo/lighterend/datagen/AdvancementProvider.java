@@ -2,10 +2,12 @@ package io.github.openbagtwo.lighterend.datagen;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.misc.StatusEffects;
+import io.github.openbagtwo.lighterend.registries.LighterEndBiomes;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndEquipment;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -14,7 +16,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.AdvancementFrame;
-import net.minecraft.advancement.AdvancementRequirements;
+import net.minecraft.advancement.AdvancementRequirements.CriterionMerger;
 import net.minecraft.advancement.AdvancementRewards;
 import net.minecraft.advancement.criterion.EffectsChangedCriterion;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
@@ -35,6 +37,7 @@ import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.biome.Biome;
 
 public class AdvancementProvider extends FabricAdvancementProvider {
 
@@ -174,7 +177,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
             true,
             true,
             false
-        ).criteriaMerger(AdvancementRequirements.CriterionMerger.OR)
+        ).criteriaMerger(CriterionMerger.OR)
         .criterion(
             "wear_agave_fur", InventoryChangedCriterion.Conditions.items(LighterEndItems.AGAVE_FUR)
         ).criterion(
@@ -207,7 +210,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
             true,
             true,
             false
-        ).criteriaMerger(AdvancementRequirements.CriterionMerger.OR)
+        ).criteriaMerger(CriterionMerger.OR)
         .criterion(
             "acquire_silk", InventoryChangedCriterion.Conditions.items(LighterEndItems.SILK)
         ).criterion(
@@ -243,6 +246,41 @@ public class AdvancementProvider extends FabricAdvancementProvider {
     ).criterion(
         "acquire_end_cream", InventoryChangedCriterion.Conditions.items(LighterEndItems.END_CREAM)
     ).build(consumer, LighterEnd.MOD_ID + "/acquire_end_cream");
+
+    Advancement.Builder allBiomesBuilder = Advancement.Builder.create().parent(end_lake).display(
+            LighterEndBlocks.END_MOSS.asItem(),
+            title("all_the_biomes"),
+            description("all_the_biomes"),
+            null,
+            AdvancementFrame.CHALLENGE,
+            false,
+            false,
+            false
+        )
+        .criteriaMerger(CriterionMerger.AND);
+
+    int xpReward = 0;
+    for (RegistryKey<Biome> biome : List.of(
+        LighterEndBiomes.BLOSSOM_FOREST,
+        LighterEndBiomes.UMBRELLA_JUNGLE,
+        LighterEndBiomes.GLOWING_GRASSLAND,
+        LighterEndBiomes.MEGALAKE,
+        LighterEndBiomes.UMBRA_VALLEY,
+        LighterEndBiomes.FOGGY_MUSHROOMLANDS
+    )) {
+      allBiomesBuilder = allBiomesBuilder.criterion(
+          biome.getValue().getPath(),
+          TickCriterion.Conditions.createLocation(LocationPredicate.Builder.createBiome(
+                  lookup.getOrThrow(RegistryKeys.BIOME).getOrThrow(biome)
+              )
+          )
+      );
+      xpReward += 50;
+    }
+
+    AdvancementEntry all_the_biomes = allBiomesBuilder.rewards(
+        AdvancementRewards.Builder.experience(xpReward)
+    ).build(consumer, LighterEnd.MOD_ID + "/all_the_biomes");
   }
 
   private static MutableText title(String path) {
