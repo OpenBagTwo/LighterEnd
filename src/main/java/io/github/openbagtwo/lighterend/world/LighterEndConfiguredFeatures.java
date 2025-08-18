@@ -8,6 +8,8 @@ import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest.SilkMothNestFeature;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
+import io.github.openbagtwo.lighterend.world.features.IceStar;
+import io.github.openbagtwo.lighterend.world.features.IceStar.Config;
 import io.github.openbagtwo.lighterend.world.features.LotusLeaf;
 import io.github.openbagtwo.lighterend.world.features.UmbralithArch;
 import io.github.openbagtwo.lighterend.world.features.UnderwaterPlants;
@@ -128,6 +130,19 @@ public class LighterEndConfiguredFeatures {
   );
   public static final RegistryKey<ConfiguredFeature<?, ?>> AGAVE = of("agave");
 
+  public static final Feature<IceStar.Config> ICE_STAR_FEATURE = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("ice_star"),
+      new IceStar());
+  public static final RegistryKey<ConfiguredFeature<?, ?>> ICE_STAR_COPPER = of(
+      "ice_star_copper");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> ICE_STAR_COPPER_SMALL = of(
+      "ice_star_copper_small");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> ICE_STAR_IRON = of(
+      "ice_star_iron");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> ICE_STAR_IRON_SMALL = of(
+      "ice_star_iron_small");
+
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
     RegistryEntryLookup<ConfiguredFeature<?, ?>> lookup = context.getRegistryLookup(
@@ -192,6 +207,30 @@ public class LighterEndConfiguredFeatures {
     ConfiguredFeatures.register(context, UMRBALITH_ARCH_THIN, THIN_ARCH_FEATURE);
     ConfiguredFeatures.register(context, GLOWSHROOM, GLOWSHROOM_FEATURE);
     ConfiguredFeatures.register(context, AGAVE, AGAVE_FEATURE);
+    ConfiguredFeatures.register(
+        context,
+        ICE_STAR_COPPER,
+        ICE_STAR_FEATURE,
+        new Config(0, 5, 15, 10, 25)
+    );
+    ConfiguredFeatures.register(
+        context,
+        ICE_STAR_COPPER_SMALL,
+        ICE_STAR_FEATURE,
+        new Config(0, 3, 5, 7, 12)
+    );
+    ConfiguredFeatures.register(
+        context,
+        ICE_STAR_IRON,
+        ICE_STAR_FEATURE,
+        new Config(1, 5, 15, 10, 25)
+    );
+    ConfiguredFeatures.register(
+        context,
+        ICE_STAR_IRON_SMALL,
+        ICE_STAR_FEATURE,
+        new Config(1, 3, 5, 7, 12)
+    );
   }
 
   public static void initialize() {
