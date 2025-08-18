@@ -7,6 +7,7 @@ import io.github.openbagtwo.lighterend.world.LighterEndPlacedFeatures;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.MusicType;
 import net.minecraft.world.biome.Biome;
@@ -48,14 +49,17 @@ public class FoggyMushroomlands {
         )
         .build();
 
-    GenerationSettings genSettings = new GenerationSettings.LookupBackedBuilder(features, carvers)
+    var genSettingsBuilder = new GenerationSettings.LookupBackedBuilder(features, carvers)
         .feature(Feature.SURFACE_STRUCTURES, EndPlacedFeatures.END_GATEWAY_RETURN)
         .feature(Feature.SURFACE_STRUCTURES, LighterEndPlacedFeatures.GLOWSHROOM)
         .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.END_MOSS_VEGETATION)
         .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.AGAVE)
         .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.WATER_PLANTS)
-        .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.END_LILY)
-        .build();
+        .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.END_LILY);
+
+    for (RegistryKey<PlacedFeature> blob : LighterEndPlacedFeatures.JADESTONE_BLOBS) {
+      genSettingsBuilder = genSettingsBuilder.feature(Feature.UNDERGROUND_ORES, blob);
+    }
 
     return new Biome.Builder()
         .precipitation(false)
@@ -74,7 +78,7 @@ public class FoggyMushroomlands {
             .build()
         )
         .spawnSettings(spawns)
-        .generationSettings(genSettings)
+        .generationSettings(genSettingsBuilder.build())
         .build();
   }
 

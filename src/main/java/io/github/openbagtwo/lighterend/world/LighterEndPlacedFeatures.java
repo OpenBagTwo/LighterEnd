@@ -45,6 +45,11 @@ public class LighterEndPlacedFeatures {
       of("starfield_ice_star_iron"),
       of("starfield_ice_star_iron_small")
   );
+  public static final List<RegistryKey<PlacedFeature>> JADESTONE_BLOBS = List.of(
+      of("jadestone_blob_azure"),
+      of("jadestone_blob_sandy"),
+      of("jadestone_blob_virid")
+  );
 
 
   public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -232,6 +237,21 @@ public class LighterEndPlacedFeatures {
               List.of(
                   RarityFilterPlacementModifier.of(rarity),
                   HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
+              )
+          )
+      );
+    }
+
+    for (int i = 0; i < 3; i++) {
+      context.register(
+          JADESTONE_BLOBS.get(i),
+          new PlacedFeature(
+              configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.JADESTONE_BLOBS.get(i)),
+              List.of(
+                  CountPlacementModifier.of(10),
+                  SquarePlacementModifier.of(),
+                  PlacedFeatures.BOTTOM_TO_TOP_RANGE,
+                  BiomePlacementModifier.of()
               )
           )
       );

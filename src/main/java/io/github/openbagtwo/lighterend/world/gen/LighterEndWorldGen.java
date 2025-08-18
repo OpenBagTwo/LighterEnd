@@ -30,6 +30,7 @@ import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.biome.source.MultiNoiseBiomeSource;
 import net.minecraft.world.biome.source.util.MultiNoiseUtil;
 import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.GenerationStep.Feature;
 import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.surfacebuilder.MaterialRules.MaterialRule;
 
@@ -167,6 +168,28 @@ public class LighterEndWorldGen {
         );
       }
     }
+  }
+
+  public static void addJadestoneBlobs(Config config) {
+    List<RegistryKey<Biome>> biomes = new ArrayList<>();
+    biomes.add(BiomeKeys.END_HIGHLANDS);
+    try {
+      biomes.add(
+          RegistryKey.of(RegistryKeys.BIOME, Identifier.of("nullscape", "crystal_peaks"))
+      );
+    } catch (NullPointerException e) {
+    }
+
+    if (config.generateBiomes()) {
+      for (RegistryKey<PlacedFeature> blob : LighterEndPlacedFeatures.JADESTONE_BLOBS) {
+        BiomeModifications.addFeature(
+            BiomeSelectors.includeByKey(biomes),
+            Feature.UNDERGROUND_ORES,
+            blob
+        );
+      }
+    }
+
   }
 
   public static MaterialRule updateSurfaceRules() {

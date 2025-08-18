@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.MusicType;
 import net.minecraft.world.biome.Biome;
@@ -45,11 +46,14 @@ public class UmbraValley {
             new SpawnEntry(EntityType.ENDERMITE, 1, 1)
         ).build();
 
-    GenerationSettings genSettings = new GenerationSettings.LookupBackedBuilder(features, carvers)
+    var genSettingsBuilder = new GenerationSettings.LookupBackedBuilder(features, carvers)
         .feature(Feature.SURFACE_STRUCTURES, EndPlacedFeatures.END_GATEWAY_RETURN)
         .feature(Feature.SURFACE_STRUCTURES, LighterEndPlacedFeatures.UMBRALITH_ARCH)
-        .feature(Feature.SURFACE_STRUCTURES, LighterEndPlacedFeatures.UMBRALITH_ARCH_THIN)
-        .build();
+        .feature(Feature.SURFACE_STRUCTURES, LighterEndPlacedFeatures.UMBRALITH_ARCH_THIN);
+
+    for (RegistryKey<PlacedFeature> blob : LighterEndPlacedFeatures.JADESTONE_BLOBS) {
+      genSettingsBuilder = genSettingsBuilder.feature(Feature.UNDERGROUND_ORES, blob);
+    }
 
     return new Biome.Builder()
         .precipitation(false)
@@ -68,7 +72,7 @@ public class UmbraValley {
             .build()
         )
         .spawnSettings(spawns)
-        .generationSettings(genSettings)
+        .generationSettings(genSettingsBuilder.build())
         .build();
   }
 

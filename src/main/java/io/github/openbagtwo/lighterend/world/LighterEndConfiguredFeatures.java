@@ -16,7 +16,9 @@ import io.github.openbagtwo.lighterend.world.features.UnderwaterPlants;
 import io.github.openbagtwo.lighterend.world.features.trees.Glowshroom;
 import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
 import io.github.openbagtwo.lighterend.world.features.trees.UmbrellaTree;
+import java.util.List;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -32,6 +34,7 @@ import net.minecraft.world.gen.feature.ConfiguredFeatures;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.PlacedFeatures;
+import net.minecraft.world.gen.feature.ReplaceBlobsFeatureConfig;
 import net.minecraft.world.gen.feature.SimpleBlockFeatureConfig;
 import net.minecraft.world.gen.feature.VegetationPatchFeatureConfig;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
@@ -133,7 +136,8 @@ public class LighterEndConfiguredFeatures {
   public static final Feature<IceStar.Config> ICE_STAR_FEATURE = Registry.register(
       Registries.FEATURE,
       LighterEnd.of("ice_star"),
-      new IceStar());
+      new IceStar()
+  );
   public static final RegistryKey<ConfiguredFeature<?, ?>> ICE_STAR_COPPER = of(
       "ice_star_copper");
   public static final RegistryKey<ConfiguredFeature<?, ?>> ICE_STAR_COPPER_SMALL = of(
@@ -142,6 +146,12 @@ public class LighterEndConfiguredFeatures {
       "ice_star_iron");
   public static final RegistryKey<ConfiguredFeature<?, ?>> ICE_STAR_IRON_SMALL = of(
       "ice_star_iron_small");
+
+  public static final List<RegistryKey<ConfiguredFeature<?, ?>>> JADESTONE_BLOBS = List.of(
+      of("jadestone_blob_azure"),
+      of("jadestone_blob_sandy"),
+      of("jadestone_blob_virid")
+  );
 
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
@@ -231,6 +241,38 @@ public class LighterEndConfiguredFeatures {
         ICE_STAR_FEATURE,
         new Config(1, 3, 5, 7, 12)
     );
+
+    ConfiguredFeatures.register(
+        context,
+        JADESTONE_BLOBS.get(0),
+        Feature.NETHERRACK_REPLACE_BLOBS,
+        new ReplaceBlobsFeatureConfig(
+            Blocks.END_STONE.getDefaultState(),
+            LighterEndBlocks.AZURE_JADESTONE.baseBlock.getDefaultState(),
+            UniformIntProvider.create(3, 7)
+        )
+    );
+    ConfiguredFeatures.register(
+        context,
+        JADESTONE_BLOBS.get(1),
+        Feature.NETHERRACK_REPLACE_BLOBS,
+        new ReplaceBlobsFeatureConfig(
+            Blocks.END_STONE.getDefaultState(),
+            LighterEndBlocks.SANDY_JADESTONE.baseBlock.getDefaultState(),
+            UniformIntProvider.create(3, 7)
+        )
+    );
+    ConfiguredFeatures.register(
+        context,
+        JADESTONE_BLOBS.get(2),
+        Feature.NETHERRACK_REPLACE_BLOBS,
+        new ReplaceBlobsFeatureConfig(
+            Blocks.END_STONE.getDefaultState(),
+            LighterEndBlocks.VIRID_JADESTONE.baseBlock.getDefaultState(),
+            UniformIntProvider.create(3, 7)
+        )
+    );
+
   }
 
   public static void initialize() {

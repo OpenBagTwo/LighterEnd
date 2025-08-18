@@ -27,8 +27,7 @@ public class Starfield {
 
     SpawnSettings spawns = new SpawnSettings.Builder().build();
 
-    GenerationSettings.LookupBackedBuilder genSettingsBuilder = new GenerationSettings.LookupBackedBuilder(
-        features, carvers);
+    var genSettingsBuilder = new GenerationSettings.LookupBackedBuilder(features, carvers);
     for (RegistryKey<PlacedFeature> star : LighterEndPlacedFeatures.STARFIELD_ICE_STARS) {
       genSettingsBuilder.feature(Feature.SURFACE_STRUCTURES, star);
     }

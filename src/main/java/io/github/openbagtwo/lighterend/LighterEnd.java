@@ -65,5 +65,6 @@ public class LighterEnd implements ModInitializer {
     VanillaLootTableModifiers.patchLootTables(CONFIG);
     LighterEndWorldGen.modifyWorldGen(CONFIG);
     LighterEndWorldGen.addIceStars(CONFIG);
+    LighterEndWorldGen.addJadestoneBlobs(CONFIG);
   }
 }
