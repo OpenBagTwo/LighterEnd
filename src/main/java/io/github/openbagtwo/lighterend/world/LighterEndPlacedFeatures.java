@@ -185,7 +185,7 @@ public class LighterEndPlacedFeatures {
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_COPPER),
             List.of(
-                RarityFilterPlacementModifier.of(256),
+                RarityFilterPlacementModifier.of(1024),
                 HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
             )
         )
@@ -195,7 +195,7 @@ public class LighterEndPlacedFeatures {
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_COPPER_SMALL),
             List.of(
-                RarityFilterPlacementModifier.of(128),
+                RarityFilterPlacementModifier.of(512),
                 HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
             )
         )
@@ -205,7 +205,7 @@ public class LighterEndPlacedFeatures {
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_IRON),
             List.of(
-                RarityFilterPlacementModifier.of(256),
+                RarityFilterPlacementModifier.of(1024),
                 HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
             )
         )
@@ -215,7 +215,7 @@ public class LighterEndPlacedFeatures {
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_IRON_SMALL),
             List.of(
-                RarityFilterPlacementModifier.of(128),
+                RarityFilterPlacementModifier.of(512),
                 HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
             )
         )

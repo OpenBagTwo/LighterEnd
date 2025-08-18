@@ -182,7 +182,6 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
                             ))
                         .apply(CopyStateLootFunction.builder(LighterEndBlocks.SILK_MOTH_NEST)
                             .addProperty(SilkMothNest.FULLNESS))
-                        .alternatively(ItemEntry.builder(LighterEndBlocks.SILK_MOTH_NEST))
                 )
         );
   }

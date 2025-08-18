@@ -20,7 +20,10 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.biome.v1.TheEndBiomes;
 import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.biome.source.BiomeSource;
@@ -128,36 +131,34 @@ public class LighterEndWorldGen {
   }
 
   public static void addIceStars(Config config) {
+    List<RegistryKey<Biome>> iceStarBiomes = new ArrayList<>();
+    iceStarBiomes.add(BiomeKeys.END_BARRENS);
+    iceStarBiomes.add(BiomeKeys.SMALL_END_ISLANDS);
+    try {
+      iceStarBiomes.add(
+          RegistryKey.of(RegistryKeys.BIOME, Identifier.of("nullscape", "void_barrens"))
+      );
+    } catch (NullPointerException e) {
+    }
+
     if (config.generateBiomes()) {
       BiomeModifications.addFeature(
-          BiomeSelectors.includeByKey(
-              BiomeKeys.END_BARRENS,
-              BiomeKeys.SMALL_END_ISLANDS
-          ),
+          BiomeSelectors.includeByKey(iceStarBiomes),
           GenerationStep.Feature.SURFACE_STRUCTURES,
           LighterEndPlacedFeatures.ICE_STAR_COPPER
       );
       BiomeModifications.addFeature(
-          BiomeSelectors.includeByKey(
-              BiomeKeys.END_BARRENS,
-              BiomeKeys.SMALL_END_ISLANDS
-          ),
+          BiomeSelectors.includeByKey(iceStarBiomes),
           GenerationStep.Feature.SURFACE_STRUCTURES,
           LighterEndPlacedFeatures.ICE_STAR_COPPER_SMALL
       );
       BiomeModifications.addFeature(
-          BiomeSelectors.includeByKey(
-              BiomeKeys.END_BARRENS,
-              BiomeKeys.SMALL_END_ISLANDS
-          ),
+          BiomeSelectors.includeByKey(iceStarBiomes),
           GenerationStep.Feature.SURFACE_STRUCTURES,
           LighterEndPlacedFeatures.ICE_STAR_IRON
       );
       BiomeModifications.addFeature(
-          BiomeSelectors.includeByKey(
-              BiomeKeys.END_BARRENS,
-              BiomeKeys.SMALL_END_ISLANDS
-          ),
+          BiomeSelectors.includeByKey(iceStarBiomes),
           GenerationStep.Feature.SURFACE_STRUCTURES,
           LighterEndPlacedFeatures.ICE_STAR_IRON_SMALL
       );
