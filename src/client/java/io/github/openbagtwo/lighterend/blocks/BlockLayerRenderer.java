@@ -4,9 +4,17 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.minecraft.client.render.BlockRenderLayer;
 
-public class CutoutRenderer {
+public class BlockLayerRenderer {
 
   public static void initialize() {
+    BlockRenderLayerMap.putBlocks(
+        BlockRenderLayer.TRANSLUCENT,
+        LighterEndBlocks.AURORA_CRYSTAL,
+        LighterEndBlocks.OBELISK,
+        LighterEndBlocks.FERROUS_ICE,
+        LighterEndBlocks.EMERALD_ICE
+    );
+
     BlockRenderLayerMap.putBlocks(
         BlockRenderLayer.CUTOUT,
         LighterEndBlocks.CREEPING_MOSS,

@@ -1,7 +1,6 @@
 package io.github.openbagtwo.lighterend;
 
-import io.github.openbagtwo.lighterend.blocks.AuroraCrystalRenderer;
-import io.github.openbagtwo.lighterend.blocks.CutoutRenderer;
+import io.github.openbagtwo.lighterend.blocks.BlockLayerRenderer;
 import io.github.openbagtwo.lighterend.blocks.EndMossRenderer;
 import io.github.openbagtwo.lighterend.blocks.SignRenderer;
 import io.github.openbagtwo.lighterend.blocks.UmbralithRenderer;
@@ -17,11 +16,10 @@ public class LighterEndClient implements ClientModInitializer {
 
   @Override
   public void onInitializeClient() {
-    AuroraCrystalRenderer.initialize();
     EndMossRenderer.initialize();
     UmbralithRenderer.initialize();
     UmbrellaMembraneRenderer.initialize();
-    CutoutRenderer.initialize();
+    BlockLayerRenderer.initialize();
     ParticleFactoryRegistry.getInstance()
         .register(LighterEndParticles.TENANEA_PETAL, TenaneaPetal.Factory::new);
     ParticleFactoryRegistry.getInstance()
