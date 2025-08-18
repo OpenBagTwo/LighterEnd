@@ -8,6 +8,7 @@ import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest.SilkMothNestFeature;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
+import io.github.openbagtwo.lighterend.world.features.BuriedBlob;
 import io.github.openbagtwo.lighterend.world.features.IceStar;
 import io.github.openbagtwo.lighterend.world.features.IceStar.Config;
 import io.github.openbagtwo.lighterend.world.features.LotusLeaf;
@@ -34,7 +35,6 @@ import net.minecraft.world.gen.feature.ConfiguredFeatures;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.PlacedFeatures;
-import net.minecraft.world.gen.feature.ReplaceBlobsFeatureConfig;
 import net.minecraft.world.gen.feature.SimpleBlockFeatureConfig;
 import net.minecraft.world.gen.feature.VegetationPatchFeatureConfig;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
@@ -147,6 +147,12 @@ public class LighterEndConfiguredFeatures {
   public static final RegistryKey<ConfiguredFeature<?, ?>> ICE_STAR_IRON_SMALL = of(
       "ice_star_iron_small");
 
+  public static final Feature<BuriedBlob.Config> BURIED_BLOB = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("buried_blob"),
+      new BuriedBlob()
+  );
+
   public static final List<RegistryKey<ConfiguredFeature<?, ?>>> JADESTONE_BLOBS = List.of(
       of("jadestone_blob_azure"),
       of("jadestone_blob_sandy"),
@@ -245,31 +251,34 @@ public class LighterEndConfiguredFeatures {
     ConfiguredFeatures.register(
         context,
         JADESTONE_BLOBS.get(0),
-        Feature.NETHERRACK_REPLACE_BLOBS,
-        new ReplaceBlobsFeatureConfig(
+        BURIED_BLOB,
+        new BuriedBlob.Config(
             Blocks.END_STONE.getDefaultState(),
             LighterEndBlocks.AZURE_JADESTONE.baseBlock.getDefaultState(),
-            UniformIntProvider.create(3, 7)
+            UniformIntProvider.create(3, 7),
+            6
         )
     );
     ConfiguredFeatures.register(
         context,
         JADESTONE_BLOBS.get(1),
-        Feature.NETHERRACK_REPLACE_BLOBS,
-        new ReplaceBlobsFeatureConfig(
+        BURIED_BLOB,
+        new BuriedBlob.Config(
             Blocks.END_STONE.getDefaultState(),
             LighterEndBlocks.SANDY_JADESTONE.baseBlock.getDefaultState(),
-            UniformIntProvider.create(3, 7)
+            UniformIntProvider.create(3, 7),
+            6
         )
     );
     ConfiguredFeatures.register(
         context,
         JADESTONE_BLOBS.get(2),
-        Feature.NETHERRACK_REPLACE_BLOBS,
-        new ReplaceBlobsFeatureConfig(
+        BURIED_BLOB,
+        new BuriedBlob.Config(
             Blocks.END_STONE.getDefaultState(),
             LighterEndBlocks.VIRID_JADESTONE.baseBlock.getDefaultState(),
-            UniformIntProvider.create(3, 7)
+            UniformIntProvider.create(3, 7),
+            6
         )
     );
 
