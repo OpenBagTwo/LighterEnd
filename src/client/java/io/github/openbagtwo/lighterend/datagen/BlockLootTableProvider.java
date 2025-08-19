@@ -16,6 +16,7 @@ import net.minecraft.block.DoorBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
@@ -139,6 +140,12 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
 
     addDrop(LighterEndBlocks.EMERALD_ICE);
     addDrop(LighterEndBlocks.FERROUS_ICE);
+    addDrop(LighterEndBlocks.AUROUS_ICE);
+
+    addDrop(LighterEndBlocks.END_STONE_REDSTONE_ORE, this::redstoneOreDrops);
+    addDrop(LighterEndBlocks.UMBRALITH_REDSTONE_ORE, this::redstoneOreDrops);
+    addDrop(LighterEndBlocks.END_STONE_QUARTZ_ORE, block -> this.oreDrops(block, Items.QUARTZ));
+    addDrop(LighterEndBlocks.UMBRALITH_QUARTZ_ORE, block -> this.oreDrops(block, Items.QUARTZ));
   }
 
   private LootTable.Builder auroraCrystalDrops() {

@@ -39,6 +39,7 @@ import net.minecraft.block.BlockSetType;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ButtonBlock;
 import net.minecraft.block.DoorBlock;
+import net.minecraft.block.ExperienceDroppingBlock;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.FlowerPotBlock;
@@ -47,6 +48,7 @@ import net.minecraft.block.LeverBlock;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.block.PressurePlateBlock;
+import net.minecraft.block.RedstoneOreBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.TintedParticleLeavesBlock;
@@ -64,8 +66,10 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 
 public class LighterEndBlocks {
 
@@ -246,6 +250,69 @@ public class LighterEndBlocks {
               .nonOpaque()
       )
   );
+
+  public static final Block AUROUS_ICE = register(
+      "aurous_ice",
+      settings -> new Block(
+          settings
+              .mapColor(MapColor.PALE_YELLOW)
+              .instrument(NoteBlockInstrument.CHIME)
+              .slipperiness(0.95F)
+              .strength(0.75F)
+              .sounds(BlockSoundGroup.GLASS)
+              .requiresTool()
+              .nonOpaque()
+      )
+  );
+
+  public static final Block END_STONE_REDSTONE_ORE = register(
+      "end_stone_redstone_ore",
+      settings -> new RedstoneOreBlock(
+          settings
+              .mapColor(MapColor.PALE_YELLOW)
+              .strength(4.5F, 9.0F)
+              .instrument(NoteBlockInstrument.BASEDRUM)
+              .requiresTool()
+              .ticksRandomly()
+              .luminance(state -> state.get(Properties.LIT) ? 9 : 0)
+      )
+  );
+
+  public static final Block UMBRALITH_REDSTONE_ORE = register(
+      "umbralith_redstone_ore",
+      settings -> new RedstoneOreBlock(
+          settings
+              .mapColor(MapColor.BLACK)
+              .strength(4.5F, 9.0F)
+              .instrument(NoteBlockInstrument.BASEDRUM)
+              .requiresTool()
+              .ticksRandomly()
+              .luminance(state -> state.get(Properties.LIT) ? 9 : 0)
+      )
+  );
+
+  public static final Block END_STONE_QUARTZ_ORE = register(
+      "end_stone_quartz_ore",
+      settings -> new ExperienceDroppingBlock(UniformIntProvider.create(2, 5),
+          settings
+              .mapColor(MapColor.PALE_YELLOW)
+              .strength(4.5F, 9.0F)
+              .instrument(NoteBlockInstrument.BASEDRUM)
+              .requiresTool()
+      )
+  );
+
+  public static final Block UMBRALITH_QUARTZ_ORE = register(
+      "umbralith_quartz_ore",
+      settings -> new ExperienceDroppingBlock(UniformIntProvider.create(2, 5),
+          settings
+              .mapColor(MapColor.BLACK)
+              .strength(4.5F, 9.0F)
+              .instrument(NoteBlockInstrument.BASEDRUM)
+              .requiresTool()
+      )
+  );
+
 
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);

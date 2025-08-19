@@ -82,9 +82,9 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     }
 
     valueLookupBuilder(BlockTags.PICKAXE_MINEABLE)
-        .add(LighterEndBlocks.ENDER_BLOCK)
-        .add(LighterEndBlocks.MISSING_TILE)
         .add(
+            LighterEndBlocks.ENDER_BLOCK,
+            LighterEndBlocks.MISSING_TILE,
             LighterEndBlocks.DRAGON_BONE_BLOCK,
             LighterEndBlocks.DRAGON_BONE_STAIRS,
             LighterEndBlocks.DRAGON_BONE_SLAB,
@@ -92,11 +92,23 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.GOLD_CHANDELIER,
             LighterEndBlocks.IRON_CHANDELIER,
             LighterEndBlocks.EMERALD_ICE,
-            LighterEndBlocks.FERROUS_ICE
+            LighterEndBlocks.FERROUS_ICE,
+            LighterEndBlocks.END_STONE_QUARTZ_ORE,
+            LighterEndBlocks.END_STONE_REDSTONE_ORE,
+            LighterEndBlocks.UMBRALITH_QUARTZ_ORE,
+            LighterEndBlocks.UMBRALITH_REDSTONE_ORE
         );
 
     valueLookupBuilder(BlockTags.NEEDS_STONE_TOOL)
         .add(LighterEndBlocks.ENDER_BLOCK);
+
+    valueLookupBuilder(BlockTags.NEEDS_IRON_TOOL)
+        .add(
+            LighterEndBlocks.END_STONE_QUARTZ_ORE,
+            LighterEndBlocks.END_STONE_REDSTONE_ORE,
+            LighterEndBlocks.UMBRALITH_QUARTZ_ORE,
+            LighterEndBlocks.UMBRALITH_REDSTONE_ORE
+        );
 
     for (Material jadestone : Arrays.asList(
         LighterEndBlocks.AZURE_JADESTONE,

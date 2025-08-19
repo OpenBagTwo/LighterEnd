@@ -24,15 +24,34 @@ public class ConfigScreen extends GameOptionsScreen {
   protected void addOptions() {
     if (this.body != null) {
       this.body.addSingleOptionEntry(
-          SimpleOption.ofBoolean("Generate Modded Biomes",
-              LighterEnd.CONFIG.generateBiomes, (value) -> {
+          SimpleOption.ofBoolean(
+              "Generate Modded Biomes",
+              LighterEnd.CONFIG.generateBiomes,
+              (value) -> {
                 LighterEnd.CONFIG.generateBiomes = value;
-              }));
+              }
+          )
+      );
       this.body.addSingleOptionEntry(
-          SimpleOption.ofBoolean("Play Modded Music in End Biomes",
-              LighterEnd.CONFIG.playEndBiomeMusic, (value) -> {
+          SimpleOption.ofBoolean(
+              "Generate Ores",
+              SimpleOption.constantTooltip(Text.of(
+                  "Whether to generate redstone and quartz ores (including in vanilla biomes)")),
+              LighterEnd.CONFIG.generateOres,
+              (value) -> {
+                LighterEnd.CONFIG.generateOres = value;
+              }
+          )
+      );
+      this.body.addSingleOptionEntry(
+          SimpleOption.ofBoolean(
+              "Play Modded Music in End Biomes",
+              LighterEnd.CONFIG.playEndBiomeMusic,
+              (value) -> {
                 LighterEnd.CONFIG.playEndBiomeMusic = value;
-              }));
+              }
+          )
+      );
       this.body.addSingleOptionEntry(
           new SimpleOption<>(
               "End Gravity",
@@ -43,36 +62,54 @@ public class ConfigScreen extends GameOptionsScreen {
               MathHelper.floor(100 * LighterEnd.CONFIG.endGravity),
               value -> {
                 LighterEnd.CONFIG.endGravity = 0.01 * value;
-              }));
+              }
+          )
+      );
       this.body.addSingleOptionEntry(
-          SimpleOption.ofBoolean("Disable End Gravity While Flying",
+          SimpleOption.ofBoolean(
+              "Disable End Gravity While Flying",
               SimpleOption.constantTooltip(Text.of("Lowering gravity nerfs unpowered glide speed")),
-              LighterEnd.CONFIG.disableEndGravityWhileFlying, (value) -> {
+              LighterEnd.CONFIG.disableEndGravityWhileFlying,
+              (value) -> {
                 LighterEnd.CONFIG.disableEndGravityWhileFlying = value;
-              }));
+              }
+          )
+      );
       this.body.addSingleOptionEntry(
-          SimpleOption.ofBoolean("Modded Plants Can Only Grow in The End",
+          SimpleOption.ofBoolean(
+              "Modded Plants Can Only Grow in The End",
               LighterEnd.CONFIG.endPlantsOnlyGrowInTheEnd, (value) -> {
                 LighterEnd.CONFIG.endPlantsOnlyGrowInTheEnd = value;
-              }));
+              }
+          )
+      );
       this.body.addSingleOptionEntry(
-          SimpleOption.ofBoolean("Mod Music Discs Can Be Found in End Cities",
+          SimpleOption.ofBoolean(
+              "Mod Music Discs Can Be Found in End Cities",
               LighterEnd.CONFIG.musicDiscsInEndCities, (value) -> {
                 LighterEnd.CONFIG.musicDiscsInEndCities = value;
-              }));
+              }
+          )
+      );
       this.body.addSingleOptionEntry(
-          SimpleOption.ofBoolean("Use Custom Fishing Loot in The End",
+          SimpleOption.ofBoolean(
+              "Use Custom Fishing Loot in The End",
               LighterEnd.CONFIG.customEndFishing, (value) -> {
                 LighterEnd.CONFIG.customEndFishing = value;
-              }));
+              }
+          )
+      );
       this.body.addSingleOptionEntry(
-          SimpleOption.ofBoolean("Custom Aquatic Vegetation Bonemealing",
+          SimpleOption.ofBoolean(
+              "Custom Aquatic Vegetation Bonemealing",
               SimpleOption.constantTooltip(Text.of(
                   "With this option enabled, bonemealing underwater in The End will grow modded flora"
               )),
               LighterEnd.CONFIG.bonemealUnderwaterInEndMakesEndVegetation, (value) -> {
                 LighterEnd.CONFIG.bonemealUnderwaterInEndMakesEndVegetation = value;
-              }));
+              }
+          )
+      );
     }
   }
 

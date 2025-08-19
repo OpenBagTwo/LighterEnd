@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "lighterend:block/end_stone_redstone_ore"
+    }
+  }
+}

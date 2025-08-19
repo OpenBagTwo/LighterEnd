@@ -69,13 +69,28 @@ public class IceStar extends Feature<IceStar.Config> {
 
     final BlockPos center = pos;
 
-    final int variant = cfg.variant % 2;
-    final BlockState ice = variant == 0 ? LighterEndBlocks.EMERALD_ICE.getDefaultState()
-        : LighterEndBlocks.FERROUS_ICE.getDefaultState();
-    final BlockState dense = variant == 0 ? Blocks.RAW_COPPER_BLOCK.getDefaultState()
-        : LighterEndBlocks.FERROUS_ICE.getDefaultState();
-    final BlockState ancient = variant == 0 ? Blocks.RAW_COPPER_BLOCK.getDefaultState()
-        : Blocks.RAW_IRON_BLOCK.getDefaultState();
+    final BlockState ice;
+    final BlockState dense;
+    final BlockState ancient;
+
+    switch (cfg.variant % 3) {
+      case 2:
+        ice = LighterEndBlocks.AUROUS_ICE.getDefaultState();
+        dense = Blocks.RAW_GOLD_BLOCK.getDefaultState();
+        ancient = Blocks.RAW_GOLD_BLOCK.getDefaultState();
+        break;
+      case 1:
+        ice = LighterEndBlocks.FERROUS_ICE.getDefaultState();
+        dense = LighterEndBlocks.FERROUS_ICE.getDefaultState();
+        ancient = Blocks.RAW_IRON_BLOCK.getDefaultState();
+        break;
+      case 0:
+      default:
+        ice = LighterEndBlocks.EMERALD_ICE.getDefaultState();
+        dense = Blocks.COPPER_BLOCK.getDefaultState();
+        ancient = Blocks.RAW_COPPER_BLOCK.getDefaultState();
+    }
+
     final SDF sdfCopy = sdf;
 
     sdf.addPostProcess((info) -> {

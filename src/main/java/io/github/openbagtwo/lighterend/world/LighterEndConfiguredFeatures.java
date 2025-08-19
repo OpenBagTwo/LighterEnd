@@ -27,6 +27,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.structure.rule.BlockMatchRuleTest;
 import net.minecraft.util.collection.Pool;
 import net.minecraft.util.math.VerticalSurfaceType;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
@@ -35,6 +36,7 @@ import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.ConfiguredFeatures;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.feature.PlacedFeatures;
 import net.minecraft.world.gen.feature.SimpleBlockFeatureConfig;
 import net.minecraft.world.gen.feature.VegetationPatchFeatureConfig;
@@ -147,6 +149,10 @@ public class LighterEndConfiguredFeatures {
       "ice_star_iron");
   public static final RegistryKey<ConfiguredFeature<?, ?>> ICE_STAR_IRON_SMALL = of(
       "ice_star_iron_small");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> ICE_STAR_GOLD = of(
+      "ice_star_gold");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> ICE_STAR_GOLD_SMALL = of(
+      "ice_star_gold_small");
 
   public static final Feature<BuriedBlob.Config> BURIED_BLOB = Registry.register(
       Registries.FEATURE,
@@ -168,6 +174,15 @@ public class LighterEndConfiguredFeatures {
 
   public static final RegistryKey<ConfiguredFeature<?, ?>> AURORA_CRYSTAL = of(
       "aurora_crystal_formation");
+
+  public static final RegistryKey<ConfiguredFeature<?, ?>> END_STONE_REDSTONE_ORE = of(
+      "end_stone_redstone_ore");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> END_STONE_QUARTZ_ORE = of(
+      "end_stone_quartz_ore");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> UMBRALITH_REDSTONE_ORE = of(
+      "umbralith_redstone_ore");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> UMBRALITH_QUARTZ_ORE = of(
+      "umbralith_quartz_ore");
 
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
@@ -257,6 +272,18 @@ public class LighterEndConfiguredFeatures {
         ICE_STAR_FEATURE,
         new Config(1, 3, 5, 7, 12)
     );
+    ConfiguredFeatures.register(
+        context,
+        ICE_STAR_GOLD,
+        ICE_STAR_FEATURE,
+        new Config(2, 5, 15, 10, 25)
+    );
+    ConfiguredFeatures.register(
+        context,
+        ICE_STAR_GOLD_SMALL,
+        ICE_STAR_FEATURE,
+        new Config(2, 3, 5, 7, 12)
+    );
 
     ConfiguredFeatures.register(
         context,
@@ -293,6 +320,48 @@ public class LighterEndConfiguredFeatures {
     );
 
     ConfiguredFeatures.register(context, AURORA_CRYSTAL, AURORA_CRYSTAL_FEATURE);
+
+    ConfiguredFeatures.register(
+        context,
+        END_STONE_REDSTONE_ORE,
+        Feature.ORE,
+        new OreFeatureConfig(
+            new BlockMatchRuleTest(Blocks.END_STONE),
+            LighterEndBlocks.END_STONE_REDSTONE_ORE.getDefaultState(),
+            5
+        )
+    );
+    ConfiguredFeatures.register(
+        context,
+        END_STONE_QUARTZ_ORE,
+        Feature.ORE,
+        new OreFeatureConfig(
+            new BlockMatchRuleTest(Blocks.END_STONE),
+            LighterEndBlocks.END_STONE_QUARTZ_ORE.getDefaultState(),
+            7
+        )
+    );
+
+    ConfiguredFeatures.register(
+        context,
+        UMBRALITH_REDSTONE_ORE,
+        Feature.ORE,
+        new OreFeatureConfig(
+            new BlockMatchRuleTest(LighterEndBlocks.UMBRALITH.baseBlock),
+            LighterEndBlocks.UMBRALITH_REDSTONE_ORE.getDefaultState(),
+            5
+        )
+    );
+    ConfiguredFeatures.register(
+        context,
+        UMBRALITH_QUARTZ_ORE,
+        Feature.ORE,
+        new OreFeatureConfig(
+            new BlockMatchRuleTest(LighterEndBlocks.UMBRALITH.baseBlock),
+            LighterEndBlocks.UMBRALITH_QUARTZ_ORE.getDefaultState(),
+            7
+        )
+    );
   }
 
   public static void initialize() {

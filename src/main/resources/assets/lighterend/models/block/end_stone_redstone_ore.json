@@ -1,0 +1,7 @@
+{
+  "parent": "lighterend:block/ore_emissive",
+  "textures": {
+    "ore": "lighterend:block/redstone_overlay",
+    "stone": "minecraft:block/end_stone"
+  }
+}

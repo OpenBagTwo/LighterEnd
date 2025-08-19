@@ -31,6 +31,11 @@ public class Config {
   protected boolean generateBiomes;
 
   /**
+   * Whether to generate redstone and quartz ores (including in vanilla biomes)
+   */
+  protected boolean generateOres;
+
+  /**
    * Whether custom music should play in LighterEnd biomes
    */
   protected boolean playEndBiomeMusic;
@@ -44,7 +49,6 @@ public class Config {
    * Whether the above gravity modification should be disabled while flying with elytra
    */
   protected boolean disableEndGravityWhileFlying;
-
 
   /**
    * Whether End trees (including lumecorn, lilies and lotuses) should be prevented from growing in
@@ -70,6 +74,10 @@ public class Config {
 
   public boolean generateBiomes() {
     return this.generateBiomes;
+  }
+
+  public boolean generateOres() {
+    return this.generateOres;
   }
 
   public boolean playEndBiomeMusic() {
@@ -104,6 +112,7 @@ public class Config {
    * Default values
    */
   private static final boolean DEFAULT_BIOME_GENERATION = true;
+  private static final boolean DEFAULT_GENERATE_ORES = false;
   private static final boolean DEFAULT_PLAY_END_BIOME_MUSIC = true;
   private static final double DEFAULT_END_GRAVITY = 0.3;
   private static final boolean DEFAULT_END_GRAVITY_DISABLED_WHILE_FLYING = false;
@@ -159,6 +168,7 @@ public class Config {
     }
     Map<String, Object> writeme = new LinkedHashMap<>();
     writeme.put("generate_biomes", this.generateBiomes);
+    writeme.put("generate_ores", this.generateOres);
     writeme.put("play_biome_music", this.playEndBiomeMusic);
     writeme.put("end_gravity", this.endGravity);
     writeme.put("disable_end_gravity_while_flying", this.disableEndGravityWhileFlying);
@@ -181,6 +191,7 @@ public class Config {
     LighterEnd.LOGGER.info("Loading default " + LighterEnd.MOD_NAME + " configuration");
     Config config = new Config();
     config.generateBiomes = DEFAULT_BIOME_GENERATION;
+    config.generateOres = DEFAULT_GENERATE_ORES;
     config.playEndBiomeMusic = DEFAULT_PLAY_END_BIOME_MUSIC;
     config.endGravity = DEFAULT_END_GRAVITY;
     config.disableEndGravityWhileFlying = DEFAULT_END_GRAVITY_DISABLED_WHILE_FLYING;
@@ -223,6 +234,12 @@ public class Config {
           settings.getOrDefault(
               "generate_biomes",
               DEFAULT_BIOME_GENERATION
+          ).toString()
+      );
+      config.generateOres = Boolean.parseBoolean(
+          settings.getOrDefault(
+              "generate_ores",
+              DEFAULT_GENERATE_ORES
           ).toString()
       );
       config.playEndBiomeMusic = Boolean.parseBoolean(

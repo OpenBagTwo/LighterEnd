@@ -37,20 +37,36 @@ public class LighterEndPlacedFeatures {
       of("barrens_ice_star_copper"),
       of("barrens_ice_star_copper_small"),
       of("barrens_ice_star_iron"),
-      of("barrens_ice_star_iron_small")
+      of("barrens_ice_star_iron_small"),
+      of("barrens_ice_star_gold"),
+      of("barrens_ice_star_gold_small")
   );
   public static final List<RegistryKey<PlacedFeature>> STARFIELD_ICE_STARS = List.of(
       of("starfield_ice_star_copper"),
       of("starfield_ice_star_copper_small"),
       of("starfield_ice_star_iron"),
-      of("starfield_ice_star_iron_small")
+      of("starfield_ice_star_iron_small"),
+      of("starfield_ice_star_gold"),
+      of("starfield_ice_star_gold_small")
   );
   public static final List<RegistryKey<PlacedFeature>> JADESTONE_BLOBS = List.of(
       of("jadestone_blob_azure"),
       of("jadestone_blob_sandy"),
       of("jadestone_blob_virid")
   );
+  public static final List<RegistryKey<PlacedFeature>> JADESTONE_BLOBS_BM = List.of(
+      of("jadestone_blob_azure_bm"),
+      of("jadestone_blob_sandy_bm"),
+      of("jadestone_blob_virid_bm")
+  );
+
   public static final RegistryKey<PlacedFeature> AURORA_CRYSTAL = of("aurora_crystal_formation");
+  public static final RegistryKey<PlacedFeature> END_STONE_REDSTONE_ORE = of(
+      "end_stone_redstone_ore");
+  public static final RegistryKey<PlacedFeature> END_STONE_QUARTZ_ORE = of("end_stone_quartz_ore");
+  public static final RegistryKey<PlacedFeature> UMBRALITH_REDSTONE_ORE = of(
+      "umbralith_redstone_ore");
+  public static final RegistryKey<PlacedFeature> UMBRALITH_QUARTZ_ORE = of("umbralith_quartz_ore");
 
 
   public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -251,21 +267,47 @@ public class LighterEndPlacedFeatures {
               )
           )
       );
-    }
-
-    for (int i = 0; i < 3; i++) {
       context.register(
-          JADESTONE_BLOBS.get(i),
+          features.get(4),
           new PlacedFeature(
-              configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.JADESTONE_BLOBS.get(i)),
+              configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_GOLD),
               List.of(
-                  CountPlacementModifier.of(5),
-                  SquarePlacementModifier.of(),
-                  PlacedFeatures.BOTTOM_TO_TOP_RANGE,
-                  BiomePlacementModifier.of()
+                  RarityFilterPlacementModifier.of(rarity * 2),
+                  HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256)),
+                  SquarePlacementModifier.of()
+                  // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
           )
       );
+      context.register(
+          features.get(5),
+          new PlacedFeature(
+              configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_GOLD_SMALL),
+              List.of(
+                  RarityFilterPlacementModifier.of(rarity),
+                  HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256)),
+                  SquarePlacementModifier.of()
+                  // lack of BiomePlacementModifier is intentional--the effects are dramatic
+              )
+          )
+      );
+    }
+
+    for (List<RegistryKey<PlacedFeature>> blobs : List.of(JADESTONE_BLOBS, JADESTONE_BLOBS_BM)) {
+      for (int i = 0; i < 3; i++) {
+        context.register(
+            blobs.get(i),
+            new PlacedFeature(
+                configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.JADESTONE_BLOBS.get(i)),
+                List.of(
+                    CountPlacementModifier.of(5),
+                    SquarePlacementModifier.of(),
+                    PlacedFeatures.BOTTOM_TO_TOP_RANGE,
+                    BiomePlacementModifier.of()
+                )
+            )
+        );
+      }
     }
 
     context.register(
@@ -275,6 +317,58 @@ public class LighterEndPlacedFeatures {
             List.of(
                 RarityFilterPlacementModifier.of(16),
                 PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
+                BiomePlacementModifier.of()
+            )
+        )
+    );
+
+    context.register(
+        END_STONE_REDSTONE_ORE,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.END_STONE_REDSTONE_ORE),
+            List.of(
+                CountPlacementModifier.of(10),
+                SquarePlacementModifier.of(),
+                PlacedFeatures.BOTTOM_TO_TOP_RANGE,
+                BiomePlacementModifier.of()
+            )
+        )
+    );
+
+    context.register(
+        END_STONE_QUARTZ_ORE,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.END_STONE_QUARTZ_ORE),
+            List.of(
+                CountPlacementModifier.of(10),
+                SquarePlacementModifier.of(),
+                PlacedFeatures.BOTTOM_TO_TOP_RANGE,
+                BiomePlacementModifier.of()
+            )
+        )
+    );
+
+    context.register(
+        UMBRALITH_REDSTONE_ORE,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.UMBRALITH_REDSTONE_ORE),
+            List.of(
+                CountPlacementModifier.of(20),
+                SquarePlacementModifier.of(),
+                PlacedFeatures.BOTTOM_TO_TOP_RANGE,
+                BiomePlacementModifier.of()
+            )
+        )
+    );
+
+    context.register(
+        UMBRALITH_QUARTZ_ORE,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.UMBRALITH_QUARTZ_ORE),
+            List.of(
+                CountPlacementModifier.of(20),
+                SquarePlacementModifier.of(),
+                PlacedFeatures.BOTTOM_TO_TOP_RANGE,
                 BiomePlacementModifier.of()
             )
         )

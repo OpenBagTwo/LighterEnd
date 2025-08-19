@@ -8,6 +8,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndEquipment;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
@@ -412,6 +413,25 @@ public class RecipeProvider extends FabricRecipeProvider {
 //                LighterEnd.of("smelting_copper_from_ice")
 //            )
 //        );
+
+        offerSmelting(
+            List.of(LighterEndBlocks.END_STONE_REDSTONE_ORE,
+                LighterEndBlocks.UMBRALITH_REDSTONE_ORE),
+            RecipeCategory.REDSTONE,
+            Items.REDSTONE,
+            0.7F,
+            200,
+            "end_redstone"
+        );
+        offerBlasting(
+            List.of(LighterEndBlocks.END_STONE_REDSTONE_ORE,
+                LighterEndBlocks.UMBRALITH_REDSTONE_ORE),
+            RecipeCategory.REDSTONE,
+            Items.REDSTONE,
+            0.7F,
+            100,
+            "end_redstone"
+        );
 
       }
 

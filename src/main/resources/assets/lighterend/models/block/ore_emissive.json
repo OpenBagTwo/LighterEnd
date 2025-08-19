@@ -1,0 +1,118 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#stone"
+        },
+        "east": {
+          "cullface": "east",
+          "texture": "#stone"
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#stone"
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#stone"
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#stone"
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#stone"
+        }
+      },
+      "from": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#ore"
+        },
+        "east": {
+          "cullface": "east",
+          "texture": "#ore"
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#ore"
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#ore"
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#ore"
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#ore"
+        }
+      },
+      "from": [
+        -0.001,
+        -0.001,
+        -0.001
+      ],
+      "to": [
+        16.001,
+        16.001,
+        16.001
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#ore"
+        },
+        "east": {
+          "texture": "#ore"
+        },
+        "north": {
+          "texture": "#ore"
+        },
+        "south": {
+          "texture": "#ore"
+        },
+        "up": {
+          "texture": "#ore"
+        },
+        "west": {
+          "texture": "#ore"
+        }
+      },
+      "from": [
+        -0.001,
+        -0.001,
+        -0.001
+      ],
+      "light_emission": 7,
+      "shade": false,
+      "to": [
+        16.001,
+        16.001,
+        16.001
+      ]
+    }
+  ],
+  "parent": "block/block",
+  "textures": {
+    "particle": "#stone"
+  }
+}

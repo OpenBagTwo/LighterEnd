@@ -115,80 +115,135 @@ public class LighterEndWorldGen {
   }
 
   public static void modifyWorldGen(Config config) {
-    if (config.generateBiomes()) {
-      TheEndBiomes.addHighlandsBiome(LighterEndBiomes.GLOWING_GRASSLAND, 2.0);
-      TheEndBiomes.addMidlandsBiome(LighterEndBiomes.GLOWING_GRASSLAND,
-          LighterEndBiomes.GLOWING_GRASSLAND, 2.0);
-      TheEndBiomes.addSmallIslandsBiome(LighterEndBiomes.GLOWING_GRASSLAND, 1.0);
+    if (!config.generateBiomes()) {
+      return;
+    }
+    TheEndBiomes.addHighlandsBiome(LighterEndBiomes.GLOWING_GRASSLAND, 2.0);
+    TheEndBiomes.addMidlandsBiome(LighterEndBiomes.GLOWING_GRASSLAND,
+        LighterEndBiomes.GLOWING_GRASSLAND, 2.0);
+    TheEndBiomes.addSmallIslandsBiome(LighterEndBiomes.GLOWING_GRASSLAND, 1.0);
 
-      TheEndBiomes.addHighlandsBiome(LighterEndBiomes.BLOSSOM_FOREST, 1.0);
+    TheEndBiomes.addHighlandsBiome(LighterEndBiomes.BLOSSOM_FOREST, 1.0);
 
-      TheEndBiomes.addHighlandsBiome(LighterEndBiomes.FOGGY_MUSHROOMLANDS, 0.5);
+    TheEndBiomes.addHighlandsBiome(LighterEndBiomes.FOGGY_MUSHROOMLANDS, 0.5);
 
-      TheEndBiomes.addHighlandsBiome(LighterEndBiomes.UMBRELLA_JUNGLE, 1.0);
-      TheEndBiomes.addMidlandsBiome(LighterEndBiomes.UMBRELLA_JUNGLE,
-          LighterEndBiomes.UMBRELLA_JUNGLE, 1.0);
+    TheEndBiomes.addHighlandsBiome(LighterEndBiomes.UMBRELLA_JUNGLE, 1.0);
+    TheEndBiomes.addMidlandsBiome(LighterEndBiomes.UMBRELLA_JUNGLE,
+        LighterEndBiomes.UMBRELLA_JUNGLE, 1.0);
 
-      TheEndBiomes.addHighlandsBiome(LighterEndBiomes.UMBRA_VALLEY, 1.0);
-      TheEndBiomes.addMidlandsBiome(LighterEndBiomes.UMBRA_VALLEY,
-          LighterEndBiomes.UMBRA_VALLEY, 1.0);
+    TheEndBiomes.addHighlandsBiome(LighterEndBiomes.UMBRA_VALLEY, 1.0);
+    TheEndBiomes.addMidlandsBiome(LighterEndBiomes.UMBRA_VALLEY,
+        LighterEndBiomes.UMBRA_VALLEY, 1.0);
 
-      TheEndBiomes.addHighlandsBiome(LighterEndBiomes.MEGALAKE, 1.0);
+    TheEndBiomes.addHighlandsBiome(LighterEndBiomes.MEGALAKE, 1.0);
 
-      TheEndBiomes.addSmallIslandsBiome(LighterEndBiomes.STARFIELD, 0.1);
-      for (RegistryKey<Biome> parentBiome : List.of(
-          BiomeKeys.END_HIGHLANDS,
-          LighterEndBiomes.GLOWING_GRASSLAND,
-          LighterEndBiomes.FOGGY_MUSHROOMLANDS,
-          LighterEndBiomes.UMBRA_VALLEY,
-          LighterEndBiomes.MEGALAKE
-      )) {
-        TheEndBiomes.addBarrensBiome(parentBiome, LighterEndBiomes.STARFIELD, 0.18);
-        TheEndBiomes.addBarrensBiome(parentBiome, BiomeKeys.END_BARRENS, 1);
-      }
+    TheEndBiomes.addSmallIslandsBiome(LighterEndBiomes.STARFIELD, 0.1);
+    for (RegistryKey<Biome> parentBiome : List.of(
+        BiomeKeys.END_HIGHLANDS,
+        LighterEndBiomes.GLOWING_GRASSLAND,
+        LighterEndBiomes.FOGGY_MUSHROOMLANDS,
+        LighterEndBiomes.UMBRA_VALLEY,
+        LighterEndBiomes.MEGALAKE
+    )) {
+      TheEndBiomes.addBarrensBiome(parentBiome, LighterEndBiomes.STARFIELD, 0.18);
+      TheEndBiomes.addBarrensBiome(parentBiome, BiomeKeys.END_BARRENS, 1);
     }
   }
 
   public static void addIceStars(Config config) {
+    if (!config.generateBiomes()) {
+      return;
+    }
     List<RegistryKey<Biome>> barrensBiomes = new ArrayList<>();
     barrensBiomes.add(BiomeKeys.END_BARRENS);
     try {
       barrensBiomes.add(
           RegistryKey.of(RegistryKeys.BIOME, Identifier.of("nullscape", "void_barrens"))
       );
-    } catch (NullPointerException e) {
+    } catch (NullPointerException ignored) {
     }
 
-    if (config.generateBiomes()) {
-      for (RegistryKey<PlacedFeature> star : LighterEndPlacedFeatures.BARRENS_ICE_STARS) {
-        BiomeModifications.addFeature(
-            BiomeSelectors.includeByKey(barrensBiomes),
-            GenerationStep.Feature.SURFACE_STRUCTURES,
-            star
-        );
-      }
+    for (RegistryKey<PlacedFeature> star : LighterEndPlacedFeatures.BARRENS_ICE_STARS) {
+      BiomeModifications.addFeature(
+          BiomeSelectors.includeByKey(barrensBiomes),
+          GenerationStep.Feature.SURFACE_STRUCTURES,
+          star
+      );
     }
   }
 
   public static void addJadestoneBlobs(Config config) {
+    if (!config.generateBiomes()) {
+      return;
+    }
     List<RegistryKey<Biome>> biomes = new ArrayList<>();
     biomes.add(BiomeKeys.END_HIGHLANDS);
     try {
       biomes.add(
           RegistryKey.of(RegistryKeys.BIOME, Identifier.of("nullscape", "crystal_peaks"))
       );
-    } catch (NullPointerException e) {
+    } catch (NullPointerException ignored) {
     }
 
-    if (config.generateBiomes()) {
-      for (RegistryKey<PlacedFeature> blob : LighterEndPlacedFeatures.JADESTONE_BLOBS) {
-        BiomeModifications.addFeature(
-            BiomeSelectors.includeByKey(biomes),
-            Feature.UNDERGROUND_ORES,
-            blob
-        );
-      }
+    for (RegistryKey<PlacedFeature> blob : LighterEndPlacedFeatures.JADESTONE_BLOBS_BM) {
+      BiomeModifications.addFeature(
+          BiomeSelectors.includeByKey(biomes),
+          Feature.UNDERGROUND_ORES,
+          blob
+      );
     }
+  }
+
+  public static void addOres(Config config) {
+    if (!config.generateOres()) {
+      return;
+    }
+    List<RegistryKey<Biome>> endStoneBiomes = new ArrayList<>();
+    endStoneBiomes.addAll(List.of(
+            LighterEndBiomes.GLOWING_GRASSLAND,
+            LighterEndBiomes.BLOSSOM_FOREST,
+            LighterEndBiomes.UMBRELLA_JUNGLE,
+            LighterEndBiomes.MEGALAKE,
+            LighterEndBiomes.FOGGY_MUSHROOMLANDS,
+            BiomeKeys.END_HIGHLANDS,
+            BiomeKeys.END_MIDLANDS,
+            BiomeKeys.SMALL_END_ISLANDS
+        )
+    );
+
+    List<RegistryKey<Biome>> umbralithBiomes = new ArrayList<>();
+    umbralithBiomes.add(LighterEndBiomes.UMBRA_VALLEY);
+
+    try {
+      endStoneBiomes.add(
+          RegistryKey.of(RegistryKeys.BIOME, Identifier.of("nullscape", "crystal_peaks"))
+      );
+      endStoneBiomes.add(
+          RegistryKey.of(RegistryKeys.BIOME, Identifier.of("nullscape", "shadowlands"))
+      );
+    } catch (NullPointerException ignored) {
+    }
+
+    BiomeModifications.addFeature(
+        BiomeSelectors.includeByKey(endStoneBiomes),
+        Feature.UNDERGROUND_ORES,
+        LighterEndPlacedFeatures.END_STONE_REDSTONE_ORE
+    );
+    BiomeModifications.addFeature(
+        BiomeSelectors.includeByKey(endStoneBiomes),
+        Feature.UNDERGROUND_ORES,
+        LighterEndPlacedFeatures.END_STONE_QUARTZ_ORE
+    );
+    BiomeModifications.addFeature(
+        BiomeSelectors.includeByKey(umbralithBiomes),
+        Feature.UNDERGROUND_ORES,
+        LighterEndPlacedFeatures.UMBRALITH_REDSTONE_ORE
+    );
+    BiomeModifications.addFeature(
+        BiomeSelectors.includeByKey(umbralithBiomes),
+        Feature.UNDERGROUND_ORES,
+        LighterEndPlacedFeatures.UMBRALITH_QUARTZ_ORE
+    );
   }
 
   public static MaterialRule updateSurfaceRules() {
