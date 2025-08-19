@@ -10,6 +10,7 @@ public class BlockLayerRenderer {
     BlockRenderLayerMap.putBlocks(
         BlockRenderLayer.TRANSLUCENT,
         LighterEndBlocks.AURORA_CRYSTAL,
+        LighterEndBlocks.UMBRELLA_MEMBRANE,
         LighterEndBlocks.OBELISK,
         LighterEndBlocks.FERROUS_ICE,
         LighterEndBlocks.EMERALD_ICE,
@@ -54,7 +55,13 @@ public class BlockLayerRenderer {
         LighterEndBlocks.END_FURNACE,
         LighterEndBlocks.END_SMOKER,
         LighterEndBlocks.GOLD_CHANDELIER,
-        LighterEndBlocks.IRON_CHANDELIER,
+        LighterEndBlocks.IRON_CHANDELIER
+    );
+
+    BlockRenderLayerMap.putBlocks(
+        BlockRenderLayer.CUTOUT_MIPPED,
+        LighterEndBlocks.END_MOSS,
+        LighterEndBlocks.UMBRALITH.baseBlock,
         LighterEndBlocks.END_STONE_QUARTZ_ORE,
         LighterEndBlocks.END_STONE_REDSTONE_ORE,
         LighterEndBlocks.UMBRALITH_QUARTZ_ORE,
