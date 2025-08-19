@@ -95,7 +95,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.FERROUS_ICE
         );
 
-    valueLookupBuilder(BlockTags.NEEDS_IRON_TOOL)
+    valueLookupBuilder(BlockTags.NEEDS_STONE_TOOL)
         .add(LighterEndBlocks.ENDER_BLOCK);
 
     for (Material jadestone : Arrays.asList(
@@ -104,7 +104,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.VIRID_JADESTONE
     )) {
       for (Block block : jadestone.blocks) {
-        valueLookupBuilder(BlockTags.NEEDS_IRON_TOOL).add(block);
+        valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(block);
       }
     }
 
