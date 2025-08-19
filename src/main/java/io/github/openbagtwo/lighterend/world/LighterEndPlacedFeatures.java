@@ -50,6 +50,7 @@ public class LighterEndPlacedFeatures {
       of("jadestone_blob_sandy"),
       of("jadestone_blob_virid")
   );
+  public static final RegistryKey<PlacedFeature> AURORA_CRYSTAL = of("aurora_crystal_formation");
 
 
   public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -158,6 +159,7 @@ public class LighterEndPlacedFeatures {
             List.of(
                 RarityFilterPlacementModifier.of(20),
                 PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
+                SquarePlacementModifier.of(),
                 BiomePlacementModifier.of()
             )
         )
@@ -169,6 +171,7 @@ public class LighterEndPlacedFeatures {
             List.of(
                 RarityFilterPlacementModifier.of(20),
                 PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
+                SquarePlacementModifier.of(),
                 BiomePlacementModifier.of()
             )
         )
@@ -206,7 +209,9 @@ public class LighterEndPlacedFeatures {
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_COPPER),
               List.of(
                   RarityFilterPlacementModifier.of(rarity * 2),
-                  HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
+                  HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256)),
+                  SquarePlacementModifier.of()
+                  // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
           )
       );
@@ -216,7 +221,9 @@ public class LighterEndPlacedFeatures {
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_COPPER_SMALL),
               List.of(
                   RarityFilterPlacementModifier.of(rarity),
-                  HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
+                  HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256)),
+                  SquarePlacementModifier.of()
+                  // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
           )
       );
@@ -226,7 +233,9 @@ public class LighterEndPlacedFeatures {
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_IRON),
               List.of(
                   RarityFilterPlacementModifier.of(rarity * 2),
-                  HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
+                  HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256)),
+                  SquarePlacementModifier.of()
+                  // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
           )
       );
@@ -236,7 +245,9 @@ public class LighterEndPlacedFeatures {
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_IRON_SMALL),
               List.of(
                   RarityFilterPlacementModifier.of(rarity),
-                  HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256))
+                  HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(256)),
+                  SquarePlacementModifier.of()
+                  // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
           )
       );
@@ -248,7 +259,7 @@ public class LighterEndPlacedFeatures {
           new PlacedFeature(
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.JADESTONE_BLOBS.get(i)),
               List.of(
-                  CountPlacementModifier.of(10),
+                  CountPlacementModifier.of(5),
                   SquarePlacementModifier.of(),
                   PlacedFeatures.BOTTOM_TO_TOP_RANGE,
                   BiomePlacementModifier.of()
@@ -256,6 +267,18 @@ public class LighterEndPlacedFeatures {
           )
       );
     }
+
+    context.register(
+        AURORA_CRYSTAL,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.AURORA_CRYSTAL),
+            List.of(
+                RarityFilterPlacementModifier.of(16),
+                PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
+                BiomePlacementModifier.of()
+            )
+        )
+    );
 
 
   }

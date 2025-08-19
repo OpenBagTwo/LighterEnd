@@ -47,6 +47,7 @@ public class UmbraValley {
         ).build();
 
     var genSettingsBuilder = new GenerationSettings.LookupBackedBuilder(features, carvers)
+        .feature(Feature.SURFACE_STRUCTURES, LighterEndPlacedFeatures.AURORA_CRYSTAL)
         .feature(Feature.SURFACE_STRUCTURES, EndPlacedFeatures.END_GATEWAY_RETURN)
         .feature(Feature.SURFACE_STRUCTURES, LighterEndPlacedFeatures.UMBRALITH_ARCH)
         .feature(Feature.SURFACE_STRUCTURES, LighterEndPlacedFeatures.UMBRALITH_ARCH_THIN);

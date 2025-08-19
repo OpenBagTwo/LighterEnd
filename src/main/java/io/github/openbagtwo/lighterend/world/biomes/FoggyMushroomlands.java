@@ -50,6 +50,7 @@ public class FoggyMushroomlands {
         .build();
 
     var genSettingsBuilder = new GenerationSettings.LookupBackedBuilder(features, carvers)
+        .feature(Feature.SURFACE_STRUCTURES, LighterEndPlacedFeatures.AURORA_CRYSTAL)
         .feature(Feature.SURFACE_STRUCTURES, EndPlacedFeatures.END_GATEWAY_RETURN)
         .feature(Feature.SURFACE_STRUCTURES, LighterEndPlacedFeatures.GLOWSHROOM)
         .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.END_MOSS_VEGETATION)

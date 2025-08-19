@@ -189,7 +189,6 @@ public class LighterEndWorldGen {
         );
       }
     }
-
   }
 
   public static MaterialRule updateSurfaceRules() {

@@ -8,6 +8,7 @@ import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest.SilkMothNestFeature;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
+import io.github.openbagtwo.lighterend.world.features.AuroraCrystalFormation;
 import io.github.openbagtwo.lighterend.world.features.BuriedBlob;
 import io.github.openbagtwo.lighterend.world.features.IceStar;
 import io.github.openbagtwo.lighterend.world.features.IceStar.Config;
@@ -159,6 +160,15 @@ public class LighterEndConfiguredFeatures {
       of("jadestone_blob_virid")
   );
 
+  public static final Feature<DefaultFeatureConfig> AURORA_CRYSTAL_FEATURE = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("aurora_crystal_formation"),
+      new AuroraCrystalFormation()
+  );
+
+  public static final RegistryKey<ConfiguredFeature<?, ?>> AURORA_CRYSTAL = of(
+      "aurora_crystal_formation");
+
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
     RegistryEntryLookup<ConfiguredFeature<?, ?>> lookup = context.getRegistryLookup(
@@ -282,6 +292,7 @@ public class LighterEndConfiguredFeatures {
         )
     );
 
+    ConfiguredFeatures.register(context, AURORA_CRYSTAL, AURORA_CRYSTAL_FEATURE);
   }
 
   public static void initialize() {
