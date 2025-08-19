@@ -433,6 +433,62 @@ public class RecipeProvider extends FabricRecipeProvider {
             "end_redstone"
         );
 
+        this.createShaped(RecipeCategory.REDSTONE, Blocks.DROPPER)
+            .input('R', Items.REDSTONE)
+            .input('#', Blocks.END_STONE)
+            .pattern("###")
+            .pattern("# #")
+            .pattern("#R#")
+            .criterion(hasItem(Blocks.END_STONE), this.conditionsFromItem(Blocks.END_STONE))
+            .offerTo(this.exporter,
+                RegistryKey.of(
+                    RegistryKeys.RECIPE,
+                    LighterEnd.of("dropper_using_end_stone")
+                )
+            );
+        this.createShaped(RecipeCategory.REDSTONE, Blocks.DISPENSER)
+            .input('R', Items.REDSTONE)
+            .input('#', Blocks.END_STONE)
+            .input('X', Items.BOW)
+            .pattern("###")
+            .pattern("#X#")
+            .pattern("#R#")
+            .criterion(hasItem(Blocks.END_STONE), this.conditionsFromItem(Blocks.END_STONE))
+            .offerTo(this.exporter,
+                RegistryKey.of(
+                    RegistryKeys.RECIPE,
+                    LighterEnd.of("dispenser_using_end_stone")
+                )
+            );
+        this.createShaped(RecipeCategory.REDSTONE, Blocks.OBSERVER)
+            .input('Q', Items.QUARTZ)
+            .input('R', Items.REDSTONE)
+            .input('#', Blocks.END_STONE)
+            .pattern("###")
+            .pattern("RRQ")
+            .pattern("###")
+            .criterion(hasItem(Blocks.END_STONE), this.conditionsFromItem(Blocks.END_STONE))
+            .offerTo(this.exporter,
+                RegistryKey.of(
+                    RegistryKeys.RECIPE,
+                    LighterEnd.of("observer_using_end_stone")
+                )
+            );
+        this.createShaped(RecipeCategory.REDSTONE, Blocks.PISTON)
+            .input('R', Items.REDSTONE)
+            .input('#', Blocks.END_STONE)
+            .input('T', ItemTags.PLANKS)
+            .input('X', Items.IRON_INGOT)
+            .pattern("TTT")
+            .pattern("#X#")
+            .pattern("#R#")
+            .criterion(hasItem(Blocks.END_STONE), this.conditionsFromItem(Blocks.END_STONE))
+            .offerTo(this.exporter,
+                RegistryKey.of(
+                    RegistryKeys.RECIPE,
+                    LighterEnd.of("piston_using_end_stone")
+                )
+            );
       }
 
       public void generateMaterialRecipes(Material material) {
