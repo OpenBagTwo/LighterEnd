@@ -87,7 +87,7 @@ public class IceStar extends Feature<IceStar.Config> {
       case 0:
       default:
         ice = LighterEndBlocks.EMERALD_ICE.getDefaultState();
-        dense = Blocks.COPPER_BLOCK.getDefaultState();
+        dense = Blocks.RAW_COPPER_BLOCK.getDefaultState();
         ancient = Blocks.RAW_COPPER_BLOCK.getDefaultState();
     }
 
