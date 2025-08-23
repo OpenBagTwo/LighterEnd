@@ -308,11 +308,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                     LighterEnd.of("shears_from_claws")
                 )
             );
-        generateSmokingSmeltingRecipes(
-            LighterEndItems.CRAB_MEAT,
-            LighterEndItems.CRAB_CAKE,
-            RecipeCategory.FOOD
-        );
+        generateCookingRecipes(LighterEndItems.CRAB_MEAT, LighterEndItems.CRAB_CAKE);
 
         createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.END_FURNACE)
             .input('#', Blocks.END_STONE)

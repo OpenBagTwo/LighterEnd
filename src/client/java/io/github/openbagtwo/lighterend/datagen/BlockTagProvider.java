@@ -89,6 +89,8 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.DRAGON_BONE_STAIRS,
             LighterEndBlocks.DRAGON_BONE_SLAB,
             LighterEndBlocks.END_MOSS,
+            LighterEndBlocks.END_FURNACE,
+            LighterEndBlocks.END_SMOKER,
             LighterEndBlocks.GOLD_CHANDELIER,
             LighterEndBlocks.IRON_CHANDELIER,
             LighterEndBlocks.EMERALD_ICE,
