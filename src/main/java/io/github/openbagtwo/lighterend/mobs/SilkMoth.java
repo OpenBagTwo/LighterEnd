@@ -156,7 +156,7 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
   @Override
   public void tickMovement() {
     super.tickMovement();
-    if (!this.getWorld().isClient) {
+    if (!this.getEntityWorld().isClient()) {
       if (this.ticksLeftUntilEnterHive > 0) {
         this.ticksLeftUntilEnterHive--;
       }
@@ -214,7 +214,7 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
     if (!this.hivePos.isWithinDistance(this.getBlockPos(), MAX_DISTANCE_FROM_HIVE)) {
       return null;
     }
-    return this.getWorld().getBlockEntity(
+    return this.getEntityWorld().getBlockEntity(
         this.hivePos, LighterEndBlockEntities.SILK_MOTH_NEST
     ).orElse(null);
 
@@ -307,17 +307,17 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
 
     @Override
     public void start() {
-      if (SilkMoth.this.hivePos != null && SilkMoth.this.getWorld()
+      if (SilkMoth.this.hivePos != null && SilkMoth.this.getEntityWorld()
           .isPosLoaded(SilkMoth.this.hivePos) && SilkMoth.this.getHive() == null) {
         SilkMoth.this.clearHivePos();
       }
 
-      this.lastValidateTime = SilkMoth.this.getWorld().getTime();
+      this.lastValidateTime = SilkMoth.this.getEntityWorld().getTime();
     }
 
     @Override
     public boolean canStart() {
-      return SilkMoth.this.getWorld().getTime()
+      return SilkMoth.this.getEntityWorld().getTime()
           > this.lastValidateTime + this.ticksUntilNextValidate;
     }
 
@@ -348,7 +348,7 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
               MAX_DISTANCE_FROM_HIVE)
               && SilkMoth.this.canEnterHive()
               && !this.isCloseEnough(SilkMoth.this.hivePos)
-              && SilkMoth.this.getWorld().getBlockState(SilkMoth.this.hivePos)
+              && SilkMoth.this.getEntityWorld().getBlockState(SilkMoth.this.hivePos)
               .isOf(LighterEndBlocks.SILK_MOTH_NEST)
       );
     }
@@ -483,7 +483,7 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
 
     private List<BlockPos> getNearbyFreeHives() {
       BlockPos blockPos = SilkMoth.this.getBlockPos();
-      World world = SilkMoth.this.getWorld();
+      World world = SilkMoth.this.getEntityWorld();
 
       List<BlockPos> nearbyHives = new ArrayList<>();
       for (int dy = 0; dy <= 10 && dy >= -10; dy = (dy <= 0 ? 1 : 0) - dy) {

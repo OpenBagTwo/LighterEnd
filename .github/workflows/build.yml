@@ -5,6 +5,7 @@ on:
     branches:
     - 1.21.5
     - 1.21.6
+    - 1.21.9
   release:
     types: [published]
 jobs:

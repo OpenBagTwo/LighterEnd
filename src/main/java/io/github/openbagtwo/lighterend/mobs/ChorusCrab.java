@@ -125,7 +125,7 @@ public class ChorusCrab extends AnimalEntity {
     entityData = super.initialize(world, difficulty, spawnReason, entityData);
 
     if (world.getRandom().nextInt(512) == 0 && (spawnReason != SpawnReason.BREEDING)) {
-      EndermanEntity rider = EntityType.ENDERMAN.create(this.getWorld(), SpawnReason.JOCKEY);
+      EndermanEntity rider = EntityType.ENDERMAN.create(this.getEntityWorld(), SpawnReason.JOCKEY);
       if (rider != null) {
         rider.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), 0.0F);
         rider.initialize(world, difficulty, spawnReason, null);
@@ -167,7 +167,7 @@ public class ChorusCrab extends AnimalEntity {
   @Override
   public void tick() {
     super.tick();
-    if (!this.getWorld().isClient) {
+    if (!this.getEntityWorld().isClient()) {
       this.setClimbingWall(this.horizontalCollision);
     }
     if (this.getBreedingAge() >= 0 && this.hasVehicle()) {
@@ -187,7 +187,7 @@ public class ChorusCrab extends AnimalEntity {
   public void breed(ServerWorld world, AnimalEntity other, @Nullable PassiveEntity baby) {
     super.breed(world, other, baby);
     if (baby != null) {
-      baby.startRiding(this, true);
+      baby.startRiding(this, true, true);
     }
   }
 

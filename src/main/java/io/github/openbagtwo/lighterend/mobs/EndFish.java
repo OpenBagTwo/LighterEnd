@@ -124,7 +124,7 @@ public class EndFish extends SchoolingFishEntity {
       double x = getX() + random.nextGaussian() * 0.2;
       double y = getY() + random.nextGaussian() * 0.2;
       double z = getZ() + random.nextGaussian() * 0.2;
-      getWorld().addParticleClient(ParticleTypes.BUBBLE, x, y, z, 0, 0, 0);
+      this.getEntityWorld().addParticleClient(ParticleTypes.BUBBLE, x, y, z, 0, 0, 0);
     }
   }
 

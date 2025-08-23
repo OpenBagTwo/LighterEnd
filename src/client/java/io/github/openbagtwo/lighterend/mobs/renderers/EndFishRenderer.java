@@ -9,8 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
@@ -60,24 +59,25 @@ public class EndFishRenderer extends
       @Override
       public void render(
           MatrixStack matrices,
-          VertexConsumerProvider vertexConsumers,
+          OrderedRenderCommandQueue queue,
           int light,
           EndFishRenderState state,
           float limbAngle,
           float limbDistance
       ) {
-        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(
-            GLOW.get(state.variant % GLOW.size())
-        );
-        this.getContextModel()
-            .render(
+        queue.getBatchingQueue(1)
+            .submitModel(
+                this.getContextModel(),
+                state,
                 matrices,
-                vertexConsumer,
+                GLOW.get(state.variant % GLOW.size()),
                 15728640,
                 OverlayTexture.DEFAULT_UV,
-                0xffffffff
+                0xffffffff,
+                null,
+                state.outlineColor,
+                null
             );
-
       }
     });
   }

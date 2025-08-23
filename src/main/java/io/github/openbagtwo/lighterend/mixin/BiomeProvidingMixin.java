@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 public abstract class BiomeProvidingMixin {
 
 
-  @ModifyArgs(method = "createWorlds", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/world/level/storage/LevelStorage$Session;Lnet/minecraft/world/level/ServerWorldProperties;Lnet/minecraft/registry/RegistryKey;Lnet/minecraft/world/dimension/DimensionOptions;Lnet/minecraft/server/WorldGenerationProgressListener;ZJLjava/util/List;ZLnet/minecraft/util/math/random/RandomSequencesState;)V"))
+  @ModifyArgs(method = "createWorlds", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/world/level/storage/LevelStorage$Session;Lnet/minecraft/world/level/ServerWorldProperties;Lnet/minecraft/registry/RegistryKey;Lnet/minecraft/world/dimension/DimensionOptions;ZJLjava/util/List;ZLnet/minecraft/util/math/random/RandomSequencesState;)V"))
   private void addModdedBiomes(Args args) {
     if (LighterEnd.CONFIG.generateBiomes()) {
       MinecraftServer server = args.get(0);
@@ -34,7 +34,8 @@ public abstract class BiomeProvidingMixin {
           BiomeSource patchedBiomes = LighterEndWorldGen.addBiomesToNoiseSource(
               ((BiomeAccessor) noiseBiomeSource).accessBiomeEntries(),
               server.getRegistryManager().getOrThrow(
-                  RegistryKeys.BIOME));
+                  RegistryKeys.BIOME)
+          );
           args.set(5, new DimensionOptions(dimensionOptions.dimensionTypeEntry(),
               new NoiseChunkGenerator(patchedBiomes, noiseChunkGen.getSettings())));
         }

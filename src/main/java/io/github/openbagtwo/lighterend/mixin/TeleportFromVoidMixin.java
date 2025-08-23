@@ -38,7 +38,7 @@ public abstract class TeleportFromVoidMixin {
         }
         user.setHealth(1.0F);
         totemFX.applyDeathEffects(handItem, user);
-        user.getWorld().sendEntityStatus(user, EntityStatuses.USE_TOTEM_OF_UNDYING);
+        user.getEntityWorld().sendEntityStatus(user, EntityStatuses.USE_TOTEM_OF_UNDYING);
 
         handItem.decrement(1);
         cir.setReturnValue(true);

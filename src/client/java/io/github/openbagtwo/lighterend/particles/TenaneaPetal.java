@@ -2,17 +2,18 @@ package io.github.openbagtwo.lighterend.particles;
 
 import io.github.openbagtwo.lighterend.blocks.TenaneaFlowerRenderer;
 import net.minecraft.client.color.block.BlockColorProvider;
+import net.minecraft.client.particle.BillboardParticle;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFactory;
-import net.minecraft.client.particle.ParticleTextureSheet;
-import net.minecraft.client.particle.SpriteBillboardParticle;
 import net.minecraft.client.particle.SpriteProvider;
+import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
 
-public class TenaneaPetal extends SpriteBillboardParticle {
+public class TenaneaPetal extends BillboardParticle {
 
   private static BlockColorProvider provider;
 
@@ -28,13 +29,9 @@ public class TenaneaPetal extends SpriteBillboardParticle {
       double x,
       double y,
       double z,
-      double r,
-      double g,
-      double b,
-      SpriteProvider sprites
+      Sprite sprite
   ) {
-    super(world, x, y, z, r, g, b);
-    this.setSprite(sprites);
+    super(world, x, y, z, sprite);
 
     if (provider == null) {
       provider = TenaneaFlowerRenderer.getBlockColor();
@@ -93,8 +90,8 @@ public class TenaneaPetal extends SpriteBillboardParticle {
   }
 
   @Override
-  public ParticleTextureSheet getType() {
-    return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
+  public BillboardParticle.RenderType getRenderType() {
+    return BillboardParticle.RenderType.field_62640;
   }
 
   public static class Factory implements ParticleFactory<SimpleParticleType> {
@@ -114,9 +111,10 @@ public class TenaneaPetal extends SpriteBillboardParticle {
         double z,
         double vX,
         double vY,
-        double vZ
+        double vZ,
+        Random random
     ) {
-      return new TenaneaPetal(world, x, y, z, 1, 1, 1, sprites);
+      return new TenaneaPetal(world, x, y, z, sprites.getSprite(random));
     }
   }
 

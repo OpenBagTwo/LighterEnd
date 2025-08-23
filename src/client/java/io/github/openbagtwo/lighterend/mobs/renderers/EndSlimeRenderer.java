@@ -9,8 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.MobEntityRenderer;
@@ -54,27 +53,25 @@ public class EndSlimeRenderer extends
       @Override
       public void render(
           MatrixStack matrices,
-          VertexConsumerProvider vertexConsumers,
+          OrderedRenderCommandQueue queue,
           int light,
           EndSlimeRenderState state,
           float limbAngle,
           float limbDistance
       ) {
-        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(
-            GLOW.get(state.variant % GLOW.size())
-        );
-        this.getContextModel()
-            .render(
+        queue.getBatchingQueue(1)
+            .submitModel(
+                this.getContextModel(),
+                state,
                 matrices,
-                vertexConsumer,
+                GLOW.get(state.variant % GLOW.size()),
                 15728640,
                 OverlayTexture.DEFAULT_UV,
-                0xffffffff
+                0xffffffff,
+                null,
+                state.outlineColor,
+                null
             );
-        if (state.variant == 2) {
-          this.getContextModel()
-              .renderFlower(matrices, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV);
-        }
       }
     });
   }
@@ -95,14 +92,17 @@ public class EndSlimeRenderer extends
     matrixStack.scale(i * g, 1.0F / i * g, i * g);
   }
 
+  @Override
   public Identifier getTexture(EndSlimeRenderState state) {
     return TEXTURES.get(state.variant % TEXTURES.size());
   }
 
+  @Override
   public EndSlimeRenderState createRenderState() {
     return new EndSlimeRenderState();
   }
 
+  @Override
   public void updateRenderState(EndSlime slime, EndSlimeRenderState state, float f) {
     super.updateRenderState(slime, state, f);
     state.variant = slime.getSlimeType();
@@ -122,47 +122,49 @@ public class EndSlimeRenderer extends
       this.model = new EndSlimeModel(loader.getModelPart(EntityModels.END_SLIME_SHELL_MODEL), true);
     }
 
+    @Override
     public void render(
-        MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i,
-        EndSlimeRenderState state, float f, float g
+        MatrixStack matrixStack,
+        OrderedRenderCommandQueue queue,
+        int light,
+        EndSlimeRenderState state,
+        float limbAngle,
+        float limbDistance
     ) {
-      boolean bl = state.hasOutline && state.invisible;
-      if (!state.invisible || bl) {
-        VertexConsumer vertexConsumer;
+      this.model.setAngles(state);
 
-        if (state.variant == 2) {
-          vertexConsumer = vertexConsumerProvider.getBuffer(
-              RenderLayer.getEntityCutout(TEXTURES.get(state.variant)));
-          this.getContextModel()
-              .renderFlower(
+      boolean renderAsModel = state.hasOutline() && state.invisible;
+      if (!state.invisible || renderAsModel) {
+        int j = LivingEntityRenderer.getOverlay(state, 0.0F);
+        if (renderAsModel) {
+          queue.getBatchingQueue(1)
+              .submitModel(
+                  this.model,
+                  state,
                   matrixStack,
-                  vertexConsumer,
-                  i,
-                  LivingEntityRenderer.getOverlay(state, 0.0F)
+                  RenderLayer.getEntityTranslucent(TEXTURES.get(state.variant % TEXTURES.size())),
+                  light,
+                  j,
+                  -1,
+                  null,
+                  state.outlineColor,
+                  null
               );
-        } else if (state.variant == 0 || state.variant == 3) {
-          vertexConsumer = vertexConsumerProvider.getBuffer(
-              RenderLayer.getEntityCutout(TEXTURES.get(state.variant)));
-          this.getContextModel()
-              .renderCrop(
-                  matrixStack,
-                  vertexConsumer,
-                  i,
-                  LivingEntityRenderer.getOverlay(state, 0.0F)
-              );
-        }
-
-        if (bl) {
-          vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getOutline(
-              TEXTURES.get(state.variant)));
         } else {
-          vertexConsumer = vertexConsumerProvider.getBuffer(
-              RenderLayer.getEntityTranslucent(TEXTURES.get(state.variant)));
+          queue.getBatchingQueue(1)
+              .submitModel(
+                  this.model,
+                  state,
+                  matrixStack,
+                  RenderLayer.getEntityTranslucent(TEXTURES.get(state.variant % TEXTURES.size())),
+                  light,
+                  j,
+                  -1,
+                  null,
+                  state.outlineColor,
+                  null
+              );
         }
-
-        this.model.setAngles(state);
-        this.model.render(matrixStack, vertexConsumer, i,
-            LivingEntityRenderer.getOverlay(state, 0.0F));
       }
     }
   }

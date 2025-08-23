@@ -119,10 +119,10 @@ public class GlossyMooshroom extends AbstractCowEntity implements Shearable {
       this.playSound(SoundEvents.ENTITY_MOOSHROOM_SUSPICIOUS_MILK, 1.0F, 1.0F);
       return ActionResult.SUCCESS;
     } else if (itemStack.isOf(Items.SHEARS) && this.isShearable()) {
-      if (this.getWorld() instanceof ServerWorld serverWorld) {
+      if (this.getEntityWorld() instanceof ServerWorld serverWorld) {
         this.sheared(serverWorld, SoundCategory.PLAYERS, itemStack);
         this.emitGameEvent(GameEvent.SHEAR, player);
-        itemStack.damage(1, player, getSlotForHand(hand));
+        itemStack.damage(1, player, hand.getEquipmentSlot());
       }
 
       return ActionResult.SUCCESS;
