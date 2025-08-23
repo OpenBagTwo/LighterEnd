@@ -548,7 +548,7 @@ public class LighterEndBlocks {
       }
 
       blocks = Arrays.asList(log, strippedLog, wood, strippedWood, planks, slab, stairs, door,
-          trapdoor, fence, gate, button, pressurePlate, sign, hangingSign);
+          trapdoor, fence, gate, button, pressurePlate, ladder, sign, hangingSign);
     }
 
     public Settings applyLogSettings(Settings settings) {
