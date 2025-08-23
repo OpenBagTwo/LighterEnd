@@ -1,15 +1,16 @@
 package io.github.openbagtwo.lighterend.particles;
 
+import net.minecraft.client.particle.BillboardParticle;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFactory;
-import net.minecraft.client.particle.ParticleTextureSheet;
-import net.minecraft.client.particle.SpriteBillboardParticle;
 import net.minecraft.client.particle.SpriteProvider;
+import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
 
-public class Snowflake extends SpriteBillboardParticle {
+public class Snowflake extends BillboardParticle {
 
   private int ticks;
   private double preVX;
@@ -24,13 +25,9 @@ public class Snowflake extends SpriteBillboardParticle {
       double x,
       double y,
       double z,
-      double r,
-      double g,
-      double b,
-      SpriteProvider sprites
+      Sprite sprite
   ) {
-    super(world, x, y, z, r, g, b);
-    this.setSprite(sprites);
+    super(world, x, y, z, sprite);
 
     this.maxAge = MathHelper.nextInt(random, 150, 300);
     this.scale = MathHelper.nextFloat(random, 0.05F, 0.2F);
@@ -80,8 +77,8 @@ public class Snowflake extends SpriteBillboardParticle {
   }
 
   @Override
-  public ParticleTextureSheet getType() {
-    return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
+  public BillboardParticle.RenderType getRenderType() {
+    return BillboardParticle.RenderType.field_62640;
   }
 
   public static class Factory implements ParticleFactory<SimpleParticleType> {
@@ -101,9 +98,10 @@ public class Snowflake extends SpriteBillboardParticle {
         double z,
         double vX,
         double vY,
-        double vZ
+        double vZ,
+        Random random
     ) {
-      return new Snowflake(world, x, y, z, 1, 1, 1, sprites);
+      return new Snowflake(world, x, y, z, this.sprites.getSprite(random));
     }
   }
 

@@ -173,7 +173,7 @@ public class Dragonfly extends AnimalEntity implements Flutterer {
     }
 
     private Vec3d getRandomLocation() {
-      int h = PosInfo.downRay(Dragonfly.this.getWorld(),
+      int h = PosInfo.downRay(Dragonfly.this.getEntityWorld(),
           Dragonfly.this.getBlockPos(), 16);
       Vec3d rotation = Dragonfly.this.getRotationVec(0.0F);
       Vec3d airPos = AboveGroundTargeting.find(Dragonfly.this, 8, 7, rotation.x, rotation.z,
@@ -215,7 +215,7 @@ public class Dragonfly extends AnimalEntity implements Flutterer {
 
     private boolean isInVoid(Vec3d pos) {
       int h = PosInfo.downRay(
-          Dragonfly.this.getWorld(),
+          Dragonfly.this.getEntityWorld(),
           new BlockPos((int) pos.x, (int) pos.y, (int) pos.z),
           128
       );

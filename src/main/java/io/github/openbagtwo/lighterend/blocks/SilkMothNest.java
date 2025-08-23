@@ -27,7 +27,6 @@ import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.TntEntity;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.mob.CreeperEntity;
@@ -115,7 +114,7 @@ public class SilkMothNest extends BlockWithEntity {
   }
 
   @Override
-  protected int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+  protected int getComparatorOutput(BlockState state, World world, BlockPos pos, Direction dir) {
     return state.get(FULLNESS);
   }
 
@@ -129,7 +128,7 @@ public class SilkMothNest extends BlockWithEntity {
       ItemStack tool
   ) {
     super.afterBreak(world, player, pos, state, blockEntity, tool);
-    if (!world.isClient && blockEntity instanceof SilkMothNestEntity nestEntity) {
+    if (!world.isClient() && blockEntity instanceof SilkMothNestEntity nestEntity) {
       if (!EnchantmentHelper.hasAnyEnchantmentsIn(
           tool, EnchantmentTags.PREVENTS_BEE_SPAWNS_WHEN_MINING
       )) {
@@ -155,7 +154,7 @@ public class SilkMothNest extends BlockWithEntity {
         world.playSound(player, player.getX(), player.getY(), player.getZ(),
             LighterEndSounds.MOTH_NEST_SHEAR, SoundCategory.BLOCKS, 1.0F, 1.0F);
         dropSilk(world, pos);
-        stack.damage(1, player, LivingEntity.getSlotForHand(hand));
+        stack.damage(1, player, hand.getEquipmentSlot());
         bl = true;
         world.emitGameEvent(player, GameEvent.SHEAR, pos);
       }
@@ -199,7 +198,7 @@ public class SilkMothNest extends BlockWithEntity {
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state,
       BlockEntityType<T> type) {
-    return world.isClient ? null
+    return world.isClient() ? null
         : validateTicker(
             type,
             LighterEndBlockEntities.SILK_MOTH_NEST,

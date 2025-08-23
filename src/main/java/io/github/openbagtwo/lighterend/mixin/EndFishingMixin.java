@@ -22,9 +22,9 @@ public abstract class EndFishingMixin extends Entity {
   @ModifyVariable(method = "use", at = @At("STORE"))
   public LootTable useInEnd(LootTable baseFishingTable) {
     if (DimensionTypes.THE_END.equals(
-        this.getWorld().getDimensionEntry().getKey().orElse(null))
+        this.getEntityWorld().getDimensionEntry().getKey().orElse(null))
         && LighterEnd.CONFIG.endFishingHasCustomLootTable()) {
-      return this.getWorld().getServer().getReloadableRegistries().getLootTable(
+      return this.getEntityWorld().getServer().getReloadableRegistries().getLootTable(
           LighterEndLootTables.END_FISHING);
     }
     return baseFishingTable;

@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MinecraftServer.class)
 public abstract class SurfaceGenMixin {
 
-  @Inject(at = @At("TAIL"), method = "createWorlds(Lnet/minecraft/server/WorldGenerationProgressListener;)V")
+  @Inject(at = @At("TAIL"), method = "createWorlds()V")
   private void addSurfaceRules(CallbackInfo ci,
       @Local Registry<DimensionOptions> registry) {
     DimensionOptions stem = registry.get(DimensionOptions.END);
