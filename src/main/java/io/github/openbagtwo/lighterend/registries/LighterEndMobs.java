@@ -49,7 +49,7 @@ public class LighterEndMobs {
           0.5F, 0.5F).eyeHeight(0.25F).maxTrackingRange(4));
 
   public static final LighterEndMob<Cubozoa> CUBOZOA = new LighterEndMob<>("cubozoa",
-      EntityType.Builder.create(Cubozoa::new, SpawnGroup.WATER_AMBIENT).dimensions(
+      EntityType.Builder.create(Cubozoa::new, SpawnGroup.WATER_CREATURE).dimensions(
           0.6F, 1.0F).eyeHeight(0.5F).maxTrackingRange(4));
 
   public static final LighterEndMob<EndSlime> END_SLIME = new LighterEndMob<>(
