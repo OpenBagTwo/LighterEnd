@@ -609,7 +609,7 @@ public class RecipeProvider extends FabricRecipeProvider {
         offerStairsRecipe(wood.stairs, wood.planks);
         createDoorRecipe(wood.door, Ingredient.ofItem(wood.planks)).criterion(hasItem(wood.planks),
             conditionsFromItem(wood.planks)).offerTo(exporter);
-        createDoorRecipe(wood.trapdoor, Ingredient.ofItem(wood.planks)).criterion(
+        createTrapdoorRecipe(wood.trapdoor, Ingredient.ofItem(wood.planks)).criterion(
             hasItem(wood.planks),
             conditionsFromItem(wood.planks)).offerTo(exporter);
         createFenceRecipe(wood.fence, Ingredient.ofItem(wood.planks)).criterion(
