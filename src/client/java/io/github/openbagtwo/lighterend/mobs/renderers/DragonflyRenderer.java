@@ -4,15 +4,15 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.mobs.Dragonfly;
 import io.github.openbagtwo.lighterend.mobs.EntityModels;
 import io.github.openbagtwo.lighterend.mobs.models.DragonflyModel;
-import io.github.openbagtwo.lighterend.mobs.states.DragonflyRenderState;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
+import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.util.Identifier;
 
 public class DragonflyRenderer extends
-    MobEntityRenderer<Dragonfly, DragonflyRenderState, DragonflyModel> {
+    MobEntityRenderer<Dragonfly, LivingEntityRenderState, DragonflyModel> {
 
   private static final Identifier TEXTURE = LighterEnd.of("textures/entity/dragonfly.png");
   private static final RenderLayer GLOW = RenderLayer.getEyes(
@@ -30,18 +30,12 @@ public class DragonflyRenderer extends
   }
 
   @Override
-  public DragonflyRenderState createRenderState() {
-    return new DragonflyRenderState();
+  public LivingEntityRenderState createRenderState() {
+    return new LivingEntityRenderState();
   }
 
   @Override
-  public Identifier getTexture(DragonflyRenderState state) {
+  public Identifier getTexture(LivingEntityRenderState state) {
     return TEXTURE;
-  }
-
-  @Override
-  public void updateRenderState(Dragonfly fly, DragonflyRenderState state, float f) {
-    super.updateRenderState(fly, state, f);
-    state.animationProgress += f / 2;
   }
 }

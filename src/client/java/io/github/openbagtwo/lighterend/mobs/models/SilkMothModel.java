@@ -1,6 +1,5 @@
 package io.github.openbagtwo.lighterend.mobs.models;
 
-import io.github.openbagtwo.lighterend.mobs.states.SilkMothRenderState;
 import java.util.Set;
 import net.minecraft.client.model.ModelData;
 import net.minecraft.client.model.ModelPart;
@@ -12,9 +11,10 @@ import net.minecraft.client.render.entity.model.BabyModelTransformer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
 import net.minecraft.client.render.entity.model.ModelTransformer;
+import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.util.math.MathHelper;
 
-public class SilkMothModel extends EntityModel<SilkMothRenderState> {
+public class SilkMothModel extends EntityModel<LivingEntityRenderState> {
 
   public static final ModelTransformer BABY_TRANSFORMER = new BabyModelTransformer(
       true,
@@ -157,14 +157,14 @@ public class SilkMothModel extends EntityModel<SilkMothRenderState> {
   }
 
   @Override
-  public void setAngles(SilkMothRenderState renderState) {
-    wingR_r1.roll = MathHelper.sin(renderState.animationProgress * 2F) * 0.4F + 0.3927F;
+  public void setAngles(LivingEntityRenderState state) {
+    wingR_r1.roll = MathHelper.sin(state.age * 2F) * 0.4F + 0.3927F;
     wingL_r1.roll = -wingR_r1.roll;
-    head_pivot.pitch = MathHelper.sin(renderState.animationProgress * 0.03F) * 0.1F;
-    tendril_r_r1.roll = MathHelper.sin(renderState.animationProgress * 0.07F) * 0.2F + 0.3927F;
+    head_pivot.pitch = MathHelper.sin(state.age * 0.03F) * 0.1F;
+    tendril_r_r1.roll = MathHelper.sin(state.age * 0.07F) * 0.2F + 0.3927F;
     tendril_r_r2.roll = -tendril_r_r1.roll;
-    abdomen_r1.pitch = MathHelper.sin(renderState.animationProgress * 0.05F) * 0.1F - 0.3927F;
-    legsR.roll = MathHelper.sin(renderState.animationProgress * 0.07F) * 0.1F - 0.6545F;
+    abdomen_r1.pitch = MathHelper.sin(state.age * 0.05F) * 0.1F - 0.3927F;
+    legsR.roll = MathHelper.sin(state.age * 0.07F) * 0.1F - 0.6545F;
     legsL.roll = -legsR.roll;
   }
 }

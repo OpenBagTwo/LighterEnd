@@ -72,9 +72,9 @@ public class CubozoaModel extends EntityModel<CubozoaRenderState> {
   @Override
   public void setAngles(CubozoaRenderState renderState) {
     super.setAngles(renderState);
-    float sin = MathHelper.sin(renderState.animationProgress * 0.13F);
+    float sin = MathHelper.sin(renderState.age * 0.13F);
     scaleY = sin * 0.1F + 0.9F;
-    scaleXZ = MathHelper.sin(renderState.animationProgress * 0.13F + 3.14F) * 0.1F + 0.9F;
+    scaleXZ = MathHelper.sin(renderState.age * 0.13F + 3.14F) * 0.1F + 0.9F;
 
     for (int i = 0; i < TENTACLE_COUNT; i++) {
       tentacle[i].pitch = sin * 0.15f;

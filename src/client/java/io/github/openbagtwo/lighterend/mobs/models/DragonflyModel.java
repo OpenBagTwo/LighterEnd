@@ -1,6 +1,5 @@
 package io.github.openbagtwo.lighterend.mobs.models;
 
-import io.github.openbagtwo.lighterend.mobs.states.DragonflyRenderState;
 import net.minecraft.client.model.ModelData;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.model.ModelPartBuilder;
@@ -9,8 +8,9 @@ import net.minecraft.client.model.ModelTransform;
 import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
+import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 
-public class DragonflyModel extends EntityModel<DragonflyRenderState> {
+public class DragonflyModel extends EntityModel<LivingEntityRenderState> {
 
   private final ModelPart model;
   private final ModelPart head;
@@ -106,8 +106,8 @@ public class DragonflyModel extends EntityModel<DragonflyRenderState> {
   }
 
   @Override
-  public void setAngles(DragonflyRenderState renderState) {
-    float progress = renderState.animationProgress * 2F;
+  public void setAngles(LivingEntityRenderState state) {
+    float progress = state.age * 2F;
 
     wing_1.roll = 0.3491F + (float) Math.sin(progress) * 0.3491F;
     wing_2.roll = -wing_1.roll;
@@ -115,7 +115,7 @@ public class DragonflyModel extends EntityModel<DragonflyRenderState> {
     wing_3.roll = 0.3491F + (float) Math.cos(progress) * 0.3491F;
     wing_4.roll = -wing_3.roll;
 
-    progress = renderState.animationProgress * 0.05F;
+    progress = state.age * 0.05F;
 
     head.pitch = 0.3491F + (float) Math.sin(progress * 0.7F) * 0.1F;
     tail.pitch = (float) Math.cos(progress) * 0.05F - 0.05F;

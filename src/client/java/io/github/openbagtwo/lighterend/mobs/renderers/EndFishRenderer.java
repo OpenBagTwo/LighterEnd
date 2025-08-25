@@ -96,6 +96,5 @@ public class EndFishRenderer extends
   public void updateRenderState(EndFish fish, EndFishRenderState state, float f) {
     super.updateRenderState(fish, state, f);
     state.variant = fish.getVariant();
-    state.animationProgress += f / 2;
   }
 }
