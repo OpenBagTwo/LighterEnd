@@ -26,18 +26,14 @@ ethos—that of a brighter dimension, teeming with life—to future versions of 
 
 ## Roadmap
 
-Subject, of course, to change
+The intent of this mod is **not** to be a 1-to-1 recreation of BetterEnd, and while no biomes
+are explicitly being excluded, porting them is subject to interest (the developers' and the
+community's). You can find a list of features slated for development, tied to the
+["milestone"](https://github.com/OpenBagTwo/LighterEnd/milestones) (release) they're targeted for,
+on the [issues page](https://github.com/OpenBagTwo/LighterEnd/issues).
 
-- [x] **Proof of Concept**: Re-implement a select few BetterEnd blocks—at least one each of stone,
-  soil, plant and crop—but no biomes or worldgen.
-- [x] **Alpha 2**: First "features"—at least two trees, plus either a ruin or a lake—that can be
-  `/place`d into a world, along with their associated blocks (read: wood sets) and at least one mob
-- [x] **Alpha 3**: An armored elytra (see below)
-- [x] **Alpha 4** Bring back the music discs and modify the vanilla loot tables to provide them
-- [x] **First Beta**: Introduce the first biomes and a start modifying the worldgen so stuff
-  naturally spawns
-- [ ] **First Release**: A full mod experience where a player can start in The End and "beat the
-  game" from The End
+If there's a specific biome of BetterEnd feature you'd like to see prioritized, feel free to open
+an issue requesting it, after first having read through the following sections:
 
 ### Out of Scope
 
@@ -46,15 +42,14 @@ The completed version of LighterEnd:
 - Will likely feature ore, but not Thallasium or Ender Ore (and thus, there will be no Terminite
   nor Aeternium)—these material types are either redundant or overpowered.
 - Will not include Crystalite armor. Which, again, is overpowered.
-- While there _will_ be an armored elytra, it will be heavily nerfed (with the glide decay of
+- While the mod features an armored elytra, it is heavily nerfed (with the glide decay of
   Aeternium elytra and sub-Diamond levels of protection) in order to balance it with vanilla
   elytra
 - Will only feature one type of end soil, though this soil may take on different appearances in
   different biomes, and bonemealing the soil in different biomes will produce different plants
 - Will not include Eternal Portals
 - Will not implement hammers, forging, infusing or alloying
-- Will make the End Veil enchantment available exclusively as _extremely rare_ loot (cannot be
-  obtained from villagers or the enchantment table)
+- Will feature the End Veil effect, but solely as a potion effect, not as an enchantment
 
 ### New Features
 
@@ -67,9 +62,10 @@ On the flip side, LighterEnd has or will have features not present in BetterEnd
 - [x] Sniffers that sploot on End Moss will dig up rare End saplings
 - [x] Obelisks that you can teleport to upon almost dying (meaning your stuff is safe even if you
   fall into The Void)
+- [x] Ice stars will be more common and will contain ice enriched with metals (copper, gold, iron)
 - [ ] New trim materials (and possibly trim patterns)
 
-### Broad Compatibility
+## Broad Compatibility
 
 LighterEnd is compatible out-of-the-box with
 both [Nullscape](https://modrinth.com/datapack/nullscape)
@@ -123,9 +119,17 @@ If there is a BetterEnd feature you would like to take responsibility for portin
 All code in this repository is licensed under
 [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
-All assets (textures, models) were created by the BetterX team.
+Substantial portions of this mod—including most of its assets—were adapted from BetterEnd and BCLib,
+developed primarily by
+[**Paulevs**](https://github.com/paulevsGitch) and [**quiqueck**](https://github.com/quiqueck),
+in accordance with the terms of their respective licenses:
 
-Music discs were composed, performed and recorded by Firel.
+- https://github.com/quiqueck/BCLib/blob/9607e2e50818c9059505c32c72eb2d8d00bf6e9d/LICENSE
+- https://github.com/quiqueck/BetterEnd/blob/00e4892827c4f1b0d2e213348f63e57a647a8011/LICENSE
+
+The Chorus Crab was designed by **Pegnok** of the BetterX Discord.
+
+Music discs were composed, performed and recorded by [Firel](https://www.youtube.com/@FirelMusic).
 
 Many thanks:
 
@@ -139,6 +143,8 @@ Many thanks:
   examples of library-free worldgen and terrain modification
 - to [Vanilla Tweaks](https://vanillatweaks.net/picker/resource-packs/) for the concept of grooved
   levers
+- to the [BetterX Discord](https://discord.gg/kYuATbYbKW) for their feedback in shaping this mod's
+  development
 
 You **may** use, modify and redistribute this mod, and you **may** include this mod within your
 modpack or run it on a server, so long as you abide by the terms of
