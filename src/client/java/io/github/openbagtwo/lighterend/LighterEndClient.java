@@ -1,7 +1,7 @@
 package io.github.openbagtwo.lighterend;
 
+import io.github.openbagtwo.lighterend.blocks.BlockEntityRenderer;
 import io.github.openbagtwo.lighterend.blocks.BlockLayerRenderer;
-import io.github.openbagtwo.lighterend.blocks.SignRenderer;
 import io.github.openbagtwo.lighterend.mobs.EntityModels;
 import io.github.openbagtwo.lighterend.particles.GlowingSphere;
 import io.github.openbagtwo.lighterend.particles.Snowflake;
@@ -23,7 +23,7 @@ public class LighterEndClient implements ClientModInitializer {
         .register(LighterEndParticles.GLOWING_SPHERE, GlowingSphere.Factory::new);
     ParticleFactoryRegistry.getInstance()
         .register(LighterEndParticles.SNOWFLAKE, Snowflake.Factory::new);
-    SignRenderer.initialize();
+    BlockEntityRenderer.initialize();
     EntityModels.initialize();
   }
 }

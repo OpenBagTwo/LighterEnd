@@ -79,6 +79,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
       valueLookupBuilder(BlockTags.CEILING_HANGING_SIGNS).add(wood.hangingSign);
       valueLookupBuilder(BlockTags.WALL_HANGING_SIGNS).add(wood.wallHangingSign);
       valueLookupBuilder(BlockTags.CLIMBABLE).add(wood.ladder);
+      valueLookupBuilder(BlockTags.WOODEN_SHELVES).add(wood.shelf);
     }
 
     valueLookupBuilder(BlockTags.PICKAXE_MINEABLE)

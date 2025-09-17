@@ -359,8 +359,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             .criterion(
                 hasItem(LighterEndItems.LUMECORN_EAR),
                 this.conditionsFromItem(LighterEndItems.LUMECORN_EAR)
-            )
-            .offerTo(exporter);
+            ).offerTo(exporter);
 
         createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.IRON_CHANDELIER)
             .input('r', LighterEndItems.LUMECORN_EAR)
@@ -372,8 +371,19 @@ public class RecipeProvider extends FabricRecipeProvider {
             .criterion(
                 hasItem(LighterEndItems.LUMECORN_EAR),
                 this.conditionsFromItem(LighterEndItems.LUMECORN_EAR)
-            )
-            .offerTo(exporter);
+            ).offerTo(exporter);
+
+//        createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.COPPER_CHANDELIER)
+//            .input('r', LighterEndItems.LUMECORN_EAR)
+//            .input('n', Items.COPPER_NUGGET)
+//            .input('i', Items.COPPER_INGOT)
+//            .pattern("r r")
+//            .pattern("n n")
+//            .pattern(" i ")
+//            .criterion(
+//                hasItem(LighterEndItems.LUMECORN_EAR),
+//                this.conditionsFromItem(LighterEndItems.LUMECORN_EAR)
+//            ).offerTo(exporter);
 
         CookingRecipeJsonBuilder.createSmelting(
             Ingredient.ofItem(LighterEndBlocks.FERROUS_ICE),
@@ -631,7 +641,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             hasItem(wood.planks),
             conditionsFromItem(wood.planks)).offerTo(exporter);
         offerHangingSignRecipe(wood.hangingSign, wood.strippedLog);
-
+        offerShelfRecipe(wood.shelf, wood.strippedLog);
       }
 
       // seems odd these aren't already implemented

@@ -121,6 +121,7 @@ public class ModelProvider extends FabricModelProvider {
     blockModelGenerator.registerHangingSign(wood.strippedLog, wood.sign, wood.wallSign);
     blockModelGenerator.registerHangingSign(wood.strippedLog, wood.hangingSign,
         wood.wallHangingSign);
+    blockModelGenerator.registerShelf(wood.shelf, wood.strippedLog);
   }
 
   @Override

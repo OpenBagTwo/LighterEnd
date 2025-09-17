@@ -17,6 +17,7 @@ import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.Obelisk;
 import io.github.openbagtwo.lighterend.blocks.Polypore;
 import io.github.openbagtwo.lighterend.blocks.Sapling;
+import io.github.openbagtwo.lighterend.blocks.Shelf;
 import io.github.openbagtwo.lighterend.blocks.Signs;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.blocks.TenaneaFlower;
@@ -442,6 +443,7 @@ public class LighterEndBlocks {
     public final Block wallSign;
     public final Block hangingSign;
     public final Block wallHangingSign;
+    public final Block shelf;
     // public final Block stool;
     public final List<Block> blocks;
     private final MapColor woodColor;
@@ -539,6 +541,16 @@ public class LighterEndBlocks {
                       RegistryKey.of(RegistryKeys.ITEM,
                           LighterEnd.of(baseName + "_hanging_sign")))
                   .useBlockPrefixedTranslationKey()));
+      shelf = register(
+          baseName + "_shelf",
+          settings -> new Shelf(
+              settings.mapColor(planks.getDefaultMapColor())
+                  .instrument(NoteBlockInstrument.BASS)
+                  .sounds(BlockSoundGroup.SHELF)
+                  .burnable()
+                  .strength(2.0F, 3.0F)
+          )
+      );
 
       for (Block block : Arrays.asList(log, strippedLog, wood, strippedWood)) {
         FlammableBlockRegistry.getDefaultInstance().add(block, 5, 5);
@@ -546,9 +558,10 @@ public class LighterEndBlocks {
       for (Block block : Arrays.asList(planks, slab, stairs, fence, gate)) {
         FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
       }
+      FlammableBlockRegistry.getDefaultInstance().add(shelf, 30, 20);
 
       blocks = Arrays.asList(log, strippedLog, wood, strippedWood, planks, slab, stairs, door,
-          trapdoor, fence, gate, button, pressurePlate, ladder, sign, hangingSign);
+          trapdoor, fence, gate, button, pressurePlate, ladder, sign, hangingSign, shelf);
     }
 
     public Settings applyLogSettings(Settings settings) {
