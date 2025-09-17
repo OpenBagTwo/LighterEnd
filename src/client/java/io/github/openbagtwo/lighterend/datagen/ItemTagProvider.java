@@ -49,6 +49,7 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
       valueLookupBuilder(ItemTags.WOODEN_TRAPDOORS).add(wood.trapdoor.asItem());
       valueLookupBuilder(ItemTags.SIGNS).add(wood.sign.asItem());
       valueLookupBuilder(ItemTags.HANGING_SIGNS).add(wood.hangingSign.asItem());
+      valueLookupBuilder(ItemTags.WOODEN_SHELVES).add(wood.shelf.asItem());
 
     }
     for (Material material : Arrays.asList(
