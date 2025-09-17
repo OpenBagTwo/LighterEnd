@@ -402,23 +402,22 @@ public class RecipeProvider extends FabricRecipeProvider {
             )
         );
 
-//        TODO: enable in 1.21.9+
-//        CookingRecipeJsonBuilder.createSmelting(
-//            Ingredient.ofItem(LighterEndBlocks.EMERALD_ICE),
-//            RecipeCategory.MISC,
-//            Items.COPPER_NUGGET,
-//            0.1F,
-//            200
-//        ).criterion(
-//            hasItem(LighterEndBlocks.EMERALD_ICE),
-//            conditionsFromItem(LighterEndBlocks.EMERALD_ICE)
-//        ).offerTo(
-//            exporter,
-//            RegistryKey.of(
-//                RegistryKeys.RECIPE,
-//                LighterEnd.of("smelting_copper_from_ice")
-//            )
-//        );
+        CookingRecipeJsonBuilder.createSmelting(
+            Ingredient.ofItem(LighterEndBlocks.EMERALD_ICE),
+            RecipeCategory.MISC,
+            Items.COPPER_NUGGET,
+            0.1F,
+            200
+        ).criterion(
+            hasItem(LighterEndBlocks.EMERALD_ICE),
+            conditionsFromItem(LighterEndBlocks.EMERALD_ICE)
+        ).offerTo(
+            exporter,
+            RegistryKey.of(
+                RegistryKeys.RECIPE,
+                LighterEnd.of("smelting_copper_from_ice")
+            )
+        );
 
         offerSmelting(
             List.of(LighterEndBlocks.END_STONE_REDSTONE_ORE,
