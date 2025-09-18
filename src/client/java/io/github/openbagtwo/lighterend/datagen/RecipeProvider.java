@@ -373,17 +373,24 @@ public class RecipeProvider extends FabricRecipeProvider {
                 this.conditionsFromItem(LighterEndItems.LUMECORN_EAR)
             ).offerTo(exporter);
 
-//        createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.COPPER_CHANDELIER)
-//            .input('r', LighterEndItems.LUMECORN_EAR)
-//            .input('n', Items.COPPER_NUGGET)
-//            .input('i', Items.COPPER_INGOT)
-//            .pattern("r r")
-//            .pattern("n n")
-//            .pattern(" i ")
-//            .criterion(
-//                hasItem(LighterEndItems.LUMECORN_EAR),
-//                this.conditionsFromItem(LighterEndItems.LUMECORN_EAR)
-//            ).offerTo(exporter);
+        createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.COPPER_CHANDELIERS.unaffected())
+            .input('r', LighterEndItems.LUMECORN_EAR)
+            .input('n', Items.COPPER_NUGGET)
+            .input('i', Items.COPPER_INGOT)
+            .pattern("r r")
+            .pattern("n n")
+            .pattern(" i ")
+            .criterion(
+                hasItem(LighterEndItems.LUMECORN_EAR),
+                this.conditionsFromItem(LighterEndItems.LUMECORN_EAR)
+            ).offerTo(exporter);
+        LighterEndBlocks.COPPER_CHANDELIERS.getWaxingMap().forEach(
+            (unwaxed, waxed) -> createShapeless(RecipeCategory.DECORATIONS, waxed)
+                .input(unwaxed)
+                .input(Items.HONEYCOMB)
+                .criterion(hasItem(unwaxed), this.conditionsFromItem(unwaxed))
+                .offerTo(exporter)
+        );
 
         CookingRecipeJsonBuilder.createSmelting(
             Ingredient.ofItem(LighterEndBlocks.FERROUS_ICE),

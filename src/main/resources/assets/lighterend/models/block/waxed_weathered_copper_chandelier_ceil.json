@@ -1,0 +1,8 @@
+{
+  "parent": "lighterend:block/chandelier_ceil",
+  "textures": {
+    "ceil": "lighterend:block/weathered_copper_chandelier_ceil",
+    "emissive": "lighterend:block/copper_chandelier_floor_e",
+    "floor": "lighterend:block/weathered_copper_chandelier_floor"
+  }
+}

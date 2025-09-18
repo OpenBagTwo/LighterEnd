@@ -39,6 +39,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockSetType;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ButtonBlock;
+import net.minecraft.block.CopperBlockSet;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.ExperienceDroppingBlock;
 import net.minecraft.block.FenceBlock;
@@ -223,6 +224,21 @@ public class LighterEndBlocks {
 
   public static final Block GOLD_CHANDELIER = register("gold_chandelier", Chandelier::new);
   public static final Block IRON_CHANDELIER = register("iron_chandelier", Chandelier::new);
+  public static final CopperBlockSet COPPER_CHANDELIERS = CopperBlockSet.create(
+      "copper_chandelier",
+      LighterEndBlocks::register,
+      Chandelier::new,
+      Chandelier.Oxidizable::new,
+      oxidationLevel -> Settings.create()
+          .mapColor(MapColor.IRON_GRAY)
+          .luminance((bs) -> 15)
+          .solid()
+          .nonOpaque()
+          .requiresTool()
+          .pistonBehavior(PistonBehavior.DESTROY)
+          .strength(2.5F)
+          .sounds(BlockSoundGroup.CHAIN)
+  );
 
   public static final Block EMERALD_ICE = register(
       "emerald_ice",
@@ -320,9 +336,21 @@ public class LighterEndBlocks {
   }
 
   public static Block register(String name, Function<Settings, Block> factory, boolean hasItem) {
+    return register(name, factory, Settings.create(), hasItem);
+  }
+
+  private static Block register(String name, Function<Settings, Block> factory, Settings settings) {
+    return register(name, factory, settings, true);
+  }
+
+  private static Block register(
+      String name,
+      Function<Settings, Block> factory,
+      Settings settings,
+      boolean hasItem
+  ) {
     Identifier id = LighterEnd.of(name);
-    Block block = factory.apply(
-        Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, id)));
+    Block block = factory.apply(settings.registryKey(RegistryKey.of(RegistryKeys.BLOCK, id)));
 
     if (hasItem) {
       RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, id);

@@ -1,15 +1,21 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import com.google.common.collect.Maps;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.EnumMap;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.MapColor;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
@@ -34,12 +40,14 @@ public class Chandelier extends Block {
   public Chandelier(Settings settings) {
     super(
         settings
+            .mapColor(MapColor.IRON_GRAY)
             .luminance((bs) -> 15)
             .solid()
             .nonOpaque()
             .requiresTool()
             .pistonBehavior(PistonBehavior.DESTROY)
             .strength(2.5F)
+            .sounds(BlockSoundGroup.CHAIN)
     );
     setDefaultState(getDefaultState().with(FACING, Direction.UP));
   }
@@ -124,6 +132,45 @@ public class Chandelier extends Block {
     BOUNDING_SHAPES.put(Direction.SOUTH, VoxelShapes.cuboid(0.0, 0.0, 0.0, 1.0, 1.0, 0.5));
     BOUNDING_SHAPES.put(Direction.WEST, VoxelShapes.cuboid(0.5, 0.0, 0.0, 1.0, 1.0, 1.0));
     BOUNDING_SHAPES.put(Direction.EAST, VoxelShapes.cuboid(0.0, 0.0, 0.0, 0.5, 1.0, 1.0));
+  }
+
+  public static class Oxidizable extends Chandelier implements net.minecraft.block.Oxidizable {
+
+    public static final MapCodec<Oxidizable> CODEC = RecordCodecBuilder.mapCodec(
+        instance -> instance.group(
+                net.minecraft.block.Oxidizable.OxidationLevel.CODEC.fieldOf("weathering_state")
+                    .forGetter(
+                        Oxidizable::getDegradationLevel), createSettingsCodec()
+            )
+            .apply(instance, Oxidizable::new)
+    );
+    private final net.minecraft.block.Oxidizable.OxidationLevel oxidationLevel;
+
+    @Override
+    public MapCodec<Oxidizable> getCodec() {
+      return CODEC;
+    }
+
+    public Oxidizable(net.minecraft.block.Oxidizable.OxidationLevel oxidationLevel,
+        AbstractBlock.Settings settings) {
+      super(settings);
+      this.oxidationLevel = oxidationLevel;
+    }
+
+    @Override
+    protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+      this.tickDegradation(state, world, pos, random);
+    }
+
+    @Override
+    protected boolean hasRandomTicks(BlockState state) {
+      return net.minecraft.block.Oxidizable.getIncreasedOxidationBlock(state.getBlock())
+          .isPresent();
+    }
+
+    public net.minecraft.block.Oxidizable.OxidationLevel getDegradationLevel() {
+      return this.oxidationLevel;
+    }
   }
 
 }
