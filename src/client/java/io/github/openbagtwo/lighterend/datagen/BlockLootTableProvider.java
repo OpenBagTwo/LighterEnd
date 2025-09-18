@@ -138,6 +138,9 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
 
     addDrop(LighterEndBlocks.GOLD_CHANDELIER);
     addDrop(LighterEndBlocks.IRON_CHANDELIER);
+    for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.getAll()) {
+      addDrop(chandelier);
+    }
 
     addDrop(LighterEndBlocks.EMERALD_ICE);
     addDrop(LighterEndBlocks.FERROUS_ICE);

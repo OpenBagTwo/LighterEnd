@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "lighterend:block/oxidized_copper_chandelier_ceil"
+    },
+    "facing=east": {
+      "model": "lighterend:block/oxidized_copper_chandelier_wall",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "lighterend:block/oxidized_copper_chandelier_wall",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "lighterend:block/oxidized_copper_chandelier_wall"
+    },
+    "facing=up": {
+      "model": "lighterend:block/oxidized_copper_chandelier_floor"
+    },
+    "facing=west": {
+      "model": "lighterend:block/oxidized_copper_chandelier_wall",
+      "y": 90
+    }
+  }
+}

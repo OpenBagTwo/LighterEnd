@@ -87,6 +87,14 @@ public class ModelProvider extends FabricModelProvider {
     blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.EMERALD_ICE);
     blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.FERROUS_ICE);
     blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.AUROUS_ICE);
+
+    LighterEndBlocks.COPPER_CHANDELIERS.getWaxingMap()
+        .forEach(
+            (unwaxed, waxed) -> blockModelGenerator.registerWaxable(
+                unwaxed.asItem(),
+                waxed.asItem()
+            )
+        );
   }
 
   public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator,
@@ -189,9 +197,7 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndMobs.MOOSHROOM.spawnEgg,
         LighterEndMobs.CHORUS_CRAB.spawnEgg
     )) {
-      itemModelGenerator.register(
-          item, Models.GENERATED
-      );
+      itemModelGenerator.register(item, Models.GENERATED);
     }
 
     itemModelGenerator.registerArmor(
