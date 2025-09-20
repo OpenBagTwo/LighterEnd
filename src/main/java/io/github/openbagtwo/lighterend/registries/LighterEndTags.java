@@ -1,6 +1,10 @@
 package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
@@ -44,6 +48,9 @@ public class LighterEndTags {
       RegistryKeys.BLOCK,
       LighterEnd.of("slime_spawnable")
   );
+
+  public static final Map<String, TagKey<Item>> LOG_TAGS = new HashMap<>();
+  public static final Map<String, TagKey<Item>> STRIPPED_LOG_TAGS = new HashMap<>();
 
   public static final TagKey<Item> REPAIRS_SILK_ARMOR = TagKey.of(
       RegistryKeys.ITEM,
@@ -91,5 +98,21 @@ public class LighterEndTags {
   );
 
   public static void initialize() {
+
+    for (Wood wood : Arrays.asList(
+        LighterEndBlocks.TENANEA,
+        LighterEndBlocks.UMBRELLA,
+        LighterEndBlocks.LOTUS,
+        LighterEndBlocks.GLOWSHROOM
+    )) {
+      LOG_TAGS.put(
+          wood.baseName,
+          TagKey.of(RegistryKeys.ITEM, LighterEnd.of(wood.baseName + "_logs"))
+      );
+      STRIPPED_LOG_TAGS.put(
+          wood.baseName,
+          TagKey.of(RegistryKeys.ITEM, LighterEnd.of("stripped_" + wood.baseName + "_logs"))
+      );
+    }
   }
 }

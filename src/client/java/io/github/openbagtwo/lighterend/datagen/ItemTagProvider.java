@@ -32,11 +32,18 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
         LighterEndBlocks.LOTUS,
         LighterEndBlocks.GLOWSHROOM
     )) {
-      valueLookupBuilder(ItemTags.LOGS_THAT_BURN).add(
+      valueLookupBuilder(LighterEndTags.LOG_TAGS.get(wood.baseName)).add(
           wood.log.asItem(),
           wood.strippedLog.asItem(),
           wood.wood.asItem(),
           wood.strippedWood.asItem()
+      );
+      valueLookupBuilder(LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName)).add(
+          wood.strippedLog.asItem(),
+          wood.strippedWood.asItem()
+      );
+      valueLookupBuilder(ItemTags.LOGS_THAT_BURN).addTag(
+          LighterEndTags.LOG_TAGS.get(wood.baseName)
       );
       valueLookupBuilder(ItemTags.PLANKS).add(wood.planks.asItem());
       valueLookupBuilder(ItemTags.WOODEN_BUTTONS).add(wood.button.asItem());

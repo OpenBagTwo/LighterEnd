@@ -618,9 +618,12 @@ public class RecipeProvider extends FabricRecipeProvider {
                 hasItem(wood.strippedLog),
                 conditionsFromItem(wood.strippedLog)
             ).offerTo(exporter);
-        createShapeless(RecipeCategory.BUILDING_BLOCKS, wood.planks, planks_per_log).input(
-                Ingredient.ofItems(wood.log, wood.strippedLog, wood.wood, wood.strippedWood))
-            .criterion(hasItem(wood.log), this.conditionsFromItem(wood.log)).offerTo(exporter);
+        createShapeless(RecipeCategory.BUILDING_BLOCKS, wood.planks, planks_per_log)
+            .input(LighterEndTags.LOG_TAGS.get(wood.baseName))
+            .criterion(
+                hasItem(wood.log),
+                this.conditionsFromTag(LighterEndTags.LOG_TAGS.get(wood.baseName))
+            ).offerTo(exporter);
         offerSlabRecipe(RecipeCategory.BUILDING_BLOCKS, wood.slab, wood.planks);
         offerStairsRecipe(wood.stairs, wood.planks);
         createDoorRecipe(wood.door, Ingredient.ofItem(wood.planks)).criterion(hasItem(wood.planks),
@@ -646,8 +649,28 @@ public class RecipeProvider extends FabricRecipeProvider {
         createSignRecipe(wood.sign, Ingredient.ofItem(wood.planks)).criterion(
             hasItem(wood.planks),
             conditionsFromItem(wood.planks)).offerTo(exporter);
-        offerHangingSignRecipe(wood.hangingSign, wood.strippedLog);
-        offerShelfRecipe(wood.shelf, wood.strippedLog);
+        createShaped(RecipeCategory.DECORATIONS, wood.hangingSign, 6)
+            .group("hanging_sign")
+            .input('#', LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName))
+            .input('X', Items.IRON_CHAIN)
+            .pattern("X X")
+            .pattern("###")
+            .pattern("###")
+            .criterion(
+                hasItem(wood.strippedLog),
+                this.conditionsFromTag(LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName))
+            ).offerTo(this.exporter);
+
+        createShaped(RecipeCategory.DECORATIONS, wood.shelf, 6)
+            .input('#', LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName))
+            .pattern("###")
+            .pattern("   ")
+            .pattern("###")
+            .group("shelf")
+            .criterion(
+                hasItem(wood.strippedLog),
+                this.conditionsFromTag(LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName))
+            ).offerTo(this.exporter);
       }
 
       // seems odd these aren't already implemented
