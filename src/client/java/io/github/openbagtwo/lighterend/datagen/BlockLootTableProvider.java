@@ -136,6 +136,8 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     addDrop(LighterEndBlocks.END_FURNACE, this::nameableContainerDrops);
     addDrop(LighterEndBlocks.END_SMOKER, this::nameableContainerDrops);
 
+    addDrop(LighterEndBlocks.END_LEVER);
+
     addDrop(LighterEndBlocks.GOLD_CHANDELIER);
     addDrop(LighterEndBlocks.IRON_CHANDELIER);
     for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.getAll()) {
