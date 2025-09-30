@@ -1,7 +1,7 @@
 plugins {
     id 'fabric-loom' version '1.11-SNAPSHOT'
     id "fr.brouillard.oss.gradle.jgitver" version "0.9.1"
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'com.gradleup.shadow' version '9.2.2'
     id 'maven-publish'
 }
 
@@ -90,7 +90,7 @@ shadowJar {
 
     configurations = [project.configurations.shadow]
     archiveClassifier.set("dev")
-    relocate "org.yaml", "{${project.maven_group}.${project.archivesBaseName}.shadow.org.yaml"
+    relocate "org.yaml", "{${project.maven_group}.${project.archives_base_name}.shadow.org.yaml"
 }
 
 remapJar {
