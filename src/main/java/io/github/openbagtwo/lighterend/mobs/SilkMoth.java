@@ -275,7 +275,7 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
     public boolean canStart() {
       if (
           SilkMoth.this.hivePos != null && SilkMoth.this.canEnterHive()
-              && SilkMoth.this.hivePos.isWithinDistance(SilkMoth.this.getPos(), 2.0)
+              && SilkMoth.this.hivePos.isWithinDistance(SilkMoth.this.getEntityPos(), 2.0)
       ) {
         SilkMothNestEntity nest = SilkMoth.this.getHive();
         if (nest != null && nest.getOccupancy() < SilkMothNestEntity.MAX_MOTH_COUNT) {
@@ -380,8 +380,8 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
         if (this.ticks > this.getTickCount(MIN_TICKS_BETWEEN_ENTERING_HIVE)) {
           this.makeChosenHivePossibleHive();
         } else if (!SilkMoth.this.navigation.isFollowingPath()) {
-          if (!SilkMoth.this.hivePos.isWithinDistance(SilkMoth.this.getPos(), 16)) {
-            if (!SilkMoth.this.hivePos.isWithinDistance(SilkMoth.this.getPos(),
+          if (!SilkMoth.this.hivePos.isWithinDistance(SilkMoth.this.getEntityPos(), 16)) {
+            if (!SilkMoth.this.hivePos.isWithinDistance(SilkMoth.this.getEntityPos(),
                 MAX_DISTANCE_FROM_HIVE)) {
               SilkMoth.this.clearHivePos();
             } else {
@@ -408,7 +408,7 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
     }
 
     private boolean startMovingToFar(BlockPos pos) {
-      int i = pos.isWithinDistance(SilkMoth.this.getPos(), 3) ? 1 : 2;
+      int i = pos.isWithinDistance(SilkMoth.this.getEntityPos(), 3) ? 1 : 2;
       SilkMoth.this.navigation.setRangeMultiplier(10.0F);
       SilkMoth.this.navigation.startMovingTo(pos.getX(), pos.getY(), pos.getZ(), i, 1.0);
       return SilkMoth.this.navigation.getCurrentPath() != null
@@ -542,7 +542,7 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
       if (SilkMoth.this.getHive() != null && SilkMoth.this.hivePos.isWithinDistance(
           SilkMoth.this.getBlockPos(), this.getMaxWanderDistance())) {
         Vec3d vec3d = Vec3d.ofCenter(SilkMoth.this.hivePos);
-        vec3d2 = vec3d.subtract(SilkMoth.this.getPos()).normalize();
+        vec3d2 = vec3d.subtract(SilkMoth.this.getEntityPos()).normalize();
       } else {
         vec3d2 = SilkMoth.this.getRotationVec(0.0F);
       }

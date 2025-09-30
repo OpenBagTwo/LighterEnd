@@ -91,7 +91,7 @@ public class TenaneaPetal extends BillboardParticle {
 
   @Override
   public BillboardParticle.RenderType getRenderType() {
-    return BillboardParticle.RenderType.field_62640;
+    return BillboardParticle.RenderType.PARTICLE_ATLAS_TRANSLUCENT;
   }
 
   public static class Factory implements ParticleFactory<SimpleParticleType> {
