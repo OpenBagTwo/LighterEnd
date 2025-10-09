@@ -90,7 +90,7 @@ shadowJar {
 
     configurations = [project.configurations.shadow]
     archiveClassifier.set("dev")
-    relocate "org.yaml", "{${project.maven_group}.${project.archives_base_name}.shadow.org.yaml"
+    relocate "org.yaml", "${project.maven_group}.shadow.org.yaml"
 }
 
 remapJar {
