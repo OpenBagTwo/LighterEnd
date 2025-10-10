@@ -64,7 +64,8 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
         LighterEndBlocks.AZURE_JADESTONE,
         LighterEndBlocks.SANDY_JADESTONE,
         LighterEndBlocks.VIRID_JADESTONE,
-        LighterEndBlocks.UMBRALITH
+        LighterEndBlocks.UMBRALITH,
+        LighterEndBlocks.SULPHUR
     )) {
       valueLookupBuilder(ItemTags.STONE_BUTTONS).add(material.button.asItem());
     }

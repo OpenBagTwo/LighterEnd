@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "lighterend:block/sulphuric_rock"
+      },
+      {
+        "model": "lighterend:block/sulphuric_rock",
+        "y": 90
+      },
+      {
+        "model": "lighterend:block/sulphuric_rock",
+        "y": 180
+      },
+      {
+        "model": "lighterend:block/sulphuric_rock",
+        "y": 270
+      }
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "lighterend:block/sulphuric_rock_top",
+    "side": "lighterend:block/sulphuric_rock"
+  }
+}

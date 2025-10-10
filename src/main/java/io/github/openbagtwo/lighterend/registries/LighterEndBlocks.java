@@ -3,6 +3,7 @@ package io.github.openbagtwo.lighterend.registries;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.Agave;
 import io.github.openbagtwo.lighterend.blocks.AuroraCrystal;
+import io.github.openbagtwo.lighterend.blocks.Brimstone;
 import io.github.openbagtwo.lighterend.blocks.Chandelier;
 import io.github.openbagtwo.lighterend.blocks.Charnia;
 import io.github.openbagtwo.lighterend.blocks.CreepingMoss;
@@ -20,6 +21,7 @@ import io.github.openbagtwo.lighterend.blocks.Sapling;
 import io.github.openbagtwo.lighterend.blocks.Shelf;
 import io.github.openbagtwo.lighterend.blocks.Signs;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
+import io.github.openbagtwo.lighterend.blocks.SulphurCrystal;
 import io.github.openbagtwo.lighterend.blocks.TenaneaFlower;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern.TallUmbrellaFern;
@@ -330,6 +332,11 @@ public class LighterEndBlocks {
       )
   );
 
+  public static final Block BRIMSTONE = register("brimstone", Brimstone::new);
+
+  public static final Material SULPHUR = new Material("sulphuric_rock", MapColor.BROWN);
+
+  public static final Block SULPHUR_CRYSTAL = register("sulphur_crystal", SulphurCrystal::new);
 
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);

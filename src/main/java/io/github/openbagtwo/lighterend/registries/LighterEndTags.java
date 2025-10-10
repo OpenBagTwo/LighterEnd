@@ -49,6 +49,11 @@ public class LighterEndTags {
       LighterEnd.of("slime_spawnable")
   );
 
+  public static final TagKey<Block> GROWS_SULPHUR_CRYSTALS = TagKey.of(
+      RegistryKeys.BLOCK,
+      LighterEnd.of("grows_sulphur_crystals")
+  );
+
   public static final Map<String, TagKey<Item>> LOG_TAGS = new HashMap<>();
   public static final Map<String, TagKey<Item>> STRIPPED_LOG_TAGS = new HashMap<>();
 

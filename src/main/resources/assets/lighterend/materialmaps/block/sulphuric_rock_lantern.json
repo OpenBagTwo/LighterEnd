@@ -1,0 +1,10 @@
+{
+  "defaultMap": {
+    "spriteMap": [
+      {
+        "material": "betterend:glow_all",
+        "sprite": "betterend:block/aurora_crystal"
+      }
+    ]
+  }
+}

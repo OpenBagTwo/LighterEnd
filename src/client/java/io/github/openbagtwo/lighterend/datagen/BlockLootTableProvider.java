@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.datagen;
 
 import io.github.openbagtwo.lighterend.blocks.EndLily;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
+import io.github.openbagtwo.lighterend.blocks.SulphurCrystal;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndData;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
@@ -19,13 +20,16 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
+import net.minecraft.loot.condition.AllOfLootCondition;
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
+import net.minecraft.loot.condition.InvertedLootCondition;
 import net.minecraft.loot.condition.LootCondition;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.CopyComponentsLootFunction;
 import net.minecraft.loot.function.CopyStateLootFunction;
+import net.minecraft.loot.function.ExplosionDecayLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
@@ -52,6 +56,7 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
         LighterEndBlocks.SANDY_JADESTONE.blocks,
         LighterEndBlocks.VIRID_JADESTONE.blocks,
         LighterEndBlocks.UMBRALITH.blocks,
+        LighterEndBlocks.SULPHUR.blocks,
         LighterEndBlocks.TENANEA.blocks,
         LighterEndBlocks.UMBRELLA.blocks,
         LighterEndBlocks.LOTUS.blocks,
@@ -152,6 +157,9 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     addDrop(LighterEndBlocks.UMBRALITH_REDSTONE_ORE, this::redstoneOreDrops);
     addDrop(LighterEndBlocks.END_STONE_QUARTZ_ORE, block -> this.oreDrops(block, Items.QUARTZ));
     addDrop(LighterEndBlocks.UMBRALITH_QUARTZ_ORE, block -> this.oreDrops(block, Items.QUARTZ));
+
+    addDrop(LighterEndBlocks.BRIMSTONE);
+    addDrop(LighterEndBlocks.SULPHUR_CRYSTAL, sulphurCrystalDrops());
   }
 
   private LootTable.Builder auroraCrystalDrops() {
@@ -203,26 +211,30 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     Reference<Enchantment> fortune = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT)
         .getOrThrow(Enchantments.FORTUNE);
 
-    LootCondition.Builder onlyTopDrops = BlockStatePropertyLootCondition.builder(
-            LighterEndBlocks.END_LILY)
-        .properties(StatePredicate.Builder.create().exactMatch(EndLily.IS_TOP, true));
+    LootCondition.Builder topCondition = BlockStatePropertyLootCondition.builder(
+        LighterEndBlocks.END_LILY
+    ).properties(StatePredicate.Builder.create().exactMatch(EndLily.IS_TOP, true));
 
     return this.applyExplosionDecay(
-            LighterEndBlocks.END_LILY,
-            LootTable.builder()
-                .pool(LootPool.builder()
-                    .with(ItemEntry.builder(LighterEndItems.END_LILY_LEAF).conditionally(onlyTopDrops)
-                    ).apply(
-                        ApplyBonusLootFunction.binomialWithBonusCount(
-                            fortune, 0.5714286F, 3))))
-        .pool(
+        LighterEndBlocks.END_LILY,
+        LootTable.builder().pool(
             LootPool.builder()
-                .conditionally(onlyTopDrops)
-                .with(ItemEntry.builder(LighterEndBlocks.END_LILY_SEED).apply(
+                .with(ItemEntry.builder(
+                    LighterEndItems.END_LILY_LEAF).conditionally(topCondition)
+                ).apply(
                     ApplyBonusLootFunction.binomialWithBonusCount(
-                        fortune, 0.5714286F, 3)))
+                        fortune, 0.5714286F, 3
+                    )
+                )
+        )
+    ).pool(
+        LootPool.builder()
+            .conditionally(topCondition)
+            .with(ItemEntry.builder(LighterEndBlocks.END_LILY_SEED).apply(
+                ApplyBonusLootFunction.binomialWithBonusCount(
+                    fortune, 0.5714286F, 3)))
 
-        );
+    );
   }
 
   private LootTable.Builder lotusFlowerDrops() {
@@ -233,6 +245,54 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
                 LootPool.builder().rolls(UniformLootNumberProvider.create(1.0F, 2.0F))
                     .with(ItemEntry.builder(LighterEndBlocks.END_LOTUS_SEED))
             )
+        );
+  }
+
+  private LootTable.Builder sulphurCrystalDrops() {
+
+    Reference<Enchantment> fortune = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT)
+        .getOrThrow(Enchantments.FORTUNE);
+
+    LootCondition.Builder fullyGrownCondition = BlockStatePropertyLootCondition.builder(
+        LighterEndBlocks.SULPHUR_CRYSTAL
+    ).properties(
+        StatePredicate.Builder.create().exactMatch(SulphurCrystal.STAGE, SulphurCrystal.MAX_STAGE)
+    );
+
+    return LootTable
+        .builder()
+        .pool(
+            LootPool.builder()
+                .conditionally(this.createSilkTouchCondition())
+                .rolls(ConstantLootNumberProvider.create(1))
+                .with(ItemEntry.builder(LighterEndBlocks.SULPHUR_CRYSTAL)
+                    .apply(SetCountLootFunction
+                        .builder(UniformLootNumberProvider.create(1, 3))
+                        .conditionally(fullyGrownCondition)
+                    )
+                    .apply(SetCountLootFunction
+                        .builder(ConstantLootNumberProvider.create(1))
+                        .conditionally(InvertedLootCondition.builder(fullyGrownCondition))
+                    )
+                    .apply(ApplyBonusLootFunction
+                        .oreDrops(fortune)
+                        .conditionally(fullyGrownCondition)
+                    )
+                    .apply(ExplosionDecayLootFunction.builder())
+                )
+        )
+        .pool(
+            LootPool.builder()
+                .conditionally(AllOfLootCondition.builder(
+                    InvertedLootCondition.builder(this.createSilkTouchCondition()),
+                    fullyGrownCondition))
+                .rolls(ConstantLootNumberProvider.create(1))
+                .with(ItemEntry.builder(LighterEndItems.CRYSTALLINE_SULPHUR)
+                    .apply(SetCountLootFunction
+                        .builder(UniformLootNumberProvider.create(1, 3))
+                    )
+                    .apply(ExplosionDecayLootFunction.builder())
+                )
         );
   }
 }

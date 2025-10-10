@@ -95,6 +95,8 @@ public class ModelProvider extends FabricModelProvider {
                 waxed.asItem()
             )
         );
+
+    generateMaterialModels(blockModelGenerator, LighterEndBlocks.SULPHUR);
   }
 
   public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator,
@@ -156,6 +158,7 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndItems.CRAB_MEAT,
         LighterEndItems.CRAB_CAKE,
         LighterEndItems.TOTEM_OF_TELEPORTATION,
+        LighterEndItems.CRYSTALLINE_SULPHUR,
         LighterEndMusicDiscs.ENDSEEKER,
         LighterEndMusicDiscs.EO_DRACONA,
         LighterEndMusicDiscs.GRASPING_AT_STARS,

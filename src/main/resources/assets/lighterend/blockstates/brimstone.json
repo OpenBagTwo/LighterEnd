@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "lighterend:block/brimstone_normal"
+    },
+    "active=true": {
+      "model": "lighterend:block/brimstone_active"
+    }
+  }
+}

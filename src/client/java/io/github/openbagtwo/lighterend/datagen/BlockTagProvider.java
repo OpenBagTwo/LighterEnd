@@ -33,7 +33,8 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.AZURE_JADESTONE,
         LighterEndBlocks.SANDY_JADESTONE,
         LighterEndBlocks.VIRID_JADESTONE,
-        LighterEndBlocks.UMBRALITH
+        LighterEndBlocks.UMBRALITH,
+        LighterEndBlocks.SULPHUR
     )) {
       for (Block block : material.blocks) {
         valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(block);
@@ -99,7 +100,9 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.END_STONE_QUARTZ_ORE,
             LighterEndBlocks.END_STONE_REDSTONE_ORE,
             LighterEndBlocks.UMBRALITH_QUARTZ_ORE,
-            LighterEndBlocks.UMBRALITH_REDSTONE_ORE
+            LighterEndBlocks.UMBRALITH_REDSTONE_ORE,
+            LighterEndBlocks.BRIMSTONE,
+            LighterEndBlocks.SULPHUR_CRYSTAL
         );
     for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.getAll()) {
       valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(chandelier);
@@ -115,16 +118,6 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.UMBRALITH_QUARTZ_ORE,
             LighterEndBlocks.UMBRALITH_REDSTONE_ORE
         );
-
-    for (Material jadestone : Arrays.asList(
-        LighterEndBlocks.AZURE_JADESTONE,
-        LighterEndBlocks.SANDY_JADESTONE,
-        LighterEndBlocks.VIRID_JADESTONE
-    )) {
-      for (Block block : jadestone.blocks) {
-        valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(block);
-      }
-    }
 
     valueLookupBuilder(BlockTags.ENDERMAN_HOLDABLE).add(
         LighterEndBlocks.END_MOSS
@@ -203,12 +196,15 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             Blocks.DEAD_FIRE_CORAL_BLOCK,
             Blocks.DEAD_HORN_CORAL_BLOCK,
             Blocks.DEAD_TUBE_CORAL_BLOCK,
-            LighterEndBlocks.UMBRALITH.baseBlock
+            LighterEndBlocks.UMBRALITH.baseBlock,
+            LighterEndBlocks.BRIMSTONE
         );
     valueLookupBuilder(LighterEndTags.END_SOIL)
         .add(
             LighterEndBlocks.END_MOSS,
-            LighterEndBlocks.UMBRALITH.baseBlock
+            LighterEndBlocks.UMBRALITH.baseBlock,
+            LighterEndBlocks.BRIMSTONE,
+            LighterEndBlocks.SULPHUR.baseBlock
         );
     valueLookupBuilder(LighterEndTags.END_STONES)
         .add(
@@ -224,7 +220,9 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.AZURE_JADESTONE.baseBlock,
             LighterEndBlocks.SANDY_JADESTONE.baseBlock,
             LighterEndBlocks.VIRID_JADESTONE.baseBlock,
-            LighterEndBlocks.UMBRALITH.baseBlock
+            LighterEndBlocks.UMBRALITH.baseBlock,
+            LighterEndBlocks.BRIMSTONE,
+            LighterEndBlocks.SULPHUR.baseBlock
         );
     valueLookupBuilder(LighterEndTags.AQUATIC_END_SOIL)
         .add(
@@ -239,7 +237,9 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             Blocks.COARSE_DIRT,
             Blocks.MUD,
             LighterEndBlocks.UMBRALITH.baseBlock,
-            LighterEndBlocks.END_MOSS  // though pretty sure this won't survive underwater
+            LighterEndBlocks.END_MOSS,  // though pretty sure this won't survive underwater
+            LighterEndBlocks.BRIMSTONE,
+            LighterEndBlocks.SULPHUR.baseBlock
         );
     valueLookupBuilder(LighterEndTags.AQUATIC_END_VEGETATION)
         .add(
@@ -257,6 +257,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         );
     valueLookupBuilder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_STONES);
     valueLookupBuilder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_SOIL);
+    valueLookupBuilder(LighterEndTags.GROWS_SULPHUR_CRYSTALS).add(LighterEndBlocks.BRIMSTONE);
 
 
   }
