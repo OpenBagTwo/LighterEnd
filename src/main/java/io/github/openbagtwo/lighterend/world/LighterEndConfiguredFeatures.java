@@ -13,6 +13,7 @@ import io.github.openbagtwo.lighterend.world.features.BuriedBlob;
 import io.github.openbagtwo.lighterend.world.features.IceStar;
 import io.github.openbagtwo.lighterend.world.features.IceStar.Config;
 import io.github.openbagtwo.lighterend.world.features.LotusLeaf;
+import io.github.openbagtwo.lighterend.world.features.SulphurLake;
 import io.github.openbagtwo.lighterend.world.features.UmbralithArch;
 import io.github.openbagtwo.lighterend.world.features.UnderwaterPlants;
 import io.github.openbagtwo.lighterend.world.features.trees.Glowshroom;
@@ -184,6 +185,13 @@ public class LighterEndConfiguredFeatures {
   public static final RegistryKey<ConfiguredFeature<?, ?>> UMBRALITH_QUARTZ_ORE = of(
       "umbralith_quartz_ore");
 
+  public static final Feature<DefaultFeatureConfig> SULPHUR_LAKE_FEATURE = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("sulphur_lake"),
+      new SulphurLake()
+  );
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SULPHUR_LAKE = of("sulphur_lake");
+
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
     RegistryEntryLookup<ConfiguredFeature<?, ?>> lookup = context.getRegistryLookup(
@@ -248,6 +256,7 @@ public class LighterEndConfiguredFeatures {
     ConfiguredFeatures.register(context, UMRBALITH_ARCH_THIN, THIN_ARCH_FEATURE);
     ConfiguredFeatures.register(context, GLOWSHROOM, GLOWSHROOM_FEATURE);
     ConfiguredFeatures.register(context, AGAVE, AGAVE_FEATURE);
+
     ConfiguredFeatures.register(
         context,
         ICE_STAR_COPPER,
@@ -362,6 +371,8 @@ public class LighterEndConfiguredFeatures {
             7
         )
     );
+
+    ConfiguredFeatures.register(context, SULPHUR_LAKE, SULPHUR_LAKE_FEATURE);
   }
 
   public static void initialize() {

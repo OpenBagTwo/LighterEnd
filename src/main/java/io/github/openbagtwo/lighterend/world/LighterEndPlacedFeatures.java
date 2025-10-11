@@ -68,6 +68,8 @@ public class LighterEndPlacedFeatures {
       "umbralith_redstone_ore");
   public static final RegistryKey<PlacedFeature> UMBRALITH_QUARTZ_ORE = of("umbralith_quartz_ore");
 
+  public static final RegistryKey<PlacedFeature> SULPHUR_LAKE = of("sulphur_lake");
+
 
   public static void bootstrap(Registerable<PlacedFeature> context) {
 
@@ -309,7 +311,6 @@ public class LighterEndPlacedFeatures {
         );
       }
     }
-
     context.register(
         AURORA_CRYSTAL,
         new PlacedFeature(
@@ -321,7 +322,6 @@ public class LighterEndPlacedFeatures {
             )
         )
     );
-
     context.register(
         END_STONE_REDSTONE_ORE,
         new PlacedFeature(
@@ -334,7 +334,6 @@ public class LighterEndPlacedFeatures {
             )
         )
     );
-
     context.register(
         END_STONE_QUARTZ_ORE,
         new PlacedFeature(
@@ -347,7 +346,6 @@ public class LighterEndPlacedFeatures {
             )
         )
     );
-
     context.register(
         UMBRALITH_REDSTONE_ORE,
         new PlacedFeature(
@@ -360,7 +358,6 @@ public class LighterEndPlacedFeatures {
             )
         )
     );
-
     context.register(
         UMBRALITH_QUARTZ_ORE,
         new PlacedFeature(
@@ -369,6 +366,18 @@ public class LighterEndPlacedFeatures {
                 CountPlacementModifier.of(20),
                 SquarePlacementModifier.of(),
                 PlacedFeatures.BOTTOM_TO_TOP_RANGE,
+                BiomePlacementModifier.of()
+            )
+        )
+    );
+    context.register(
+        SULPHUR_LAKE,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.SULPHUR_LAKE),
+            List.of(
+                RarityFilterPlacementModifier.of(20),
+                PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
+                SquarePlacementModifier.of(),
                 BiomePlacementModifier.of()
             )
         )
