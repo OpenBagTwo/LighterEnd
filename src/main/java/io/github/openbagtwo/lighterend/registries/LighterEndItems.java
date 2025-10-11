@@ -3,6 +3,7 @@ package io.github.openbagtwo.lighterend.registries;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.items.Fur;
 import io.github.openbagtwo.lighterend.items.LighterEndFoodComponents;
+import io.github.openbagtwo.lighterend.items.Matchstick;
 import io.github.openbagtwo.lighterend.items.TPTotem;
 import io.github.openbagtwo.lighterend.registries.LighterEndData.SilkLevelComponent;
 import java.util.function.Function;
@@ -101,6 +102,8 @@ public class LighterEndItems {
   );
 
   public static final Item CRYSTALLINE_SULPHUR = register("sulphur_crystalline");
+
+  public static final Item MATCHSTICK = register("matchstick", Matchstick::new, new Settings());
 
   public static Item register(String name) {
     return register(name, new Settings());

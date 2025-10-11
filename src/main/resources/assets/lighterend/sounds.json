@@ -301,6 +301,14 @@
     ],
     "subtitle": "subtitles.lighterend.item.armor.equip_silk"
   },
+  "item.matchstick.use": {
+    "sounds": [
+      {
+        "name": "item.flintandsteel.use",
+        "type": "event"
+      }
+    ]
+  },
   "item.totem_of_teleportation.set": {
     "sounds": [
       {

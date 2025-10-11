@@ -445,7 +445,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             "end_redstone"
         );
 
-        this.createShaped(RecipeCategory.REDSTONE, Blocks.DROPPER)
+        createShaped(RecipeCategory.REDSTONE, Blocks.DROPPER)
             .input('R', Items.REDSTONE)
             .input('#', Blocks.END_STONE)
             .pattern("###")
@@ -458,7 +458,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                     LighterEnd.of("dropper_using_end_stone")
                 )
             );
-        this.createShaped(RecipeCategory.REDSTONE, Blocks.DISPENSER)
+        createShaped(RecipeCategory.REDSTONE, Blocks.DISPENSER)
             .input('R', Items.REDSTONE)
             .input('#', Blocks.END_STONE)
             .input('X', Items.BOW)
@@ -472,7 +472,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                     LighterEnd.of("dispenser_using_end_stone")
                 )
             );
-        this.createShaped(RecipeCategory.REDSTONE, Blocks.OBSERVER)
+        createShaped(RecipeCategory.REDSTONE, Blocks.OBSERVER)
             .input('Q', Items.QUARTZ)
             .input('R', Items.REDSTONE)
             .input('#', Blocks.END_STONE)
@@ -486,7 +486,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                     LighterEnd.of("observer_using_end_stone")
                 )
             );
-        this.createShaped(RecipeCategory.REDSTONE, Blocks.PISTON)
+        createShaped(RecipeCategory.REDSTONE, Blocks.PISTON)
             .input('R', Items.REDSTONE)
             .input('#', Blocks.END_STONE)
             .input('T', ItemTags.PLANKS)
@@ -499,6 +499,32 @@ public class RecipeProvider extends FabricRecipeProvider {
                 RegistryKey.of(
                     RegistryKeys.RECIPE,
                     LighterEnd.of("piston_using_end_stone")
+                )
+            );
+
+        generateMaterialRecipes(LighterEndBlocks.SULPHUR);
+
+        createShaped(RecipeCategory.DECORATIONS, LighterEndItems.MATCHSTICK, 4)
+            .input('#', Items.STICK)
+            .input('X', LighterEndItems.CRYSTALLINE_SULPHUR)
+            .pattern("X")
+            .pattern("#")
+            .criterion(
+                hasItem(LighterEndItems.CRYSTALLINE_SULPHUR),
+                this.conditionsFromItem(LighterEndItems.CRYSTALLINE_SULPHUR)
+            ).offerTo(this.exporter);
+
+        createShapeless(RecipeCategory.MISC, Items.GUNPOWDER, 3)
+            .input(Items.BONE_MEAL)
+            .input(Ingredient.ofItems(Items.COAL, Items.CHARCOAL))
+            .input(LighterEndItems.CRYSTALLINE_SULPHUR)
+            .criterion(
+                hasItem(LighterEndItems.CRYSTALLINE_SULPHUR),
+                this.conditionsFromItem(LighterEndItems.CRYSTALLINE_SULPHUR)
+            ).offerTo(this.exporter,
+                RegistryKey.of(
+                    RegistryKeys.RECIPE,
+                    LighterEnd.of("gunpowder_from_sulphur")
                 )
             );
       }
