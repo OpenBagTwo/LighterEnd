@@ -327,4 +327,10 @@ public class MathUtils {
     float vz = (float) Math.cos(angleY);
     return new Vector3f(vx, 0, vz);
   }
+
+  public static int getSeed(int seed, int x, int y) {
+    int h = seed + x * 374761393 + y * 668265263;
+    h = (h ^ (h >> 13)) * 1274126177;
+    return h ^ (h >> 16);
+  }
 }

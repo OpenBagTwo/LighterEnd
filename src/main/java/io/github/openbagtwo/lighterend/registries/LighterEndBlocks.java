@@ -14,6 +14,7 @@ import io.github.openbagtwo.lighterend.blocks.EndMoss;
 import io.github.openbagtwo.lighterend.blocks.Fur;
 import io.github.openbagtwo.lighterend.blocks.Furnaces;
 import io.github.openbagtwo.lighterend.blocks.GlowshroomCap;
+import io.github.openbagtwo.lighterend.blocks.HydrothermalVent;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.Obelisk;
 import io.github.openbagtwo.lighterend.blocks.Polypore;
@@ -27,6 +28,7 @@ import io.github.openbagtwo.lighterend.blocks.UmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern.TallUmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaMembrane;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaTreeCluster;
+import io.github.openbagtwo.lighterend.blocks.VentBubbleColumn;
 import io.github.openbagtwo.lighterend.world.features.trees.Glowshroom;
 import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
 import io.github.openbagtwo.lighterend.world.features.trees.UmbrellaTree;
@@ -333,10 +335,16 @@ public class LighterEndBlocks {
   );
 
   public static final Block BRIMSTONE = register("brimstone", Brimstone::new);
-
   public static final Material SULPHUR = new Material("sulphuric_rock", MapColor.BROWN);
-
   public static final Block SULPHUR_CRYSTAL = register("sulphur_crystal", SulphurCrystal::new);
+  public static final Block HYDROTHERMAL_VENT = register(
+      "hydrothermal_vent",
+      HydrothermalVent::new
+  );
+  public static final Block VENT_BUBBLE_COLUMN = register(
+      "vent_bubble_column",
+      VentBubbleColumn::new
+  );
 
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);

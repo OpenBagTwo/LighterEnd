@@ -77,8 +77,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class SilkMothNest extends BlockWithEntity {
 
-  public static final MapCodec<SilkMothNest> CODEC = createCodec(
-      SilkMothNest::new);
+  public static final MapCodec<SilkMothNest> CODEC = createCodec(SilkMothNest::new);
   public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
   public static final int MAX_FULLNESS = 3;
   public static final IntProperty FULLNESS = IntProperty.of("fullness", 0, MAX_FULLNESS);

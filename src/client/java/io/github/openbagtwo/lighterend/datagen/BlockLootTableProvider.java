@@ -160,6 +160,7 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
 
     addDrop(LighterEndBlocks.BRIMSTONE);
     addDrop(LighterEndBlocks.SULPHUR_CRYSTAL, sulphurCrystalDrops());
+    addDrop(LighterEndBlocks.HYDROTHERMAL_VENT);
   }
 
   private LootTable.Builder auroraCrystalDrops() {

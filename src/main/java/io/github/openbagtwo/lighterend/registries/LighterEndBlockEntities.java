@@ -6,6 +6,7 @@ import io.github.openbagtwo.lighterend.blocks.Shelf;
 import io.github.openbagtwo.lighterend.blocks.Signs.LighterEndHangingSignBlockEntity;
 import io.github.openbagtwo.lighterend.blocks.Signs.LighterEndSignBlockEntity;
 import io.github.openbagtwo.lighterend.blocks.entities.SilkMothNestEntity;
+import io.github.openbagtwo.lighterend.blocks.entities.Updraft;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
@@ -73,6 +74,14 @@ public class LighterEndBlockEntities {
       LighterEnd.of("silk_moth_nest"),
       FabricBlockEntityTypeBuilder.create(
           SilkMothNestEntity::new, LighterEndBlocks.SILK_MOTH_NEST
+      ).build(null)
+  );
+
+  public static final BlockEntityType<Updraft> UPDRAFT = Registry.register(
+      Registries.BLOCK_ENTITY_TYPE,
+      LighterEnd.of("updraft"),
+      FabricBlockEntityTypeBuilder.create(
+          Updraft::new, LighterEndBlocks.HYDROTHERMAL_VENT
       ).build(null)
   );
 

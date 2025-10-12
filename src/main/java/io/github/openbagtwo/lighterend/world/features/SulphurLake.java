@@ -148,7 +148,7 @@ public class SulphurLake extends Feature<DefaultFeatureConfig> {
     return true;
   }
 
-  private boolean isBorder(StructureWorldAccess world, BlockPos pos) {
+  protected static boolean isBorder(StructureWorldAccess world, BlockPos pos) {
     int y = pos.getY() + 1;
     for (Direction dir : Direction.values()) {
       if (world.getTopY(
@@ -162,7 +162,7 @@ public class SulphurLake extends Feature<DefaultFeatureConfig> {
     return false;
   }
 
-  private boolean isAbsoluteBorder(StructureWorldAccess world, BlockPos pos) {
+  protected static boolean isAbsoluteBorder(StructureWorldAccess world, BlockPos pos) {
     int y = pos.getY() - 2;
     for (Direction dir : Direction.values()) {
       if (world.getTopY(
@@ -176,7 +176,7 @@ public class SulphurLake extends Feature<DefaultFeatureConfig> {
     return false;
   }
 
-  private boolean isDeepWater(StructureWorldAccess world, BlockPos pos) {
+  protected static boolean isDeepWater(StructureWorldAccess world, BlockPos pos) {
     int y = pos.getY() + 1;
     for (Direction dir : Direction.values()) {
       if (world.getTopY(
@@ -199,7 +199,7 @@ public class SulphurLake extends Feature<DefaultFeatureConfig> {
     return true;
   }
 
-  private void placeBrimstone(StructureWorldAccess world, BlockPos pos, Random random) {
+  protected static void placeBrimstone(StructureWorldAccess world, BlockPos pos, Random random) {
     BlockState state = getBrimstone(world, pos);
     world.setBlockState(pos, state, Flags.SILENT);
     if (state.get(Brimstone.ACTIVATED)) {
@@ -207,7 +207,7 @@ public class SulphurLake extends Feature<DefaultFeatureConfig> {
     }
   }
 
-  private BlockState getBrimstone(StructureWorldAccess world, BlockPos pos) {
+  protected static BlockState getBrimstone(StructureWorldAccess world, BlockPos pos) {
     for (Direction dir : Direction.values()) {
       if (world.getBlockState(pos.offset(dir)).isOf(Blocks.WATER)) {
         return LighterEndBlocks.BRIMSTONE.getDefaultState().with(Brimstone.ACTIVATED, true);
@@ -216,7 +216,7 @@ public class SulphurLake extends Feature<DefaultFeatureConfig> {
     return LighterEndBlocks.BRIMSTONE.getDefaultState();
   }
 
-  private void makeShards(StructureWorldAccess world, BlockPos pos, Random random) {
+  protected static void makeShards(StructureWorldAccess world, BlockPos pos, Random random) {
     for (Direction dir : Direction.values()) {
       BlockPos side;
       if (random.nextInt(16) == 0 && world.getBlockState((side = pos.offset(dir)))

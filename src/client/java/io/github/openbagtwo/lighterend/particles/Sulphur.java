@@ -102,7 +102,7 @@ public class Sulphur extends BillboardParticle {
         double vZ,
         Random random
     ) {
-      return new Snowflake(world, x, y, z, this.sprites.getSprite(random));
+      return new Sulphur(world, x, y, z, this.sprites.getSprite(random));
     }
   }
 }

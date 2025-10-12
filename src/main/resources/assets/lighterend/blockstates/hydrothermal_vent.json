@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "lighterend:block/hydrothermal_vent"
+      },
+      {
+        "model": "lighterend:block/hydrothermal_vent",
+        "y": 90
+      },
+      {
+        "model": "lighterend:block/hydrothermal_vent",
+        "y": 180
+      },
+      {
+        "model": "lighterend:block/hydrothermal_vent",
+        "y": 270
+      }
+    ]
+  }
+}
