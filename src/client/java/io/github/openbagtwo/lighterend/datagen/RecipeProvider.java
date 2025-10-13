@@ -502,7 +502,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                 )
             );
 
-        generateMaterialRecipes(LighterEndBlocks.SULPHUR);
+        generateMaterialRecipes(LighterEndBlocks.BORNITE);
 
         createShaped(RecipeCategory.DECORATIONS, LighterEndItems.MATCHSTICK, 4)
             .input('#', Items.STICK)

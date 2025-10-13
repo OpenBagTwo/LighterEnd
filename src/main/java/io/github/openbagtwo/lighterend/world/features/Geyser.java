@@ -79,7 +79,7 @@ public class Geyser extends Feature<DefaultFeatureConfig> {
     SDF sdf = new SDFCappedCone().setHeight(halfHeight)
         .setRadius1(radius1)
         .setRadius2(radius2)
-        .setBlock(LighterEndBlocks.SULPHUR.baseBlock);
+        .setBlock(LighterEndBlocks.BORNITE.baseBlock);
     sdf = new SDFTranslate().setTranslate(0, halfHeight - 3, 0).setSource(sdf);
 
     int count = halfHeight;
@@ -91,7 +91,7 @@ public class Geyser extends Feature<DefaultFeatureConfig> {
       SDF bowl = new SDFCappedCone().setHeight(radius)
           .setRadius1(0)
           .setRadius2(radius)
-          .setBlock(LighterEndBlocks.SULPHUR.baseBlock);
+          .setBlock(LighterEndBlocks.BORNITE.baseBlock);
 
       SDF brimstone = new SDFCappedCone().setHeight(radius)
           .setRadius1(0)
@@ -168,8 +168,8 @@ public class Geyser extends Feature<DefaultFeatureConfig> {
         .setReplaceFunction(REPLACE1)
         .fillRecursiveIgnore(world, pos, IGNORE);
 
-    obj1.setBlock(LighterEndBlocks.SULPHUR.baseBlock);
-    obj2.setBlock(LighterEndBlocks.SULPHUR.baseBlock);
+    obj1.setBlock(LighterEndBlocks.BORNITE.baseBlock);
+    obj2.setBlock(LighterEndBlocks.BORNITE.baseBlock);
     new SDFDisplace().setFunction((vec) -> -4F)
         .setSource(cave)
         .setReplaceFunction(REPLACE1)
@@ -218,7 +218,7 @@ public class Geyser extends Feature<DefaultFeatureConfig> {
           for (int j = 0; j <= dist; j++) {
             world.setBlockState(
                 mut,
-                LighterEndBlocks.SULPHUR.baseBlock.getDefaultState(),
+                LighterEndBlocks.BORNITE.baseBlock.getDefaultState(),
                 Flags.SILENT
             );
             for (Direction dir : Direction.Type.HORIZONTAL.getShuffled(random)) {
@@ -272,7 +272,7 @@ public class Geyser extends Feature<DefaultFeatureConfig> {
           for (int j = 0; j <= dist; j++) {
             world.setBlockState(
                 mut,
-                LighterEndBlocks.SULPHUR.baseBlock.getDefaultState(),
+                LighterEndBlocks.BORNITE.baseBlock.getDefaultState(),
                 Flags.SILENT
             );
             mut.setY(mut.getY() + 1);
@@ -326,7 +326,7 @@ public class Geyser extends Feature<DefaultFeatureConfig> {
 
     IGNORE = (state) -> state.isOf(Blocks.WATER)
         || state.isOf(Blocks.CAVE_AIR)
-        || state.isOf(LighterEndBlocks.SULPHUR.baseBlock)
+        || state.isOf(LighterEndBlocks.BORNITE.baseBlock)
         || state.isOf(LighterEndBlocks.BRIMSTONE);
   }
 

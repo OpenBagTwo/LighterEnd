@@ -336,7 +336,7 @@ public class LighterEndBlocks {
   );
 
   public static final Block BRIMSTONE = register("brimstone", Brimstone::new);
-  public static final Material SULPHUR = new Material("sulphuric_rock", MapColor.BROWN);
+  public static final Material BORNITE = new Material("sulphuric_rock", MapColor.BROWN);
   public static final Block SULPHUR_CRYSTAL = register("sulphur_crystal", SulphurCrystal::new);
   public static final Block HYDROTHERMAL_VENT = register(
       "hydrothermal_vent",

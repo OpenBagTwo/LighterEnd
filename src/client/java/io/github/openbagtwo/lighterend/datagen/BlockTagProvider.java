@@ -34,7 +34,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.SANDY_JADESTONE,
         LighterEndBlocks.VIRID_JADESTONE,
         LighterEndBlocks.UMBRALITH,
-        LighterEndBlocks.SULPHUR
+        LighterEndBlocks.BORNITE
     )) {
       for (Block block : material.blocks) {
         valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(block);
@@ -206,7 +206,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.END_MOSS,
             LighterEndBlocks.UMBRALITH.baseBlock,
             LighterEndBlocks.BRIMSTONE,
-            LighterEndBlocks.SULPHUR.baseBlock
+            LighterEndBlocks.BORNITE.baseBlock
         );
     valueLookupBuilder(LighterEndTags.END_STONES)
         .add(
@@ -224,7 +224,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.VIRID_JADESTONE.baseBlock,
             LighterEndBlocks.UMBRALITH.baseBlock,
             LighterEndBlocks.BRIMSTONE,
-            LighterEndBlocks.SULPHUR.baseBlock
+            LighterEndBlocks.BORNITE.baseBlock
         );
     valueLookupBuilder(LighterEndTags.AQUATIC_END_SOIL)
         .add(
@@ -241,7 +241,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.UMBRALITH.baseBlock,
             LighterEndBlocks.END_MOSS,  // though pretty sure this won't survive underwater
             LighterEndBlocks.BRIMSTONE,
-            LighterEndBlocks.SULPHUR.baseBlock
+            LighterEndBlocks.BORNITE.baseBlock
         );
     valueLookupBuilder(LighterEndTags.AQUATIC_END_VEGETATION)
         .add(

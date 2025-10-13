@@ -104,7 +104,7 @@ public class HydrothermalVent extends BlockWithEntity implements FluidFillable, 
   @Override
   public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
     state = world.getBlockState(pos.down());
-    return state.isOf(LighterEndBlocks.SULPHUR.baseBlock);
+    return state.isOf(LighterEndBlocks.BORNITE.baseBlock);
   }
 
   @Override

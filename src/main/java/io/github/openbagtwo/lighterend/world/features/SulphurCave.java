@@ -81,7 +81,7 @@ public class SulphurCave extends Feature<DefaultFeatureConfig> {
     double nr = radius * 0.25;
 
     Set<BlockPos> brimstone = Sets.newHashSet();
-    BlockState rock = LighterEndBlocks.SULPHUR.baseBlock.getDefaultState();
+    BlockState rock = LighterEndBlocks.BORNITE.baseBlock.getDefaultState();
     int waterLevel = pos.getY()
         + MathHelper.nextInt(random, MathHelper.floor(radius * 0.8), radius);
     for (int x = x1; x <= x2; x++) {
@@ -160,7 +160,7 @@ public class SulphurCave extends Feature<DefaultFeatureConfig> {
             for (int j = 0; j <= dist; j++) {
               world.setBlockState(
                   mut,
-                  LighterEndBlocks.SULPHUR.baseBlock.getDefaultState(),
+                  LighterEndBlocks.BORNITE.baseBlock.getDefaultState(),
                   Flags.SILENT
               );
               for (Direction dir : Direction.Type.HORIZONTAL.getShuffled(random)) {

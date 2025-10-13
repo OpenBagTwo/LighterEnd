@@ -96,7 +96,7 @@ public class ModelProvider extends FabricModelProvider {
             )
         );
 
-    generateMaterialModels(blockModelGenerator, LighterEndBlocks.SULPHUR);
+    generateMaterialModels(blockModelGenerator, LighterEndBlocks.BORNITE);
   }
 
   public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator,

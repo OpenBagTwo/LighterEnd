@@ -311,7 +311,7 @@ public class LighterEndWorldGen {
                     sequence(
                         condition(
                             noiseThreshold(NoiseParameters.SULPHUR_SURFACE, -0.3, 0.3),
-                            block(LighterEndBlocks.SULPHUR.baseBlock.getDefaultState())
+                            block(LighterEndBlocks.BORNITE.baseBlock.getDefaultState())
                         ),
                         block(Blocks.END_STONE.getDefaultState())
                     )

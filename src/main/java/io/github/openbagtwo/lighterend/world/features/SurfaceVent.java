@@ -62,7 +62,7 @@ public class SurfaceVent extends Feature<DefaultFeatureConfig> {
           for (int j = 0; j <= dist; j++) {
             world.setBlockState(
                 mut,
-                LighterEndBlocks.SULPHUR.baseBlock.getDefaultState(),
+                LighterEndBlocks.BORNITE.baseBlock.getDefaultState(),
                 Flags.SILENT
             );
             mut.setY(mut.getY() + 1);

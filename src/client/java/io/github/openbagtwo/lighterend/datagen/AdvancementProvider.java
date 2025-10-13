@@ -266,8 +266,9 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         LighterEndBiomes.GLOWING_GRASSLAND,
         LighterEndBiomes.MEGALAKE,
         LighterEndBiomes.UMBRA_VALLEY,
-        LighterEndBiomes.FOGGY_MUSHROOMLANDS
+        LighterEndBiomes.FOGGY_MUSHROOMLANDS,
         // starfield intentionally omitted (because it's just a variant on end barrens (read: void)
+        LighterEndBiomes.SULPHUR_SPRINGS
     )) {
       allBiomesBuilder = allBiomesBuilder.criterion(
           biome.getValue().getPath(),

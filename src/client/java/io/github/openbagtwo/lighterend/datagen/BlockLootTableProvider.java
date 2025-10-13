@@ -56,7 +56,7 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
         LighterEndBlocks.SANDY_JADESTONE.blocks,
         LighterEndBlocks.VIRID_JADESTONE.blocks,
         LighterEndBlocks.UMBRALITH.blocks,
-        LighterEndBlocks.SULPHUR.blocks,
+        LighterEndBlocks.BORNITE.blocks,
         LighterEndBlocks.TENANEA.blocks,
         LighterEndBlocks.UMBRELLA.blocks,
         LighterEndBlocks.LOTUS.blocks,
