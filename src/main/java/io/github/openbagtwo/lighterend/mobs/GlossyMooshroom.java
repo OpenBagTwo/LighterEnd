@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.mobs;
 
 import io.github.openbagtwo.lighterend.misc.StatusEffects;
+import io.github.openbagtwo.lighterend.registries.LighterEndBiomes;
 import io.github.openbagtwo.lighterend.registries.LighterEndData;
 import io.github.openbagtwo.lighterend.registries.LighterEndLootTables;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
@@ -10,6 +11,7 @@ import net.minecraft.component.ComponentType;
 import net.minecraft.component.ComponentsAccess;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.SuspiciousStewEffectsComponent;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Shearable;
 import net.minecraft.entity.SpawnReason;
@@ -31,6 +33,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -39,8 +42,11 @@ import net.minecraft.storage.WriteView;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
@@ -61,6 +67,26 @@ public class GlossyMooshroom extends AbstractCowEntity implements Shearable {
 
   public GlossyMooshroom(EntityType<? extends GlossyMooshroom> entityType, World world) {
     super(entityType, world);
+  }
+
+  @Nullable
+  @Override
+  public EntityData initialize(
+      ServerWorldAccess world,
+      LocalDifficulty difficulty,
+      SpawnReason spawnReason,
+      @Nullable EntityData entityData
+  ) {
+    this.setVariant(0);
+
+    RegistryEntry<Biome> biome = world.getBiome(getBlockPos());
+    if (biome.matchesKey(LighterEndBiomes.SULPHUR_SPRINGS)) {
+      this.dataTracker.set(VARIANT, 1);
+    }
+    EntityData data = super.initialize(world, difficulty, spawnReason, entityData);
+
+    this.calculateDimensions();
+    return data;
   }
 
   @Override

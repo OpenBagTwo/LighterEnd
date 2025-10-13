@@ -3,6 +3,7 @@ package io.github.openbagtwo.lighterend.blocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.fluid.Fluids;
@@ -58,7 +59,8 @@ public class Brimstone extends Block {
             int age = sideState.get(SulphurCrystal.STAGE) + 1;
             world.setBlockState(side, sideState.with(SulphurCrystal.STAGE, age));
           }
-        } else if (sideState.getFluidState().getFluid() == Fluids.WATER) {
+        } else if (sideState.isOf(Blocks.WATER)
+        ) {
           BlockState crystal = LighterEndBlocks.SULPHUR_CRYSTAL.getDefaultState()
               .with(SulphurCrystal.FACING, dir)
               .with(SulphurCrystal.WATERLOGGED, true)

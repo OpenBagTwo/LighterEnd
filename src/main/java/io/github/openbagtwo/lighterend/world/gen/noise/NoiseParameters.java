@@ -14,11 +14,17 @@ public class NoiseParameters {
   public static final RegistryKey<DoublePerlinNoiseSampler.NoiseParameters> VIOLECITE_SURFACE = createKey(
       "violecite_surface");
 
+  public static final RegistryKey<DoublePerlinNoiseSampler.NoiseParameters> SULPHUR_SURFACE = createKey(
+      "sulphur_surface");
+
   public static void bootstrap(Registerable<DoublePerlinNoiseSampler.NoiseParameters> context) {
     register(context, END_MOSS_SURFACE,
         new DoublePerlinNoiseSampler.NoiseParameters(-5, 1.0D, 0.5D, 1.0D));
 
     register(context, VIOLECITE_SURFACE,
+        new DoublePerlinNoiseSampler.NoiseParameters(-5, 1.0D, 0.5D, 1.0D));
+
+    register(context, SULPHUR_SURFACE,
         new DoublePerlinNoiseSampler.NoiseParameters(-5, 1.0D, 0.5D, 1.0D));
   }
 

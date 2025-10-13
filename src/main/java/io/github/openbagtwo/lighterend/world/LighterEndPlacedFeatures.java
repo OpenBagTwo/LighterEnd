@@ -401,7 +401,7 @@ public class LighterEndPlacedFeatures {
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.SURFACE_VENT),
             List.of(
-                RarityFilterPlacementModifier.of(4),
+                RarityFilterPlacementModifier.of(2),
                 SquarePlacementModifier.of(),
                 BiomePlacementModifier.of()
             )
@@ -412,7 +412,7 @@ public class LighterEndPlacedFeatures {
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.GEYSER),
             List.of(
-                RarityFilterPlacementModifier.of(8),
+                RarityFilterPlacementModifier.of(4),
                 SquarePlacementModifier.of(),
                 BiomePlacementModifier.of()
             )

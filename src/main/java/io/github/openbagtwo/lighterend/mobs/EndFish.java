@@ -1,5 +1,6 @@
 package io.github.openbagtwo.lighterend.mobs;
 
+import io.github.openbagtwo.lighterend.registries.LighterEndBiomes;
 import io.github.openbagtwo.lighterend.registries.LighterEndData;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
@@ -19,12 +20,14 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.SchoolingFishEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -55,11 +58,10 @@ public class EndFish extends SchoolingFishEntity {
 
     this.setVariant(random.nextInt(VARIANTS_NORMAL));
 
-    // TODO: reenable once sulphur springs are back in the game
-//    RegistryEntry<Biome> biome = world.getBiome(getBlockPos());
-//    if (biome.matchesKey(EndBiomes.SULPHUR_SPRINGS.key)) {
-//      this.setVariant(random.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL));
-//    }
+    RegistryEntry<Biome> biome = world.getBiome(getBlockPos());
+    if (biome.matchesKey(LighterEndBiomes.SULPHUR_SPRINGS)) {
+      this.setVariant(random.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL);
+    }
 
     EntityData data = super.initialize(world, difficulty, spawnReason, entityData);
 

@@ -36,6 +36,16 @@
       }
     ]
   },
+  "ambient.sulphur.loop": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "lighterend:ambient/sulphur_springs",
+        "stream": true,
+        "volume": 0.5
+      }
+    ]
+  },
   "ambient.umbra_valley.loop": {
     "category": "ambient",
     "sounds": [
@@ -437,6 +447,31 @@
       },
       {
         "name": "lighterend:music/astron-peaceful_mind",
+        "stream": true,
+        "volume": 0.2
+      }
+    ]
+  },
+  "music.sulphur": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "lighterend:music/godmode-melancholia",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/asher_fulero-elegy",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/the_tides-ammil",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/vyen-amber",
         "stream": true,
         "volume": 0.2
       }

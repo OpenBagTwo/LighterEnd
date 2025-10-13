@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.world.gen;
 
 import static net.minecraft.world.gen.surfacebuilder.MaterialRules.STONE_DEPTH_FLOOR;
 import static net.minecraft.world.gen.surfacebuilder.MaterialRules.STONE_DEPTH_FLOOR_WITH_SURFACE_DEPTH_RANGE_30;
+import static net.minecraft.world.gen.surfacebuilder.MaterialRules.STONE_DEPTH_FLOOR_WITH_SURFACE_DEPTH_RANGE_6;
 import static net.minecraft.world.gen.surfacebuilder.MaterialRules.biome;
 import static net.minecraft.world.gen.surfacebuilder.MaterialRules.block;
 import static net.minecraft.world.gen.surfacebuilder.MaterialRules.condition;
@@ -19,6 +20,7 @@ import java.util.List;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.biome.v1.TheEndBiomes;
+import net.minecraft.block.Blocks;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -80,6 +82,15 @@ public class LighterEndWorldGen {
                 0.01F
             ), context.getOrThrow(LighterEndBiomes.UMBRA_VALLEY)),
             Pair.of(MultiNoiseUtil.createNoiseHypercube(
+                MultiNoiseUtil.ParameterRange.of(-1, 1),
+                MultiNoiseUtil.ParameterRange.of(-0.5F, 1),
+                MultiNoiseUtil.ParameterRange.of(-1, 1),
+                MultiNoiseUtil.ParameterRange.of(0.25F, 1),
+                MultiNoiseUtil.ParameterRange.of(-1.4F, 1),
+                MultiNoiseUtil.ParameterRange.of(-1, 1),
+                0.42F
+            ), context.getOrThrow(LighterEndBiomes.SULPHUR_SPRINGS)),
+            Pair.of(MultiNoiseUtil.createNoiseHypercube(
                 MultiNoiseUtil.ParameterRange.of(-0.5F, 0.2F),
                 MultiNoiseUtil.ParameterRange.of(0.5F, 1),
                 MultiNoiseUtil.ParameterRange.of(0.5F, 1),
@@ -135,6 +146,10 @@ public class LighterEndWorldGen {
     TheEndBiomes.addMidlandsBiome(LighterEndBiomes.UMBRA_VALLEY,
         LighterEndBiomes.UMBRA_VALLEY, 1.0);
 
+    TheEndBiomes.addHighlandsBiome(LighterEndBiomes.SULPHUR_SPRINGS, 1.0);
+    TheEndBiomes.addMidlandsBiome(LighterEndBiomes.SULPHUR_SPRINGS,
+        LighterEndBiomes.SULPHUR_SPRINGS, 1.0);
+
     TheEndBiomes.addHighlandsBiome(LighterEndBiomes.MEGALAKE, 1.0);
 
     TheEndBiomes.addSmallIslandsBiome(LighterEndBiomes.STARFIELD, 0.1);
@@ -143,7 +158,8 @@ public class LighterEndWorldGen {
         LighterEndBiomes.GLOWING_GRASSLAND,
         LighterEndBiomes.FOGGY_MUSHROOMLANDS,
         LighterEndBiomes.UMBRA_VALLEY,
-        LighterEndBiomes.MEGALAKE
+        LighterEndBiomes.MEGALAKE,
+        LighterEndBiomes.SULPHUR_SPRINGS
     )) {
       TheEndBiomes.addBarrensBiome(parentBiome, LighterEndBiomes.STARFIELD, 0.18);
       TheEndBiomes.addBarrensBiome(parentBiome, BiomeKeys.END_BARRENS, 1);
@@ -205,6 +221,7 @@ public class LighterEndWorldGen {
             LighterEndBiomes.UMBRELLA_JUNGLE,
             LighterEndBiomes.MEGALAKE,
             LighterEndBiomes.FOGGY_MUSHROOMLANDS,
+            LighterEndBiomes.SULPHUR_SPRINGS,
             BiomeKeys.END_HIGHLANDS,
             BiomeKeys.END_MIDLANDS,
             BiomeKeys.SMALL_END_ISLANDS
@@ -280,6 +297,23 @@ public class LighterEndWorldGen {
                             block(LighterEndBlocks.VIOLECITE.baseBlock.getDefaultState())
                         ),
                         block(LighterEndBlocks.UMBRALITH.baseBlock.getDefaultState())
+                    )
+                )
+            )
+        ),
+        condition(
+            STONE_DEPTH_FLOOR_WITH_SURFACE_DEPTH_RANGE_6,
+            sequence(
+                condition(
+                    biome(
+                        LighterEndBiomes.SULPHUR_SPRINGS
+                    ),
+                    sequence(
+                        condition(
+                            noiseThreshold(NoiseParameters.SULPHUR_SURFACE, -0.3, 0.3),
+                            block(LighterEndBlocks.SULPHUR.baseBlock.getDefaultState())
+                        ),
+                        block(Blocks.END_STONE.getDefaultState())
                     )
                 )
             )
