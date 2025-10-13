@@ -391,6 +391,7 @@ public class LighterEndPlacedFeatures {
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.SULPHUR_CAVE),
             List.of(
                 CountPlacementModifier.of(2),
+                PlacedFeatures.BOTTOM_TO_TOP_RANGE,
                 SquarePlacementModifier.of(),
                 BiomePlacementModifier.of()
             )
@@ -402,6 +403,7 @@ public class LighterEndPlacedFeatures {
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.SURFACE_VENT),
             List.of(
                 RarityFilterPlacementModifier.of(2),
+                PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
                 SquarePlacementModifier.of(),
                 BiomePlacementModifier.of()
             )
@@ -412,7 +414,8 @@ public class LighterEndPlacedFeatures {
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.GEYSER),
             List.of(
-                RarityFilterPlacementModifier.of(4),
+                RarityFilterPlacementModifier.of(8),
+                PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
                 SquarePlacementModifier.of(),
                 BiomePlacementModifier.of()
             )
