@@ -10,6 +10,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.world.features.AuroraCrystalFormation;
 import io.github.openbagtwo.lighterend.world.features.BuriedBlob;
+import io.github.openbagtwo.lighterend.world.features.Geyser;
 import io.github.openbagtwo.lighterend.world.features.IceStar;
 import io.github.openbagtwo.lighterend.world.features.IceStar.Config;
 import io.github.openbagtwo.lighterend.world.features.LotusLeaf;
@@ -208,6 +209,13 @@ public class LighterEndConfiguredFeatures {
   );
   public static final RegistryKey<ConfiguredFeature<?, ?>> SURFACE_VENT = of("surface_vent");
 
+  public static final Feature<DefaultFeatureConfig> GEYSER_FEATURE = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("geyser"),
+      new Geyser()
+  );
+  public static final RegistryKey<ConfiguredFeature<?, ?>> GEYSER = of("geyser");
+
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
     RegistryEntryLookup<ConfiguredFeature<?, ?>> lookup = context.getRegistryLookup(
@@ -391,6 +399,7 @@ public class LighterEndConfiguredFeatures {
     ConfiguredFeatures.register(context, SULPHUR_LAKE, SULPHUR_LAKE_FEATURE);
     ConfiguredFeatures.register(context, SULPHUR_CAVE, SULPHUR_CAVE_FEATURE);
     ConfiguredFeatures.register(context, SURFACE_VENT, SURFACE_VENT_FEATURE);
+    ConfiguredFeatures.register(context, GEYSER, GEYSER_FEATURE);
   }
 
   public static void initialize() {

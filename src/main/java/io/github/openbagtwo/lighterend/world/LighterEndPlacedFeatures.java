@@ -71,6 +71,7 @@ public class LighterEndPlacedFeatures {
   public static final RegistryKey<PlacedFeature> SULPHUR_LAKE = of("sulphur_lake");
   public static final RegistryKey<PlacedFeature> SULPHUR_CAVE = of("sulphur_cave");
   public static final RegistryKey<PlacedFeature> SURFACE_VENT = of("surface_vent");
+  public static final RegistryKey<PlacedFeature> GEYSER = of("geyser");
 
 
   public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -377,7 +378,7 @@ public class LighterEndPlacedFeatures {
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.SULPHUR_LAKE),
             List.of(
-                RarityFilterPlacementModifier.of(20),
+                RarityFilterPlacementModifier.of(8),
                 PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
                 SquarePlacementModifier.of(),
                 BiomePlacementModifier.of()
@@ -401,6 +402,17 @@ public class LighterEndPlacedFeatures {
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.SURFACE_VENT),
             List.of(
                 RarityFilterPlacementModifier.of(4),
+                SquarePlacementModifier.of(),
+                BiomePlacementModifier.of()
+            )
+        )
+    );
+    context.register(
+        GEYSER,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.GEYSER),
+            List.of(
+                RarityFilterPlacementModifier.of(8),
                 SquarePlacementModifier.of(),
                 BiomePlacementModifier.of()
             )

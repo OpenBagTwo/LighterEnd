@@ -32,27 +32,29 @@ public class Updraft extends BlockEntity {
       BlockState state,
       T uncastedEntity
   ) {
-    if (level != null && uncastedEntity instanceof Updraft updraft && state.isOf(
-        LighterEndBlocks.HYDROTHERMAL_VENT)) {
-      if (level.isClient()) {
-        clientTick(level, worldPosition, state, updraft);
-      }
+
+    if (
+        level != null
+            && uncastedEntity instanceof Updraft updraft
+            && state.isOf(LighterEndBlocks.HYDROTHERMAL_VENT)
+    ) {
+      particleTick(level, worldPosition, state, updraft);
       serverTick(level, worldPosition, state, updraft);
     }
   }
 
-  private static void clientTick(
+  private static void particleTick(
       World level,
       BlockPos worldPosition,
       BlockState state,
       Updraft updraft
   ) {
     boolean active = state.get(HydrothermalVent.ACTIVATED);
-    if (active && level.random.nextInt(20) == 0 && state.get(HydrothermalVent.WATERLOGGED)) {
-      double x = worldPosition.getX() + level.random.nextDouble();
+    if (active && level.random.nextInt(20) == 0) {
+      double x = worldPosition.getX() + 0.5 * level.random.nextDouble();
       double y = worldPosition.getY() + 0.9 + level.random.nextDouble() * 0.3;
-      double z = worldPosition.getZ() + level.random.nextDouble();
-      level.addParticleClient(LighterEndParticles.GEYSER, x, y, z, 0, 0, 0);
+      double z = worldPosition.getZ() + 0.5 * level.random.nextDouble();
+      level.addParticleClient(LighterEndParticles.GEYSER, x, y, z, 0, 0.125, 0);
     }
   }
 
