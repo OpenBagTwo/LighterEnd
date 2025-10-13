@@ -4,8 +4,6 @@ import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.blocks.entities.Updraft;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.utils.Flags;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -58,7 +56,7 @@ public class HydrothermalVent extends BlockWithEntity implements FluidFillable, 
             .strength(1.5F, 6.0F)
             .mapColor(MapColor.STONE_GRAY)
     );
-    this.setDefaultState(getDefaultState().with(WATERLOGGED, true).with(ACTIVATED, false));
+    this.setDefaultState(getDefaultState().with(WATERLOGGED, false).with(ACTIVATED, false));
   }
 
   @Override
@@ -121,7 +119,7 @@ public class HydrothermalVent extends BlockWithEntity implements FluidFillable, 
       Random random
   ) {
     if (!canPlaceAt(state, world, pos)) {
-      return Blocks.WATER.getDefaultState();
+      return state.get(WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
     } else if (
         state.get(WATERLOGGED)
             && direction == Direction.UP
@@ -175,7 +173,6 @@ public class HydrothermalVent extends BlockWithEntity implements FluidFillable, 
     }
   }
 
-  @Environment(EnvType.CLIENT)
   public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
     super.randomDisplayTick(state, world, pos, random);
     if (!state.get(ACTIVATED) && random.nextBoolean()) {

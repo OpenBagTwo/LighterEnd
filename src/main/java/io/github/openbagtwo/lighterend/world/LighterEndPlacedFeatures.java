@@ -70,6 +70,7 @@ public class LighterEndPlacedFeatures {
 
   public static final RegistryKey<PlacedFeature> SULPHUR_LAKE = of("sulphur_lake");
   public static final RegistryKey<PlacedFeature> SULPHUR_CAVE = of("sulphur_cave");
+  public static final RegistryKey<PlacedFeature> SURFACE_VENT = of("surface_vent");
 
 
   public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -389,6 +390,17 @@ public class LighterEndPlacedFeatures {
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.SULPHUR_CAVE),
             List.of(
                 CountPlacementModifier.of(2),
+                SquarePlacementModifier.of(),
+                BiomePlacementModifier.of()
+            )
+        )
+    );
+    context.register(
+        SURFACE_VENT,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.SURFACE_VENT),
+            List.of(
+                RarityFilterPlacementModifier.of(4),
                 SquarePlacementModifier.of(),
                 BiomePlacementModifier.of()
             )

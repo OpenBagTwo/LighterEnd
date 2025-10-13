@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.world.features;
 
 import com.google.common.collect.Sets;
 import io.github.openbagtwo.lighterend.BlockFixer;
+import io.github.openbagtwo.lighterend.blocks.HydrothermalVent;
 import io.github.openbagtwo.lighterend.blocks.TubeWorm;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
@@ -176,7 +177,8 @@ public class SulphurCave extends Feature<DefaultFeatureConfig> {
             }
             world.setBlockState(
                 mut,
-                LighterEndBlocks.HYDROTHERMAL_VENT.getDefaultState(),
+                LighterEndBlocks.HYDROTHERMAL_VENT.getDefaultState()
+                    .with(HydrothermalVent.WATERLOGGED, true),
                 Flags.SILENT
             );
             mut.setY(mut.getY() + 1);

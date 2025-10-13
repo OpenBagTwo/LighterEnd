@@ -15,6 +15,7 @@ import io.github.openbagtwo.lighterend.world.features.IceStar.Config;
 import io.github.openbagtwo.lighterend.world.features.LotusLeaf;
 import io.github.openbagtwo.lighterend.world.features.SulphurCave;
 import io.github.openbagtwo.lighterend.world.features.SulphurLake;
+import io.github.openbagtwo.lighterend.world.features.SurfaceVent;
 import io.github.openbagtwo.lighterend.world.features.UmbralithArch;
 import io.github.openbagtwo.lighterend.world.features.UnderwaterPlants;
 import io.github.openbagtwo.lighterend.world.features.trees.Glowshroom;
@@ -200,6 +201,13 @@ public class LighterEndConfiguredFeatures {
   );
   public static final RegistryKey<ConfiguredFeature<?, ?>> SULPHUR_CAVE = of("sulphur_cave");
 
+  public static final Feature<DefaultFeatureConfig> SURFACE_VENT_FEATURE = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("surface_vent"),
+      new SurfaceVent()
+  );
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SURFACE_VENT = of("surface_vent");
+
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
     RegistryEntryLookup<ConfiguredFeature<?, ?>> lookup = context.getRegistryLookup(
@@ -382,6 +390,7 @@ public class LighterEndConfiguredFeatures {
 
     ConfiguredFeatures.register(context, SULPHUR_LAKE, SULPHUR_LAKE_FEATURE);
     ConfiguredFeatures.register(context, SULPHUR_CAVE, SULPHUR_CAVE_FEATURE);
+    ConfiguredFeatures.register(context, SURFACE_VENT, SURFACE_VENT_FEATURE);
   }
 
   public static void initialize() {
