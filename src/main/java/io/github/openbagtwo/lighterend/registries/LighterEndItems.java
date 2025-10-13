@@ -33,7 +33,8 @@ public class LighterEndItems {
   );
   public static final Item SILK = register("silk_fiber");
   public static final Item SILK_MATRIX = register("silk_matrix");
-  public static Item SILK_MOTH_NEST = register("silk_moth_nest",
+  public static Item SILK_MOTH_NEST = register(
+      "silk_moth_nest",
       settings -> new BlockItem(
           LighterEndBlocks.SILK_MOTH_NEST,
           settings

@@ -13,6 +13,7 @@ import io.github.openbagtwo.lighterend.world.features.BuriedBlob;
 import io.github.openbagtwo.lighterend.world.features.IceStar;
 import io.github.openbagtwo.lighterend.world.features.IceStar.Config;
 import io.github.openbagtwo.lighterend.world.features.LotusLeaf;
+import io.github.openbagtwo.lighterend.world.features.SulphurCave;
 import io.github.openbagtwo.lighterend.world.features.SulphurLake;
 import io.github.openbagtwo.lighterend.world.features.UmbralithArch;
 import io.github.openbagtwo.lighterend.world.features.UnderwaterPlants;
@@ -191,6 +192,13 @@ public class LighterEndConfiguredFeatures {
       new SulphurLake()
   );
   public static final RegistryKey<ConfiguredFeature<?, ?>> SULPHUR_LAKE = of("sulphur_lake");
+
+  public static final Feature<DefaultFeatureConfig> SULPHUR_CAVE_FEATURE = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("sulphur_cave"),
+      new SulphurCave()
+  );
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SULPHUR_CAVE = of("sulphur_cave");
 
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
@@ -373,6 +381,7 @@ public class LighterEndConfiguredFeatures {
     );
 
     ConfiguredFeatures.register(context, SULPHUR_LAKE, SULPHUR_LAKE_FEATURE);
+    ConfiguredFeatures.register(context, SULPHUR_CAVE, SULPHUR_CAVE_FEATURE);
   }
 
   public static void initialize() {

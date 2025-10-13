@@ -69,6 +69,7 @@ public class LighterEndPlacedFeatures {
   public static final RegistryKey<PlacedFeature> UMBRALITH_QUARTZ_ORE = of("umbralith_quartz_ore");
 
   public static final RegistryKey<PlacedFeature> SULPHUR_LAKE = of("sulphur_lake");
+  public static final RegistryKey<PlacedFeature> SULPHUR_CAVE = of("sulphur_cave");
 
 
   public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -377,6 +378,17 @@ public class LighterEndPlacedFeatures {
             List.of(
                 RarityFilterPlacementModifier.of(20),
                 PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
+                SquarePlacementModifier.of(),
+                BiomePlacementModifier.of()
+            )
+        )
+    );
+    context.register(
+        SULPHUR_CAVE,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.SULPHUR_CAVE),
+            List.of(
+                CountPlacementModifier.of(2),
                 SquarePlacementModifier.of(),
                 BiomePlacementModifier.of()
             )

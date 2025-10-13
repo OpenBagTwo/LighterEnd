@@ -43,10 +43,10 @@ public class LighterEnd implements ModInitializer {
   @Override
   public void onInitialize() {
 
+    LighterEndBlocks.initialize();
     LighterEndItems.initialize();
     LighterEndMusicDiscs.initialize();
     LighterEndParticles.initialize();
-    LighterEndBlocks.initialize();
     LighterEndData.initialize();
     LighterEndBlockEntities.initialize();
     LighterEndMobs.initialize();

@@ -4,6 +4,7 @@ import java.util.Map;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldAccess;
 
@@ -14,6 +15,8 @@ public class PosInfo implements Comparable<PosInfo> {
   private final Map<BlockPos, PosInfo> add;
   private final BlockPos pos;
   private BlockState state;
+
+  private static final ThreadLocal<Mutable> TL_POS = ThreadLocal.withInitial(() -> new Mutable());
 
   public static PosInfo create(Map<BlockPos, PosInfo> blocks, Map<BlockPos, PosInfo> add,
       BlockPos pos) {
@@ -33,6 +36,15 @@ public class PosInfo implements Comparable<PosInfo> {
       length++;
     }
     return length;
+  }
+
+  public static int downRayRep(WorldAccess world, BlockPos pos, int maxDist) {
+    final Mutable POS = TL_POS.get();
+    POS.set(pos);
+    for (int j = 1; j < maxDist && (world.getBlockState(POS)).isReplaceable(); j++) {
+      POS.setY(POS.getY() - 1);
+    }
+    return pos.getY() - POS.getY();
   }
 
   public static int upRay(WorldAccess world, BlockPos pos, int maxDist) {

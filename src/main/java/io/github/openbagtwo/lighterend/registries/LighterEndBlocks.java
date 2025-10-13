@@ -24,6 +24,7 @@ import io.github.openbagtwo.lighterend.blocks.Signs;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.blocks.SulphurCrystal;
 import io.github.openbagtwo.lighterend.blocks.TenaneaFlower;
+import io.github.openbagtwo.lighterend.blocks.TubeWorm;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern.TallUmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaMembrane;
@@ -344,6 +345,10 @@ public class LighterEndBlocks {
   public static final Block VENT_BUBBLE_COLUMN = register(
       "vent_bubble_column",
       VentBubbleColumn::new
+  );
+  public static final Block TUBE_WORM = register(
+      "tube_worm",
+      TubeWorm::new
   );
 
   public static Block register(String name, Function<Settings, Block> factory) {
