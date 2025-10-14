@@ -19,8 +19,6 @@ import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.Obelisk;
 import io.github.openbagtwo.lighterend.blocks.Polypore;
 import io.github.openbagtwo.lighterend.blocks.Sapling;
-import io.github.openbagtwo.lighterend.blocks.Shelf;
-import io.github.openbagtwo.lighterend.blocks.Signs;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.blocks.SulphurCrystal;
 import io.github.openbagtwo.lighterend.blocks.TenaneaFlower;
@@ -30,27 +28,21 @@ import io.github.openbagtwo.lighterend.blocks.UmbrellaFern.TallUmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaMembrane;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaTreeCluster;
 import io.github.openbagtwo.lighterend.blocks.VentBubbleColumn;
+import io.github.openbagtwo.lighterend.misc.Wood.WoodSet;
 import io.github.openbagtwo.lighterend.world.features.trees.Glowshroom;
 import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
 import io.github.openbagtwo.lighterend.world.features.trees.UmbrellaTree;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
-import net.fabricmc.fabric.api.object.builder.v1.block.type.WoodTypeBuilder;
-import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
-import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSetType;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ButtonBlock;
 import net.minecraft.block.CopperBlockSet;
-import net.minecraft.block.DoorBlock;
 import net.minecraft.block.ExperienceDroppingBlock;
-import net.minecraft.block.FenceBlock;
-import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.FlowerPotBlock;
-import net.minecraft.block.LadderBlock;
 import net.minecraft.block.LeverBlock;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.PillarBlock;
@@ -59,15 +51,11 @@ import net.minecraft.block.RedstoneOreBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.TintedParticleLeavesBlock;
-import net.minecraft.block.TrapdoorBlock;
 import net.minecraft.block.WallBlock;
-import net.minecraft.block.WoodType;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.HangingSignItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.SignItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -75,7 +63,6 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 
 public class LighterEndBlocks {
@@ -125,7 +112,11 @@ public class LighterEndBlocks {
       settings -> new FlowerPotBlock(TENANEA_SAPLING, applyFlowerPotSettings(settings)),
       false
   );
-  public static Wood TENANEA = new Wood("tenanea", MapColor.TERRACOTTA_YELLOW, MapColor.MAGENTA);
+  public static WoodSet TENANEA = new WoodSet(
+      "tenanea",
+      MapColor.TERRACOTTA_YELLOW,
+      MapColor.MAGENTA
+  );
   public static Block TENANEA_LEAVES = register(
       "tenanea_leaves",
       settings -> new TintedParticleLeavesBlock(
@@ -146,7 +137,7 @@ public class LighterEndBlocks {
       settings -> new FlowerPotBlock(UMBRELLA_TREE_SAPLING, applyFlowerPotSettings(settings)),
       false
   );
-  public static Wood UMBRELLA = new Wood("umbrella", MapColor.BLUE, MapColor.GREEN);
+  public static WoodSet UMBRELLA = new WoodSet("umbrella", MapColor.BLUE, MapColor.GREEN);
   public static Block UMBRELLA_MEMBRANE = register("umbrella_membrane", UmbrellaMembrane::new);
 
   public static final Block CHARNIA_CYAN = register("charnia_cyan", Charnia::new);
@@ -164,7 +155,7 @@ public class LighterEndBlocks {
   public static final Block END_LOTUS_LEAF = register("end_lotus_leaf", EndLotus.Leaf::new, false);
   public static final Block END_LOTUS_SEED = register("end_lotus_seed", EndLotus.Seed::new);
 
-  public static final Wood LOTUS = new Wood("end_lotus", MapColor.LIGHT_BLUE, MapColor.CYAN);
+  public static final WoodSet LOTUS = new WoodSet("end_lotus", MapColor.LIGHT_BLUE, MapColor.CYAN);
 
   public static final Block GLOWSHROOM_SAPLING = register("mossy_glowshroom_sapling",
       settings -> new Sapling(Glowshroom::new, settings.luminance((bs) -> 7)));
@@ -173,11 +164,10 @@ public class LighterEndBlocks {
       settings -> new FlowerPotBlock(GLOWSHROOM_SAPLING, applyFlowerPotSettings(settings)),
       false
   );
-  public static final Wood GLOWSHROOM = new Wood(
+  public static final WoodSet GLOWSHROOM = new WoodSet(
       "mossy_glowshroom",
       MapColor.GRAY,
-      MapColor.OAK_TAN
-  );
+      MapColor.OAK_TAN);
   public static final Block GLOWSHROOM_CAP = register("mossy_glowshroom_cap", GlowshroomCap::new);
   public static final Block GLOWSHROOM_HYMENOPHORE = register(
       "mossy_glowshroom_hymenophore",
@@ -468,168 +458,6 @@ public class LighterEndBlocks {
       return settings.instrument(NoteBlockInstrument.BASEDRUM).requiresTool().strength(3.0F, 9.0F)
           .mapColor(this.mapColor);
     }
-  }
-
-  public static class Wood {
-
-    public final String baseName;
-    public final WoodType woodType;
-    public final Block log;
-    public final Block strippedLog;
-    public final Block wood;
-    public final Block strippedWood;
-    public final Block planks;
-    public final Block slab;
-    public final Block stairs;
-    public final Block door;
-    public final Block trapdoor;
-    public final Block fence;
-    public final Block gate;
-    public final Block button;
-    public final Block pressurePlate;
-    public final Block ladder;
-    public final Block sign;
-    public final Block wallSign;
-    public final Block hangingSign;
-    public final Block wallHangingSign;
-    public final Block shelf;
-    // public final Block stool;
-    public final List<Block> blocks;
-    private final MapColor woodColor;
-
-
-    public Wood(String name, MapColor barkColor, MapColor woodColor) {
-      this.baseName = name;
-      this.woodColor = woodColor;
-
-      // TODO: Add individual sound sets (BlockSetType)
-      woodType = new WoodTypeBuilder().register(
-          LighterEnd.of(baseName),
-          BlockSetType.CHERRY
-      );
-
-      log = register(baseName + "_log", settings -> new PillarBlock(applyLogSettings(
-          settings.mapColor(
-              state -> state.get(PillarBlock.AXIS) == Direction.Axis.Y ? woodColor : barkColor))));
-      strippedLog = register(baseName + "_stripped_log",
-          settings -> new PillarBlock(applyLogSettings(settings.mapColor(woodColor))));
-      wood = register(baseName + "_wood",
-          settings -> new PillarBlock(applyLogSettings(settings.mapColor(barkColor))));
-      strippedWood = register(baseName + "_stripped_wood",
-          settings -> new PillarBlock(applyLogSettings(settings.mapColor(woodColor))));
-
-      StrippableBlockRegistry.register(log, strippedLog);
-      StrippableBlockRegistry.register(wood, strippedWood);
-
-      planks = register(baseName + "_planks", settings -> new Block(applyPlankSettings(settings)));
-      slab = register(baseName + "_slab", settings -> new SlabBlock(applyPlankSettings(settings)));
-      stairs = register(baseName + "_stairs",
-          settings -> new StairsBlock(planks.getDefaultState(), applyPlankSettings(settings)));
-
-      door = register(baseName + "_door", settings -> new DoorBlock(BlockSetType.CHERRY,
-          settings.mapColor(planks.getDefaultMapColor())
-              .instrument(NoteBlockInstrument.BASS)
-              .strength(3.0F)
-              .nonOpaque()
-              .burnable()
-              .pistonBehavior(PistonBehavior.DESTROY)));
-      trapdoor = register(baseName + "_trapdoor", settings -> new TrapdoorBlock(BlockSetType.CHERRY,
-          settings.mapColor(planks.getDefaultMapColor())
-              .instrument(NoteBlockInstrument.BASS)
-              .strength(3.0F)
-              .nonOpaque()
-              .allowsSpawning(Blocks::never)
-              .burnable()));
-      fence = register(baseName + "_fence",
-          settings -> new FenceBlock(settings.mapColor(planks.getDefaultMapColor())
-              .instrument(NoteBlockInstrument.BASS)
-              .strength(2.0F, 3.0F)
-              .burnable()
-              .sounds(BlockSoundGroup.CHERRY_WOOD)));
-      gate = register(baseName + "_fence_gate", settings -> new FenceGateBlock(woodType,
-          settings.mapColor(planks.getDefaultMapColor()).solid()
-              .instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F).burnable()));
-      button = register(baseName + "_button", settings -> new ButtonBlock(BlockSetType.CHERRY, 30,
-          settings.noCollision().strength(0.5F).pistonBehavior(PistonBehavior.DESTROY)));
-      pressurePlate = register(baseName + "_pressure_plate",
-          settings -> new PressurePlateBlock(BlockSetType.CHERRY,
-              settings.mapColor(planks.getDefaultMapColor())
-                  .solid()
-                  .instrument(NoteBlockInstrument.BASS)
-                  .noCollision()
-                  .strength(0.5F)
-                  .burnable()
-                  .pistonBehavior(PistonBehavior.DESTROY)));
-      ladder = register(baseName + "_ladder", settings -> new LadderBlock(
-          settings.strength(0.4F).sounds(BlockSoundGroup.LADDER).nonOpaque()
-              .pistonBehavior(PistonBehavior.DESTROY)));
-      sign = register(baseName + "_sign",
-          settings -> new Signs.LighterEndStandingSignBlock(woodType,
-              settings.mapColor(planks.getDefaultMapColor())), false);
-      wallSign = register(baseName + "_wall_sign",
-          settings -> new Signs.LighterEndWallSignBlock(woodType,
-              settings.mapColor(planks.getDefaultMapColor()).lootTable(sign.getLootTableKey())
-                  .overrideTranslationKey(sign.getTranslationKey())), false);
-      Registry.register(Registries.ITEM, LighterEnd.of(baseName + "_sign"),
-          new SignItem(sign, wallSign, new Item.Settings().maxCount(16).registryKey(
-                  RegistryKey.of(RegistryKeys.ITEM,
-                      LighterEnd.of(baseName + "_sign")))
-              .useBlockPrefixedTranslationKey()));
-      hangingSign = register(baseName + "_hanging_sign",
-          settings -> new Signs.LighterEndCeilingHangingSignBlock(woodType,
-              settings.mapColor(planks.getDefaultMapColor())), false);
-      wallHangingSign = register(baseName + "_wall_hanging_sign",
-          settings -> new Signs.LighterEndWallHangingSignBlock(woodType,
-              settings.lootTable(hangingSign.getLootTableKey())
-                  .overrideTranslationKey(hangingSign.getTranslationKey())
-                  .mapColor(planks.getDefaultMapColor())), false);
-      Registry.register(Registries.ITEM,
-          LighterEnd.of(baseName + "_hanging_sign"),
-          new HangingSignItem(hangingSign, wallHangingSign,
-              new Item.Settings().maxCount(16).registryKey(
-                      RegistryKey.of(RegistryKeys.ITEM,
-                          LighterEnd.of(baseName + "_hanging_sign")))
-                  .useBlockPrefixedTranslationKey()));
-      shelf = register(
-          baseName + "_shelf",
-          settings -> new Shelf(
-              settings.mapColor(planks.getDefaultMapColor())
-                  .instrument(NoteBlockInstrument.BASS)
-                  .sounds(BlockSoundGroup.SHELF)
-                  .burnable()
-                  .strength(2.0F, 3.0F)
-          )
-      );
-
-      for (Block block : Arrays.asList(log, strippedLog, wood, strippedWood)) {
-        FlammableBlockRegistry.getDefaultInstance().add(block, 5, 5);
-      }
-      for (Block block : Arrays.asList(planks, slab, stairs, fence, gate)) {
-        FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
-      }
-      FlammableBlockRegistry.getDefaultInstance().add(shelf, 30, 20);
-
-      blocks = Arrays.asList(log, strippedLog, wood, strippedWood, planks, slab, stairs, door,
-          trapdoor, fence, gate, button, pressurePlate, ladder, sign, hangingSign, shelf);
-    }
-
-    public Settings applyLogSettings(Settings settings) {
-      return settings
-          .instrument(NoteBlockInstrument.BASS)
-          .strength(2.0F)
-          .sounds(BlockSoundGroup.WOOD)
-          .burnable();
-    }
-
-    public Settings applyPlankSettings(Settings settings) {
-      return settings
-          .mapColor(this.woodColor)
-          .instrument(NoteBlockInstrument.BASS)
-          .strength(2.0F, 3.0F)
-          .sounds(BlockSoundGroup.WOOD)
-          .burnable();
-    }
-
   }
 
   public static Settings applyLeafSettings(Settings settings) {

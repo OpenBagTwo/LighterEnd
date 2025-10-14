@@ -66,6 +66,456 @@
       }
     ]
   },
+  "block.end_lotus.break": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.end_lotus.fall": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood.fall",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.end_lotus.hit": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.end_lotus.place": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.end_lotus.step": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.end_lotus_button.click_off": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_button.click_off",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.button.click"
+  },
+  "block.end_lotus_button.click_on": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_button.click_on",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.button.click"
+  },
+  "block.end_lotus_door.close": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_door.close",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.door.toggle"
+  },
+  "block.end_lotus_door.open": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_door.open",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.door.toggle"
+  },
+  "block.end_lotus_fence_gate.close": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_fence_gate.close",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.fence_gate.toggle"
+  },
+  "block.end_lotus_fence_gate.open": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_fence_gate.open",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.fence_gate.toggle"
+  },
+  "block.end_lotus_hanging_sign.break": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_hanging_sign.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.end_lotus_hanging_sign.fall": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_hanging_sign.fall",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.end_lotus_hanging_sign.hit": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_hanging_sign.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.end_lotus_hanging_sign.place": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_hanging_sign.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.end_lotus_hanging_sign.step": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_hanging_sign.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.end_lotus_log.break": {
+    "sounds": [
+      {
+        "name": "block.bamboo.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.end_lotus_log.fall": {
+    "sounds": [
+      {
+        "name": "block.bamboo.fall",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.end_lotus_log.hit": {
+    "sounds": [
+      {
+        "name": "block.bamboo.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.end_lotus_log.place": {
+    "sounds": [
+      {
+        "name": "block.bamboo.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.end_lotus_log.step": {
+    "sounds": [
+      {
+        "name": "block.bamboo.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.end_lotus_pressure_plate.click_off": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_pressure_plate.click_off",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.pressure_plate.click"
+  },
+  "block.end_lotus_pressure_plate.click_on": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_pressure_plate.click_on",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.pressure_plate.click"
+  },
+  "block.end_lotus_trapdoor.close": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_trapdoor.close",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.trapdoor.close"
+  },
+  "block.end_lotus_trapdoor.open": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_trapdoor.open",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.trapdoor.open"
+  },
+  "block.mossy_glowshroom.break": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.mossy_glowshroom.fall": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood.fall",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.mossy_glowshroom.hit": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.mossy_glowshroom.place": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.mossy_glowshroom.step": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.mossy_glowshroom_button.click_off": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood_button.click_off",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.button.click"
+  },
+  "block.mossy_glowshroom_button.click_on": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood_button.click_on",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.button.click"
+  },
+  "block.mossy_glowshroom_door.close": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood_door.close",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.door.toggle"
+  },
+  "block.mossy_glowshroom_door.open": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood_door.open",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.door.toggle"
+  },
+  "block.mossy_glowshroom_fence_gate.close": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood_fence_gate.close",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.fence_gate.toggle"
+  },
+  "block.mossy_glowshroom_fence_gate.open": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood_fence_gate.open",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.fence_gate.toggle"
+  },
+  "block.mossy_glowshroom_hanging_sign.break": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood_hanging_sign.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.mossy_glowshroom_hanging_sign.fall": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood_hanging_sign.fall",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.mossy_glowshroom_hanging_sign.hit": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood_hanging_sign.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.mossy_glowshroom_hanging_sign.place": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood_hanging_sign.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.mossy_glowshroom_hanging_sign.step": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood_hanging_sign.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.mossy_glowshroom_log.break": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.mossy_glowshroom_log.fall": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood.fall",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.mossy_glowshroom_log.hit": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.mossy_glowshroom_log.place": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.mossy_glowshroom_log.step": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.mossy_glowshroom_pressure_plate.click_off": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood_pressure_plate.click_off",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.pressure_plate.click"
+  },
+  "block.mossy_glowshroom_pressure_plate.click_on": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood_pressure_plate.click_on",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.pressure_plate.click"
+  },
+  "block.mossy_glowshroom_trapdoor.close": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood_trapdoor.close",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.trapdoor.close"
+  },
+  "block.mossy_glowshroom_trapdoor.open": {
+    "sounds": [
+      {
+        "name": "block.cherry_wood_trapdoor.open",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.trapdoor.open"
+  },
   "block.silk_moth_nest.enter": {
     "sounds": [
       {
@@ -143,6 +593,456 @@
       }
     ],
     "subtitle": "subtitles.lighterend.block.silk_moth_nest.work"
+  },
+  "block.tenanea.break": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.tenanea.fall": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood.fall",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.tenanea.hit": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.tenanea.place": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.tenanea.step": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.tenanea_button.click_off": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_button.click_off",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.button.click"
+  },
+  "block.tenanea_button.click_on": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_button.click_on",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.button.click"
+  },
+  "block.tenanea_door.close": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_door.close",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.door.toggle"
+  },
+  "block.tenanea_door.open": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_door.open",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.door.toggle"
+  },
+  "block.tenanea_fence_gate.close": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_fence_gate.close",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.fence_gate.toggle"
+  },
+  "block.tenanea_fence_gate.open": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_fence_gate.open",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.fence_gate.toggle"
+  },
+  "block.tenanea_hanging_sign.break": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_hanging_sign.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.tenanea_hanging_sign.fall": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_hanging_sign.fall",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.tenanea_hanging_sign.hit": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_hanging_sign.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.tenanea_hanging_sign.place": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_hanging_sign.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.tenanea_hanging_sign.step": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_hanging_sign.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.tenanea_log.break": {
+    "sounds": [
+      {
+        "name": "block.bamboo.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.tenanea_log.fall": {
+    "sounds": [
+      {
+        "name": "block.bamboo.fall",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.tenanea_log.hit": {
+    "sounds": [
+      {
+        "name": "block.bamboo.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.tenanea_log.place": {
+    "sounds": [
+      {
+        "name": "block.bamboo.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.tenanea_log.step": {
+    "sounds": [
+      {
+        "name": "block.bamboo.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.tenanea_pressure_plate.click_off": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_pressure_plate.click_off",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.pressure_plate.click"
+  },
+  "block.tenanea_pressure_plate.click_on": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_pressure_plate.click_on",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.pressure_plate.click"
+  },
+  "block.tenanea_trapdoor.close": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_trapdoor.close",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.trapdoor.close"
+  },
+  "block.tenanea_trapdoor.open": {
+    "sounds": [
+      {
+        "name": "block.bamboo_wood_trapdoor.open",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.trapdoor.open"
+  },
+  "block.umbrella.break": {
+    "sounds": [
+      {
+        "name": "block.nether_wood.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.umbrella.fall": {
+    "sounds": [
+      {
+        "name": "block.nether_wood.fall",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.umbrella.hit": {
+    "sounds": [
+      {
+        "name": "block.nether_wood.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.umbrella.place": {
+    "sounds": [
+      {
+        "name": "block.nether_wood.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.umbrella.step": {
+    "sounds": [
+      {
+        "name": "block.nether_wood.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.umbrella_button.click_off": {
+    "sounds": [
+      {
+        "name": "block.nether_wood_button.click_off",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.button.click"
+  },
+  "block.umbrella_button.click_on": {
+    "sounds": [
+      {
+        "name": "block.nether_wood_button.click_on",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.button.click"
+  },
+  "block.umbrella_door.close": {
+    "sounds": [
+      {
+        "name": "block.nether_wood_door.close",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.door.toggle"
+  },
+  "block.umbrella_door.open": {
+    "sounds": [
+      {
+        "name": "block.nether_wood_door.open",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.door.toggle"
+  },
+  "block.umbrella_fence_gate.close": {
+    "sounds": [
+      {
+        "name": "block.nether_wood_fence_gate.close",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.fence_gate.toggle"
+  },
+  "block.umbrella_fence_gate.open": {
+    "sounds": [
+      {
+        "name": "block.nether_wood_fence_gate.open",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.fence_gate.toggle"
+  },
+  "block.umbrella_hanging_sign.break": {
+    "sounds": [
+      {
+        "name": "block.nether_wood_hanging_sign.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.umbrella_hanging_sign.fall": {
+    "sounds": [
+      {
+        "name": "block.nether_wood_hanging_sign.fall",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.umbrella_hanging_sign.hit": {
+    "sounds": [
+      {
+        "name": "block.nether_wood_hanging_sign.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.umbrella_hanging_sign.place": {
+    "sounds": [
+      {
+        "name": "block.nether_wood_hanging_sign.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.umbrella_hanging_sign.step": {
+    "sounds": [
+      {
+        "name": "block.nether_wood_hanging_sign.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.umbrella_log.break": {
+    "sounds": [
+      {
+        "name": "block.stem.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.umbrella_log.fall": {
+    "sounds": [
+      {
+        "name": "block.stem.fall",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.umbrella_log.hit": {
+    "sounds": [
+      {
+        "name": "block.stem.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.umbrella_log.place": {
+    "sounds": [
+      {
+        "name": "block.stem.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.umbrella_log.step": {
+    "sounds": [
+      {
+        "name": "block.stem.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.umbrella_pressure_plate.click_off": {
+    "sounds": [
+      {
+        "name": "block.nether_wood_pressure_plate.click_off",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.pressure_plate.click"
+  },
+  "block.umbrella_pressure_plate.click_on": {
+    "sounds": [
+      {
+        "name": "block.nether_wood_pressure_plate.click_on",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.pressure_plate.click"
+  },
+  "block.umbrella_trapdoor.close": {
+    "sounds": [
+      {
+        "name": "block.nether_wood_trapdoor.close",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.trapdoor.close"
+  },
+  "block.umbrella_trapdoor.open": {
+    "sounds": [
+      {
+        "name": "block.nether_wood_trapdoor.open",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.trapdoor.open"
   },
   "entity.crab.death": {
     "sounds": [

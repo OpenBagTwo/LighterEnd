@@ -1,9 +1,9 @@
 package io.github.openbagtwo.lighterend.datagen;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.misc.Wood.WoodSet;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
-import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
 import io.github.openbagtwo.lighterend.registries.LighterEndEquipment;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
@@ -629,11 +629,11 @@ public class RecipeProvider extends FabricRecipeProvider {
         }
       }
 
-      public void generateWoodRecipes(Wood wood) {
+      public void generateWoodRecipes(WoodSet wood) {
         generateWoodRecipes(wood, 4);
       }
 
-      public void generateWoodRecipes(Wood wood, int planks_per_log) {
+      public void generateWoodRecipes(WoodSet wood, int planks_per_log) {
         createShaped(RecipeCategory.BUILDING_BLOCKS, wood.wood, 3).pattern("ll").pattern("ll")
             .input('l', wood.log).criterion(
                 hasItem(wood.log),

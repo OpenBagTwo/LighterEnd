@@ -1,8 +1,8 @@
 package io.github.openbagtwo.lighterend.datagen;
 
+import io.github.openbagtwo.lighterend.misc.Wood.WoodSet;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
-import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -50,7 +50,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
       }
     }
 
-    for (Wood wood : Arrays.asList(
+    for (WoodSet wood : Arrays.asList(
         LighterEndBlocks.TENANEA,
         LighterEndBlocks.UMBRELLA,
         LighterEndBlocks.LOTUS,

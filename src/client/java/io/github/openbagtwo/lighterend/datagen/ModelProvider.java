@@ -1,8 +1,8 @@
 package io.github.openbagtwo.lighterend.datagen;
 
+import io.github.openbagtwo.lighterend.misc.Wood.WoodSet;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
-import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
 import io.github.openbagtwo.lighterend.registries.LighterEndEquipment;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
@@ -118,8 +118,10 @@ public class ModelProvider extends FabricModelProvider {
     blockModelGenerator.registerAxisRotated(material.pillar, TexturedModel.CUBE_COLUMN);
   }
 
-  public static void generateWoodModels(BlockStateModelGenerator blockModelGenerator,
-      Wood wood) {
+  public static void generateWoodModels(
+      BlockStateModelGenerator blockModelGenerator,
+      WoodSet wood
+  ) {
     blockModelGenerator.createLogTexturePool(wood.log).log(wood.log).wood(wood.wood);
     blockModelGenerator.createLogTexturePool(wood.strippedLog).log(wood.strippedLog)
         .wood(wood.strippedWood);

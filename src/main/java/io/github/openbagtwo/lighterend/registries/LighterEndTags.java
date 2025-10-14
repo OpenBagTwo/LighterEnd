@@ -1,7 +1,7 @@
 package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
+import io.github.openbagtwo.lighterend.misc.Wood.WoodSet;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -104,7 +104,7 @@ public class LighterEndTags {
 
   public static void initialize() {
 
-    for (Wood wood : Arrays.asList(
+    for (WoodSet wood : Arrays.asList(
         LighterEndBlocks.TENANEA,
         LighterEndBlocks.UMBRELLA,
         LighterEndBlocks.LOTUS,

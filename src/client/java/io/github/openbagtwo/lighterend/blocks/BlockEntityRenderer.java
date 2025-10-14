@@ -1,8 +1,8 @@
 package io.github.openbagtwo.lighterend.blocks;
 
+import io.github.openbagtwo.lighterend.misc.Wood.WoodSet;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
-import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
 import java.util.Arrays;
 import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
@@ -20,7 +20,7 @@ public class BlockEntityRenderer {
     BlockEntityRendererFactories.register(LighterEndBlockEntities.SHELF,
         ShelfBlockEntityRenderer::new);
 
-    for (Wood wood : Arrays.asList(
+    for (WoodSet wood : Arrays.asList(
         LighterEndBlocks.TENANEA,
         LighterEndBlocks.UMBRELLA,
         LighterEndBlocks.LOTUS,

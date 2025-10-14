@@ -1,8 +1,8 @@
 package io.github.openbagtwo.lighterend.datagen;
 
+import io.github.openbagtwo.lighterend.misc.Wood.WoodSet;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
-import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Wood;
 import io.github.openbagtwo.lighterend.registries.LighterEndEquipment;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
@@ -26,7 +26,7 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
   @Override
   protected void configure(RegistryWrapper.WrapperLookup lookup) {
-    for (Wood wood : Arrays.asList(
+    for (WoodSet wood : Arrays.asList(
         LighterEndBlocks.TENANEA,
         LighterEndBlocks.UMBRELLA,
         LighterEndBlocks.LOTUS,
