@@ -18,6 +18,10 @@ repositories {
         name = "Terraformers"
         url = "https://maven.terraformersmc.com/"
     }
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+    }
 }
 
 loom {
@@ -47,6 +51,7 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     modCompileOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
     modRuntimeOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
+    modRuntimeOnly("maven.modrinth:jade:${project.jade_version}")
 
     compileOnly "org.yaml:snakeyaml:2.2"
     shadow(implementation("org.yaml:snakeyaml:2.2"))

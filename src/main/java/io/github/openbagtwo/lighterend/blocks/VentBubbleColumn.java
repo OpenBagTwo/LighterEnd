@@ -182,6 +182,16 @@ public class VentBubbleColumn extends Block implements FluidDrainable, FluidFill
   }
 
   @Override
+  protected ItemStack getPickStack(
+      WorldView world,
+      BlockPos pos,
+      BlockState state,
+      boolean includeData
+  ) {
+    return new ItemStack(Blocks.WATER);
+  }
+
+  @Override
   public boolean canFillWithFluid(
       @Nullable LivingEntity filler,
       BlockView world,

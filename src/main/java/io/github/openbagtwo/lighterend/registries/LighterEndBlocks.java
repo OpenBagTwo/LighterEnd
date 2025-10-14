@@ -344,7 +344,8 @@ public class LighterEndBlocks {
   );
   public static final Block VENT_BUBBLE_COLUMN = register(
       "vent_bubble_column",
-      VentBubbleColumn::new
+      VentBubbleColumn::new,
+      false
   );
   public static final Block TUBE_WORM = register(
       "tube_worm",
