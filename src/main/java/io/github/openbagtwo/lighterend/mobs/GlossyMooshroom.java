@@ -80,7 +80,7 @@ public class GlossyMooshroom extends AbstractCowEntity implements Shearable {
     this.setVariant(0);
 
     RegistryEntry<Biome> biome = world.getBiome(getBlockPos());
-    if (biome.matchesKey(LighterEndBiomes.SULPHUR_SPRINGS)) {
+    if (biome.matchesKey(LighterEndBiomes.FOGGY_MUSHROOMLANDS)) {
       this.dataTracker.set(VARIANT, 1);
     }
     EntityData data = super.initialize(world, difficulty, spawnReason, entityData);

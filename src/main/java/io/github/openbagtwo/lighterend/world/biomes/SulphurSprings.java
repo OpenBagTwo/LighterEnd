@@ -41,10 +41,6 @@ public class SulphurSprings {
             1,
             new SpawnEntry(LighterEndMobs.CUBOZOA.mob, 3, 8)
         ).spawn(
-            SpawnGroup.CREATURE,
-            1,
-            new SpawnEntry(LighterEndMobs.MOOSHROOM.mob, 2, 4)
-        ).spawn(
             SpawnGroup.MONSTER,
             20,
             new SpawnEntry(EntityType.ENDERMAN, 1, 4)
