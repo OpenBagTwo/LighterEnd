@@ -178,6 +178,7 @@ public class SulphurCave extends Feature<DefaultFeatureConfig> {
             world.setBlockState(
                 mut,
                 LighterEndBlocks.HYDROTHERMAL_VENT.getDefaultState()
+                    .with(HydrothermalVent.ACTIVATED, false)
                     .with(HydrothermalVent.WATERLOGGED, true),
                 Flags.SILENT
             );

@@ -234,7 +234,8 @@ public class Geyser extends Feature<DefaultFeatureConfig> {
             mut.setY(mut.getY() + 1);
           }
           state = LighterEndBlocks.HYDROTHERMAL_VENT.getDefaultState()
-              .with(HydrothermalVent.ACTIVATED, distRaw < 2);
+              .with(HydrothermalVent.ACTIVATED, distRaw < 2)
+              .with(HydrothermalVent.WATERLOGGED, true);
           world.setBlockState(mut, state, Flags.SILENT);
           mut.setY(mut.getY() + 1);
           state = world.getBlockState(mut);
@@ -278,7 +279,8 @@ public class Geyser extends Feature<DefaultFeatureConfig> {
             mut.setY(mut.getY() + 1);
           }
           state = LighterEndBlocks.HYDROTHERMAL_VENT.getDefaultState()
-              .with(HydrothermalVent.ACTIVATED, distRaw < 2);
+              .with(HydrothermalVent.ACTIVATED, distRaw < 2)
+              .with(HydrothermalVent.WATERLOGGED, true);
           world.setBlockState(mut, state, Flags.SILENT);
           mut.setY(mut.getY() + 1);
           state = world.getBlockState(mut);

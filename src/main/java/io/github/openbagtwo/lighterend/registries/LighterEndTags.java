@@ -87,6 +87,11 @@ public class LighterEndTags {
       LighterEnd.of("lives_in_moth_nests")
   );
 
+  public static final TagKey<EntityType<?>> IGNORES_GEYSER_BUBBLES = TagKey.of(
+      RegistryKeys.ENTITY_TYPE,
+      LighterEnd.of("ignores_geyser_bubbles")
+  );
+
   public static final TagKey<Biome> VANILLA_END_BIOMES = TagKey.of(
       RegistryKeys.BIOME,
       LighterEnd.of("end_biomes_vanilla")

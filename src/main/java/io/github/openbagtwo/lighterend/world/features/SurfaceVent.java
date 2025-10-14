@@ -37,7 +37,8 @@ public class SurfaceVent extends Feature<DefaultFeatureConfig> {
     Mutable mut = new Mutable();
     int count = MathHelper.nextInt(random, 15, 30);
     BlockState vent = LighterEndBlocks.HYDROTHERMAL_VENT.getDefaultState()
-        .with(HydrothermalVent.WATERLOGGED, false).with(HydrothermalVent.ACTIVATED, true);
+        .with(HydrothermalVent.WATERLOGGED, false)
+        .with(HydrothermalVent.ACTIVATED, true);
     for (int i = 0; i < count; i++) {
       mut.set(pos)
           .move(

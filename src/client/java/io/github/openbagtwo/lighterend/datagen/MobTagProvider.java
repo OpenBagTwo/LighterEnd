@@ -54,5 +54,10 @@ public class MobTagProvider extends FabricTagProvider.EntityTypeTagProvider {
         LighterEndMobs.SILK_MOTH.mob
     );
 
+    valueLookupBuilder(LighterEndTags.IGNORES_GEYSER_BUBBLES).add(
+        LighterEndMobs.END_FISH.mob,
+        LighterEndMobs.CUBOZOA.mob
+    );
+
   }
 }

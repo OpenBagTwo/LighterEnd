@@ -1,10 +1,9 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
+import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
 import java.util.Optional;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -113,7 +112,6 @@ public class VentBubbleColumn extends Block implements FluidDrainable, FluidFill
     return state;
   }
 
-  @Environment(EnvType.CLIENT)
   public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
     if (random.nextInt(4) == 0) {
       double px = pos.getX() + random.nextDouble();
@@ -135,7 +133,6 @@ public class VentBubbleColumn extends Block implements FluidDrainable, FluidFill
     }
   }
 
-  //  @Environment(EnvType.CLIENT)
   @Override
   protected void onEntityCollision(
       BlockState state,
@@ -145,6 +142,9 @@ public class VentBubbleColumn extends Block implements FluidDrainable, FluidFill
       EntityCollisionHandler handler,
       boolean bl
   ) {
+    if (entity.getType().isIn(LighterEndTags.IGNORES_GEYSER_BUBBLES)) {
+      return;
+    }
     BlockState blockState = world.getBlockState(pos.up());
     if (blockState.isAir()) {
       entity.onBubbleColumnSurfaceCollision(false, pos.up());
