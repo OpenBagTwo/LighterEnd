@@ -44,8 +44,6 @@ public class SulphurCrystal extends Block implements Waterloggable, FluidFillabl
         settings
             .mapColor(MapColor.YELLOW)
             .sounds(BlockSoundGroup.GLASS)
-            .requiresTool()
-            .noCollision()
             .pistonBehavior(PistonBehavior.DESTROY)
     );
   }

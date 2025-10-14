@@ -16,6 +16,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.NoteBlockInstrument;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
@@ -54,6 +55,7 @@ public class HydrothermalVent extends BlockWithEntity implements FluidFillable, 
             .sounds(BlockSoundGroup.STONE)
             .requiresTool()
             .strength(1.5F, 6.0F)
+            .pistonBehavior(PistonBehavior.DESTROY)
             .mapColor(MapColor.STONE_GRAY)
     );
     this.setDefaultState(getDefaultState().with(WATERLOGGED, false).with(ACTIVATED, false));

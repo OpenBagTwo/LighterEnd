@@ -102,14 +102,15 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.UMBRALITH_QUARTZ_ORE,
             LighterEndBlocks.UMBRALITH_REDSTONE_ORE,
             LighterEndBlocks.BRIMSTONE,
-            LighterEndBlocks.SULPHUR_CRYSTAL
+            LighterEndBlocks.HYDROTHERMAL_VENT
         );
     for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.getAll()) {
       valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(chandelier);
     }
 
     valueLookupBuilder(BlockTags.NEEDS_STONE_TOOL)
-        .add(LighterEndBlocks.ENDER_BLOCK);
+        .add(LighterEndBlocks.ENDER_BLOCK)
+        .add(LighterEndBlocks.HYDROTHERMAL_VENT);
 
     valueLookupBuilder(BlockTags.NEEDS_IRON_TOOL)
         .add(
