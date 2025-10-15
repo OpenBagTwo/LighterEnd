@@ -54,7 +54,8 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.TENANEA,
         LighterEndBlocks.UMBRELLA,
         LighterEndBlocks.LOTUS,
-        LighterEndBlocks.GLOWSHROOM
+        LighterEndBlocks.GLOWSHROOM,
+        LighterEndBlocks.DRAGON
     )) {
       for (Block block : wood.blocks) {
         valueLookupBuilder(BlockTags.AXE_MINEABLE).add(block);
@@ -152,12 +153,14 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     valueLookupBuilder(BlockTags.SAPLINGS).add(
         LighterEndBlocks.TENANEA_SAPLING,
         LighterEndBlocks.UMBRELLA_TREE_SAPLING,
-        LighterEndBlocks.GLOWSHROOM_SAPLING
+        LighterEndBlocks.GLOWSHROOM_SAPLING,
+        LighterEndBlocks.DRAGON_SAPLING
     );
     valueLookupBuilder(BlockTags.LEAVES).add(
         LighterEndBlocks.TENANEA_LEAVES,
         LighterEndBlocks.GLOWSHROOM_FUR,
-        LighterEndBlocks.AGAVE_FUR
+        LighterEndBlocks.AGAVE_FUR,
+        LighterEndBlocks.DRAGON_LEAVES
     );
 
     valueLookupBuilder(BlockTags.FLOWER_POTS).add(

@@ -33,6 +33,7 @@ import io.github.openbagtwo.lighterend.blocks.UmbrellaMembrane;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaTreeCluster;
 import io.github.openbagtwo.lighterend.blocks.VentBubbleColumn;
 import io.github.openbagtwo.lighterend.misc.Wood.WoodSet;
+import io.github.openbagtwo.lighterend.world.features.trees.DragonTree;
 import io.github.openbagtwo.lighterend.world.features.trees.Glowshroom;
 import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
 import io.github.openbagtwo.lighterend.world.features.trees.UmbrellaTree;
@@ -362,6 +363,21 @@ public class LighterEndBlocks {
   public static final Block MURKWEED = register(
       "murkweed",
       Murkweed::new
+  );
+  public static Block DRAGON_SAPLING = register("dragon_tree_sapling",
+      settings -> new Sapling(DragonTree::new, settings.mapColor(MapColor.MAGENTA)));
+  public static Block POTTED_DRAGON_SAPLING = register(
+      "potted_dragon_tree_sapling",
+      settings -> new FlowerPotBlock(DRAGON_SAPLING, applyFlowerPotSettings(settings)),
+      false
+  );
+  public static WoodSet DRAGON = new WoodSet("dragon_tree", MapColor.BLACK, MapColor.PURPLE);
+  public static Block DRAGON_LEAVES = register(
+      "dragon_tree_leaves",
+      settings -> new TintedParticleLeavesBlock(
+          0.01F,
+          applyLeafSettings(settings.mapColor(MapColor.MAGENTA))
+      )
   );
 
   public static Block register(String name, Function<Settings, Block> factory) {

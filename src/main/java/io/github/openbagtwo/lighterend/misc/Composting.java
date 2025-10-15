@@ -37,6 +37,8 @@ public class Composting {
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.SHADOW_GRASS, 0.3F);
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.NEEDLEGRASS, 0.3F);
     CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.MURKWEED, 0.5F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.DRAGON_LEAVES, 0.3F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.DRAGON_SAPLING, 0.3F);
   }
 
 }

@@ -30,7 +30,8 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
         LighterEndBlocks.TENANEA,
         LighterEndBlocks.UMBRELLA,
         LighterEndBlocks.LOTUS,
-        LighterEndBlocks.GLOWSHROOM
+        LighterEndBlocks.GLOWSHROOM,
+        LighterEndBlocks.DRAGON
     )) {
       valueLookupBuilder(LighterEndTags.LOG_TAGS.get(wood.baseName)).add(
           wood.log.asItem(),
@@ -73,7 +74,9 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
     valueLookupBuilder(ItemTags.BEE_FOOD).add(LighterEndBlocks.TENANEA_FLOWER.asItem());
     valueLookupBuilder(ItemTags.LEAVES).add(
         LighterEndBlocks.TENANEA_LEAVES.asItem(),
-        LighterEndItems.GLOWSHROOM_FUR
+        LighterEndItems.GLOWSHROOM_FUR,
+        LighterEndItems.AGAVE_FUR,
+        LighterEndBlocks.DRAGON_LEAVES.asItem()
     );
 
     valueLookupBuilder(ItemTags.FISHES).add(LighterEndItems.RAW_END_FISH);

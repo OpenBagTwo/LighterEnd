@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "lighterend:block/dragon_tree_stripped_log",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "lighterend:block/dragon_tree_stripped_log"
+    },
+    "axis=z": {
+      "model": "lighterend:block/dragon_tree_stripped_log",
+      "x": 90
+    }
+  }
+}

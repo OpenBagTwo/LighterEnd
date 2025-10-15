@@ -123,7 +123,8 @@ public class LighterEndTags {
         LighterEndBlocks.TENANEA,
         LighterEndBlocks.UMBRELLA,
         LighterEndBlocks.LOTUS,
-        LighterEndBlocks.GLOWSHROOM
+        LighterEndBlocks.GLOWSHROOM,
+        LighterEndBlocks.DRAGON
     )) {
       LOG_TAGS.put(
           wood.baseName,

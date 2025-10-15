@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "lighterend:block/dragon_tree_log_top",
+    "east": "lighterend:block/dragon_tree_log_side_4",
+    "north": "lighterend:block/dragon_tree_log_side_4",
+    "particle": "lighterend:block/dragon_tree_log_side_4",
+    "south": "lighterend:block/dragon_tree_log_side_4",
+    "up": "lighterend:block/dragon_tree_log_top",
+    "west": "lighterend:block/dragon_tree_log_side_4"
+  }
+}

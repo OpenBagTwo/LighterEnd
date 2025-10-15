@@ -73,6 +73,11 @@ public class LighterEndPlacedFeatures {
   public static final RegistryKey<PlacedFeature> SURFACE_VENT = of("surface_vent");
   public static final RegistryKey<PlacedFeature> GEYSER = of("geyser");
 
+  public static final RegistryKey<PlacedFeature> DRAGON_TREE = of("dragon_tree");
+  public static final RegistryKey<PlacedFeature> SHADOW_FOREST_VEGETATION = of(
+      "shadow_forest_vegetation"
+  );
+
 
   public static void bootstrap(Registerable<PlacedFeature> context) {
 
@@ -419,6 +424,27 @@ public class LighterEndPlacedFeatures {
                 SquarePlacementModifier.of(),
                 BiomePlacementModifier.of()
             )
+        )
+    );
+    context.register(
+        SHADOW_FOREST_VEGETATION,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.SHADOW_MOSS_VEGETATION),
+            List.of(
+                CountPlacementModifier.of(32),
+                SquarePlacementModifier.of(),
+                PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
+                BiomePlacementModifier.of()
+            )
+        )
+    );
+    context.register(
+        DRAGON_TREE,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.DRAGON_TREE),
+            VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
+                PlacedFeatures.createCountExtraModifier(10, 0.5f, 2),
+                LighterEndBlocks.DRAGON_SAPLING)
         )
     );
 

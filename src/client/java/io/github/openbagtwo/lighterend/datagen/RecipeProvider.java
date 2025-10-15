@@ -546,6 +546,8 @@ public class RecipeProvider extends FabricRecipeProvider {
                 hasItem(LighterEndItems.SHADOW_BERRY_COOKED),
                 this.conditionsFromItem(LighterEndItems.SHADOW_BERRY_COOKED)
             ).offerTo(this.exporter);
+
+        generateWoodRecipes(LighterEndBlocks.DRAGON);
       }
 
       public void generateMaterialRecipes(Material material) {

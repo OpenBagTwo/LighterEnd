@@ -333,4 +333,19 @@ public class MathUtils {
     h = (h ^ (h >> 13)) * 1274126177;
     return h ^ (h >> 16);
   }
+
+  public static Vector3f getPos(List<Vector3f> spline, float index) {
+    int i = (int) index;
+    int last = spline.size() - 1;
+    if (i >= last) {
+      return spline.get(last);
+    }
+    float delta = index - i;
+    Vector3f p1 = spline.get(i);
+    Vector3f p2 = spline.get(i + 1);
+    float x = MathHelper.lerp(delta, p1.x(), p2.x());
+    float y = MathHelper.lerp(delta, p1.y(), p2.y());
+    float z = MathHelper.lerp(delta, p1.z(), p2.z());
+    return new Vector3f(x, y, z);
+  }
 }

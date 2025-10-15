@@ -62,7 +62,8 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
         LighterEndBlocks.TENANEA.blocks,
         LighterEndBlocks.UMBRELLA.blocks,
         LighterEndBlocks.LOTUS.blocks,
-        LighterEndBlocks.GLOWSHROOM.blocks
+        LighterEndBlocks.GLOWSHROOM.blocks,
+        LighterEndBlocks.DRAGON.blocks
     )) {
       for (Block block : material) {
         if (block instanceof SlabBlock) {
@@ -191,6 +192,11 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
         )
     );
     addDrop(LighterEndBlocks.MURKWEED);
+
+    addDrop(LighterEndBlocks.DRAGON_LEAVES,
+        (leaves) -> this.leavesDrops(leaves, LighterEndBlocks.DRAGON_SAPLING,
+            0.025F, 0.03125F, 0.041666668F, 0.05F));
+    addDrop(LighterEndBlocks.DRAGON_SAPLING);
   }
 
   private LootTable.Builder auroraCrystalDrops() {

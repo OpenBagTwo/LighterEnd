@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "lighterend:block/dragon_tree_stripped_log",
+    "side": "lighterend:block/dragon_tree_stripped_log"
+  }
+}

@@ -97,6 +97,14 @@ public class ModelProvider extends FabricModelProvider {
         );
 
     generateMaterialModels(blockModelGenerator, LighterEndBlocks.BORNITE);
+
+    generateWoodModels(blockModelGenerator, LighterEndBlocks.DRAGON);
+    blockModelGenerator.registerFlowerPotPlant(
+        LighterEndBlocks.DRAGON_SAPLING,
+        LighterEndBlocks.POTTED_DRAGON_SAPLING,
+        CrossType.NOT_TINTED
+    );
+    blockModelGenerator.registerSingleton(LighterEndBlocks.DRAGON_LEAVES, TexturedModel.LEAVES);
   }
 
   public static void generateMaterialModels(BlockStateModelGenerator blockModelGenerator,
@@ -202,6 +210,8 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndBlocks.TUBE_WORM.asItem(),
         LighterEndBlocks.NEEDLEGRASS.asItem(),
         LighterEndBlocks.MURKWEED.asItem(),
+        LighterEndBlocks.DRAGON.ladder.asItem(),
+        LighterEndBlocks.DRAGON_SAPLING.asItem(),
         LighterEndMobs.SILK_MOTH.spawnEgg,
         LighterEndMobs.DRAGONFLY.spawnEgg,
         LighterEndMobs.END_FISH.spawnEgg,

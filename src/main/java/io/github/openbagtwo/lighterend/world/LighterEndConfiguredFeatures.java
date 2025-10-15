@@ -5,6 +5,7 @@ import io.github.openbagtwo.lighterend.blocks.Agave.AgaveFeature;
 import io.github.openbagtwo.lighterend.blocks.EndLily.EndLilyFeature;
 import io.github.openbagtwo.lighterend.blocks.EndLotus.EndLotusFeature;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
+import io.github.openbagtwo.lighterend.blocks.ShadowBerry;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest.SilkMothNestFeature;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
@@ -19,6 +20,7 @@ import io.github.openbagtwo.lighterend.world.features.SulphurLake;
 import io.github.openbagtwo.lighterend.world.features.SurfaceVent;
 import io.github.openbagtwo.lighterend.world.features.UmbralithArch;
 import io.github.openbagtwo.lighterend.world.features.UnderwaterPlants;
+import io.github.openbagtwo.lighterend.world.features.trees.DragonTree;
 import io.github.openbagtwo.lighterend.world.features.trees.Glowshroom;
 import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
 import io.github.openbagtwo.lighterend.world.features.trees.UmbrellaTree;
@@ -55,6 +57,12 @@ public class LighterEndConfiguredFeatures {
       = of("end_moss_patch_bonemeal");
   public static final RegistryKey<ConfiguredFeature<?, ?>> END_MOSS_VEGETATION
       = of("end_moss_vegetation");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SHADOW_MOSS_PATCH
+      = of("end_moss_patch_shadow");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SHADOW_MOSS_PATCH_BONEMEAL
+      = of("end_moss_patch_bonemeal_shadow");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SHADOW_MOSS_VEGETATION
+      = of("end_moss_vegetation_shadow");
 
 
   public static final Feature<DefaultFeatureConfig> LUMECORN_FEATURE = Registry.register(
@@ -216,6 +224,13 @@ public class LighterEndConfiguredFeatures {
   );
   public static final RegistryKey<ConfiguredFeature<?, ?>> GEYSER = of("geyser");
 
+  public static final Feature<DefaultFeatureConfig> DRAGON_TREE_FEATURE = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("dragon_tree"),
+      new DragonTree());
+  public static final RegistryKey<ConfiguredFeature<?, ?>> DRAGON_TREE = of(
+      "dragon_tree");
+
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
     RegistryEntryLookup<ConfiguredFeature<?, ?>> lookup = context.getRegistryLookup(
@@ -235,7 +250,6 @@ public class LighterEndConfiguredFeatures {
             )
         )
     );
-
     ConfiguredFeatures.register(
         context,
         END_MOSS_VEGETATION,
@@ -248,7 +262,6 @@ public class LighterEndConfiguredFeatures {
             )
         )
     );
-
     ConfiguredFeatures.register(
         context,
         END_MOSS_PATCH_BONEMEAL,
@@ -258,6 +271,58 @@ public class LighterEndConfiguredFeatures {
             BlockStateProvider.of(LighterEndBlocks.END_MOSS),
             PlacedFeatures.createEntry(
                 lookup.getOrThrow(END_MOSS_PATCH)
+            ),
+            VerticalSurfaceType.FLOOR,
+            ConstantIntProvider.create(1),
+            0.0F,
+            2,
+            0.1F,
+            UniformIntProvider.create(0, 1),
+            0.25F)
+    );
+
+    ConfiguredFeatures.register(
+        context,
+        SHADOW_MOSS_PATCH,
+        Feature.SIMPLE_BLOCK,
+        new SimpleBlockFeatureConfig(
+            new WeightedBlockStateProvider(
+                Pool.<BlockState>builder()
+                    .add(LighterEndBlocks.SHADOW_GRASS.getDefaultState(), 40)
+                    .add(LighterEndBlocks.NEEDLEGRASS.getDefaultState(), 20)
+                    .add(
+                        LighterEndBlocks.SHADOW_BERRY.getDefaultState().with(ShadowBerry.AGE, 0),
+                        20)
+                    .add(LighterEndBlocks.MURKWEED.getDefaultState(), 20)
+            )
+        )
+    );
+    ConfiguredFeatures.register(
+        context,
+        SHADOW_MOSS_VEGETATION,
+        Feature.SIMPLE_BLOCK,
+        new SimpleBlockFeatureConfig(
+            new WeightedBlockStateProvider(
+                Pool.<BlockState>builder()
+                    .add(LighterEndBlocks.SHADOW_GRASS.getDefaultState(), 40)
+                    .add(LighterEndBlocks.NEEDLEGRASS.getDefaultState(), 40)
+                    .add(
+                        LighterEndBlocks.SHADOW_BERRY.getDefaultState()
+                            .with(ShadowBerry.AGE, ShadowBerry.MAX_AGE),
+                        10
+                    ).add(LighterEndBlocks.MURKWEED.getDefaultState(), 10)
+            )
+        )
+    );
+    ConfiguredFeatures.register(
+        context,
+        SHADOW_MOSS_PATCH_BONEMEAL,
+        Feature.VEGETATION_PATCH,
+        new VegetationPatchFeatureConfig(
+            LighterEndTags.END_MOSS_REPLACEABLE,
+            BlockStateProvider.of(LighterEndBlocks.END_MOSS),
+            PlacedFeatures.createEntry(
+                lookup.getOrThrow(SHADOW_MOSS_PATCH)
             ),
             VerticalSurfaceType.FLOOR,
             ConstantIntProvider.create(1),
@@ -400,6 +465,8 @@ public class LighterEndConfiguredFeatures {
     ConfiguredFeatures.register(context, SULPHUR_CAVE, SULPHUR_CAVE_FEATURE);
     ConfiguredFeatures.register(context, SURFACE_VENT, SURFACE_VENT_FEATURE);
     ConfiguredFeatures.register(context, GEYSER, GEYSER_FEATURE);
+
+    ConfiguredFeatures.register(context, DRAGON_TREE, DRAGON_TREE_FEATURE);
   }
 
   public static void initialize() {

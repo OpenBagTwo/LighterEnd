@@ -5,6 +5,7 @@ import io.github.openbagtwo.lighterend.world.biomes.BlossomingForest;
 import io.github.openbagtwo.lighterend.world.biomes.FoggyMushroomlands;
 import io.github.openbagtwo.lighterend.world.biomes.GlowingGrasslands;
 import io.github.openbagtwo.lighterend.world.biomes.Megalake;
+import io.github.openbagtwo.lighterend.world.biomes.ShadowForest;
 import io.github.openbagtwo.lighterend.world.biomes.Starfield;
 import io.github.openbagtwo.lighterend.world.biomes.SulphurSprings;
 import io.github.openbagtwo.lighterend.world.biomes.UmbraValley;
@@ -24,6 +25,7 @@ public class LighterEndBiomes {
   public static final RegistryKey<Biome> FOGGY_MUSHROOMLANDS = register("mushroomlands");
   public static final RegistryKey<Biome> STARFIELD = register("starfield");
   public static final RegistryKey<Biome> SULPHUR_SPRINGS = register("sulphur_springs");
+  public static final RegistryKey<Biome> SHADOW_FOREST = register("shadow_forest");
 
   public static void bootstrap(Registerable<Biome> context) {
     context.register(BLOSSOM_FOREST, BlossomingForest.create(context));
@@ -34,6 +36,7 @@ public class LighterEndBiomes {
     context.register(FOGGY_MUSHROOMLANDS, FoggyMushroomlands.create(context));
     context.register(STARFIELD, Starfield.create(context));
     context.register(SULPHUR_SPRINGS, SulphurSprings.create(context));
+    context.register(SHADOW_FOREST, ShadowForest.create(context));
   }
 
   private static RegistryKey<Biome> register(String name) {

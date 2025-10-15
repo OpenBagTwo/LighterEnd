@@ -26,7 +26,9 @@ public class LighterEndBlockEntities {
           LighterEndBlocks.LOTUS.sign,
           LighterEndBlocks.LOTUS.wallSign,
           LighterEndBlocks.GLOWSHROOM.sign,
-          LighterEndBlocks.GLOWSHROOM.wallSign
+          LighterEndBlocks.GLOWSHROOM.wallSign,
+          LighterEndBlocks.DRAGON.sign,
+          LighterEndBlocks.DRAGON.wallSign
       ).build(null));
 
   public static final BlockEntityType<LighterEndHangingSignBlockEntity> HANGING_SIGN = Registry.register(
@@ -41,7 +43,9 @@ public class LighterEndBlockEntities {
           LighterEndBlocks.LOTUS.hangingSign,
           LighterEndBlocks.LOTUS.wallHangingSign,
           LighterEndBlocks.GLOWSHROOM.hangingSign,
-          LighterEndBlocks.GLOWSHROOM.wallHangingSign
+          LighterEndBlocks.GLOWSHROOM.wallHangingSign,
+          LighterEndBlocks.DRAGON.hangingSign,
+          LighterEndBlocks.DRAGON.wallHangingSign
       ).build(null));
 
   public static final BlockEntityType<Shelf.Entity> SHELF = Registry.register(
@@ -52,7 +56,8 @@ public class LighterEndBlockEntities {
           LighterEndBlocks.TENANEA.shelf,
           LighterEndBlocks.UMBRELLA.shelf,
           LighterEndBlocks.LOTUS.shelf,
-          LighterEndBlocks.GLOWSHROOM.shelf
+          LighterEndBlocks.GLOWSHROOM.shelf,
+          LighterEndBlocks.DRAGON.shelf
       ).build(null));
 
   public static final BlockEntityType<Furnaces.EndFurnaceEntity> END_FURNACE = Registry.register(

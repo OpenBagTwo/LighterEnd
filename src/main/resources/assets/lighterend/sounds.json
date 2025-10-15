@@ -36,6 +36,15 @@
       }
     ]
   },
+  "ambient.shadow.loop": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "lighterend:ambient/chorus_forest",
+        "stream": true
+      }
+    ]
+  },
   "ambient.sulphur.loop": {
     "category": "ambient",
     "sounds": [
@@ -65,6 +74,231 @@
         "volume": 1.0
       }
     ]
+  },
+  "block.dragon_tree.break": {
+    "sounds": [
+      {
+        "name": "block.wood.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.dragon_tree.fall": {
+    "sounds": [
+      {
+        "name": "block.wood.fall",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.dragon_tree.hit": {
+    "sounds": [
+      {
+        "name": "block.wood.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.dragon_tree.place": {
+    "sounds": [
+      {
+        "name": "block.wood.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.dragon_tree.step": {
+    "sounds": [
+      {
+        "name": "block.wood.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.dragon_tree_button.click_off": {
+    "sounds": [
+      {
+        "name": "block.wooden_button.click_off",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.button.click"
+  },
+  "block.dragon_tree_button.click_on": {
+    "sounds": [
+      {
+        "name": "block.wooden_button.click_on",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.button.click"
+  },
+  "block.dragon_tree_door.close": {
+    "sounds": [
+      {
+        "name": "block.wooden_door.close",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.door.toggle"
+  },
+  "block.dragon_tree_door.open": {
+    "sounds": [
+      {
+        "name": "block.wooden_door.open",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.door.toggle"
+  },
+  "block.dragon_tree_fence_gate.close": {
+    "sounds": [
+      {
+        "name": "block.wooden_fence_gate.close",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.fence_gate.toggle"
+  },
+  "block.dragon_tree_fence_gate.open": {
+    "sounds": [
+      {
+        "name": "block.wooden_fence_gate.open",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.fence_gate.toggle"
+  },
+  "block.dragon_tree_hanging_sign.break": {
+    "sounds": [
+      {
+        "name": "block.hanging_sign.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.dragon_tree_hanging_sign.fall": {
+    "sounds": [
+      {
+        "name": "block.hanging_sign.fall",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.dragon_tree_hanging_sign.hit": {
+    "sounds": [
+      {
+        "name": "block.hanging_sign.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.dragon_tree_hanging_sign.place": {
+    "sounds": [
+      {
+        "name": "block.hanging_sign.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.dragon_tree_hanging_sign.step": {
+    "sounds": [
+      {
+        "name": "block.hanging_sign.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.dragon_tree_log.break": {
+    "sounds": [
+      {
+        "name": "block.woood.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.dragon_tree_log.fall": {
+    "sounds": [
+      {
+        "name": "block.wood.fall",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.dragon_tree_log.hit": {
+    "sounds": [
+      {
+        "name": "block.wood.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.dragon_tree_log.place": {
+    "sounds": [
+      {
+        "name": "block.wood.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.dragon_tree_log.step": {
+    "sounds": [
+      {
+        "name": "block.wood.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.dragon_tree_pressure_plate.click_off": {
+    "sounds": [
+      {
+        "name": "block.wooden_pressure_plate.click_off",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.pressure_plate.click"
+  },
+  "block.dragon_tree_pressure_plate.click_on": {
+    "sounds": [
+      {
+        "name": "block.wooden_pressure_plate.click_on",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.pressure_plate.click"
+  },
+  "block.dragon_tree_trapdoor.close": {
+    "sounds": [
+      {
+        "name": "block.wooden_trapdoor.close",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.trapdoor.close"
+  },
+  "block.dragon_tree_trapdoor.open": {
+    "sounds": [
+      {
+        "name": "block.wooden_trapdoor.open",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.trapdoor.open"
   },
   "block.end_lotus.break": {
     "sounds": [
@@ -1362,6 +1596,31 @@
       },
       {
         "name": "lighterend:music/astron-peaceful_mind",
+        "stream": true,
+        "volume": 0.2
+      }
+    ]
+  },
+  "music.shadow": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "lighterend:music/emmit_fenn-creep",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/jesse_gallagher-the_anunnaki_return",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/i_think_i_can_help_you-the_six_realms",
+        "stream": true,
+        "volume": 0.2
+      },
+      {
+        "name": "lighterend:music/jesse_gallagher-maestro_tlakaelel",
         "stream": true,
         "volume": 0.2
       }

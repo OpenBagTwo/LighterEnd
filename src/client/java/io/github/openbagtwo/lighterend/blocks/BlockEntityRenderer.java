@@ -24,7 +24,8 @@ public class BlockEntityRenderer {
         LighterEndBlocks.TENANEA,
         LighterEndBlocks.UMBRELLA,
         LighterEndBlocks.LOTUS,
-        LighterEndBlocks.GLOWSHROOM
+        LighterEndBlocks.GLOWSHROOM,
+        LighterEndBlocks.DRAGON
     )) {
       TexturedRenderLayers.SIGN_TYPE_TEXTURES.put(wood.woodType,
           TexturedRenderLayers.getSignTextureId(wood.woodType));
