@@ -1219,6 +1219,21 @@
       }
     ]
   },
+  "item.shadow_berry_jam.drink": {
+    "sounds": [
+      "item/bottle/drink_honey1",
+      "item/bottle/drink_honey2",
+      {
+        "name": "item/bottle/drink_honey3",
+        "volume": 0.35
+      },
+      {
+        "name": "item/bottle/drink_honey3",
+        "volume": 0.75
+      }
+    ],
+    "subtitle": "subtitles.lighterend.item.shadow_berry_jam.drink"
+  },
   "item.totem_of_teleportation.set": {
     "sounds": [
       {

@@ -15,7 +15,6 @@ public class LighterEndFoodComponents {
       .saturationModifier(0.6F)
       .alwaysEdible()
       .build();
-
   public static final ConsumableComponent POPPED_LUMECORN_EFFECT = ConsumableComponents.food()
       .consumeSeconds(0.8F)
       .consumeEffect(
@@ -29,21 +28,44 @@ public class LighterEndFoodComponents {
       .saturationModifier(0.7F)
       .alwaysEdible()
       .build();
-
   public static final ConsumableComponent UMBRELLA_JUICE_EFFECT = ConsumableComponents.drink()
       .consumeSeconds(2.0F)
       .sound(LighterEndSounds.DRINK_UMBRELLA_JUICE)
       .build();
 
-  public static final FoodComponent CRAB_MEAT = new FoodComponent.Builder().nutrition(2)
-      .saturationModifier(0.3F).build();
-  public static final FoodComponent CRAB_CAKE = new FoodComponent.Builder().nutrition(7)
-      .saturationModifier(0.7F).build();
-
+  public static final FoodComponent CRAB_MEAT = new FoodComponent.Builder()
+      .nutrition(2)
+      .saturationModifier(0.3F)
+      .build();
   public static final ConsumableComponent RAW_CRAB_MEAT_EFFECT = ConsumableComponents.food()
       .consumeEffect(
           new ApplyEffectsConsumeEffect(
-              new StatusEffectInstance(StatusEffects.HUNGER, 600, 0),
+              new StatusEffectInstance(StatusEffects.HUNGER, 600),
               0.5F)
+      ).build();
+  public static final FoodComponent CRAB_CAKE = new FoodComponent.Builder().nutrition(7)
+      .saturationModifier(0.7F).build();
+
+
+  public static final FoodComponent SHADOW_BERRY = new FoodComponent.Builder()
+      .nutrition(4)
+      .saturationModifier(0.5F)
+      .build();
+  public static final FoodComponent SHADOW_BERRY_COOKED = new FoodComponent.Builder()
+      .nutrition(6)
+      .saturationModifier(0.7F)
+      .build();
+  public static final FoodComponent SHADOW_BERRY_JAM = new FoodComponent.Builder()
+      .nutrition(6)
+      .saturationModifier(0.8F)
+      .alwaysEdible()
+      .build();
+  public static final ConsumableComponent SHADOW_BERRY_JAM_EFFECT = ConsumableComponents.drink()
+      .consumeSeconds(3.0F)
+      .sound(LighterEndSounds.EAT_SHADOW_BERRY_JAM)
+      .consumeEffect(
+          new ApplyEffectsConsumeEffect(
+              new StatusEffectInstance(StatusEffects.NIGHT_VISION, 400)
+          )
       ).build();
 }

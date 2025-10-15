@@ -19,6 +19,7 @@ import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.Obelisk;
 import io.github.openbagtwo.lighterend.blocks.Polypore;
 import io.github.openbagtwo.lighterend.blocks.Sapling;
+import io.github.openbagtwo.lighterend.blocks.ShadowBerry;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.blocks.SulphurCrystal;
 import io.github.openbagtwo.lighterend.blocks.TenaneaFlower;
@@ -340,6 +341,12 @@ public class LighterEndBlocks {
   public static final Block TUBE_WORM = register(
       "tube_worm",
       TubeWorm::new
+  );
+
+  public static final Block SHADOW_BERRY = register(
+      "shadow_berry",
+      ShadowBerry::new,
+      false
   );
 
   public static Block register(String name, Function<Settings, Block> factory) {

@@ -58,7 +58,8 @@ public class BlockLayerRenderer {
         LighterEndBlocks.GOLD_CHANDELIER,
         LighterEndBlocks.IRON_CHANDELIER,
         LighterEndBlocks.SULPHUR_CRYSTAL,
-        LighterEndBlocks.TUBE_WORM
+        LighterEndBlocks.TUBE_WORM,
+        LighterEndBlocks.SHADOW_BERRY
     );
     for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.getAll()) {
       BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT, chandelier);

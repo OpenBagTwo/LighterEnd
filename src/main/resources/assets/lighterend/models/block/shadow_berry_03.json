@@ -1,0 +1,250 @@
+{
+  "__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
+  "elements": [
+    {
+      "__comment": "Box1",
+      "faces": {
+        "down": {
+          "texture": "#texture",
+          "uv": [
+            9,
+            9,
+            15,
+            15
+          ]
+        },
+        "east": {
+          "texture": "#texture",
+          "uv": [
+            1,
+            10,
+            7,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#texture",
+          "uv": [
+            1,
+            10,
+            7,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#texture",
+          "uv": [
+            1,
+            10,
+            7,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#texture",
+          "uv": [
+            1,
+            1,
+            7,
+            7
+          ]
+        },
+        "west": {
+          "texture": "#texture",
+          "uv": [
+            1,
+            10,
+            7,
+            16
+          ]
+        }
+      },
+      "from": [
+        2,
+        0,
+        2
+      ],
+      "to": [
+        8,
+        6,
+        8
+      ]
+    },
+    {
+      "__comment": "Box1",
+      "faces": {
+        "down": {
+          "texture": "#texture",
+          "uv": [
+            10,
+            10,
+            14,
+            14
+          ]
+        },
+        "east": {
+          "texture": "#texture",
+          "uv": [
+            1,
+            11,
+            5,
+            15
+          ]
+        },
+        "north": {
+          "texture": "#texture",
+          "uv": [
+            1,
+            11,
+            5,
+            15
+          ]
+        },
+        "south": {
+          "texture": "#texture",
+          "uv": [
+            1,
+            11,
+            5,
+            15
+          ]
+        },
+        "up": {
+          "texture": "#texture",
+          "uv": [
+            8.5,
+            0.5,
+            12.5,
+            4.5
+          ]
+        },
+        "west": {
+          "texture": "#texture",
+          "uv": [
+            1,
+            11,
+            5,
+            15
+          ]
+        }
+      },
+      "from": [
+        11,
+        0,
+        6
+      ],
+      "to": [
+        15,
+        4,
+        10
+      ]
+    },
+    {
+      "__comment": "Box1",
+      "faces": {
+        "down": {
+          "texture": "#texture",
+          "uv": [
+            12,
+            12,
+            15,
+            15
+          ]
+        },
+        "east": {
+          "texture": "#texture",
+          "uv": [
+            4,
+            11,
+            7,
+            14
+          ]
+        },
+        "north": {
+          "texture": "#texture",
+          "uv": [
+            4,
+            11,
+            7,
+            14
+          ]
+        },
+        "south": {
+          "texture": "#texture",
+          "uv": [
+            4,
+            11,
+            7,
+            14
+          ]
+        },
+        "up": {
+          "texture": "#texture",
+          "uv": [
+            9,
+            1,
+            12,
+            4
+          ]
+        },
+        "west": {
+          "texture": "#texture",
+          "uv": [
+            4,
+            11,
+            7,
+            14
+          ]
+        }
+      },
+      "from": [
+        4,
+        0,
+        11
+      ],
+      "to": [
+        7,
+        3,
+        14
+      ]
+    },
+    {
+      "__comment": "PlaneY4",
+      "faces": {
+        "down": {
+          "texture": "#texture1",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#texture1",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        0,
+        0.5,
+        0
+      ],
+      "to": [
+        16,
+        0.501,
+        16
+      ]
+    }
+  ],
+  "textures": {
+    "particle": "lighterend:block/shadow_berry",
+    "texture": "lighterend:block/shadow_berry",
+    "texture1": "lighterend:block/shadow_berry_leaves"
+  }
+}

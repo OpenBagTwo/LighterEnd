@@ -106,6 +106,31 @@ public class LighterEndItems {
 
   public static final Item MATCHSTICK = register("matchstick", Matchstick::new, new Settings());
 
+  public static final Item SHADOW_BERRY_SEEDS = register(
+      "shadow_berry_seeds",
+      settings -> new BlockItem(
+          LighterEndBlocks.SHADOW_BERRY,
+          settings.useItemPrefixedTranslationKey()
+      ),
+      new Settings()
+  );
+  public static final Item SHADOW_BERRY = register(
+      "shadow_berry",
+      new Settings().food(LighterEndFoodComponents.SHADOW_BERRY)
+  );
+  public static final Item SHADOW_BERRY_COOKED = register(
+      "shadow_berry_cooked",
+      new Settings().food(LighterEndFoodComponents.SHADOW_BERRY_COOKED)
+  );
+  public static final Item SHADOW_BERRY_JAM = register(
+      "shadow_berry_jam",
+      new Settings().food(
+              LighterEndFoodComponents.SHADOW_BERRY_JAM,
+              LighterEndFoodComponents.SHADOW_BERRY_JAM_EFFECT
+          ).useRemainder(Items.GLASS_BOTTLE)
+          .maxCount(16)
+  );
+
   public static Item register(String name) {
     return register(name, new Settings());
   }

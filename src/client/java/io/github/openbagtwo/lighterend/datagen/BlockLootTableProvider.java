@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.datagen;
 
 import io.github.openbagtwo.lighterend.blocks.EndLily;
+import io.github.openbagtwo.lighterend.blocks.ShadowBerry;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.blocks.SulphurCrystal;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
@@ -34,6 +35,7 @@ import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.StatePredicate;
+import net.minecraft.predicate.StatePredicate.Builder;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
@@ -161,6 +163,19 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     addDrop(LighterEndBlocks.BRIMSTONE);
     addDrop(LighterEndBlocks.SULPHUR_CRYSTAL, sulphurCrystalDrops());
     addDrop(LighterEndBlocks.HYDROTHERMAL_VENT, this::dropsWithSilkTouch);
+
+    addDrop(
+        LighterEndBlocks.SHADOW_BERRY,
+        cropDrops(
+            LighterEndBlocks.SHADOW_BERRY,
+            LighterEndItems.SHADOW_BERRY,
+            LighterEndItems.SHADOW_BERRY_SEEDS,
+            BlockStatePropertyLootCondition.builder(
+                    LighterEndBlocks.SHADOW_BERRY)
+                .properties(Builder.create().exactMatch(ShadowBerry.AGE, ShadowBerry.MAX_AGE)
+                )
+        )
+    );
   }
 
   private LootTable.Builder auroraCrystalDrops() {

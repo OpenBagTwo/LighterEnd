@@ -31,6 +31,8 @@ public class LighterEndSounds {
       "item.armor.equip_fur");
   public static final RegistryEntry<SoundEvent> DRINK_UMBRELLA_JUICE = registerReference(
       "item.umbrella_juice.drink");
+  public static final RegistryEntry<SoundEvent> EAT_SHADOW_BERRY_JAM = registerReference(
+      "item.shadow_berry_jam.drink");
 
   public static final RegistryEntry<SoundEvent> BLOSSOM_AMBIENT = registerReference(
       "ambient.blossom.loop");

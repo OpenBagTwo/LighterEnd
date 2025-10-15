@@ -39,6 +39,7 @@ public class LighterEndPotions {
           Potions.AWKWARD
       );
     });
+
     FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
       builder.registerPotionRecipe(Potions.AWKWARD, Ingredient.ofItems(
               LighterEndItems.AGAVE_FUR, LighterEndItems.GLOWSHROOM_FUR
@@ -48,6 +49,14 @@ public class LighterEndPotions {
     });
     FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
       builder.registerPotionRecipe(END_VEIL, Items.REDSTONE, LONG_END_VEIL);
+    });
+
+    FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
+      builder.registerPotionRecipe(Potions.AWKWARD, Ingredient.ofItems(
+              LighterEndItems.SHADOW_BERRY_COOKED
+          ),
+          Potions.NIGHT_VISION
+      );
     });
   }
 

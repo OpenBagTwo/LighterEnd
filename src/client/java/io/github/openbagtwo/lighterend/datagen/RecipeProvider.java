@@ -521,12 +521,23 @@ public class RecipeProvider extends FabricRecipeProvider {
             .criterion(
                 hasItem(LighterEndItems.CRYSTALLINE_SULPHUR),
                 this.conditionsFromItem(LighterEndItems.CRYSTALLINE_SULPHUR)
-            ).offerTo(this.exporter,
+            ).offerTo(
+                this.exporter,
                 RegistryKey.of(
                     RegistryKeys.RECIPE,
                     LighterEnd.of("gunpowder_from_sulphur")
                 )
             );
+
+        generateCookingRecipes(LighterEndItems.SHADOW_BERRY, LighterEndItems.SHADOW_BERRY_COOKED);
+        createShapeless(RecipeCategory.FOOD, LighterEndItems.SHADOW_BERRY_JAM, 3)
+            .input(LighterEndItems.SHADOW_BERRY_COOKED, 3)
+            .input(Items.SUGAR, 3)
+            .input(Items.GLASS_BOTTLE, 3)
+            .criterion(
+                hasItem(LighterEndItems.SHADOW_BERRY_COOKED),
+                this.conditionsFromItem(LighterEndItems.SHADOW_BERRY_COOKED)
+            ).offerTo(this.exporter);
       }
 
       public void generateMaterialRecipes(Material material) {

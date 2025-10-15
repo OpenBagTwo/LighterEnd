@@ -1,0 +1,181 @@
+{
+  "__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
+  "elements": [
+    {
+      "__comment": "Box1",
+      "faces": {
+        "down": {
+          "texture": "#texture",
+          "uv": [
+            10,
+            10,
+            14,
+            14
+          ]
+        },
+        "east": {
+          "texture": "#texture",
+          "uv": [
+            2,
+            11,
+            6,
+            15
+          ]
+        },
+        "north": {
+          "texture": "#texture",
+          "uv": [
+            2,
+            11,
+            6,
+            15
+          ]
+        },
+        "south": {
+          "texture": "#texture",
+          "uv": [
+            2,
+            11,
+            6,
+            15
+          ]
+        },
+        "up": {
+          "texture": "#texture",
+          "uv": [
+            8.5,
+            0.5,
+            12.5,
+            4.5
+          ]
+        },
+        "west": {
+          "texture": "#texture",
+          "uv": [
+            2,
+            11,
+            6,
+            15
+          ]
+        }
+      },
+      "from": [
+        3,
+        0,
+        3
+      ],
+      "to": [
+        7,
+        4,
+        7
+      ]
+    },
+    {
+      "__comment": "Box1",
+      "faces": {
+        "down": {
+          "texture": "#texture",
+          "uv": [
+            12,
+            12,
+            15,
+            15
+          ]
+        },
+        "east": {
+          "texture": "#texture",
+          "uv": [
+            4,
+            11,
+            7,
+            14
+          ]
+        },
+        "north": {
+          "texture": "#texture",
+          "uv": [
+            4,
+            11,
+            7,
+            14
+          ]
+        },
+        "south": {
+          "texture": "#texture",
+          "uv": [
+            4,
+            11,
+            7,
+            14
+          ]
+        },
+        "up": {
+          "texture": "#texture",
+          "uv": [
+            9,
+            1,
+            12,
+            4
+          ]
+        },
+        "west": {
+          "texture": "#texture",
+          "uv": [
+            4,
+            11,
+            7,
+            14
+          ]
+        }
+      },
+      "from": [
+        11.5,
+        0,
+        6.5
+      ],
+      "to": [
+        14.5,
+        3,
+        9.5
+      ]
+    },
+    {
+      "__comment": "PlaneY4",
+      "faces": {
+        "down": {
+          "texture": "#texture1",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#texture1",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      },
+      "from": [
+        0,
+        0.5,
+        0
+      ],
+      "to": [
+        16,
+        0.501,
+        16
+      ]
+    }
+  ],
+  "textures": {
+    "particle": "lighterend:block/shadow_berry",
+    "texture": "lighterend:block/shadow_berry",
+    "texture1": "lighterend:block/shadow_berry_leaves"
+  }
+}
