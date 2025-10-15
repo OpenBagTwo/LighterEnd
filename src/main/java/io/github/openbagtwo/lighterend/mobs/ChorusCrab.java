@@ -6,6 +6,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.AnimalMateGoal;
 import net.minecraft.entity.ai.goal.FleeEntityGoal;
@@ -36,9 +37,11 @@ import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.EntityTypeTags;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -132,8 +135,25 @@ public class ChorusCrab extends AnimalEntity {
         rider.startRiding(this);
       }
     }
+    this.setCanPickUpLoot(true);
+    this.initEquipment(world.getRandom(), difficulty);
+    this.enchantMainHandItem(world, world.getRandom(), difficulty);
 
     return entityData;
+  }
+
+  @Override
+  protected void initEquipment(Random random, LocalDifficulty localDifficulty) {
+    if (random.nextInt(512) == 0) {
+      this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(Items.DIAMOND_SWORD));
+      this.setDropGuaranteed(EquipmentSlot.MAINHAND);
+
+    }
+  }
+
+  @Override
+  public boolean canPickupItem(ItemStack stack) {
+    return stack.isIn(ItemTags.SWORDS);
   }
 
   @Override

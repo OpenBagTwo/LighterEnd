@@ -31,7 +31,7 @@ public class CrabModel extends EntityModel<LivingEntityRenderState> {
   private final ModelPart stalk_left;
   private final ModelPart stalk_right;
   private final ModelPart claw_left;
-  private final ModelPart pincer_left;
+  public final ModelPart pincer_left;
   private final ModelPart claw_right;
   private final ModelPart pincer_right;
   private final ModelPart leg_left_front;
