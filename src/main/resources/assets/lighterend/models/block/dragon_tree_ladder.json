@@ -1,0 +1,6 @@
+{
+  "parent": "lighterend:block/ladder",
+  "textures": {
+    "texture": "lighterend:block/dragon_tree_ladder"
+  }
+}

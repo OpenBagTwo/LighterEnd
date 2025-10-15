@@ -3,7 +3,6 @@ package io.github.openbagtwo.lighterend.blocks;
 import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Fertilizable;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.PlantBlock;
 import net.minecraft.block.piston.PistonBehavior;
@@ -12,18 +11,15 @@ import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.particle.TintedParticleEffect;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
 
-public class Murkweed extends PlantBlock implements Fertilizable {
+public class Murkweed extends PlantBlock {
 
   public static final MapCodec<Murkweed> CODEC = createCodec(Murkweed::new);
 
@@ -49,21 +45,6 @@ public class Murkweed extends PlantBlock implements Fertilizable {
   @Override
   protected MapCodec<? extends PlantBlock> getCodec() {
     return CODEC;
-  }
-
-  @Override
-  public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
-    return true;
-  }
-
-  @Override
-  public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-    return true;
-  }
-
-  @Override
-  public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-    dropStack(world, pos, new ItemStack(this));
   }
 
   @Override

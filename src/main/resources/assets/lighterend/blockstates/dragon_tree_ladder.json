@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=east": {
-      "model": "lighterend:block/umbrella_ladder",
+      "model": "lighterend:block/dragon_tree_ladder",
       "y": 90
     },
     "facing=north": {
-      "model": "lighterend:block/umbrella_ladder"
+      "model": "lighterend:block/dragon_tree_ladder"
     },
     "facing=south": {
-      "model": "lighterend:block/umbrella_ladder",
+      "model": "lighterend:block/dragon_tree_ladder",
       "y": 180
     },
     "facing=west": {
-      "model": "lighterend:block/umbrella_ladder",
+      "model": "lighterend:block/dragon_tree_ladder",
       "y": 270
     }
   }

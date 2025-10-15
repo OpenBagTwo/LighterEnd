@@ -222,7 +222,7 @@
   "block.dragon_tree_log.break": {
     "sounds": [
       {
-        "name": "block.woood.break",
+        "name": "block.wood.break",
         "type": "event"
       }
     ],
