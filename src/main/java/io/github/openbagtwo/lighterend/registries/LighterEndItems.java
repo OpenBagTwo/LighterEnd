@@ -50,6 +50,7 @@ public class LighterEndItems {
           .food(LighterEndFoodComponents.UMBRELLA_JUICE_NUTRITION,
               LighterEndFoodComponents.UMBRELLA_JUICE_EFFECT)
           .useRemainder(Items.GLASS_BOTTLE)
+          .recipeRemainder(Items.GLASS_BOTTLE)
           .maxCount(16)
   );
   public static final Item END_FISH_BUCKET = register("bucket_end_fish",
@@ -128,6 +129,7 @@ public class LighterEndItems {
               LighterEndFoodComponents.SHADOW_BERRY_JAM,
               LighterEndFoodComponents.SHADOW_BERRY_JAM_EFFECT
           ).useRemainder(Items.GLASS_BOTTLE)
+          .recipeRemainder(Items.GLASS_BOTTLE)
           .maxCount(16)
   );
 

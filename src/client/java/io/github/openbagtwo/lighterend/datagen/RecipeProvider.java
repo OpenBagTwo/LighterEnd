@@ -529,6 +529,14 @@ public class RecipeProvider extends FabricRecipeProvider {
                 )
             );
 
+        createShapeless(RecipeCategory.MISC, Items.SUGAR, 3)
+            .input(LighterEndItems.UMBRELLA_JUICE)
+            .group("sugar")
+            .criterion(
+                hasItem(LighterEndItems.UMBRELLA_JUICE),
+                this.conditionsFromItem(LighterEndItems.UMBRELLA_JUICE)
+            ).offerTo(this.exporter, convertBetween(Items.SUGAR, LighterEndItems.UMBRELLA_JUICE));
+
         generateCookingRecipes(LighterEndItems.SHADOW_BERRY, LighterEndItems.SHADOW_BERRY_COOKED);
         createShapeless(RecipeCategory.FOOD, LighterEndItems.SHADOW_BERRY_JAM, 3)
             .input(LighterEndItems.SHADOW_BERRY_COOKED, 3)
