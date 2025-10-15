@@ -547,6 +547,19 @@ public class RecipeProvider extends FabricRecipeProvider {
                 this.conditionsFromItem(LighterEndItems.SHADOW_BERRY_COOKED)
             ).offerTo(this.exporter);
 
+        createShapeless(RecipeCategory.MISC, Items.BLACK_DYE)
+            .input(LighterEndBlocks.MURKWEED)
+            .criterion(
+                hasItem(LighterEndBlocks.MURKWEED),
+                conditionsFromItem(LighterEndBlocks.MURKWEED)
+            ).offerTo(
+                exporter,
+                RegistryKey.of(
+                    RegistryKeys.RECIPE,
+                    LighterEnd.of("black_dye_from_murkweed")
+                )
+            );
+
         generateWoodRecipes(LighterEndBlocks.DRAGON);
       }
 
