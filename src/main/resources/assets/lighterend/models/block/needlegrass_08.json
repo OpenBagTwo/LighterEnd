@@ -1,0 +1,6 @@
+{
+  "parent": "lighterend:block/cross_inverted",
+  "textures": {
+    "cross": "lighterend:block/needlegrass_04"
+  }
+}

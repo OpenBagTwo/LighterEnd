@@ -200,6 +200,8 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndBlocks.GOLD_CHANDELIER.asItem(),
         LighterEndBlocks.IRON_CHANDELIER.asItem(),
         LighterEndBlocks.TUBE_WORM.asItem(),
+        LighterEndBlocks.NEEDLEGRASS.asItem(),
+        LighterEndBlocks.MURKWEED.asItem(),
         LighterEndMobs.SILK_MOTH.spawnEgg,
         LighterEndMobs.DRAGONFLY.spawnEgg,
         LighterEndMobs.END_FISH.spawnEgg,

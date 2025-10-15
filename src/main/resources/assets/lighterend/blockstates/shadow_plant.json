@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "lighterend:block/shadow_plant_01"
+      },
+      {
+        "model": "lighterend:block/shadow_plant_02"
+      },
+      {
+        "model": "lighterend:block/shadow_plant_03"
+      },
+      {
+        "model": "lighterend:block/shadow_plant_04"
+      }
+    ]
+  }
+}

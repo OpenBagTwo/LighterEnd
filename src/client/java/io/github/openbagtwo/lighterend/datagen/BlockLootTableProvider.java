@@ -176,6 +176,21 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
                 )
         )
     );
+    addDrop(LighterEndBlocks.SHADOW_GRASS, this::dropsWithSilkTouchOrShears);
+    addDrop(
+        LighterEndBlocks.NEEDLEGRASS,
+        block -> this.dropsWithShears(
+            block,
+            this.applyExplosionDecay(
+                block,
+                ItemEntry
+                    .builder(Items.STICK)
+                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 2))
+                    )
+            )
+        )
+    );
+    addDrop(LighterEndBlocks.MURKWEED);
   }
 
   private LootTable.Builder auroraCrystalDrops() {

@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "lighterend:block/needlegrass_01"
+      },
+      {
+        "model": "lighterend:block/needlegrass_02"
+      },
+      {
+        "model": "lighterend:block/needlegrass_03"
+      },
+      {
+        "model": "lighterend:block/needlegrass_04"
+      },
+      {
+        "model": "lighterend:block/needlegrass_05"
+      },
+      {
+        "model": "lighterend:block/needlegrass_06"
+      },
+      {
+        "model": "lighterend:block/needlegrass_07"
+      },
+      {
+        "model": "lighterend:block/needlegrass_08"
+      }
+    ]
+  }
+}

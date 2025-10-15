@@ -27,6 +27,9 @@ public class Fire {
     FlammableBlockRegistry.getDefaultInstance().add(LighterEndBlocks.AGAVE, 60, 60);
     FlammableBlockRegistry.getDefaultInstance().add(LighterEndBlocks.AGAVE_BULB, 30, 20);
     FlammableBlockRegistry.getDefaultInstance().add(LighterEndBlocks.AGAVE_FUR, 60, 100);
+    FlammableBlockRegistry.getDefaultInstance().add(LighterEndBlocks.SHADOW_GRASS, 60, 100);
+    FlammableBlockRegistry.getDefaultInstance().add(LighterEndBlocks.NEEDLEGRASS, 60, 100);
+    FlammableBlockRegistry.getDefaultInstance().add(LighterEndBlocks.MURKWEED, 30, 60);
   }
 
 }

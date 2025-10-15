@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "lighterend:block/shadow_plant"
+  }
+}

@@ -53,7 +53,7 @@ public class LighterEndPotions {
 
     FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
       builder.registerPotionRecipe(Potions.AWKWARD, Ingredient.ofItems(
-              LighterEndItems.SHADOW_BERRY_COOKED
+              LighterEndBlocks.MURKWEED
           ),
           Potions.NIGHT_VISION
       );

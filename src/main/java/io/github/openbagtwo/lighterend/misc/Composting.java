@@ -34,6 +34,9 @@ public class Composting {
     CompostingChanceRegistry.INSTANCE.add(LighterEndItems.SHADOW_BERRY_SEEDS, 0.3F);
     CompostingChanceRegistry.INSTANCE.add(LighterEndItems.SHADOW_BERRY, 0.65F);
     CompostingChanceRegistry.INSTANCE.add(LighterEndItems.SHADOW_BERRY_COOKED, 0.85F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.SHADOW_GRASS, 0.3F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.NEEDLEGRASS, 0.3F);
+    CompostingChanceRegistry.INSTANCE.add(LighterEndBlocks.MURKWEED, 0.5F);
   }
 
 }

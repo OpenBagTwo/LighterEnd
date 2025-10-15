@@ -92,6 +92,16 @@ public class LighterEndTags {
       LighterEnd.of("ignores_geyser_bubbles")
   );
 
+  public static final TagKey<EntityType<?>> IMMUNE_TO_NEEDLEGRASS = TagKey.of(
+      RegistryKeys.ENTITY_TYPE,
+      LighterEnd.of("immune_to_needlegrass")
+  );
+
+  public static final TagKey<EntityType<?>> IMMUNE_TO_MURKWEED = TagKey.of(
+      RegistryKeys.ENTITY_TYPE,
+      LighterEnd.of("immune_to_murkweed")
+  );
+
   public static final TagKey<Biome> VANILLA_END_BIOMES = TagKey.of(
       RegistryKeys.BIOME,
       LighterEnd.of("end_biomes_vanilla")

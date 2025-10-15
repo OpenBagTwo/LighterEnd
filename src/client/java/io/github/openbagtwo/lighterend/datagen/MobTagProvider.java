@@ -5,6 +5,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.minecraft.entity.EntityType;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.registry.tag.EntityTypeTags;
 
@@ -57,6 +58,11 @@ public class MobTagProvider extends FabricTagProvider.EntityTypeTagProvider {
     valueLookupBuilder(LighterEndTags.IGNORES_GEYSER_BUBBLES).add(
         LighterEndMobs.END_FISH.mob,
         LighterEndMobs.CUBOZOA.mob
+    );
+
+    valueLookupBuilder(LighterEndTags.IMMUNE_TO_MURKWEED).add(
+        EntityType.ENDERMITE,
+        EntityType.PHANTOM
     );
 
   }

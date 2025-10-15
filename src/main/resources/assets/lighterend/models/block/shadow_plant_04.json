@@ -1,0 +1,6 @@
+{
+  "parent": "lighterend:block/crop_block_inverted",
+  "textures": {
+    "texture": "lighterend:block/shadow_plant"
+  }
+}

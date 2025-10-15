@@ -16,10 +16,13 @@ import io.github.openbagtwo.lighterend.blocks.Furnaces;
 import io.github.openbagtwo.lighterend.blocks.GlowshroomCap;
 import io.github.openbagtwo.lighterend.blocks.HydrothermalVent;
 import io.github.openbagtwo.lighterend.blocks.Lumecorn;
+import io.github.openbagtwo.lighterend.blocks.Murkweed;
+import io.github.openbagtwo.lighterend.blocks.Needlegrass;
 import io.github.openbagtwo.lighterend.blocks.Obelisk;
 import io.github.openbagtwo.lighterend.blocks.Polypore;
 import io.github.openbagtwo.lighterend.blocks.Sapling;
 import io.github.openbagtwo.lighterend.blocks.ShadowBerry;
+import io.github.openbagtwo.lighterend.blocks.ShadowGrass;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.blocks.SulphurCrystal;
 import io.github.openbagtwo.lighterend.blocks.TenaneaFlower;
@@ -347,6 +350,18 @@ public class LighterEndBlocks {
       "shadow_berry",
       ShadowBerry::new,
       false
+  );
+  public static final Block SHADOW_GRASS = register(
+      "shadow_plant",
+      ShadowGrass::new
+  );
+  public static final Block NEEDLEGRASS = register(
+      "needlegrass",
+      Needlegrass::new
+  );
+  public static final Block MURKWEED = register(
+      "murkweed",
+      Murkweed::new
   );
 
   public static Block register(String name, Function<Settings, Block> factory) {
