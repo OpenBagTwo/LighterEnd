@@ -19,6 +19,7 @@ import io.github.openbagtwo.lighterend.blocks.Lumecorn;
 import io.github.openbagtwo.lighterend.blocks.Murkweed;
 import io.github.openbagtwo.lighterend.blocks.Needlegrass;
 import io.github.openbagtwo.lighterend.blocks.Obelisk;
+import io.github.openbagtwo.lighterend.blocks.Pedestal;
 import io.github.openbagtwo.lighterend.blocks.Polypore;
 import io.github.openbagtwo.lighterend.blocks.Sapling;
 import io.github.openbagtwo.lighterend.blocks.ShadowBerry;
@@ -378,6 +379,11 @@ public class LighterEndBlocks {
           0.01F,
           applyLeafSettings(settings.mapColor(MapColor.MAGENTA))
       )
+  );
+
+  public static Block PEDESTAL = register(
+      "pedestal",
+      Pedestal::new
   );
 
   public static Block register(String name, Function<Settings, Block> factory) {

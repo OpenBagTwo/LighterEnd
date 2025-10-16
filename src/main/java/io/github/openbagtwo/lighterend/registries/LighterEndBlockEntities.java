@@ -5,6 +5,7 @@ import io.github.openbagtwo.lighterend.blocks.Furnaces;
 import io.github.openbagtwo.lighterend.blocks.Shelf;
 import io.github.openbagtwo.lighterend.blocks.Signs.LighterEndHangingSignBlockEntity;
 import io.github.openbagtwo.lighterend.blocks.Signs.LighterEndSignBlockEntity;
+import io.github.openbagtwo.lighterend.blocks.entities.PedestalDisplay;
 import io.github.openbagtwo.lighterend.blocks.entities.SilkMothNestEntity;
 import io.github.openbagtwo.lighterend.blocks.entities.Updraft;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -87,6 +88,14 @@ public class LighterEndBlockEntities {
       LighterEnd.of("updraft"),
       FabricBlockEntityTypeBuilder.create(
           Updraft::new, LighterEndBlocks.HYDROTHERMAL_VENT
+      ).build(null)
+  );
+
+  public static final BlockEntityType<PedestalDisplay> PEDESTAL = Registry.register(
+      Registries.BLOCK_ENTITY_TYPE,
+      LighterEnd.of("pedestal"),
+      FabricBlockEntityTypeBuilder.create(
+          PedestalDisplay::new, LighterEndBlocks.PEDESTAL
       ).build(null)
   );
 

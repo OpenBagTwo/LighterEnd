@@ -13,12 +13,22 @@ import net.minecraft.client.render.block.entity.SignBlockEntityRenderer;
 public class BlockEntityRenderer {
 
   public static void initialize() {
-    BlockEntityRendererFactories.register(LighterEndBlockEntities.SIGN,
-        SignBlockEntityRenderer::new);
-    BlockEntityRendererFactories.register(LighterEndBlockEntities.HANGING_SIGN,
-        HangingSignBlockEntityRenderer::new);
-    BlockEntityRendererFactories.register(LighterEndBlockEntities.SHELF,
-        ShelfBlockEntityRenderer::new);
+    BlockEntityRendererFactories.register(
+        LighterEndBlockEntities.SIGN,
+        SignBlockEntityRenderer::new
+    );
+    BlockEntityRendererFactories.register(
+        LighterEndBlockEntities.HANGING_SIGN,
+        HangingSignBlockEntityRenderer::new
+    );
+    BlockEntityRendererFactories.register(
+        LighterEndBlockEntities.SHELF,
+        ShelfBlockEntityRenderer::new
+    );
+    BlockEntityRendererFactories.register(
+        LighterEndBlockEntities.PEDESTAL,
+        PedestalRenderer::new
+    );
 
     for (WoodSet wood : Arrays.asList(
         LighterEndBlocks.TENANEA,
