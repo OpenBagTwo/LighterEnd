@@ -1,0 +1,9 @@
+{
+  "parent": "lighterend:block/pedestal",
+  "textures": {
+    "base": "lighterend:block/sulphuric_rock_polished",
+    "bottom": "lighterend:block/sulphuric_rock_polished",
+    "pillar": "lighterend:block/sulphuric_rock_pillar_side",
+    "top": "lighterend:block/sulphuric_rock_polished"
+  }
+}

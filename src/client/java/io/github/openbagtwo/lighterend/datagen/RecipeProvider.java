@@ -661,6 +661,15 @@ public class RecipeProvider extends FabricRecipeProvider {
               RecipeCategory.BUILDING_BLOCKS, material.tileWall, input
           );
         }
+
+        createShaped(RecipeCategory.DECORATIONS, material.pedestal)
+            .pattern("s")
+            .pattern("#")
+            .pattern("s")
+            .input('s', material.polishedSlab)
+            .input('#', material.pillar)
+            .criterion(hasItem(material.pillar), conditionsFromItem(material.pillar))
+            .offerTo(exporter);
       }
 
       public void generateWoodRecipes(WoodSet wood) {

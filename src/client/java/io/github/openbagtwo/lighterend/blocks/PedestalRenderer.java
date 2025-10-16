@@ -63,8 +63,7 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalDisplay, Re
       OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
     matrices.push();
 
-    matrices.translate(0.5f, 1.15f, 0.5f);
-    matrices.scale(0.5f, 0.5f, 0.5f);
+    matrices.translate(0.5f, 1.4f, 0.5f);
     matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(state.rotation));
 
     state.itemRenderState.render(matrices, queue, getLightLevel(state.blockEntityWorld, state.pos),

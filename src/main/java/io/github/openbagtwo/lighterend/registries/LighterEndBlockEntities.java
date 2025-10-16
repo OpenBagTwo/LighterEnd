@@ -95,7 +95,13 @@ public class LighterEndBlockEntities {
       Registries.BLOCK_ENTITY_TYPE,
       LighterEnd.of("pedestal"),
       FabricBlockEntityTypeBuilder.create(
-          PedestalDisplay::new, LighterEndBlocks.PEDESTAL
+          PedestalDisplay::new,
+          LighterEndBlocks.VIOLECITE.pedestal,
+          LighterEndBlocks.AZURE_JADESTONE.pedestal,
+          LighterEndBlocks.SANDY_JADESTONE.pedestal,
+          LighterEndBlocks.VIRID_JADESTONE.pedestal,
+          LighterEndBlocks.UMBRALITH.pedestal,
+          LighterEndBlocks.BORNITE.pedestal
       ).build(null)
   );
 

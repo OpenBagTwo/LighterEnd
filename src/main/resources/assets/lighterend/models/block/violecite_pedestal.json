@@ -1,0 +1,9 @@
+{
+  "parent": "lighterend:block/pedestal",
+  "textures": {
+    "base": "lighterend:block/violecite_polished",
+    "bottom": "lighterend:block/violecite_polished",
+    "pillar": "lighterend:block/violecite_pillar_side",
+    "top": "lighterend:block/violecite_polished"
+  }
+}

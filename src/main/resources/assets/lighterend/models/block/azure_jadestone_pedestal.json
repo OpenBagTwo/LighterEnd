@@ -1,0 +1,9 @@
+{
+  "parent": "lighterend:block/pedestal",
+  "textures": {
+    "base": "lighterend:block/azure_jadestone_polished",
+    "bottom": "lighterend:block/azure_jadestone_polished",
+    "pillar": "lighterend:block/azure_jadestone_pillar_side",
+    "top": "lighterend:block/azure_jadestone_polished"
+  }
+}

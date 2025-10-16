@@ -1,0 +1,9 @@
+{
+  "parent": "lighterend:block/pedestal",
+  "textures": {
+    "base": "lighterend:block/umbralith_polished",
+    "bottom": "lighterend:block/umbralith_polished",
+    "pillar": "lighterend:block/umbralith_pillar_side",
+    "top": "lighterend:block/umbralith_polished"
+  }
+}

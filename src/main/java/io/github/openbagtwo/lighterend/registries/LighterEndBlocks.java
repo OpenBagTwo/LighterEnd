@@ -381,11 +381,6 @@ public class LighterEndBlocks {
       )
   );
 
-  public static Block PEDESTAL = register(
-      "pedestal",
-      Pedestal::new
-  );
-
   public static Block register(String name, Function<Settings, Block> factory) {
     return register(name, factory, true);
   }
@@ -441,7 +436,7 @@ public class LighterEndBlocks {
     public final Block pillar;
     public final Block button;
     public final Block pressurePlate;
-    // public final Block pedestal;
+    public final Block pedestal;
     public final List<Block> blocks;
     private final MapColor mapColor;
 
@@ -492,10 +487,13 @@ public class LighterEndBlocks {
                   .noCollision()
                   .strength(0.5F)
                   .pistonBehavior(PistonBehavior.DESTROY)));
+      pedestal = register(baseName + "_pedestal",
+          settings -> new Pedestal(applySettings(settings))
+      );
 
       blocks = Arrays.asList(baseBlock, baseStairs, baseSlab, baseWall, bricks, brickStairs,
           brickSlab, brickWall, polished, polishedStairs, polishedSlab, polishedWall, tiles,
-          tileStairs, tileSlab, tileWall, pillar, button, pressurePlate);
+          tileStairs, tileSlab, tileWall, pillar, button, pressurePlate, pedestal);
     }
 
     public Settings applySettings(Settings settings) {

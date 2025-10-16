@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
@@ -27,7 +28,10 @@ public class Pedestal extends BlockWithEntity {
   public static final MapCodec<Pedestal> CODEC = Pedestal.createCodec(Pedestal::new);
 
   public Pedestal(Settings settings) {
-    super(settings);
+    super(
+        settings
+            .pistonBehavior(PistonBehavior.BLOCK)
+    );
   }
 
   @Override
