@@ -1,7 +1,6 @@
 package io.github.openbagtwo.lighterend.mobs;
 
 import io.github.openbagtwo.lighterend.misc.StatusEffects;
-import io.github.openbagtwo.lighterend.registries.LighterEndBiomes;
 import io.github.openbagtwo.lighterend.registries.LighterEndData;
 import io.github.openbagtwo.lighterend.registries.LighterEndLootTables;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
@@ -33,7 +32,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -46,7 +44,6 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
@@ -79,8 +76,7 @@ public class GlossyMooshroom extends AbstractCowEntity implements Shearable {
   ) {
     this.setVariant(0);
 
-    RegistryEntry<Biome> biome = world.getBiome(getBlockPos());
-    if (biome.matchesKey(LighterEndBiomes.FOGGY_MUSHROOMLANDS)) {
+    if (world.getBiome(getBlockPos()).isIn(LighterEndTags.PURPLE_MOOSHROOM_BIOMES)) {
       this.dataTracker.set(VARIANT, 1);
     }
     EntityData data = super.initialize(world, difficulty, spawnReason, entityData);

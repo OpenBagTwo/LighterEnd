@@ -117,6 +117,11 @@ public class LighterEndTags {
       LighterEnd.of("has_structure/obelisk_chamber")
   );
 
+  public static final TagKey<Biome> PURPLE_MOOSHROOM_BIOMES = TagKey.of(
+      RegistryKeys.BIOME,
+      LighterEnd.of("has_purple_mooshrooms")
+  );
+
   public static void initialize() {
 
     for (WoodSet wood : Arrays.asList(
