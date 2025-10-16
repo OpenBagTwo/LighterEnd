@@ -74,7 +74,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
           wood.strippedLog,
           wood.wood,
           wood.strippedWood
-      );
+      );  // this also adds them to #minecraft:logs
       valueLookupBuilder(BlockTags.WOODEN_TRAPDOORS).add(wood.trapdoor);
       valueLookupBuilder(BlockTags.STANDING_SIGNS).add(wood.sign);
       valueLookupBuilder(BlockTags.WALL_SIGNS).add(wood.wallSign);

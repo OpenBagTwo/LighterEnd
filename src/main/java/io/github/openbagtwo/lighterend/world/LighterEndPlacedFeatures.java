@@ -77,6 +77,7 @@ public class LighterEndPlacedFeatures {
   public static final RegistryKey<PlacedFeature> SHADOW_FOREST_VEGETATION = of(
       "shadow_forest_vegetation"
   );
+  public static final RegistryKey<PlacedFeature> PURPLE_POLYPORES = of("purple_polypores");
 
 
   public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -445,6 +446,18 @@ public class LighterEndPlacedFeatures {
             VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
                 PlacedFeatures.createCountExtraModifier(10, 0.5f, 2),
                 LighterEndBlocks.DRAGON_SAPLING)
+        )
+    );
+    context.register(
+        PURPLE_POLYPORES,
+        new PlacedFeature(
+            configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.PURPLE_POLYPORES),
+            List.of(
+                CountPlacementModifier.of(5),
+                SquarePlacementModifier.of(),
+                PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
+                BiomePlacementModifier.of()
+            )
         )
     );
 

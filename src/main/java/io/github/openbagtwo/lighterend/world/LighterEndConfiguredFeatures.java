@@ -13,8 +13,8 @@ import io.github.openbagtwo.lighterend.world.features.AuroraCrystalFormation;
 import io.github.openbagtwo.lighterend.world.features.BuriedBlob;
 import io.github.openbagtwo.lighterend.world.features.Geyser;
 import io.github.openbagtwo.lighterend.world.features.IceStar;
-import io.github.openbagtwo.lighterend.world.features.IceStar.Config;
 import io.github.openbagtwo.lighterend.world.features.LotusLeaf;
+import io.github.openbagtwo.lighterend.world.features.PurplePolypores;
 import io.github.openbagtwo.lighterend.world.features.SulphurCave;
 import io.github.openbagtwo.lighterend.world.features.SulphurLake;
 import io.github.openbagtwo.lighterend.world.features.SurfaceVent;
@@ -231,6 +231,14 @@ public class LighterEndConfiguredFeatures {
   public static final RegistryKey<ConfiguredFeature<?, ?>> DRAGON_TREE = of(
       "dragon_tree");
 
+  public static final Feature<PurplePolypores.Config> PURPLE_POLYPORES_FEATURE = Registry.register(
+      Registries.FEATURE,
+      LighterEnd.of("purple_polypores"),
+      new PurplePolypores()
+  );
+  public static final RegistryKey<ConfiguredFeature<?, ?>> PURPLE_POLYPORES = of(
+      "purple_polypores");
+
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
     RegistryEntryLookup<ConfiguredFeature<?, ?>> lookup = context.getRegistryLookup(
@@ -350,37 +358,37 @@ public class LighterEndConfiguredFeatures {
         context,
         ICE_STAR_COPPER,
         ICE_STAR_FEATURE,
-        new Config(0, 5, 15, 10, 25)
+        new IceStar.Config(0, 5, 15, 10, 25)
     );
     ConfiguredFeatures.register(
         context,
         ICE_STAR_COPPER_SMALL,
         ICE_STAR_FEATURE,
-        new Config(0, 3, 5, 7, 12)
+        new IceStar.Config(0, 3, 5, 7, 12)
     );
     ConfiguredFeatures.register(
         context,
         ICE_STAR_IRON,
         ICE_STAR_FEATURE,
-        new Config(1, 5, 15, 10, 25)
+        new IceStar.Config(1, 5, 15, 10, 25)
     );
     ConfiguredFeatures.register(
         context,
         ICE_STAR_IRON_SMALL,
         ICE_STAR_FEATURE,
-        new Config(1, 3, 5, 7, 12)
+        new IceStar.Config(1, 3, 5, 7, 12)
     );
     ConfiguredFeatures.register(
         context,
         ICE_STAR_GOLD,
         ICE_STAR_FEATURE,
-        new Config(2, 5, 15, 10, 25)
+        new IceStar.Config(2, 5, 15, 10, 25)
     );
     ConfiguredFeatures.register(
         context,
         ICE_STAR_GOLD_SMALL,
         ICE_STAR_FEATURE,
-        new Config(2, 3, 5, 7, 12)
+        new IceStar.Config(2, 3, 5, 7, 12)
     );
 
     ConfiguredFeatures.register(
@@ -467,6 +475,12 @@ public class LighterEndConfiguredFeatures {
     ConfiguredFeatures.register(context, GEYSER, GEYSER_FEATURE);
 
     ConfiguredFeatures.register(context, DRAGON_TREE, DRAGON_TREE_FEATURE);
+    ConfiguredFeatures.register(
+        context,
+        PURPLE_POLYPORES,
+        PURPLE_POLYPORES_FEATURE,
+        new PurplePolypores.Config(3)
+    );
   }
 
   public static void initialize() {

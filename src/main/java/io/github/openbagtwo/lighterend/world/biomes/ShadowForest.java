@@ -45,6 +45,7 @@ public class ShadowForest {
     var genSettingsBuilder = new GenerationSettings.LookupBackedBuilder(features, carvers)
         .feature(Feature.SURFACE_STRUCTURES, EndPlacedFeatures.END_GATEWAY_RETURN)
         .feature(Feature.SURFACE_STRUCTURES, LighterEndPlacedFeatures.DRAGON_TREE)
+        .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.PURPLE_POLYPORES)
         .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.SHADOW_FOREST_VEGETATION);
 
     for (RegistryKey<PlacedFeature> blob : LighterEndPlacedFeatures.JADESTONE_BLOBS) {
