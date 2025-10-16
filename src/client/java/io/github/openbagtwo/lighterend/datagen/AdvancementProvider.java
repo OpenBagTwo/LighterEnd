@@ -54,7 +54,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
       Consumer<AdvancementEntry> consumer
   ) {
     AdvancementEntry root = Advancement.Builder.create().display(
-        LighterEndBlocks.AURORA_CRYSTAL.asItem(),
+        LighterEndItems.AURORA_CRYSTAL_SHARD,
         title("root"),
         description("root"),
         LighterEnd.of("block/ender_block"),
@@ -70,6 +70,24 @@ public class AdvancementProvider extends FabricAdvancementProvider {
     // end_lake was created by hand
     AdvancementEntry end_lake = new AdvancementEntry(Identifier.of(LighterEnd.MOD_ID + "/end_lake"),
         null);
+
+    AdvancementEntry sulphur_springs = Advancement.Builder.create().parent(end_lake).display(
+        LighterEndBlocks.HYDROTHERMAL_VENT.asItem(),
+        title("sulphur_springs"),
+        description("sulphur_springs"),
+        null,
+        AdvancementFrame.TASK,
+        true,
+        true,
+        false
+    ).criterion(
+        "found_sulphur_spring",
+        TickCriterion.Conditions.createLocation(
+            LocationPredicate.Builder.createBiome(
+                lookup.getOrThrow(RegistryKeys.BIOME).getOrThrow(LighterEndBiomes.SULPHUR_SPRINGS)
+            )
+        )
+    ).build(consumer, LighterEnd.MOD_ID + "/sulphur_springs");
 
     AdvancementEntry craft_spectral_arrow = Advancement.Builder.create().parent(end_lake).display(
         LighterEndItems.GLOW_BARB,
@@ -247,7 +265,8 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         "acquire_end_cream", InventoryChangedCriterion.Conditions.items(LighterEndItems.END_CREAM)
     ).build(consumer, LighterEnd.MOD_ID + "/acquire_end_cream");
 
-    Advancement.Builder allBiomesBuilder = Advancement.Builder.create().parent(end_lake).display(
+    Advancement.Builder allBiomesBuilder = Advancement.Builder.create().parent(sulphur_springs)
+        .display(
             LighterEndBlocks.END_MOSS.asItem(),
             title("all_the_biomes"),
             description("all_the_biomes"),
@@ -256,8 +275,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
             false,
             false,
             false
-        )
-        .criteriaMerger(CriterionMerger.AND);
+        ).criteriaMerger(CriterionMerger.AND);
 
     int xpReward = 0;
     for (RegistryKey<Biome> biome : List.of(
