@@ -10,8 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
@@ -53,16 +51,6 @@ public class UmbrellaTreeCluster extends Block {
       }
       stack = new ItemStack(LighterEndItems.UMBRELLA_JUICE);
       player.giveItemStack(stack);
-      world.playSoundClient(
-          pos.getX() + 0.5,
-          pos.getY() + 0.5,
-          pos.getZ() + 0.5,
-          SoundEvents.ITEM_BOTTLE_FILL,
-          SoundCategory.BLOCKS,
-          1,
-          1,
-          false
-      );
       world.setBlockState(pos,
           LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY.getDefaultState().with(NATURAL,
               state.get(NATURAL)), Block.NOTIFY_ALL);

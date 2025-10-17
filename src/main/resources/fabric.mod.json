@@ -8,10 +8,10 @@
     "sources": "https://github.com/OpenBagTwo/LighterEnd"
   },
   "depends": {
-    "fabric-api": ">=0.133.14",
-    "fabricloader": ">=0.17.2",
+    "fabric-api": "*",
+    "fabricloader": "*",
     "java": ">=21",
-    "minecraft": ">=1.21.9"
+    "minecraft": "=1.21.4"
   },
   "description": "Bringing light and life to the most desolate dimension. A continuation of BetterEnd",
   "entrypoints": {
@@ -33,7 +33,6 @@
   "id": "lighterend",
   "license": "GPL-3.0",
   "mixins": [
-    "lighterend.mixins.json",
     {
       "config": "lighterend.client.mixins.json",
       "environment": "client"

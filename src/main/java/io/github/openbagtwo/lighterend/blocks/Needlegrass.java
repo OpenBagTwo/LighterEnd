@@ -7,15 +7,11 @@ import net.minecraft.block.Fertilizable;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.PlantBlock;
 import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCollisionHandler;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -63,32 +59,6 @@ public class Needlegrass extends PlantBlock implements Fertilizable {
   @Override
   public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
     dropStack(world, pos, new ItemStack(this));
-  }
-
-  @Override
-  protected void onEntityCollision(
-      BlockState state,
-      World world,
-      BlockPos pos,
-      Entity entity,
-      EntityCollisionHandler handler,
-      boolean bl
-  ) {
-    if (
-        entity instanceof LivingEntity
-            && !entity.getType().isIn(LighterEndTags.IMMUNE_TO_NEEDLEGRASS)
-    ) {
-      entity.slowMovement(state, new Vec3d(0.8F, 0.75, 0.8F));
-      if (world instanceof ServerWorld serverWorld) {
-        Vec3d vec3d = entity.isControlledByPlayer() ? entity.getMovement()
-            : entity.getLastRenderPos().subtract(entity.getEntityPos());
-        if (vec3d.horizontalLengthSquared() > 0.0) {
-          if (Math.abs(vec3d.getX()) >= 0.003F || Math.abs(vec3d.getZ()) >= 0.003F) {
-            entity.damage(serverWorld, world.getDamageSources().sweetBerryBush(), 1.0F);
-          }
-        }
-      }
-    }
   }
 
   @Override

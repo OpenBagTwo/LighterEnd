@@ -32,12 +32,7 @@ import io.github.openbagtwo.lighterend.blocks.UmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaFern.TallUmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaMembrane;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaTreeCluster;
-import io.github.openbagtwo.lighterend.blocks.VentBubbleColumn;
 import io.github.openbagtwo.lighterend.misc.Wood.WoodSet;
-import io.github.openbagtwo.lighterend.world.features.trees.DragonTree;
-import io.github.openbagtwo.lighterend.world.features.trees.Glowshroom;
-import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
-import io.github.openbagtwo.lighterend.world.features.trees.UmbrellaTree;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -45,10 +40,11 @@ import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSetType;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.BubbleColumnBlock;
 import net.minecraft.block.ButtonBlock;
-import net.minecraft.block.CopperBlockSet;
 import net.minecraft.block.ExperienceDroppingBlock;
 import net.minecraft.block.FlowerPotBlock;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.LeverBlock;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.PillarBlock;
@@ -56,7 +52,6 @@ import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.block.RedstoneOreBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
-import net.minecraft.block.TintedParticleLeavesBlock;
 import net.minecraft.block.WallBlock;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
@@ -112,7 +107,7 @@ public class LighterEndBlocks {
 
   public static Block TENANEA_FLOWER = register("tenanea_flower", TenaneaFlower::new);
   public static Block TENANEA_SAPLING = register("tenanea_sapling",
-      settings -> new Sapling(TenaneaTree::new, settings.mapColor(MapColor.PINK)));
+      settings -> new Sapling(settings.mapColor(MapColor.PINK)));
   public static Block POTTED_TENANEA_SAPLING = register(
       "potted_tenanea_sapling",
       settings -> new FlowerPotBlock(TENANEA_SAPLING, applyFlowerPotSettings(settings)),
@@ -125,8 +120,7 @@ public class LighterEndBlocks {
   );
   public static Block TENANEA_LEAVES = register(
       "tenanea_leaves",
-      settings -> new TintedParticleLeavesBlock(
-          0.01F,
+      settings -> new LeavesBlock(
           applyLeafSettings(settings.mapColor(MapColor.PINK))
       )
   );
@@ -137,7 +131,7 @@ public class LighterEndBlocks {
   public static Block UMBRELLA_TREE_CLUSTER_EMPTY = register("umbrella_tree_cluster_empty",
       UmbrellaTreeCluster.EmptyCluster::new);
   public static Block UMBRELLA_TREE_SAPLING = register("umbrella_tree_sapling",
-      settings -> new Sapling(UmbrellaTree::new, settings.mapColor(MapColor.BRIGHT_TEAL)));
+      settings -> new Sapling(settings.mapColor(MapColor.BRIGHT_TEAL)));
   public static Block POTTED_UMBRELLA_SAPLING = register(
       "potted_umbrella_tree_sapling",
       settings -> new FlowerPotBlock(UMBRELLA_TREE_SAPLING, applyFlowerPotSettings(settings)),
@@ -164,7 +158,7 @@ public class LighterEndBlocks {
   public static final WoodSet LOTUS = new WoodSet("end_lotus", MapColor.LIGHT_BLUE, MapColor.CYAN);
 
   public static final Block GLOWSHROOM_SAPLING = register("mossy_glowshroom_sapling",
-      settings -> new Sapling(Glowshroom::new, settings.luminance((bs) -> 7)));
+      settings -> new Sapling(settings.luminance((bs) -> 7)));
   public static Block POTTED_GLOWSHROOM_SAPLING = register(
       "potted_mossy_glowshroom_sapling",
       settings -> new FlowerPotBlock(GLOWSHROOM_SAPLING, applyFlowerPotSettings(settings)),
@@ -197,7 +191,7 @@ public class LighterEndBlocks {
       false
   );
   public static final Block AGAVE_SEED = register(
-      "blue_vine_seed", settings -> new Sapling(Agave.AgaveFeature::new, settings)
+      "blue_vine_seed", settings -> new Sapling(settings)
   );
 
   public static final Block AURANT_POLYPORE = register(
@@ -225,21 +219,6 @@ public class LighterEndBlocks {
 
   public static final Block GOLD_CHANDELIER = register("gold_chandelier", Chandelier::new);
   public static final Block IRON_CHANDELIER = register("iron_chandelier", Chandelier::new);
-  public static final CopperBlockSet COPPER_CHANDELIERS = CopperBlockSet.create(
-      "copper_chandelier",
-      LighterEndBlocks::register,
-      Chandelier::new,
-      Chandelier.Oxidizable::new,
-      oxidationLevel -> Settings.create()
-          .mapColor(MapColor.IRON_GRAY)
-          .luminance((bs) -> 15)
-          .solid()
-          .nonOpaque()
-          .requiresTool()
-          .pistonBehavior(PistonBehavior.DESTROY)
-          .strength(2.5F)
-          .sounds(BlockSoundGroup.CHAIN)
-  );
 
   public static final Block EMERALD_ICE = register(
       "emerald_ice",
@@ -340,7 +319,7 @@ public class LighterEndBlocks {
   );
   public static final Block VENT_BUBBLE_COLUMN = register(
       "vent_bubble_column",
-      VentBubbleColumn::new,
+      BubbleColumnBlock::new,
       false
   );
   public static final Block TUBE_WORM = register(
@@ -366,7 +345,7 @@ public class LighterEndBlocks {
       Murkweed::new
   );
   public static Block DRAGON_SAPLING = register("dragon_tree_sapling",
-      settings -> new Sapling(DragonTree::new, settings.mapColor(MapColor.MAGENTA)));
+      settings -> new Sapling(settings.mapColor(MapColor.MAGENTA)));
   public static Block POTTED_DRAGON_SAPLING = register(
       "potted_dragon_tree_sapling",
       settings -> new FlowerPotBlock(DRAGON_SAPLING, applyFlowerPotSettings(settings)),
@@ -375,8 +354,7 @@ public class LighterEndBlocks {
   public static WoodSet DRAGON = new WoodSet("dragon_tree", MapColor.BLACK, MapColor.PURPLE);
   public static Block DRAGON_LEAVES = register(
       "dragon_tree_leaves",
-      settings -> new TintedParticleLeavesBlock(
-          0.01F,
+      settings -> new LeavesBlock(
           applyLeafSettings(settings.mapColor(MapColor.MAGENTA))
       )
   );

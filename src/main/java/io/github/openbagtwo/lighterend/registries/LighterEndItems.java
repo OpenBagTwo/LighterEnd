@@ -5,7 +5,6 @@ import io.github.openbagtwo.lighterend.items.Fur;
 import io.github.openbagtwo.lighterend.items.LighterEndFoodComponents;
 import io.github.openbagtwo.lighterend.items.Matchstick;
 import io.github.openbagtwo.lighterend.items.TPTotem;
-import io.github.openbagtwo.lighterend.registries.LighterEndData.SilkLevelComponent;
 import java.util.function.Function;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.FoodComponents;
@@ -38,8 +37,6 @@ public class LighterEndItems {
       settings -> new BlockItem(
           LighterEndBlocks.SILK_MOTH_NEST,
           settings
-              .component(LighterEndData.MOTHS, LighterEndData.MothsComponent.DEFAULT)
-              .component(LighterEndData.SILK_LEVEL, new SilkLevelComponent(0))
       ),
       new Settings()
   );

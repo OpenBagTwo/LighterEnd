@@ -2,9 +2,6 @@ package io.github.openbagtwo.lighterend.utils.math;
 
 import com.google.common.collect.Lists;
 import io.github.openbagtwo.lighterend.utils.Flags;
-import io.github.openbagtwo.lighterend.utils.math.sdf.SDF;
-import io.github.openbagtwo.lighterend.utils.math.sdf.operators.SDFUnion;
-import io.github.openbagtwo.lighterend.utils.math.sdf.primitives.SDFLine;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -290,29 +287,6 @@ public class MathUtils {
       z1 = z2;
     }
     return true;
-  }
-
-  public static SDF buildSDF(
-      List<Vector3f> spline,
-      float radius1,
-      float radius2,
-      Function<BlockPos, BlockState> placerFunction
-  ) {
-    int count = spline.size();
-    float max = count - 2;
-    SDF result = null;
-    Vector3f start = spline.get(0);
-    for (int i = 1; i < count; i++) {
-      Vector3f pos = spline.get(i);
-      float delta = (float) (i - 1) / max;
-      SDF line = new SDFLine().setRadius(MathHelper.lerp(delta, radius1, radius2))
-          .setStart(start.x(), start.y(), start.z())
-          .setEnd(pos.x(), pos.y(), pos.z())
-          .setBlock(placerFunction);
-      result = result == null ? line : new SDFUnion().setSourceA(result).setSourceB(line);
-      start = pos;
-    }
-    return result;
   }
 
   public static void offset(List<Vector3f> spline, Vector3f offset) {

@@ -1,13 +1,6 @@
 package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import io.github.openbagtwo.lighterend.mobs.ChorusCrab;
-import io.github.openbagtwo.lighterend.mobs.Cubozoa;
-import io.github.openbagtwo.lighterend.mobs.Dragonfly;
-import io.github.openbagtwo.lighterend.mobs.EndFish;
-import io.github.openbagtwo.lighterend.mobs.EndSlime;
-import io.github.openbagtwo.lighterend.mobs.GlossyMooshroom;
-import io.github.openbagtwo.lighterend.mobs.SilkMoth;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -16,9 +9,8 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnLocationTypes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.SpawnRestriction;
-import net.minecraft.entity.mob.SlimeEntity;
-import net.minecraft.entity.mob.WaterCreatureEntity;
-import net.minecraft.entity.passive.AbstractCowEntity;
+import net.minecraft.entity.mob.EndermiteEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.item.SpawnEggItem;
@@ -35,40 +27,40 @@ import net.minecraft.world.WorldAccess;
 
 public class LighterEndMobs {
 
-  public static final LighterEndMob<SilkMoth> SILK_MOTH = new LighterEndMob<>("silk_moth",
-      EntityType.Builder.create(SilkMoth::new, SpawnGroup.CREATURE).dimensions(
+  public static final LighterEndMob<EndermiteEntity> SILK_MOTH = new LighterEndMob<>("silk_moth",
+      EntityType.Builder.create(EndermiteEntity::new, SpawnGroup.CREATURE).dimensions(
           0.6F, 0.6F).eyeHeight(0.3F).maxTrackingRange(8));
 
-  public static final LighterEndMob<Dragonfly> DRAGONFLY = new LighterEndMob<>("dragonfly",
-      EntityType.Builder.create(Dragonfly::new, SpawnGroup.AMBIENT).dimensions(
+  public static final LighterEndMob<EndermiteEntity> DRAGONFLY = new LighterEndMob<>("dragonfly",
+      EntityType.Builder.create(EndermiteEntity::new, SpawnGroup.AMBIENT).dimensions(
           0.6F, 0.5F).eyeHeight(0.25F).maxTrackingRange(8));
 
-  public static final LighterEndMob<EndFish> END_FISH = new LighterEndMob<>("end_fish",
-      EntityType.Builder.create(EndFish::new, SpawnGroup.WATER_AMBIENT).dimensions(
+  public static final LighterEndMob<EndermiteEntity> END_FISH = new LighterEndMob<>("end_fish",
+      EntityType.Builder.create(EndermiteEntity::new, SpawnGroup.WATER_AMBIENT).dimensions(
           0.5F, 0.5F).eyeHeight(0.25F).maxTrackingRange(4));
 
-  public static final LighterEndMob<Cubozoa> CUBOZOA = new LighterEndMob<>("cubozoa",
-      EntityType.Builder.create(Cubozoa::new, SpawnGroup.WATER_CREATURE).dimensions(
+  public static final LighterEndMob<EndermiteEntity> CUBOZOA = new LighterEndMob<>("cubozoa",
+      EntityType.Builder.create(EndermiteEntity::new, SpawnGroup.WATER_CREATURE).dimensions(
           0.6F, 1.0F).eyeHeight(0.5F).maxTrackingRange(4));
 
-  public static final LighterEndMob<EndSlime> END_SLIME = new LighterEndMob<>(
+  public static final LighterEndMob<EndermiteEntity> END_SLIME = new LighterEndMob<>(
       "end_slime",
-      EntityType.Builder.create(EndSlime::new, SpawnGroup.MONSTER).dimensions(0.5F, 0.5F)
+      EntityType.Builder.create(EndermiteEntity::new, SpawnGroup.MONSTER).dimensions(0.5F, 0.5F)
           .eyeHeight(0.325F).spawnBoxScale(4.0F).maxTrackingRange(10)
   );
 
-  public static final LighterEndMob<GlossyMooshroom> MOOSHROOM = new LighterEndMob<>(
+  public static final LighterEndMob<EndermiteEntity> MOOSHROOM = new LighterEndMob<>(
       "glossy_mooshroom",
-      EntityType.Builder.create(GlossyMooshroom::new, SpawnGroup.CREATURE)
+      EntityType.Builder.create(EndermiteEntity::new, SpawnGroup.CREATURE)
           .dimensions(0.9F, 1.4F)
           .eyeHeight(1.3F)
           .passengerAttachments(1.36875F)
           .maxTrackingRange(10)
   );
 
-  public static final LighterEndMob<ChorusCrab> CHORUS_CRAB = new LighterEndMob<>(
+  public static final LighterEndMob<EndermiteEntity> CHORUS_CRAB = new LighterEndMob<>(
       "chorus_crab",
-      EntityType.Builder.create(ChorusCrab::new, SpawnGroup.CREATURE)
+      EntityType.Builder.create(EndermiteEntity::new, SpawnGroup.CREATURE)
           .dimensions(2.0F, 1.2F)
           .eyeHeight(1.1F)
           .passengerAttachments(new Vec3d(0, 0.9F, -0.5F))
@@ -88,20 +80,27 @@ public class LighterEndMobs {
                   RegistryKeys.ENTITY_TYPE, LighterEnd.of(name))));
       spawnEgg = LighterEndItems.register(
           name + "_spawn_egg",
-          (properties) -> new SpawnEggItem(properties.spawnEgg(mob)),
+          (properties) -> new SpawnEggItem((EntityType<? extends MobEntity>) mob, properties),
           new Settings()
       );
     }
   }
 
   public static void initialize() {
-    FabricDefaultAttributeRegistry.register(SILK_MOTH.mob, SilkMoth.createAttributes());
-    FabricDefaultAttributeRegistry.register(DRAGONFLY.mob, Dragonfly.createAttributes());
-    FabricDefaultAttributeRegistry.register(END_FISH.mob, EndFish.createAttributes());
-    FabricDefaultAttributeRegistry.register(CUBOZOA.mob, Cubozoa.createAttributes());
-    FabricDefaultAttributeRegistry.register(END_SLIME.mob, EndSlime.createAttributes());
-    FabricDefaultAttributeRegistry.register(MOOSHROOM.mob, AbstractCowEntity.createCowAttributes());
-    FabricDefaultAttributeRegistry.register(CHORUS_CRAB.mob, ChorusCrab.createCrabAttributes());
+    FabricDefaultAttributeRegistry.register(SILK_MOTH.mob,
+        EndermiteEntity.createEndermiteAttributes());
+    FabricDefaultAttributeRegistry.register(DRAGONFLY.mob,
+        EndermiteEntity.createEndermiteAttributes());
+    FabricDefaultAttributeRegistry.register(END_FISH.mob,
+        EndermiteEntity.createEndermiteAttributes());
+    FabricDefaultAttributeRegistry.register(CUBOZOA.mob,
+        EndermiteEntity.createEndermiteAttributes());
+    FabricDefaultAttributeRegistry.register(END_SLIME.mob,
+        EndermiteEntity.createEndermiteAttributes());
+    FabricDefaultAttributeRegistry.register(MOOSHROOM.mob,
+        EndermiteEntity.createEndermiteAttributes());
+    FabricDefaultAttributeRegistry.register(CHORUS_CRAB.mob,
+        EndermiteEntity.createEndermiteAttributes());
 
     SpawnRestriction.register(
         DRAGONFLY.mob,
@@ -141,14 +140,14 @@ public class LighterEndMobs {
     );
   }
 
-  public static boolean canAquaticMobSpawn(EntityType<? extends WaterCreatureEntity> type,
+  public static boolean canAquaticMobSpawn(EntityType<? extends EndermiteEntity> type,
       WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
     return world.getFluidState(pos.down()).isIn(FluidTags.WATER)
         && world.getBlockState(pos.up()).isOf(Blocks.WATER);
   }
 
   public static boolean canSlimeSpawn(
-      EntityType<? extends SlimeEntity> type,
+      EntityType<? extends EndermiteEntity> type,
       WorldAccess world, SpawnReason reason, BlockPos pos, Random random
   ) {
     if (!world.getBlockState(pos.down()).isIn(LighterEndTags.SLIME_SPAWNABLE)) {

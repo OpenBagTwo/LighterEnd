@@ -17,7 +17,6 @@ import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Models;
 import net.minecraft.client.data.TexturedModel;
 import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
 
 public class ModelProvider extends FabricModelProvider {
 
@@ -88,14 +87,6 @@ public class ModelProvider extends FabricModelProvider {
     blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.FERROUS_ICE);
     blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.AUROUS_ICE);
 
-    LighterEndBlocks.COPPER_CHANDELIERS.getWaxingMap()
-        .forEach(
-            (unwaxed, waxed) -> blockModelGenerator.registerWaxable(
-                unwaxed.asItem(),
-                waxed.asItem()
-            )
-        );
-
     generateMaterialModels(blockModelGenerator, LighterEndBlocks.BORNITE);
 
     generateWoodModels(blockModelGenerator, LighterEndBlocks.DRAGON);
@@ -130,8 +121,8 @@ public class ModelProvider extends FabricModelProvider {
       BlockStateModelGenerator blockModelGenerator,
       WoodSet wood
   ) {
-    blockModelGenerator.createLogTexturePool(wood.log).log(wood.log).wood(wood.wood);
-    blockModelGenerator.createLogTexturePool(wood.strippedLog).log(wood.strippedLog)
+    blockModelGenerator.registerLog(wood.log).log(wood.log).wood(wood.wood);
+    blockModelGenerator.registerLog(wood.strippedLog).log(wood.strippedLog)
         .wood(wood.strippedWood);
     blockModelGenerator.registerCubeAllModelTexturePool(wood.planks).stairs(wood.stairs)
         .slab(wood.slab).fence(wood.fence).fenceGate(wood.gate).button(wood.button)
@@ -141,7 +132,6 @@ public class ModelProvider extends FabricModelProvider {
     blockModelGenerator.registerHangingSign(wood.strippedLog, wood.sign, wood.wallSign);
     blockModelGenerator.registerHangingSign(wood.strippedLog, wood.hangingSign,
         wood.wallHangingSign);
-    blockModelGenerator.registerShelf(wood.shelf, wood.strippedLog);
   }
 
   @Override
@@ -226,7 +216,7 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.registerArmor(
         LighterEndEquipment.SILK_ELYTRA,
         LighterEndEquipment.SILK_MATERIAL,
-        Identifier.ofVanilla("trims/items/chestplate_trim"),
+        "trims/items/chestplate_trim",
         true
     );
 

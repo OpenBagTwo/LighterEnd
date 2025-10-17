@@ -3,8 +3,6 @@ package io.github.openbagtwo.lighterend.blocks;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.Optional;
-import java.util.function.Supplier;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SaplingBlock;
 import net.minecraft.block.SaplingGenerator;
@@ -16,24 +14,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
 
 public class Sapling extends SaplingBlock {
 
-  public final Supplier<Feature<DefaultFeatureConfig>> treeConstructor;
   public final int growChance;
 
   public Sapling(
-      Supplier<Feature<DefaultFeatureConfig>> treeConstructor,
       Settings settings
   ) {
-    this(treeConstructor, settings, 15);
+    this(settings, 15);
   }
 
   public Sapling(
-      Supplier<Feature<DefaultFeatureConfig>> treeConstructor,
       Settings settings,
       int growChance
   ) {
@@ -46,23 +38,11 @@ public class Sapling extends SaplingBlock {
             .burnable()
             .ticksRandomly()
     );
-    this.treeConstructor = treeConstructor;
     this.growChance = growChance;
   }
 
   @Override
   public void generate(ServerWorld world, BlockPos pos, BlockState state, Random random) {
-    if (!isAllowedToGrow(world, pos)) {
-      return;
-    }
-    if (state.get(STAGE) == 0) {
-      world.setBlockState(pos, state.cycle(STAGE),
-          Block.SKIP_REDRAW_AND_BLOCK_ENTITY_REPLACED_CALLBACK);
-    } else {
-      FeatureContext<DefaultFeatureConfig> context = new FeatureContext<>(null, world,
-          world.getChunkManager().getChunkGenerator(), random, pos, new DefaultFeatureConfig());
-      treeConstructor.get().generate(context);
-    }
   }
 
   @Override

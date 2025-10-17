@@ -1,29 +1,22 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import com.mojang.serialization.MapCodec;
-import io.github.openbagtwo.lighterend.blocks.entities.Updraft;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.utils.Flags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidFillable;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
@@ -40,7 +33,7 @@ import net.minecraft.world.WorldView;
 import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
-public class HydrothermalVent extends BlockWithEntity implements FluidFillable, Waterloggable {
+public class HydrothermalVent extends Block implements FluidFillable, Waterloggable {
 
   public static final MapCodec<HydrothermalVent> CODEC = createCodec(HydrothermalVent::new);
 
@@ -79,17 +72,6 @@ public class HydrothermalVent extends BlockWithEntity implements FluidFillable, 
       ShapeContext ePos
   ) {
     return SHAPE;
-  }
-
-  @Override
-  public boolean canFillWithFluid(
-      @Nullable LivingEntity filler,
-      BlockView world,
-      BlockPos pos,
-      BlockState state,
-      Fluid fluid
-  ) {
-    return false;
   }
 
 
@@ -147,11 +129,6 @@ public class HydrothermalVent extends BlockWithEntity implements FluidFillable, 
   }
 
   @Override
-  public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-    return new Updraft(pos, state);
-  }
-
-  @Override
   public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
     BlockPos up = pos.up();
     if (world.getBlockState(up).isOf(Blocks.WATER)) {
@@ -173,26 +150,6 @@ public class HydrothermalVent extends BlockWithEntity implements FluidFillable, 
             && state.get(WATERLOGGED) && world.getBlockState(pos.up()).isOf(Blocks.WATER)) {
       scheduledTick(state, (ServerWorld) world, pos, world.random);
     }
-  }
-
-  public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-    super.randomDisplayTick(state, world, pos, random);
-    if (!state.get(ACTIVATED) && random.nextBoolean()) {
-      double x = pos.getX() + random.nextDouble();
-      double y = pos.getY() + 0.9 + random.nextDouble() * 0.3;
-      double z = pos.getZ() + random.nextDouble();
-      world.addParticleClient(ParticleTypes.LARGE_SMOKE, x, y, z, 0, 0, 0);
-    }
-  }
-
-  @Nullable
-  @Override
-  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
-      World level,
-      BlockState blockState,
-      BlockEntityType<T> blockEntityType
-  ) {
-    return Updraft::tick;
   }
 
 }

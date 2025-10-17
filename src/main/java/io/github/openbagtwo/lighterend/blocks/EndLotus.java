@@ -13,7 +13,7 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -283,7 +283,7 @@ public class EndLotus extends Block {
   public static class Seed extends Sapling implements FluidFillable {
 
     public Seed(Settings settings) {
-      super(EndLotusFeature::new, settings, 7);
+      super(settings, 7);
     }
 
     @Override
@@ -307,7 +307,7 @@ public class EndLotus extends Block {
     }
 
     @Override
-    public boolean canFillWithFluid(@Nullable LivingEntity filler, BlockView world, BlockPos pos,
+    public boolean canFillWithFluid(@Nullable PlayerEntity player, BlockView world, BlockPos pos,
         BlockState state, Fluid fluid) {
       return false;
     }

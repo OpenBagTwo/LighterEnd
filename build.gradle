@@ -15,6 +15,10 @@ base {
 repositories {
     mavenCentral()
     maven {
+        name = "Wispforest"
+        url = "https://maven.wispforest.io/releases/"
+    }
+    maven {
         name = "Terraformers"
         url = "https://maven.terraformersmc.com/"
     }
@@ -52,6 +56,9 @@ dependencies {
     modCompileOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
     modRuntimeOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
     modRuntimeOnly("maven.modrinth:jade:${project.jade_version}")
+//    modRuntimeOnly("io.wispforest:worldmesher:${project.worldmesher_version}")
+//    modRuntimeOnly("maven.modrinth:owo-lib:${project.owo_version}")
+//    modRuntimeOnly("maven.modrinth:isometric-renders:${project.isorender_version}")
 
     compileOnly "org.yaml:snakeyaml:2.2"
     shadow(implementation("org.yaml:snakeyaml:2.2"))
