@@ -103,6 +103,10 @@ public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
         LighterEndItems.CRAB_CAKE
     );
 
+    valueLookupBuilder(ItemTags.TRIM_MATERIALS).add(
+        LighterEndItems.AURORA_CRYSTAL_SHARD
+    );
+
     valueLookupBuilder(LighterEndTags.REPAIRS_SILK_ARMOR).add(LighterEndItems.SILK);
 
     valueLookupBuilder(LighterEndTags.FLETCHINGS).add(

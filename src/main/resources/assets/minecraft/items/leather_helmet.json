@@ -3,10 +3,10 @@
     "cases": [
       {
         "model": {
-          "model": "lighterend:item/silk_elytra_quartz_trim",
+          "model": "minecraft:item/leather_helmet_quartz_trim",
           "tints": [
             {
-              "default": -262145,
+              "default": -6265536,
               "type": "minecraft:dye"
             }
           ],
@@ -16,10 +16,10 @@
       },
       {
         "model": {
-          "model": "lighterend:item/silk_elytra_iron_trim",
+          "model": "minecraft:item/leather_helmet_iron_trim",
           "tints": [
             {
-              "default": -262145,
+              "default": -6265536,
               "type": "minecraft:dye"
             }
           ],
@@ -29,23 +29,10 @@
       },
       {
         "model": {
-          "model": "lighterend:item/silk_elytra_aurora_trim",
+          "model": "minecraft:item/leather_helmet_netherite_trim",
           "tints": [
             {
-              "default": -262145,
-              "type": "minecraft:dye"
-            }
-          ],
-          "type": "minecraft:model"
-        },
-        "when": "lighterend:aurora"
-      },
-      {
-        "model": {
-          "model": "lighterend:item/silk_elytra_netherite_trim",
-          "tints": [
-            {
-              "default": -262145,
+              "default": -6265536,
               "type": "minecraft:dye"
             }
           ],
@@ -55,10 +42,10 @@
       },
       {
         "model": {
-          "model": "lighterend:item/silk_elytra_redstone_trim",
+          "model": "minecraft:item/leather_helmet_redstone_trim",
           "tints": [
             {
-              "default": -262145,
+              "default": -6265536,
               "type": "minecraft:dye"
             }
           ],
@@ -68,10 +55,10 @@
       },
       {
         "model": {
-          "model": "lighterend:item/silk_elytra_copper_trim",
+          "model": "minecraft:item/leather_helmet_copper_trim",
           "tints": [
             {
-              "default": -262145,
+              "default": -6265536,
               "type": "minecraft:dye"
             }
           ],
@@ -81,10 +68,10 @@
       },
       {
         "model": {
-          "model": "lighterend:item/silk_elytra_gold_trim",
+          "model": "minecraft:item/leather_helmet_gold_trim",
           "tints": [
             {
-              "default": -262145,
+              "default": -6265536,
               "type": "minecraft:dye"
             }
           ],
@@ -94,10 +81,10 @@
       },
       {
         "model": {
-          "model": "lighterend:item/silk_elytra_emerald_trim",
+          "model": "minecraft:item/leather_helmet_emerald_trim",
           "tints": [
             {
-              "default": -262145,
+              "default": -6265536,
               "type": "minecraft:dye"
             }
           ],
@@ -107,10 +94,10 @@
       },
       {
         "model": {
-          "model": "lighterend:item/silk_elytra_diamond_trim",
+          "model": "minecraft:item/leather_helmet_diamond_trim",
           "tints": [
             {
-              "default": -262145,
+              "default": -6265536,
               "type": "minecraft:dye"
             }
           ],
@@ -120,10 +107,10 @@
       },
       {
         "model": {
-          "model": "lighterend:item/silk_elytra_lapis_trim",
+          "model": "minecraft:item/leather_helmet_lapis_trim",
           "tints": [
             {
-              "default": -262145,
+              "default": -6265536,
               "type": "minecraft:dye"
             }
           ],
@@ -133,10 +120,10 @@
       },
       {
         "model": {
-          "model": "lighterend:item/silk_elytra_amethyst_trim",
+          "model": "minecraft:item/leather_helmet_amethyst_trim",
           "tints": [
             {
-              "default": -262145,
+              "default": -6265536,
               "type": "minecraft:dye"
             }
           ],
@@ -146,23 +133,36 @@
       },
       {
         "model": {
-          "model": "lighterend:item/silk_elytra_resin_trim",
+          "model": "minecraft:item/leather_helmet_resin_trim",
           "tints": [
             {
-              "default": -262145,
+              "default": -6265536,
               "type": "minecraft:dye"
             }
           ],
           "type": "minecraft:model"
         },
         "when": "minecraft:resin"
+      },
+      {
+        "model": {
+          "model": "minecraft:item/leather_helmet_aurora_trim",
+          "tints": [
+            {
+              "default": -6265536,
+              "type": "minecraft:dye"
+            }
+          ],
+          "type": "minecraft:model"
+        },
+        "when": "lighterend:aurora"
       }
     ],
     "fallback": {
-      "model": "lighterend:item/silk_elytra",
+      "model": "minecraft:item/leather_helmet",
       "tints": [
         {
-          "default": -262145,
+          "default": -6265536,
           "type": "minecraft:dye"
         }
       ],

@@ -1,0 +1,17 @@
+{
+  "sources": [
+    {
+      "palette_key": "minecraft:trims/color_palettes/trim_palette",
+      "permutations": {
+        "aurora": "lighterend:trims/color_palettes/aurora"
+      },
+      "textures": [
+        "minecraft:trims/items/helmet_trim",
+        "minecraft:trims/items/chestplate_trim",
+        "minecraft:trims/items/leggings_trim",
+        "minecraft:trims/items/boots_trim"
+      ],
+      "type": "minecraft:paletted_permutations"
+    }
+  ]
+}

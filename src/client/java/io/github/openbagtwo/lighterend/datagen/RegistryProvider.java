@@ -22,6 +22,7 @@ public class RegistryProvider extends FabricDynamicRegistryProvider {
     entries.addAll(registries.getOrThrow(RegistryKeys.PLACED_FEATURE));
     entries.addAll(registries.getOrThrow(RegistryKeys.BIOME));
     entries.addAll(registries.getOrThrow(RegistryKeys.NOISE_PARAMETERS));
+    entries.addAll(registries.getOrThrow(RegistryKeys.TRIM_MATERIAL));
   }
 
   @Override

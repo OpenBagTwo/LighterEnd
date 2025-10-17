@@ -25,11 +25,16 @@ import net.minecraft.util.Identifier;
 
 public class LighterEndItems {
 
-  public static final Item AURORA_CRYSTAL_SHARD = register("aurora_crystal_shard");
+  public static final Item AURORA_CRYSTAL_SHARD = register(
+      "aurora_crystal_shard",
+      new Settings().trimMaterial(LighterEndTrimming.AURORA)
+  );
   public static final Item LUMECORN_EAR = register("lumecorn_rod");
-  public static final Item POPPED_LUMECORN = register("lumecorn_popped", new Settings().food(
-      LighterEndFoodComponents.POPPED_LUMECORN_NUTRITION,
-      LighterEndFoodComponents.POPPED_LUMECORN_EFFECT)
+  public static final Item POPPED_LUMECORN = register(
+      "lumecorn_popped",
+      new Settings().food(
+          LighterEndFoodComponents.POPPED_LUMECORN_NUTRITION,
+          LighterEndFoodComponents.POPPED_LUMECORN_EFFECT)
   );
   public static final Item SILK = register("silk_fiber");
   public static final Item SILK_MATRIX = register("silk_matrix");

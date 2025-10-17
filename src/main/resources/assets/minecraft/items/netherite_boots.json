@@ -1,0 +1,96 @@
+{
+  "model": {
+    "cases": [
+      {
+        "model": {
+          "model": "minecraft:item/netherite_boots_quartz_trim",
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:quartz"
+      },
+      {
+        "model": {
+          "model": "minecraft:item/netherite_boots_iron_trim",
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:iron"
+      },
+      {
+        "model": {
+          "model": "minecraft:item/netherite_boots_netherite_trim",
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:netherite"
+      },
+      {
+        "model": {
+          "model": "minecraft:item/netherite_boots_redstone_trim",
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:redstone"
+      },
+      {
+        "model": {
+          "model": "minecraft:item/netherite_boots_copper_trim",
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:copper"
+      },
+      {
+        "model": {
+          "model": "minecraft:item/netherite_boots_gold_trim",
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:gold"
+      },
+      {
+        "model": {
+          "model": "minecraft:item/netherite_boots_emerald_trim",
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:emerald"
+      },
+      {
+        "model": {
+          "model": "minecraft:item/netherite_boots_diamond_trim",
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:diamond"
+      },
+      {
+        "model": {
+          "model": "minecraft:item/netherite_boots_lapis_trim",
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:lapis"
+      },
+      {
+        "model": {
+          "model": "minecraft:item/netherite_boots_amethyst_trim",
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:amethyst"
+      },
+      {
+        "model": {
+          "model": "minecraft:item/netherite_boots_resin_trim",
+          "type": "minecraft:model"
+        },
+        "when": "minecraft:resin"
+      },
+      {
+        "model": {
+          "model": "minecraft:item/netherite_boots_aurora_trim",
+          "type": "minecraft:model"
+        },
+        "when": "lighterend:aurora"
+      }
+    ],
+    "fallback": {
+      "model": "minecraft:item/netherite_boots",
+      "type": "minecraft:model"
+    },
+    "property": "minecraft:trim_material",
+    "type": "minecraft:select"
+  }
+}

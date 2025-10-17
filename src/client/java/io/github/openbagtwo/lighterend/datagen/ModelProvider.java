@@ -7,6 +7,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndEquipment;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import io.github.openbagtwo.lighterend.registries.LighterEndMusicDiscs;
+import io.github.openbagtwo.lighterend.registries.LighterEndTrimming;
 import java.util.Arrays;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -14,9 +15,16 @@ import net.minecraft.client.data.BlockStateModelGenerator;
 import net.minecraft.client.data.BlockStateModelGenerator.BlockTexturePool;
 import net.minecraft.client.data.BlockStateModelGenerator.CrossType;
 import net.minecraft.client.data.ItemModelGenerator;
+import net.minecraft.client.data.ModelIds;
 import net.minecraft.client.data.Models;
+import net.minecraft.client.data.TextureMap;
 import net.minecraft.client.data.TexturedModel;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
+import net.minecraft.item.equipment.EquipmentAsset;
+import net.minecraft.item.equipment.EquipmentAssetKeys;
+import net.minecraft.item.equipment.trim.ArmorTrimAssets;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 
 public class ModelProvider extends FabricModelProvider {
@@ -230,7 +238,122 @@ public class ModelProvider extends FabricModelProvider {
         true
     );
 
+    generateVanillaArmorTrims(itemModelGenerator);
+
+    registerArmorTrim(
+        itemModelGenerator,
+        LighterEndEquipment.SILK_ELYTRA,
+        LighterEndEquipment.SILK_MATERIAL,
+        Identifier.ofVanilla("trims/items/chestplate_trim"),
+        false
+    );
   }
 
 
+  /**
+   * The following code is adapted from the Cinderscape mod by TerraformersMC
+   * https://github.com/TerraformersMC/Cinderscapes/blob/0e9d760/common/src/main/java/com/terraformersmc/cinderscapes/data/CinderscapesModelProvider.java
+   * under the terms of the GNU Lesser General Public License v3.0
+   * https://github.com/TerraformersMC/Cinderscapes/blob/0e9d760/LICENSE
+   */
+
+
+  public static void generateVanillaArmorTrims(ItemModelGenerator itemModelGenerator) {
+
+    registerArmorTrim(itemModelGenerator, Items.TURTLE_HELMET, EquipmentAssetKeys.TURTLE_SCUTE,
+        ItemModelGenerator.HELMET_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.LEATHER_HELMET, EquipmentAssetKeys.LEATHER,
+        ItemModelGenerator.HELMET_TRIM_ID_PREFIX, true);
+    registerArmorTrim(itemModelGenerator, Items.LEATHER_CHESTPLATE, EquipmentAssetKeys.LEATHER,
+        ItemModelGenerator.CHESTPLATE_TRIM_ID_PREFIX, true);
+    registerArmorTrim(itemModelGenerator, Items.LEATHER_LEGGINGS, EquipmentAssetKeys.LEATHER,
+        ItemModelGenerator.LEGGINGS_TRIM_ID_PREFIX, true);
+    registerArmorTrim(itemModelGenerator, Items.LEATHER_BOOTS, EquipmentAssetKeys.LEATHER,
+        ItemModelGenerator.BOOTS_TRIM_ID_PREFIX, true);
+    registerArmorTrim(itemModelGenerator, Items.COPPER_HELMET, EquipmentAssetKeys.COPPER,
+        ItemModelGenerator.HELMET_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.COPPER_CHESTPLATE, EquipmentAssetKeys.COPPER,
+        ItemModelGenerator.CHESTPLATE_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.COPPER_LEGGINGS, EquipmentAssetKeys.COPPER,
+        ItemModelGenerator.LEGGINGS_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.COPPER_BOOTS, EquipmentAssetKeys.COPPER,
+        ItemModelGenerator.BOOTS_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.CHAINMAIL_HELMET, EquipmentAssetKeys.CHAINMAIL,
+        ItemModelGenerator.HELMET_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.CHAINMAIL_CHESTPLATE, EquipmentAssetKeys.CHAINMAIL,
+        ItemModelGenerator.CHESTPLATE_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.CHAINMAIL_LEGGINGS, EquipmentAssetKeys.CHAINMAIL,
+        ItemModelGenerator.LEGGINGS_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.CHAINMAIL_BOOTS, EquipmentAssetKeys.CHAINMAIL,
+        ItemModelGenerator.BOOTS_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.IRON_HELMET, EquipmentAssetKeys.IRON,
+        ItemModelGenerator.HELMET_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.IRON_CHESTPLATE, EquipmentAssetKeys.IRON,
+        ItemModelGenerator.CHESTPLATE_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.IRON_LEGGINGS, EquipmentAssetKeys.IRON,
+        ItemModelGenerator.LEGGINGS_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.IRON_BOOTS, EquipmentAssetKeys.IRON,
+        ItemModelGenerator.BOOTS_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.DIAMOND_HELMET, EquipmentAssetKeys.DIAMOND,
+        ItemModelGenerator.HELMET_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.DIAMOND_CHESTPLATE, EquipmentAssetKeys.DIAMOND,
+        ItemModelGenerator.CHESTPLATE_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.DIAMOND_LEGGINGS, EquipmentAssetKeys.DIAMOND,
+        ItemModelGenerator.LEGGINGS_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.DIAMOND_BOOTS, EquipmentAssetKeys.DIAMOND,
+        ItemModelGenerator.BOOTS_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.GOLDEN_HELMET, EquipmentAssetKeys.GOLD,
+        ItemModelGenerator.HELMET_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.GOLDEN_CHESTPLATE, EquipmentAssetKeys.GOLD,
+        ItemModelGenerator.CHESTPLATE_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.GOLDEN_LEGGINGS, EquipmentAssetKeys.GOLD,
+        ItemModelGenerator.LEGGINGS_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.GOLDEN_BOOTS, EquipmentAssetKeys.GOLD,
+        ItemModelGenerator.BOOTS_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.NETHERITE_HELMET, EquipmentAssetKeys.NETHERITE,
+        ItemModelGenerator.HELMET_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.NETHERITE_CHESTPLATE, EquipmentAssetKeys.NETHERITE,
+        ItemModelGenerator.CHESTPLATE_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.NETHERITE_LEGGINGS, EquipmentAssetKeys.NETHERITE,
+        ItemModelGenerator.LEGGINGS_TRIM_ID_PREFIX, false);
+    registerArmorTrim(itemModelGenerator, Items.NETHERITE_BOOTS, EquipmentAssetKeys.NETHERITE,
+        ItemModelGenerator.BOOTS_TRIM_ID_PREFIX, false);
+  }
+
+  private static void registerArmorTrim(
+      ItemModelGenerator generator,
+      Item armor,
+      RegistryKey<EquipmentAsset> equipmentKey,
+      Identifier trimIdPrefix,
+      boolean dyeable
+  ) {
+    Identifier armorModelId = ModelIds.getItemModelId(armor);
+    Identifier armorTextures = TextureMap.getId(armor);
+    Identifier armorOverlayTextures = TextureMap.getSubId(armor, "_overlay");
+
+    var auroraTrimmer = new ItemModelGenerator.TrimMaterial(
+        ArmorTrimAssets.of("aurora"),
+        LighterEndTrimming.AURORA
+    );
+
+    Identifier trimmedModelId = armorModelId.withSuffixedPath(
+        "_" + auroraTrimmer.assets().base().suffix() + "_trim"
+    );
+    Identifier trimTextureId = trimIdPrefix.withSuffixedPath(
+        "_" + auroraTrimmer.assets().getAssetId(equipmentKey).suffix()
+    );
+    if (dyeable) {
+      Models.GENERATED_THREE_LAYERS.upload(
+          trimmedModelId,
+          TextureMap.layered(armorTextures, armorOverlayTextures, trimTextureId),
+          generator.modelCollector
+      );
+    } else {
+      Models.GENERATED_TWO_LAYERS.upload(
+          trimmedModelId,
+          TextureMap.layered(armorTextures, trimTextureId),
+          generator.modelCollector
+      );
+    }
+  }
 }

@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.datagen;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBiomes;
+import io.github.openbagtwo.lighterend.registries.LighterEndTrimming;
 import io.github.openbagtwo.lighterend.world.LighterEndConfiguredFeatures;
 import io.github.openbagtwo.lighterend.world.LighterEndPlacedFeatures;
 import io.github.openbagtwo.lighterend.world.gen.noise.NoiseParameters;
@@ -41,5 +42,6 @@ public class LighterEndDataGenerator implements DataGeneratorEntrypoint {
         LighterEndBiomes::bootstrap
     );
     registryBuilder.addRegistry(RegistryKeys.NOISE_PARAMETERS, NoiseParameters::bootstrap);
+    registryBuilder.addRegistry(RegistryKeys.TRIM_MATERIAL, LighterEndTrimming::bootstrap);
   }
 }
