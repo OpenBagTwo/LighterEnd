@@ -1,0 +1,15 @@
+{
+  "pack": {
+    "pack_format": 55,
+    "supported_formats": {
+      "min_inclusive": 46,
+      "max_inclusive": 9999
+    },
+    "description": {
+      "type": "translatable",
+      "translate": "resourcepacks.lighterend.wing_trims.description"
+    },
+    "min_format": 46,
+    "max_format": 9999
+  }
+}

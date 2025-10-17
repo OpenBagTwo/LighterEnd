@@ -1,0 +1,11 @@
+{
+  "pack": {
+    "pack_format": 69,
+    "description": {
+      "type": "translatable",
+      "translate": "resourcepacks.lighterend.visibly_waxed.description"
+    },
+    "min_format": 69,
+    "max_format": 9999
+  }
+}

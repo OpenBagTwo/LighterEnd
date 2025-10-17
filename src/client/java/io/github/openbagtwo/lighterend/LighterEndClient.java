@@ -11,6 +11,10 @@ import io.github.openbagtwo.lighterend.particles.TenaneaPetal;
 import io.github.openbagtwo.lighterend.registries.LighterEndParticles;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.text.Text;
 
 public class LighterEndClient implements ClientModInitializer {
 
@@ -32,5 +36,21 @@ public class LighterEndClient implements ClientModInitializer {
 
     BlockEntityRenderer.initialize();
     EntityModels.initialize();
+
+    FabricLoader.getInstance().getModContainer(LighterEnd.MOD_ID).ifPresent(container -> {
+          ResourceManagerHelper.registerBuiltinResourcePack(
+              LighterEnd.of("wing_trims"),
+              container,
+              Text.translatable("resourcepacks.lighterend.wing_trims.title"),
+              ResourcePackActivationType.DEFAULT_ENABLED
+          );
+          ResourceManagerHelper.registerBuiltinResourcePack(
+              LighterEnd.of("visibly_waxed"),
+              container,
+              Text.translatable("resourcepacks.lighterend.visibly_waxed.title"),
+              ResourcePackActivationType.NORMAL
+          );
+        }
+    );
   }
 }
