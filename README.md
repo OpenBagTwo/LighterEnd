@@ -139,6 +139,9 @@ Many thanks:
 - to [Pintér Gábor](https://github.com/pinter-gabor-at) and his
   [IronSigns mod](https://gitlab.com/pintergabor/ironsigns) for providing an extremely helpful
   example of adding custom signs
+- [KikuGie](https://codeberg.org/KikuGie) for their elytra trims
+- [TerraformersMC](https://github.com/TerraformersMC) for figuring out how to automate _some_ of the
+  ridiculous amount of complexity involved in adding a custom armor material
 - to the [Enderscape](https://github.com/they-made-enderscape/enderscape) team for great modern
   examples of library-free worldgen and terrain modification
 - to [Vanilla Tweaks](https://vanillatweaks.net/picker/resource-packs/) for the concept of grooved
