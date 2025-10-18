@@ -695,6 +695,7 @@
   "subtitles.lighterend.item.umbrella_juice.drink": "Gulping",
   "tag.biome.lighterend.end_biomes_vanilla": "The Vanilla End biomes, enumerated for reference",
   "tag.biome.lighterend.has_purple_mooshrooms": "Biomes where Glossy Mooshrooms spawn with purple polypores",
+  "tag.biome.lighterend.invalid_end_spawn_biomes": "Biomes that should be excluded from world spawn selection",
   "tag.block.lighterend.end_moss_replaceable": "Blocks that End Moss can spread to",
   "tag.block.lighterend.end_soil": "LighterEnd plants can be planted on these blocks",
   "tag.block.lighterend.end_soil_aquatic": "Underwater LighterEnd plants can grow on these blocks",

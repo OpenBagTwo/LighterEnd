@@ -7,6 +7,10 @@ import net.minecraft.registry.RegistryKeys;
 
 public class LighterEndLootTables {
 
+  public static final RegistryKey<LootTable> STARTER_CHEST = register(
+      "chests/spawn_chest"
+  );
+
   public static final RegistryKey<LootTable> END_MOSS_SPLOOT_LOOT = register(
       "gameplay/sniffer_digging_end_moss"
   );

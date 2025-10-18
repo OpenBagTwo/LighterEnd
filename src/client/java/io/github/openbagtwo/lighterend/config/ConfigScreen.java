@@ -16,6 +16,8 @@ public class ConfigScreen extends GameOptionsScreen {
 
   private OptionListWidget widgets;
 
+  private static String REQUIRES_RESTART = "Restart Minecraft to apply changes";
+
   public ConfigScreen(Screen previous) {
     super(previous, MinecraftClient.getInstance().options, Text.of(LighterEnd.MOD_NAME));
   }
@@ -26,6 +28,7 @@ public class ConfigScreen extends GameOptionsScreen {
       this.body.addSingleOptionEntry(
           SimpleOption.ofBoolean(
               "Generate Modded Biomes",
+              SimpleOption.constantTooltip(Text.of(REQUIRES_RESTART)),
               LighterEnd.CONFIG.generateBiomes,
               (value) -> {
                 LighterEnd.CONFIG.generateBiomes = value;
@@ -36,7 +39,8 @@ public class ConfigScreen extends GameOptionsScreen {
           SimpleOption.ofBoolean(
               "Generate Ores",
               SimpleOption.constantTooltip(Text.of(
-                  "Whether to generate redstone and quartz ores (including in vanilla biomes)")),
+                  "Whether to generate redstone and quartz ores (including in vanilla biomes)"
+                      + "\n\n" + REQUIRES_RESTART)),
               LighterEnd.CONFIG.generateOres,
               (value) -> {
                 LighterEnd.CONFIG.generateOres = value;
@@ -86,6 +90,7 @@ public class ConfigScreen extends GameOptionsScreen {
       this.body.addSingleOptionEntry(
           SimpleOption.ofBoolean(
               "Mod Music Discs Can Be Found in End Cities",
+              SimpleOption.constantTooltip(Text.of(REQUIRES_RESTART)),
               LighterEnd.CONFIG.musicDiscsInEndCities, (value) -> {
                 LighterEnd.CONFIG.musicDiscsInEndCities = value;
               }
@@ -107,6 +112,18 @@ public class ConfigScreen extends GameOptionsScreen {
               )),
               LighterEnd.CONFIG.bonemealUnderwaterInEndMakesEndVegetation, (value) -> {
                 LighterEnd.CONFIG.bonemealUnderwaterInEndMakesEndVegetation = value;
+              }
+          )
+      );
+      this.body.addSingleOptionEntry(
+          SimpleOption.ofBoolean(
+              "End World Spawn",
+              SimpleOption.constantTooltip(Text.of(
+                  "New worlds will have their spawn points in The End."
+                      + "\n\nHighly experimental.\nEnable at your own risk."
+              )),
+              LighterEnd.CONFIG.endSpawn, (value) -> {
+                LighterEnd.CONFIG.endSpawn = value;
               }
           )
       );

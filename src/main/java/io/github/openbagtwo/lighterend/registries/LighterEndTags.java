@@ -122,6 +122,11 @@ public class LighterEndTags {
       LighterEnd.of("has_purple_mooshrooms")
   );
 
+  public static final TagKey<Biome> INVALID_SPAWN_BIOMES = TagKey.of(
+      RegistryKeys.BIOME,
+      LighterEnd.of("invalid_end_spawn_biomes")
+  );
+
   public static void initialize() {
 
     for (WoodSet wood : Arrays.asList(
