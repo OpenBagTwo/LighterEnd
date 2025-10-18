@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.world.LighterEndConfiguredFeatures;
+import java.util.Map;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -29,6 +30,7 @@ import net.minecraft.world.level.UnmodifiableLevelProperties;
 import net.minecraft.world.level.storage.LevelStorage;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -37,10 +39,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MinecraftServer.class)
 public abstract class EndSpawnMixin {
 
+  @Unique
   private static final float END_SPAWN_RADIUS = 10_000F;
+
+  @Unique
+  private ServerWorld theEnd = null;
 
   @Shadow
   public abstract ServerWorld getWorld(RegistryKey<World> key);
+
+  @Accessor("worlds")
+  abstract Map<RegistryKey<World>, ServerWorld> getWorldz();
 
   @Shadow
   public abstract ChunkLoadProgress getChunkLoadProgress();
@@ -77,7 +86,7 @@ public abstract class EndSpawnMixin {
       return;
     }
 
-    ServerWorld theEnd = loadTheEnd(
+    this.theEnd = loadTheEnd(
         new UnmodifiableLevelProperties(
             this.getSaveProperties(),
             serverWorldProperties
@@ -85,14 +94,24 @@ public abstract class EndSpawnMixin {
         endSettings,
         BiomeAccess.hashSeed(generatorOptions.getSeed())
     );
+    this.getWorldz().put(World.END, this.theEnd);
 
     setEndSpawn(
-        theEnd,
+        this.theEnd,
         serverWorldProperties,
         this.getChunkLoadProgress()
     );
     serverWorldProperties.setInitialized(true);
   }
+
+  @Inject(method = "createWorlds", at = @At("TAIL"))
+  public void reInsertOurEnd(CallbackInfo ci) {
+    if (this.theEnd != null) {
+      this.getWorldz().put(World.END, this.theEnd);
+      this.theEnd = null;
+    }
+  }
+
 
   private ServerWorld loadTheEnd(
       UnmodifiableLevelProperties unmodifiableLevelProperties,

@@ -1,5 +1,6 @@
 package io.github.openbagtwo.lighterend.world.features;
 
+import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndLootTables;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import java.util.stream.IntStream;
@@ -52,8 +53,7 @@ public class StarterChest extends Feature<DefaultFeatureConfig> {
           structureWorldAccess.setBlockState(
               blockPos,
               Blocks.BARREL.getDefaultState().with(BarrelBlock.FACING, Direction.UP),
-              Block.NOTIFY_LISTENERS
-          );
+              Block.NOTIFY_LISTENERS);
           LootableInventory.setLootTable(structureWorldAccess, random, blockPos,
               LighterEndLootTables.STARTER_CHEST);
           BlockState blockState = Blocks.END_ROD.getDefaultState();
@@ -66,6 +66,7 @@ public class StarterChest extends Feature<DefaultFeatureConfig> {
                   blockState.with(EndRodBlock.FACING, direction),
                   Block.NOTIFY_LISTENERS
               );
+
             }
           }
 
@@ -73,7 +74,7 @@ public class StarterChest extends Feature<DefaultFeatureConfig> {
         }
       }
     }
-
+    LighterEnd.LOGGER.error("Failed to generate starter chest");
     return false;
   }
 }
