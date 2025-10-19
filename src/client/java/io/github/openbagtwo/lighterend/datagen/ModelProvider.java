@@ -245,7 +245,7 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndEquipment.SILK_ELYTRA,
         LighterEndEquipment.SILK_MATERIAL,
         Identifier.ofVanilla("trims/items/chestplate_trim"),
-        false
+        true
     );
   }
 

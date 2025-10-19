@@ -5,7 +5,7 @@
         "dyeable": {
           "color_when_undyed": -262145
         },
-        "texture": "minecraft:leather"
+        "texture": "lighterend:silk"
       }
     ],
     "humanoid_leggings": [
@@ -13,7 +13,7 @@
         "dyeable": {
           "color_when_undyed": -262145
         },
-        "texture": "minecraft:leather"
+        "texture": "lighterend:silk"
       }
     ],
     "wings": [
