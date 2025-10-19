@@ -18,6 +18,7 @@
     "GlideDecayMixin",
     "GravityEffectsMixin",
     "GravityStrengthMixin",
+    "SilkWashingMixin",
     "SurfaceGenMixin",
     "TeleportFromVoidMixin",
     "TooltipMixin",
