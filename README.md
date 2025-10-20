@@ -1,75 +1,88 @@
 # LighterEnd
 
 ![server + client mod](https://img.shields.io/badge/Server\/Client-both-purple)
-![mod loader: fabric/quilt](https://img.shields.io/badge/Mod_Loader-fabric%2Fquilt-a4cc37)
+![mod loader: fabric](https://img.shields.io/badge/Mod_Loader-fabric-a4cc37)
 [![build status](https://github.com/OpenBagTwo/LighterEnd/actions/workflows/build.yml/badge.svg)](https://github.com/OpenBagTwo/LighterEnd/actions/workflows/build.yml)
-![supported versions](https://img.shields.io/badge/Supported_Versions-1.21.5,1.21.10-blue)
+![supported versions](https://img.shields.io/badge/Supported_Versions-1.21.5--1.21.10-blue)
 [![Modrinth Downloads](https://img.shields.io/modrinth/dt/lighterend)](https://modrinth.com/mod/lighterend)
 
 ***A reimagined vision of a BetterEnd***
 
 ![logo](_static/logo_big.png)
 
-## What Is This, and Why Does it Exist?
+## What Is This?
 
-[Paulevs](https://github.com/paulevsGitch)' legendary mod
-[BetterEnd](https://github.com/quiqueck/BetterEnd) drastically transformed Minecraft's final
-dimension from a barren, repetitive wasteland into a thriving and alien worldscape, filled with
-life, light, adventure and mystery. Sadly, after almost five years of continued development,
-the mod has been abandoned, and its codebase is a tangled, unmaintainable mess, spread across no
-fewer than [four](https://github.com/quiqueck/BCLib)
-[separate](https://github.com/quiqueck/WunderLib) [repos](https://github.com/quiqueck/WorldWeaver).
+When's the last time you went to The End dimension? What did you do there? Did you go to fight
+the dragon? To grab some wings? Maybe you raided an End City and got yourself some shulker shells.
+But either way, I bet you didn't linger. Because why would you? What is there to explore except
+a vast desert wasteland? What is there to do except pillage some structures and farm Endermen?
 
-The goal of this project is **not** to be a continuation, faithful port or ground-up rewrite. It
-is instead to create a simple, maintainable mod that can bring the _core aspects_ of BetterEnd's
-ethos—that of a brighter dimension, teeming with life—to future versions of the game.
+But what if there were more? What if, beyond the ring of void, The End were a truly alien landscape,
+chock full of adventure, mystery, life and **light**? What if it were home to massive trees that
+could only grow in the dimension's uniquely low gravity? What if there were lakes to swim in,
+herbs to forage, creatures to encounter—friend and fiend—and a full progression to unlock?
 
-## Roadmap
+That's this mod's vision of _A Better End,_ based on and inspired by
+[Paulevs](https://github.com/paulevsGitch)' [legendary mod](https://github.com/quiqueck/BetterEnd).
+Where BetterEnd's development has sadly ceased after over five years of development, LighterEnd
+strives to pick up the torch with a new, simplified, easily maintainable mod that carries its
+_core ethos_ through to modern Minecraft and the future versions to come.
 
-The intent of this mod is **not** to be a 1-to-1 recreation of BetterEnd, and while no biomes
-are explicitly being excluded, porting them is subject to interest (the developers' and the
-community's). You can find a list of features slated for development, tied to the
+### What This Is Not
+
+LighterEnd is **not** and never will be a 1-to-1 recreation of BetterEnd. Explicitly, a lot of
+BetterEnd's features are either unbalanced with vanilla Minecraft, are too difficult to maintain
+or never worked right to begin with. For example:
+
+- Thallasium and Ender Ore were redundant, and Terminite, Aeternium and Crystalite tool tiers were
+  overpowered. LighterEnd introduces no new ores to the game and only one new armor material,
+  exclusive to the **Silk Elytra,** which had weaker glide than base elytra, a protection level
+  roughly on par with diamond and a durability only slightly better than leather
+- LighterEnd does not implement its own terrain generation, instead overlaying biomes onto either
+  the Vanilla End or that of a datapack like Nullscape or Stellarity.
+- Instead of biome-specific end soil, LighterEnd makes do with one **End Moss** which takes on
+  different colors (and bonemeal behaviors) based on the biome it's in
+- End Veil is a potion-only effect instead of an enchantment, though intrepid explorers may find
+  other ways of avoiding the ire of Endermen
+- LighterEnd does not include hammers, forging, infusing or alloying
+- LighterEnd has no Eternal Portals—the only ways to make it out of The End alive is
+  through the central island.
+
+Regarding BetterEnd's **twenty four** biomes, LighterEnd has **nine** (as of v1.0), along with
+six wood sets. While none of BetterEnd's mods are explicitly being excluded, which ones will be
+ported, when and how is dependent on interest (the developers' and the community's).
+
+You can find a list of features slated for development, tied to the
 ["milestone"](https://github.com/OpenBagTwo/LighterEnd/milestones) (release) they're targeted for,
-on the [issues page](https://github.com/OpenBagTwo/LighterEnd/issues).
-
-If there's a specific biome of BetterEnd feature you'd like to see prioritized, feel free to open
-an issue requesting it, after first having read through the following sections:
-
-### Out of Scope
-
-The completed version of LighterEnd:
-
-- Will likely feature ore, but not Thallasium or Ender Ore (and thus, there will be no Terminite
-  nor Aeternium)—these material types are either redundant or overpowered.
-- Will not include Crystalite armor. Which, again, is overpowered.
-- While the mod features an armored elytra, it is heavily nerfed (with the glide decay of
-  Aeternium elytra and sub-Diamond levels of protection) in order to balance it with vanilla
-  elytra
-- Will only feature one type of end soil, though this soil may take on different appearances in
-  different biomes, and bonemealing the soil in different biomes will produce different plants
-- Will not include Eternal Portals
-- Will not implement hammers, forging, infusing or alloying
-- Will feature the End Veil effect, but solely as a potion effect, not as an enchantment
+on the [issues page](https://github.com/OpenBagTwo/LighterEnd/issues). If there's a specific biome
+or feature (from BetterEnd or no) you'd like to see prioritized, feel free to open
+an issue requesting it.
 
 ### New Features
 
-On the flip side, LighterEnd has or will have features not present in BetterEnd
+On the flip side, LighterEnd has features not present in BetterEnd
 
-- [x] The option for gravity in The End to be 1/3 of normal
-- [x] Silk Elytra—a craftable, trimmable and renewable armored elytra
-- [x] New survival-challenge-friendly crafting recipes (such as the ability to get paper from end
+- The option for gravity in The End to be 1/3 of normal
+- Silk Elytra—a craftable, trimmable and renewable armored elytra
+- New survival-challenge-friendly crafting recipes (such as the ability to get paper from end
   lily leaves and arrows from cubozoa drops)
-- [x] Sniffers that sploot on End Moss will dig up rare End saplings
-- [x] Obelisks that you can teleport to upon almost dying (meaning your stuff is safe even if you
+- Sniffers that sploot on End Moss will dig up rare End saplings
+- Obelisks that you can teleport to upon almost dying (meaning your stuff is safe even if you
   fall into The Void)
-- [x] Ice stars will be more common and will contain ice enriched with metals (copper, gold, iron)
-- [ ] New trim materials (and possibly trim patterns)
+- Ice stars will be more common and will contain ice enriched with metals (copper, gold, iron)
+- New mobs such as the Chorus Crab and Glossy Mooshroom
 
-## Broad Compatibility
+### Broad Compatibility
 
-LighterEnd is compatible out-of-the-box with
-both [Nullscape](https://modrinth.com/datapack/nullscape)
-and [Moog's End Structures](https://modrinth.com/mod/mes-moogs-end-structures)
+LighterEnd is fully compatible with all your favorite End mods, such as
+
+- [Nullscape](https://modrinth.com/datapack/nullscape)
+- [Moog's End Structures](https://modrinth.com/mod/mes-moogs-end-structures),
+- [Stellarity](https://modrinth.com/datapack/stellarity), and
+- [Elytra Trims](https://modrinth.com/mod/elytra-trims)
+
+If you find a Fabric End mod that _doesn't_ work with LighterEnd, please
+[open an issue](https://github.com/OpenBagTwo/LighterEnd/issues/new).
 
 ## Contributing
 
