@@ -186,8 +186,8 @@ public class RecipeProvider extends FabricRecipeProvider {
             ).offerTo(exporter);
 
         createShaped(RecipeCategory.DECORATIONS, LighterEndItems.SILK_MOTH_NEST)
-            .pattern("PPP")
-            .pattern("MMM")
+            .pattern(" P ")
+            .pattern("PMP")
             .pattern("PPP")
             .input('M', LighterEndItems.SILK_MATRIX)
             .input('P', LighterEndBlocks.TENANEA.planks)
