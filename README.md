@@ -78,6 +78,7 @@ LighterEnd is fully compatible with all your favorite End mods, such as
 
 - [Nullscape](https://modrinth.com/datapack/nullscape)
 - [Moog's End Structures](https://modrinth.com/mod/mes-moogs-end-structures),
+- [Enderscape](https://github.com/they-made-enderscape/enderscape)
 - [Stellarity](https://modrinth.com/datapack/stellarity), and
 - [Elytra Trims](https://modrinth.com/mod/elytra-trims)
 
