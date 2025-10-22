@@ -1354,7 +1354,7 @@
         "volume": 0.5
       }
     ],
-    "subtitle": "subtitles.entity.cubozoa.death"
+    "subtitle": "subtitles.lighterend.entity.cubozoa.death"
   },
   "entity.cubozoa.flop": {
     "sounds": [
@@ -1404,7 +1404,7 @@
         "volume": 0.5
       }
     ],
-    "subtitle": "subtitles.entity.cubozoa.hurt"
+    "subtitle": "subtitles.lighterend.entity.cubozoa.hurt"
   },
   "entity.cubozoa.idle": {
     "sounds": []
@@ -1416,7 +1416,7 @@
         "type": "event"
       }
     ],
-    "subtitle": "subtitles.entity.dragonfly.death"
+    "subtitle": "subtitles.lighterend.entity.dragonfly.death"
   },
   "entity.dragonfly.hurt": {
     "sounds": [
@@ -1425,7 +1425,7 @@
         "type": "event"
       }
     ],
-    "subtitle": "subtitles.entity.dragonfly.hurt"
+    "subtitle": "subtitles.lighterend.entity.dragonfly.hurt"
   },
   "entity.dragonfly.idle": {
     "category": "entity",
@@ -1509,7 +1509,7 @@
         "type": "event"
       }
     ],
-    "subtitle": "subtitles.entity.silk_moth.death"
+    "subtitle": "subtitles.lighterend.entity.silk_moth.death"
   },
   "entity.silk_moth.hurt": {
     "sounds": [
@@ -1518,7 +1518,7 @@
         "type": "event"
       }
     ],
-    "subtitle": "subtitles.entity.silk_moth.hurt"
+    "subtitle": "subtitles.lighterend.entity.silk_moth.hurt"
   },
   "item.armor.equip_fur": {
     "sounds": [],
