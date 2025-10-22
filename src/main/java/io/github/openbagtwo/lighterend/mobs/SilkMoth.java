@@ -5,6 +5,7 @@ import io.github.openbagtwo.lighterend.blocks.entities.SilkMothNestEntity;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
+import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.EnumSet;
@@ -30,11 +31,13 @@ import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
@@ -558,6 +561,21 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
       int i = (SilkMoth.this.hivePos == null) ? 16 : 24;
       return 48 - i;
     }
+  }
+
+  @Override
+  public SoundEvent getAmbientSound() {
+    return LighterEndSounds.SILK_MOTH_IDLE;
+  }
+
+  @Nullable
+  protected SoundEvent getHurtSound(DamageSource source) {
+    return LighterEndSounds.SILK_MOTH_HURT;
+  }
+
+  @Nullable
+  protected SoundEvent getDeathSound() {
+    return LighterEndSounds.SILK_MOTH_DEATH;
   }
 
 }

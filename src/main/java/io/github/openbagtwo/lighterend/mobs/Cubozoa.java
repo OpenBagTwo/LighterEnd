@@ -12,6 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -121,6 +122,21 @@ public class Cubozoa extends SchoolingFishEntity {
   @Override
   protected SoundEvent getFlopSound() {
     return LighterEndSounds.CUBOZOA_FLOP;
+  }
+
+  @Override
+  public SoundEvent getAmbientSound() {
+    return LighterEndSounds.CUBOZOA_IDLE;
+  }
+
+  @Nullable
+  protected SoundEvent getHurtSound(DamageSource source) {
+    return LighterEndSounds.CUBOZOA_HURT;
+  }
+
+  @Nullable
+  protected SoundEvent getDeathSound() {
+    return LighterEndSounds.CUBOZOA_DEATH;
   }
 
   @Override

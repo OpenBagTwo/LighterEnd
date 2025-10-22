@@ -1308,6 +1308,9 @@
     ],
     "subtitle": "subtitles.lighterend.entity.crab.hurt"
   },
+  "entity.crab.idle": {
+    "sounds": []
+  },
   "entity.crab.step": {
     "sounds": [
       {
@@ -1333,6 +1336,26 @@
     ],
     "subtitle": "subtitles.lighterend.entity.crab.step"
   },
+  "entity.cubozoa.death": {
+    "sounds": [
+      {
+        "name": "mob/squid/death1",
+        "pitch": 1.5,
+        "volume": 0.5
+      },
+      {
+        "name": "mob/squid/death2",
+        "pitch": 1.5,
+        "volume": 0.5
+      },
+      {
+        "name": "mob/squid/death3",
+        "pitch": 1.5,
+        "volume": 0.5
+      }
+    ],
+    "subtitle": "subtitles.entity.cubozoa.death"
+  },
   "entity.cubozoa.flop": {
     "sounds": [
       {
@@ -1357,6 +1380,52 @@
       }
     ],
     "subtitle": "subtitles.lighterend.entity.cubozoa.flop"
+  },
+  "entity.cubozoa.hurt": {
+    "sounds": [
+      {
+        "name": "mob/squid/hurt1",
+        "pitch": 1.5,
+        "volume": 0.5
+      },
+      {
+        "name": "mob/squid/hurt2",
+        "pitch": 1.5,
+        "volume": 0.5
+      },
+      {
+        "name": "mob/squid/hurt3",
+        "pitch": 1.5,
+        "volume": 0.5
+      },
+      {
+        "name": "mob/squid/hurt4",
+        "pitch": 1.5,
+        "volume": 0.5
+      }
+    ],
+    "subtitle": "subtitles.entity.cubozoa.hurt"
+  },
+  "entity.cubozoa.idle": {
+    "sounds": []
+  },
+  "entity.dragonfly.death": {
+    "sounds": [
+      {
+        "name": "entity.bee.death",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.dragonfly.death"
+  },
+  "entity.dragonfly.hurt": {
+    "sounds": [
+      {
+        "name": "entity.bee.hurt",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.dragonfly.hurt"
   },
   "entity.dragonfly.idle": {
     "category": "entity",
@@ -1429,6 +1498,27 @@
       "entity/fish/hurt4"
     ],
     "subtitle": "subtitles.lighterend.entity.end_fish.hurt"
+  },
+  "entity.end_fish.idle": {
+    "sounds": []
+  },
+  "entity.silk_moth.death": {
+    "sounds": [
+      {
+        "name": "entity.silverfish.death",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.silk_moth.death"
+  },
+  "entity.silk_moth.hurt": {
+    "sounds": [
+      {
+        "name": "entity.bee.hurt",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.silk_moth.hurt"
   },
   "item.armor.equip_fur": {
     "sounds": [],

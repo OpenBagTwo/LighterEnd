@@ -105,6 +105,11 @@ public class EndFish extends SchoolingFishEntity {
   }
 
   @Override
+  protected SoundEvent getAmbientSound() {
+    return LighterEndSounds.END_FISH_IDLE;
+  }
+
+  @Override
   protected @NotNull SoundEvent getFlopSound() {
     return LighterEndSounds.END_FISH_FLOP;
   }

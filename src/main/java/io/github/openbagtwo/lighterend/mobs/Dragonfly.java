@@ -24,6 +24,7 @@ import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
@@ -36,6 +37,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class Dragonfly extends AnimalEntity implements Flutterer {
 
@@ -124,6 +126,16 @@ public class Dragonfly extends AnimalEntity implements Flutterer {
   @Override
   public SoundEvent getAmbientSound() {
     return LighterEndSounds.DRAGONFLY_IDLE;
+  }
+
+  @Nullable
+  protected SoundEvent getHurtSound(DamageSource source) {
+    return LighterEndSounds.DRAGONFLY_HURT;
+  }
+
+  @Nullable
+  protected SoundEvent getDeathSound() {
+    return LighterEndSounds.DRAGONFLY_DEATH;
   }
 
   @Override
