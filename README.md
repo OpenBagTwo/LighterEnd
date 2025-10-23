@@ -6,32 +6,39 @@
 ![supported versions](https://img.shields.io/badge/Supported_Versions-1.21.5--1.21.10-blue)
 [![Modrinth Downloads](https://img.shields.io/modrinth/dt/lighterend)](https://modrinth.com/mod/lighterend)
 
-***A reimagined vision of a BetterEnd***
+***A reimagined vision of a Better End***
 
 ![logo](_static/logo_big.png)
 
 ## What Is This?
 
-When's the last time you went to The End dimension? What did you do there? Did you go to fight
-the dragon? To grab some wings? Maybe you raided an End City and got yourself some shulker shells.
-But either way, I bet you didn't linger. Because why would you? What is there to explore except
-a vast desert wasteland? What is there to do except pillage some structures and farm Endermen?
+LighterEnd transforms Minecraft's least-loved dimension into one full of light, life, wonder and
+mystery. It adds:
 
-But what if there were more? What if, beyond the ring of void, The End were a truly alien landscape,
-chock full of adventure, mystery, life and **light**? What if it were home to massive trees that
-could only grow in the dimension's uniquely low gravity? What if there were lakes to swim in,
-herbs to forage, creatures to encounter—friend and fiend—and a full progression to unlock?
+- **nine** new biomes, each with its own ambient sounds and music
+- **seven** new mobs (some friendly, some hostile)
+- **six** new stone building materials
+- **five** new wood types
+- **four** new music discs
+- an **armored elytra**
+- and much more
 
-That's this mod's vision of _A Better End,_ based on and inspired by
-[Paulevs](https://github.com/paulevsGitch)' [legendary mod](https://github.com/quiqueck/BetterEnd).
-Where BetterEnd's development has sadly ceased after over five years of development, LighterEnd
-strives to pick up the torch with a new, simplified, easily maintainable mod that carries its
-_core ethos_ through to modern Minecraft and the future versions to come.
+through a balanced gameplay experience that will make you want to explore, base and build in The
+End, and not just go straight home after raiding an End City.
 
-### What This Is Not
+### A New Future for a Better End
+
+This mod is based on and inspired by [Paulevs](https://github.com/paulevsGitch)' legendary mod,
+[BetterEnd](https://github.com/quiqueck/BetterEnd), development on which ceased in 2024 after
+over five years. LighterEnd is a ground-up rewrite, built using modern design principles, and has
+no dependencies outside of the Fabric API. It is my hope, by making this mod easily
+maintainable, with the bare minimum of abstractions, that BetterEnd's _core ethos_ can be carried
+through to new Minecraft versions, as they release, with a minimum of effort.
+
+### What We Leave Behind
 
 LighterEnd is **not** and never will be a 1-to-1 recreation of BetterEnd. Explicitly, a lot of
-BetterEnd's features are either unbalanced with vanilla Minecraft, are too difficult to maintain
+BetterEnd's features were either unbalanced with vanilla Minecraft, were too difficult to maintain
 or never worked right to begin with. For example:
 
 - Thallasium and Ender Ore were redundant, and Terminite, Aeternium and Crystalite tool tiers were
@@ -60,17 +67,17 @@ an issue requesting it.
 
 ### New Features
 
-On the flip side, LighterEnd has features not present in BetterEnd
+On the flip side, LighterEnd has features not present in BetterEnd:
 
 - The option for gravity in The End to be 1/3 of normal
-- Silk Elytra—a craftable, trimmable and renewable armored elytra
-- New survival-challenge-friendly crafting recipes (such as the ability to get paper from end
-  lily leaves and arrows from cubozoa drops)
-- Sniffers that sploot on End Moss will dig up rare End saplings
-- Obelisks that you can teleport to upon almost dying (meaning your stuff is safe even if you
+- **Silk Elytra**—a craftable, trimmable and renewable armored elytra
+- New survival-challenge-friendly crafting recipes (such as the ability to get paper from the leaves
+  of **End Lilies** and arrows from **Cubozoa** drops)
+- Sniffers that sploot on **End Moss** will dig up rare End saplings
+- **Obelisks** that you can teleport to upon almost dying (meaning your stuff is safe even if you
   fall into The Void)
-- Ice stars will be more common and will contain ice enriched with metals (copper, gold, iron)
-- New mobs such as the Chorus Crab and Glossy Mooshroom
+- **Ice Stars** that contain ice enriched with metals (copper, gold, iron)
+- New mobs such as the **Chorus Crab** and **Glossy Mooshroom**
 
 ### Broad Compatibility
 
