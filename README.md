@@ -1,4 +1,4 @@
-# LighterEnd
+# Lighter End
 
 ![server + client mod](https://img.shields.io/badge/Server\/Client-both-purple)
 ![mod loader: fabric](https://img.shields.io/badge/Mod_Loader-fabric-a4cc37)

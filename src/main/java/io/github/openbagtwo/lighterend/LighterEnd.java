@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 public class LighterEnd implements ModInitializer {
 
   public static final String MOD_ID = "lighterend";
-  public static final String MOD_NAME = "LighterEnd";
+  public static final String MOD_NAME = "Lighter End";
 
   public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
