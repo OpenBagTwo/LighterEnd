@@ -172,6 +172,8 @@ Many thanks:
     - and to the developers of [Gatekeeper](https://store.steampowered.com/app/2106670/Gatekeeper/)
       for providing a phenomenal example of Quartz in practice with their
       [game wiki](https://www.gatekeeper.wiki/)
+- to the deveopers of and contributors to the
+  [isometric-renders](https://github.com/gliscowo/isometric-renders) mod
 - to the [BetterX Discord](https://discord.gg/kYuATbYbKW) for their feedback in shaping this mod's
   development
 
