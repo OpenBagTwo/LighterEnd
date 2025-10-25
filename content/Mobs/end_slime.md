@@ -19,7 +19,7 @@ when a large End Slime is killed, it splits into smaller End Slimes.
 
 Small End Slimes drop [End Cream](../items/end_cream) upon death.
 
-> [!note] Changed from Better End
+> [!info] Changed from Better End
 > This is different from Better End, where End Slimes dropped Slime Balls.
 
 --- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Mobs/end_slime.md)

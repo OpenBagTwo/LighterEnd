@@ -1,0 +1,21 @@
+
+---
+title: Stripped Dragon Wood
+tags:
+- item
+
+---
+> [!infobox-narrow] Infobox
+> ![Stripped Dragon Wood](assets/items/dragon_tree_stripped_wood.png)
+>
+
+
+This article is a stub.
+
+## Obtaining
+
+## Usage
+
+
+
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/items/dragon_tree_stripped_wood.md)

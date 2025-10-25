@@ -17,8 +17,8 @@ tags:
 **End Fish** are passive aquatic mobs found wherever there is water in The End, though [Sulfur Springs](../biomes/#sulfur-springs)
 contain variants not found anywhere else.
 
-They can be carried in [Buckets](../items/bucket_end_fish).
+They can be carried in [Buckets](../Items/bucket_end_fish).
 
-When killed, they drop Raw [End Fish](../items/end_fish).
+When killed, they drop Raw [End Fish](../Items/end_fish).
 
 --- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Mobs/end_fish.md)

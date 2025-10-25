@@ -29,32 +29,32 @@ peaceful.
 
 ### Blossoming Forest
 
-The Blossoming Forests are dense woodlands crowded with [Tenanea Trees](blocks/tenanea_log).
-[Silk Moth](Mobs/silk_moth) [Nests](blocks/silk_moth_nests) can be found among the leaves,
+The Blossoming Forests are dense woodlands crowded with [Tenanea Trees](Blocks/tenanea_log).
+[Silk Moth](Mobs/silk_moth) [Nests](Blocks/silk_moth_nest) can be found among the leaves,
 and [Chorus Crabs](Mobs/chorus_crab) are dense on the ground.
 
 No hostile mobs spawn in this biome.
 
 ### Umbrella Jungle
 
-Umbrella Jungles are where the massive [Umbrella Trees](blocks/umbrella_log) grow, under
+Umbrella Jungles are where the massive [Umbrella Trees](Blocks/umbrella_log) grow, under
 whose canopies spawn massive [End Slimes](Mobs/end_slime) and the occasional
 [Dragonfly](Mobs/dragonfly).
 
 ### Shadow Forest
 
 The darkest of the forests, Shadow Forests are home to dangerous flora and fauna. Beneath
-the black leaves of the [Dragon Trees](blocks/dragon_tree_log) lurk
+the black leaves of the [Dragon Trees](Blocks/dragon_tree_log) lurk
 [Phantoms](https://minecraft.wiki/w/Phantom) and [Endermen](https://minecraft.wiki/w/Enderman),
-and watch your step, lest you get pricked by [Needlegrass](blocks/needlegrass) or blinded by
-[Murkweed](blocks/murkweed).
+and watch your step, lest you get pricked by [Needlegrass](Blocks/needlegrass) or blinded by
+[Murkweed](Items/murkweed).
 
 ### Foggy Mushroomland
 
 The Foggy Mushroomlands are home to Lighter End's most iconic feature, the
 Mossy Glowshrooms, which light up the skyline with their glowing
 [Hymenophores](blocks/mossy_glowshroom_hymenophore). Less staggering—but no less
-luminous—are the [Foggy Agave](blocks/blue_vine) blooms.
+luminous—are the [Foggy Agave](Blocks/blue_vine) blooms.
 
 [End Slimes](Mobs/end_slime), [Dragonflies](Mobs/dragonfly)
 and [Glossy Mooshrooms](Mobs/glossy_mooshroom) can spawn here.
@@ -65,13 +65,13 @@ Umbra Valleys are perhaps the most hazardous biome in the mod, with nowhere to h
 [Phantoms](https://minecraft.wiki/w/Phantom), [Endermen](https://minecraft.wiki/w/Enderman)
 and occasional [Endermites](https://minecraft.wiki/w/Endermite) that spawn there. That said,
 this biome might be worth the trip to chip off bits of the massive
-[Aurora Crystal](items/aurora_crystal_shard) formations that can be found there or to mine
-the [Umbralith](blocks/umbralith) and [Violecite](blocks/violecite) underfoot.
+[Aurora Crystal](Items/aurora_crystal_shard) formations that can be found there or to mine
+the [Umbralith](Blocks/umbralith) and [Violecite](Blocks/violecite) underfoot.
 
 ### Sulfur Springs
 
-Sulfur Springs are geologically active formations where the [sulfur-rich](blocks/sulphuric_rock)
-mixes with pools of water to form massive geysers and [Hydrothermal Vents](blocks/hydrothermal_vent).
+Sulfur Springs are geologically active formations where the [sulfur-rich](Blocks/sulphuric_rock)
+mixes with pools of water to form massive geysers and [Hydrothermal Vents](Blocks/hydrothermal_vent).
 Fly over one of these formations to experience the updraft from the plumes or farm the unique
 variants of [End Fish](Mobs/end_fish) and [Cubozoas](Mobs/cubozoa) that have adapted to these
 conditions, but be on the lookout for groups of [Endermen](https://minecraft.wiki/w/Enderman)
@@ -80,8 +80,8 @@ and the occasional [Endermite](https://minecraft.wiki/w/Endermite).
 ### Megalake
 
 Perhaps the rarest biome in the game, Megalakes are the only place to find
-[End Lotuses](blocks/end_lotus_stem), alongside [End Lilies](items/end_lily_leaf)
-and [Charnia](blocks/charnia_red).
+[End Lotuses](Blocks/end_lotus_stem), alongside [End Lilies](Items/end_lily_leaf)
+and [Charnia](Blocks/charnia_red).
 
 [End Fish](Mobs/end_fish) and [Cubozoas](Mobs/cubozoa) can be found swimming in the water
 and [Chorus Crabs](Mobs/chorus_crab) by the shore.
@@ -89,7 +89,7 @@ and [Chorus Crabs](Mobs/chorus_crab) by the shore.
 ### Starfield
 
 While the stone that comprises The End Islands is absent of useful metals, the void between
-them is rich with Ice Stars. Each star contains an outer layer of [ice](blocks/emerald_ice)
+them is rich with Ice Stars. Each star contains an outer layer of [ice](Blocks/emerald_ice)
 mixed with copper, gold or iron, and a core of pure ore. If you can reach one of the larger
 stars, you'll have enough metal for life.
 

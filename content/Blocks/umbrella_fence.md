@@ -1,0 +1,21 @@
+
+---
+title: Umbrella Wood Fence
+tags:
+- block
+
+---
+> [!infobox] Infobox
+> ![Umbrella Wood Fence](assets/blocks/umbrella_fence.png)
+>
+
+
+This article is a stub.
+
+## Obtaining
+
+## Usage
+
+
+
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/blocks/umbrella_fence.md)

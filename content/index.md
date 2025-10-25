@@ -8,11 +8,11 @@ Lighter End is a Fabric mod that transforms Minecraft's least-loved dimension in
 wonder and mystery. It adds:
 
 - **nine** new [biomes](biomes), each with its own ambient sounds and music
-- **seven** new [mobs](mobs) (some friendly, some hostile)
+- **seven** new [mobs](Mobs) (some friendly, some hostile)
 - **six** new stone building materials
 - **five** new wood types
-- **four** new music discs
-- an [**armored elytra**](items/silk_elytra)
+- **four** new [music discs](tags/music-disc)
+- an [**armored elytra**](Items/silk_elytra)
 - and much more
 
 through a balanced gameplay experience that will make you want to explore, base and build in The

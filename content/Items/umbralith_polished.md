@@ -1,0 +1,21 @@
+
+---
+title: Polished Umbralith
+tags:
+- item
+
+---
+> [!infobox-narrow] Infobox
+> ![Polished Umbralith](assets/items/umbralith_polished.png)
+>
+
+
+This article is a stub.
+
+## Obtaining
+
+## Usage
+
+
+
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/items/umbralith_polished.md)

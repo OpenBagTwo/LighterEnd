@@ -1,0 +1,21 @@
+
+---
+title: Virid Jadestone Tiles
+tags:
+- block
+
+---
+> [!infobox] Infobox
+> ![Virid Jadestone Tiles](assets/blocks/virid_jadestone_tiles.png)
+>
+
+
+This article is a stub.
+
+## Obtaining
+
+## Usage
+
+
+
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/blocks/virid_jadestone_tiles.md)

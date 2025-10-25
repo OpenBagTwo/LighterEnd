@@ -25,6 +25,6 @@ will ride on their parent's back until reaching maturity.
 Chorus Crabs will also pick up—and wield—swords they find on the ground. They also very rarely spawn being ridden by
 [Enderman](https://minecraft.wiki/w/Enderman) Jockeys.
 
-Upon death, Chorus Crabs drop [Raw Crab Meat](../items/crab_meat) and [Crab Claws](../items/crab_claw).
+Upon death, Chorus Crabs drop [Raw Crab Meat](../Items/crab_meat) and [Crab Claws](../Items/crab_claw).
 
 --- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Mobs/chorus_crab.md)

@@ -15,9 +15,9 @@ tags:
 **Silk Moths** are **passive** mobs found in [Blossoming Forest](../biomes#blossoming-forest) biomes. Specifically,
 they only spawn when a  [Silk Moth Nest](../blocks/silk_moth_nest) naturally generates during world generation.
 
-They produce [Silk Fiber](../items/silk_fiber) while inside their nests and can be bred
-using [Tenanea Flowers](../items/tenanea_flower).
+They produce [Silk Fiber](../Items/silk_fiber) while inside their nests and can be bred
+using [Tenanea Flowers](../Items/tenanea_flower).
 
-They drop [Silk Fiber](../items/silk_fiber) upon death.
+They drop [Silk Fiber](../Items/silk_fiber) upon death.
 
 --- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Mobs/silk_moth.md)

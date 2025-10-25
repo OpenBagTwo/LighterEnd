@@ -117,6 +117,39 @@
     --border: var(--lightgray);
     --callout-icon: var(--callout-icon-quote);
   }
+  &[data-callout="infobox"] {
+    --color: #00b0ff;
+    --border: #00b0ff44;
+    --bg: #00b0ff10;
+    --callout-icon: var(--callout-icon-abstract);
+
+    width: 512px;
+    border: 1px solid var(--border);
+    background-color: var(--bg);
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: var(--color);
+    float: right;
+    margin: -10px 10px 10px 10px;
+  }
+
+   &[data-callout="infobox-narrow"] {
+    --color: #00b0ff;
+    --border: #00b0ff44;
+    --bg: #00b0ff10;
+    --callout-icon: var(--callout-icon-abstract);
+
+    width: 256px;
+    border: 1px solid var(--border);
+    background-color: var(--bg);
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: var(--color);
+    float: right;
+    margin: -10px 10px 10px 10px;
+  }
 
   &.is-collapsed {
     & > .callout-title > .fold-callout-icon {
