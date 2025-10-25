@@ -167,6 +167,11 @@ Many thanks:
   examples of library-free worldgen and terrain modification
 - to [Vanilla Tweaks](https://vanillatweaks.net/picker/resource-packs/) for the concept of grooved
   levers
+- to the developers of [Quartz](https://quartz.jzhao.xyz/) for building a fantastic static site
+  generator
+    - and to the developers of [Gatekeeper](https://store.steampowered.com/app/2106670/Gatekeeper/)
+      for providing a phenomenal example of Quartz in practice with their
+      [game wiki](https://www.gatekeeper.wiki/)
 - to the [BetterX Discord](https://discord.gg/kYuATbYbKW) for their feedback in shaping this mod's
   development
 
