@@ -24,4 +24,4 @@ When killed, they drop [Glow Barbs](../items/glow_barb).
 > [!note] Changed from Better End
 > This is different from Better End, where Cubozoas dropped Gelatine.
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/mobs/cubozoa.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Mobs/cubozoa.md)

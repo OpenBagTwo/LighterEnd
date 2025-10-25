@@ -27,4 +27,4 @@ Chorus Crabs will also pick up—and wield—swords they find on the ground. The
 
 Upon death, Chorus Crabs drop [Raw Crab Meat](../items/crab_meat) and [Crab Claws](../items/crab_claw).
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/mobs/chorus_crab.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Mobs/chorus_crab.md)

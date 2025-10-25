@@ -21,4 +21,4 @@ They can be carried in [Buckets](../items/bucket_end_fish).
 
 When killed, they drop Raw [End Fish](../items/end_fish).
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/mobs/end_fish.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Mobs/end_fish.md)

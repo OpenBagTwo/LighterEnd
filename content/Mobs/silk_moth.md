@@ -20,4 +20,4 @@ using [Tenanea Flowers](../items/tenanea_flower).
 
 They drop [Silk Fiber](../items/silk_fiber) upon death.
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/mobs/silk_moth.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Mobs/silk_moth.md)

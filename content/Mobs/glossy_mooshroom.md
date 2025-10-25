@@ -27,4 +27,4 @@ Glossy Mooshrooms can be bred using [Ears of Lumecorn](../items/lumecorn_rod).
 Upon death, Glossy Mooshrooms drop [Leather](https://minecraft.wiki/w/Leather) and [Raw Beef](https://minecraft.wiki/w/Raw_Beef)
 or [Steak](https://minecraft.wiki/w/Steak) depending on if they were killed while on fire.
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/mobs/glossy_mooshroom.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Mobs/glossy_mooshroom.md)

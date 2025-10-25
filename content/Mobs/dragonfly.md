@@ -18,4 +18,4 @@ and [Foggy Mushroomlands](../biomes#foggy-mushroomland).
 
 They drop nothing when killed.
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/mobs/dragonfly.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Mobs/dragonfly.md)

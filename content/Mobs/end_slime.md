@@ -22,4 +22,4 @@ Small End Slimes drop [End Cream](../items/end_cream) upon death.
 > [!note] Changed from Better End
 > This is different from Better End, where End Slimes dropped Slime Balls.
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/mobs/end_slime.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Mobs/end_slime.md)
