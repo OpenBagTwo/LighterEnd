@@ -15,11 +15,11 @@ tags:
 
 ## Obtaining
 
-Aurant Polypores are obtained by shearing [Glossy Mooshrooms](../Mobs/glossy-mooshroom)
+Aurant Polypores are obtained by shearing [Glossy Mooshrooms](Mobs/glossy-mooshroom)
 
 ## Usage
 
-Aurant Polypores can be placed on the sides of full blocks. See: [block entry](../Blocks/aurant_polypore#usage).
+Aurant Polypores can be placed on the sides of full blocks. See: [block entry](Blocks/aurant_polypore#usage).
 
 They can also be used as a potion ingredient as a substitute for
 [Nether Wart](https://minecraft.wiki/w/Nether_Wart): brewing an Aurant Polypore and a

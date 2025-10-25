@@ -15,11 +15,11 @@ tags:
 
 ## Obtaining
 
-See: [block entry](../Blocks/purple_polypore#obtaining).
+See: [block entry](Blocks/purple_polypore#obtaining).
 
 ## Usage
 
-Purple Polypores can be placed on the sides of full blocks. See: [block entry](../Blocks/purple_polypore#usage).
+Purple Polypores can be placed on the sides of full blocks. See: [block entry](Blocks/purple_polypore#usage).
 
 They can also be used as a potion ingredient as a substitute for
 [Nether Wart](https://minecraft.wiki/w/Nether_Wart): brewing a Purple Polypore and a
