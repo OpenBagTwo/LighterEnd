@@ -16,7 +16,7 @@ tags:
 **Glossy Mooshrooms** are a **passive** mob found in [Glowing Grasslands](../biomes#glowing-grassland) and [Foggy Mushroomlands](../biomes#foggy-mushroomland).
 Similar to [Mooshrooms](https://minecraft.wiki/w/Mooshroom) in The Overworld, they can be milked with a Bucket. Using a Bowl on a
 Glossy Mooshroom yields a [Suspicious Stew](https://minecraft.wiki/w/Suspicious_Stew) that grants the consumer the
-[End Veil](../misc/end_veil) effect temporarily.
+[End Veil](../misc#end_veil) effect temporarily.
 
 Glossy Mooshrooms can also be sheared to obtain the [Polypores](../Items/aurant_polypore) that grow on their hides. Unlike
 regular Mooshrooms, however, this will not transform them into regular cows, and instead the fungi

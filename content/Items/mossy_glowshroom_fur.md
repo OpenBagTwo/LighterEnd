@@ -3,6 +3,7 @@
 title: Glowshroom Fur
 tags:
 - item
+- fur
 
 ---
 > [!infobox-narrow] Infobox

@@ -3,6 +3,7 @@
 title: Foggy Agave Fur
 tags:
 - item
+- fur
 
 ---
 > [!infobox-narrow] Infobox
