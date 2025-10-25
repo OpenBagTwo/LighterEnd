@@ -15,7 +15,7 @@ tags:
 
 ## Obtaining
 
-Aurant Polypores are obtained by shearing [Glossy Mooshrooms](Mobs/glossy-mooshroom)
+Aurant Polypores are obtained by shearing [Glossy Mooshrooms](Mobs/glossy_mooshroom)
 
 ## Usage
 
