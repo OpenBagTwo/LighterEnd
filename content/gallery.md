@@ -28,3 +28,6 @@ tags:
 ### With Nullscape
 
 ![Umbra Valley intersecting with a Shadowlands](assets/gallery/nullscape-shadowlands.png)
+
+
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/gallery.md)

@@ -1,3 +1,20 @@
 @use "./base.scss";
 
-// put your custom CSS here!
+
+.callout {
+  &[data-callout="infobox"] {
+    --color: #000;
+    --border: #fdfa32;
+    --bg: #222;
+
+    width: 512px;
+    border: 1px solid var(--border);
+    background-color: var(--bg);
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: var(--color);
+    float: right;
+    margin: -10px 10px 10px 10px;
+  }
+}

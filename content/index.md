@@ -25,3 +25,5 @@ Lighter End is available for Minecraft 1.21.5-1.21.10 and can be downloaded thro
 Find a bug? A compatibility issue with another mod? Have a feature suggestion?
 [Open an issue](https://github.com/OpenBagTwo/LighterEnd/issues/new) or
 join the **`#lighterend`** channel in [the BetterX Mods Discord](https://discord.gg/kYuATbYbKW).
+
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/index.md)
