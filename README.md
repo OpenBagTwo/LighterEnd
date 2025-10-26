@@ -81,13 +81,15 @@ On the flip side, LighterEnd has features not present in BetterEnd:
 
 ### Broad Compatibility
 
-LighterEnd is fully compatible with all your favorite End mods, such as
+Lighter End can be installed alongside other End mods, including (but by no means limited to):
 
 - [Nullscape](https://modrinth.com/datapack/nullscape)
-- [Moog's End Structures](https://modrinth.com/mod/mes-moogs-end-structures),
-- [Enderscape](https://github.com/they-made-enderscape/enderscape)
-- [Stellarity](https://modrinth.com/datapack/stellarity), and
+- [Moog's End Structures](https://modrinth.com/mod/mes-moogs-end-structures)
 - [Elytra Trims](https://modrinth.com/mod/elytra-trims)
+- [Better End Sky](https://modrinth.com/mod/better-end-sky)
+
+For a more detailed and up-to-date list of compatible mods and datapacks, consult the
+[Lighter End Wiki](https://openbagtwo.github.io/LighterEnd/mods)
 
 If you find a Fabric End mod that _doesn't_ work with LighterEnd, please
 [open an issue](https://github.com/OpenBagTwo/LighterEnd/issues/new).
