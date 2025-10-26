@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.world.LighterEndConfiguredFeatures;
+import io.github.openbagtwo.lighterend.world.gen.LighterEndWorldGen;
 import java.util.Map;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -22,9 +23,13 @@ import net.minecraft.world.SaveProperties;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProperties;
 import net.minecraft.world.biome.source.BiomeAccess;
+import net.minecraft.world.biome.source.BiomeSource;
+import net.minecraft.world.biome.source.MultiNoiseBiomeSource;
 import net.minecraft.world.chunk.ChunkLoadProgress;
 import net.minecraft.world.dimension.DimensionOptions;
 import net.minecraft.world.gen.GeneratorOptions;
+import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.gen.chunk.NoiseChunkGenerator;
 import net.minecraft.world.level.ServerWorldProperties;
 import net.minecraft.world.level.UnmodifiableLevelProperties;
 import net.minecraft.world.level.storage.LevelStorage;
@@ -118,6 +123,23 @@ public abstract class EndSpawnMixin {
       DimensionOptions dimensionOptions,
       long biomeSeed
   ) {
+
+    if (LighterEnd.CONFIG.generateBiomes()) {
+      ChunkGenerator defaultChunkGen = dimensionOptions.chunkGenerator();
+      BiomeSource defaultBiomes = defaultChunkGen.getBiomeSource();
+      if (defaultBiomes instanceof MultiNoiseBiomeSource noiseBiomeSource
+          && defaultChunkGen instanceof NoiseChunkGenerator noiseChunkGen) {
+        BiomeSource patchedBiomes = LighterEndWorldGen.addBiomesToNoiseSource(
+            ((BiomeAccessor) noiseBiomeSource).accessBiomeEntries(),
+            ((MinecraftServer) (Object) this).getRegistryManager().getOrThrow(
+                RegistryKeys.BIOME)
+        );
+        dimensionOptions = new DimensionOptions(
+            dimensionOptions.dimensionTypeEntry(),
+            new NoiseChunkGenerator(patchedBiomes, noiseChunkGen.getSettings())
+        );
+      }
+    }
 
     return new ServerWorld(
         (MinecraftServer) (Object) this,

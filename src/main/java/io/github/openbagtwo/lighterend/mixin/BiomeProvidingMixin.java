@@ -36,8 +36,10 @@ public abstract class BiomeProvidingMixin {
               server.getRegistryManager().getOrThrow(
                   RegistryKeys.BIOME)
           );
-          args.set(5, new DimensionOptions(dimensionOptions.dimensionTypeEntry(),
-              new NoiseChunkGenerator(patchedBiomes, noiseChunkGen.getSettings())));
+          args.set(5, new DimensionOptions(
+              dimensionOptions.dimensionTypeEntry(),
+              new NoiseChunkGenerator(patchedBiomes, noiseChunkGen.getSettings())
+          ));
         }
       }
     }
