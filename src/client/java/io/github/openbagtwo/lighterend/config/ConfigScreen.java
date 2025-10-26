@@ -59,7 +59,9 @@ public class ConfigScreen extends GameOptionsScreen {
       this.body.addSingleOptionEntry(
           new SimpleOption<>(
               "End Gravity",
-              SimpleOption.constantTooltip(Text.of("Set to 1.0 for vanilla")),
+              SimpleOption.constantTooltip(
+                  Text.of("Set to 1.0 for vanilla" + "\n\n" + REQUIRES_RESTART)
+              ),
               (optionText, value) -> GameOptions.getGenericValueText(optionText,
                   Text.of(String.valueOf(.01 * value))),
               new SimpleOption.ValidatingIntSliderCallbacks(5, 100, false),
@@ -72,7 +74,12 @@ public class ConfigScreen extends GameOptionsScreen {
       this.body.addSingleOptionEntry(
           SimpleOption.ofBoolean(
               "Disable End Gravity While Flying",
-              SimpleOption.constantTooltip(Text.of("Lowering gravity nerfs unpowered glide speed")),
+              SimpleOption.constantTooltip(
+                  Text.of(
+                      "Lowering gravity nerfs unpowered glide speed otherwise"
+                          + "\n\n" + REQUIRES_RESTART
+                  )
+              ),
               LighterEnd.CONFIG.disableEndGravityWhileFlying,
               (value) -> {
                 LighterEnd.CONFIG.disableEndGravityWhileFlying = value;

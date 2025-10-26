@@ -7,6 +7,7 @@ import io.github.openbagtwo.lighterend.misc.Fire;
 import io.github.openbagtwo.lighterend.misc.LighterEndPotions;
 import io.github.openbagtwo.lighterend.misc.Oxidizing;
 import io.github.openbagtwo.lighterend.misc.StatusEffects;
+import io.github.openbagtwo.lighterend.networking.GravityPayload;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndData;
@@ -23,6 +24,8 @@ import io.github.openbagtwo.lighterend.world.LighterEndConfiguredFeatures;
 import io.github.openbagtwo.lighterend.world.VanillaLootTableModifiers;
 import io.github.openbagtwo.lighterend.world.gen.LighterEndWorldGen;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +72,16 @@ public class LighterEnd implements ModInitializer {
     LighterEndWorldGen.addJadestoneBlobs(CONFIG);
     LighterEndWorldGen.addIceStars(CONFIG);
     LighterEndWorldGen.addOres(CONFIG);
+
+    PayloadTypeRegistry.playS2C().register(GravityPayload.ID, GravityPayload.CODEC);
+    ServerPlayConnectionEvents.JOIN.register((handler, sender, server) ->
+        sender.sendPacket(
+            new GravityPayload(
+                LighterEnd.CONFIG.getEndGravity(),
+                LighterEnd.CONFIG.disableEndGravityWhileFlying()
+            )
+        )
+    );
 
   }
 }

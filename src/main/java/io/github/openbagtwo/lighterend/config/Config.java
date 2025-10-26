@@ -44,11 +44,13 @@ public class Config {
    * The strength of gravity in the end (where 1.0 is normal)
    */
   protected double endGravity;
+  private double serverEndGravity;
 
   /**
    * Whether the above gravity modification should be disabled while flying with elytra
    */
   protected boolean disableEndGravityWhileFlying;
+  private boolean serverDisableEndGravityWhileFlying;
 
   /**
    * Whether End trees (including lumecorn, lilies and lotuses) should be prevented from growing in
@@ -90,11 +92,19 @@ public class Config {
   }
 
   public double getEndGravity() {
-    return this.endGravity;
+    return this.serverEndGravity;
+  }
+
+  public void setServerEndGravity(double gravity) {
+    this.serverEndGravity = gravity;
   }
 
   public boolean disableEndGravityWhileFlying() {
-    return this.disableEndGravityWhileFlying;
+    return this.serverDisableEndGravityWhileFlying;
+  }
+
+  public void setServerFlyFix(boolean enable) {
+    this.serverDisableEndGravityWhileFlying = enable;
   }
 
   public boolean endPlantsOnlyGrowInTheEnd() {
@@ -302,6 +312,9 @@ public class Config {
               DEFAULT_END_SPAWN
           ).toString()
       );
+
+      config.serverEndGravity = config.endGravity;
+      config.serverDisableEndGravityWhileFlying = config.disableEndGravityWhileFlying;
 
       return config;
 
