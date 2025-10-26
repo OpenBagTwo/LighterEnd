@@ -22,3 +22,5 @@ It can be obtained in one of a few ways:
 
 > [!info] Changed from Better End
 > In Better End, End Veil was a helmet enchantment.
+
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/misc.md)
