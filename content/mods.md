@@ -70,4 +70,13 @@ Enderscape's configuration and **disable** "Improved End Terrain"
 
 _last tested: [1.1.1 for 1.21.8](https://modrinth.com/mod/enderscape/version/1.1.1)_
 
+## Terrablender
+
+❌ **Incompatible**
+
+Lighter End biomes do not generate when [TerraBlender](https://modrinth.com/mod/terrablender)
+is installed.
+
+_last tested: [21.10.0.0 for Fabric 1.21.10](https://modrinth.com/mod/terrablender/version/kzbTmNaX)_
+
 --- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/mods.md)
