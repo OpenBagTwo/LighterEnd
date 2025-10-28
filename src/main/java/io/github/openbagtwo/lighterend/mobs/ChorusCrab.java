@@ -131,8 +131,9 @@ public class ChorusCrab extends AnimalEntity {
       @Nullable EntityData entityData
   ) {
     entityData = super.initialize(world, difficulty, spawnReason, entityData);
-
-    if (world.getRandom().nextInt(512) == 0 && (spawnReason != SpawnReason.BREEDING)) {
+    if (spawnReason == SpawnReason.BREEDING) {
+      this.setPersistent();
+    } else if (world.getRandom().nextInt(512) == 0) {
       EndermanEntity rider = EntityType.ENDERMAN.create(this.getEntityWorld(), SpawnReason.JOCKEY);
       if (rider != null) {
         rider.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), 0.0F);
@@ -225,6 +226,17 @@ public class ChorusCrab extends AnimalEntity {
     }
 
     this.dataTracker.set(CLIMBING, b);
+  }
+
+  @Override
+  public boolean canImmediatelyDespawn(double d) {
+    return !this.hasCustomName() && !this.hasPassengers();
+  }
+
+  @Override
+  public void lovePlayer(@Nullable PlayerEntity player) {
+    this.setPersistent();
+    super.lovePlayer(player);
   }
 
   class MateGoal extends AnimalMateGoal {
