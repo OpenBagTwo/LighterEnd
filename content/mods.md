@@ -21,7 +21,7 @@ _last tested: [v1.2.14](https://modrinth.com/datapack/nullscape/version/JuMNLwUQ
 
 ## Moog's End Structures
 
-✅  **Fully Compatible**
+✅ **Fully Compatible**
 
 [Moog's End Structures](https://modrinth.com/mod/mes-moogs-end-structures)
 beautifully compliment Lighter End's general aesthetic.
@@ -31,7 +31,7 @@ _last tested: [1.4.7 for 1.21.10](https://modrinth.com/mod/mes-moogs-end-structu
 
 ## Better End Sky
 
-✅  **Fully Compatible**
+✅ **Fully Compatible**
 
 [Better End Sky](https://modrinth.com/mod/better-end-sky) is fully compatible with Lighter End.
 
@@ -50,7 +50,7 @@ _last tested: [4.4.2 for 1.21.10](https://modrinth.com/mod/elytra-trims/version/
 
 ## Stellarity
 
-⚠️ **Partially Compatible**
+⚠️  **Partially Compatible**
 
 As with [Nullscape](#nullscape), Lighter End injects its list of biomes into Stellarity's
 biome source. However, Lighter End's biomes are much smaller—and rarer—under
@@ -60,7 +60,7 @@ _last tested: [v5.1.2 for 1.21.10](https://modrinth.com/datapack/stellarity/vers
 
 ## Enderscape
 
-⚠️ **Partially Compatible**
+⚠️  **Partially Compatible**
 
 [Enderscape](https://modrinth.com/mod/enderscape) by default provides its own world generation
 that overwrites Lighter End's biome source. To use Lighter End with Enderscape, go into
@@ -70,13 +70,29 @@ Enderscape's configuration and **disable** "Improved End Terrain"
 
 _last tested: [1.1.1 for 1.21.8](https://modrinth.com/mod/enderscape/version/1.1.1)_
 
-## Terrablender
+## TerraBlender
 
-❌ **Incompatible**
+✅ **Fully Compatible**
 
-Lighter End biomes do not generate when [TerraBlender](https://modrinth.com/mod/terrablender)
-is installed.
+Lighter End registers its biomes with [TerraBlender's](https://modrinth.com/mod/terrablender) API
+and arguably produces much more exciting worldgen results compared to vanilla. However, you may
+choose to tweak TerraBlender's settings by editing the `terrablender.toml` file in your Minecraft's
+`config` folder to make vanilla biomes more common.
 
 _last tested: [21.10.0.0 for Fabric 1.21.10](https://modrinth.com/mod/terrablender/version/kzbTmNaX)_
+
+### Biomes O' Plenty
+
+✅ **Fully Compatible**
+
+Explicitly: Lighter End biomes will generate alongside
+[Biomes O'Plenty's](https://modrinth.com/mod/biomes-o-plenty) End biomes, though I personally would
+suggest disabling the End Corruption by setting:
+```json
+  "end_corruption_enabled": false,
+```
+in `config/biomesoplenty/biome_toggles.json`
+
+_last tested: [21.10.0.2 for Fabric 1.21.10](https://modrinth.com/mod/biomes-o-plenty/version/EThFDdyw)_
 
 --- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/mods.md)
