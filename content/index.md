@@ -19,7 +19,7 @@ through a balanced gameplay experience that will make you want to explore, base 
 End, and not just go straight home after raiding an End City.
 
 Lighter End is available for Minecraft 1.21.5-1.21.10 and can be downloaded through
-[Modrinth](https://github.com/OpenBagTwo/LighterEnd/) or
+[Modrinth](https://modrinth.com/mod/lighterend/) or
 [GitHub](https://github.com/OpenBagTwo/LighterEnd/releases).
 
 Find a bug? A compatibility issue with another mod? Have a feature suggestion?
