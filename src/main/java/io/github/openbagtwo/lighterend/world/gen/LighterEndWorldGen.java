@@ -10,6 +10,7 @@ import static net.minecraft.world.gen.surfacebuilder.MaterialRules.noiseThreshol
 import static net.minecraft.world.gen.surfacebuilder.MaterialRules.sequence;
 
 import com.mojang.datafixers.util.Pair;
+import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.config.Config;
 import io.github.openbagtwo.lighterend.registries.LighterEndBiomes;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
@@ -130,6 +131,9 @@ public class LighterEndWorldGen {
     );
     biomeParams.addAll(defaultBiomes.getEntries());
 
+    LighterEnd.LOGGER.info(
+        "Injected " + LighterEnd.MOD_NAME + "'s biomes into multinoise worldgen");
+
     return MultiNoiseBiomeSource.create(new MultiNoiseUtil.Entries<>(biomeParams));
 
   }
@@ -175,6 +179,8 @@ public class LighterEndWorldGen {
       TheEndBiomes.addBarrensBiome(parentBiome, LighterEndBiomes.STARFIELD, 0.18);
       TheEndBiomes.addBarrensBiome(parentBiome, BiomeKeys.END_BARRENS, 1);
     }
+
+    LighterEnd.LOGGER.info("Injected " + LighterEnd.MOD_NAME + "'s biomes into Fabric worldgen");
   }
 
   public static void addIceStars(Config config) {
