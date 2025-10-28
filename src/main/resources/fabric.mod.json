@@ -26,6 +26,9 @@
     ],
     "modmenu": [
       "io.github.openbagtwo.lighterend.config.ModMenu"
+    ],
+    "terrablender": [
+      "io.github.openbagtwo.lighterend.integrations.TerraBlender"
     ]
   },
   "environment": "*",

@@ -22,6 +22,10 @@ repositories {
         name = "Modrinth"
         url = "https://api.modrinth.com/maven"
     }
+    maven {
+        name = "Forge"
+        url = "https://maven.minecraftforge.net/"
+    }
 }
 
 loom {
@@ -48,12 +52,16 @@ dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+
     modCompileOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
     modRuntimeOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
     modRuntimeOnly("maven.modrinth:jade:${project.jade_version}")
+    modCompileOnly("com.github.glitchfiend:TerraBlender-fabric:${project.terrablender_version}")
+    // Only comment in the line below when you're explicitly testing TerraBlender compat
+//    modRuntimeOnly("com.github.glitchfiend:TerraBlender-fabric:${project.terrablender_version}")
+
 
     compileOnly "org.yaml:snakeyaml:2.2"
     shadow(implementation("org.yaml:snakeyaml:2.2"))
