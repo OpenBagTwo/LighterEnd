@@ -98,6 +98,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.IRON_CHANDELIER,
             LighterEndBlocks.EMERALD_ICE,
             LighterEndBlocks.FERROUS_ICE,
+            LighterEndBlocks.AUROUS_ICE,
             LighterEndBlocks.END_STONE_QUARTZ_ORE,
             LighterEndBlocks.END_STONE_REDSTONE_ORE,
             LighterEndBlocks.UMBRALITH_QUARTZ_ORE,
