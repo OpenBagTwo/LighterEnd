@@ -5,6 +5,7 @@ import io.github.openbagtwo.lighterend.blocks.entities.PedestalDisplay;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.InteractibleSlotContainer;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
@@ -20,18 +21,16 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 
-public class Pedestal extends BlockWithEntity {
+public class Pedestal extends BlockWithEntity implements InteractibleSlotContainer {
 
   private static final VoxelShape SHAPE;
 
   public static final MapCodec<Pedestal> CODEC = Pedestal.createCodec(Pedestal::new);
 
   public Pedestal(Settings settings) {
-    super(
-        settings
-            .pistonBehavior(PistonBehavior.BLOCK)
-    );
+    super(settings.pistonBehavior(PistonBehavior.BLOCK));
   }
 
   @Override
@@ -64,7 +63,7 @@ public class Pedestal extends BlockWithEntity {
       Hand hand,
       BlockHitResult hit
   ) {
-    if (world.getBlockEntity(pos) instanceof PedestalDisplay display) {
+    if ((world.getBlockEntity(pos) instanceof PedestalDisplay display) && (!world.isClient())) {
 
       boolean makeSound = false;
       ItemStack toInsert = ItemStack.EMPTY;
@@ -85,12 +84,24 @@ public class Pedestal extends BlockWithEntity {
       if (makeSound) {
         display.setStack(0, toInsert);
         display.markDirty();
+        player.getInventory().markDirty();
         world.playSound(player, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 2f);
-        world.updateListeners(pos, state, state, 0);
+        world.emitGameEvent(GameEvent.ENTITY_INTERACT, pos, GameEvent.Emitter.of(state));
+        world.updateListeners(pos, state, state, Block.NOTIFY_ALL);
       }
     }
 
     return ActionResult.SUCCESS;
+  }
+
+  @Override
+  public int getRows() {
+    return 1;
+  }
+
+  @Override
+  public int getColumns() {
+    return 1;
   }
 
   static {
@@ -101,5 +112,6 @@ public class Pedestal extends BlockWithEntity {
     VoxelShape basin = VoxelShapes.union(basinDown, basinUp);
     SHAPE = VoxelShapes.union(basin, pillarDefault, pedestalDefault);
   }
+
 
 }

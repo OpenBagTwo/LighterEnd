@@ -5,7 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.SidedInventory;
+import net.minecraft.inventory.ListInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
@@ -14,13 +14,14 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
+import net.minecraft.util.HeldItemContext;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
-public class PedestalDisplay extends BlockEntity implements SidedInventory {
+public class PedestalDisplay extends BlockEntity implements HeldItemContext, ListInventory {
 
   private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
   private float rotation = 0;
@@ -42,15 +43,16 @@ public class PedestalDisplay extends BlockEntity implements SidedInventory {
   }
 
   @Override
-  protected void writeData(WriteView view) {
-    super.writeData(view);
-    Inventories.writeData(view, inventory);
+  protected void readData(ReadView view) {
+    super.readData(view);
+    this.inventory.clear();
+    Inventories.readData(view, this.inventory);
   }
 
   @Override
-  protected void readData(ReadView view) {
-    super.readData(view);
-    Inventories.readData(view, inventory);
+  protected void writeData(WriteView view) {
+    super.writeData(view);
+    Inventories.writeData(view, this.inventory, true);
   }
 
   @Override
@@ -70,18 +72,8 @@ public class PedestalDisplay extends BlockEntity implements SidedInventory {
   }
 
   @Override
-  public int[] getAvailableSlots(Direction side) {
-    return new int[0];
-  }
-
-  @Override
-  public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-    return inventory.getFirst().isEmpty();
-  }
-
-  @Override
-  public boolean canExtract(int slot, ItemStack stack, Direction dir) {
-    return !inventory.getFirst().isEmpty();
+  public DefaultedList<ItemStack> getHeldStacks() {
+    return this.inventory;
   }
 
   @Override
@@ -119,7 +111,6 @@ public class PedestalDisplay extends BlockEntity implements SidedInventory {
     if (slot == 0) {
       inventory.set(0, stack);
     }
-
   }
 
   @Override
@@ -130,5 +121,20 @@ public class PedestalDisplay extends BlockEntity implements SidedInventory {
   @Override
   public void clear() {
     this.removeStack(0);
+  }
+
+  @Override
+  public World getEntityWorld() {
+    return this.world;
+  }
+
+  @Override
+  public Vec3d getEntityPos() {
+    return this.getPos().toCenterPos();
+  }
+
+  @Override
+  public float getBodyYaw() {
+    return 0;
   }
 }
