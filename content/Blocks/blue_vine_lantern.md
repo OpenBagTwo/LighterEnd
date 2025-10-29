@@ -3,6 +3,7 @@
 title: Foggy Agave Bulb
 tags:
 - block
+- light
 
 ---
 > [!infobox] Infobox

@@ -22,7 +22,7 @@ See: [block entry](Blocks/purple_polypore#obtaining).
 Purple Polypores can be placed on the sides of full blocks. See: [block entry](Blocks/purple_polypore#usage).
 
 They can also be used as a potion ingredient as a substitute for
-[Nether Wart](https://minecraft.wiki/w/Nether_Wart): brewing a Purple Polypore and a
+[Nether Wart](https://minecraft.wiki/w/Nether_Wart): brewing a Purple Polypore into a
 [Water Bottle](https://minecraft.wiki/w/Water_Bottle) will produce an
 [Awkward Potion](https://minecraft.wiki/w/Awkward_Potion).
 

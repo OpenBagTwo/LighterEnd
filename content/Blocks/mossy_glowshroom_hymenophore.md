@@ -3,6 +3,7 @@
 title: Glowshroom Hymenophore
 tags:
 - block
+- light
 
 ---
 > [!infobox] Infobox
