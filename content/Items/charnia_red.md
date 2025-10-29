@@ -18,4 +18,4 @@ This article is a stub.
 
 
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/items/charnia_red.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Items/charnia_red.md)

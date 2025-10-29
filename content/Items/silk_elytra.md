@@ -53,4 +53,4 @@ Silk Elytra can be repaired in an anvil using [Silk Fiber](Items/silk_fiber) or 
 damaged Silk Elytra.
 
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/items/silk_elytra.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Items/silk_elytra.md)

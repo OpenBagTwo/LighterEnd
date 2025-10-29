@@ -18,4 +18,4 @@ This article is a stub.
 
 
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/items/sandy_jadestone_bricks.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Items/sandy_jadestone_bricks.md)

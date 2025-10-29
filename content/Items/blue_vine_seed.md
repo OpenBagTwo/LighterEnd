@@ -18,4 +18,4 @@ This article is a stub.
 
 
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/items/blue_vine_seed.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Items/blue_vine_seed.md)

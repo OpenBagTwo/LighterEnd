@@ -18,4 +18,4 @@ This article is a stub.
 
 
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/blocks/umbrella_stripped_log.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Blocks/umbrella_stripped_log.md)

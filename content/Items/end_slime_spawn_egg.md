@@ -12,4 +12,4 @@ tags:
 
 See: [End Slime](Mobs/end_slime)
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/items/end_slime_spawn_egg.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Items/end_slime_spawn_egg.md)

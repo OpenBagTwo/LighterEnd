@@ -35,4 +35,4 @@ the moths will exit and increase the nest's fullness level by one.
 Once the Nest reaches its maximum fullness level of 3, it can be sheared, resetting its fullness level and dropping three
 pieces of [Silk Fiber](Items/silk_fiber).
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/blocks/silk_moth_nest.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Blocks/silk_moth_nest.md)

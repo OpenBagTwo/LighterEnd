@@ -26,4 +26,4 @@ They can also be used as a potion ingredient as a substitute for
 [Water Bottle](https://minecraft.wiki/w/Water_Bottle) will produce an
 [Awkward Potion](https://minecraft.wiki/w/Awkward_Potion).
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/items/aurant_polypore.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Items/aurant_polypore.md)

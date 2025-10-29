@@ -9,3 +9,4 @@ private/
 .replit
 replit.nix
 .ipynb_checkpoints
+.idea

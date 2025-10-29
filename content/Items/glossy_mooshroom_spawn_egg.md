@@ -12,4 +12,4 @@ tags:
 
 See: [Glossy Mooshroom](Mobs/glossy_mooshroom)
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/items/glossy_mooshroom_spawn_egg.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Items/glossy_mooshroom_spawn_egg.md)

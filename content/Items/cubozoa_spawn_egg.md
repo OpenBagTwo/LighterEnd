@@ -12,4 +12,4 @@ tags:
 
 See: [Cubozoa](Mobs/cubozoa)
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/items/cubozoa_spawn_egg.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Items/cubozoa_spawn_egg.md)

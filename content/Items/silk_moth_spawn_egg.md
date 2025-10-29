@@ -12,4 +12,4 @@ tags:
 
 See: [Silk Moth](Mobs/silk_moth)
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/items/silk_moth_spawn_egg.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Items/silk_moth_spawn_egg.md)

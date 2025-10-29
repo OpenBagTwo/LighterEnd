@@ -24,4 +24,4 @@ They can also be crafted by combining six [Tenanea Planks](Items/tenanea_planks)
 See: [block entry](Blocks/silk_moth_nest).
 
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/items/silk_moth_nest.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Items/silk_moth_nest.md)

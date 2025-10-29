@@ -31,4 +31,4 @@ Combining one Silk Matrix and six [Tenanea Planks](Items/tenanea_planks) produce
 Combining six Silk Matrices and two [Phantom Membranes](https://minecraft.wiki/w/Phantom_Membrane) produces
 a [Silk Elytra](silk_elytra)
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/items/silk_matrix.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Items/silk_matrix.md)

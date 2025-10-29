@@ -30,4 +30,4 @@ light level of 13.
 See also: [item entry](Items/aurant_polypore#usage).
 
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/blocks/aurant_polypore.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Blocks/aurant_polypore.md)

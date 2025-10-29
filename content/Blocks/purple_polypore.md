@@ -26,4 +26,4 @@ Purple Polypores can be placed on the sides of full blocks as decoration.
 
 See also: [item entry](Items/purple_polypore#usage).
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/blocks/purple_polypore.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Blocks/purple_polypore.md)

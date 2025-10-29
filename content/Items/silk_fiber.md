@@ -28,4 +28,4 @@ Alternatively, nine Silk Fibers can be crafted in a grid to produce one [Silk Ma
 Silk Fiber can also be used to repair damaged [Silk Elytra](Items/silk_elytra).
 
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/items/silk_fiber.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Items/silk_fiber.md)

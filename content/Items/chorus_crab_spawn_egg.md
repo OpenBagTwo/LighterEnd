@@ -12,4 +12,4 @@ tags:
 
 See: [Chorus Crab](Mobs/chorus_crab)
 
---- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/items/chorus_crab_spawn_egg.md)
+--- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Items/chorus_crab_spawn_egg.md)
