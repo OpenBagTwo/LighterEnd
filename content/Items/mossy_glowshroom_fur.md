@@ -4,6 +4,7 @@ title: Glowshroom Fur
 tags:
 - item
 - fur
+- fletching
 
 ---
 > [!infobox-narrow] Infobox

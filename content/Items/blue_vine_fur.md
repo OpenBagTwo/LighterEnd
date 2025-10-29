@@ -4,6 +4,7 @@ title: Foggy Agave Fur
 tags:
 - item
 - fur
+- fletching
 
 ---
 > [!infobox-narrow] Infobox

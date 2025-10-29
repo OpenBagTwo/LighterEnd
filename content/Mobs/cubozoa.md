@@ -24,4 +24,9 @@ When killed, they drop [Glow Barbs](Items/glow_barb).
 > [!info] Changed from Better End
 > This is different from Better End, where Cubozoas dropped Gelatine.
 
+### Trivia
+
+In the real world, [Cubozoas](https://en.wikipedia.org/wiki/Box_jellyfish), also known as Box Jellyfish, can be found
+in many tropical and subtropical oceans and pack powerful and painful stings.
+
 --- [Edit this page on GitHub](https://github.com/OpenBagTwo/LighterEnd/edit/wiki/content/Mobs/cubozoa.md)
