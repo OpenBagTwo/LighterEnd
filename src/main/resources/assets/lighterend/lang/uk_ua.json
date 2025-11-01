@@ -326,6 +326,7 @@
   "entity.lighterend.end_slime": "Ендерслимак",
   "entity.lighterend.glossy_mooshroom": "Глянцевий мушрум",
   "entity.lighterend.silk_moth": "Шовкова міль",
+  "item..lighterend.waxed_oxidized_copper_chandelier": "Вощена окисненна мідна люстра",
   "item.lighterend.aurant_polypore": "Аврантовий поліпор",
   "item.lighterend.aurora_crystal": "Авроровий кристал",
   "item.lighterend.aurora_crystal_shard": "Уламок аврорового кристала",
@@ -640,7 +641,6 @@
   "item.lighterend.virid_jadestone_wall": "Віридово-нефритова стіна",
   "item.lighterend.waxed_copper_chandelier": "Вощена мідна люстра",
   "item.lighterend.waxed_exposed_copper_chandelier": "Вощена наражена мідна люстра",
-  "item..lighterend.waxed_oxidized_copper_chandelier": "Вощена окисненна мідна люстра",
   "item.lighterend.waxed_weathered_copper_chandelier": "Вощена вивістрена мідна люстра",
   "item.lighterend.weathered_copper_chandelier": "Вивітрена мідна люстра",
   "item.minecraft.lingering_potion.effect.end_veil": "Осідальне зілля завіси Енду",
@@ -671,6 +671,7 @@
   "minecraft.overworld": "Верхній світ",
   "minecraft.the_end": "Енд",
   "minecraft.the_nether": "Незер",
+  "modmenu.descriptionTranslation.lighterend": "Приносячи світло й життя в найбезлюдніший вимір. Продовження BetterEnd",
   "resourcepacks.lighterend.visibly_waxed.description": "Надає вощеним люстрам виразну текстуру предмета",
   "resourcepacks.lighterend.visibly_waxed.title": "Помітно вощені люстри",
   "resourcepacks.lighterend.wing_trims.description": "Застосує орнаменти обладунків до шару шовкових елітр",
@@ -721,6 +722,5 @@
   "tag.item.lighterend.glossy_mooshroom_food": "Їжа глянцевих мушрумів",
   "tag.item.lighterend.polypores": "Гриби, що живуть на корі LighterEnd, з яких можна варити незграбні зілля",
   "tag.item.lighterend.repairs_silk_armor": "Предмети, які можуть лагодити шовкові елітри",
-  "trim_material.lighterend.aurora": "Авроровий матеріал",
-  "modmenu.descriptionTranslation.lighterend": "Приносячи світло й життя в найбезлюдніший вимір. Продовження BetterEnd"
+  "trim_material.lighterend.aurora": "Авроровий матеріал"
 }
