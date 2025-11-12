@@ -1535,6 +1535,12 @@
     ],
     "subtitle": "subtitles.lighterend.item.armor.equip_silk"
   },
+  "item.armor.wet_fur": {
+    "sounds": [
+      "random/pop"
+    ],
+    "subtitle": "subtitles.lighterend.item.armor.wet_fur"
+  },
   "item.matchstick.use": {
     "sounds": [
       {

@@ -22,7 +22,8 @@
     "SurfaceGenMixin",
     "TeleportFromVoidMixin",
     "TooltipMixin",
-    "UnderwaterBonemealMixin"
+    "UnderwaterBonemealMixin",
+    "WetFurMixin"
   ],
   "package": "io.github.openbagtwo.lighterend.mixin",
   "required": true
