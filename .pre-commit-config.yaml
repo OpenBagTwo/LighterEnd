@@ -8,6 +8,8 @@ repos:
   rev: v6.0.0
   hooks:
   - id: check-json
+    types: [file]
+    files: .*\.(mcmeta|json)$
   - id: pretty-format-json
     args: [--autofix, --indent=2, --no-ensure-ascii]
     exclude: fabric.mod.json
@@ -15,7 +17,7 @@ repos:
   - id: check-executables-have-shebangs
   - id: end-of-file-fixer
 - repo: https://github.com/igorshubovych/markdownlint-cli
-  rev: v0.45.0
+  rev: v0.46.0
   hooks:
   - id: markdownlint-fix
     args: [--disable, MD013, MD033, MD036 --]
