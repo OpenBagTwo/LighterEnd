@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
@@ -24,9 +25,9 @@ public class CubozoaRenderer extends
       LighterEnd.of("textures/entity/cubozoa/cubozoa_sulphur.png")
   );
   private static final List<RenderLayer> GLOW = Arrays.asList(
-      RenderLayer.getEyes(
+      RenderLayers.eyes(
           LighterEnd.of("textures/entity/cubozoa/cubozoa_glow.png")),
-      RenderLayer.getEyes(
+      RenderLayers.eyes(
           LighterEnd.of("textures/entity/cubozoa/cubozoa_sulphur_glow.png"))
   );
 

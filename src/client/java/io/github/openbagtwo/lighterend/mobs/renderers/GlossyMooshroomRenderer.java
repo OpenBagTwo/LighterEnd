@@ -10,6 +10,7 @@ import java.util.List;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.AgeableMobEntityRenderer;
@@ -35,7 +36,7 @@ public class GlossyMooshroomRenderer extends
   );
 
   private static final List<RenderLayer> GLOW = Arrays.asList(
-      RenderLayer.getEyes(
+      RenderLayers.eyes(
           LighterEnd.of("textures/entity/glossy_mooshroom_glow.png")
       )
   );
@@ -188,7 +189,7 @@ public class GlossyMooshroomRenderer extends
       if (renderAsModel) {
         queue.submitBlockStateModel(
             matrices,
-            RenderLayer.getOutline(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE),
+            RenderLayers.outlineNoCull(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE),
             mushroomModel,
             0.0F, 0.0F, 0.0F, light, overlay, color
         );

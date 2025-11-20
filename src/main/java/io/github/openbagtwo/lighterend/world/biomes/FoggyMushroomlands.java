@@ -4,15 +4,19 @@ import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import io.github.openbagtwo.lighterend.registries.LighterEndParticles;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.world.LighterEndPlacedFeatures;
+import java.util.List;
+import java.util.Optional;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.sound.MusicType;
+import net.minecraft.world.attribute.AmbientParticle;
+import net.minecraft.world.attribute.AmbientSounds;
+import net.minecraft.world.attribute.BackgroundMusic;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
-import net.minecraft.world.biome.BiomeParticleConfig;
 import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.biome.SpawnSettings;
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry;
@@ -67,20 +71,29 @@ public class FoggyMushroomlands {
         .temperature(0.5F)
         .downfall(0.5F)
         .effects(new BiomeEffects.Builder()
-            .particleConfig(new BiomeParticleConfig(LighterEndParticles.GLOWING_SPHERE, 0.001F))
-            .skyColor(0x000000)
-            .fogColor(0x297AAD)
             .waterColor(0x77E3FA)
-            .waterFogColor(0x77E3FA)
             .foliageColor(0x49D2D1)
             .grassColor(0x31bfe1)
-            .loopSound(LighterEndSounds.MUSHROOMLANDS_AMBIENT)
-            .music(MusicType.createIngameMusic(LighterEndSounds.MUSHROOMLANDS_MUSIC))
             .build()
         )
         .spawnSettings(spawns)
         .generationSettings(genSettingsBuilder.build())
-        .build();
+        .setEnvironmentAttribute(EnvironmentAttributes.AMBIENT_PARTICLES_VISUAL,
+            AmbientParticle.of(LighterEndParticles.GLOWING_SPHERE, 0.001F))
+        .setEnvironmentAttribute(EnvironmentAttributes.SKY_COLOR_VISUAL, 0x000000)
+        .setEnvironmentAttribute(EnvironmentAttributes.FOG_COLOR_VISUAL, 0x297AAD)
+        .setEnvironmentAttribute(EnvironmentAttributes.WATER_FOG_COLOR_VISUAL, 0x77E3FA)
+        .setEnvironmentAttribute(
+            EnvironmentAttributes.AMBIENT_SOUNDS_AUDIO,
+            new AmbientSounds(
+                Optional.of(LighterEndSounds.MUSHROOMLANDS_AMBIENT),
+                Optional.empty(),
+                List.of()
+            )
+        ).setEnvironmentAttribute(
+            EnvironmentAttributes.BACKGROUND_MUSIC_AUDIO,
+            new BackgroundMusic(LighterEndSounds.MUSHROOMLANDS_MUSIC)
+        ).build();
   }
 
 }

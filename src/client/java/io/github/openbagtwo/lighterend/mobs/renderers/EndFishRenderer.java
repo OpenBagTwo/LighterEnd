@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
@@ -30,21 +31,21 @@ public class EndFishRenderer extends
       LighterEnd.of("textures/entity/end_fish/end_fish_7.png")
   );
   private static final List<RenderLayer> GLOW = Arrays.asList(
-      RenderLayer.getEyes(
+      RenderLayers.eyes(
           LighterEnd.of("textures/entity/end_fish/end_fish_0_glow.png")),
-      RenderLayer.getEyes(
+      RenderLayers.eyes(
           LighterEnd.of("textures/entity/end_fish/end_fish_1_glow.png")),
-      RenderLayer.getEyes(
+      RenderLayers.eyes(
           LighterEnd.of("textures/entity/end_fish/end_fish_2_glow.png")),
-      RenderLayer.getEyes(
+      RenderLayers.eyes(
           LighterEnd.of("textures/entity/end_fish/end_fish_3_glow.png")),
-      RenderLayer.getEyes(
+      RenderLayers.eyes(
           LighterEnd.of("textures/entity/end_fish/end_fish_4_glow.png")),
-      RenderLayer.getEyes(
+      RenderLayers.eyes(
           LighterEnd.of("textures/entity/end_fish/end_fish_5_glow.png")),
-      RenderLayer.getEyes(
+      RenderLayers.eyes(
           LighterEnd.of("textures/entity/end_fish/end_fish_6_glow.png")),
-      RenderLayer.getEyes(
+      RenderLayers.eyes(
           LighterEnd.of("textures/entity/end_fish/end_fish_7_glow.png"))
   );
 

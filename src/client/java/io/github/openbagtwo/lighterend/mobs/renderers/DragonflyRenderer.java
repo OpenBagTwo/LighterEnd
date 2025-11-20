@@ -5,6 +5,7 @@ import io.github.openbagtwo.lighterend.mobs.Dragonfly;
 import io.github.openbagtwo.lighterend.mobs.EntityModels;
 import io.github.openbagtwo.lighterend.mobs.models.DragonflyModel;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
@@ -15,7 +16,7 @@ public class DragonflyRenderer extends
     MobEntityRenderer<Dragonfly, LivingEntityRenderState, DragonflyModel> {
 
   private static final Identifier TEXTURE = LighterEnd.of("textures/entity/dragonfly.png");
-  private static final RenderLayer GLOW = RenderLayer.getEyes(
+  private static final RenderLayer GLOW = RenderLayers.eyes(
       LighterEnd.of("textures/entity/dragonfly_glow.png")
   );
 

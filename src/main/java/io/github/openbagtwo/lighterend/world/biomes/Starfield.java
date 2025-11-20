@@ -6,9 +6,10 @@ import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.world.attribute.AmbientParticle;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
-import net.minecraft.world.biome.BiomeParticleConfig;
 import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.biome.SpawnSettings;
 import net.minecraft.world.gen.GenerationStep.Feature;
@@ -36,19 +37,19 @@ public class Starfield {
         .precipitation(false)
         .temperature(-1.0F)
         .downfall(1.0F)
-        .effects(
-            new BiomeEffects.Builder()
-                .particleConfig(new BiomeParticleConfig(LighterEndParticles.SNOWFLAKE, 0.002F))
-                .skyColor(0x000000)
-                .fogColor(0xe0f5fe)
-                .waterColor(0x45c2be)
-                .waterFogColor(0x45c2be)
-                .foliageColor(0xc1f4f4)
-                .grassColor(0xe6f6fc)
-                .build()
+        .effects(new BiomeEffects.Builder()
+            .waterColor(0x45c2be)
+            .foliageColor(0xc1f4f4)
+            .grassColor(0xe6f6fc)
+            .build()
         )
         .spawnSettings(spawns)
         .generationSettings(genSettingsBuilder.build())
+        .setEnvironmentAttribute(EnvironmentAttributes.AMBIENT_PARTICLES_VISUAL,
+            AmbientParticle.of(LighterEndParticles.SNOWFLAKE, 0.002F))
+        .setEnvironmentAttribute(EnvironmentAttributes.SKY_COLOR_VISUAL, 0x000000)
+        .setEnvironmentAttribute(EnvironmentAttributes.FOG_COLOR_VISUAL, 0xe0f5fe)
+        .setEnvironmentAttribute(EnvironmentAttributes.WATER_FOG_COLOR_VISUAL, 0x45c2be)
         .build();
   }
 }

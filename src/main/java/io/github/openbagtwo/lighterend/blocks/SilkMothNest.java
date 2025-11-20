@@ -63,7 +63,6 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
@@ -72,6 +71,7 @@ import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.world.rule.GameRules;
 import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
@@ -210,7 +210,7 @@ public class SilkMothNest extends BlockWithEntity {
     if (
         world instanceof ServerWorld serverWorld
             && player.shouldSkipBlockDrops()
-            && serverWorld.getGameRules().getBoolean(GameRules.DO_TILE_DROPS)
+            && serverWorld.getGameRules().getValue(GameRules.DO_TILE_DROPS)
             && world.getBlockEntity(pos) instanceof SilkMothNestEntity nestEntity
     ) {
       int fullness = state.get(FULLNESS);

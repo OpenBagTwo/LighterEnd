@@ -2,6 +2,8 @@ package io.github.openbagtwo.lighterend.world.biomes;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.world.LighterEndPlacedFeatures;
+import java.util.List;
+import java.util.Optional;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.particle.ParticleTypes;
@@ -9,10 +11,12 @@ import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.sound.MusicType;
+import net.minecraft.world.attribute.AmbientParticle;
+import net.minecraft.world.attribute.AmbientSounds;
+import net.minecraft.world.attribute.BackgroundMusic;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
-import net.minecraft.world.biome.BiomeParticleConfig;
 import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.biome.SpawnSettings;
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry;
@@ -57,19 +61,28 @@ public class ShadowForest {
         .temperature(0.5F)
         .downfall(0.5F)
         .effects(new BiomeEffects.Builder()
-            .particleConfig(new BiomeParticleConfig(ParticleTypes.MYCELIUM, 0.01F))
-            .skyColor(0x000000)
-            .fogColor(0x000000)
             .waterColor(0x2A2D50)
-            .waterFogColor(0x2A2D50)
             .foliageColor(0x2D2D2D)
             .grassColor(0x2D2D2D)
-            .loopSound(LighterEndSounds.SHADOW_AMBIENT)
-            .music(MusicType.createIngameMusic(LighterEndSounds.SHADOW_MUSIC))
             .build()
         )
         .spawnSettings(spawns)
         .generationSettings(genSettingsBuilder.build())
-        .build();
+        .setEnvironmentAttribute(EnvironmentAttributes.AMBIENT_PARTICLES_VISUAL,
+            AmbientParticle.of(ParticleTypes.MYCELIUM, 0.01F))
+        .setEnvironmentAttribute(EnvironmentAttributes.SKY_COLOR_VISUAL, 0x000000)
+        .setEnvironmentAttribute(EnvironmentAttributes.FOG_COLOR_VISUAL, 0x000000)
+        .setEnvironmentAttribute(EnvironmentAttributes.WATER_FOG_COLOR_VISUAL, 0x2A2D50)
+        .setEnvironmentAttribute(
+            EnvironmentAttributes.AMBIENT_SOUNDS_AUDIO,
+            new AmbientSounds(
+                Optional.of(LighterEndSounds.SHADOW_AMBIENT),
+                Optional.empty(),
+                List.of()
+            )
+        ).setEnvironmentAttribute(
+            EnvironmentAttributes.BACKGROUND_MUSIC_AUDIO,
+            new BackgroundMusic(LighterEndSounds.SHADOW_MUSIC)
+        ).build();
   }
 }

@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
@@ -31,13 +32,13 @@ public class EndSlimeRenderer extends
       LighterEnd.of("textures/entity/end_slime/end_slime_amber.png")
   );
   private static final List<RenderLayer> GLOW = Arrays.asList(
-      RenderLayer.getEyes(
+      RenderLayers.eyes(
           LighterEnd.of("textures/entity/end_slime/end_slime_glow.png")),
-      RenderLayer.getEyes(
+      RenderLayers.eyes(
           LighterEnd.of("textures/entity/end_slime/end_slime_glow.png")),
-      RenderLayer.getEyes(
+      RenderLayers.eyes(
           LighterEnd.of("textures/entity/end_slime/end_slime_lake_glow.png")),
-      RenderLayer.getEyes(
+      RenderLayers.eyes(
           LighterEnd.of("textures/entity/end_slime/end_slime_amber_glow.png"))
   );
 
@@ -142,7 +143,7 @@ public class EndSlimeRenderer extends
                   this.model,
                   state,
                   matrixStack,
-                  RenderLayer.getEntityTranslucent(TEXTURES.get(state.variant % TEXTURES.size())),
+                  RenderLayers.entityTranslucent(TEXTURES.get(state.variant % TEXTURES.size())),
                   light,
                   j,
                   -1,
@@ -156,7 +157,7 @@ public class EndSlimeRenderer extends
                   this.model,
                   state,
                   matrixStack,
-                  RenderLayer.getEntityTranslucent(TEXTURES.get(state.variant % TEXTURES.size())),
+                  RenderLayers.entityTranslucent(TEXTURES.get(state.variant % TEXTURES.size())),
                   light,
                   j,
                   -1,

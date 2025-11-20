@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.11-SNAPSHOT'
+    id 'fabric-loom' version '1.13-SNAPSHOT'
     id "fr.brouillard.oss.gradle.jgitver" version "0.9.1"
     id 'com.gradleup.shadow' version '9.2.2'
     id 'maven-publish'
@@ -57,7 +57,7 @@ dependencies {
 
     modCompileOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
     modRuntimeOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
-    modRuntimeOnly("maven.modrinth:jade:${project.jade_version}")
+//    modRuntimeOnly("maven.modrinth:jade:${project.jade_version}")
     modCompileOnly("com.github.glitchfiend:TerraBlender-fabric:${project.terrablender_version}")
     // Only comment in the line below when you're explicitly testing TerraBlender compat
 //    modRuntimeOnly("com.github.glitchfiend:TerraBlender-fabric:${project.terrablender_version}")

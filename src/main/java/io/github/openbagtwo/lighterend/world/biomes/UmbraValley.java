@@ -3,16 +3,20 @@ package io.github.openbagtwo.lighterend.world.biomes;
 import io.github.openbagtwo.lighterend.registries.LighterEndParticles;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.world.LighterEndPlacedFeatures;
+import java.util.List;
+import java.util.Optional;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.sound.MusicType;
+import net.minecraft.world.attribute.AmbientParticle;
+import net.minecraft.world.attribute.AmbientSounds;
+import net.minecraft.world.attribute.BackgroundMusic;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
-import net.minecraft.world.biome.BiomeParticleConfig;
 import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.biome.SpawnSettings;
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry;
@@ -61,20 +65,29 @@ public class UmbraValley {
         .temperature(0.5F)
         .downfall(0.5F)
         .effects(new BiomeEffects.Builder()
-            .particleConfig(new BiomeParticleConfig(LighterEndParticles.AMBER_SPHERE, 0.0001F))
-            .skyColor(0x000000)
-            .fogColor(0x646464)
             .waterColor(0x45C286)
-            .waterFogColor(0x45C286)
             .foliageColor(0xACBDBE)
             .grassColor(0xACBDBE)
-            .loopSound(LighterEndSounds.UMBRA_VALLEY_AMBIENT)
-            .music(MusicType.createIngameMusic(LighterEndSounds.UMBRA_VALLEY_MUSIC))
             .build()
         )
         .spawnSettings(spawns)
         .generationSettings(genSettingsBuilder.build())
-        .build();
+        .setEnvironmentAttribute(EnvironmentAttributes.AMBIENT_PARTICLES_VISUAL,
+            AmbientParticle.of(LighterEndParticles.AMBER_SPHERE, 0.0001F))
+        .setEnvironmentAttribute(EnvironmentAttributes.SKY_COLOR_VISUAL, 0x000000)
+        .setEnvironmentAttribute(EnvironmentAttributes.FOG_COLOR_VISUAL, 0x646464)
+        .setEnvironmentAttribute(EnvironmentAttributes.WATER_FOG_COLOR_VISUAL, 0x45C286)
+        .setEnvironmentAttribute(
+            EnvironmentAttributes.AMBIENT_SOUNDS_AUDIO,
+            new AmbientSounds(
+                Optional.of(LighterEndSounds.UMBRA_VALLEY_AMBIENT),
+                Optional.empty(),
+                List.of()
+            )
+        ).setEnvironmentAttribute(
+            EnvironmentAttributes.BACKGROUND_MUSIC_AUDIO,
+            new BackgroundMusic(LighterEndSounds.UMBRA_VALLEY_MUSIC)
+        ).build();
   }
 
 }

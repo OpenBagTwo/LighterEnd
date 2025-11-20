@@ -3,12 +3,16 @@ package io.github.openbagtwo.lighterend.world.biomes;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.world.LighterEndPlacedFeatures;
+import java.util.List;
+import java.util.Optional;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.sound.MusicType;
+import net.minecraft.world.attribute.AmbientSounds;
+import net.minecraft.world.attribute.BackgroundMusic;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.biome.GenerationSettings;
@@ -52,19 +56,26 @@ public class BlossomingForest {
         .temperature(0.5F)
         .downfall(0.5F)
         .effects(new BiomeEffects.Builder()
-            .skyColor(0x000000)
-            .fogColor(0xF192E5)
             .waterColor(0x3F76E4)
-            .waterFogColor(0x050533)
             .foliageColor(0x7A2D7A)
             .grassColor(0xC671EB)
-            .loopSound(LighterEndSounds.BLOSSOM_AMBIENT)
-            .music(MusicType.createIngameMusic(LighterEndSounds.BLOSSOM_MUSIC))
             .build()
         )
         .spawnSettings(spawns)
         .generationSettings(genSettingsBuilder.build())
-        .build();
+        .setEnvironmentAttribute(EnvironmentAttributes.SKY_COLOR_VISUAL, 0x000000)
+        .setEnvironmentAttribute(EnvironmentAttributes.FOG_COLOR_VISUAL, 0xF192E5)
+        .setEnvironmentAttribute(EnvironmentAttributes.WATER_FOG_COLOR_VISUAL, 0x050533)
+        .setEnvironmentAttribute(
+            EnvironmentAttributes.AMBIENT_SOUNDS_AUDIO,
+            new AmbientSounds(
+                Optional.of(LighterEndSounds.BLOSSOM_AMBIENT),
+                Optional.empty(),
+                List.of()
+            )
+        ).setEnvironmentAttribute(
+            EnvironmentAttributes.BACKGROUND_MUSIC_AUDIO,
+            new BackgroundMusic(LighterEndSounds.BLOSSOM_MUSIC)
+        ).build();
   }
-
 }

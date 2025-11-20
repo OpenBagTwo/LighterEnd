@@ -64,14 +64,7 @@ public class BlockLayerRenderer {
         LighterEndBlocks.NEEDLEGRASS,
         LighterEndBlocks.MURKWEED,
         LighterEndBlocks.DRAGON_SAPLING,
-        LighterEndBlocks.POTTED_DRAGON_SAPLING
-    );
-    for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.getAll()) {
-      BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT, chandelier);
-    }
-
-    BlockRenderLayerMap.putBlocks(
-        BlockRenderLayer.CUTOUT_MIPPED,
+        LighterEndBlocks.POTTED_DRAGON_SAPLING,
         LighterEndBlocks.END_MOSS,
         LighterEndBlocks.UMBRALITH.baseBlock,
         LighterEndBlocks.END_STONE_QUARTZ_ORE,
@@ -79,6 +72,10 @@ public class BlockLayerRenderer {
         LighterEndBlocks.UMBRALITH_QUARTZ_ORE,
         LighterEndBlocks.UMBRALITH_REDSTONE_ORE
     );
+    for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.getAll()) {
+      BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT, chandelier);
+    }
+
   }
 
 }
