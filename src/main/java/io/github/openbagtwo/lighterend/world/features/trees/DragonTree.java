@@ -17,21 +17,21 @@ import io.github.openbagtwo.lighterend.utils.math.sdf.primitives.SDFSphere;
 import io.github.openbagtwo.lighterend.world.gen.noise.OpenSimplexNoise;
 import java.util.List;
 import java.util.function.Function;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import org.joml.Vector3f;
 
-public class DragonTree extends Feature<DefaultFeatureConfig> {
+public class DragonTree extends Feature<NoneFeatureConfiguration> {
 
   private static final Function<BlockState, Boolean> REPLACE;
   private static final Function<BlockState, Boolean> IGNORE;
@@ -42,41 +42,41 @@ public class DragonTree extends Feature<DefaultFeatureConfig> {
   private static final List<Vector3f> ROOT;
 
   public DragonTree() {
-    super(DefaultFeatureConfig.CODEC);
+    super(NoneFeatureConfiguration.CODEC);
   }
 
   @Override
-  public boolean generate(FeatureContext<DefaultFeatureConfig> featureConfig) {
-    final Random random = featureConfig.getRandom();
-    final BlockPos pos = featureConfig.getOrigin();
-    final StructureWorldAccess world = featureConfig.getWorld();
-    if (!world.getBlockState(pos.down()).isIn(LighterEndTags.END_SOIL)) {
+  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+    final RandomSource random = featureConfig.random();
+    final BlockPos pos = featureConfig.origin();
+    final WorldGenLevel world = featureConfig.level();
+    if (!world.getBlockState(pos.below()).is(LighterEndTags.END_SOIL)) {
       return false;
     }
 
-    float size = MathHelper.nextFloat(random, 10, 25);
+    float size = Mth.nextFloat(random, 10, 25);
     List<Vector3f> spline = MathUtils.makeSpline(0, 0, 0, 0, size, 0, 6);
     MathUtils.offsetParts(spline, random, 1F, 0, 1F);
 
     if (!MathUtils.canGenerate(spline, pos, world, REPLACE)) {
       return false;
     }
-    world.setBlockState(pos, Blocks.AIR.getDefaultState(), Flags.SILENT);
+    world.setBlock(pos, Blocks.AIR.defaultBlockState(), Flags.SILENT);
 
     Vector3f last = MathUtils.getPos(spline, 3.5F);
     OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
-    float radius = size * MathHelper.nextFloat(random, 0.5F, 0.7F);
-    makeCap(world, pos.add((int) last.x(), (int) last.y(), (int) last.z()), radius, random, noise);
+    float radius = size * Mth.nextFloat(random, 0.5F, 0.7F);
+    makeCap(world, pos.offset((int) last.x(), (int) last.y(), (int) last.z()), radius, random, noise);
 
     last = spline.get(0);
-    makeRoots(world, pos.add((int) last.x(), (int) last.y(), (int) last.z()), radius, random);
+    makeRoots(world, pos.offset((int) last.x(), (int) last.y(), (int) last.z()), radius, random);
 
-    radius = MathHelper.nextFloat(random, 1.2F, 2.3F);
+    radius = Mth.nextFloat(random, 1.2F, 2.3F);
     SDF function = MathUtils.buildSDF(
         spline,
         radius,
         1.2F,
-        (bpos) -> LighterEndBlocks.DRAGON.wood.getDefaultState()
+        (bpos) -> LighterEndBlocks.DRAGON.wood.defaultBlockState()
     );
 
     function.setReplaceFunction(REPLACE);
@@ -86,51 +86,51 @@ public class DragonTree extends Feature<DefaultFeatureConfig> {
     return true;
   }
 
-  private void makeCap(StructureWorldAccess world, BlockPos pos, float radius, Random random,
+  private void makeCap(WorldGenLevel world, BlockPos pos, float radius, RandomSource random,
       OpenSimplexNoise noise) {
     int count = (int) radius;
     int offset = (int) (BRANCH.get(BRANCH.size() - 1).y() * radius);
     for (int i = 0; i < count; i++) {
-      float angle = (float) i / (float) count * MathHelper.TAU;
-      float scale = radius * MathHelper.nextFloat(random, 0.85F, 1.15F);
+      float angle = (float) i / (float) count * Mth.TWO_PI;
+      float scale = radius * Mth.nextFloat(random, 0.85F, 1.15F);
 
       List<Vector3f> branch = MathUtils.copySpline(BRANCH);
       MathUtils.rotateSpline(branch, angle);
       MathUtils.scale(branch, scale);
-      MathUtils.fillSpline(branch, world, LighterEndBlocks.DRAGON.wood.getDefaultState(), pos,
+      MathUtils.fillSpline(branch, world, LighterEndBlocks.DRAGON.wood.defaultBlockState(), pos,
           REPLACE);
 
       branch = MathUtils.copySpline(SIDE1);
       MathUtils.rotateSpline(branch, angle);
       MathUtils.scale(branch, scale);
-      MathUtils.fillSpline(branch, world, LighterEndBlocks.DRAGON.wood.getDefaultState(), pos,
+      MathUtils.fillSpline(branch, world, LighterEndBlocks.DRAGON.wood.defaultBlockState(), pos,
           REPLACE);
 
       branch = MathUtils.copySpline(SIDE2);
       MathUtils.rotateSpline(branch, angle);
       MathUtils.scale(branch, scale);
-      MathUtils.fillSpline(branch, world, LighterEndBlocks.DRAGON.wood.getDefaultState(), pos,
+      MathUtils.fillSpline(branch, world, LighterEndBlocks.DRAGON.wood.defaultBlockState(), pos,
           REPLACE);
     }
-    leavesBall(world, pos.up(offset), radius * 1.15F + 2, random, noise);
+    leavesBall(world, pos.above(offset), radius * 1.15F + 2, random, noise);
   }
 
-  private void makeRoots(StructureWorldAccess world, BlockPos pos, float radius, Random random) {
+  private void makeRoots(WorldGenLevel world, BlockPos pos, float radius, RandomSource random) {
     int count = (int) (radius * 1.5F);
     for (int i = 0; i < count; i++) {
-      float angle = (float) i / (float) count * MathHelper.TAU;
-      float scale = radius * MathHelper.nextFloat(random, 0.85F, 1.15F);
+      float angle = (float) i / (float) count * Mth.TWO_PI;
+      float scale = radius * Mth.nextFloat(random, 0.85F, 1.15F);
 
       List<Vector3f> branch = MathUtils.copySpline(ROOT);
       MathUtils.rotateSpline(branch, angle);
       MathUtils.scale(branch, scale);
       Vector3f last = branch.get(branch.size() - 1);
-      if (world.getBlockState(pos.add((int) last.x(), (int) last.y(), (int) last.z()))
-          .isIn(LighterEndTags.END_STONES)) {
+      if (world.getBlockState(pos.offset((int) last.x(), (int) last.y(), (int) last.z()))
+          .is(LighterEndTags.END_STONES)) {
         MathUtils.fillSpline(
             branch,
             world,
-            LighterEndBlocks.DRAGON.wood.getDefaultState(),
+            LighterEndBlocks.DRAGON.wood.defaultBlockState(),
             pos,
             REPLACE
         );
@@ -139,15 +139,15 @@ public class DragonTree extends Feature<DefaultFeatureConfig> {
   }
 
   private void leavesBall(
-      StructureWorldAccess world,
+      WorldGenLevel world,
       BlockPos pos,
       float radius,
-      Random random,
+      RandomSource random,
       OpenSimplexNoise noise
   ) {
     SDF sphere = new SDFSphere().setRadius(radius)
-        .setBlock(LighterEndBlocks.DRAGON_LEAVES.getDefaultState()
-            .with(LeavesBlock.DISTANCE, 6));
+        .setBlock(LighterEndBlocks.DRAGON_LEAVES.defaultBlockState()
+            .setValue(LeavesBlock.DISTANCE, 6));
     SDF sub = new SDFScale().setScale(5).setSource(sphere);
     sub = new SDFTranslate().setTranslate(0, -radius * 5, 0).setSource(sub);
     sphere = new SDFSubtract().setSourceA(sphere).setSourceB(sub);
@@ -159,7 +159,7 @@ public class DragonTree extends Feature<DefaultFeatureConfig> {
     ) * 1.5F).setSource(sphere);
     sphere = new SDFDisplace().setFunction((vec) -> random.nextFloat() * 3F - 1.5F)
         .setSource(sphere);
-    Mutable mut = new Mutable();
+    MutableBlockPos mut = new MutableBlockPos();
     sphere.addPostProcess((info) -> {
       if (random.nextInt(5) == 0) {
         for (Direction dir : Direction.values()) {
@@ -168,7 +168,7 @@ public class DragonTree extends Feature<DefaultFeatureConfig> {
             return info.getState();
           }
         }
-        info.setState(LighterEndBlocks.DRAGON.wood.getDefaultState());
+        info.setState(LighterEndBlocks.DRAGON.wood.defaultBlockState());
         for (int x = -6; x < 7; x++) {
           int ax = Math.abs(x);
           mut.setX(x + info.getPos().getX());
@@ -182,9 +182,9 @@ public class DragonTree extends Feature<DefaultFeatureConfig> {
                 mut.setY(y + info.getPos().getY());
                 BlockState state = info.getState(mut);
                 if (state.getBlock() instanceof LeavesBlock) {
-                  int distance = state.get(LeavesBlock.DISTANCE);
+                  int distance = state.getValue(LeavesBlock.DISTANCE);
                   if (d < distance) {
-                    info.setState(mut, state.with(LeavesBlock.DISTANCE, d));
+                    info.setState(mut, state.setValue(LeavesBlock.DISTANCE, d));
                   }
                 }
               }
@@ -199,30 +199,30 @@ public class DragonTree extends Feature<DefaultFeatureConfig> {
     if (radius > 5) {
       int count = (int) (radius * 2.5F);
       for (int i = 0; i < count; i++) {
-        BlockPos p = pos.add(
+        BlockPos p = pos.offset(
             (int) (random.nextGaussian() * 1),
             (int) (random.nextGaussian() * 1),
             (int) (random.nextGaussian() * 1)
         );
         boolean place = true;
         for (Direction d : Direction.values()) {
-          BlockState state = world.getBlockState(p.offset(d));
+          BlockState state = world.getBlockState(p.relative(d));
           if (
-              !state.isOf(LighterEndBlocks.DRAGON.wood)
-                  && !state.isOf(LighterEndBlocks.DRAGON.log)
-                  && !state.isOf(LighterEndBlocks.DRAGON_LEAVES)
+              !state.is(LighterEndBlocks.DRAGON.wood)
+                  && !state.is(LighterEndBlocks.DRAGON.log)
+                  && !state.is(LighterEndBlocks.DRAGON_LEAVES)
           ) {
             place = false;
             break;
           }
         }
         if (place) {
-          world.setBlockState(p, LighterEndBlocks.DRAGON.wood.getDefaultState(), Flags.SILENT);
+          world.setBlock(p, LighterEndBlocks.DRAGON.wood.defaultBlockState(), Flags.SILENT);
         }
       }
     }
 
-    world.setBlockState(pos, LighterEndBlocks.DRAGON.wood.getDefaultState(), Flags.SILENT);
+    world.setBlock(pos, LighterEndBlocks.DRAGON.wood.defaultBlockState(), Flags.SILENT);
   }
 
   static {
@@ -237,20 +237,20 @@ public class DragonTree extends Feature<DefaultFeatureConfig> {
     };
 
     IGNORE = state -> (
-        state.isOf(LighterEndBlocks.DRAGON.wood) || state.isOf(LighterEndBlocks.DRAGON.log)
+        state.is(LighterEndBlocks.DRAGON.wood) || state.is(LighterEndBlocks.DRAGON.log)
     );
 
     POST = (info) -> {
       if (
           (
-              info.getStateUp().isOf(LighterEndBlocks.DRAGON.wood)
-                  || info.getStateUp().isOf(LighterEndBlocks.DRAGON.log)
+              info.getStateUp().is(LighterEndBlocks.DRAGON.wood)
+                  || info.getStateUp().is(LighterEndBlocks.DRAGON.log)
           ) && (
-              info.getStateDown().isOf(LighterEndBlocks.DRAGON.wood)
-                  || info.getStateUp().isOf(LighterEndBlocks.DRAGON.log)
+              info.getStateDown().is(LighterEndBlocks.DRAGON.wood)
+                  || info.getStateUp().is(LighterEndBlocks.DRAGON.log)
           )
       ) {
-        return LighterEndBlocks.DRAGON.log.getDefaultState();
+        return LighterEndBlocks.DRAGON.log.defaultBlockState();
       }
 
       return info.getState();

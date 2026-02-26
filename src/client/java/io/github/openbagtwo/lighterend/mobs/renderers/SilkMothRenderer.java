@@ -4,21 +4,21 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.mobs.EntityModels;
 import io.github.openbagtwo.lighterend.mobs.SilkMoth;
 import io.github.openbagtwo.lighterend.mobs.models.SilkMothModel;
-import net.minecraft.client.render.entity.AgeableMobEntityRenderer;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.state.LivingEntityRenderState;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.entity.AgeableMobRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.resources.Identifier;
 
 public class SilkMothRenderer extends
-    AgeableMobEntityRenderer<SilkMoth, LivingEntityRenderState, SilkMothModel> {
+    AgeableMobRenderer<SilkMoth, LivingEntityRenderState, SilkMothModel> {
 
   private static final Identifier TEXTURE = LighterEnd.of("textures/entity/silk_moth.png");
 
-  public SilkMothRenderer(EntityRendererFactory.Context ctx) {
+  public SilkMothRenderer(EntityRendererProvider.Context ctx) {
     super(
         ctx,
-        new SilkMothModel(ctx.getPart(EntityModels.SILK_MOTH_MODEL)),
-        new SilkMothModel(ctx.getPart(EntityModels.SILK_MOTH_BABY)),
+        new SilkMothModel(ctx.bakeLayer(EntityModels.SILK_MOTH_MODEL)),
+        new SilkMothModel(ctx.bakeLayer(EntityModels.SILK_MOTH_BABY)),
         0.5f
     );
   }
@@ -29,7 +29,7 @@ public class SilkMothRenderer extends
   }
 
   @Override
-  public Identifier getTexture(LivingEntityRenderState state) {
+  public Identifier getTextureLocation(LivingEntityRenderState state) {
     return TEXTURE;
   }
 }

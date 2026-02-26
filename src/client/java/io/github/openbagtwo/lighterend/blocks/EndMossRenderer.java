@@ -1,23 +1,23 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
-import net.minecraft.client.color.block.BlockColorProvider;
-import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.BiomeTags;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.client.color.block.BlockColor;
+import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.core.Holder;
+import net.minecraft.tags.BiomeTags;
+import net.minecraft.world.level.biome.Biome;
 
 public class EndMossRenderer {
 
-  public static BlockColorProvider getBlockColor() {
+  public static BlockColor getBlockColor() {
     return (state, world, pos, tintIndex) -> {
       if (world != null && pos != null) {
-        RegistryEntry<Biome> biome = world.getBiomeFabric(pos);
-        if (biome.isIn(BiomeTags.IS_END)) {
-          if (biome.isIn(LighterEndTags.VANILLA_END_BIOMES)) {
+        Holder<Biome> biome = world.getBiomeFabric(pos);
+        if (biome.is(BiomeTags.IS_END)) {
+          if (biome.is(LighterEndTags.VANILLA_END_BIOMES)) {
             return 0x4ad6d5;
           }
-          return BiomeColors.getGrassColor(world, pos);
+          return BiomeColors.getAverageGrassColor(world, pos);
         }
         return 0xFFFFFF;
       }

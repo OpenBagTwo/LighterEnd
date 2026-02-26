@@ -4,28 +4,28 @@ import io.github.openbagtwo.lighterend.misc.Wood.WoodSet;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import java.util.Arrays;
-import net.minecraft.client.render.TexturedRenderLayers;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
-import net.minecraft.client.render.block.entity.HangingSignBlockEntityRenderer;
-import net.minecraft.client.render.block.entity.ShelfBlockEntityRenderer;
-import net.minecraft.client.render.block.entity.SignBlockEntityRenderer;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
+import net.minecraft.client.renderer.blockentity.ShelfRenderer;
+import net.minecraft.client.renderer.blockentity.SignRenderer;
 
 public class BlockEntityRenderer {
 
   public static void initialize() {
-    BlockEntityRendererFactories.register(
+    BlockEntityRenderers.register(
         LighterEndBlockEntities.SIGN,
-        SignBlockEntityRenderer::new
+        SignRenderer::new
     );
-    BlockEntityRendererFactories.register(
+    BlockEntityRenderers.register(
         LighterEndBlockEntities.HANGING_SIGN,
-        HangingSignBlockEntityRenderer::new
+        HangingSignRenderer::new
     );
-    BlockEntityRendererFactories.register(
+    BlockEntityRenderers.register(
         LighterEndBlockEntities.SHELF,
-        ShelfBlockEntityRenderer::new
+        ShelfRenderer::new
     );
-    BlockEntityRendererFactories.register(
+    BlockEntityRenderers.register(
         LighterEndBlockEntities.PEDESTAL,
         PedestalRenderer::new
     );
@@ -37,10 +37,10 @@ public class BlockEntityRenderer {
         LighterEndBlocks.GLOWSHROOM,
         LighterEndBlocks.DRAGON
     )) {
-      TexturedRenderLayers.SIGN_TYPE_TEXTURES.put(wood.woodType,
-          TexturedRenderLayers.getSignTextureId(wood.woodType));
-      TexturedRenderLayers.HANGING_SIGN_TYPE_TEXTURES.put(wood.woodType,
-          TexturedRenderLayers.getHangingSignTextureId(wood.woodType));
+      Sheets.SIGN_MATERIALS.put(wood.woodType,
+          Sheets.getSignMaterial(wood.woodType));
+      Sheets.HANGING_SIGN_MATERIALS.put(wood.woodType,
+          Sheets.getHangingSignMaterial(wood.woodType));
     }
   }
 

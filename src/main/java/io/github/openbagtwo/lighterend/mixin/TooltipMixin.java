@@ -2,14 +2,14 @@ package io.github.openbagtwo.lighterend.mixin;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndData;
 import java.util.function.Consumer;
-import net.minecraft.component.ComponentType;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipAppender;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.Text;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.component.TooltipProvider;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -21,38 +21,38 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class TooltipMixin {
 
   @Shadow
-  public abstract <T extends TooltipAppender> void appendComponentTooltip(
-      ComponentType<T> componentType,
+  public abstract <T extends TooltipProvider> void addToTooltip(
+      DataComponentType<T> componentType,
       Item.TooltipContext context,
-      TooltipDisplayComponent displayComponent,
-      Consumer<Text> textConsumer,
-      TooltipType type
+      TooltipDisplay displayComponent,
+      Consumer<Component> textConsumer,
+      TooltipFlag type
   );
 
-  @Inject(method = "appendTooltip", at = @At("HEAD"))
+  @Inject(method = "addDetailsToTooltip", at = @At("HEAD"))
   public void appendLighterEndTooltips(
       Item.TooltipContext context,
-      TooltipDisplayComponent displayComponent,
-      @Nullable PlayerEntity player,
-      TooltipType type,
-      Consumer<Text> textConsumer,
+      TooltipDisplay displayComponent,
+      @Nullable Player player,
+      TooltipFlag type,
+      Consumer<Component> textConsumer,
       CallbackInfo ci
   ) {
-    this.appendComponentTooltip(
+    this.addToTooltip(
         LighterEndData.MOTHS,
         context,
         displayComponent,
         textConsumer,
         type
     );
-    this.appendComponentTooltip(
+    this.addToTooltip(
         LighterEndData.SILK_LEVEL,
         context,
         displayComponent,
         textConsumer,
         type
     );
-    this.appendComponentTooltip(
+    this.addToTooltip(
         LighterEndData.TOTEM_TARGET,
         context,
         displayComponent,

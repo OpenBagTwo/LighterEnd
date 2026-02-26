@@ -1,11 +1,11 @@
 package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import net.minecraft.item.Item;
-import net.minecraft.item.Item.Settings;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Rarity;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.Rarity;
 
 public class LighterEndMusicDiscs {
 
@@ -17,12 +17,12 @@ public class LighterEndMusicDiscs {
   public static Item registerDisc(String trackName) {
     LighterEndSounds.registerReference("music_disc." + trackName);
 
-    Settings settings = new Settings()
-        .translationKey("item." + LighterEnd.MOD_ID + ".music_disc_" + trackName)
-        .maxCount(1)
+    Properties settings = new Properties()
+        .overrideDescription("item." + LighterEnd.MOD_ID + ".music_disc_" + trackName)
+        .stacksTo(1)
         .rarity(Rarity.RARE)
         .jukeboxPlayable(
-            RegistryKey.of(RegistryKeys.JUKEBOX_SONG, LighterEnd.of(trackName))
+            ResourceKey.create(Registries.JUKEBOX_SONG, LighterEnd.of(trackName))
         );
 
     return LighterEndItems.register("music_disc_" + trackName, settings);

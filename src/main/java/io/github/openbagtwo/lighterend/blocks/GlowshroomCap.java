@@ -1,43 +1,43 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.enums.NoteBlockInstrument;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 
 public class GlowshroomCap extends Block {
 
-  public static final BooleanProperty TRANSITION = BooleanProperty.of("transition");
+  public static final BooleanProperty TRANSITION = BooleanProperty.create("transition");
 
-  public GlowshroomCap(Settings settings) {
+  public GlowshroomCap(Properties settings) {
     super(
         settings
-            .mapColor(MapColor.OAK_TAN)
+            .mapColor(MapColor.WOOD)
             .instrument(NoteBlockInstrument.BASS)
             .strength(2.0F)
-            .sounds(BlockSoundGroup.WOOD)
+            .sound(SoundType.WOOD)
     );
-    this.setDefaultState(this.stateManager.getDefaultState().with(TRANSITION, false));
+    this.registerDefaultState(this.stateDefinition.any().setValue(TRANSITION, false));
   }
 
   @Override
-  protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     builder.add(TRANSITION);
   }
 
   @Override
-  public BlockState getPlacementState(ItemPlacementContext ctx) {
-    BlockState below = ctx.getWorld().getBlockState(ctx.getBlockPos().down());
-    return this.getDefaultState()
-        .with(
+  public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+    BlockState below = ctx.getLevel().getBlockState(ctx.getClickedPos().below());
+    return this.defaultBlockState()
+        .setValue(
             TRANSITION,
-            below.isOf(LighterEndBlocks.GLOWSHROOM.wood)
-                || below.isOf(LighterEndBlocks.GLOWSHROOM.log)
+            below.is(LighterEndBlocks.GLOWSHROOM.wood)
+                || below.is(LighterEndBlocks.GLOWSHROOM.log)
         );
   }
 

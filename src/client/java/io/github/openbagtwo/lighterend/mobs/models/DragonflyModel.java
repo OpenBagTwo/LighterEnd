@@ -1,14 +1,14 @@
 package io.github.openbagtwo.lighterend.mobs.models;
 
-import net.minecraft.client.model.ModelData;
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.model.ModelPartBuilder;
-import net.minecraft.client.model.ModelPartData;
-import net.minecraft.client.model.ModelTransform;
-import net.minecraft.client.model.TexturedModelData;
-import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.render.entity.model.EntityModelPartNames;
-import net.minecraft.client.render.entity.state.LivingEntityRenderState;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartNames;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
 public class DragonflyModel extends EntityModel<LivingEntityRenderState> {
 
@@ -23,102 +23,104 @@ public class DragonflyModel extends EntityModel<LivingEntityRenderState> {
   private final ModelPart legs_1;
   private final ModelPart legs_2;
 
-  public static TexturedModelData getTexturedModelData() {
-    ModelData modelData = new ModelData();
-    ModelPartData modelPartData = modelData.getRoot();
+  public static LayerDefinition getTexturedModelData() {
+    MeshDefinition modelData = new MeshDefinition();
+    PartDefinition modelPartData = modelData.getRoot();
 
-    ModelPartData bodyPart = modelPartData.addChild(
-        EntityModelPartNames.BODY,
-        ModelPartBuilder.create().uv(0, 0).cuboid(-4.0F, -4.0F, 0.0F, 4.0F, 4.0F, 9.0F),
-        ModelTransform.origin(2.0F, 21.5F, -4.0F)
+    PartDefinition bodyPart = modelPartData.addOrReplaceChild(
+        PartNames.BODY,
+        CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -4.0F, 0.0F, 4.0F, 4.0F, 9.0F),
+        PartPose.offset(2.0F, 21.5F, -4.0F)
     );
 
-    bodyPart.addChild(
-        EntityModelPartNames.HEAD,
-        ModelPartBuilder.create().uv(17, 0).cuboid(-1.5F, -1.5F, -2.5F, 3.0F, 3.0F, 3.0F),
-        ModelTransform.of(-2.0F, -2.0F, 0.0F, 0.3491F, 0.0F, 0.0F)
+    bodyPart.addOrReplaceChild(
+        PartNames.HEAD,
+        CubeListBuilder.create().texOffs(17, 0).addBox(-1.5F, -1.5F, -2.5F, 3.0F, 3.0F, 3.0F),
+        PartPose.offsetAndRotation(-2.0F, -2.0F, 0.0F, 0.3491F, 0.0F, 0.0F)
     );
 
-    ModelPartData tailPart = bodyPart.addChild(
-        EntityModelPartNames.TAIL,
-        ModelPartBuilder.create().uv(26, 0).cuboid(-1.5F, -1.5F, 0.0F, 3.0F, 3.0F, 7.0F),
-        ModelTransform.origin(-2.0F, -2.0F, 9.0F)
+    PartDefinition tailPart = bodyPart.addOrReplaceChild(
+        PartNames.TAIL,
+        CubeListBuilder.create().texOffs(26, 0).addBox(-1.5F, -1.5F, 0.0F, 3.0F, 3.0F, 7.0F),
+        PartPose.offset(-2.0F, -2.0F, 9.0F)
     );
 
-    tailPart.addChild(
-        EntityModelPartNames.TAIL_FIN,
-        ModelPartBuilder.create().uv(36, 0).cuboid(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 10.0F),
-        ModelTransform.origin(0.0F, 0.0F, 7.0F)
+    tailPart.addOrReplaceChild(
+        PartNames.TAIL_FIN,
+        CubeListBuilder.create().texOffs(36, 0).addBox(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 10.0F),
+        PartPose.offset(0.0F, 0.0F, 7.0F)
     );
 
-    bodyPart.addChild(
-        EntityModelPartNames.LEFT_WING,
-        ModelPartBuilder.create().uv(0, 13).cuboid(-15.0F, 0.0F, -3.0F, 15.0F, 0.0F, 4.0F),
-        ModelTransform.origin(-2.0F, -4.0F, 4.0F)
+    bodyPart.addOrReplaceChild(
+        PartNames.LEFT_WING,
+        CubeListBuilder.create().texOffs(0, 13).addBox(-15.0F, 0.0F, -3.0F, 15.0F, 0.0F, 4.0F),
+        PartPose.offset(-2.0F, -4.0F, 4.0F)
     );
 
-    bodyPart.addChild(
-        EntityModelPartNames.RIGHT_WING,
-        ModelPartBuilder.create().mirrored().uv(0, 13).cuboid(0.0F, 0.0F, -3.0F, 15.0F, 0.0F, 4.0F),
-        ModelTransform.origin(-2.0F, -4.0F, 4.0F)
+    bodyPart.addOrReplaceChild(
+        PartNames.RIGHT_WING,
+        CubeListBuilder.create().mirror().texOffs(0, 13)
+            .addBox(0.0F, 0.0F, -3.0F, 15.0F, 0.0F, 4.0F),
+        PartPose.offset(-2.0F, -4.0F, 4.0F)
     );
 
-    bodyPart.addChild(
-        EntityModelPartNames.LEFT_WING_BASE,
-        ModelPartBuilder.create().uv(4, 17).cuboid(-12.0F, 0.0F, -2.5F, 12.0F, 0.0F, 3.0F),
-        ModelTransform.origin(-2.0F, -4.0F, 8.0F)
+    bodyPart.addOrReplaceChild(
+        PartNames.LEFT_WING_BASE,
+        CubeListBuilder.create().texOffs(4, 17).addBox(-12.0F, 0.0F, -2.5F, 12.0F, 0.0F, 3.0F),
+        PartPose.offset(-2.0F, -4.0F, 8.0F)
     );
 
-    bodyPart.addChild(
-        EntityModelPartNames.RIGHT_WING_BASE,
-        ModelPartBuilder.create().mirrored().uv(4, 17).cuboid(0.0F, 0.0F, -2.5F, 12.0F, 0.0F, 3.0F),
-        ModelTransform.origin(-2.0F, -4.0F, 8.0F)
+    bodyPart.addOrReplaceChild(
+        PartNames.RIGHT_WING_BASE,
+        CubeListBuilder.create().mirror().texOffs(4, 17)
+            .addBox(0.0F, 0.0F, -2.5F, 12.0F, 0.0F, 3.0F),
+        PartPose.offset(-2.0F, -4.0F, 8.0F)
     );
 
-    bodyPart.addChild(
-        EntityModelPartNames.LEFT_LEG,
-        ModelPartBuilder.create().uv(50, 1).cuboid(0.0F, 0.0F, 0.0F, 0.0F, 3.0F, 6.0F),
-        ModelTransform.of(-1.0F, 0.0F, 1.0F, 0.0F, 0.0F, -0.5236F)
+    bodyPart.addOrReplaceChild(
+        PartNames.LEFT_LEG,
+        CubeListBuilder.create().texOffs(50, 1).addBox(0.0F, 0.0F, 0.0F, 0.0F, 3.0F, 6.0F),
+        PartPose.offsetAndRotation(-1.0F, 0.0F, 1.0F, 0.0F, 0.0F, -0.5236F)
     );
 
-    bodyPart.addChild(
-        EntityModelPartNames.RIGHT_LEG,
-        ModelPartBuilder.create().uv(50, 1).cuboid(0.0F, 0.0F, 0.0F, 0.0F, 3.0F, 6.0F),
-        ModelTransform.of(-3.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.5236F)
+    bodyPart.addOrReplaceChild(
+        PartNames.RIGHT_LEG,
+        CubeListBuilder.create().texOffs(50, 1).addBox(0.0F, 0.0F, 0.0F, 0.0F, 3.0F, 6.0F),
+        PartPose.offsetAndRotation(-3.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.5236F)
     );
 
-    return TexturedModelData.of(modelData, 64, 64);
+    return LayerDefinition.create(modelData, 64, 64);
   }
 
   public DragonflyModel(ModelPart modelPart) {
     super(modelPart);
 
-    model = modelPart.getChild(EntityModelPartNames.BODY);
-    head = model.getChild(EntityModelPartNames.HEAD);
-    tail = model.getChild(EntityModelPartNames.TAIL);
-    tail_2 = tail.getChild(EntityModelPartNames.TAIL_FIN);
-    wing_1 = model.getChild(EntityModelPartNames.LEFT_WING);
-    wing_2 = model.getChild(EntityModelPartNames.RIGHT_WING);
-    wing_3 = model.getChild(EntityModelPartNames.LEFT_WING_BASE);
-    wing_4 = model.getChild(EntityModelPartNames.RIGHT_WING_BASE);
-    legs_1 = model.getChild(EntityModelPartNames.LEFT_LEG);
-    legs_2 = model.getChild(EntityModelPartNames.RIGHT_LEG);
+    model = modelPart.getChild(PartNames.BODY);
+    head = model.getChild(PartNames.HEAD);
+    tail = model.getChild(PartNames.TAIL);
+    tail_2 = tail.getChild(PartNames.TAIL_FIN);
+    wing_1 = model.getChild(PartNames.LEFT_WING);
+    wing_2 = model.getChild(PartNames.RIGHT_WING);
+    wing_3 = model.getChild(PartNames.LEFT_WING_BASE);
+    wing_4 = model.getChild(PartNames.RIGHT_WING_BASE);
+    legs_1 = model.getChild(PartNames.LEFT_LEG);
+    legs_2 = model.getChild(PartNames.RIGHT_LEG);
   }
 
   @Override
-  public void setAngles(LivingEntityRenderState state) {
-    float progress = state.age * 2F;
+  public void setupAnim(LivingEntityRenderState state) {
+    float progress = state.ageInTicks * 2F;
 
-    wing_1.roll = 0.3491F + (float) Math.sin(progress) * 0.3491F;
-    wing_2.roll = -wing_1.roll;
+    wing_1.zRot = 0.3491F + (float) Math.sin(progress) * 0.3491F;
+    wing_2.zRot = -wing_1.zRot;
 
-    wing_3.roll = 0.3491F + (float) Math.cos(progress) * 0.3491F;
-    wing_4.roll = -wing_3.roll;
+    wing_3.zRot = 0.3491F + (float) Math.cos(progress) * 0.3491F;
+    wing_4.zRot = -wing_3.zRot;
 
-    progress = state.age * 0.05F;
+    progress = state.ageInTicks * 0.05F;
 
-    head.pitch = 0.3491F + (float) Math.sin(progress * 0.7F) * 0.1F;
-    tail.pitch = (float) Math.cos(progress) * 0.05F - 0.05F;
-    tail_2.pitch = -tail.pitch * 1.5F;
+    head.xRot = 0.3491F + (float) Math.sin(progress * 0.7F) * 0.1F;
+    tail.xRot = (float) Math.cos(progress) * 0.05F - 0.05F;
+    tail_2.xRot = -tail.xRot * 1.5F;
   }
 }

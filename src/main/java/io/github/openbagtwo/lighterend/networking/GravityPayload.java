@@ -1,28 +1,28 @@
 package io.github.openbagtwo.lighterend.networking;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
-public record GravityPayload(double gravity, boolean flyFix) implements CustomPayload {
+public record GravityPayload(double gravity, boolean flyFix) implements CustomPacketPayload {
 
-  public static final Id<GravityPayload> ID = new Id<>(LighterEnd.of("gravity"));
-  public static final PacketCodec<PacketByteBuf, GravityPayload> CODEC = CustomPayload.codecOf(
+  public static final Type<GravityPayload> ID = new Type<>(LighterEnd.of("gravity"));
+  public static final StreamCodec<FriendlyByteBuf, GravityPayload> CODEC = CustomPacketPayload.codec(
       (p, buffer) -> write(p.gravity(), p.flyFix(), buffer),
       buffer -> read(buffer)
   );
 
   @Override
-  public Id<GravityPayload> getId() {
+  public Type<GravityPayload> type() {
     return ID;
   }
 
-  static GravityPayload read(PacketByteBuf buffer) {
+  static GravityPayload read(FriendlyByteBuf buffer) {
     return new GravityPayload(buffer.readDouble(), buffer.readBoolean());
   }
 
-  static PacketByteBuf write(double gravity, boolean flyFix, PacketByteBuf buffer) {
+  static FriendlyByteBuf write(double gravity, boolean flyFix, FriendlyByteBuf buffer) {
     buffer.writeDouble(gravity);
     buffer.writeBoolean(flyFix);
     return buffer;

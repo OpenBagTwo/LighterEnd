@@ -1,64 +1,64 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.utils.Flags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.enums.NoteBlockInstrument;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.StateManager.Builder;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.util.StringIdentifiable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class Obelisk extends Block {
 
-  private static final VoxelShape VOXEL_SHAPE_BOTTOM = Block.createCuboidShape(1, 0, 1, 15, 16, 15);
-  private static final VoxelShape VOXEL_SHAPE_MIDDLE_TOP = Block.createCuboidShape(
+  private static final VoxelShape VOXEL_SHAPE_BOTTOM = Block.box(1, 0, 1, 15, 16, 15);
+  private static final VoxelShape VOXEL_SHAPE_MIDDLE_TOP = Block.box(
       2, 0, 2, 14, 16, 14
   );
 
-  public static final EnumProperty<Shape> SHAPE = EnumProperty.of("shape", Shape.class);
+  public static final EnumProperty<Shape> SHAPE = EnumProperty.create("shape", Shape.class);
 
-  public Obelisk(Settings settings) {
+  public Obelisk(Properties settings) {
     super(
         settings
-            .mapColor(MapColor.PALE_YELLOW)
+            .mapColor(MapColor.SAND)
             .instrument(NoteBlockInstrument.BASEDRUM)
             .strength(-1.0F, 3600000.0F)
-            .dropsNothing()
-            .luminance((state) -> state.get(SHAPE) == Shape.BOTTOM ? 0 : 15)
+            .noLootTable()
+            .lightLevel((state) -> state.getValue(SHAPE) == Shape.BOTTOM ? 0 : 15)
     );
   }
 
   @Override
-  protected VoxelShape getOutlineShape(
-      BlockState state, BlockView world, BlockPos pos, ShapeContext context
+  protected VoxelShape getShape(
+      BlockState state, BlockGetter world, BlockPos pos, CollisionContext context
   ) {
-    return (state.get(SHAPE) == Shape.BOTTOM) ? VOXEL_SHAPE_BOTTOM : VOXEL_SHAPE_MIDDLE_TOP;
+    return (state.getValue(SHAPE) == Shape.BOTTOM) ? VOXEL_SHAPE_BOTTOM : VOXEL_SHAPE_MIDDLE_TOP;
   }
 
   @Override
-  protected void appendProperties(Builder<Block, BlockState> builder) {
+  protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
     builder.add(SHAPE);
   }
 
   @Override
-  public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+  public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
     for (int i = 0; i < 3; i++) {
-      if (!world.getBlockState(pos.up(i)).isReplaceable()) {
+      if (!world.getBlockState(pos.above(i)).canBeReplaced()) {
         return false;
       }
     }
@@ -66,66 +66,66 @@ public class Obelisk extends Block {
   }
 
   @Override
-  public void onPlaced(
-      World world,
+  public void setPlacedBy(
+      Level world,
       BlockPos pos,
       BlockState state,
       @Nullable LivingEntity placer,
       ItemStack itemStack
   ) {
-    state = this.getDefaultState();
-    world.setBlockState(pos, state.with(SHAPE, Shape.BOTTOM), Flags.SILENT);
-    world.setBlockState(pos.up(), state.with(SHAPE, Shape.MIDDLE), Flags.SILENT);
-    world.setBlockState(pos.up(2), state.with(SHAPE, Shape.TOP), Flags.SILENT);
+    state = this.defaultBlockState();
+    world.setBlock(pos, state.setValue(SHAPE, Shape.BOTTOM), Flags.SILENT);
+    world.setBlock(pos.above(), state.setValue(SHAPE, Shape.MIDDLE), Flags.SILENT);
+    world.setBlock(pos.above(2), state.setValue(SHAPE, Shape.TOP), Flags.SILENT);
   }
 
   @Override
-  protected BlockState getStateForNeighborUpdate(
+  protected BlockState updateShape(
       BlockState state,
-      WorldView world,
-      ScheduledTickView tickView,
+      LevelReader world,
+      ScheduledTickAccess tickView,
       BlockPos pos,
       Direction direction,
       BlockPos neighborPos,
       BlockState neighborState,
-      Random random
+      RandomSource random
   ) {
-    Shape shape = state.get(SHAPE);
+    Shape shape = state.getValue(SHAPE);
     if (shape == Shape.BOTTOM) {
-      if (world.getBlockState(pos.up()).isOf(this)) {
+      if (world.getBlockState(pos.above()).is(this)) {
         return state;
       } else {
-        return Blocks.AIR.getDefaultState();
+        return Blocks.AIR.defaultBlockState();
       }
     } else if (shape == Shape.MIDDLE) {
-      if (world.getBlockState(pos.up()).isOf(this) && world.getBlockState(pos.down()).isOf(this)) {
+      if (world.getBlockState(pos.above()).is(this) && world.getBlockState(pos.below()).is(this)) {
         return state;
       } else {
-        return Blocks.AIR.getDefaultState();
+        return Blocks.AIR.defaultBlockState();
       }
     } else {
-      if (world.getBlockState(pos.down()).isOf(this)) {
+      if (world.getBlockState(pos.below()).is(this)) {
         return state;
       } else {
-        return Blocks.AIR.getDefaultState();
+        return Blocks.AIR.defaultBlockState();
       }
     }
   }
 
   @Override
-  public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+  public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
     if (player.isCreative()) {
-      Shape shape = state.get(SHAPE);
+      Shape shape = state.getValue(SHAPE);
       if (shape == Shape.MIDDLE) {
-        world.setBlockState(pos.down(), Blocks.AIR.getDefaultState(), Flags.SILENT);
+        world.setBlock(pos.below(), Blocks.AIR.defaultBlockState(), Flags.SILENT);
       } else if (shape == Shape.TOP) {
-        world.setBlockState(pos.down(2), Blocks.AIR.getDefaultState(), Flags.SILENT);
+        world.setBlock(pos.below(2), Blocks.AIR.defaultBlockState(), Flags.SILENT);
       }
     }
-    return super.onBreak(world, pos, state, player);
+    return super.playerWillDestroy(world, pos, state, player);
   }
 
-  public enum Shape implements StringIdentifiable {
+  public enum Shape implements StringRepresentable {
     TOP("top"),
     MIDDLE("middle"),
     BOTTOM("bottom");
@@ -137,7 +137,7 @@ public class Obelisk extends Block {
     }
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
       return name;
     }
 

@@ -5,77 +5,77 @@ import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.world.LighterEndPlacedFeatures;
 import java.util.List;
 import java.util.Optional;
-import net.minecraft.entity.SpawnGroup;
-import net.minecraft.registry.Registerable;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.placement.EndPlacements;
 import net.minecraft.world.attribute.AmbientSounds;
 import net.minecraft.world.attribute.BackgroundMusic;
 import net.minecraft.world.attribute.EnvironmentAttributes;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeEffects;
-import net.minecraft.world.biome.GenerationSettings;
-import net.minecraft.world.biome.SpawnSettings;
-import net.minecraft.world.biome.SpawnSettings.SpawnEntry;
-import net.minecraft.world.gen.GenerationStep.Feature;
-import net.minecraft.world.gen.carver.ConfiguredCarver;
-import net.minecraft.world.gen.feature.EndPlacedFeatures;
-import net.minecraft.world.gen.feature.PlacedFeature;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeGenerationSettings;
+import net.minecraft.world.level.biome.BiomeSpecialEffects;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class GlowingGrasslands {
 
-  public static Biome create(Registerable<Biome> context) {
-    RegistryEntryLookup<PlacedFeature> features = context.getRegistryLookup(
-        RegistryKeys.PLACED_FEATURE
+  public static Biome create(BootstrapContext<Biome> context) {
+    HolderGetter<PlacedFeature> features = context.lookup(
+        Registries.PLACED_FEATURE
     );
-    RegistryEntryLookup<ConfiguredCarver<?>> carvers = context.getRegistryLookup(
-        RegistryKeys.CONFIGURED_CARVER
+    HolderGetter<ConfiguredWorldCarver<?>> carvers = context.lookup(
+        Registries.CONFIGURED_CARVER
     );
 
-    SpawnSettings spawns = new SpawnSettings.Builder()
-        .spawn(
-            SpawnGroup.CREATURE,
+    MobSpawnSettings spawns = new MobSpawnSettings.Builder()
+        .addSpawn(
+            MobCategory.CREATURE,
             1,
-            new SpawnEntry(LighterEndMobs.MOOSHROOM.mob, 2, 4)
+            new SpawnerData(LighterEndMobs.MOOSHROOM.mob, 2, 4)
         )
-        .spawn(
-            SpawnGroup.AMBIENT,
+        .addSpawn(
+            MobCategory.AMBIENT,
             1,
-            new SpawnEntry(LighterEndMobs.DRAGONFLY.mob, 1, 1)
+            new SpawnerData(LighterEndMobs.DRAGONFLY.mob, 1, 1)
         )
         .build();
 
-    GenerationSettings genSettings = new GenerationSettings.LookupBackedBuilder(features, carvers)
-        .feature(Feature.SURFACE_STRUCTURES, EndPlacedFeatures.END_GATEWAY_RETURN)
-        .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.LUMECORN)
-        .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.END_MOSS_VEGETATION)
-        .feature(Feature.VEGETAL_DECORATION, LighterEndPlacedFeatures.WATER_PLANTS)
+    BiomeGenerationSettings genSettings = new BiomeGenerationSettings.Builder(features, carvers)
+        .addFeature(Decoration.SURFACE_STRUCTURES, EndPlacements.END_GATEWAY_RETURN)
+        .addFeature(Decoration.VEGETAL_DECORATION, LighterEndPlacedFeatures.LUMECORN)
+        .addFeature(Decoration.VEGETAL_DECORATION, LighterEndPlacedFeatures.END_MOSS_VEGETATION)
+        .addFeature(Decoration.VEGETAL_DECORATION, LighterEndPlacedFeatures.WATER_PLANTS)
         .build();
 
-    return new Biome.Builder()
-        .precipitation(false)
+    return new Biome.BiomeBuilder()
+        .hasPrecipitation(false)
         .temperature(0.5F)
         .downfall(0.5F)
-        .effects(new BiomeEffects.Builder()
+        .specialEffects(new BiomeSpecialEffects.Builder()
             .waterColor(0x5CFAE6)
-            .foliageColor(0x49D2D1)
-            .grassColor(0x4ad6d5)
+            .foliageColorOverride(0x49D2D1)
+            .grassColorOverride(0x4ad6d5)
             .build()
         )
-        .spawnSettings(spawns)
+        .mobSpawnSettings(spawns)
         .generationSettings(genSettings)
-        .setEnvironmentAttribute(EnvironmentAttributes.SKY_COLOR_VISUAL, 0x000000)
-        .setEnvironmentAttribute(EnvironmentAttributes.FOG_COLOR_VISUAL, 0x63E4F7)
-        .setEnvironmentAttribute(EnvironmentAttributes.WATER_FOG_COLOR_VISUAL, 0x5CFAE6)
-        .setEnvironmentAttribute(
-            EnvironmentAttributes.AMBIENT_SOUNDS_AUDIO,
+        .setAttribute(EnvironmentAttributes.SKY_COLOR, 0x000000)
+        .setAttribute(EnvironmentAttributes.FOG_COLOR, 0x63E4F7)
+        .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 0x5CFAE6)
+        .setAttribute(
+            EnvironmentAttributes.AMBIENT_SOUNDS,
             new AmbientSounds(
                 Optional.of(LighterEndSounds.GRASSLAND_AMBIENT),
                 Optional.empty(),
                 List.of()
             )
-        ).setEnvironmentAttribute(
-            EnvironmentAttributes.BACKGROUND_MUSIC_AUDIO,
+        ).setAttribute(
+            EnvironmentAttributes.BACKGROUND_MUSIC,
             new BackgroundMusic(LighterEndSounds.GRASSLAND_MUSIC)
         ).build();
   }

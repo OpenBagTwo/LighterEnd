@@ -1,31 +1,31 @@
 package io.github.openbagtwo.lighterend.world.structures.pieces;
 
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.structure.StructureContext;
-import net.minecraft.structure.StructurePiece;
-import net.minecraft.structure.StructurePieceType;
-import net.minecraft.util.math.BlockBox;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 
 public abstract class BasePiece extends StructurePiece {
 
-  protected BasePiece(StructurePieceType type, int i, BlockBox boundingBox) {
+  protected BasePiece(StructurePieceType type, int i, BoundingBox boundingBox) {
     super(type, i, boundingBox);
   }
 
-  protected BasePiece(StructurePieceType type, NbtCompound tag) {
+  protected BasePiece(StructurePieceType type, CompoundTag tag) {
     super(type, tag);
     fromNbt(tag);
   }
 
-  protected abstract void fromNbt(NbtCompound tag);
+  protected abstract void fromNbt(CompoundTag tag);
 
-  protected void addAdditionalSaveData(NbtCompound tag) {
+  protected void addAdditionalSaveData(CompoundTag tag) {
   }
 
   @Override
-  protected void writeNbt(
-      StructureContext structurePieceSerializationContext,
-      NbtCompound compoundTag
+  protected void addAdditionalSaveData(
+      StructurePieceSerializationContext structurePieceSerializationContext,
+      CompoundTag compoundTag
   ) {
     addAdditionalSaveData(compoundTag);
   }

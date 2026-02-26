@@ -1,6 +1,6 @@
 package io.github.openbagtwo.lighterend.utils;
 
-import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.core.BlockPos.MutableBlockPos;
 
 public class GlobalState {
 
@@ -11,5 +11,5 @@ public class GlobalState {
     return STATE.get();
   }
 
-  public final Mutable POS = new Mutable();
+  public final MutableBlockPos POS = new MutableBlockPos();
 }

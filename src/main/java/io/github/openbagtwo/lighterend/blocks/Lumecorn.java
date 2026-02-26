@@ -6,112 +6,112 @@ import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
 import java.util.Optional;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.SaplingBlock;
-import net.minecraft.block.SaplingGenerator;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.enums.NoteBlockInstrument;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.BiomeTags;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.StateManager.Builder;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.StringIdentifiable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BiomeTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SaplingBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.grower.TreeGrower;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class Lumecorn extends Block {
 
-  public static final EnumProperty<LumecornShape> SHAPE = EnumProperty.of(
+  public static final EnumProperty<LumecornShape> SHAPE = EnumProperty.create(
       "shape",
       LumecornShape.class
   );
-  private static final VoxelShape SHAPE_BOTTOM = Block.createCuboidShape(
+  private static final VoxelShape SHAPE_BOTTOM = Block.box(
       6, 0, 6, 10, 16, 10
   );
-  private static final VoxelShape SHAPE_TOP = Block.createCuboidShape(
+  private static final VoxelShape SHAPE_TOP = Block.box(
       6, 0, 6, 10, 8, 10
   );
 
-  public Lumecorn(Settings settings) {
+  public Lumecorn(Properties settings) {
     super(
         settings
-            .mapColor(MapColor.BRIGHT_TEAL)
+            .mapColor(MapColor.WARPED_WART_BLOCK)
             .instrument(NoteBlockInstrument.BASS)
-            .sounds(BlockSoundGroup.WOOD)
+            .sound(SoundType.WOOD)
             .strength(0.2F)
-            .burnable()
-            .luminance(bs -> bs.get(SHAPE).getLight())
+            .ignitedByLava()
+            .lightLevel(bs -> bs.getValue(SHAPE).getLight())
     );
   }
 
   @Override
-  protected void appendProperties(Builder<Block, BlockState> builder) {
+  protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
     builder.add(SHAPE);
   }
 
   @Override
-  protected VoxelShape getOutlineShape(
-      BlockState state, BlockView world, BlockPos pos, ShapeContext context
+  protected VoxelShape getShape(
+      BlockState state, BlockGetter world, BlockPos pos, CollisionContext context
   ) {
-    return state.get(SHAPE) == LumecornShape.LIGHT_TOP ? SHAPE_TOP : SHAPE_BOTTOM;
+    return state.getValue(SHAPE) == LumecornShape.LIGHT_TOP ? SHAPE_TOP : SHAPE_BOTTOM;
   }
 
   @Override
-  protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-    LumecornShape shape = state.get(SHAPE);
+  protected boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+    LumecornShape shape = state.getValue(SHAPE);
     if (shape == LumecornShape.LIGHT_TOP) {
       return (
-          world.getBlockState(pos.down()).isOf(this)
-              || world.getBlockState(pos.down()).isOf(LighterEndBlocks.LUMECORN_STEM)
+          world.getBlockState(pos.below()).is(this)
+              || world.getBlockState(pos.below()).is(LighterEndBlocks.LUMECORN_STEM)
       );
     } else {
       return (
           (
-              world.getBlockState(pos.down()).isOf(this)
-                  || world.getBlockState(pos.down()).isOf(LighterEndBlocks.LUMECORN_STEM)
-          ) && world.getBlockState(pos.up()).isOf(this)
+              world.getBlockState(pos.below()).is(this)
+                  || world.getBlockState(pos.below()).is(LighterEndBlocks.LUMECORN_STEM)
+          ) && world.getBlockState(pos.above()).is(this)
       );
     }
   }
 
   @Override
-  protected BlockState getStateForNeighborUpdate(
+  protected BlockState updateShape(
       BlockState state,
-      WorldView world,
-      ScheduledTickView tickView,
+      LevelReader world,
+      ScheduledTickAccess tickView,
       BlockPos pos,
       Direction direction,
       BlockPos neighborPos,
       BlockState neighborState,
-      Random random
+      RandomSource random
   ) {
-    if (!canPlaceAt(state, world, pos)) {
-      return Blocks.AIR.getDefaultState();
+    if (!canSurvive(state, world, pos)) {
+      return Blocks.AIR.defaultBlockState();
     } else {
       return state;
     }
   }
 
   @Override
-  protected ItemStack getPickStack(
-      WorldView world,
+  protected ItemStack getCloneItemStack(
+      LevelReader world,
       BlockPos pos,
       BlockState state,
       boolean includeData
@@ -121,66 +121,66 @@ public class Lumecorn extends Block {
 
   public static class LumecornStem extends Block {
 
-    public LumecornStem(Settings settings) {
+    public LumecornStem(Properties settings) {
       super(
           settings
-              .mapColor(MapColor.DARK_AQUA)
+              .mapColor(MapColor.WARPED_STEM)
               .instrument(NoteBlockInstrument.BASS)
-              .sounds(BlockSoundGroup.WOOD)
+              .sound(SoundType.WOOD)
               .strength(0.5F)
-              .burnable()
-              .luminance(bs -> 0)
+              .ignitedByLava()
+              .lightLevel(bs -> 0)
       );
     }
 
     @Override
-    protected void appendProperties(Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
       builder.add(SHAPE);
     }
 
     @Override
-    protected VoxelShape getOutlineShape(
-        BlockState state, BlockView world, BlockPos pos, ShapeContext context
+    protected VoxelShape getShape(
+        BlockState state, BlockGetter world, BlockPos pos, CollisionContext context
     ) {
       return SHAPE_BOTTOM;
     }
 
     @Override
-    protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-      LumecornShape shape = state.get(SHAPE);
+    protected boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+      LumecornShape shape = state.getValue(SHAPE);
       if (shape == LumecornShape.BOTTOM_BIG || shape == LumecornShape.BOTTOM_SMALL) {
-        return world.getBlockState(pos.down()).isIn(LighterEndTags.END_SOIL);
+        return world.getBlockState(pos.below()).is(LighterEndTags.END_SOIL);
       } else {
         return (
-            world.getBlockState(pos.down()).isOf(this) && (
-                world.getBlockState(pos.up()).isOf(this)
-                    || world.getBlockState(pos.up()).isOf(LighterEndBlocks.LUMECORN)
+            world.getBlockState(pos.below()).is(this) && (
+                world.getBlockState(pos.above()).is(this)
+                    || world.getBlockState(pos.above()).is(LighterEndBlocks.LUMECORN)
             )
         );
       }
     }
 
     @Override
-    protected BlockState getStateForNeighborUpdate(
+    protected BlockState updateShape(
         BlockState state,
-        WorldView world,
-        ScheduledTickView tickView,
+        LevelReader world,
+        ScheduledTickAccess tickView,
         BlockPos pos,
         Direction direction,
         BlockPos neighborPos,
         BlockState neighborState,
-        Random random
+        RandomSource random
     ) {
-      if (!canPlaceAt(state, world, pos)) {
-        return Blocks.AIR.getDefaultState();
+      if (!canSurvive(state, world, pos)) {
+        return Blocks.AIR.defaultBlockState();
       } else {
         return state;
       }
     }
 
     @Override
-    protected ItemStack getPickStack(
-        WorldView world,
+    protected ItemStack getCloneItemStack(
+        LevelReader world,
         BlockPos pos,
         BlockState state,
         boolean includeData
@@ -191,70 +191,70 @@ public class Lumecorn extends Block {
 
   public static class LumecornSeed extends SaplingBlock {
 
-    public static final IntProperty AGE = IntProperty.of("age", 0, 3);
+    public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 3);
 
-    public LumecornSeed(Settings settings) {
+    public LumecornSeed(Properties settings) {
       super(
           LUMECORN_GENERATOR,
           settings
-              .mapColor(MapColor.TEAL)
+              .mapColor(MapColor.WARPED_NYLIUM)
               .noCollision()
-              .breakInstantly()
-              .sounds(BlockSoundGroup.CROP)
-              .pistonBehavior(PistonBehavior.DESTROY)
-              .burnable()
-              .ticksRandomly()
+              .instabreak()
+              .sound(SoundType.CROP)
+              .pushReaction(PushReaction.DESTROY)
+              .ignitedByLava()
+              .randomTicks()
       );
-      this.setDefaultState(this.stateManager.getDefaultState().with(AGE, 0));
+      this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0));
     }
 
     @Override
-    public void generate(ServerWorld world, BlockPos pos, BlockState state, Random random) {
+    public void advanceTree(ServerLevel world, BlockPos pos, BlockState state, RandomSource random) {
       if (!isAllowedToGrow(world, pos)) {
         return;
       }
-      if (state.get(AGE) < 3) {
-        world.setBlockState(pos, state.cycle(AGE), Block.NO_REDRAW);
+      if (state.getValue(AGE) < 3) {
+        world.setBlock(pos, state.cycle(AGE), Block.UPDATE_INVISIBLE);
       } else {
-        if (!world.getBlockState(pos.down()).isIn(LighterEndTags.END_SOIL)) {
+        if (!world.getBlockState(pos.below()).is(LighterEndTags.END_SOIL)) {
           return;
         }
-        FeatureContext<DefaultFeatureConfig> context = new FeatureContext<>(null, world,
-            world.getChunkManager().getChunkGenerator(), random, pos, new DefaultFeatureConfig());
-        new LumecornFeature().generate(context);
+        FeaturePlaceContext<NoneFeatureConfiguration> context = new FeaturePlaceContext<>(null, world,
+            world.getChunkSource().getGenerator(), random, pos, new NoneFeatureConfiguration());
+        new LumecornFeature().place(context);
       }
     }
 
     @Override
-    protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-      return floor.isIn(LighterEndTags.END_SOIL);
+    protected boolean mayPlaceOn(BlockState floor, BlockGetter world, BlockPos pos) {
+      return floor.is(LighterEndTags.END_SOIL);
     }
 
     @Override
-    protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    protected void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
       if (random.nextInt(3) == 0) {
-        this.generate(world, pos, state, random);
+        this.advanceTree(world, pos, state, random);
       }
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-      super.appendProperties(builder);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+      super.createBlockStateDefinition(builder);
       builder.add(AGE);
     }
 
     @Override
-    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
       return isAllowedToGrow(world, pos);
     }
 
-    private static boolean isAllowedToGrow(WorldView world, BlockPos pos) {
+    private static boolean isAllowedToGrow(LevelReader world, BlockPos pos) {
       return !LighterEnd.CONFIG.endPlantsOnlyGrowInTheEnd()
-          || world.getBiome(pos).isIn(BiomeTags.IS_END);
+          || world.getBiome(pos).is(BiomeTags.IS_END);
     }
   }
 
-  public enum LumecornShape implements StringIdentifiable {
+  public enum LumecornShape implements StringRepresentable {
     LIGHT_TOP("light_top", 15),
     LIGHT_TOP_MIDDLE("light_top_middle", 15),
     LIGHT_MIDDLE("light_middle", 15),
@@ -272,7 +272,7 @@ public class Lumecorn extends Block {
     }
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
       return name;
     }
 
@@ -286,86 +286,86 @@ public class Lumecorn extends Block {
     }
   }
 
-  public static class LumecornFeature extends Feature<DefaultFeatureConfig> {
+  public static class LumecornFeature extends Feature<NoneFeatureConfiguration> {
 
     public LumecornFeature() {
-      super(DefaultFeatureConfig.CODEC);
+      super(NoneFeatureConfiguration.CODEC);
     }
 
     @Override
-    public boolean generate(FeatureContext<DefaultFeatureConfig> featureConfig) {
-      final Random random = featureConfig.getRandom();
-      final BlockPos pos = featureConfig.getOrigin();
-      final StructureWorldAccess world = featureConfig.getWorld();
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+      final RandomSource random = featureConfig.random();
+      final BlockPos pos = featureConfig.origin();
+      final WorldGenLevel world = featureConfig.level();
 
-      int height = random.nextBetween(4, 7);
-      BlockPos.Mutable mut = new BlockPos.Mutable().set(pos);
+      int height = random.nextIntBetweenInclusive(4, 7);
+      BlockPos.MutableBlockPos mut = new BlockPos.MutableBlockPos().set(pos);
       for (int i = 1; i < height; i++) {
         mut.move(Direction.UP);
-        if (!world.isAir(mut)) {
+        if (!world.isEmptyBlock(mut)) {
           return false;
         }
       }
       mut.set(pos);
-      BlockState topMiddle = LighterEndBlocks.LUMECORN.getDefaultState()
-          .with(Lumecorn.SHAPE, LumecornShape.LIGHT_TOP_MIDDLE);
-      BlockState middle = LighterEndBlocks.LUMECORN.getDefaultState()
-          .with(Lumecorn.SHAPE, LumecornShape.LIGHT_MIDDLE);
-      BlockState bottom = LighterEndBlocks.LUMECORN.getDefaultState()
-          .with(Lumecorn.SHAPE, LumecornShape.LIGHT_BOTTOM);
-      BlockState top = LighterEndBlocks.LUMECORN.getDefaultState().with(
+      BlockState topMiddle = LighterEndBlocks.LUMECORN.defaultBlockState()
+          .setValue(Lumecorn.SHAPE, LumecornShape.LIGHT_TOP_MIDDLE);
+      BlockState middle = LighterEndBlocks.LUMECORN.defaultBlockState()
+          .setValue(Lumecorn.SHAPE, LumecornShape.LIGHT_MIDDLE);
+      BlockState bottom = LighterEndBlocks.LUMECORN.defaultBlockState()
+          .setValue(Lumecorn.SHAPE, LumecornShape.LIGHT_BOTTOM);
+      BlockState top = LighterEndBlocks.LUMECORN.defaultBlockState().setValue(
           Lumecorn.SHAPE, LumecornShape.LIGHT_TOP
       );
       if (height == 4) {
-        world.setBlockState(
+        world.setBlock(
             mut,
-            LighterEndBlocks.LUMECORN_STEM.getDefaultState().with(
+            LighterEndBlocks.LUMECORN_STEM.defaultBlockState().setValue(
                 Lumecorn.SHAPE, LumecornShape.BOTTOM_SMALL
             ),
             Flags.SILENT
         );
-        world.setBlockState(mut.move(Direction.UP), bottom, 18);
-        world.setBlockState(mut.move(Direction.UP), topMiddle, 18);
-        world.setBlockState(mut.move(Direction.UP), top, 18);
+        world.setBlock(mut.move(Direction.UP), bottom, 18);
+        world.setBlock(mut.move(Direction.UP), topMiddle, 18);
+        world.setBlock(mut.move(Direction.UP), top, 18);
         return true;
       }
       if (random.nextBoolean()) {
-        world.setBlockState(
+        world.setBlock(
             mut,
-            LighterEndBlocks.LUMECORN_STEM.getDefaultState().with(
+            LighterEndBlocks.LUMECORN_STEM.defaultBlockState().setValue(
                 Lumecorn.SHAPE, LumecornShape.BOTTOM_SMALL
             ),
             18
         );
       } else {
-        world.setBlockState(
+        world.setBlock(
             mut,
-            LighterEndBlocks.LUMECORN_STEM.getDefaultState().with(
+            LighterEndBlocks.LUMECORN_STEM.defaultBlockState().setValue(
                 Lumecorn.SHAPE, LumecornShape.BOTTOM_BIG
             ),
             18
         );
-        world.setBlockState(
+        world.setBlock(
             mut.move(Direction.UP),
-            LighterEndBlocks.LUMECORN_STEM.getDefaultState().with(
+            LighterEndBlocks.LUMECORN_STEM.defaultBlockState().setValue(
                 Lumecorn.SHAPE, LumecornShape.MIDDLE
             ),
             18
         );
         height--;
       }
-      world.setBlockState(mut.move(Direction.UP), bottom, 18);
+      world.setBlock(mut.move(Direction.UP), bottom, 18);
 
       for (int i = 4; i < height; i++) {
-        world.setBlockState(mut.move(Direction.UP), middle, 18);
+        world.setBlock(mut.move(Direction.UP), middle, 18);
       }
-      world.setBlockState(mut.move(Direction.UP), topMiddle, 18);
-      world.setBlockState(mut.move(Direction.UP), top, 18);
+      world.setBlock(mut.move(Direction.UP), topMiddle, 18);
+      world.setBlock(mut.move(Direction.UP), top, 18);
       return true;
     }
   }
 
-  public static final SaplingGenerator LUMECORN_GENERATOR = new SaplingGenerator(
+  public static final TreeGrower LUMECORN_GENERATOR = new TreeGrower(
       LighterEnd.MOD_ID + ":lumecorn",
       Optional.empty(),
       Optional.empty(),  // we're completely overriding lumecorn generation

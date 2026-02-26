@@ -1,27 +1,27 @@
 package io.github.openbagtwo.lighterend.utils;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.PushReaction;
 
 public class MiscUtils {
 
   public static Boolean replaceableOrPlant(BlockState state) {
     final Block block = state.getBlock();
 
-    if (state.getPistonBehavior() == PistonBehavior.DESTROY && block.getHardness() == 0) {
+    if (state.getPistonPushReaction() == PushReaction.DESTROY && block.defaultDestroyTime() == 0) {
       return true;
     }
 
-    if (state.getSoundGroup() == BlockSoundGroup.GRASS
-        || state.getSoundGroup() == BlockSoundGroup.WET_GRASS
-        || state.getSoundGroup() == BlockSoundGroup.CROP
-        || state.getSoundGroup() == BlockSoundGroup.CAVE_VINES
+    if (state.getSoundType() == SoundType.GRASS
+        || state.getSoundType() == SoundType.WET_GRASS
+        || state.getSoundType() == SoundType.CROP
+        || state.getSoundType() == SoundType.CAVE_VINES
     ) {
       return true;
     }
 
-    return state.isReplaceable();
+    return state.canBeReplaced();
   }
 }

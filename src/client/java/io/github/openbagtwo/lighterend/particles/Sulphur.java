@@ -1,16 +1,16 @@
 package io.github.openbagtwo.lighterend.particles;
 
-import net.minecraft.client.particle.BillboardParticle;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleFactory;
-import net.minecraft.client.particle.SpriteProvider;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.SimpleParticleType;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SingleQuadParticle;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 
-public class Sulphur extends BillboardParticle {
+public class Sulphur extends SingleQuadParticle {
 
   private int ticks;
   private double preVX;
@@ -21,16 +21,16 @@ public class Sulphur extends BillboardParticle {
   private double nextVZ;
 
   protected Sulphur(
-      ClientWorld world,
+      ClientLevel world,
       double x,
       double y,
       double z,
-      Sprite sprite
+      TextureAtlasSprite sprite
   ) {
     super(world, x, y, z, sprite);
 
-    this.maxAge = MathHelper.nextInt(random, 150, 300);
-    this.scale = MathHelper.nextFloat(random, 0.05F, 0.15F);
+    this.lifetime = Mth.nextInt(random, 150, 300);
+    this.quadSize = Mth.nextFloat(random, 0.05F, 0.15F);
     this.setColor(1, 1, 1);
     this.setAlpha(0);
 
@@ -62,47 +62,47 @@ public class Sulphur extends BillboardParticle {
 
     if (this.age <= 40) {
       this.setAlpha(this.age / 40F);
-    } else if (this.age >= this.maxAge - 40) {
-      this.setAlpha((this.maxAge - this.age) / 40F);
+    } else if (this.age >= this.lifetime - 40) {
+      this.setAlpha((this.lifetime - this.age) / 40F);
     }
 
-    if (this.age >= this.maxAge) {
-      this.markDead();
+    if (this.age >= this.lifetime) {
+      this.remove();
     }
 
-    this.velocityX = MathHelper.lerp(delta, preVX, nextVX);
-    this.velocityY = MathHelper.lerp(delta, preVY, nextVY);
-    this.velocityZ = MathHelper.lerp(delta, preVZ, nextVZ);
+    this.xd = Mth.lerp(delta, preVX, nextVX);
+    this.yd = Mth.lerp(delta, preVY, nextVY);
+    this.zd = Mth.lerp(delta, preVZ, nextVZ);
 
     super.tick();
   }
 
   @Override
-  public BillboardParticle.RenderType getRenderType() {
-    return BillboardParticle.RenderType.PARTICLE_ATLAS_TRANSLUCENT;
+  public SingleQuadParticle.Layer getLayer() {
+    return SingleQuadParticle.Layer.TRANSLUCENT;
   }
 
-  public static class Factory implements ParticleFactory<SimpleParticleType> {
+  public static class Factory implements ParticleProvider<SimpleParticleType> {
 
-    private final SpriteProvider sprites;
+    private final SpriteSet sprites;
 
-    public Factory(SpriteProvider sprites) {
+    public Factory(SpriteSet sprites) {
       this.sprites = sprites;
     }
 
     @Override
     public Particle createParticle(
         SimpleParticleType type,
-        ClientWorld world,
+        ClientLevel world,
         double x,
         double y,
         double z,
         double vX,
         double vY,
         double vZ,
-        Random random
+        RandomSource random
     ) {
-      return new Sulphur(world, x, y, z, this.sprites.getSprite(random));
+      return new Sulphur(world, x, y, z, this.sprites.get(random));
     }
   }
 }

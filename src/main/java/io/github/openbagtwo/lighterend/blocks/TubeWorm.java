@@ -3,104 +3,104 @@ package io.github.openbagtwo.lighterend.blocks;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import java.util.EnumMap;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Fertilizable;
-import net.minecraft.block.FluidFillable;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.state.StateManager.Builder;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class TubeWorm extends Block implements Fertilizable, FluidFillable {
+public class TubeWorm extends Block implements BonemealableBlock, LiquidBlockContainer {
 
   private static final EnumMap<Direction, VoxelShape> SHAPES = Maps.newEnumMap(ImmutableMap.of(
-      Direction.NORTH, createCuboidShape(1, 1, 8, 15, 15, 16),
-      Direction.SOUTH, createCuboidShape(1, 1, 0, 15, 15, 8),
-      Direction.WEST, createCuboidShape(8, 1, 1, 16, 15, 15),
-      Direction.EAST, createCuboidShape(0, 1, 1, 8, 15, 15)
+      Direction.NORTH, box(1, 1, 8, 15, 15, 16),
+      Direction.SOUTH, box(1, 1, 0, 15, 15, 8),
+      Direction.WEST, box(8, 1, 1, 16, 15, 15),
+      Direction.EAST, box(0, 1, 1, 8, 15, 15)
   ));
-  public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
+  public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
-  public TubeWorm(Settings settings) {
+  public TubeWorm(Properties settings) {
     super(
         settings
-            .mapColor(MapColor.BROWN)
+            .mapColor(MapColor.COLOR_BROWN)
             .replaceable()
             .noCollision()
-            .nonOpaque()
-            .breakInstantly()
-            .sounds(BlockSoundGroup.WET_GRASS)
-            .pistonBehavior(PistonBehavior.DESTROY)
+            .noOcclusion()
+            .instabreak()
+            .sound(SoundType.WET_GRASS)
+            .pushReaction(PushReaction.DESTROY)
     );
   }
 
   @Override
-  protected void appendProperties(Builder<Block, BlockState> builder) {
+  protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
     builder.add(FACING);
   }
 
   @Override
-  public VoxelShape getOutlineShape(
+  public VoxelShape getShape(
       BlockState state,
-      BlockView view,
+      BlockGetter view,
       BlockPos pos,
-      ShapeContext ePos
+      CollisionContext ePos
   ) {
-    return SHAPES.get(state.get(FACING));
+    return SHAPES.get(state.getValue(FACING));
   }
 
   @Override
-  public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos,
-      Random randomSource) {
-    if (!canPlaceAt(state, world, pos)) {
-      world.breakBlock(pos, true);
+  public void tick(BlockState state, ServerLevel world, BlockPos pos,
+      RandomSource randomSource) {
+    if (!canSurvive(state, world, pos)) {
+      world.destroyBlock(pos, true);
     }
   }
 
   @Override
-  public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-    Direction direction = state.get(FACING);
-    BlockPos blockPos = pos.offset(direction.getOpposite());
+  public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+    Direction direction = state.getValue(FACING);
+    BlockPos blockPos = pos.relative(direction.getOpposite());
     BlockState blockState = world.getBlockState(blockPos);
-    return world.getFluidState(pos).getFluid() == Fluids.WATER
+    return world.getFluidState(pos).getType() == Fluids.WATER
         && blockState.isSolid()
-        && blockState.isSideSolidFullSquare(world, pos, direction);
+        && blockState.isFaceSturdy(world, pos, direction);
   }
 
   @Override
-  public BlockState getPlacementState(ItemPlacementContext ctx) {
-    BlockState blockState = this.getDefaultState();
-    WorldView worldView = ctx.getWorld();
-    BlockPos blockPos = ctx.getBlockPos();
-    Direction[] directions = ctx.getPlacementDirections();
+  public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+    BlockState blockState = this.defaultBlockState();
+    LevelReader worldView = ctx.getLevel();
+    BlockPos blockPos = ctx.getClickedPos();
+    Direction[] directions = ctx.getNearestLookingDirections();
     for (Direction direction : directions) {
       if (direction.getAxis().isHorizontal()) {
         Direction direction2 = direction.getOpposite();
-        blockState = blockState.with(FACING, direction2);
-        if (blockState.canPlaceAt(worldView, blockPos)) {
+        blockState = blockState.setValue(FACING, direction2);
+        if (blockState.canSurvive(worldView, blockPos)) {
           return blockState;
         }
       }
@@ -109,34 +109,34 @@ public class TubeWorm extends Block implements Fertilizable, FluidFillable {
   }
 
   @Override
-  protected BlockState getStateForNeighborUpdate(
+  protected BlockState updateShape(
       BlockState state,
-      WorldView world,
-      ScheduledTickView tickView,
+      LevelReader world,
+      ScheduledTickAccess tickView,
       BlockPos pos,
       Direction direction,
       BlockPos neighborPos,
       BlockState neighborState,
-      Random random
+      RandomSource random
   ) {
-    if (!canPlaceAt(state, world, pos)) {
-      return Blocks.AIR.getDefaultState();
+    if (!canSurvive(state, world, pos)) {
+      return Blocks.AIR.defaultBlockState();
     }
     return state;
   }
 
   @Override
-  public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
+  public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
     return true;
   }
 
   @Override
-  public boolean canGrow(World level, Random random, BlockPos pos, BlockState state) {
+  public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
     return true;
   }
 
   @Override
-  public void grow(ServerWorld level, Random random, BlockPos pos, BlockState state) {
+  public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
     ItemEntity item = new ItemEntity(
         level,
         pos.getX() + 0.5,
@@ -144,14 +144,14 @@ public class TubeWorm extends Block implements Fertilizable, FluidFillable {
         pos.getZ() + 0.5,
         new ItemStack(this)
     );
-    level.spawnEntity(item);
+    level.addFreshEntity(item);
   }
 
 
   @Override
-  public boolean canFillWithFluid(
+  public boolean canPlaceLiquid(
       @Nullable LivingEntity filler,
-      BlockView world,
+      BlockGetter world,
       BlockPos pos,
       BlockState state,
       Fluid fluid) {
@@ -159,13 +159,13 @@ public class TubeWorm extends Block implements Fertilizable, FluidFillable {
   }
 
   @Override
-  public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state,
+  public boolean placeLiquid(LevelAccessor world, BlockPos pos, BlockState state,
       FluidState fluidState) {
     return false;
   }
 
   @Override
   public FluidState getFluidState(BlockState state) {
-    return Fluids.WATER.getStill(false);
+    return Fluids.WATER.getSource(false);
   }
 }

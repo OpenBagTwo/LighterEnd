@@ -12,59 +12,58 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.minecraft.block.Blocks;
-import net.minecraft.data.recipe.CookingRecipeJsonBuilder;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.RegistryWrapper.WrapperLookup;
-import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 
 public class RecipeProvider extends FabricRecipeProvider {
 
   protected RecipeProvider(
       FabricDataOutput output,
-      CompletableFuture<WrapperLookup> registriesFuture
+      CompletableFuture<Provider> registriesFuture
   ) {
     super(output, registriesFuture);
   }
 
   @Override
-  protected RecipeGenerator getRecipeGenerator(
-      RegistryWrapper.WrapperLookup registryLookup,
-      RecipeExporter exporter
+  protected net.minecraft.data.recipes.RecipeProvider createRecipeProvider(
+      HolderLookup.Provider registryLookup,
+      RecipeOutput exporter
   ) {
-    return new RecipeGenerator(registryLookup, exporter) {
+    return new net.minecraft.data.recipes.RecipeProvider(registryLookup, exporter) {
       @Override
-      public void generate() {
-        offer2x2CompactingRecipe(
+      public void buildRecipes() {
+        twoByTwoPacker(
             RecipeCategory.BUILDING_BLOCKS,
             LighterEndBlocks.AURORA_CRYSTAL,
             LighterEndItems.AURORA_CRYSTAL_SHARD
         );
 
-        offer2x2CompactingRecipe(
+        twoByTwoPacker(
             RecipeCategory.BUILDING_BLOCKS, LighterEndBlocks.ENDER_BLOCK, Items.ENDER_PEARL
         );
 
         generateMaterialRecipes(LighterEndBlocks.VIOLECITE);
 
-        createShaped(RecipeCategory.BUILDING_BLOCKS, LighterEndBlocks.MISSING_TILE, 4)
+        shaped(RecipeCategory.BUILDING_BLOCKS, LighterEndBlocks.MISSING_TILE, 4)
             .pattern("VP")
             .pattern("PV")
-            .input('V', LighterEndBlocks.VIOLECITE.tiles)
-            .input('P', Blocks.PURPUR_BLOCK)
-            .criterion(
-                hasItem(LighterEndBlocks.VIOLECITE.tiles),
-                conditionsFromItem(LighterEndBlocks.VIOLECITE.tiles)
-            ).offerTo(exporter);
+            .define('V', LighterEndBlocks.VIOLECITE.tiles)
+            .define('P', Blocks.PURPUR_BLOCK)
+            .unlockedBy(
+                getHasName(LighterEndBlocks.VIOLECITE.tiles),
+                has(LighterEndBlocks.VIOLECITE.tiles)
+            ).save(output);
 
         for (Material jadestone : Arrays.asList(
             LighterEndBlocks.AZURE_JADESTONE,
@@ -74,64 +73,64 @@ public class RecipeProvider extends FabricRecipeProvider {
           generateMaterialRecipes(jadestone);
         }
 
-        createShaped(RecipeCategory.BUILDING_BLOCKS, LighterEndBlocks.DRAGON_BONE_BLOCK, 8)
+        shaped(RecipeCategory.BUILDING_BLOCKS, LighterEndBlocks.DRAGON_BONE_BLOCK, 8)
             .pattern("BBB")
             .pattern("BDB")
             .pattern("BBB")
-            .input('B', Blocks.BONE_BLOCK)
-            .input('D', Items.DRAGON_BREATH)
-            .criterion(
-                hasItem(Items.DRAGON_BREATH),
-                conditionsFromItem(Items.DRAGON_BREATH)
-            ).offerTo(exporter);
-        offerSlabRecipe(
+            .define('B', Blocks.BONE_BLOCK)
+            .define('D', Items.DRAGON_BREATH)
+            .unlockedBy(
+                getHasName(Items.DRAGON_BREATH),
+                has(Items.DRAGON_BREATH)
+            ).save(output);
+        slab(
             RecipeCategory.BUILDING_BLOCKS,
             LighterEndBlocks.DRAGON_BONE_SLAB,
             LighterEndBlocks.DRAGON_BONE_BLOCK
         );
-        offerStonecuttingRecipe(
+        stonecutterResultFromBase(
             RecipeCategory.BUILDING_BLOCKS,
             LighterEndBlocks.DRAGON_BONE_SLAB,
             LighterEndBlocks.DRAGON_BONE_BLOCK,
             2
         );
         offerStairsRecipe(LighterEndBlocks.DRAGON_BONE_STAIRS, LighterEndBlocks.DRAGON_BONE_BLOCK);
-        offerStonecuttingRecipe(
+        stonecutterResultFromBase(
             RecipeCategory.BUILDING_BLOCKS,
             LighterEndBlocks.DRAGON_BONE_STAIRS,
             LighterEndBlocks.DRAGON_BONE_BLOCK
         );
 
-        createShapeless(RecipeCategory.MISC, LighterEndBlocks.END_MOSS, 2)
-            .input(Blocks.END_STONE)
-            .input(Blocks.PALE_MOSS_BLOCK)
-            .criterion(
-                hasItem(Blocks.END_STONE),
-                conditionsFromItem(Blocks.END_STONE)
-            ).offerTo(exporter);
+        shapeless(RecipeCategory.MISC, LighterEndBlocks.END_MOSS, 2)
+            .requires(Blocks.END_STONE)
+            .requires(Blocks.PALE_MOSS_BLOCK)
+            .unlockedBy(
+                getHasName(Blocks.END_STONE),
+                has(Blocks.END_STONE)
+            ).save(output);
 
-        createShapeless(RecipeCategory.MISC, Items.CYAN_DYE)
-            .input(LighterEndBlocks.CREEPING_MOSS)
-            .criterion(
-                hasItem(LighterEndBlocks.CREEPING_MOSS),
-                conditionsFromItem(LighterEndBlocks.CREEPING_MOSS)
-            ).offerTo(
-                exporter,
-                RegistryKey.of(
-                    RegistryKeys.RECIPE,
+        shapeless(RecipeCategory.MISC, Items.CYAN_DYE)
+            .requires(LighterEndBlocks.CREEPING_MOSS)
+            .unlockedBy(
+                getHasName(LighterEndBlocks.CREEPING_MOSS),
+                has(LighterEndBlocks.CREEPING_MOSS)
+            ).save(
+                output,
+                ResourceKey.create(
+                    Registries.RECIPE,
                     LighterEnd.of("cyan_dye_from_creeping_moss")
                 )
             );
 
-        createShapeless(RecipeCategory.MISC, Items.ORANGE_DYE)
-            .input(LighterEndBlocks.UMBRELLA_FERN)
-            .criterion(
-                hasItem(LighterEndBlocks.UMBRELLA_FERN),
-                conditionsFromItem(LighterEndBlocks.UMBRELLA_FERN)
-            ).offerTo(
-                exporter,
-                RegistryKey.of(
-                    RegistryKeys.RECIPE,
+        shapeless(RecipeCategory.MISC, Items.ORANGE_DYE)
+            .requires(LighterEndBlocks.UMBRELLA_FERN)
+            .unlockedBy(
+                getHasName(LighterEndBlocks.UMBRELLA_FERN),
+                has(LighterEndBlocks.UMBRELLA_FERN)
+            ).save(
+                output,
+                ResourceKey.create(
+                    Registries.RECIPE,
                     LighterEnd.of("orange_dye_from_umbrella_fern")
                 )
             );
@@ -140,83 +139,83 @@ public class RecipeProvider extends FabricRecipeProvider {
 
         generateMaterialRecipes(LighterEndBlocks.UMBRALITH);
 
-        createShapeless(RecipeCategory.MISC, Items.MAGENTA_DYE)
-            .input(LighterEndBlocks.TENANEA_FLOWER)
-            .criterion(
-                hasItem(LighterEndBlocks.TENANEA_FLOWER),
-                conditionsFromItem(LighterEndBlocks.TENANEA_FLOWER)
-            ).offerTo(
-                exporter,
-                RegistryKey.of(
-                    RegistryKeys.RECIPE,
+        shapeless(RecipeCategory.MISC, Items.MAGENTA_DYE)
+            .requires(LighterEndBlocks.TENANEA_FLOWER)
+            .unlockedBy(
+                getHasName(LighterEndBlocks.TENANEA_FLOWER),
+                has(LighterEndBlocks.TENANEA_FLOWER)
+            ).save(
+                output,
+                ResourceKey.create(
+                    Registries.RECIPE,
                     LighterEnd.of("magenta_dye_from_tenanea_flower")
                 )
             );
 
         generateWoodRecipes(LighterEndBlocks.TENANEA);
 
-        createShapeless(RecipeCategory.MISC, Items.STRING, 2)
-            .input(LighterEndItems.SILK)
-            .criterion(
-                hasItem(LighterEndItems.SILK),
-                conditionsFromItem(LighterEndItems.SILK)
-            ).offerTo(
-                exporter,
-                RegistryKey.of(
-                    RegistryKeys.RECIPE,
+        shapeless(RecipeCategory.MISC, Items.STRING, 2)
+            .requires(LighterEndItems.SILK)
+            .unlockedBy(
+                getHasName(LighterEndItems.SILK),
+                has(LighterEndItems.SILK)
+            ).save(
+                output,
+                ResourceKey.create(
+                    Registries.RECIPE,
                     LighterEnd.of("string_from_silk")
                 )
             );
 
-        createShaped(RecipeCategory.MISC, LighterEndItems.SILK_MATRIX)
+        shaped(RecipeCategory.MISC, LighterEndItems.SILK_MATRIX)
             .pattern("###")
             .pattern("###")
             .pattern("###")
-            .input('#', LighterEndItems.SILK)
-            .criterion(
-                hasItem(LighterEndItems.SILK),
-                conditionsFromItem(LighterEndItems.SILK)
-            ).offerTo(exporter);
+            .define('#', LighterEndItems.SILK)
+            .unlockedBy(
+                getHasName(LighterEndItems.SILK),
+                has(LighterEndItems.SILK)
+            ).save(output);
 
-        createShapeless(RecipeCategory.MISC, LighterEndItems.SILK, 9)
-            .input(LighterEndItems.SILK_MATRIX)
-            .criterion(
-                hasItem(LighterEndItems.SILK_MATRIX),
-                conditionsFromItem(LighterEndItems.SILK_MATRIX)
-            ).offerTo(exporter);
+        shapeless(RecipeCategory.MISC, LighterEndItems.SILK, 9)
+            .requires(LighterEndItems.SILK_MATRIX)
+            .unlockedBy(
+                getHasName(LighterEndItems.SILK_MATRIX),
+                has(LighterEndItems.SILK_MATRIX)
+            ).save(output);
 
-        createShaped(RecipeCategory.DECORATIONS, LighterEndItems.SILK_MOTH_NEST)
+        shaped(RecipeCategory.DECORATIONS, LighterEndItems.SILK_MOTH_NEST)
             .pattern(" P ")
             .pattern("PMP")
             .pattern("PPP")
-            .input('M', LighterEndItems.SILK_MATRIX)
-            .input('P', LighterEndBlocks.TENANEA.planks)
-            .criterion(
-                hasItem(LighterEndItems.SILK_MATRIX),
-                conditionsFromItem(LighterEndItems.SILK_MATRIX)
-            ).offerTo(exporter);
+            .define('M', LighterEndItems.SILK_MATRIX)
+            .define('P', LighterEndBlocks.TENANEA.planks)
+            .unlockedBy(
+                getHasName(LighterEndItems.SILK_MATRIX),
+                has(LighterEndItems.SILK_MATRIX)
+            ).save(output);
 
-        createShaped(RecipeCategory.COMBAT, LighterEndEquipment.SILK_ELYTRA)
+        shaped(RecipeCategory.COMBAT, LighterEndEquipment.SILK_ELYTRA)
             .pattern("P P")
             .pattern("MMM")
             .pattern("MMM")
-            .input('M', LighterEndItems.SILK_MATRIX)
-            .input('P', Items.PHANTOM_MEMBRANE)
-            .criterion(
-                hasItem(LighterEndItems.SILK_MATRIX),
-                conditionsFromItem(LighterEndItems.SILK_MATRIX)
-            ).offerTo(exporter);
+            .define('M', LighterEndItems.SILK_MATRIX)
+            .define('P', Items.PHANTOM_MEMBRANE)
+            .unlockedBy(
+                getHasName(LighterEndItems.SILK_MATRIX),
+                has(LighterEndItems.SILK_MATRIX)
+            ).save(output);
 
         generateWoodRecipes(LighterEndBlocks.UMBRELLA);
-        CookingRecipeJsonBuilder.createSmelting(
-                Ingredient.ofItem(LighterEndBlocks.UMBRELLA_MEMBRANE), RecipeCategory.MISC,
+        SimpleCookingRecipeBuilder.smelting(
+                Ingredient.of(LighterEndBlocks.UMBRELLA_MEMBRANE), RecipeCategory.MISC,
                 Items.SLIME_BALL, 0.1F, 200)
-            .criterion(hasItem(LighterEndBlocks.UMBRELLA_MEMBRANE),
-                this.conditionsFromItem(LighterEndBlocks.UMBRELLA_MEMBRANE))
-            .offerTo(
-                exporter,
-                RegistryKey.of(
-                    RegistryKeys.RECIPE,
+            .unlockedBy(getHasName(LighterEndBlocks.UMBRELLA_MEMBRANE),
+                this.has(LighterEndBlocks.UMBRELLA_MEMBRANE))
+            .save(
+                output,
+                ResourceKey.create(
+                    Registries.RECIPE,
                     LighterEnd.of("slime_balls_from_smelting_membranes")
                 )
             );
@@ -237,20 +236,20 @@ public class RecipeProvider extends FabricRecipeProvider {
         generateSmokingSmeltingRecipes(LighterEndBlocks.CHARNIA_RED, Items.RED_DYE,
             RecipeCategory.MISC);
 
-        createShaped(RecipeCategory.COMBAT, Items.SPECTRAL_ARROW, 4)
+        shaped(RecipeCategory.COMBAT, Items.SPECTRAL_ARROW, 4)
             .pattern("X")
             .pattern("#")
             .pattern("Y")
-            .input('X', LighterEndItems.GLOW_BARB)
-            .input('#', Items.STICK)
-            .input('Y', LighterEndTags.FLETCHINGS
-            ).criterion(
-                hasItem(LighterEndItems.GLOW_BARB),
-                conditionsFromItem(LighterEndItems.GLOW_BARB)
-            ).offerTo(
-                exporter,
-                RegistryKey.of(
-                    RegistryKeys.RECIPE,
+            .define('X', LighterEndItems.GLOW_BARB)
+            .define('#', Items.STICK)
+            .define('Y', LighterEndTags.FLETCHINGS
+            ).unlockedBy(
+                getHasName(LighterEndItems.GLOW_BARB),
+                has(LighterEndItems.GLOW_BARB)
+            ).save(
+                output,
+                ResourceKey.create(
+                    Registries.RECIPE,
                     LighterEnd.of("spectral_arrow")
                 )
             );
@@ -258,22 +257,22 @@ public class RecipeProvider extends FabricRecipeProvider {
         generateSmokingSmeltingRecipes(LighterEndItems.END_LILY_LEAF,
             LighterEndItems.DRIED_END_LILY_LEAF, RecipeCategory.MISC);
 
-        createShaped(RecipeCategory.MISC, Items.PAPER, 3)
+        shaped(RecipeCategory.MISC, Items.PAPER, 3)
             .pattern("###")
-            .input('#', LighterEndItems.DRIED_END_LILY_LEAF)
-            .criterion(
-                hasItem(LighterEndItems.DRIED_END_LILY_LEAF),
-                conditionsFromItem(LighterEndItems.DRIED_END_LILY_LEAF)
-            ).offerTo(
-                exporter,
-                RegistryKey.of(
-                    RegistryKeys.RECIPE,
+            .define('#', LighterEndItems.DRIED_END_LILY_LEAF)
+            .unlockedBy(
+                getHasName(LighterEndItems.DRIED_END_LILY_LEAF),
+                has(LighterEndItems.DRIED_END_LILY_LEAF)
+            ).save(
+                output,
+                ResourceKey.create(
+                    Registries.RECIPE,
                     LighterEnd.of("paper_from_dried_leaves")
                 )
             );
 
         generateWoodRecipes(LighterEndBlocks.LOTUS, 4);
-        offerCompactingRecipe(
+        threeByThreePacker(
             RecipeCategory.BUILDING_BLOCKS,
             LighterEndBlocks.LOTUS.log,
             LighterEndBlocks.END_LOTUS_STEM
@@ -281,152 +280,152 @@ public class RecipeProvider extends FabricRecipeProvider {
 
         generateWoodRecipes(LighterEndBlocks.GLOWSHROOM);
 
-        CookingRecipeJsonBuilder.createSmelting(
-                Ingredient.ofItem(LighterEndItems.END_CREAM), RecipeCategory.BREWING,
+        SimpleCookingRecipeBuilder.smelting(
+                Ingredient.of(LighterEndItems.END_CREAM), RecipeCategory.BREWING,
                 LighterEndItems.END_POWDER, 0.1F, 200)
-            .criterion(hasItem(LighterEndItems.END_CREAM),
-                conditionsFromItem(LighterEndItems.END_CREAM))
-            .offerTo(
-                exporter,
-                RegistryKey.of(
-                    RegistryKeys.RECIPE,
+            .unlockedBy(getHasName(LighterEndItems.END_CREAM),
+                has(LighterEndItems.END_CREAM))
+            .save(
+                output,
+                ResourceKey.create(
+                    Registries.RECIPE,
                     LighterEnd.of("end_powder_from_smelting_end_cream")
                 )
             );
 
-        createShaped(RecipeCategory.TOOLS, Items.SHEARS)
+        shaped(RecipeCategory.TOOLS, Items.SHEARS)
             .pattern(" #")
             .pattern("# ")
-            .input('#', LighterEndItems.CRAB_CLAW)
-            .criterion(
-                hasItem(LighterEndItems.CRAB_CLAW),
-                conditionsFromItem(LighterEndItems.CRAB_CLAW)
-            ).offerTo(
-                exporter,
-                RegistryKey.of(
-                    RegistryKeys.RECIPE,
+            .define('#', LighterEndItems.CRAB_CLAW)
+            .unlockedBy(
+                getHasName(LighterEndItems.CRAB_CLAW),
+                has(LighterEndItems.CRAB_CLAW)
+            ).save(
+                output,
+                ResourceKey.create(
+                    Registries.RECIPE,
                     LighterEnd.of("shears_from_claws")
                 )
             );
         generateCookingRecipes(LighterEndItems.CRAB_MEAT, LighterEndItems.CRAB_CAKE);
 
-        createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.END_FURNACE)
-            .input('#', Blocks.END_STONE)
+        shaped(RecipeCategory.DECORATIONS, LighterEndBlocks.END_FURNACE)
+            .define('#', Blocks.END_STONE)
             .pattern("###")
             .pattern("# #")
             .pattern("###")
-            .criterion(hasItem(Blocks.END_STONE), this.conditionsFromItem(Blocks.END_STONE))
-            .offerTo(exporter);
-        createShapeless(RecipeCategory.TRANSPORTATION, Items.FURNACE_MINECART)
-            .input(LighterEndBlocks.END_FURNACE)
-            .input(Items.MINECART)
-            .criterion(
-                hasItem(LighterEndBlocks.END_FURNACE),
-                this.conditionsFromItem(LighterEndBlocks.END_FURNACE)
-            ).offerTo(
-                exporter,
-                RegistryKey.of(
-                    RegistryKeys.RECIPE,
+            .unlockedBy(getHasName(Blocks.END_STONE), this.has(Blocks.END_STONE))
+            .save(output);
+        shapeless(RecipeCategory.TRANSPORTATION, Items.FURNACE_MINECART)
+            .requires(LighterEndBlocks.END_FURNACE)
+            .requires(Items.MINECART)
+            .unlockedBy(
+                getHasName(LighterEndBlocks.END_FURNACE),
+                this.has(LighterEndBlocks.END_FURNACE)
+            ).save(
+                output,
+                ResourceKey.create(
+                    Registries.RECIPE,
                     LighterEnd.of("furnace_minecart_from_end_stone_furnace")
                 )
             );
-        createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.END_SMOKER)
-            .input('#', ItemTags.LOGS)
-            .input('X', LighterEndBlocks.END_FURNACE)
+        shaped(RecipeCategory.DECORATIONS, LighterEndBlocks.END_SMOKER)
+            .define('#', ItemTags.LOGS)
+            .define('X', LighterEndBlocks.END_FURNACE)
             .pattern(" # ")
             .pattern("#X#")
             .pattern(" # ")
-            .criterion(
-                hasItem(LighterEndBlocks.END_FURNACE),
-                this.conditionsFromItem(LighterEndBlocks.END_FURNACE)
-            ).offerTo(exporter);
+            .unlockedBy(
+                getHasName(LighterEndBlocks.END_FURNACE),
+                this.has(LighterEndBlocks.END_FURNACE)
+            ).save(output);
 
-        createShaped(RecipeCategory.REDSTONE, LighterEndBlocks.END_LEVER)
-            .input('#', Blocks.END_STONE)
-            .input('X', Items.STICK)
+        shaped(RecipeCategory.REDSTONE, LighterEndBlocks.END_LEVER)
+            .define('#', Blocks.END_STONE)
+            .define('X', Items.STICK)
             .pattern("X")
             .pattern("#")
-            .criterion(hasItem(Blocks.END_STONE), this.conditionsFromItem(Blocks.END_STONE))
-            .offerTo(exporter);
+            .unlockedBy(getHasName(Blocks.END_STONE), this.has(Blocks.END_STONE))
+            .save(output);
 
-        createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.GOLD_CHANDELIER)
-            .input('r', LighterEndItems.LUMECORN_EAR)
-            .input('n', Items.GOLD_NUGGET)
-            .input('i', Items.GOLD_INGOT)
+        shaped(RecipeCategory.DECORATIONS, LighterEndBlocks.GOLD_CHANDELIER)
+            .define('r', LighterEndItems.LUMECORN_EAR)
+            .define('n', Items.GOLD_NUGGET)
+            .define('i', Items.GOLD_INGOT)
             .pattern("r r")
             .pattern("n n")
             .pattern(" i ")
-            .criterion(
-                hasItem(LighterEndItems.LUMECORN_EAR),
-                this.conditionsFromItem(LighterEndItems.LUMECORN_EAR)
-            ).offerTo(exporter);
+            .unlockedBy(
+                getHasName(LighterEndItems.LUMECORN_EAR),
+                this.has(LighterEndItems.LUMECORN_EAR)
+            ).save(output);
 
-        createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.IRON_CHANDELIER)
-            .input('r', LighterEndItems.LUMECORN_EAR)
-            .input('n', Items.IRON_NUGGET)
-            .input('i', Items.IRON_INGOT)
+        shaped(RecipeCategory.DECORATIONS, LighterEndBlocks.IRON_CHANDELIER)
+            .define('r', LighterEndItems.LUMECORN_EAR)
+            .define('n', Items.IRON_NUGGET)
+            .define('i', Items.IRON_INGOT)
             .pattern("r r")
             .pattern("n n")
             .pattern(" i ")
-            .criterion(
-                hasItem(LighterEndItems.LUMECORN_EAR),
-                this.conditionsFromItem(LighterEndItems.LUMECORN_EAR)
-            ).offerTo(exporter);
+            .unlockedBy(
+                getHasName(LighterEndItems.LUMECORN_EAR),
+                this.has(LighterEndItems.LUMECORN_EAR)
+            ).save(output);
 
-        createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.COPPER_CHANDELIERS.unaffected())
-            .input('r', LighterEndItems.LUMECORN_EAR)
-            .input('n', Items.COPPER_NUGGET)
-            .input('i', Items.COPPER_INGOT)
+        shaped(RecipeCategory.DECORATIONS, LighterEndBlocks.COPPER_CHANDELIERS.unaffected())
+            .define('r', LighterEndItems.LUMECORN_EAR)
+            .define('n', Items.COPPER_NUGGET)
+            .define('i', Items.COPPER_INGOT)
             .pattern("r r")
             .pattern("n n")
             .pattern(" i ")
-            .criterion(
-                hasItem(LighterEndItems.LUMECORN_EAR),
-                this.conditionsFromItem(LighterEndItems.LUMECORN_EAR)
-            ).offerTo(exporter);
-        LighterEndBlocks.COPPER_CHANDELIERS.getWaxingMap().forEach(
-            (unwaxed, waxed) -> createShapeless(RecipeCategory.DECORATIONS, waxed)
-                .input(unwaxed)
-                .input(Items.HONEYCOMB)
-                .criterion(hasItem(unwaxed), this.conditionsFromItem(unwaxed))
-                .offerTo(exporter)
+            .unlockedBy(
+                getHasName(LighterEndItems.LUMECORN_EAR),
+                this.has(LighterEndItems.LUMECORN_EAR)
+            ).save(output);
+        LighterEndBlocks.COPPER_CHANDELIERS.waxedMapping().forEach(
+            (unwaxed, waxed) -> shapeless(RecipeCategory.DECORATIONS, waxed)
+                .requires(unwaxed)
+                .requires(Items.HONEYCOMB)
+                .unlockedBy(getHasName(unwaxed), this.has(unwaxed))
+                .save(exporter)
         );
 
-        CookingRecipeJsonBuilder.createSmelting(
-            Ingredient.ofItem(LighterEndBlocks.FERROUS_ICE),
+        SimpleCookingRecipeBuilder.smelting(
+            Ingredient.of(LighterEndBlocks.FERROUS_ICE),
             RecipeCategory.MISC,
             Items.IRON_NUGGET,
             0.1F,
             200
-        ).criterion(
-            hasItem(LighterEndBlocks.FERROUS_ICE),
-            conditionsFromItem(LighterEndBlocks.FERROUS_ICE)
-        ).offerTo(
-            exporter,
-            RegistryKey.of(
-                RegistryKeys.RECIPE,
+        ).unlockedBy(
+            getHasName(LighterEndBlocks.FERROUS_ICE),
+            has(LighterEndBlocks.FERROUS_ICE)
+        ).save(
+            output,
+            ResourceKey.create(
+                Registries.RECIPE,
                 LighterEnd.of("smelting_iron_from_ice")
             )
         );
 
-        CookingRecipeJsonBuilder.createSmelting(
-            Ingredient.ofItem(LighterEndBlocks.EMERALD_ICE),
+        SimpleCookingRecipeBuilder.smelting(
+            Ingredient.of(LighterEndBlocks.EMERALD_ICE),
             RecipeCategory.MISC,
             Items.COPPER_NUGGET,
             0.1F,
             200
-        ).criterion(
-            hasItem(LighterEndBlocks.EMERALD_ICE),
-            conditionsFromItem(LighterEndBlocks.EMERALD_ICE)
-        ).offerTo(
-            exporter,
-            RegistryKey.of(
-                RegistryKeys.RECIPE,
+        ).unlockedBy(
+            getHasName(LighterEndBlocks.EMERALD_ICE),
+            has(LighterEndBlocks.EMERALD_ICE)
+        ).save(
+            output,
+            ResourceKey.create(
+                Registries.RECIPE,
                 LighterEnd.of("smelting_copper_from_ice")
             )
         );
 
-        offerSmelting(
+        oreSmelting(
             List.of(LighterEndBlocks.END_STONE_REDSTONE_ORE,
                 LighterEndBlocks.UMBRALITH_REDSTONE_ORE),
             RecipeCategory.REDSTONE,
@@ -435,7 +434,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             200,
             "end_redstone"
         );
-        offerBlasting(
+        oreBlasting(
             List.of(LighterEndBlocks.END_STONE_REDSTONE_ORE,
                 LighterEndBlocks.UMBRALITH_REDSTONE_ORE),
             RecipeCategory.REDSTONE,
@@ -445,117 +444,118 @@ public class RecipeProvider extends FabricRecipeProvider {
             "end_redstone"
         );
 
-        createShaped(RecipeCategory.REDSTONE, Blocks.DROPPER)
-            .input('R', Items.REDSTONE)
-            .input('#', Blocks.END_STONE)
+        shaped(RecipeCategory.REDSTONE, Blocks.DROPPER)
+            .define('R', Items.REDSTONE)
+            .define('#', Blocks.END_STONE)
             .pattern("###")
             .pattern("# #")
             .pattern("#R#")
-            .criterion(hasItem(Blocks.END_STONE), this.conditionsFromItem(Blocks.END_STONE))
-            .offerTo(this.exporter,
-                RegistryKey.of(
-                    RegistryKeys.RECIPE,
+            .unlockedBy(getHasName(Blocks.END_STONE), this.has(Blocks.END_STONE))
+            .save(this.output,
+                ResourceKey.create(
+                    Registries.RECIPE,
                     LighterEnd.of("dropper_using_end_stone")
                 )
             );
-        createShaped(RecipeCategory.REDSTONE, Blocks.DISPENSER)
-            .input('R', Items.REDSTONE)
-            .input('#', Blocks.END_STONE)
-            .input('X', Items.BOW)
+        shaped(RecipeCategory.REDSTONE, Blocks.DISPENSER)
+            .define('R', Items.REDSTONE)
+            .define('#', Blocks.END_STONE)
+            .define('X', Items.BOW)
             .pattern("###")
             .pattern("#X#")
             .pattern("#R#")
-            .criterion(hasItem(Blocks.END_STONE), this.conditionsFromItem(Blocks.END_STONE))
-            .offerTo(this.exporter,
-                RegistryKey.of(
-                    RegistryKeys.RECIPE,
+            .unlockedBy(getHasName(Blocks.END_STONE), this.has(Blocks.END_STONE))
+            .save(this.output,
+                ResourceKey.create(
+                    Registries.RECIPE,
                     LighterEnd.of("dispenser_using_end_stone")
                 )
             );
-        createShaped(RecipeCategory.REDSTONE, Blocks.OBSERVER)
-            .input('Q', Items.QUARTZ)
-            .input('R', Items.REDSTONE)
-            .input('#', Blocks.END_STONE)
+        shaped(RecipeCategory.REDSTONE, Blocks.OBSERVER)
+            .define('Q', Items.QUARTZ)
+            .define('R', Items.REDSTONE)
+            .define('#', Blocks.END_STONE)
             .pattern("###")
             .pattern("RRQ")
             .pattern("###")
-            .criterion(hasItem(Blocks.END_STONE), this.conditionsFromItem(Blocks.END_STONE))
-            .offerTo(this.exporter,
-                RegistryKey.of(
-                    RegistryKeys.RECIPE,
+            .unlockedBy(getHasName(Blocks.END_STONE), this.has(Blocks.END_STONE))
+            .save(this.output,
+                ResourceKey.create(
+                    Registries.RECIPE,
                     LighterEnd.of("observer_using_end_stone")
                 )
             );
-        createShaped(RecipeCategory.REDSTONE, Blocks.PISTON)
-            .input('R', Items.REDSTONE)
-            .input('#', Blocks.END_STONE)
-            .input('T', ItemTags.PLANKS)
-            .input('X', Items.IRON_INGOT)
+        shaped(RecipeCategory.REDSTONE, Blocks.PISTON)
+            .define('R', Items.REDSTONE)
+            .define('#', Blocks.END_STONE)
+            .define('T', ItemTags.PLANKS)
+            .define('X', Items.IRON_INGOT)
             .pattern("TTT")
             .pattern("#X#")
             .pattern("#R#")
-            .criterion(hasItem(Blocks.END_STONE), this.conditionsFromItem(Blocks.END_STONE))
-            .offerTo(this.exporter,
-                RegistryKey.of(
-                    RegistryKeys.RECIPE,
+            .unlockedBy(getHasName(Blocks.END_STONE), this.has(Blocks.END_STONE))
+            .save(this.output,
+                ResourceKey.create(
+                    Registries.RECIPE,
                     LighterEnd.of("piston_using_end_stone")
                 )
             );
 
         generateMaterialRecipes(LighterEndBlocks.BORNITE);
 
-        createShaped(RecipeCategory.DECORATIONS, LighterEndItems.MATCHSTICK, 4)
-            .input('#', Items.STICK)
-            .input('X', LighterEndItems.CRYSTALLINE_SULPHUR)
+        shaped(RecipeCategory.DECORATIONS, LighterEndItems.MATCHSTICK, 4)
+            .define('#', Items.STICK)
+            .define('X', LighterEndItems.CRYSTALLINE_SULPHUR)
             .pattern("X")
             .pattern("#")
-            .criterion(
-                hasItem(LighterEndItems.CRYSTALLINE_SULPHUR),
-                this.conditionsFromItem(LighterEndItems.CRYSTALLINE_SULPHUR)
-            ).offerTo(this.exporter);
+            .unlockedBy(
+                getHasName(LighterEndItems.CRYSTALLINE_SULPHUR),
+                this.has(LighterEndItems.CRYSTALLINE_SULPHUR)
+            ).save(this.output);
 
-        createShapeless(RecipeCategory.MISC, Items.GUNPOWDER, 3)
-            .input(Items.BONE_MEAL)
-            .input(Ingredient.ofItems(Items.COAL, Items.CHARCOAL))
-            .input(LighterEndItems.CRYSTALLINE_SULPHUR)
-            .criterion(
-                hasItem(LighterEndItems.CRYSTALLINE_SULPHUR),
-                this.conditionsFromItem(LighterEndItems.CRYSTALLINE_SULPHUR)
-            ).offerTo(
-                this.exporter,
-                RegistryKey.of(
-                    RegistryKeys.RECIPE,
+        shapeless(RecipeCategory.MISC, Items.GUNPOWDER, 3)
+            .requires(Items.BONE_MEAL)
+            .requires(Ingredient.of(Items.COAL, Items.CHARCOAL))
+            .requires(LighterEndItems.CRYSTALLINE_SULPHUR)
+            .unlockedBy(
+                getHasName(LighterEndItems.CRYSTALLINE_SULPHUR),
+                this.has(LighterEndItems.CRYSTALLINE_SULPHUR)
+            ).save(
+                this.output,
+                ResourceKey.create(
+                    Registries.RECIPE,
                     LighterEnd.of("gunpowder_from_sulphur")
                 )
             );
 
-        createShapeless(RecipeCategory.MISC, Items.SUGAR, 3)
-            .input(LighterEndItems.UMBRELLA_JUICE)
+        shapeless(RecipeCategory.MISC, Items.SUGAR, 3)
+            .requires(LighterEndItems.UMBRELLA_JUICE)
             .group("sugar")
-            .criterion(
-                hasItem(LighterEndItems.UMBRELLA_JUICE),
-                this.conditionsFromItem(LighterEndItems.UMBRELLA_JUICE)
-            ).offerTo(this.exporter, convertBetween(Items.SUGAR, LighterEndItems.UMBRELLA_JUICE));
+            .unlockedBy(
+                getHasName(LighterEndItems.UMBRELLA_JUICE),
+                this.has(LighterEndItems.UMBRELLA_JUICE)
+            ).save(this.output,
+                getConversionRecipeName(Items.SUGAR, LighterEndItems.UMBRELLA_JUICE));
 
         generateCookingRecipes(LighterEndItems.SHADOW_BERRY, LighterEndItems.SHADOW_BERRY_COOKED);
-        createShapeless(RecipeCategory.FOOD, LighterEndItems.SHADOW_BERRY_JAM, 3)
-            .input(LighterEndItems.SHADOW_BERRY_COOKED, 3)
-            .input(Items.SUGAR, 3)
-            .input(Items.GLASS_BOTTLE, 3)
-            .criterion(
-                hasItem(LighterEndItems.SHADOW_BERRY_COOKED),
-                this.conditionsFromItem(LighterEndItems.SHADOW_BERRY_COOKED)
-            ).offerTo(this.exporter);
+        shapeless(RecipeCategory.FOOD, LighterEndItems.SHADOW_BERRY_JAM, 3)
+            .requires(LighterEndItems.SHADOW_BERRY_COOKED, 3)
+            .requires(Items.SUGAR, 3)
+            .requires(Items.GLASS_BOTTLE, 3)
+            .unlockedBy(
+                getHasName(LighterEndItems.SHADOW_BERRY_COOKED),
+                this.has(LighterEndItems.SHADOW_BERRY_COOKED)
+            ).save(this.output);
 
-        createShapeless(RecipeCategory.MISC, Items.BLACK_DYE)
-            .input(LighterEndBlocks.MURKWEED)
-            .criterion(
-                hasItem(LighterEndBlocks.MURKWEED),
-                conditionsFromItem(LighterEndBlocks.MURKWEED)
-            ).offerTo(
-                exporter,
-                RegistryKey.of(
-                    RegistryKeys.RECIPE,
+        shapeless(RecipeCategory.MISC, Items.BLACK_DYE)
+            .requires(LighterEndBlocks.MURKWEED)
+            .unlockedBy(
+                getHasName(LighterEndBlocks.MURKWEED),
+                has(LighterEndBlocks.MURKWEED)
+            ).save(
+                output,
+                ResourceKey.create(
+                    Registries.RECIPE,
                     LighterEnd.of("black_dye_from_murkweed")
                 )
             );
@@ -565,111 +565,114 @@ public class RecipeProvider extends FabricRecipeProvider {
 
       public void generateMaterialRecipes(Material material) {
 
-        offerSlabRecipe(
+        slab(
             RecipeCategory.BUILDING_BLOCKS, material.baseSlab, material.baseBlock
         );
-        offerStonecuttingRecipe(
+        stonecutterResultFromBase(
             RecipeCategory.BUILDING_BLOCKS, material.baseSlab, material.baseBlock, 2
         );
         offerStairsRecipe(material.baseStairs, material.baseBlock);
-        offerStonecuttingRecipe(
+        stonecutterResultFromBase(
             RecipeCategory.BUILDING_BLOCKS, material.baseStairs, material.baseBlock
         );
-        offerWallRecipe(RecipeCategory.BUILDING_BLOCKS, material.baseWall, material.baseBlock);
-        offerStonecuttingRecipe(
+        wall(RecipeCategory.BUILDING_BLOCKS, material.baseWall, material.baseBlock);
+        stonecutterResultFromBase(
             RecipeCategory.BUILDING_BLOCKS, material.baseWall, material.baseBlock
         );
-        createShaped(RecipeCategory.BUILDING_BLOCKS, material.pillar, 1)
+        shaped(RecipeCategory.BUILDING_BLOCKS, material.pillar, 1)
             .pattern("s")
             .pattern("s")
-            .input('s', material.baseSlab)
-            .criterion(
-                hasItem(material.baseSlab),
-                conditionsFromItem(material.baseSlab)
-            ).offerTo(exporter);
-        offerStonecuttingRecipe(
+            .define('s', material.baseSlab)
+            .unlockedBy(
+                getHasName(material.baseSlab),
+                has(material.baseSlab)
+            ).save(output);
+        stonecutterResultFromBase(
             RecipeCategory.BUILDING_BLOCKS, material.pillar, material.baseBlock
         );
 
-        offerPolishedStoneRecipe(
+        polished(
             RecipeCategory.BUILDING_BLOCKS, material.polished, material.baseBlock
         );
-        offerStonecuttingRecipe(
+        stonecutterResultFromBase(
             RecipeCategory.BUILDING_BLOCKS, material.polished, material.baseBlock
         );
-        offerSlabRecipe(
+        slab(
             RecipeCategory.BUILDING_BLOCKS, material.polishedSlab, material.polished
         );
         offerStairsRecipe(material.polishedStairs, material.polished);
-        offerWallRecipe(RecipeCategory.BUILDING_BLOCKS, material.polishedWall, material.polished);
+        wall(RecipeCategory.BUILDING_BLOCKS, material.polishedWall, material.polished);
         offerButtonRecipe(material.button, material.polished);
-        offerPressurePlateRecipe(material.pressurePlate, material.polished);
-        for (ItemConvertible input : Arrays.asList(material.polished, material.baseBlock)) {
-          offerStonecuttingRecipe(
+        pressurePlate(material.pressurePlate, material.polished);
+        for (ItemLike input : Arrays.asList(material.polished, material.baseBlock)) {
+          stonecutterResultFromBase(
               RecipeCategory.BUILDING_BLOCKS, material.polishedSlab, input, 2
           );
-          offerStonecuttingRecipe(
+          stonecutterResultFromBase(
               RecipeCategory.BUILDING_BLOCKS, material.polishedStairs, input
           );
-          offerStonecuttingRecipe(
+          stonecutterResultFromBase(
               RecipeCategory.BUILDING_BLOCKS, material.polishedWall, input
           );
         }
 
-        offerPolishedStoneRecipe(
+        polished(
             RecipeCategory.BUILDING_BLOCKS, material.bricks, material.polished
         );
-        offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, material.bricks, material.polished);
-        offerStonecuttingRecipe(
+        stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, material.bricks,
+            material.polished);
+        stonecutterResultFromBase(
             RecipeCategory.BUILDING_BLOCKS, material.bricks, material.baseBlock
         );
-        offerSlabRecipe(RecipeCategory.BUILDING_BLOCKS, material.brickSlab, material.bricks);
+        slab(RecipeCategory.BUILDING_BLOCKS, material.brickSlab, material.bricks);
         offerStairsRecipe(material.brickStairs, material.bricks);
-        offerWallRecipe(RecipeCategory.BUILDING_BLOCKS, material.brickWall, material.bricks);
-        for (ItemConvertible input : Arrays.asList(
+        wall(RecipeCategory.BUILDING_BLOCKS, material.brickWall, material.bricks);
+        for (ItemLike input : Arrays.asList(
             material.bricks, material.polished, material.baseBlock
         )) {
-          offerStonecuttingRecipe(
+          stonecutterResultFromBase(
               RecipeCategory.BUILDING_BLOCKS, material.brickSlab, input, 2
           );
-          offerStonecuttingRecipe(
+          stonecutterResultFromBase(
               RecipeCategory.BUILDING_BLOCKS, material.brickStairs, input
           );
-          offerStonecuttingRecipe(
+          stonecutterResultFromBase(
               RecipeCategory.BUILDING_BLOCKS, material.brickWall, input
           );
         }
 
-        offerPolishedStoneRecipe(RecipeCategory.BUILDING_BLOCKS, material.tiles, material.bricks);
-        offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, material.tiles, material.polished);
-        offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, material.tiles, material.baseBlock);
-        offerSlabRecipe(
+        polished(RecipeCategory.BUILDING_BLOCKS, material.tiles, material.bricks);
+        stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, material.tiles,
+            material.polished);
+        stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, material.tiles,
+            material.baseBlock);
+        slab(
             RecipeCategory.BUILDING_BLOCKS, material.tileSlab, material.tiles
         );
         offerStairsRecipe(material.tileStairs, material.tiles);
-        offerWallRecipe(RecipeCategory.BUILDING_BLOCKS, material.tileWall, material.tiles);
-        for (ItemConvertible input : Arrays.asList(
+        wall(RecipeCategory.BUILDING_BLOCKS, material.tileWall, material.tiles);
+        for (ItemLike input : Arrays.asList(
             material.tiles, material.bricks, material.polished, material.baseBlock
         )) {
-          offerStonecuttingRecipe(
+          stonecutterResultFromBase(
               RecipeCategory.BUILDING_BLOCKS, material.tileSlab, input, 2
           );
-          offerStonecuttingRecipe(
+          stonecutterResultFromBase(
               RecipeCategory.BUILDING_BLOCKS, material.tileStairs, input
           );
-          offerStonecuttingRecipe(
+          stonecutterResultFromBase(
               RecipeCategory.BUILDING_BLOCKS, material.tileWall, input
           );
         }
 
-        createShaped(RecipeCategory.DECORATIONS, material.pedestal)
+        shaped(RecipeCategory.DECORATIONS, material.pedestal)
             .pattern("s")
             .pattern("#")
             .pattern("s")
-            .input('s', material.polishedSlab)
-            .input('#', material.pillar)
-            .criterion(hasItem(material.pillar), conditionsFromItem(material.pillar))
-            .offerTo(exporter);
+            .define('s', material.polishedSlab)
+            .define('#', material.pillar)
+            .unlockedBy(getHasName(material.pillar), has(material.pillar))
+            .save(output);
       }
 
       public void generateWoodRecipes(WoodSet wood) {
@@ -677,141 +680,144 @@ public class RecipeProvider extends FabricRecipeProvider {
       }
 
       public void generateWoodRecipes(WoodSet wood, int planks_per_log) {
-        createShaped(RecipeCategory.BUILDING_BLOCKS, wood.wood, 3).pattern("ll").pattern("ll")
-            .input('l', wood.log).criterion(
-                hasItem(wood.log),
-                conditionsFromItem(wood.log)
-            ).offerTo(exporter);
-        createShaped(RecipeCategory.BUILDING_BLOCKS, wood.strippedWood, 3).pattern("ll")
-            .pattern("ll").input('l', wood.log).criterion(
-                hasItem(wood.strippedLog),
-                conditionsFromItem(wood.strippedLog)
-            ).offerTo(exporter);
-        createShapeless(RecipeCategory.BUILDING_BLOCKS, wood.planks, planks_per_log)
-            .input(LighterEndTags.LOG_TAGS.get(wood.baseName))
-            .criterion(
-                hasItem(wood.log),
-                this.conditionsFromTag(LighterEndTags.LOG_TAGS.get(wood.baseName))
-            ).offerTo(exporter);
-        offerSlabRecipe(RecipeCategory.BUILDING_BLOCKS, wood.slab, wood.planks);
+        shaped(RecipeCategory.BUILDING_BLOCKS, wood.wood, 3).pattern("ll").pattern("ll")
+            .define('l', wood.log).unlockedBy(
+                getHasName(wood.log),
+                has(wood.log)
+            ).save(output);
+        shaped(RecipeCategory.BUILDING_BLOCKS, wood.strippedWood, 3).pattern("ll")
+            .pattern("ll").define('l', wood.log).unlockedBy(
+                getHasName(wood.strippedLog),
+                has(wood.strippedLog)
+            ).save(output);
+        shapeless(RecipeCategory.BUILDING_BLOCKS, wood.planks, planks_per_log)
+            .requires(LighterEndTags.LOG_TAGS.get(wood.baseName))
+            .unlockedBy(
+                getHasName(wood.log),
+                this.has(LighterEndTags.LOG_TAGS.get(wood.baseName))
+            ).save(output);
+        slab(RecipeCategory.BUILDING_BLOCKS, wood.slab, wood.planks);
         offerStairsRecipe(wood.stairs, wood.planks);
-        createDoorRecipe(wood.door, Ingredient.ofItem(wood.planks)).criterion(hasItem(wood.planks),
-            conditionsFromItem(wood.planks)).offerTo(exporter);
-        createTrapdoorRecipe(wood.trapdoor, Ingredient.ofItem(wood.planks)).criterion(
-            hasItem(wood.planks),
-            conditionsFromItem(wood.planks)).offerTo(exporter);
-        createFenceRecipe(wood.fence, Ingredient.ofItem(wood.planks)).criterion(
-            hasItem(wood.planks),
-            conditionsFromItem(wood.planks)).offerTo(exporter);
-        createFenceGateRecipe(wood.gate, Ingredient.ofItem(wood.planks)).criterion(
-            hasItem(wood.planks),
-            conditionsFromItem(wood.planks)).offerTo(exporter);
+        doorBuilder(wood.door, Ingredient.of(wood.planks)).unlockedBy(getHasName(wood.planks),
+            has(wood.planks)).save(output);
+        trapdoorBuilder(wood.trapdoor, Ingredient.of(wood.planks)).unlockedBy(
+            getHasName(wood.planks),
+            has(wood.planks)).save(output);
+        fenceBuilder(wood.fence, Ingredient.of(wood.planks)).unlockedBy(
+            getHasName(wood.planks),
+            has(wood.planks)).save(output);
+        fenceGateBuilder(wood.gate, Ingredient.of(wood.planks)).unlockedBy(
+            getHasName(wood.planks),
+            has(wood.planks)).save(output);
         offerButtonRecipe(wood.button, wood.planks);
-        offerPressurePlateRecipe(wood.pressurePlate, wood.planks);
-        createShaped(RecipeCategory.DECORATIONS, wood.ladder, 2)
-            .input('#', wood.slab)
+        pressurePlate(wood.pressurePlate, wood.planks);
+        shaped(RecipeCategory.DECORATIONS, wood.ladder, 2)
+            .define('#', wood.slab)
             .pattern("#")
             .pattern("#")
             .pattern("#")
-            .criterion(hasItem(wood.planks), this.conditionsFromItem(wood.planks))
-            .offerTo(exporter);
-        createSignRecipe(wood.sign, Ingredient.ofItem(wood.planks)).criterion(
-            hasItem(wood.planks),
-            conditionsFromItem(wood.planks)).offerTo(exporter);
-        createShaped(RecipeCategory.DECORATIONS, wood.hangingSign, 6)
+            .unlockedBy(getHasName(wood.planks), this.has(wood.planks))
+            .save(output);
+        signBuilder(wood.sign, Ingredient.of(wood.planks)).unlockedBy(
+            getHasName(wood.planks),
+            has(wood.planks)).save(output);
+        shaped(RecipeCategory.DECORATIONS, wood.hangingSign, 6)
             .group("hanging_sign")
-            .input('#', LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName))
-            .input('X', Items.IRON_CHAIN)
+            .define('#', LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName))
+            .define('X', Items.IRON_CHAIN)
             .pattern("X X")
             .pattern("###")
             .pattern("###")
-            .criterion(
-                hasItem(wood.strippedLog),
-                this.conditionsFromTag(LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName))
-            ).offerTo(this.exporter);
+            .unlockedBy(
+                getHasName(wood.strippedLog),
+                this.has(LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName))
+            ).save(this.output);
 
-        createShaped(RecipeCategory.DECORATIONS, wood.shelf, 6)
-            .input('#', LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName))
+        shaped(RecipeCategory.DECORATIONS, wood.shelf, 6)
+            .define('#', LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName))
             .pattern("###")
             .pattern("   ")
             .pattern("###")
             .group("shelf")
-            .criterion(
-                hasItem(wood.strippedLog),
-                this.conditionsFromTag(LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName))
-            ).offerTo(this.exporter);
+            .unlockedBy(
+                getHasName(wood.strippedLog),
+                this.has(LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName))
+            ).save(this.output);
       }
 
       // seems odd these aren't already implemented
-      public void offerStairsRecipe(ItemConvertible output, ItemConvertible input) {
-        createStairsRecipe(
-            output, Ingredient.ofItem(input)
-        ).criterion(hasItem(input), this.conditionsFromItem(input)).offerTo(exporter);
+      public void offerStairsRecipe(ItemLike product, ItemLike input) {
+        stairBuilder(
+            product, Ingredient.of(input)
+        ).unlockedBy(getHasName(input), this.has(input)).save(this.output);
       }
 
-      public void offerButtonRecipe(ItemConvertible output, ItemConvertible input) {
-        createButtonRecipe(
-            output, Ingredient.ofItem(input)
-        ).criterion(hasItem(input), this.conditionsFromItem(input)).offerTo(exporter);
+      public void offerButtonRecipe(ItemLike product, ItemLike input) {
+        buttonBuilder(
+            product, Ingredient.of(input)
+        ).unlockedBy(getHasName(input), this.has(input)).save(this.output);
       }
 
-      public void generateCookingRecipes(ItemConvertible input, ItemConvertible output) {
-        generateSmokingSmeltingRecipes(input, output, RecipeCategory.FOOD);
+      public void generateCookingRecipes(ItemLike input, ItemLike product) {
+        generateSmokingSmeltingRecipes(input, product, RecipeCategory.FOOD);
 
-        CookingRecipeJsonBuilder.createCampfireCooking(
-            Ingredient.ofItem(input),
+        SimpleCookingRecipeBuilder.campfireCooking(
+            Ingredient.of(input),
             RecipeCategory.FOOD,
-            output,
+            product,
             0.35F,
             600
-        ).criterion(hasItem(input), this.conditionsFromItem(input)
-        ).offerTo(
-            exporter,
-            RegistryKey.of(
-                RegistryKeys.RECIPE,
+        ).unlockedBy(getHasName(input), this.has(input)
+        ).save(
+            this.output,
+            ResourceKey.create(
+                Registries.RECIPE,
                 LighterEnd.of(
-                    Registries.ITEM.getId(output.asItem()).getPath()
+                    BuiltInRegistries.ITEM.getKey(product.asItem()).getPath()
                         + "_campfire_from_"
-                        + Registries.ITEM.getId(input.asItem()).getPath())
+                        + BuiltInRegistries.ITEM.getKey(input.asItem()).getPath())
             )
         );
       }
 
-      public void generateSmokingSmeltingRecipes(ItemConvertible input, ItemConvertible output,
-          RecipeCategory category) {
-        String output_key = Registries.ITEM.getId(output.asItem()).getPath();
-        CookingRecipeJsonBuilder.createSmelting(
-            Ingredient.ofItem(input),
+      public void generateSmokingSmeltingRecipes(
+          ItemLike input,
+          ItemLike product,
+          RecipeCategory category
+      ) {
+        String output_key = BuiltInRegistries.ITEM.getKey(product.asItem()).getPath();
+        SimpleCookingRecipeBuilder.smelting(
+            Ingredient.of(input),
             category,
-            output,
+            product,
             0.35F,
             200
-        ).criterion(hasItem(input), this.conditionsFromItem(input)
-        ).offerTo(
-            exporter,
-            RegistryKey.of(RegistryKeys.RECIPE,
+        ).unlockedBy(getHasName(input), this.has(input)
+        ).save(
+            this.output,
+            ResourceKey.create(Registries.RECIPE,
                 LighterEnd.of(
                     output_key
                         + "_smelting_"
-                        + Registries.ITEM.getId(input.asItem()).getPath()
+                        + BuiltInRegistries.ITEM.getKey(input.asItem()).getPath()
                 )
             )
         );
-        CookingRecipeJsonBuilder.createSmoking(
-            Ingredient.ofItem(input),
+        SimpleCookingRecipeBuilder.smoking(
+            Ingredient.of(input),
             category,
-            output,
+            product,
             0.35F,
             100
-        ).criterion(hasItem(input),
-            conditionsFromItem(input)
-        ).offerTo(
-            exporter,
-            RegistryKey.of(RegistryKeys.RECIPE,
+        ).unlockedBy(getHasName(input),
+            has(input)
+        ).save(
+            this.output,
+            ResourceKey.create(Registries.RECIPE,
                 LighterEnd.of(
                     output_key
                         + "_smoking_"
-                        + Registries.ITEM.getId(input.asItem()).getPath()
+                        + BuiltInRegistries.ITEM.getKey(input.asItem()).getPath()
                 )
             )
         );

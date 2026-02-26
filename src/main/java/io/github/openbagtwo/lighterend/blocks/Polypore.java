@@ -3,89 +3,89 @@ package io.github.openbagtwo.lighterend.blocks;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import java.util.EnumMap;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class Polypore extends Block {
 
   private static final EnumMap<Direction, VoxelShape> SHAPES = Maps.newEnumMap(ImmutableMap.of(
-      Direction.NORTH, createCuboidShape(1, 1, 8, 15, 15, 16),
-      Direction.SOUTH, createCuboidShape(1, 1, 0, 15, 15, 8),
-      Direction.WEST, createCuboidShape(8, 1, 1, 16, 15, 15),
-      Direction.EAST, createCuboidShape(0, 1, 1, 8, 15, 15),
-      Direction.UP, createCuboidShape(0, 0, 0, 0, 0, 0),
-      Direction.DOWN, createCuboidShape(0, 0, 0, 0, 0, 0)
+      Direction.NORTH, box(1, 1, 8, 15, 15, 16),
+      Direction.SOUTH, box(1, 1, 0, 15, 15, 8),
+      Direction.WEST, box(8, 1, 1, 16, 15, 15),
+      Direction.EAST, box(0, 1, 1, 8, 15, 15),
+      Direction.UP, box(0, 0, 0, 0, 0, 0),
+      Direction.DOWN, box(0, 0, 0, 0, 0, 0)
   ));
-  public static final EnumProperty<Direction> FACING = Properties.FACING;
+  public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
 
-  public Polypore(Settings settings, MapColor color, int luminance) {
+  public Polypore(Properties settings, MapColor color, int luminance) {
     super(
         settings
-            .offset(OffsetType.NONE)
+            .offsetType(OffsetType.NONE)
             .mapColor(color)
-            .nonOpaque()
-            .breakInstantly()
-            .pistonBehavior(PistonBehavior.DESTROY)
+            .noOcclusion()
+            .instabreak()
+            .pushReaction(PushReaction.DESTROY)
             .noCollision()
-            .hardness(0.2F)
-            .luminance(bs -> luminance)
-            .sounds(BlockSoundGroup.WOOD)
+            .destroyTime(0.2F)
+            .lightLevel(bs -> luminance)
+            .sound(SoundType.WOOD)
     );
-    setDefaultState(getDefaultState().with(FACING, Direction.UP));
+    registerDefaultState(defaultBlockState().setValue(FACING, Direction.UP));
   }
 
   @Override
-  protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
     stateManager.add(FACING);
   }
 
   @Override
-  public VoxelShape getOutlineShape(
+  public VoxelShape getShape(
       BlockState state,
-      BlockView view,
+      BlockGetter view,
       BlockPos pos,
-      ShapeContext ePos
+      CollisionContext ePos
   ) {
-    return SHAPES.get(state.get(FACING));
+    return SHAPES.get(state.getValue(FACING));
   }
 
   @Override
-  public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-    Direction direction = state.get(FACING);
-    BlockPos blockPos = pos.offset(direction.getOpposite());
+  public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+    Direction direction = state.getValue(FACING);
+    BlockPos blockPos = pos.relative(direction.getOpposite());
     BlockState blockState = world.getBlockState(blockPos);
-    return blockState.isSolid() && blockState.isSideSolidFullSquare(world, pos, direction);
+    return blockState.isSolid() && blockState.isFaceSturdy(world, pos, direction);
   }
 
   @Override
-  public BlockState getPlacementState(ItemPlacementContext ctx) {
-    BlockState blockState = this.getDefaultState();
-    WorldView worldView = ctx.getWorld();
-    BlockPos blockPos = ctx.getBlockPos();
-    Direction[] directions = ctx.getPlacementDirections();
+  public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+    BlockState blockState = this.defaultBlockState();
+    LevelReader worldView = ctx.getLevel();
+    BlockPos blockPos = ctx.getClickedPos();
+    Direction[] directions = ctx.getNearestLookingDirections();
     for (Direction direction : directions) {
       if (direction.getAxis().isHorizontal()) {
         Direction direction2 = direction.getOpposite();
-        blockState = blockState.with(FACING, direction2);
-        if (blockState.canPlaceAt(worldView, blockPos)) {
+        blockState = blockState.setValue(FACING, direction2);
+        if (blockState.canSurvive(worldView, blockPos)) {
           return blockState;
         }
       }
@@ -94,30 +94,30 @@ public class Polypore extends Block {
   }
 
   @Override
-  public BlockState getStateForNeighborUpdate(
+  public BlockState updateShape(
       BlockState state,
-      WorldView world,
-      ScheduledTickView tickView,
+      LevelReader world,
+      ScheduledTickAccess tickView,
       BlockPos pos,
       Direction direction,
       BlockPos neighborPos,
       BlockState neighborState,
-      Random random
+      RandomSource random
   ) {
-    if (!canPlaceAt(state, world, pos)) {
-      return Blocks.AIR.getDefaultState();
+    if (!canSurvive(state, world, pos)) {
+      return Blocks.AIR.defaultBlockState();
     } else {
       return state;
     }
   }
 
   @Override
-  public BlockState rotate(BlockState state, BlockRotation rotation) {
-    return state.with(FACING, rotation.rotate(state.get(FACING)));
+  public BlockState rotate(BlockState state, Rotation rotation) {
+    return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
   }
 
   @Override
-  public BlockState mirror(BlockState state, BlockMirror mirror) {
-    return state.rotate(mirror.getRotation(state.get(FACING)));
+  public BlockState mirror(BlockState state, Mirror mirror) {
+    return state.rotate(mirror.getRotation(state.getValue(FACING)));
   }
 }

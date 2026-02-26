@@ -1,6 +1,6 @@
 package io.github.openbagtwo.lighterend.mobs.states;
 
-import net.minecraft.client.render.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
 public class GlossyMooshroomRenderState extends LivingEntityRenderState {
 

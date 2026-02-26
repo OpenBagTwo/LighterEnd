@@ -1,16 +1,16 @@
 package io.github.openbagtwo.lighterend.mixin.client;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.sound.MusicSound;
-import net.minecraft.util.Nullables;
-import net.minecraft.world.World;
+import net.minecraft.Optionull;
+import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.sounds.Music;
 import net.minecraft.world.attribute.EnvironmentAttributes;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,45 +18,45 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(MinecraftClient.class)
+@Mixin(Minecraft.class)
 public abstract class EndBiomeMusicMixin {
 
   @Shadow
-  public @Nullable Screen currentScreen;
+  public @Nullable Screen screen;
 
   @Shadow
-  public @Nullable ClientPlayerEntity player;
+  public @Nullable LocalPlayer player;
 
   @Shadow
-  public InGameHud inGameHud;
+  public Gui gui;
 
   @Shadow
   public GameRenderer gameRenderer;
 
 
-  @Inject(method = "getMusicInstance", at = @At("HEAD"), cancellable = true)
-  public void checkForEndMusic(CallbackInfoReturnable<MusicSound> cir) {
-    MusicSound musicSound = Nullables.map(this.currentScreen, Screen::getMusic);
-    Camera camera = this.gameRenderer.getCamera();
+  @Inject(method = "getSituationalMusic", at = @At("HEAD"), cancellable = true)
+  public void checkForEndMusic(CallbackInfoReturnable<Music> cir) {
+    Music musicSound = Optionull.map(this.screen, Screen::getBackgroundMusic);
+    Camera camera = this.gameRenderer.getMainCamera();
     if (
         LighterEnd.CONFIG.playEndBiomeMusic()
             && musicSound == null
             && this.player != null
             && camera != null
     ) {
-      World world = this.player.getEntityWorld();
+      Level world = this.player.level();
       if (
-          world.getRegistryKey() == World.END
-              && !this.inGameHud.getBossBarHud().shouldPlayDragonMusic()
+          world.dimension() == Level.END
+              && !this.gui.getBossOverlay().shouldPlayMusic()
       ) {
-        MusicSound biomeMusic = camera.getEnvironmentAttributeInterpolator()
-            .get(EnvironmentAttributes.BACKGROUND_MUSIC_AUDIO, 1.0F).getCurrent(
-                this.player.getAbilities().creativeMode && this.player.getAbilities().allowFlying,
-                this.player.isSubmergedInWater()
+        Music biomeMusic = camera.attributeProbe()
+            .getValue(EnvironmentAttributes.BACKGROUND_MUSIC, 1.0F).select(
+                this.player.getAbilities().instabuild && this.player.getAbilities().mayfly,
+                this.player.isUnderWater()
             ).orElse(null);
         if (biomeMusic != null && biomeMusic.replaceCurrentMusic()) {
           cir.setReturnValue(
-              new MusicSound(
+              new Music(
                   biomeMusic.sound(),
                   biomeMusic.minDelay(),
                   biomeMusic.maxDelay(),

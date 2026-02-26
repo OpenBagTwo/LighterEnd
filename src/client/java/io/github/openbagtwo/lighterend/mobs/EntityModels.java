@@ -18,24 +18,24 @@ import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import java.util.function.Function;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.client.render.entity.EntityRendererFactory.Context;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.entity.model.CowEntityModel;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.entity.EntityType;
+import net.minecraft.client.model.animal.cow.CowModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.world.entity.EntityType;
 
 public class EntityModels {
 
-  public static final EntityModelLayer SILK_MOTH_MODEL = makeLayer("silk_moth");
-  public static final EntityModelLayer SILK_MOTH_BABY = makeLayer("silk_moth_baby");
-  public static final EntityModelLayer DRAGONFLY_MODEL = makeLayer("dragonfly");
-  public static final EntityModelLayer END_FISH_MODEL = makeLayer("end_fish");
-  public static final EntityModelLayer CUBOZOA_MODEL = makeLayer("cubozoa");
-  public static final EntityModelLayer END_SLIME_MODEL = makeLayer("end_slime");
-  public static final EntityModelLayer END_SLIME_SHELL_MODEL = makeLayer("end_slime_shell");
-  public static final EntityModelLayer MOOSHROOM_MODEL = makeLayer("mooshroom");
-  public static final EntityModelLayer CRAB_MODEL = makeLayer("chorus_crab");
-  public static final EntityModelLayer CRAB_BABY = makeLayer("chorus_crab_baby");
+  public static final ModelLayerLocation SILK_MOTH_MODEL = makeLayer("silk_moth");
+  public static final ModelLayerLocation SILK_MOTH_BABY = makeLayer("silk_moth_baby");
+  public static final ModelLayerLocation DRAGONFLY_MODEL = makeLayer("dragonfly");
+  public static final ModelLayerLocation END_FISH_MODEL = makeLayer("end_fish");
+  public static final ModelLayerLocation CUBOZOA_MODEL = makeLayer("cubozoa");
+  public static final ModelLayerLocation END_SLIME_MODEL = makeLayer("end_slime");
+  public static final ModelLayerLocation END_SLIME_SHELL_MODEL = makeLayer("end_slime_shell");
+  public static final ModelLayerLocation MOOSHROOM_MODEL = makeLayer("mooshroom");
+  public static final ModelLayerLocation CRAB_MODEL = makeLayer("chorus_crab");
+  public static final ModelLayerLocation CRAB_BABY = makeLayer("chorus_crab_baby");
 
   public static void initialize() {
     EntityModelLayerRegistry.registerModelLayer(EntityModels.SILK_MOTH_MODEL,
@@ -43,7 +43,7 @@ public class EntityModels {
     register(LighterEndMobs.SILK_MOTH.mob, SilkMothRenderer::new);
 
     EntityModelLayerRegistry.registerModelLayer(SILK_MOTH_BABY,
-        () -> SilkMothModel.getTexturedModelData().transform(SilkMothModel.BABY_TRANSFORMER));
+        () -> SilkMothModel.getTexturedModelData().apply(SilkMothModel.BABY_TRANSFORMER));
 
     EntityModelLayerRegistry.registerModelLayer(EntityModels.DRAGONFLY_MODEL,
         DragonflyModel::getTexturedModelData);
@@ -66,7 +66,7 @@ public class EntityModels {
     register(LighterEndMobs.END_SLIME.mob, EndSlimeRenderer::new);
 
     EntityModelLayerRegistry.registerModelLayer(EntityModels.MOOSHROOM_MODEL,
-        CowEntityModel::getTexturedModelData);
+        CowModel::createBodyLayer);
     register(LighterEndMobs.MOOSHROOM.mob, GlossyMooshroomRenderer::new);
 
     EntityModelLayerRegistry.registerModelLayer(EntityModels.CRAB_MODEL,
@@ -74,14 +74,14 @@ public class EntityModels {
     register(LighterEndMobs.CHORUS_CRAB.mob, CrabRenderer::new);
 
     EntityModelLayerRegistry.registerModelLayer(CRAB_BABY,
-        () -> CrabModel.getTexturedModelData().transform(CrabModel.BABY_TRANSFORMER));
+        () -> CrabModel.getTexturedModelData().apply(CrabModel.BABY_TRANSFORMER));
   }
 
-  private static void register(EntityType<?> type, Function<Context, MobEntityRenderer> renderer) {
+  private static void register(EntityType<?> type, Function<Context, MobRenderer> renderer) {
     EntityRendererRegistry.register(type, renderer::apply);
   }
 
-  private static EntityModelLayer makeLayer(String name) {
-    return new EntityModelLayer(LighterEnd.of(name), "main");
+  private static ModelLayerLocation makeLayer(String name) {
+    return new ModelLayerLocation(LighterEnd.of(name), "main");
   }
 }

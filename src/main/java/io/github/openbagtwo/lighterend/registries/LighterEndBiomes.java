@@ -10,24 +10,24 @@ import io.github.openbagtwo.lighterend.world.biomes.Starfield;
 import io.github.openbagtwo.lighterend.world.biomes.SulphurSprings;
 import io.github.openbagtwo.lighterend.world.biomes.UmbraValley;
 import io.github.openbagtwo.lighterend.world.biomes.UmbrellaJungle;
-import net.minecraft.registry.Registerable;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.biome.Biome;
 
 public class LighterEndBiomes {
 
-  public static final RegistryKey<Biome> BLOSSOM_FOREST = register("blossom_forest");
-  public static final RegistryKey<Biome> UMBRELLA_JUNGLE = register("umbrella_jungle");
-  public static final RegistryKey<Biome> GLOWING_GRASSLAND = register("glowing_grassland");
-  public static final RegistryKey<Biome> MEGALAKE = register("megalake");
-  public static final RegistryKey<Biome> UMBRA_VALLEY = register("umbra_valley");
-  public static final RegistryKey<Biome> FOGGY_MUSHROOMLANDS = register("mushroomlands");
-  public static final RegistryKey<Biome> STARFIELD = register("starfield");
-  public static final RegistryKey<Biome> SULPHUR_SPRINGS = register("sulphur_springs");
-  public static final RegistryKey<Biome> SHADOW_FOREST = register("shadow_forest");
+  public static final ResourceKey<Biome> BLOSSOM_FOREST = register("blossom_forest");
+  public static final ResourceKey<Biome> UMBRELLA_JUNGLE = register("umbrella_jungle");
+  public static final ResourceKey<Biome> GLOWING_GRASSLAND = register("glowing_grassland");
+  public static final ResourceKey<Biome> MEGALAKE = register("megalake");
+  public static final ResourceKey<Biome> UMBRA_VALLEY = register("umbra_valley");
+  public static final ResourceKey<Biome> FOGGY_MUSHROOMLANDS = register("mushroomlands");
+  public static final ResourceKey<Biome> STARFIELD = register("starfield");
+  public static final ResourceKey<Biome> SULPHUR_SPRINGS = register("sulphur_springs");
+  public static final ResourceKey<Biome> SHADOW_FOREST = register("shadow_forest");
 
-  public static void bootstrap(Registerable<Biome> context) {
+  public static void bootstrap(BootstrapContext<Biome> context) {
     context.register(BLOSSOM_FOREST, BlossomingForest.create(context));
     context.register(UMBRELLA_JUNGLE, UmbrellaJungle.create(context));
     context.register(GLOWING_GRASSLAND, GlowingGrasslands.create(context));
@@ -39,8 +39,8 @@ public class LighterEndBiomes {
     context.register(SHADOW_FOREST, ShadowForest.create(context));
   }
 
-  private static RegistryKey<Biome> register(String name) {
-    RegistryKey<Biome> key = RegistryKey.of(RegistryKeys.BIOME, LighterEnd.of(name));
+  private static ResourceKey<Biome> register(String name) {
+    ResourceKey<Biome> key = ResourceKey.create(Registries.BIOME, LighterEnd.of(name));
     return key;
   }
 

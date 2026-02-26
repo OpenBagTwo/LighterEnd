@@ -4,128 +4,128 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
 import java.util.Optional;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FluidDrainable;
-import net.minecraft.block.FluidFillable;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCollisionHandler;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class VentBubbleColumn extends Block implements FluidDrainable, FluidFillable {
+public class VentBubbleColumn extends Block implements BucketPickup, LiquidBlockContainer {
 
-  public VentBubbleColumn(Settings settings) {
+  public VentBubbleColumn(Properties settings) {
     super(
         settings
-            .mapColor(MapColor.WATER_BLUE)
+            .mapColor(MapColor.WATER)
             .replaceable()
             .noCollision()
-            .dropsNothing()
-            .pistonBehavior(PistonBehavior.DESTROY)
+            .noLootTable()
+            .pushReaction(PushReaction.DESTROY)
             .liquid()
-            .sounds(BlockSoundGroup.INTENTIONALLY_EMPTY)
-            .nonOpaque()
+            .sound(SoundType.EMPTY)
+            .noOcclusion()
     );
   }
 
   @Override
-  public ItemStack tryDrainFluid(
+  public ItemStack pickupBlock(
       @Nullable LivingEntity drainer,
-      WorldAccess world,
+      LevelAccessor world,
       BlockPos pos,
       BlockState state
   ) {
-    world.setBlockState(pos, Blocks.AIR.getDefaultState(), 11);
+    world.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
     return new ItemStack(Items.WATER_BUCKET);
   }
 
   @Override
-  public BlockRenderType getRenderType(BlockState state) {
-    return BlockRenderType.INVISIBLE;
+  public RenderShape getRenderShape(BlockState state) {
+    return RenderShape.INVISIBLE;
   }
 
   @Override
-  public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-    BlockState blockState = world.getBlockState(pos.down());
-    return blockState.isOf(this) || blockState.isOf(LighterEndBlocks.HYDROTHERMAL_VENT);
+  public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+    BlockState blockState = world.getBlockState(pos.below());
+    return blockState.is(this) || blockState.is(LighterEndBlocks.HYDROTHERMAL_VENT);
   }
 
   @Override
-  public VoxelShape getOutlineShape(
+  public VoxelShape getShape(
       BlockState state,
-      BlockView world,
+      BlockGetter world,
       BlockPos pos,
-      ShapeContext context
+      CollisionContext context
   ) {
-    return VoxelShapes.empty();
+    return Shapes.empty();
   }
 
   @Override
-  protected BlockState getStateForNeighborUpdate(
+  protected BlockState updateShape(
       BlockState state,
-      WorldView world,
-      ScheduledTickView tickView,
+      LevelReader world,
+      ScheduledTickAccess tickView,
       BlockPos pos,
       Direction direction,
       BlockPos neighborPos,
       BlockState neighborState,
-      Random random
+      RandomSource random
   ) {
-    if (!state.canPlaceAt(world, pos)) {
-      return Blocks.WATER.getDefaultState();
+    if (!state.canSurvive(world, pos)) {
+      return Blocks.WATER.defaultBlockState();
     } else {
-      BlockPos up = pos.up();
-      if (world.getBlockState(up).isOf(Blocks.WATER)) {
-        if (world instanceof ServerWorld serverWorld) {
-          serverWorld.setBlockState(up, this.getDefaultState(), Flags.SILENT);
-          serverWorld.createOrderedTick(up, this, 5);
+      BlockPos up = pos.above();
+      if (world.getBlockState(up).is(Blocks.WATER)) {
+        if (world instanceof ServerLevel serverWorld) {
+          serverWorld.setBlock(up, this.defaultBlockState(), Flags.SILENT);
+          serverWorld.createTick(up, this, 5);
         }
       }
     }
     return state;
   }
 
-  public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+  public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
     if (random.nextInt(4) == 0) {
       double px = pos.getX() + random.nextDouble();
       double py = pos.getY() + random.nextDouble();
       double pz = pos.getZ() + random.nextDouble();
-      world.addImportantParticleClient(ParticleTypes.BUBBLE_COLUMN_UP, px, py, pz, 0, 0.04, 0);
+      world.addAlwaysVisibleParticle(ParticleTypes.BUBBLE_COLUMN_UP, px, py, pz, 0, 0.04, 0);
     }
     if (random.nextInt(200) == 0) {
-      world.playSoundClient(
+      world.playLocalSound(
           pos.getX(),
           pos.getY(),
           pos.getZ(),
-          SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT,
-          SoundCategory.BLOCKS,
+          SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT,
+          SoundSource.BLOCKS,
           0.2F + random.nextFloat() * 0.2F,
           0.9F + random.nextFloat() * 0.15F,
           false
@@ -134,25 +134,25 @@ public class VentBubbleColumn extends Block implements FluidDrainable, FluidFill
   }
 
   @Override
-  protected void onEntityCollision(
+  protected void entityInside(
       BlockState state,
-      World world,
+      Level world,
       BlockPos pos,
       Entity entity,
-      EntityCollisionHandler handler,
+      InsideBlockEffectApplier handler,
       boolean bl
   ) {
-    if (entity.getType().isIn(LighterEndTags.IGNORES_GEYSER_BUBBLES)) {
+    if (entity.getType().is(LighterEndTags.IGNORES_GEYSER_BUBBLES)) {
       return;
     }
-    BlockState blockState = world.getBlockState(pos.up());
+    BlockState blockState = world.getBlockState(pos.above());
     if (blockState.isAir()) {
-      entity.onBubbleColumnSurfaceCollision(false, pos.up());
-      if (!world.isClient()) {
-        ServerWorld serverWorld = (ServerWorld) world;
+      entity.onAboveBubbleColumn(false, pos.above());
+      if (!world.isClientSide()) {
+        ServerLevel serverWorld = (ServerLevel) world;
 
         for (int i = 0; i < 2; ++i) {
-          serverWorld.spawnParticles(
+          serverWorld.sendParticles(
               ParticleTypes.SPLASH,
               (double) pos.getX() + world.random.nextDouble(),
               pos.getY() + 1,
@@ -163,7 +163,7 @@ public class VentBubbleColumn extends Block implements FluidDrainable, FluidFill
               0.0D,
               1.0D
           );
-          serverWorld.spawnParticles(
+          serverWorld.sendParticles(
               ParticleTypes.BUBBLE,
               (double) pos.getX() + world.random.nextDouble(),
               pos.getY() + 1,
@@ -177,13 +177,13 @@ public class VentBubbleColumn extends Block implements FluidDrainable, FluidFill
         }
       }
     } else {
-      entity.onBubbleColumnCollision(false);
+      entity.onInsideBubbleColumn(false);
     }
   }
 
   @Override
-  protected ItemStack getPickStack(
-      WorldView world,
+  protected ItemStack getCloneItemStack(
+      LevelReader world,
       BlockPos pos,
       BlockState state,
       boolean includeData
@@ -192,9 +192,9 @@ public class VentBubbleColumn extends Block implements FluidDrainable, FluidFill
   }
 
   @Override
-  public boolean canFillWithFluid(
+  public boolean canPlaceLiquid(
       @Nullable LivingEntity filler,
-      BlockView world,
+      BlockGetter world,
       BlockPos pos,
       BlockState state,
       Fluid fluid
@@ -203,8 +203,8 @@ public class VentBubbleColumn extends Block implements FluidDrainable, FluidFill
   }
 
   @Override
-  public boolean tryFillWithFluid(
-      WorldAccess world,
+  public boolean placeLiquid(
+      LevelAccessor world,
       BlockPos pos,
       BlockState state,
       FluidState fluidState
@@ -214,12 +214,12 @@ public class VentBubbleColumn extends Block implements FluidDrainable, FluidFill
 
   @Override
   public FluidState getFluidState(BlockState state) {
-    return Fluids.WATER.getStill(false);
+    return Fluids.WATER.getSource(false);
   }
 
 
   @Override
-  public Optional<SoundEvent> getBucketFillSound() {
-    return Fluids.WATER.getBucketFillSound();
+  public Optional<SoundEvent> getPickupSound() {
+    return Fluids.WATER.getPickupSound();
   }
 }

@@ -10,22 +10,22 @@ import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.item.Items;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.RegistryWrapper.WrapperLookup;
-import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Items;
 
 public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
   public ItemTagProvider(
       FabricDataOutput output,
-      CompletableFuture<WrapperLookup> future
+      CompletableFuture<Provider> future
   ) {
     super(output, future);
   }
 
   @Override
-  protected void configure(RegistryWrapper.WrapperLookup lookup) {
+  protected void addTags(HolderLookup.Provider lookup) {
     for (WoodSet wood : Arrays.asList(
         LighterEndBlocks.TENANEA,
         LighterEndBlocks.UMBRELLA,

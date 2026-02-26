@@ -2,89 +2,89 @@ package io.github.openbagtwo.lighterend.blocks;
 
 import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Fertilizable;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.PlantBlock;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCollisionHandler;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.pathing.NavigationType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.VegetationBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.Vec3;
 
-public class Needlegrass extends PlantBlock implements Fertilizable {
+public class Needlegrass extends VegetationBlock implements BonemealableBlock {
 
-  public static final MapCodec<Needlegrass> CODEC = createCodec(Needlegrass::new);
+  public static final MapCodec<Needlegrass> CODEC = simpleCodec(Needlegrass::new);
 
-  public Needlegrass(Settings settings) {
+  public Needlegrass(Properties settings) {
     super(
         settings
-            .mapColor(MapColor.BLACK)
+            .mapColor(MapColor.COLOR_BLACK)
             .replaceable()
             .noCollision()
-            .breakInstantly()
-            .nonOpaque()
-            .sounds(BlockSoundGroup.GRASS)
-            .pistonBehavior(PistonBehavior.DESTROY)
-            .offset(OffsetType.XZ)
-            .burnable()
+            .instabreak()
+            .noOcclusion()
+            .sound(SoundType.GRASS)
+            .pushReaction(PushReaction.DESTROY)
+            .offsetType(OffsetType.XZ)
+            .ignitedByLava()
     );
   }
 
   @Override
-  protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-    return floor.isIn(LighterEndTags.END_SOIL);
+  protected boolean mayPlaceOn(BlockState floor, BlockGetter world, BlockPos pos) {
+    return floor.is(LighterEndTags.END_SOIL);
   }
 
   @Override
-  protected MapCodec<? extends PlantBlock> getCodec() {
+  protected MapCodec<? extends VegetationBlock> codec() {
     return CODEC;
   }
 
   @Override
-  public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
+  public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
     return true;
   }
 
   @Override
-  public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
+  public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
     return true;
   }
 
   @Override
-  public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-    dropStack(world, pos, new ItemStack(this));
+  public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
+    popResource(world, pos, new ItemStack(this));
   }
 
   @Override
-  protected void onEntityCollision(
+  protected void entityInside(
       BlockState state,
-      World world,
+      Level world,
       BlockPos pos,
       Entity entity,
-      EntityCollisionHandler handler,
+      InsideBlockEffectApplier handler,
       boolean bl
   ) {
     if (
         entity instanceof LivingEntity
-            && !entity.getType().isIn(LighterEndTags.IMMUNE_TO_NEEDLEGRASS)
+            && !entity.getType().is(LighterEndTags.IMMUNE_TO_NEEDLEGRASS)
     ) {
-      entity.slowMovement(state, new Vec3d(0.8F, 0.75, 0.8F));
-      if (world instanceof ServerWorld serverWorld) {
-        Vec3d vec3d = entity.isControlledByPlayer() ? entity.getMovement()
-            : entity.getLastRenderPos().subtract(entity.getEntityPos());
-        if (vec3d.horizontalLengthSquared() > 0.0) {
-          if (Math.abs(vec3d.getX()) >= 0.003F || Math.abs(vec3d.getZ()) >= 0.003F) {
-            entity.damage(serverWorld, world.getDamageSources().sweetBerryBush(), 1.0F);
+      entity.makeStuckInBlock(state, new Vec3(0.8F, 0.75, 0.8F));
+      if (world instanceof ServerLevel serverWorld) {
+        Vec3 vec3d = entity.isClientAuthoritative() ? entity.getKnownMovement()
+            : entity.oldPosition().subtract(entity.position());
+        if (vec3d.horizontalDistanceSqr() > 0.0) {
+          if (Math.abs(vec3d.x()) >= 0.003F || Math.abs(vec3d.z()) >= 0.003F) {
+            entity.hurtServer(serverWorld, world.damageSources().sweetBerryBush(), 1.0F);
           }
         }
       }
@@ -92,7 +92,7 @@ public class Needlegrass extends PlantBlock implements Fertilizable {
   }
 
   @Override
-  protected boolean canPathfindThrough(BlockState state, NavigationType nav) {
+  protected boolean isPathfindable(BlockState state, PathComputationType nav) {
     return false;
   }
 

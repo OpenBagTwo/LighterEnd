@@ -9,14 +9,14 @@ import io.github.openbagtwo.lighterend.blocks.entities.PedestalDisplay;
 import io.github.openbagtwo.lighterend.blocks.entities.SilkMothNestEntity;
 import io.github.openbagtwo.lighterend.blocks.entities.Updraft;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class LighterEndBlockEntities {
 
   public static final BlockEntityType<LighterEndSignBlockEntity> SIGN = Registry.register(
-      Registries.BLOCK_ENTITY_TYPE,
+      BuiltInRegistries.BLOCK_ENTITY_TYPE,
       LighterEnd.of("sign"),
       FabricBlockEntityTypeBuilder.create(
           LighterEndSignBlockEntity::new,
@@ -33,7 +33,7 @@ public class LighterEndBlockEntities {
       ).build(null));
 
   public static final BlockEntityType<LighterEndHangingSignBlockEntity> HANGING_SIGN = Registry.register(
-      Registries.BLOCK_ENTITY_TYPE,
+      BuiltInRegistries.BLOCK_ENTITY_TYPE,
       LighterEnd.of("hanging_sign"),
       FabricBlockEntityTypeBuilder.create(
           LighterEndHangingSignBlockEntity::new,
@@ -50,7 +50,7 @@ public class LighterEndBlockEntities {
       ).build(null));
 
   public static final BlockEntityType<Shelf.Entity> SHELF = Registry.register(
-      Registries.BLOCK_ENTITY_TYPE,
+      BuiltInRegistries.BLOCK_ENTITY_TYPE,
       LighterEnd.of("shelf"),
       FabricBlockEntityTypeBuilder.create(
           Shelf.Entity::new,
@@ -62,21 +62,21 @@ public class LighterEndBlockEntities {
       ).build(null));
 
   public static final BlockEntityType<Furnaces.EndFurnaceEntity> END_FURNACE = Registry.register(
-      Registries.BLOCK_ENTITY_TYPE,
+      BuiltInRegistries.BLOCK_ENTITY_TYPE,
       LighterEnd.of("end_stone_furnace"),
       FabricBlockEntityTypeBuilder.create(
           Furnaces.EndFurnaceEntity::new, LighterEndBlocks.END_FURNACE
       ).build(null));
 
   public static final BlockEntityType<Furnaces.EndSmokerEntity> END_SMOKER = Registry.register(
-      Registries.BLOCK_ENTITY_TYPE,
+      BuiltInRegistries.BLOCK_ENTITY_TYPE,
       LighterEnd.of("end_stone_smoker"),
       FabricBlockEntityTypeBuilder.create(
           Furnaces.EndSmokerEntity::new, LighterEndBlocks.END_SMOKER
       ).build(null));
 
   public static final BlockEntityType<SilkMothNestEntity> SILK_MOTH_NEST = Registry.register(
-      Registries.BLOCK_ENTITY_TYPE,
+      BuiltInRegistries.BLOCK_ENTITY_TYPE,
       LighterEnd.of("silk_moth_nest"),
       FabricBlockEntityTypeBuilder.create(
           SilkMothNestEntity::new, LighterEndBlocks.SILK_MOTH_NEST
@@ -84,7 +84,7 @@ public class LighterEndBlockEntities {
   );
 
   public static final BlockEntityType<Updraft> UPDRAFT = Registry.register(
-      Registries.BLOCK_ENTITY_TYPE,
+      BuiltInRegistries.BLOCK_ENTITY_TYPE,
       LighterEnd.of("updraft"),
       FabricBlockEntityTypeBuilder.create(
           Updraft::new, LighterEndBlocks.HYDROTHERMAL_VENT
@@ -92,7 +92,7 @@ public class LighterEndBlockEntities {
   );
 
   public static final BlockEntityType<PedestalDisplay> PEDESTAL = Registry.register(
-      Registries.BLOCK_ENTITY_TYPE,
+      BuiltInRegistries.BLOCK_ENTITY_TYPE,
       LighterEnd.of("pedestal"),
       FabricBlockEntityTypeBuilder.create(
           PedestalDisplay::new,

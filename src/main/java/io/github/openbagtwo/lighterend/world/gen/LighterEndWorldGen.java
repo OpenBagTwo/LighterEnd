@@ -1,13 +1,13 @@
 package io.github.openbagtwo.lighterend.world.gen;
 
-import static net.minecraft.world.gen.surfacebuilder.MaterialRules.STONE_DEPTH_FLOOR;
-import static net.minecraft.world.gen.surfacebuilder.MaterialRules.STONE_DEPTH_FLOOR_WITH_SURFACE_DEPTH_RANGE_30;
-import static net.minecraft.world.gen.surfacebuilder.MaterialRules.STONE_DEPTH_FLOOR_WITH_SURFACE_DEPTH_RANGE_6;
-import static net.minecraft.world.gen.surfacebuilder.MaterialRules.biome;
-import static net.minecraft.world.gen.surfacebuilder.MaterialRules.block;
-import static net.minecraft.world.gen.surfacebuilder.MaterialRules.condition;
-import static net.minecraft.world.gen.surfacebuilder.MaterialRules.noiseThreshold;
-import static net.minecraft.world.gen.surfacebuilder.MaterialRules.sequence;
+import static net.minecraft.world.level.levelgen.SurfaceRules.ON_FLOOR;
+import static net.minecraft.world.level.levelgen.SurfaceRules.VERY_DEEP_UNDER_FLOOR;
+import static net.minecraft.world.level.levelgen.SurfaceRules.DEEP_UNDER_FLOOR;
+import static net.minecraft.world.level.levelgen.SurfaceRules.isBiome;
+import static net.minecraft.world.level.levelgen.SurfaceRules.state;
+import static net.minecraft.world.level.levelgen.SurfaceRules.ifTrue;
+import static net.minecraft.world.level.levelgen.SurfaceRules.noiseCondition;
+import static net.minecraft.world.level.levelgen.SurfaceRules.sequence;
 
 import com.mojang.datafixers.util.Pair;
 import io.github.openbagtwo.lighterend.LighterEnd;
@@ -21,120 +21,120 @@ import java.util.List;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.biome.v1.TheEndBiomes;
-import net.minecraft.block.Blocks;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeKeys;
-import net.minecraft.world.biome.source.BiomeSource;
-import net.minecraft.world.biome.source.MultiNoiseBiomeSource;
-import net.minecraft.world.biome.source.util.MultiNoiseUtil;
-import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.GenerationStep.Feature;
-import net.minecraft.world.gen.feature.PlacedFeature;
-import net.minecraft.world.gen.surfacebuilder.MaterialRules.MaterialRule;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSource;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.biome.Climate;
+import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.world.level.levelgen.SurfaceRules.RuleSource;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class LighterEndWorldGen {
 
   public static BiomeSource addBiomesToNoiseSource(
-      MultiNoiseUtil.Entries<RegistryEntry<Biome>> defaultBiomes,
-      RegistryEntryLookup<Biome> context
+      Climate.ParameterList<Holder<Biome>> defaultBiomes,
+      HolderGetter<Biome> context
   ) {
-    List<Pair<MultiNoiseUtil.NoiseHypercube, RegistryEntry<Biome>>> biomeParams = new ArrayList<>();
+    List<Pair<Climate.ParameterPoint, Holder<Biome>>> biomeParams = new ArrayList<>();
     biomeParams.addAll(
         List.of(
-            Pair.of(MultiNoiseUtil.createNoiseHypercube(
-                MultiNoiseUtil.ParameterRange.of(0),
-                MultiNoiseUtil.ParameterRange.of(0.3F),
-                MultiNoiseUtil.ParameterRange.of(0.3F),
-                MultiNoiseUtil.ParameterRange.of(0),
-                MultiNoiseUtil.ParameterRange.of(0),
-                MultiNoiseUtil.ParameterRange.of(-0.5F),
+            Pair.of(Climate.parameters(
+                Climate.Parameter.point(0),
+                Climate.Parameter.point(0.3F),
+                Climate.Parameter.point(0.3F),
+                Climate.Parameter.point(0),
+                Climate.Parameter.point(0),
+                Climate.Parameter.point(-0.5F),
                 0.0F
             ), context.getOrThrow(LighterEndBiomes.BLOSSOM_FOREST)),
-            Pair.of(MultiNoiseUtil.createNoiseHypercube(
-                MultiNoiseUtil.ParameterRange.of(0, 1),
-                MultiNoiseUtil.ParameterRange.of(0.5F),
-                MultiNoiseUtil.ParameterRange.of(0.5F),
-                MultiNoiseUtil.ParameterRange.of(0, 1),
-                MultiNoiseUtil.ParameterRange.of(-1, 1),
-                MultiNoiseUtil.ParameterRange.of(-1, 1),
+            Pair.of(Climate.parameters(
+                Climate.Parameter.span(0, 1),
+                Climate.Parameter.point(0.5F),
+                Climate.Parameter.point(0.5F),
+                Climate.Parameter.span(0, 1),
+                Climate.Parameter.span(-1, 1),
+                Climate.Parameter.span(-1, 1),
                 0.3F
             ), context.getOrThrow(LighterEndBiomes.UMBRELLA_JUNGLE)),
-            Pair.of(MultiNoiseUtil.createNoiseHypercube(
-                MultiNoiseUtil.ParameterRange.of(0, 1),
-                MultiNoiseUtil.ParameterRange.of(-0.5F, -0.2F),
-                MultiNoiseUtil.ParameterRange.of(-1, 0),
-                MultiNoiseUtil.ParameterRange.of(-1, 1),
-                MultiNoiseUtil.ParameterRange.of(-1.4F, 1),
-                MultiNoiseUtil.ParameterRange.of(-1, 1),
+            Pair.of(Climate.parameters(
+                Climate.Parameter.span(0, 1),
+                Climate.Parameter.span(-0.5F, -0.2F),
+                Climate.Parameter.span(-1, 0),
+                Climate.Parameter.span(-1, 1),
+                Climate.Parameter.span(-1.4F, 1),
+                Climate.Parameter.span(-1, 1),
                 0.48F
             ), context.getOrThrow(LighterEndBiomes.SHADOW_FOREST)),
-            Pair.of(MultiNoiseUtil.createNoiseHypercube(
-                MultiNoiseUtil.ParameterRange.of(-1, 1),
-                MultiNoiseUtil.ParameterRange.of(0, 1),
-                MultiNoiseUtil.ParameterRange.of(0.5F, 1),
-                MultiNoiseUtil.ParameterRange.of(0.8F, 1),
-                MultiNoiseUtil.ParameterRange.of(0),
-                MultiNoiseUtil.ParameterRange.of(-1, 1),
+            Pair.of(Climate.parameters(
+                Climate.Parameter.span(-1, 1),
+                Climate.Parameter.span(0, 1),
+                Climate.Parameter.span(0.5F, 1),
+                Climate.Parameter.span(0.8F, 1),
+                Climate.Parameter.point(0),
+                Climate.Parameter.span(-1, 1),
                 0.0F
             ), context.getOrThrow(LighterEndBiomes.MEGALAKE)),
-            Pair.of(MultiNoiseUtil.createNoiseHypercube(
-                MultiNoiseUtil.ParameterRange.of(-1, 1),
-                MultiNoiseUtil.ParameterRange.of(-1, -0.5F),
-                MultiNoiseUtil.ParameterRange.of(-1, 1),
-                MultiNoiseUtil.ParameterRange.of(0),
-                MultiNoiseUtil.ParameterRange.of(0),
-                MultiNoiseUtil.ParameterRange.of(-0.2F, 0.2F),
+            Pair.of(Climate.parameters(
+                Climate.Parameter.span(-1, 1),
+                Climate.Parameter.span(-1, -0.5F),
+                Climate.Parameter.span(-1, 1),
+                Climate.Parameter.point(0),
+                Climate.Parameter.point(0),
+                Climate.Parameter.span(-0.2F, 0.2F),
                 0.01F
             ), context.getOrThrow(LighterEndBiomes.UMBRA_VALLEY)),
-            Pair.of(MultiNoiseUtil.createNoiseHypercube(
-                MultiNoiseUtil.ParameterRange.of(-1, 1),
-                MultiNoiseUtil.ParameterRange.of(-0.5F, 1),
-                MultiNoiseUtil.ParameterRange.of(-1, 1),
-                MultiNoiseUtil.ParameterRange.of(0.25F, 1),
-                MultiNoiseUtil.ParameterRange.of(-1.4F, 1),
-                MultiNoiseUtil.ParameterRange.of(-1, 1),
+            Pair.of(Climate.parameters(
+                Climate.Parameter.span(-1, 1),
+                Climate.Parameter.span(-0.5F, 1),
+                Climate.Parameter.span(-1, 1),
+                Climate.Parameter.span(0.25F, 1),
+                Climate.Parameter.span(-1.4F, 1),
+                Climate.Parameter.span(-1, 1),
                 0.42F
             ), context.getOrThrow(LighterEndBiomes.SULPHUR_SPRINGS)),
-            Pair.of(MultiNoiseUtil.createNoiseHypercube(
-                MultiNoiseUtil.ParameterRange.of(-0.5F, 0.2F),
-                MultiNoiseUtil.ParameterRange.of(0.5F, 1),
-                MultiNoiseUtil.ParameterRange.of(0.5F, 1),
-                MultiNoiseUtil.ParameterRange.of(0, 0.5F),
-                MultiNoiseUtil.ParameterRange.of(0),
-                MultiNoiseUtil.ParameterRange.of(-1F, 1F),
+            Pair.of(Climate.parameters(
+                Climate.Parameter.span(-0.5F, 0.2F),
+                Climate.Parameter.span(0.5F, 1),
+                Climate.Parameter.span(0.5F, 1),
+                Climate.Parameter.span(0, 0.5F),
+                Climate.Parameter.point(0),
+                Climate.Parameter.span(-1F, 1F),
                 0.4F
             ), context.getOrThrow(LighterEndBiomes.FOGGY_MUSHROOMLANDS)),
-            Pair.of(MultiNoiseUtil.createNoiseHypercube(
-                MultiNoiseUtil.ParameterRange.of(-1, 0),
-                MultiNoiseUtil.ParameterRange.of(1),
-                MultiNoiseUtil.ParameterRange.of(0.3F, 1),
-                MultiNoiseUtil.ParameterRange.of(-1, -0.15F),
-                MultiNoiseUtil.ParameterRange.of(-1.4F, 1),
-                MultiNoiseUtil.ParameterRange.of(-1, 1),
+            Pair.of(Climate.parameters(
+                Climate.Parameter.span(-1, 0),
+                Climate.Parameter.point(1),
+                Climate.Parameter.span(0.3F, 1),
+                Climate.Parameter.span(-1, -0.15F),
+                Climate.Parameter.span(-1.4F, 1),
+                Climate.Parameter.span(-1, 1),
                 0.1F
             ), context.getOrThrow(LighterEndBiomes.STARFIELD)),
-            Pair.of(MultiNoiseUtil.createNoiseHypercube(
-                MultiNoiseUtil.ParameterRange.of(-1, 1),
-                MultiNoiseUtil.ParameterRange.of(-1, 1),
-                MultiNoiseUtil.ParameterRange.of(-1, 1),
-                MultiNoiseUtil.ParameterRange.of(0.5F, 1),
-                MultiNoiseUtil.ParameterRange.of(-1.4F, 0),
-                MultiNoiseUtil.ParameterRange.of(-0.5F, 0.5F),
+            Pair.of(Climate.parameters(
+                Climate.Parameter.span(-1, 1),
+                Climate.Parameter.span(-1, 1),
+                Climate.Parameter.span(-1, 1),
+                Climate.Parameter.span(0.5F, 1),
+                Climate.Parameter.span(-1.4F, 0),
+                Climate.Parameter.span(-0.5F, 0.5F),
                 0.3F
             ), context.getOrThrow(LighterEndBiomes.GLOWING_GRASSLAND))
         )
     );
-    biomeParams.addAll(defaultBiomes.getEntries());
+    biomeParams.addAll(defaultBiomes.values());
 
     LighterEnd.LOGGER.info(
         "Injected " + LighterEnd.MOD_NAME + "'s biomes into multinoise worldgen");
 
-    return MultiNoiseBiomeSource.create(new MultiNoiseUtil.Entries<>(biomeParams));
+    return MultiNoiseBiomeSource.createFromList(new Climate.ParameterList<>(biomeParams));
 
   }
 
@@ -168,8 +168,8 @@ public class LighterEndWorldGen {
     TheEndBiomes.addHighlandsBiome(LighterEndBiomes.MEGALAKE, 1.0);
 
     TheEndBiomes.addSmallIslandsBiome(LighterEndBiomes.STARFIELD, 0.1);
-    for (RegistryKey<Biome> parentBiome : List.of(
-        BiomeKeys.END_HIGHLANDS,
+    for (ResourceKey<Biome> parentBiome : List.of(
+        Biomes.END_HIGHLANDS,
         LighterEndBiomes.GLOWING_GRASSLAND,
         LighterEndBiomes.FOGGY_MUSHROOMLANDS,
         LighterEndBiomes.UMBRA_VALLEY,
@@ -177,7 +177,7 @@ public class LighterEndWorldGen {
         LighterEndBiomes.SULPHUR_SPRINGS
     )) {
       TheEndBiomes.addBarrensBiome(parentBiome, LighterEndBiomes.STARFIELD, 0.18);
-      TheEndBiomes.addBarrensBiome(parentBiome, BiomeKeys.END_BARRENS, 1);
+      TheEndBiomes.addBarrensBiome(parentBiome, Biomes.END_BARRENS, 1);
     }
 
     LighterEnd.LOGGER.info("Injected " + LighterEnd.MOD_NAME + "'s biomes into Fabric worldgen");
@@ -187,19 +187,19 @@ public class LighterEndWorldGen {
     if (!config.generateBiomes()) {
       return;
     }
-    List<RegistryKey<Biome>> barrensBiomes = new ArrayList<>();
-    barrensBiomes.add(BiomeKeys.END_BARRENS);
+    List<ResourceKey<Biome>> barrensBiomes = new ArrayList<>();
+    barrensBiomes.add(Biomes.END_BARRENS);
     try {
       barrensBiomes.add(
-          RegistryKey.of(RegistryKeys.BIOME, Identifier.of("nullscape", "void_barrens"))
+          ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("nullscape", "void_barrens"))
       );
     } catch (NullPointerException ignored) {
     }
 
-    for (RegistryKey<PlacedFeature> star : LighterEndPlacedFeatures.BARRENS_ICE_STARS) {
+    for (ResourceKey<PlacedFeature> star : LighterEndPlacedFeatures.BARRENS_ICE_STARS) {
       BiomeModifications.addFeature(
           BiomeSelectors.includeByKey(barrensBiomes),
-          GenerationStep.Feature.SURFACE_STRUCTURES,
+          GenerationStep.Decoration.SURFACE_STRUCTURES,
           star
       );
     }
@@ -209,19 +209,19 @@ public class LighterEndWorldGen {
     if (!config.generateBiomes()) {
       return;
     }
-    List<RegistryKey<Biome>> biomes = new ArrayList<>();
-    biomes.add(BiomeKeys.END_HIGHLANDS);
+    List<ResourceKey<Biome>> biomes = new ArrayList<>();
+    biomes.add(Biomes.END_HIGHLANDS);
     try {
       biomes.add(
-          RegistryKey.of(RegistryKeys.BIOME, Identifier.of("nullscape", "crystal_peaks"))
+          ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("nullscape", "crystal_peaks"))
       );
     } catch (NullPointerException ignored) {
     }
 
-    for (RegistryKey<PlacedFeature> blob : LighterEndPlacedFeatures.JADESTONE_BLOBS_BM) {
+    for (ResourceKey<PlacedFeature> blob : LighterEndPlacedFeatures.JADESTONE_BLOBS_BM) {
       BiomeModifications.addFeature(
           BiomeSelectors.includeByKey(biomes),
-          Feature.UNDERGROUND_ORES,
+          Decoration.UNDERGROUND_ORES,
           blob
       );
     }
@@ -231,7 +231,7 @@ public class LighterEndWorldGen {
     if (!config.generateOres()) {
       return;
     }
-    List<RegistryKey<Biome>> endStoneBiomes = new ArrayList<>();
+    List<ResourceKey<Biome>> endStoneBiomes = new ArrayList<>();
     endStoneBiomes.addAll(List.of(
             LighterEndBiomes.GLOWING_GRASSLAND,
             LighterEndBiomes.BLOSSOM_FOREST,
@@ -239,54 +239,54 @@ public class LighterEndWorldGen {
             LighterEndBiomes.MEGALAKE,
             LighterEndBiomes.FOGGY_MUSHROOMLANDS,
             LighterEndBiomes.SULPHUR_SPRINGS,
-            BiomeKeys.END_HIGHLANDS,
-            BiomeKeys.END_MIDLANDS,
-            BiomeKeys.SMALL_END_ISLANDS
+            Biomes.END_HIGHLANDS,
+            Biomes.END_MIDLANDS,
+            Biomes.SMALL_END_ISLANDS
         )
     );
 
-    List<RegistryKey<Biome>> umbralithBiomes = new ArrayList<>();
+    List<ResourceKey<Biome>> umbralithBiomes = new ArrayList<>();
     umbralithBiomes.add(LighterEndBiomes.UMBRA_VALLEY);
 
     try {
       endStoneBiomes.add(
-          RegistryKey.of(RegistryKeys.BIOME, Identifier.of("nullscape", "crystal_peaks"))
+          ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("nullscape", "crystal_peaks"))
       );
       endStoneBiomes.add(
-          RegistryKey.of(RegistryKeys.BIOME, Identifier.of("nullscape", "shadowlands"))
+          ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("nullscape", "shadowlands"))
       );
     } catch (NullPointerException ignored) {
     }
 
     BiomeModifications.addFeature(
         BiomeSelectors.includeByKey(endStoneBiomes),
-        Feature.UNDERGROUND_ORES,
+        Decoration.UNDERGROUND_ORES,
         LighterEndPlacedFeatures.END_STONE_REDSTONE_ORE
     );
     BiomeModifications.addFeature(
         BiomeSelectors.includeByKey(endStoneBiomes),
-        Feature.UNDERGROUND_ORES,
+        Decoration.UNDERGROUND_ORES,
         LighterEndPlacedFeatures.END_STONE_QUARTZ_ORE
     );
     BiomeModifications.addFeature(
         BiomeSelectors.includeByKey(umbralithBiomes),
-        Feature.UNDERGROUND_ORES,
+        Decoration.UNDERGROUND_ORES,
         LighterEndPlacedFeatures.UMBRALITH_REDSTONE_ORE
     );
     BiomeModifications.addFeature(
         BiomeSelectors.includeByKey(umbralithBiomes),
-        Feature.UNDERGROUND_ORES,
+        Decoration.UNDERGROUND_ORES,
         LighterEndPlacedFeatures.UMBRALITH_QUARTZ_ORE
     );
   }
 
-  public static MaterialRule updateSurfaceRules() {
+  public static RuleSource updateSurfaceRules() {
     return sequence(
-        condition(
-            STONE_DEPTH_FLOOR,
+        ifTrue(
+            ON_FLOOR,
             sequence(
-                condition(
-                    biome(
+                ifTrue(
+                    isBiome(
                         LighterEndBiomes.BLOSSOM_FOREST,
                         LighterEndBiomes.UMBRELLA_JUNGLE,
                         LighterEndBiomes.GLOWING_GRASSLAND,
@@ -294,44 +294,44 @@ public class LighterEndWorldGen {
                         LighterEndBiomes.SHADOW_FOREST
                     ),
                     sequence(
-                        condition(
-                            noiseThreshold(NoiseParameters.END_MOSS_SURFACE, -0.5, 0.5),
-                            block(LighterEndBlocks.END_MOSS.getDefaultState())
+                        ifTrue(
+                            noiseCondition(NoiseParameters.END_MOSS_SURFACE, -0.5, 0.5),
+                            state(LighterEndBlocks.END_MOSS.defaultBlockState())
                         )
                     )
                 )
             )
         ),
-        condition(
-            STONE_DEPTH_FLOOR_WITH_SURFACE_DEPTH_RANGE_30,
+        ifTrue(
+            VERY_DEEP_UNDER_FLOOR,
             sequence(
-                condition(
-                    biome(
+                ifTrue(
+                    isBiome(
                         LighterEndBiomes.UMBRA_VALLEY
                     ),
                     sequence(
-                        condition(
-                            noiseThreshold(NoiseParameters.VIOLECITE_SURFACE, -0.05, 0.05),
-                            block(LighterEndBlocks.VIOLECITE.baseBlock.getDefaultState())
+                        ifTrue(
+                            noiseCondition(NoiseParameters.VIOLECITE_SURFACE, -0.05, 0.05),
+                            state(LighterEndBlocks.VIOLECITE.baseBlock.defaultBlockState())
                         ),
-                        block(LighterEndBlocks.UMBRALITH.baseBlock.getDefaultState())
+                        state(LighterEndBlocks.UMBRALITH.baseBlock.defaultBlockState())
                     )
                 )
             )
         ),
-        condition(
-            STONE_DEPTH_FLOOR_WITH_SURFACE_DEPTH_RANGE_6,
+        ifTrue(
+            DEEP_UNDER_FLOOR,
             sequence(
-                condition(
-                    biome(
+                ifTrue(
+                    isBiome(
                         LighterEndBiomes.SULPHUR_SPRINGS
                     ),
                     sequence(
-                        condition(
-                            noiseThreshold(NoiseParameters.SULPHUR_SURFACE, -0.3, 0.3),
-                            block(LighterEndBlocks.BORNITE.baseBlock.getDefaultState())
+                        ifTrue(
+                            noiseCondition(NoiseParameters.SULPHUR_SURFACE, -0.3, 0.3),
+                            state(LighterEndBlocks.BORNITE.baseBlock.defaultBlockState())
                         ),
-                        block(Blocks.END_STONE.getDefaultState())
+                        state(Blocks.END_STONE.defaultBlockState())
                     )
                 )
             )

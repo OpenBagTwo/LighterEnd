@@ -3,50 +3,50 @@ package io.github.openbagtwo.lighterend.world.features;
 import io.github.openbagtwo.lighterend.blocks.EndLotus;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.utils.Flags;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class LotusLeaf extends Feature<DefaultFeatureConfig> {
+public class LotusLeaf extends Feature<NoneFeatureConfiguration> {
 
   public LotusLeaf() {
-    super(DefaultFeatureConfig.CODEC);
+    super(NoneFeatureConfiguration.CODEC);
   }
 
   @Override
-  public boolean generate(FeatureContext<DefaultFeatureConfig> featureConfig) {
+  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
 
-    final BlockPos pos = featureConfig.getOrigin();
-    final StructureWorldAccess world = featureConfig.getWorld();
+    final BlockPos pos = featureConfig.origin();
+    final WorldGenLevel world = featureConfig.level();
 
     if (!canGenerate(world, pos)) {
       return false;
     }
 
-    Mutable p = new Mutable();
-    BlockState leaf = LighterEndBlocks.END_LOTUS_LEAF.getDefaultState();
-    world.setBlockState(pos, leaf.with(EndLotus.Leaf.SHAPE, EndLotus.Shape.BOTTOM), Flags.SILENT);
-    for (Direction move : Direction.Type.HORIZONTAL) {
-      world.setBlockState(
+    MutableBlockPos p = new MutableBlockPos();
+    BlockState leaf = LighterEndBlocks.END_LOTUS_LEAF.defaultBlockState();
+    world.setBlock(pos, leaf.setValue(EndLotus.Leaf.SHAPE, EndLotus.Shape.BOTTOM), Flags.SILENT);
+    for (Direction move : Direction.Plane.HORIZONTAL) {
+      world.setBlock(
           p.set(pos).move(move),
-          leaf.with(EndLotus.Leaf.HORIZONTAL_FACING, move)
-              .with(EndLotus.Leaf.SHAPE, EndLotus.Shape.MIDDLE),
+          leaf.setValue(EndLotus.Leaf.HORIZONTAL_FACING, move)
+              .setValue(EndLotus.Leaf.SHAPE, EndLotus.Shape.MIDDLE),
           Flags.SILENT
       );
     }
     for (int i = 0; i < 4; i++) {
-      Direction d1 = Direction.Type.HORIZONTAL.stream().toList().get(i);
-      Direction d2 = Direction.Type.HORIZONTAL.stream().toList().get((i + 1) & 3);
-      world.setBlockState(
+      Direction d1 = Direction.Plane.HORIZONTAL.stream().toList().get(i);
+      Direction d2 = Direction.Plane.HORIZONTAL.stream().toList().get((i + 1) & 3);
+      world.setBlock(
           p.set(pos).move(d1).move(d2),
-          leaf.with(EndLotus.Leaf.HORIZONTAL_FACING, d1)
-              .with(EndLotus.Leaf.SHAPE, EndLotus.Shape.TOP),
+          leaf.setValue(EndLotus.Leaf.HORIZONTAL_FACING, d1)
+              .setValue(EndLotus.Leaf.SHAPE, EndLotus.Shape.TOP),
           Flags.SILENT
       );
     }
@@ -54,15 +54,15 @@ public class LotusLeaf extends Feature<DefaultFeatureConfig> {
   }
 
 
-  private boolean canGenerate(StructureWorldAccess world, BlockPos pos) {
-    Mutable p = new Mutable();
+  private boolean canGenerate(WorldGenLevel world, BlockPos pos) {
+    MutableBlockPos p = new MutableBlockPos();
     p.setY(pos.getY());
     int count = 0;
     for (int x = -1; x < 2; x++) {
       p.setX(pos.getX() + x);
       for (int z = -1; z < 2; z++) {
         p.setZ(pos.getZ() + z);
-        if (world.isAir(p) && world.getBlockState(p.down()).isOf(Blocks.WATER)) {
+        if (world.isEmptyBlock(p) && world.getBlockState(p.below()).is(Blocks.WATER)) {
           count++;
         }
       }

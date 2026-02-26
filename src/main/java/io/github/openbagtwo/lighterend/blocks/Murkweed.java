@@ -2,59 +2,59 @@ package io.github.openbagtwo.lighterend.blocks;
 
 import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.PlantBlock;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCollisionHandler;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.particle.TintedParticleEffect;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ColorParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.VegetationBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 
-public class Murkweed extends PlantBlock {
+public class Murkweed extends VegetationBlock {
 
-  public static final MapCodec<Murkweed> CODEC = createCodec(Murkweed::new);
+  public static final MapCodec<Murkweed> CODEC = simpleCodec(Murkweed::new);
 
-  public Murkweed(Settings settings) {
+  public Murkweed(Properties settings) {
     super(
         settings
-            .mapColor(MapColor.BLACK)
+            .mapColor(MapColor.COLOR_BLACK)
             .replaceable()
             .noCollision()
-            .breakInstantly()
-            .nonOpaque()
-            .sounds(BlockSoundGroup.GRASS)
-            .pistonBehavior(PistonBehavior.DESTROY)
-            .burnable()
+            .instabreak()
+            .noOcclusion()
+            .sound(SoundType.GRASS)
+            .pushReaction(PushReaction.DESTROY)
+            .ignitedByLava()
     );
   }
 
   @Override
-  protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-    return floor.isIn(LighterEndTags.END_SOIL);
+  protected boolean mayPlaceOn(BlockState floor, BlockGetter world, BlockPos pos) {
+    return floor.is(LighterEndTags.END_SOIL);
   }
 
   @Override
-  protected MapCodec<? extends PlantBlock> getCodec() {
+  protected MapCodec<? extends VegetationBlock> codec() {
     return CODEC;
   }
 
   @Override
-  public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+  public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
     double x = pos.getX() + random.nextDouble();
     double y = pos.getY() + random.nextDouble() * 0.5 + 0.5;
     double z = pos.getZ() + random.nextDouble();
     double v = random.nextDouble() * 0.1;
-    world.addParticleClient(
-        TintedParticleEffect.create(ParticleTypes.ENTITY_EFFECT, 0xFFFFFFFF),
+    world.addParticle(
+        ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, 0xFFFFFFFF),
         x,
         y,
         z,
@@ -65,20 +65,20 @@ public class Murkweed extends PlantBlock {
   }
 
   @Override
-  protected void onEntityCollision(
+  protected void entityInside(
       BlockState state,
-      World world,
+      Level world,
       BlockPos pos,
       Entity entity,
-      EntityCollisionHandler handler,
+      InsideBlockEffectApplier handler,
       boolean bl
   ) {
     if (
         entity instanceof LivingEntity livingEntity
-            && !entity.getType().isIn(LighterEndTags.IMMUNE_TO_MURKWEED)
+            && !entity.getType().is(LighterEndTags.IMMUNE_TO_MURKWEED)
     ) {
-      if (!livingEntity.hasStatusEffect(StatusEffects.BLINDNESS)) {
-        livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 50));
+      if (!livingEntity.hasEffect(MobEffects.BLINDNESS)) {
+        livingEntity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 50));
       }
     }
   }

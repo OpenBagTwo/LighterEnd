@@ -5,114 +5,114 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
 import java.util.Map;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FluidFillable;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.Waterloggable;
-import net.minecraft.block.enums.NoteBlockInstrument;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.WaterFluid;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.StateManager.Builder;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.StringIdentifiable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Direction.Axis;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.material.WaterFluid;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class EndLotus extends Block {
 
-  private static final VoxelShape SHAPE_OUTLINE = Block.createCuboidShape(2, 0, 2, 14, 14, 14);
-  private static final VoxelShape SHAPE_COLLISION = Block.createCuboidShape(0, 0, 0, 16, 2, 16);
+  private static final VoxelShape SHAPE_OUTLINE = Block.box(2, 0, 2, 14, 14, 14);
+  private static final VoxelShape SHAPE_COLLISION = Block.box(0, 0, 0, 16, 2, 16);
 
-  public EndLotus(Settings settings) {
+  public EndLotus(Properties settings) {
     super(
         settings
-            .mapColor(MapColor.PINK)
+            .mapColor(MapColor.COLOR_PINK)
             .instrument(NoteBlockInstrument.BASS)
-            .sounds(BlockSoundGroup.WOOD)
+            .sound(SoundType.WOOD)
             .strength(0.2F)
-            .burnable()
-            .pistonBehavior(PistonBehavior.DESTROY)
-            .nonOpaque()
-            .breakInstantly()
-            .luminance(bs -> 15)
+            .ignitedByLava()
+            .pushReaction(PushReaction.DESTROY)
+            .noOcclusion()
+            .instabreak()
+            .lightLevel(bs -> 15)
     );
   }
 
   @Override
-  protected BlockState getStateForNeighborUpdate(
+  protected BlockState updateShape(
       BlockState state,
-      WorldView world,
-      ScheduledTickView tickView,
+      LevelReader world,
+      ScheduledTickAccess tickView,
       BlockPos pos,
       Direction direction,
       BlockPos neighborPos,
       BlockState neighborState,
-      Random random
+      RandomSource random
   ) {
-    if (!canPlaceAt(state, world, pos)) {
-      tickView.scheduleBlockTick(pos, this, 1);
+    if (!canSurvive(state, world, pos)) {
+      tickView.scheduleTick(pos, this, 1);
     }
     return state;
   }
 
   @Override
-  protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-    if (!state.canPlaceAt(world, pos)) {
-      world.breakBlock(pos, true);
+  protected void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+    if (!state.canSurvive(world, pos)) {
+      world.destroyBlock(pos, true);
     }
   }
 
   @Override
-  protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-    return state.isOf(LighterEndBlocks.END_LOTUS_STEM);
+  protected boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+    return state.is(LighterEndBlocks.END_LOTUS_STEM);
   }
 
   @Override
-  protected VoxelShape getOutlineShape(
-      BlockState state, BlockView world, BlockPos pos, ShapeContext context
+  protected VoxelShape getShape(
+      BlockState state, BlockGetter world, BlockPos pos, CollisionContext context
   ) {
     return SHAPE_OUTLINE;
   }
 
   @Override
-  public VoxelShape getCollisionShape(BlockState state, BlockView view, BlockPos pos,
-      ShapeContext ePos) {
+  public VoxelShape getCollisionShape(BlockState state, BlockGetter view, BlockPos pos,
+      CollisionContext ePos) {
     return SHAPE_COLLISION;
   }
 
   @Override
-  protected ItemStack getPickStack(
-      WorldView world,
+  protected ItemStack getCloneItemStack(
+      LevelReader world,
       BlockPos pos,
       BlockState state,
       boolean includeData
@@ -120,158 +120,158 @@ public class EndLotus extends Block {
     return new ItemStack(LighterEndBlocks.END_LOTUS_SEED);
   }
 
-  public static class Stem extends Block implements Waterloggable, FluidFillable {
+  public static class Stem extends Block implements SimpleWaterloggedBlock, LiquidBlockContainer {
 
-    public static final EnumProperty<Direction> FACING = Properties.FACING;
-    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-    public static final BooleanProperty LEAF = BooleanProperty.of("leaf");
-    public static final EnumProperty<Shape> SHAPE = EnumProperty.of("shape", Shape.class);
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final BooleanProperty LEAF = BooleanProperty.create("leaf");
+    public static final EnumProperty<Shape> SHAPE = EnumProperty.create("shape", Shape.class);
     private static final Map<Axis, VoxelShape> SHAPES = Maps.newEnumMap(Axis.class);
 
-    public Stem(Settings settings) {
+    public Stem(Properties settings) {
       super(
           settings
-              .mapColor(MapColor.GREEN)
+              .mapColor(MapColor.COLOR_GREEN)
               .instrument(NoteBlockInstrument.BASS)
               .strength(2.0F, 3.0F)
-              .sounds(BlockSoundGroup.BAMBOO_WOOD)
-              .pistonBehavior(PistonBehavior.DESTROY)
-              .nonOpaque()
-              .solid()
-              .burnable()
+              .sound(SoundType.BAMBOO_WOOD)
+              .pushReaction(PushReaction.DESTROY)
+              .noOcclusion()
+              .forceSolidOn()
+              .ignitedByLava()
       );
-      this.setDefaultState(getDefaultState()
-          .with(WATERLOGGED, false)
-          .with(SHAPE, Shape.MIDDLE)
-          .with(LEAF, false)
-          .with(FACING, Direction.UP));
+      this.registerDefaultState(defaultBlockState()
+          .setValue(WATERLOGGED, false)
+          .setValue(SHAPE, Shape.MIDDLE)
+          .setValue(LEAF, false)
+          .setValue(FACING, Direction.UP));
     }
 
     @Override
-    protected void appendProperties(Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
       builder.add(FACING, WATERLOGGED, SHAPE, LEAF);
     }
 
     @Override
-    protected VoxelShape getOutlineShape(
-        BlockState state, BlockView world, BlockPos pos, ShapeContext context
+    protected VoxelShape getShape(
+        BlockState state, BlockGetter world, BlockPos pos, CollisionContext context
     ) {
-      return state.get(LEAF) ? SHAPES.get(Axis.Y) : SHAPES.get(state.get(FACING).getAxis());
+      return state.getValue(LEAF) ? SHAPES.get(Axis.Y) : SHAPES.get(state.getValue(FACING).getAxis());
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-      return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+      return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-      WorldAccess worldAccess = ctx.getWorld();
-      BlockPos blockPos = ctx.getBlockPos();
-      return this.getDefaultState()
-          .with(WATERLOGGED, worldAccess.getFluidState(blockPos).getFluid() == Fluids.WATER)
-          .with(FACING, ctx.getSide());
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+      LevelAccessor worldAccess = ctx.getLevel();
+      BlockPos blockPos = ctx.getClickedPos();
+      return this.defaultBlockState()
+          .setValue(WATERLOGGED, worldAccess.getFluidState(blockPos).getType() == Fluids.WATER)
+          .setValue(FACING, ctx.getClickedFace());
     }
 
     @Override
-    public BlockState rotate(BlockState state, BlockRotation rotation) {
-      return state.with(FACING, rotation.rotate(state.get(FACING)));
+    public BlockState rotate(BlockState state, Rotation rotation) {
+      return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     @Override
-    public BlockState mirror(BlockState state, BlockMirror mirror) {
-      return state.rotate(mirror.getRotation(state.get(FACING)));
+    public BlockState mirror(BlockState state, Mirror mirror) {
+      return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override
-    protected BlockState getStateForNeighborUpdate(
+    protected BlockState updateShape(
         BlockState state,
-        WorldView world,
-        ScheduledTickView tickView,
+        LevelReader world,
+        ScheduledTickAccess tickView,
         BlockPos pos,
         Direction direction,
         BlockPos neighborPos,
         BlockState neighborState,
-        Random random
+        RandomSource random
     ) {
-      if (state.get(WATERLOGGED)) {
-        tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+      if (state.getValue(WATERLOGGED)) {
+        tickView.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
       }
-      if (!canPlaceAt(state, world, pos)) {
-        tickView.scheduleBlockTick(pos, this, 1);
+      if (!canSurvive(state, world, pos)) {
+        tickView.scheduleTick(pos, this, 1);
       }
       return state;
     }
 
     @Override
-    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-      if (!state.canPlaceAt(world, pos)) {
-        world.breakBlock(pos, true);
+    protected void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+      if (!state.canSurvive(world, pos)) {
+        world.destroyBlock(pos, true);
       }
     }
 
     @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-      BlockState down = world.getBlockState(pos.down());
-      return down.isIn(LighterEndTags.AQUATIC_END_SOIL) || down.getBlock() == this;
+    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+      BlockState down = world.getBlockState(pos.below());
+      return down.is(LighterEndTags.AQUATIC_END_SOIL) || down.getBlock() == this;
     }
 
     static {
-      SHAPES.put(Axis.X, Block.createCuboidShape(0, 6, 6, 16, 10, 10));
-      SHAPES.put(Axis.Y, Block.createCuboidShape(6, 0, 6, 10, 16, 10));
-      SHAPES.put(Axis.Z, Block.createCuboidShape(6, 6, 0, 10, 10, 16));
+      SHAPES.put(Axis.X, Block.box(0, 6, 6, 16, 10, 10));
+      SHAPES.put(Axis.Y, Block.box(6, 0, 6, 10, 16, 10));
+      SHAPES.put(Axis.Z, Block.box(6, 6, 0, 10, 10, 16));
     }
   }
 
   public static class Leaf extends Block {
 
-    public static final EnumProperty<Direction> HORIZONTAL_FACING = Properties.HORIZONTAL_FACING;
-    public static final EnumProperty<Shape> SHAPE = EnumProperty.of("shape", Shape.class);
-    private static final VoxelShape VSHAPE = Block.createCuboidShape(0, 0, 0, 16, 1, 16);
+    public static final EnumProperty<Direction> HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final EnumProperty<Shape> SHAPE = EnumProperty.create("shape", Shape.class);
+    private static final VoxelShape VSHAPE = Block.box(0, 0, 0, 16, 1, 16);
 
-    public Leaf(Settings settings) {
+    public Leaf(Properties settings) {
       super(
           settings
-              .mapColor(MapColor.PINK)
-              .breakInstantly()
-              .sounds(BlockSoundGroup.LILY_PAD)
-              .nonOpaque()
-              .pistonBehavior(PistonBehavior.DESTROY)
+              .mapColor(MapColor.COLOR_PINK)
+              .instabreak()
+              .sound(SoundType.LILY_PAD)
+              .noOcclusion()
+              .pushReaction(PushReaction.DESTROY)
       );
     }
 
     @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-      BlockState down = world.getBlockState(pos.down());
+    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+      BlockState down = world.getBlockState(pos.below());
       return !down.getFluidState().isEmpty() && down.getFluidState()
-          .getFluid() instanceof WaterFluid;
+          .getType() instanceof WaterFluid;
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
       builder.add(SHAPE, HORIZONTAL_FACING);
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos,
-        ShapeContext ePos) {
+    public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos,
+        CollisionContext ePos) {
       return VSHAPE;
     }
 
     @Override
-    public BlockState rotate(BlockState state, BlockRotation rotation) {
-      return state.with(HORIZONTAL_FACING, rotation.rotate(state.get(HORIZONTAL_FACING)));
+    public BlockState rotate(BlockState state, Rotation rotation) {
+      return state.setValue(HORIZONTAL_FACING, rotation.rotate(state.getValue(HORIZONTAL_FACING)));
     }
 
     @Override
-    public BlockState mirror(BlockState state, BlockMirror mirror) {
-      return state.rotate(mirror.getRotation(state.get(HORIZONTAL_FACING)));
+    public BlockState mirror(BlockState state, Mirror mirror) {
+      return state.rotate(mirror.getRotation(state.getValue(HORIZONTAL_FACING)));
     }
 
 
     @Override
-    protected ItemStack getPickStack(
-        WorldView world,
+    protected ItemStack getCloneItemStack(
+        LevelReader world,
         BlockPos pos,
         BlockState state,
         boolean includeData
@@ -280,167 +280,167 @@ public class EndLotus extends Block {
     }
   }
 
-  public static class Seed extends Sapling implements FluidFillable {
+  public static class Seed extends Sapling implements LiquidBlockContainer {
 
-    public Seed(Settings settings) {
+    public Seed(Properties settings) {
       super(EndLotusFeature::new, settings, 7);
     }
 
     @Override
-    protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-      return floor.isSideSolidFullSquare(world, pos, Direction.UP) && floor.isIn(
+    protected boolean mayPlaceOn(BlockState floor, BlockGetter world, BlockPos pos) {
+      return floor.isFaceSturdy(world, pos, Direction.UP) && floor.is(
           LighterEndTags.AQUATIC_END_SOIL);
     }
 
     @Nullable
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-      FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
-      return fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8
-          ? super.getPlacementState(
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+      FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
+      return fluidState.is(FluidTags.WATER) && fluidState.getAmount() == 8
+          ? super.getStateForPlacement(
           ctx) : null;
     }
 
     @Override
     protected FluidState getFluidState(BlockState state) {
-      return Fluids.WATER.getStill(false);
+      return Fluids.WATER.getSource(false);
     }
 
     @Override
-    public boolean canFillWithFluid(@Nullable LivingEntity filler, BlockView world, BlockPos pos,
+    public boolean canPlaceLiquid(@Nullable LivingEntity filler, BlockGetter world, BlockPos pos,
         BlockState state, Fluid fluid) {
       return false;
     }
 
     @Override
-    public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state,
+    public boolean placeLiquid(LevelAccessor world, BlockPos pos, BlockState state,
         FluidState fluidState) {
       return false;
     }
 
     @Override
-    public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
       return EndLotus.canGrow(world, pos);
     }
 
   }
 
-  public static class EndLotusFeature extends Feature<DefaultFeatureConfig> {
+  public static class EndLotusFeature extends Feature<NoneFeatureConfiguration> {
 
     public EndLotusFeature() {
-      super(DefaultFeatureConfig.CODEC);
+      super(NoneFeatureConfiguration.CODEC);
     }
 
     @Override
-    public boolean generate(FeatureContext<DefaultFeatureConfig> featureConfig) {
-      final BlockPos pos = featureConfig.getOrigin();
-      final StructureWorldAccess world = featureConfig.getWorld();
-      final Random random = featureConfig.getRandom();
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+      final BlockPos pos = featureConfig.origin();
+      final WorldGenLevel world = featureConfig.level();
+      final RandomSource random = featureConfig.random();
 
       if (EndLotus.canGrow(world, pos)) {
-        BlockState startLeaf = LighterEndBlocks.END_LOTUS_STEM.getDefaultState()
-            .with(Stem.LEAF, true);
-        BlockState roots = LighterEndBlocks.END_LOTUS_STEM.getDefaultState()
-            .with(Stem.SHAPE, Shape.BOTTOM)
-            .with(Stem.WATERLOGGED, true);
-        BlockState stem = LighterEndBlocks.END_LOTUS_STEM.getDefaultState();
-        BlockState flower = LighterEndBlocks.END_LOTUS_FLOWER.getDefaultState();
+        BlockState startLeaf = LighterEndBlocks.END_LOTUS_STEM.defaultBlockState()
+            .setValue(Stem.LEAF, true);
+        BlockState roots = LighterEndBlocks.END_LOTUS_STEM.defaultBlockState()
+            .setValue(Stem.SHAPE, Shape.BOTTOM)
+            .setValue(Stem.WATERLOGGED, true);
+        BlockState stem = LighterEndBlocks.END_LOTUS_STEM.defaultBlockState();
+        BlockState flower = LighterEndBlocks.END_LOTUS_FLOWER.defaultBlockState();
 
-        world.setBlockState(pos, roots, Flags.SILENT);
-        Mutable bpos = new Mutable().set(pos);
+        world.setBlock(pos, roots, Flags.SILENT);
+        MutableBlockPos bpos = new MutableBlockPos().set(pos);
         bpos.setY(bpos.getY() + 1);
-        while (world.getFluidState(bpos).isStill()) {
-          world.setBlockState(bpos, stem.with(Stem.WATERLOGGED, true), Flags.SILENT);
+        while (world.getFluidState(bpos).isSource()) {
+          world.setBlock(bpos, stem.setValue(Stem.WATERLOGGED, true), Flags.SILENT);
           bpos.setY(bpos.getY() + 1);
         }
 
         int height =
             random.nextBoolean() ? 0 : random.nextBoolean() ? 1 : random.nextBoolean() ? 1 : -1;
         Shape shape = (height == 0) ? Shape.TOP : Shape.MIDDLE;
-        Direction dir = Direction.Type.HORIZONTAL.random(random);
-        BlockPos leafCenter = bpos.toImmutable().offset(dir);
+        Direction dir = Direction.Plane.HORIZONTAL.getRandomDirection(random);
+        BlockPos leafCenter = bpos.immutable().relative(dir);
         if (hasLeaf(world, leafCenter)) {
           generateLeaf(world, leafCenter);
-          world.setBlockState(
+          world.setBlock(
               bpos,
-              startLeaf.with(Stem.SHAPE, shape).with(Stem.FACING, dir),
+              startLeaf.setValue(Stem.SHAPE, shape).setValue(Stem.FACING, dir),
               Flags.SILENT
           );
         } else {
-          world.setBlockState(bpos, stem.with(Stem.SHAPE, shape), Flags.SILENT);
+          world.setBlock(bpos, stem.setValue(Stem.SHAPE, shape), Flags.SILENT);
         }
 
         bpos.setY(bpos.getY() + 1);
         for (int i = 1; i <= height; i++) {
-          if (!world.isAir(bpos)) {
+          if (!world.isEmptyBlock(bpos)) {
             bpos.setY(bpos.getY() - 1);
-            world.setBlockState(bpos, flower, Flags.SILENT);
+            world.setBlock(bpos, flower, Flags.SILENT);
             bpos.setY(bpos.getY() - 1);
             stem = world.getBlockState(bpos);
-            world.setBlockState(bpos, stem.with(Stem.SHAPE, Shape.TOP), Flags.SILENT);
+            world.setBlock(bpos, stem.setValue(Stem.SHAPE, Shape.TOP), Flags.SILENT);
             return true;
           }
-          world.setBlockState(bpos, stem, Flags.SILENT);
+          world.setBlock(bpos, stem, Flags.SILENT);
           bpos.setY(bpos.getY() + 1);
         }
 
-        if (!world.isAir(bpos) || height < 0) {
+        if (!world.isEmptyBlock(bpos) || height < 0) {
           bpos.setY(bpos.getY() - 1);
         }
 
-        world.setBlockState(bpos, flower, Flags.SILENT);
+        world.setBlock(bpos, flower, Flags.SILENT);
         bpos.setY(bpos.getY() - 1);
         stem = world.getBlockState(bpos);
-        if (!stem.isOf(LighterEndBlocks.END_LOTUS_STEM)) {
-          stem = LighterEndBlocks.END_LOTUS_STEM.getDefaultState();
+        if (!stem.is(LighterEndBlocks.END_LOTUS_STEM)) {
+          stem = LighterEndBlocks.END_LOTUS_STEM.defaultBlockState();
           if (!world.getBlockState(bpos.north()).getFluidState().isEmpty()) {
-            stem = stem.with(Stem.WATERLOGGED, true);
+            stem = stem.setValue(Stem.WATERLOGGED, true);
           }
         }
 
-        if (world.getBlockState(bpos.offset(dir)).isOf(LighterEndBlocks.END_LOTUS_LEAF)) {
-          stem = stem.with(Stem.LEAF, true).with(Stem.FACING, dir);
+        if (world.getBlockState(bpos.relative(dir)).is(LighterEndBlocks.END_LOTUS_LEAF)) {
+          stem = stem.setValue(Stem.LEAF, true).setValue(Stem.FACING, dir);
         }
 
-        world.setBlockState(bpos, stem.with(Stem.SHAPE, Shape.TOP), Flags.SILENT);
+        world.setBlock(bpos, stem.setValue(Stem.SHAPE, Shape.TOP), Flags.SILENT);
         return true;
       }
       return false;
     }
 
-    private void generateLeaf(StructureWorldAccess world, BlockPos pos) {
-      Mutable p = new Mutable();
-      BlockState leaf = LighterEndBlocks.END_LOTUS_LEAF.getDefaultState();
-      world.setBlockState(pos, leaf.with(Leaf.SHAPE, Shape.BOTTOM), Flags.SILENT);
-      for (Direction move : Direction.Type.HORIZONTAL) {
-        world.setBlockState(
+    private void generateLeaf(WorldGenLevel world, BlockPos pos) {
+      MutableBlockPos p = new MutableBlockPos();
+      BlockState leaf = LighterEndBlocks.END_LOTUS_LEAF.defaultBlockState();
+      world.setBlock(pos, leaf.setValue(Leaf.SHAPE, Shape.BOTTOM), Flags.SILENT);
+      for (Direction move : Direction.Plane.HORIZONTAL) {
+        world.setBlock(
             p.set(pos).move(move),
-            leaf.with(Leaf.HORIZONTAL_FACING, move)
-                .with(Leaf.SHAPE, Shape.MIDDLE),
+            leaf.setValue(Leaf.HORIZONTAL_FACING, move)
+                .setValue(Leaf.SHAPE, Shape.MIDDLE),
             Flags.SILENT
         );
       }
       for (int i = 0; i < 4; i++) {
-        Direction d1 = Direction.Type.HORIZONTAL.stream().toList().get(i);
-        Direction d2 = Direction.Type.HORIZONTAL.stream().toList().get((i + 1) & 3);
-        world.setBlockState(
+        Direction d1 = Direction.Plane.HORIZONTAL.stream().toList().get(i);
+        Direction d2 = Direction.Plane.HORIZONTAL.stream().toList().get((i + 1) & 3);
+        world.setBlock(
             p.set(pos).move(d1).move(d2),
-            leaf.with(Leaf.HORIZONTAL_FACING, d1)
-                .with(Leaf.SHAPE, Shape.TOP),
+            leaf.setValue(Leaf.HORIZONTAL_FACING, d1)
+                .setValue(Leaf.SHAPE, Shape.TOP),
             Flags.SILENT
         );
       }
     }
 
-    private boolean hasLeaf(StructureWorldAccess world, BlockPos pos) {
-      Mutable p = new Mutable();
+    private boolean hasLeaf(WorldGenLevel world, BlockPos pos) {
+      MutableBlockPos p = new MutableBlockPos();
       p.setY(pos.getY());
       int count = 0;
       for (int x = -1; x < 2; x++) {
         p.setX(pos.getX() + x);
         for (int z = -1; z < 2; z++) {
           p.setZ(pos.getZ() + z);
-          if (world.isAir(p) && !world.getFluidState(p.down()).isEmpty()) {
+          if (world.isEmptyBlock(p) && !world.getFluidState(p.below()).isEmpty()) {
             count++;
           }
         }
@@ -450,7 +450,7 @@ public class EndLotus extends Block {
   }
 
 
-  public enum Shape implements StringIdentifiable {
+  public enum Shape implements StringRepresentable {
     TOP("top"),
     MIDDLE("middle"),
     BOTTOM("bottom");
@@ -462,7 +462,7 @@ public class EndLotus extends Block {
     }
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
       return name;
     }
 
@@ -472,16 +472,16 @@ public class EndLotus extends Block {
     }
   }
 
-  private static boolean canGrow(WorldAccess world, BlockPos pos) {
-    if (!world.getBlockState(pos).getFluidState().getFluid().equals(Fluids.WATER.getStill())) {
+  private static boolean canGrow(LevelAccessor world, BlockPos pos) {
+    if (!world.getBlockState(pos).getFluidState().getType().equals(Fluids.WATER.getSource())) {
       return false;
     }
-    Mutable bpos = new Mutable();
+    MutableBlockPos bpos = new MutableBlockPos();
     bpos.set(pos);
-    while (world.getBlockState(bpos).getFluidState().getFluid().equals(Fluids.WATER.getStill())) {
+    while (world.getBlockState(bpos).getFluidState().getType().equals(Fluids.WATER.getSource())) {
       bpos.setY(bpos.getY() + 1);
     }
-    return world.isAir(bpos) && world.isAir(bpos.up());
+    return world.isEmptyBlock(bpos) && world.isEmptyBlock(bpos.above());
   }
 
 }

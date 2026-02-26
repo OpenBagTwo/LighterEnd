@@ -7,80 +7,80 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
-import net.minecraft.item.Items;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.LootTable.Builder;
-import net.minecraft.loot.context.LootContextTypes;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryWrapper.WrapperLookup;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.LootTable.Builder;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 public class ChestLootTableProvider extends SimpleFabricLootTableProvider {
 
 
   public ChestLootTableProvider(
       FabricDataOutput output,
-      CompletableFuture<WrapperLookup> registryLookup
+      CompletableFuture<Provider> registryLookup
   ) {
-    super(output, registryLookup, LootContextTypes.CHEST);
+    super(output, registryLookup, LootContextParamSets.CHEST);
   }
 
   @Override
-  public void accept(BiConsumer<RegistryKey<LootTable>, Builder> lootTableBiConsumer) {
+  public void generate(BiConsumer<ResourceKey<LootTable>, Builder> lootTableBiConsumer) {
     lootTableBiConsumer.accept(
         LighterEndLootTables.STARTER_CHEST,
-        LootTable.builder()
-            .pool(
-                LootPool.builder()
-                    .rolls(ConstantLootNumberProvider.create(1.0F))
-                    .with(ItemEntry.builder(Items.COPPER_AXE))
-                    .with(ItemEntry.builder(Items.WOODEN_AXE).weight(3))
+        LootTable.lootTable()
+            .withPool(
+                LootPool.lootPool()
+                    .setRolls(ConstantValue.exactly(1.0F))
+                    .add(LootItem.lootTableItem(Items.COPPER_AXE))
+                    .add(LootItem.lootTableItem(Items.WOODEN_AXE).setWeight(3))
             )
-            .pool(
-                LootPool.builder()
-                    .rolls(ConstantLootNumberProvider.create(1.0F))
-                    .with(ItemEntry.builder(Items.COPPER_PICKAXE))
-                    .with(ItemEntry.builder(Items.WOODEN_PICKAXE).weight(3))
+            .withPool(
+                LootPool.lootPool()
+                    .setRolls(ConstantValue.exactly(1.0F))
+                    .add(LootItem.lootTableItem(Items.COPPER_PICKAXE))
+                    .add(LootItem.lootTableItem(Items.WOODEN_PICKAXE).setWeight(3))
             )
-            .pool(
-                LootPool.builder()
-                    .rolls(ConstantLootNumberProvider.create(3.0F))
-                    .with(ItemEntry.builder(LighterEndItems.SHADOW_BERRY).weight(5).apply(
-                        SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 2.0F))))
-                    .with(ItemEntry.builder(LighterEndItems.POPPED_LUMECORN).weight(3).apply(
-                        SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 2.0F))))
-                    .with(ItemEntry.builder(LighterEndItems.CRAB_CAKE).weight(3).apply(
-                        SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 2.0F))))
+            .withPool(
+                LootPool.lootPool()
+                    .setRolls(ConstantValue.exactly(3.0F))
+                    .add(LootItem.lootTableItem(LighterEndItems.SHADOW_BERRY).setWeight(5).apply(
+                        SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+                    .add(LootItem.lootTableItem(LighterEndItems.POPPED_LUMECORN).setWeight(3).apply(
+                        SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+                    .add(LootItem.lootTableItem(LighterEndItems.CRAB_CAKE).setWeight(3).apply(
+                        SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
             )
-            .pool(
-                LootPool.builder()
-                    .rolls(ConstantLootNumberProvider.create(4.0F))
-                    .with(ItemEntry.builder(Items.STICK).weight(10).apply(
-                        SetCountLootFunction.builder(
-                            UniformLootNumberProvider.create(1.0F, 12.0F))))
+            .withPool(
+                LootPool.lootPool()
+                    .setRolls(ConstantValue.exactly(4.0F))
+                    .add(LootItem.lootTableItem(Items.STICK).setWeight(10).apply(
+                        SetItemCountFunction.setCount(
+                            UniformGenerator.between(1.0F, 12.0F))))
                     // the line below is kind of a troll, since Tenanea logs don't generate naturally
-                    .with(ItemEntry.builder(LighterEndBlocks.TENANEA.log).weight(3).apply(
-                        SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 3.0F))))
-                    .with(ItemEntry.builder(LighterEndBlocks.UMBRELLA.log).weight(3).apply(
-                        SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 3.0F))))
-                    .with(ItemEntry.builder(LighterEndBlocks.LOTUS.log).weight(3).apply(
-                        SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 3.0F))))
-                    .with(ItemEntry.builder(LighterEndBlocks.GLOWSHROOM.log).weight(3).apply(
-                        SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 3.0F))))
-                    .with(ItemEntry.builder(LighterEndBlocks.DRAGON.log).weight(3).apply(
-                        SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 3.0F))))
+                    .add(LootItem.lootTableItem(LighterEndBlocks.TENANEA.log).setWeight(3).apply(
+                        SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+                    .add(LootItem.lootTableItem(LighterEndBlocks.UMBRELLA.log).setWeight(3).apply(
+                        SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+                    .add(LootItem.lootTableItem(LighterEndBlocks.LOTUS.log).setWeight(3).apply(
+                        SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+                    .add(LootItem.lootTableItem(LighterEndBlocks.GLOWSHROOM.log).setWeight(3).apply(
+                        SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+                    .add(LootItem.lootTableItem(LighterEndBlocks.DRAGON.log).setWeight(3).apply(
+                        SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
 
             )
-            .pool(
-                LootPool.builder()
-                    .rolls(ConstantLootNumberProvider.create(1.0F))
-                    .with(ItemEntry.builder(LighterEndItems.CRAB_CLAW).weight(5).apply(
-                        SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0F, 4.0F))))
-                    .with(ItemEntry.builder(Items.SHEARS))
+            .withPool(
+                LootPool.lootPool()
+                    .setRolls(ConstantValue.exactly(1.0F))
+                    .add(LootItem.lootTableItem(LighterEndItems.CRAB_CLAW).setWeight(5).apply(
+                        SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F))))
+                    .add(LootItem.lootTableItem(Items.SHEARS))
             )
     );
   }

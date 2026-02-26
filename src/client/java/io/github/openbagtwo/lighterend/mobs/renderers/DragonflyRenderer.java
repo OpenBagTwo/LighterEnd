@@ -4,27 +4,27 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.mobs.Dragonfly;
 import io.github.openbagtwo.lighterend.mobs.EntityModels;
 import io.github.openbagtwo.lighterend.mobs.models.DragonflyModel;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.RenderLayers;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
-import net.minecraft.client.render.entity.state.LivingEntityRenderState;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.EyesLayer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.resources.Identifier;
 
 public class DragonflyRenderer extends
-    MobEntityRenderer<Dragonfly, LivingEntityRenderState, DragonflyModel> {
+    MobRenderer<Dragonfly, LivingEntityRenderState, DragonflyModel> {
 
   private static final Identifier TEXTURE = LighterEnd.of("textures/entity/dragonfly.png");
-  private static final RenderLayer GLOW = RenderLayers.eyes(
+  private static final RenderType GLOW = RenderTypes.eyes(
       LighterEnd.of("textures/entity/dragonfly_glow.png")
   );
 
-  public DragonflyRenderer(EntityRendererFactory.Context ctx) {
-    super(ctx, new DragonflyModel(ctx.getPart(EntityModels.DRAGONFLY_MODEL)), 0.5f);
-    this.addFeature(new EyesFeatureRenderer<>(this) {
+  public DragonflyRenderer(EntityRendererProvider.Context ctx) {
+    super(ctx, new DragonflyModel(ctx.bakeLayer(EntityModels.DRAGONFLY_MODEL)), 0.5f);
+    this.addLayer(new EyesLayer<>(this) {
       @Override
-      public RenderLayer getEyesTexture() {
+      public RenderType renderType() {
         return GLOW;
       }
     });
@@ -36,7 +36,7 @@ public class DragonflyRenderer extends
   }
 
   @Override
-  public Identifier getTexture(LivingEntityRenderState state) {
+  public Identifier getTextureLocation(LivingEntityRenderState state) {
     return TEXTURE;
   }
 }

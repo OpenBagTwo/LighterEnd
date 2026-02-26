@@ -1,30 +1,30 @@
 package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import net.minecraft.item.equipment.trim.ArmorTrimAssets;
-import net.minecraft.item.equipment.trim.ArmorTrimMaterial;
-import net.minecraft.registry.Registerable;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Util;
+import net.minecraft.world.item.equipment.trim.MaterialAssetGroup;
+import net.minecraft.world.item.equipment.trim.TrimMaterial;
 
 public class LighterEndTrimming {
 
-  public static final RegistryKey<ArmorTrimMaterial> AURORA = RegistryKey.of(
-      RegistryKeys.TRIM_MATERIAL, LighterEnd.of("aurora")
+  public static final ResourceKey<TrimMaterial> AURORA = ResourceKey.create(
+      Registries.TRIM_MATERIAL, LighterEnd.of("aurora")
   );
 
-  public static void bootstrap(Registerable<ArmorTrimMaterial> registerable) {
+  public static void bootstrap(BootstrapContext<TrimMaterial> registerable) {
 
     registerable.register(
         AURORA,
-        new ArmorTrimMaterial(
-            ArmorTrimAssets.of("aurora"),
-            Text.translatable(Util.createTranslationKey("trim_material", AURORA.getValue()))
-                .fillStyle(Style.EMPTY.withColor(TextColor.parse("#a791fe").getOrThrow()))
+        new TrimMaterial(
+            MaterialAssetGroup.create("aurora"),
+            Component.translatable(Util.makeDescriptionId("trim_material", AURORA.identifier()))
+                .withStyle(Style.EMPTY.withColor(TextColor.parseColor("#a791fe").getOrThrow()))
         )
     );
   }

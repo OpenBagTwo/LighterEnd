@@ -3,121 +3,121 @@ package io.github.openbagtwo.lighterend.blocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FluidFillable;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.state.StateManager.Builder;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class EndLily extends Block implements FluidFillable {
+public class EndLily extends Block implements LiquidBlockContainer {
 
-  public static final BooleanProperty IS_TOP = BooleanProperty.of("is_top");
+  public static final BooleanProperty IS_TOP = BooleanProperty.create("is_top");
 
-  private static final VoxelShape SHAPE_BOTTOM = Block.createCuboidShape(
+  private static final VoxelShape SHAPE_BOTTOM = Block.box(
       4, 0, 4, 12, 16, 12
   );
-  private static final VoxelShape SHAPE_TOP = Block.createCuboidShape(
+  private static final VoxelShape SHAPE_TOP = Block.box(
       2, 0, 2, 14, 6, 14
   );
 
-  public EndLily(Settings settings) {
+  public EndLily(Properties settings) {
     super(settings
-        .mapColor(MapColor.WATER_BLUE)
+        .mapColor(MapColor.WATER)
         .replaceable()
         .noCollision()
-        .nonOpaque()
-        .breakInstantly()
-        .offset(OffsetType.XZ)
-        .sounds(BlockSoundGroup.WET_GRASS)
-        .pistonBehavior(PistonBehavior.DESTROY)
-        .luminance((state) -> state.get(IS_TOP) ? 13 : 0)
+        .noOcclusion()
+        .instabreak()
+        .offsetType(OffsetType.XZ)
+        .sound(SoundType.WET_GRASS)
+        .pushReaction(PushReaction.DESTROY)
+        .lightLevel((state) -> state.getValue(IS_TOP) ? 13 : 0)
     );
   }
 
   @Override
-  protected void appendProperties(Builder<Block, BlockState> builder) {
+  protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
     builder.add(IS_TOP);
   }
 
   @Override
-  public BlockState getStateForNeighborUpdate(
+  public BlockState updateShape(
       BlockState state,
-      WorldView world,
-      ScheduledTickView tickView,
+      LevelReader world,
+      ScheduledTickAccess tickView,
       BlockPos pos,
       Direction direction,
       BlockPos neighborPos,
       BlockState neighborState,
-      Random random
+      RandomSource random
   ) {
-    if (!canPlaceAt(state, world, pos)) {
-      tickView.scheduleBlockTick(pos, this, 1);
+    if (!canSurvive(state, world, pos)) {
+      tickView.scheduleTick(pos, this, 1);
     }
     return state;
   }
 
   @Override
-  protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-    if (!state.canPlaceAt(world, pos)) {
-      world.breakBlock(pos, true);
+  protected void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+    if (!state.canSurvive(world, pos)) {
+      world.destroyBlock(pos, true);
     }
   }
 
   @Override
-  protected VoxelShape getOutlineShape(
-      BlockState state, BlockView world, BlockPos pos, ShapeContext context
+  protected VoxelShape getShape(
+      BlockState state, BlockGetter world, BlockPos pos, CollisionContext context
   ) {
-    Vec3d vec3d = state.getModelOffset(pos);
-    VoxelShape shape = state.get(IS_TOP) ? SHAPE_TOP : SHAPE_BOTTOM;
-    return shape.offset(vec3d.x, vec3d.y, vec3d.z);
+    Vec3 vec3d = state.getOffset(pos);
+    VoxelShape shape = state.getValue(IS_TOP) ? SHAPE_TOP : SHAPE_BOTTOM;
+    return shape.move(vec3d.x, vec3d.y, vec3d.z);
   }
 
   @Override
   public FluidState getFluidState(BlockState state) {
-    return state.get(IS_TOP) ? Fluids.EMPTY.getDefaultState() : Fluids.WATER.getStill(false);
+    return state.getValue(IS_TOP) ? Fluids.EMPTY.defaultFluidState() : Fluids.WATER.getSource(false);
   }
 
   @Override
-  public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-    if (state.get(IS_TOP)) {
-      return world.getBlockState(pos.down()).getBlock() == this;
+  public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+    if (state.getValue(IS_TOP)) {
+      return world.getBlockState(pos.below()).getBlock() == this;
     } else {
-      BlockState down = world.getBlockState(pos.down());
-      return down.isIn(LighterEndTags.AQUATIC_END_SOIL) || down.getBlock() == this;
+      BlockState down = world.getBlockState(pos.below());
+      return down.is(LighterEndTags.AQUATIC_END_SOIL) || down.getBlock() == this;
     }
   }
 
   @Override
-  protected ItemStack getPickStack(
-      WorldView world,
+  protected ItemStack getCloneItemStack(
+      LevelReader world,
       BlockPos pos,
       BlockState state,
       boolean includeData
@@ -126,91 +126,91 @@ public class EndLily extends Block implements FluidFillable {
   }
 
   @Override
-  public boolean canFillWithFluid(@Nullable LivingEntity filler, BlockView world, BlockPos pos,
+  public boolean canPlaceLiquid(@Nullable LivingEntity filler, BlockGetter world, BlockPos pos,
       BlockState state, Fluid fluid) {
     return false;
   }
 
   @Override
-  public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state,
+  public boolean placeLiquid(LevelAccessor world, BlockPos pos, BlockState state,
       FluidState fluidState) {
     return false;
   }
 
-  public static class Seed extends Sapling implements FluidFillable {
+  public static class Seed extends Sapling implements LiquidBlockContainer {
 
-    public Seed(Settings settings) {
+    public Seed(Properties settings) {
       super(EndLilyFeature::new, settings, 7);
     }
 
     @Override
-    protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-      return floor.isSideSolidFullSquare(world, pos, Direction.UP) && floor.isIn(
+    protected boolean mayPlaceOn(BlockState floor, BlockGetter world, BlockPos pos) {
+      return floor.isFaceSturdy(world, pos, Direction.UP) && floor.is(
           LighterEndTags.AQUATIC_END_SOIL);
     }
 
     @Nullable
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-      FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
-      return fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8
-          ? super.getPlacementState(
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+      FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
+      return fluidState.is(FluidTags.WATER) && fluidState.getAmount() == 8
+          ? super.getStateForPlacement(
           ctx) : null;
     }
 
     @Override
     protected FluidState getFluidState(BlockState state) {
-      return Fluids.WATER.getStill(false);
+      return Fluids.WATER.getSource(false);
     }
 
     @Override
-    public boolean canFillWithFluid(@Nullable LivingEntity filler, BlockView world, BlockPos pos,
+    public boolean canPlaceLiquid(@Nullable LivingEntity filler, BlockGetter world, BlockPos pos,
         BlockState state, Fluid fluid) {
       return false;
     }
 
     @Override
-    public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state,
+    public boolean placeLiquid(LevelAccessor world, BlockPos pos, BlockState state,
         FluidState fluidState) {
       return false;
     }
 
     @Override
-    public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
       return EndLily.canGrow(world, pos);
     }
 
   }
 
-  public static class EndLilyFeature extends Feature<DefaultFeatureConfig> {
+  public static class EndLilyFeature extends Feature<NoneFeatureConfiguration> {
 
     public EndLilyFeature() {
-      super(DefaultFeatureConfig.CODEC);
+      super(NoneFeatureConfiguration.CODEC);
     }
 
     @Override
-    public boolean generate(FeatureContext<DefaultFeatureConfig> featureConfig) {
-      final BlockPos pos = featureConfig.getOrigin();
-      final StructureWorldAccess world = featureConfig.getWorld();
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+      final BlockPos pos = featureConfig.origin();
+      final WorldGenLevel world = featureConfig.level();
 
       if (EndLily.canGrow(world, pos)) {
-        world.setBlockState(
+        world.setBlock(
             pos,
-            LighterEndBlocks.END_LILY.getDefaultState().with(EndLily.IS_TOP, false),
+            LighterEndBlocks.END_LILY.defaultBlockState().setValue(EndLily.IS_TOP, false),
             Flags.SILENT
         );
 
-        BlockPos up = pos.up();
-        while (world.getFluidState(up).isStill()) {
-          world.setBlockState(up,
-              LighterEndBlocks.END_LILY.getDefaultState().with(EndLily.IS_TOP, false),
+        BlockPos up = pos.above();
+        while (world.getFluidState(up).isSource()) {
+          world.setBlock(up,
+              LighterEndBlocks.END_LILY.defaultBlockState().setValue(EndLily.IS_TOP, false),
               Flags.SILENT
           );
-          up = up.up();
+          up = up.above();
         }
-        world.setBlockState(
+        world.setBlock(
             up,
-            LighterEndBlocks.END_LILY.getDefaultState().with(EndLily.IS_TOP, true),
+            LighterEndBlocks.END_LILY.defaultBlockState().setValue(EndLily.IS_TOP, true),
             Flags.SILENT
         );
         return true;
@@ -219,16 +219,16 @@ public class EndLily extends Block implements FluidFillable {
     }
   }
 
-  private static boolean canGrow(WorldAccess world, BlockPos pos) {
-    if (!world.getBlockState(pos).getFluidState().getFluid().equals(Fluids.WATER.getStill())) {
+  private static boolean canGrow(LevelAccessor world, BlockPos pos) {
+    if (!world.getBlockState(pos).getFluidState().getType().equals(Fluids.WATER.getSource())) {
       return false;
     }
-    Mutable bpos = new Mutable();
+    MutableBlockPos bpos = new MutableBlockPos();
     bpos.set(pos);
-    while (world.getBlockState(bpos).getFluidState().getFluid().equals(Fluids.WATER.getStill())) {
+    while (world.getBlockState(bpos).getFluidState().getType().equals(Fluids.WATER.getSource())) {
       bpos.setY(bpos.getY() + 1);
     }
-    return world.isAir(bpos) && world.isAir(bpos.up());
+    return world.isEmptyBlock(bpos) && world.isEmptyBlock(bpos.above());
   }
 
 }

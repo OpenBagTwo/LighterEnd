@@ -1,7 +1,7 @@
 package io.github.openbagtwo.lighterend.utils.math.sdf.primitives;
 
 import io.github.openbagtwo.lighterend.utils.math.sdf.SDF;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 public class SDFCappedCone extends SDF.Primitive {
 
@@ -26,12 +26,12 @@ public class SDFCappedCone extends SDF.Primitive {
 
   @Override
   public float getDistance(float x, float y, float z) {
-    float qx = MathHelper.sqrt(x * x + z * z);
+    float qx = Mth.sqrt(x * x + z * z);
     float k2x = radius2 - radius1;
     float k2y = 2 * height;
     float cax = qx - Math.min(qx, (y < 0F) ? radius1 : radius2);
     float cay = Math.abs(y) - height;
-    float mlt = MathHelper.clamp(
+    float mlt = Mth.clamp(
         ((radius2 - qx) * k2x + (height - y) * k2y) / (k2x * k2x + k2y * k2y),
         0F,
         1F

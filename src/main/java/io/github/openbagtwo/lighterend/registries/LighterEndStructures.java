@@ -5,11 +5,11 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.world.structures.EndLake;
 import io.github.openbagtwo.lighterend.world.structures.Megalake;
 import io.github.openbagtwo.lighterend.world.structures.pieces.LakePiece;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.structure.StructurePieceType;
-import net.minecraft.world.gen.structure.Structure;
-import net.minecraft.world.gen.structure.StructureType;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 
 public class LighterEndStructures {
 
@@ -19,14 +19,14 @@ public class LighterEndStructures {
 
   public static StructurePieceType register(String name, StructurePieceType piece) {
     return Registry.register(
-        Registries.STRUCTURE_PIECE,
+        BuiltInRegistries.STRUCTURE_PIECE,
         LighterEnd.of(name),
         piece
     );
   }
 
   public static <S extends Structure> StructureType<S> register(String name, MapCodec<S> codec) {
-    return Registry.register(Registries.STRUCTURE_TYPE, LighterEnd.of(name),
+    return Registry.register(BuiltInRegistries.STRUCTURE_TYPE, LighterEnd.of(name),
         () -> codec);
   }
 

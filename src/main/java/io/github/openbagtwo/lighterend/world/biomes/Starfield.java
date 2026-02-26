@@ -2,54 +2,54 @@ package io.github.openbagtwo.lighterend.world.biomes;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndParticles;
 import io.github.openbagtwo.lighterend.world.LighterEndPlacedFeatures;
-import net.minecraft.registry.Registerable;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.attribute.AmbientParticle;
 import net.minecraft.world.attribute.EnvironmentAttributes;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeEffects;
-import net.minecraft.world.biome.GenerationSettings;
-import net.minecraft.world.biome.SpawnSettings;
-import net.minecraft.world.gen.GenerationStep.Feature;
-import net.minecraft.world.gen.carver.ConfiguredCarver;
-import net.minecraft.world.gen.feature.PlacedFeature;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeGenerationSettings;
+import net.minecraft.world.level.biome.BiomeSpecialEffects;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class Starfield {
 
-  public static Biome create(Registerable<Biome> context) {
-    RegistryEntryLookup<PlacedFeature> features = context.getRegistryLookup(
-        RegistryKeys.PLACED_FEATURE
+  public static Biome create(BootstrapContext<Biome> context) {
+    HolderGetter<PlacedFeature> features = context.lookup(
+        Registries.PLACED_FEATURE
     );
-    RegistryEntryLookup<ConfiguredCarver<?>> carvers = context.getRegistryLookup(
-        RegistryKeys.CONFIGURED_CARVER
+    HolderGetter<ConfiguredWorldCarver<?>> carvers = context.lookup(
+        Registries.CONFIGURED_CARVER
     );
 
-    SpawnSettings spawns = new SpawnSettings.Builder().build();
+    MobSpawnSettings spawns = new MobSpawnSettings.Builder().build();
 
-    var genSettingsBuilder = new GenerationSettings.LookupBackedBuilder(features, carvers);
-    for (RegistryKey<PlacedFeature> star : LighterEndPlacedFeatures.STARFIELD_ICE_STARS) {
-      genSettingsBuilder.feature(Feature.SURFACE_STRUCTURES, star);
+    var genSettingsBuilder = new BiomeGenerationSettings.Builder(features, carvers);
+    for (ResourceKey<PlacedFeature> star : LighterEndPlacedFeatures.STARFIELD_ICE_STARS) {
+      genSettingsBuilder.addFeature(Decoration.SURFACE_STRUCTURES, star);
     }
 
-    return new Biome.Builder()
-        .precipitation(false)
+    return new Biome.BiomeBuilder()
+        .hasPrecipitation(false)
         .temperature(-1.0F)
         .downfall(1.0F)
-        .effects(new BiomeEffects.Builder()
+        .specialEffects(new BiomeSpecialEffects.Builder()
             .waterColor(0x45c2be)
-            .foliageColor(0xc1f4f4)
-            .grassColor(0xe6f6fc)
+            .foliageColorOverride(0xc1f4f4)
+            .grassColorOverride(0xe6f6fc)
             .build()
         )
-        .spawnSettings(spawns)
+        .mobSpawnSettings(spawns)
         .generationSettings(genSettingsBuilder.build())
-        .setEnvironmentAttribute(EnvironmentAttributes.AMBIENT_PARTICLES_VISUAL,
+        .setAttribute(EnvironmentAttributes.AMBIENT_PARTICLES,
             AmbientParticle.of(LighterEndParticles.SNOWFLAKE, 0.002F))
-        .setEnvironmentAttribute(EnvironmentAttributes.SKY_COLOR_VISUAL, 0x000000)
-        .setEnvironmentAttribute(EnvironmentAttributes.FOG_COLOR_VISUAL, 0xe0f5fe)
-        .setEnvironmentAttribute(EnvironmentAttributes.WATER_FOG_COLOR_VISUAL, 0x45c2be)
+        .setAttribute(EnvironmentAttributes.SKY_COLOR, 0x000000)
+        .setAttribute(EnvironmentAttributes.FOG_COLOR, 0xe0f5fe)
+        .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 0x45c2be)
         .build();
   }
 }

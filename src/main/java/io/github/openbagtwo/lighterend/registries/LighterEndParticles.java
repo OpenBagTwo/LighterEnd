@@ -2,9 +2,9 @@ package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
-import net.minecraft.particle.SimpleParticleType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 
 public class LighterEndParticles {
 
@@ -40,7 +40,7 @@ public class LighterEndParticles {
 
   public static SimpleParticleType register(String name, SimpleParticleType particleType) {
     return Registry.register(
-        Registries.PARTICLE_TYPE,
+        BuiltInRegistries.PARTICLE_TYPE,
         LighterEnd.of(name),
         particleType);
   }

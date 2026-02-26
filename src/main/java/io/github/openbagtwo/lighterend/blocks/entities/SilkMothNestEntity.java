@@ -17,28 +17,28 @@ import io.netty.buffer.ByteBuf;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FireBlock;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.component.ComponentMap;
-import net.minecraft.component.ComponentsAccess;
-import net.minecraft.component.type.NbtComponent;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.registry.Registries;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.storage.NbtWriteView;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.ErrorReporter;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.FireBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
 public class SilkMothNestEntity extends BlockEntity {
@@ -81,11 +81,11 @@ public class SilkMothNestEntity extends BlockEntity {
   }
 
   @Override
-  public void markDirty() {
+  public void setChanged() {
     if (this.isNearFire()) {
-      this.tryReleaseMoths(this.world.getBlockState(this.getPos()));
+      this.tryReleaseMoths(this.level.getBlockState(this.getBlockPos()));
     }
-    super.markDirty();
+    super.setChanged();
   }
 
   public int getOccupancy() {
@@ -93,9 +93,9 @@ public class SilkMothNestEntity extends BlockEntity {
   }
 
   public boolean isNearFire() {
-    if (this.world != null) {
-      for (BlockPos blockPos : BlockPos.iterate(this.pos.add(-1, -1, -1), this.pos.add(1, 1, 1))) {
-        if (this.world.getBlockState(blockPos).getBlock() instanceof FireBlock) {
+    if (this.level != null) {
+      for (BlockPos blockPos : BlockPos.betweenClosed(this.worldPosition.offset(-1, -1, -1), this.worldPosition.offset(1, 1, 1))) {
+        if (this.level.getBlockState(blockPos).getBlock() instanceof FireBlock) {
           return true;
         }
       }
@@ -106,37 +106,37 @@ public class SilkMothNestEntity extends BlockEntity {
   public List<Entity> tryReleaseMoths(BlockState state) {
     List<Entity> list = Lists.<Entity>newArrayList();
     this.moths.removeIf(
-        moth -> releaseMoth(this.world, this.pos, state, moth.createData(), list, true));
+        moth -> releaseMoth(this.level, this.worldPosition, state, moth.createData(), list, true));
     if (!list.isEmpty()) {
-      super.markDirty();
+      super.setChanged();
     }
     return list;
   }
 
   public static int getFullness(BlockState state) {
-    return state.get(SilkMothNest.FULLNESS);
+    return state.getValue(SilkMothNest.FULLNESS);
   }
 
   public void tryEnterHive(SilkMoth entity) {
     if (this.moths.size() < MAX_MOTH_COUNT) {
       entity.stopRiding();
-      entity.removeAllPassengers();
-      entity.detachLeash();
+      entity.ejectPassengers();
+      entity.dropLeash();
       this.addMoth(MothData.of(entity));
-      if (this.world != null) {
+      if (this.level != null) {
 
-        BlockPos blockPos = this.getPos();
-        this.world
+        BlockPos blockPos = this.getBlockPos();
+        this.level
             .playSound(
                 null, blockPos.getX(), blockPos.getY(), blockPos.getZ(),
-                LighterEndSounds.MOTH_NEST_ENTER, SoundCategory.BLOCKS, 1.0F, 1.0F
+                LighterEndSounds.MOTH_NEST_ENTER, SoundSource.BLOCKS, 1.0F, 1.0F
             );
-        this.world.emitGameEvent(GameEvent.BLOCK_CHANGE, blockPos,
-            GameEvent.Emitter.of(entity, this.getCachedState()));
+        this.level.gameEvent(GameEvent.BLOCK_CHANGE, blockPos,
+            GameEvent.Context.of(entity, this.getBlockState()));
       }
 
       entity.discard();
-      super.markDirty();
+      super.setChanged();
     }
   }
 
@@ -145,7 +145,7 @@ public class SilkMothNestEntity extends BlockEntity {
   }
 
   private static boolean releaseMoth(
-      World world,
+      Level world,
       BlockPos pos,
       BlockState state,
       MothData moth,
@@ -153,8 +153,8 @@ public class SilkMothNestEntity extends BlockEntity {
       boolean emergency
   ) {
 
-    Direction direction = state.get(SilkMothNest.FACING);
-    BlockPos blockPos = pos.offset(direction);
+    Direction direction = state.getValue(SilkMothNest.FACING);
+    BlockPos blockPos = pos.relative(direction);
     boolean bl = !world.getBlockState(blockPos).getCollisionShape(world, blockPos).isEmpty();
     if (bl) {
       return false;
@@ -164,7 +164,7 @@ public class SilkMothNestEntity extends BlockEntity {
       if (entity != null) {
         if (entity instanceof SilkMoth mothEntity) {
 
-          if (state.isOf(LighterEndBlocks.SILK_MOTH_NEST) && !emergency) {
+          if (state.is(LighterEndBlocks.SILK_MOTH_NEST) && !emergency) {
             int current_fullness = getFullness(state);
             if (current_fullness < SilkMothNest.MAX_FULLNESS) {
               int additional_fullness = 1;
@@ -173,8 +173,8 @@ public class SilkMothNestEntity extends BlockEntity {
                   additional_fullness += 1;
                 }
               }
-              world.setBlockState(pos,
-                  state.with(SilkMothNest.FULLNESS, current_fullness + additional_fullness));
+              world.setBlockAndUpdate(pos,
+                  state.setValue(SilkMothNest.FULLNESS, current_fullness + additional_fullness));
             }
             mothEntity.resetCannotEnterHiveTicks();
           }
@@ -183,19 +183,19 @@ public class SilkMothNestEntity extends BlockEntity {
             entities.add(mothEntity);
           }
 
-          float f = entity.getWidth();
+          float f = entity.getBbWidth();
           double d = bl ? 0.0 : 0.55 + f / 2.0F;
-          double e = pos.getX() + 0.5 + d * direction.getOffsetX();
-          double g = pos.getY() + 0.5 - entity.getHeight() / 2.0F;
-          double h = pos.getZ() + 0.5 + d * direction.getOffsetZ();
-          entity.refreshPositionAndAngles(e, g, h, entity.getYaw(), entity.getPitch());
+          double e = pos.getX() + 0.5 + d * direction.getStepX();
+          double g = pos.getY() + 0.5 - entity.getBbHeight() / 2.0F;
+          double h = pos.getZ() + 0.5 + d * direction.getStepZ();
+          entity.snapTo(e, g, h, entity.getYRot(), entity.getXRot());
         }
 
-        world.playSound(null, pos, LighterEndSounds.MOTH_NEST_EXIT, SoundCategory.BLOCKS, 1.0F,
+        world.playSound(null, pos, LighterEndSounds.MOTH_NEST_EXIT, SoundSource.BLOCKS, 1.0F,
             1.0F);
-        world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos,
-            GameEvent.Emitter.of(entity, world.getBlockState(pos)));
-        return world.spawnEntity(entity);
+        world.gameEvent(GameEvent.BLOCK_CHANGE, pos,
+            GameEvent.Context.of(entity, world.getBlockState(pos)));
+        return world.addFreshEntity(entity);
       } else {
         return false;
       }
@@ -203,7 +203,7 @@ public class SilkMothNestEntity extends BlockEntity {
   }
 
 
-  private static void tickMoths(World world, BlockPos pos, BlockState state,
+  private static void tickMoths(Level world, BlockPos pos, BlockState state,
       List<Moth> moths) {
     boolean bl = false;
     Iterator<Moth> iterator = moths.iterator();
@@ -218,25 +218,25 @@ public class SilkMothNestEntity extends BlockEntity {
       }
     }
     if (bl) {
-      markDirty(world, pos, state);
+      setChanged(world, pos, state);
     }
   }
 
-  public static void serverTick(World world, BlockPos pos, BlockState state,
+  public static void serverTick(Level world, BlockPos pos, BlockState state,
       SilkMothNestEntity blockEntity) {
     tickMoths(world, pos, state, blockEntity.moths);
     if (!blockEntity.moths.isEmpty() && world.getRandom().nextDouble() < 0.005) {
       double d = pos.getX() + 0.5;
       double e = pos.getY();
       double f = pos.getZ() + 0.5;
-      world.playSound(null, d, e, f, LighterEndSounds.MOTH_NEST_WORK, SoundCategory.BLOCKS,
+      world.playSound(null, d, e, f, LighterEndSounds.MOTH_NEST_WORK, SoundSource.BLOCKS,
           1.0F, 1.0F);
     }
   }
 
   @Override
-  protected void readData(ReadView view) {
-    super.readData(view);
+  protected void loadAdditional(ValueInput view) {
+    super.loadAdditional(view);
     this.moths.clear();
     for (MothData data : view.read("moths", MothData.LIST_CODEC).orElse(List.of())) {
       this.addMoth(data);
@@ -244,15 +244,15 @@ public class SilkMothNestEntity extends BlockEntity {
   }
 
   @Override
-  protected void writeData(WriteView view) {
-    super.writeData(view);
-    view.put("moths", MothData.LIST_CODEC,
+  protected void saveAdditional(ValueOutput view) {
+    super.saveAdditional(view);
+    view.store("moths", MothData.LIST_CODEC,
         this.createMothData());
   }
 
   @Override
-  protected void readComponents(ComponentsAccess components) {
-    super.readComponents(components);
+  protected void applyImplicitComponents(DataComponentGetter components) {
+    super.applyImplicitComponents(components);
     this.moths.clear();
     List<MothData> list = components.getOrDefault(
         LighterEndData.MOTHS, LighterEndData.MothsComponent.DEFAULT).moths();
@@ -260,15 +260,15 @@ public class SilkMothNestEntity extends BlockEntity {
   }
 
   @Override
-  protected void addComponents(ComponentMap.Builder builder) {
-    super.addComponents(builder);
-    builder.add(LighterEndData.MOTHS, new MothsComponent(this.createMothData()));
+  protected void collectImplicitComponents(DataComponentMap.Builder builder) {
+    super.collectImplicitComponents(builder);
+    builder.set(LighterEndData.MOTHS, new MothsComponent(this.createMothData()));
   }
 
   @Override
-  public void removeFromCopiedStackData(WriteView view) {
-    super.removeFromCopiedStackData(view);
-    view.remove("moths");
+  public void removeComponentsFromTag(ValueOutput view) {
+    super.removeComponentsFromTag(view);
+    view.discard("moths");
   }
 
   private List<MothData> createMothData() {
@@ -296,11 +296,11 @@ public class SilkMothNestEntity extends BlockEntity {
     }
   }
 
-  public record MothData(NbtComponent entityData, int ticksInHive, int minTicksInHive) {
+  public record MothData(CustomData entityData, int ticksInHive, int minTicksInHive) {
 
     public static final Codec<MothData> CODEC = RecordCodecBuilder.create(
         instance -> instance.group(
-                NbtComponent.CODEC.optionalFieldOf("entity_data", NbtComponent.DEFAULT).forGetter(
+                CustomData.CODEC.optionalFieldOf("entity_data", CustomData.EMPTY).forGetter(
                     MothData::entityData),
                 Codec.INT.fieldOf("ticks_in_hive").forGetter(
                     MothData::ticksInHive),
@@ -310,35 +310,35 @@ public class SilkMothNestEntity extends BlockEntity {
             .apply(instance, MothData::new)
     );
     public static final Codec<List<MothData>> LIST_CODEC = CODEC.listOf();
-    public static final PacketCodec<ByteBuf, MothData> PACKET_CODEC = PacketCodec.tuple(
-        NbtComponent.PACKET_CODEC,
+    public static final StreamCodec<ByteBuf, MothData> PACKET_CODEC = StreamCodec.composite(
+        CustomData.STREAM_CODEC,
         MothData::entityData,
-        PacketCodecs.VAR_INT,
+        ByteBufCodecs.VAR_INT,
         MothData::ticksInHive,
-        PacketCodecs.VAR_INT,
+        ByteBufCodecs.VAR_INT,
         MothData::minTicksInHive,
         MothData::new
     );
 
     public static MothData create(int ticksInHive) {
-      NbtCompound nbtCompound = new NbtCompound();
+      CompoundTag nbtCompound = new CompoundTag();
       nbtCompound.putString("id",
-          Registries.ENTITY_TYPE.getId(LighterEndMobs.SILK_MOTH.mob).toString());
+          BuiltInRegistries.ENTITY_TYPE.getKey(LighterEndMobs.SILK_MOTH.mob).toString());
       return new MothData(
-          NbtComponent.of(nbtCompound),
+          CustomData.of(nbtCompound),
           ticksInHive,
           MIN_OCCUPATION_TICKS
       );
     }
 
     @Nullable
-    public Entity loadEntity(World world, BlockPos pos) {
-      NbtCompound nbtCompound = this.entityData.copyNbt();
+    public Entity loadEntity(Level world, BlockPos pos) {
+      CompoundTag nbtCompound = this.entityData.copyTag();
       SilkMothNestEntity.IRRELEVANT_NBT_TAGS.forEach(
           nbtCompound::remove);
-      Entity entity = EntityType.loadEntityWithPassengers(nbtCompound, world, SpawnReason.LOAD,
+      Entity entity = EntityType.loadEntityRecursive(nbtCompound, world, EntitySpawnReason.LOAD,
           entityx -> entityx);
-      if (entity != null && entity.getType().isIn(LighterEndTags.MOTH_NEST_INHABITORS)) {
+      if (entity != null && entity.getType().is(LighterEndTags.MOTH_NEST_INHABITORS)) {
         entity.setNoGravity(true);
         if (entity instanceof SilkMoth mothEntity) {
           mothEntity.setHive(pos);
@@ -351,27 +351,27 @@ public class SilkMothNestEntity extends BlockEntity {
     }
 
     private static void tickEntity(int ticksInHive, SilkMoth moth) {
-      int i = moth.getBreedingAge();
+      int i = moth.getAge();
       if (i < 0) {
-        moth.setBreedingAge(Math.min(0, i + ticksInHive));
+        moth.setAge(Math.min(0, i + ticksInHive));
       } else if (i > 0) {
-        moth.setBreedingAge(Math.max(0, i - ticksInHive));
+        moth.setAge(Math.max(0, i - ticksInHive));
       }
 
-      moth.setLoveTicks(Math.max(0, moth.getLoveTicks() - ticksInHive));
+      moth.setInLoveTime(Math.max(0, moth.getInLoveTime() - ticksInHive));
     }
 
     public static MothData of(Entity entity) {
       MothData mothData;
-      try (ErrorReporter.Logging logging = new ErrorReporter.Logging(
-          entity.getErrorReporterContext(),
+      try (ProblemReporter.ScopedCollector logging = new ProblemReporter.ScopedCollector(
+          entity.problemPath(),
           LighterEnd.LOGGER
       )) {
-        NbtWriteView nbtWriteView = NbtWriteView.create(logging, entity.getRegistryManager());
-        entity.saveData(nbtWriteView);
-        SilkMothNestEntity.IRRELEVANT_NBT_TAGS.forEach(nbtWriteView::remove);
-        NbtCompound nbtCompound = nbtWriteView.getNbt();
-        mothData = new MothData(NbtComponent.of(nbtCompound), 0, MIN_OCCUPATION_TICKS);
+        TagValueOutput nbtWriteView = TagValueOutput.createWithContext(logging, entity.registryAccess());
+        entity.save(nbtWriteView);
+        SilkMothNestEntity.IRRELEVANT_NBT_TAGS.forEach(nbtWriteView::discard);
+        CompoundTag nbtCompound = nbtWriteView.buildResult();
+        mothData = new MothData(CustomData.of(nbtCompound), 0, MIN_OCCUPATION_TICKS);
       }
 
       return mothData;

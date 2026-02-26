@@ -4,103 +4,103 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBiomes;
 import io.github.openbagtwo.lighterend.registries.LighterEndData;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
-import net.minecraft.block.Blocks;
-import net.minecraft.component.ComponentType;
-import net.minecraft.component.ComponentsAccess;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.passive.SchoolingFishEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.fish.AbstractSchoolingFish;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class EndFish extends SchoolingFishEntity {
+public class EndFish extends AbstractSchoolingFish {
 
   public static final int VARIANTS_NORMAL = 5;
   public static final int VARIANTS_SULPHUR = 3;
   public static final int VARIANTS = VARIANTS_NORMAL + VARIANTS_SULPHUR;
-  private static final TrackedData<Integer> VARIANT = DataTracker.registerData(
+  private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(
       EndFish.class,
-      TrackedDataHandlerRegistry.INTEGER
+      EntityDataSerializers.INT
   );
 
-  public EndFish(EntityType<EndFish> entityType, World world) {
+  public EndFish(EntityType<EndFish> entityType, Level world) {
     super(entityType, world);
   }
 
   @Override
-  public EntityData initialize(
-      ServerWorldAccess world,
-      LocalDifficulty difficulty,
-      SpawnReason spawnReason,
-      @Nullable EntityData entityData
+  public SpawnGroupData finalizeSpawn(
+      ServerLevelAccessor world,
+      DifficultyInstance difficulty,
+      EntitySpawnReason spawnReason,
+      @Nullable SpawnGroupData entityData
   ) {
-    if (spawnReason == SpawnReason.BUCKET) {
+    if (spawnReason == EntitySpawnReason.BUCKET) {
       return entityData;
     }
 
     this.setVariant(random.nextInt(VARIANTS_NORMAL));
 
-    RegistryEntry<Biome> biome = world.getBiome(getBlockPos());
-    if (biome.matchesKey(LighterEndBiomes.SULPHUR_SPRINGS)) {
+    Holder<Biome> biome = world.getBiome(blockPosition());
+    if (biome.is(LighterEndBiomes.SULPHUR_SPRINGS)) {
       this.setVariant(random.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL);
     }
 
-    EntityData data = super.initialize(world, difficulty, spawnReason, entityData);
+    SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData);
 
-    this.calculateDimensions();
+    this.refreshDimensions();
     return data;
   }
 
   @Override
-  protected void initDataTracker(DataTracker.Builder builder) {
-    super.initDataTracker(builder);
-    builder.add(VARIANT, 0);
+  protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    super.defineSynchedData(builder);
+    builder.define(VARIANT, 0);
   }
 
   @Override
-  public void writeCustomData(WriteView view) {
-    super.writeCustomData(view);
+  public void addAdditionalSaveData(ValueOutput view) {
+    super.addAdditionalSaveData(view);
     view.putInt("Variant", this.getVariant());
   }
 
   @Override
-  protected void readCustomData(ReadView view) {
-    super.readCustomData(view);
-    this.setVariant(view.getInt("Variant", 0));
+  protected void readAdditionalSaveData(ValueInput view) {
+    super.readAdditionalSaveData(view);
+    this.setVariant(view.getIntOr("Variant", 0));
   }
 
   @Override
-  public void copyDataToStack(ItemStack stack) {
-    super.copyDataToStack(stack);
-    stack.copy(LighterEndData.VARIANT, this);
+  public void saveToBucketTag(ItemStack stack) {
+    super.saveToBucketTag(stack);
+    stack.copyFrom(LighterEndData.VARIANT, this);
   }
 
   @Override
-  protected void copyComponentsFrom(ComponentsAccess from) {
-    this.copyComponentFrom(from, LighterEndData.VARIANT);
-    super.copyComponentsFrom(from);
+  protected void applyImplicitComponents(DataComponentGetter from) {
+    this.applyImplicitComponentIfPresent(from, LighterEndData.VARIANT);
+    super.applyImplicitComponents(from);
   }
 
   @Override
-  public @NotNull ItemStack getBucketItem() {
+  public @NotNull ItemStack getBucketItemStack() {
     return new ItemStack(LighterEndItems.END_FISH_BUCKET);
   }
 
@@ -127,43 +127,43 @@ public class EndFish extends SchoolingFishEntity {
   @Override
   public void tick() {
     super.tick();
-    if (random.nextInt(8) == 0 && getBlockStateAtPos().isOf(Blocks.WATER)) {
+    if (random.nextInt(8) == 0 && getInBlockState().is(Blocks.WATER)) {
       double x = getX() + random.nextGaussian() * 0.2;
       double y = getY() + random.nextGaussian() * 0.2;
       double z = getZ() + random.nextGaussian() * 0.2;
-      this.getEntityWorld().addParticleClient(ParticleTypes.BUBBLE, x, y, z, 0, 0, 0);
+      this.level().addParticle(ParticleTypes.BUBBLE, x, y, z, 0, 0, 0);
     }
   }
 
-  public static DefaultAttributeContainer.Builder createAttributes() {
+  public static AttributeSupplier.Builder createAttributes() {
     return LivingEntity.createLivingAttributes()
-        .add(EntityAttributes.MAX_HEALTH, 2.0)
-        .add(EntityAttributes.FOLLOW_RANGE, 16.0)
-        .add(EntityAttributes.MOVEMENT_SPEED, 0.75);
+        .add(Attributes.MAX_HEALTH, 2.0)
+        .add(Attributes.FOLLOW_RANGE, 16.0)
+        .add(Attributes.MOVEMENT_SPEED, 0.75);
   }
 
   public int getVariant() {
-    return this.dataTracker.get(VARIANT);
+    return this.entityData.get(VARIANT);
   }
 
   public void setVariant(int variant) {
-    this.dataTracker.set(VARIANT, variant % VARIANTS);
+    this.entityData.set(VARIANT, variant % VARIANTS);
   }
 
   @Nullable
   @Override
-  public <T> T get(ComponentType<? extends T> type) {
+  public <T> T get(DataComponentType<? extends T> type) {
     return type == LighterEndData.VARIANT ?
         castComponentValue(type, new LighterEndData.Variant(this.getVariant())) : super.get(type);
   }
 
   @Override
-  protected <T> boolean setApplicableComponent(ComponentType<T> type, T value) {
+  protected <T> boolean applyImplicitComponent(DataComponentType<T> type, T value) {
     if (type == LighterEndData.VARIANT) {
       this.setVariant(castComponentValue(LighterEndData.VARIANT, value).variant());
       return true;
     } else {
-      return super.setApplicableComponent(type, value);
+      return super.applyImplicitComponent(type, value);
     }
   }
 }

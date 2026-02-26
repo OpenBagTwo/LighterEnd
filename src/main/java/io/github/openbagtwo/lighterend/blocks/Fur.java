@@ -2,92 +2,92 @@ package io.github.openbagtwo.lighterend.blocks;
 
 import com.google.common.collect.Maps;
 import java.util.EnumMap;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.Waterloggable;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-public class Fur extends Block implements Waterloggable {
+public class Fur extends Block implements SimpleWaterloggedBlock {
 
-  private static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-  public static final EnumProperty<Direction> FACING = Properties.FACING;
+  private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+  public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
   private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(
       Direction.class);
 
   static {
-    BOUNDING_SHAPES.put(Direction.UP, VoxelShapes.cuboid(0.0, 0.0, 0.0, 1.0, 0.5, 1.0));
-    BOUNDING_SHAPES.put(Direction.DOWN, VoxelShapes.cuboid(0.0, 0.5, 0.0, 1.0, 1.0, 1.0));
-    BOUNDING_SHAPES.put(Direction.NORTH, VoxelShapes.cuboid(0.0, 0.0, 0.5, 1.0, 1.0, 1.0));
-    BOUNDING_SHAPES.put(Direction.SOUTH, VoxelShapes.cuboid(0.0, 0.0, 0.0, 1.0, 1.0, 0.5));
-    BOUNDING_SHAPES.put(Direction.WEST, VoxelShapes.cuboid(0.5, 0.0, 0.0, 1.0, 1.0, 1.0));
-    BOUNDING_SHAPES.put(Direction.EAST, VoxelShapes.cuboid(0.0, 0.0, 0.0, 0.5, 1.0, 1.0));
+    BOUNDING_SHAPES.put(Direction.UP, Shapes.box(0.0, 0.0, 0.0, 1.0, 0.5, 1.0));
+    BOUNDING_SHAPES.put(Direction.DOWN, Shapes.box(0.0, 0.5, 0.0, 1.0, 1.0, 1.0));
+    BOUNDING_SHAPES.put(Direction.NORTH, Shapes.box(0.0, 0.0, 0.5, 1.0, 1.0, 1.0));
+    BOUNDING_SHAPES.put(Direction.SOUTH, Shapes.box(0.0, 0.0, 0.0, 1.0, 1.0, 0.5));
+    BOUNDING_SHAPES.put(Direction.WEST, Shapes.box(0.5, 0.0, 0.0, 1.0, 1.0, 1.0));
+    BOUNDING_SHAPES.put(Direction.EAST, Shapes.box(0.0, 0.0, 0.0, 0.5, 1.0, 1.0));
   }
 
-  public Fur(Settings settings, MapColor color, int luminance, boolean wet) {
+  public Fur(Properties settings, MapColor color, int luminance, boolean wet) {
     super(
         settings
             .mapColor(color)
             .replaceable()
             .noCollision()
-            .breakInstantly()
-            .burnable()
-            .pistonBehavior(PistonBehavior.DESTROY)
-            .luminance(bs -> luminance)
-            .burnable()
-            .sounds(wet ? BlockSoundGroup.WET_GRASS : BlockSoundGroup.GRASS)
+            .instabreak()
+            .ignitedByLava()
+            .pushReaction(PushReaction.DESTROY)
+            .lightLevel(bs -> luminance)
+            .ignitedByLava()
+            .sound(wet ? SoundType.WET_GRASS : SoundType.GRASS)
     );
-    setDefaultState(getDefaultState().with(WATERLOGGED, false).with(FACING, Direction.UP));
+    registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(FACING, Direction.UP));
   }
 
   @Override
-  public @NotNull VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos,
-      ShapeContext ePos) {
-    return BOUNDING_SHAPES.get(state.get(FACING));
+  public @NotNull VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos,
+      CollisionContext ePos) {
+    return BOUNDING_SHAPES.get(state.getValue(FACING));
   }
 
   @Override
-  protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     builder.add(WATERLOGGED);
     builder.add(FACING);
   }
 
   @Override
   protected FluidState getFluidState(BlockState state) {
-    return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+    return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
   }
 
   @Override
-  public BlockState getPlacementState(ItemPlacementContext ctx) {
-    BlockState blockState = super.getPlacementState(ctx);
+  public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+    BlockState blockState = super.getStateForPlacement(ctx);
     if (blockState != null) {
-      FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
-      blockState = blockState.with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
-      for (Direction direction : ctx.getPlacementDirections()) {
-        blockState = blockState.with(FACING, direction.getOpposite());
-        if (blockState.canPlaceAt(ctx.getWorld(), ctx.getBlockPos())) {
+      FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
+      blockState = blockState.setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
+      for (Direction direction : ctx.getNearestLookingDirections()) {
+        blockState = blockState.setValue(FACING, direction.getOpposite());
+        if (blockState.canSurvive(ctx.getLevel(), ctx.getClickedPos())) {
           return blockState;
         }
       }
@@ -96,38 +96,38 @@ public class Fur extends Block implements Waterloggable {
   }
 
   @Override
-  public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-    Direction direction = state.get(FACING);
-    BlockPos blockPos = pos.offset(direction.getOpposite());
-    return sideCoversSmallSquare(world, blockPos, direction) || world.getBlockState(blockPos)
-        .isIn(BlockTags.LEAVES);
+  public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+    Direction direction = state.getValue(FACING);
+    BlockPos blockPos = pos.relative(direction.getOpposite());
+    return canSupportCenter(world, blockPos, direction) || world.getBlockState(blockPos)
+        .is(BlockTags.LEAVES);
   }
 
   @Override
-  public BlockState getStateForNeighborUpdate(
+  public BlockState updateShape(
       BlockState state,
-      WorldView world,
-      ScheduledTickView tickView,
+      LevelReader world,
+      ScheduledTickAccess tickView,
       BlockPos pos,
       Direction direction,
       BlockPos neighborPos,
       BlockState neighborState,
-      Random random
+      RandomSource random
   ) {
-    if (!canPlaceAt(state, world, pos)) {
-      return Blocks.AIR.getDefaultState();
+    if (!canSurvive(state, world, pos)) {
+      return Blocks.AIR.defaultBlockState();
     } else {
       return state;
     }
   }
 
   @Override
-  public BlockState rotate(BlockState state, BlockRotation rotation) {
-    return state.with(FACING, rotation.rotate(state.get(FACING)));
+  public BlockState rotate(BlockState state, Rotation rotation) {
+    return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
   }
 
   @Override
-  public BlockState mirror(BlockState state, BlockMirror mirror) {
-    return state.rotate(mirror.getRotation(state.get(FACING)));
+  public BlockState mirror(BlockState state, Mirror mirror) {
+    return state.rotate(mirror.getRotation(state.getValue(FACING)));
   }
 }

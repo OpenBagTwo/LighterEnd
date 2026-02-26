@@ -3,26 +3,26 @@ package io.github.openbagtwo.lighterend.datagen;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.RegistryWrapper.WrapperLookup;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.registries.Registries;
 
 public class RegistryProvider extends FabricDynamicRegistryProvider {
 
   protected RegistryProvider(
       FabricDataOutput output,
-      CompletableFuture<WrapperLookup> registriesFuture
+      CompletableFuture<Provider> registriesFuture
   ) {
     super(output, registriesFuture);
   }
 
   @Override
-  protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
-    entries.addAll(registries.getOrThrow(RegistryKeys.CONFIGURED_FEATURE));
-    entries.addAll(registries.getOrThrow(RegistryKeys.PLACED_FEATURE));
-    entries.addAll(registries.getOrThrow(RegistryKeys.BIOME));
-    entries.addAll(registries.getOrThrow(RegistryKeys.NOISE_PARAMETERS));
-    entries.addAll(registries.getOrThrow(RegistryKeys.TRIM_MATERIAL));
+  protected void configure(HolderLookup.Provider registries, Entries entries) {
+    entries.addAll(registries.lookupOrThrow(Registries.CONFIGURED_FEATURE));
+    entries.addAll(registries.lookupOrThrow(Registries.PLACED_FEATURE));
+    entries.addAll(registries.lookupOrThrow(Registries.BIOME));
+    entries.addAll(registries.lookupOrThrow(Registries.NOISE));
+    entries.addAll(registries.lookupOrThrow(Registries.TRIM_MATERIAL));
   }
 
   @Override

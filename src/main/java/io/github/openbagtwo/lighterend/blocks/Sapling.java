@@ -4,90 +4,90 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.Optional;
 import java.util.function.Supplier;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SaplingBlock;
-import net.minecraft.block.SaplingGenerator;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.registry.tag.BiomeTags;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BiomeTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SaplingBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.grower.TreeGrower;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.PushReaction;
 
 public class Sapling extends SaplingBlock {
 
-  public final Supplier<Feature<DefaultFeatureConfig>> treeConstructor;
+  public final Supplier<Feature<NoneFeatureConfiguration>> treeConstructor;
   public final int growChance;
 
   public Sapling(
-      Supplier<Feature<DefaultFeatureConfig>> treeConstructor,
-      Settings settings
+      Supplier<Feature<NoneFeatureConfiguration>> treeConstructor,
+      Properties settings
   ) {
     this(treeConstructor, settings, 15);
   }
 
   public Sapling(
-      Supplier<Feature<DefaultFeatureConfig>> treeConstructor,
-      Settings settings,
+      Supplier<Feature<NoneFeatureConfiguration>> treeConstructor,
+      Properties settings,
       int growChance
   ) {
     super(SAPLING_GENERATOR,
         settings
             .noCollision()
-            .breakInstantly()
-            .sounds(BlockSoundGroup.CROP)
-            .pistonBehavior(PistonBehavior.DESTROY)
-            .burnable()
-            .ticksRandomly()
+            .instabreak()
+            .sound(SoundType.CROP)
+            .pushReaction(PushReaction.DESTROY)
+            .ignitedByLava()
+            .randomTicks()
     );
     this.treeConstructor = treeConstructor;
     this.growChance = growChance;
   }
 
   @Override
-  public void generate(ServerWorld world, BlockPos pos, BlockState state, Random random) {
+  public void advanceTree(ServerLevel world, BlockPos pos, BlockState state, RandomSource random) {
     if (!isAllowedToGrow(world, pos)) {
       return;
     }
-    if (state.get(STAGE) == 0) {
-      world.setBlockState(pos, state.cycle(STAGE),
-          Block.SKIP_REDRAW_AND_BLOCK_ENTITY_REPLACED_CALLBACK);
+    if (state.getValue(STAGE) == 0) {
+      world.setBlock(pos, state.cycle(STAGE),
+          Block.UPDATE_NONE);
     } else {
-      FeatureContext<DefaultFeatureConfig> context = new FeatureContext<>(null, world,
-          world.getChunkManager().getChunkGenerator(), random, pos, new DefaultFeatureConfig());
-      treeConstructor.get().generate(context);
+      FeaturePlaceContext<NoneFeatureConfiguration> context = new FeaturePlaceContext<>(null, world,
+          world.getChunkSource().getGenerator(), random, pos, new NoneFeatureConfiguration());
+      treeConstructor.get().place(context);
     }
   }
 
   @Override
-  protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-    return floor.isIn(LighterEndTags.END_SOIL);
+  protected boolean mayPlaceOn(BlockState floor, BlockGetter world, BlockPos pos) {
+    return floor.is(LighterEndTags.END_SOIL);
   }
 
   @Override
-  protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+  protected void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
     if (random.nextInt(this.growChance) == 0) {
-      this.generate(world, pos, state, random);
+      this.advanceTree(world, pos, state, random);
     }
   }
 
   @Override
-  public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
+  public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
     return isAllowedToGrow(world, pos);
   }
 
-  protected static boolean isAllowedToGrow(WorldView world, BlockPos pos) {
+  protected static boolean isAllowedToGrow(LevelReader world, BlockPos pos) {
     return !LighterEnd.CONFIG.endPlantsOnlyGrowInTheEnd()
-        || world.getBiome(pos).isIn(BiomeTags.IS_END);
+        || world.getBiome(pos).is(BiomeTags.IS_END);
   }
 
-  private static final SaplingGenerator SAPLING_GENERATOR = new SaplingGenerator(
+  private static final TreeGrower SAPLING_GENERATOR = new TreeGrower(
       LighterEnd.MOD_ID + ":sapling",
       Optional.empty(),
       Optional.empty(),

@@ -9,70 +9,70 @@ import io.github.openbagtwo.lighterend.mobs.EndSlime;
 import io.github.openbagtwo.lighterend.mobs.GlossyMooshroom;
 import io.github.openbagtwo.lighterend.mobs.SilkMoth;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.SpawnLocationTypes;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.SpawnRestriction;
-import net.minecraft.entity.mob.SlimeEntity;
-import net.minecraft.entity.mob.WaterCreatureEntity;
-import net.minecraft.entity.passive.AbstractCowEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.Item.Settings;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.animal.cow.AbstractCow;
+import net.minecraft.world.entity.animal.fish.WaterAnimal;
+import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.phys.Vec3;
 
 public class LighterEndMobs {
 
   public static final LighterEndMob<SilkMoth> SILK_MOTH = new LighterEndMob<>("silk_moth",
-      EntityType.Builder.create(SilkMoth::new, SpawnGroup.CREATURE).dimensions(
-          0.6F, 0.6F).eyeHeight(0.3F).maxTrackingRange(8));
+      EntityType.Builder.of(SilkMoth::new, MobCategory.CREATURE).sized(
+          0.6F, 0.6F).eyeHeight(0.3F).clientTrackingRange(8));
 
   public static final LighterEndMob<Dragonfly> DRAGONFLY = new LighterEndMob<>("dragonfly",
-      EntityType.Builder.create(Dragonfly::new, SpawnGroup.AMBIENT).dimensions(
-          0.6F, 0.5F).eyeHeight(0.25F).maxTrackingRange(8));
+      EntityType.Builder.of(Dragonfly::new, MobCategory.AMBIENT).sized(
+          0.6F, 0.5F).eyeHeight(0.25F).clientTrackingRange(8));
 
   public static final LighterEndMob<EndFish> END_FISH = new LighterEndMob<>("end_fish",
-      EntityType.Builder.create(EndFish::new, SpawnGroup.WATER_AMBIENT).dimensions(
-          0.5F, 0.5F).eyeHeight(0.25F).maxTrackingRange(4));
+      EntityType.Builder.of(EndFish::new, MobCategory.WATER_AMBIENT).sized(
+          0.5F, 0.5F).eyeHeight(0.25F).clientTrackingRange(4));
 
   public static final LighterEndMob<Cubozoa> CUBOZOA = new LighterEndMob<>("cubozoa",
-      EntityType.Builder.create(Cubozoa::new, SpawnGroup.WATER_CREATURE).dimensions(
-          0.6F, 1.0F).eyeHeight(0.5F).maxTrackingRange(4));
+      EntityType.Builder.of(Cubozoa::new, MobCategory.WATER_CREATURE).sized(
+          0.6F, 1.0F).eyeHeight(0.5F).clientTrackingRange(4));
 
   public static final LighterEndMob<EndSlime> END_SLIME = new LighterEndMob<>(
       "end_slime",
-      EntityType.Builder.create(EndSlime::new, SpawnGroup.MONSTER).dimensions(0.5F, 0.5F)
-          .eyeHeight(0.325F).spawnBoxScale(4.0F).maxTrackingRange(10)
+      EntityType.Builder.of(EndSlime::new, MobCategory.MONSTER).sized(0.5F, 0.5F)
+          .eyeHeight(0.325F).spawnDimensionsScale(4.0F).clientTrackingRange(10)
   );
 
   public static final LighterEndMob<GlossyMooshroom> MOOSHROOM = new LighterEndMob<>(
       "glossy_mooshroom",
-      EntityType.Builder.create(GlossyMooshroom::new, SpawnGroup.CREATURE)
-          .dimensions(0.9F, 1.4F)
+      EntityType.Builder.of(GlossyMooshroom::new, MobCategory.CREATURE)
+          .sized(0.9F, 1.4F)
           .eyeHeight(1.3F)
           .passengerAttachments(1.36875F)
-          .maxTrackingRange(10)
+          .clientTrackingRange(10)
   );
 
   public static final LighterEndMob<ChorusCrab> CHORUS_CRAB = new LighterEndMob<>(
       "chorus_crab",
-      EntityType.Builder.create(ChorusCrab::new, SpawnGroup.CREATURE)
-          .dimensions(2.0F, 1.2F)
+      EntityType.Builder.of(ChorusCrab::new, MobCategory.CREATURE)
+          .sized(2.0F, 1.2F)
           .eyeHeight(1.1F)
-          .passengerAttachments(new Vec3d(0, 0.9F, -0.5F))
-          .maxTrackingRange(4)
+          .passengerAttachments(new Vec3(0, 0.9F, -0.5F))
+          .clientTrackingRange(4)
   );
 
   public static class LighterEndMob<T extends Entity> {
@@ -81,15 +81,15 @@ public class LighterEndMobs {
     public final Item spawnEgg;
 
     public LighterEndMob(String name, EntityType.Builder<T> settings) {
-      mob = Registry.register(Registries.ENTITY_TYPE,
+      mob = Registry.register(BuiltInRegistries.ENTITY_TYPE,
           LighterEnd.of(name),
           settings.build(
-              RegistryKey.of(
-                  RegistryKeys.ENTITY_TYPE, LighterEnd.of(name))));
+              ResourceKey.create(
+                  Registries.ENTITY_TYPE, LighterEnd.of(name))));
       spawnEgg = LighterEndItems.register(
           name + "_spawn_egg",
           (properties) -> new SpawnEggItem(properties.spawnEgg(mob)),
-          new Settings()
+          new Properties()
       );
     }
   }
@@ -100,58 +100,58 @@ public class LighterEndMobs {
     FabricDefaultAttributeRegistry.register(END_FISH.mob, EndFish.createAttributes());
     FabricDefaultAttributeRegistry.register(CUBOZOA.mob, Cubozoa.createAttributes());
     FabricDefaultAttributeRegistry.register(END_SLIME.mob, EndSlime.createAttributes());
-    FabricDefaultAttributeRegistry.register(MOOSHROOM.mob, AbstractCowEntity.createCowAttributes());
+    FabricDefaultAttributeRegistry.register(MOOSHROOM.mob, AbstractCow.createAttributes());
     FabricDefaultAttributeRegistry.register(CHORUS_CRAB.mob, ChorusCrab.createCrabAttributes());
 
-    SpawnRestriction.register(
+    SpawnPlacements.register(
         DRAGONFLY.mob,
-        SpawnLocationTypes.UNRESTRICTED,
-        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+        SpawnPlacementTypes.NO_RESTRICTIONS,
+        Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
         LighterEndMobs::canDragonflySpawn
     );
-    SpawnRestriction.register(
+    SpawnPlacements.register(
         END_FISH.mob,
-        SpawnLocationTypes.IN_WATER,
-        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+        SpawnPlacementTypes.IN_WATER,
+        Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
         LighterEndMobs::canAquaticMobSpawn
     );
-    SpawnRestriction.register(
+    SpawnPlacements.register(
         CUBOZOA.mob,
-        SpawnLocationTypes.IN_WATER,
-        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+        SpawnPlacementTypes.IN_WATER,
+        Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
         LighterEndMobs::canAquaticMobSpawn
     );
-    SpawnRestriction.register(
+    SpawnPlacements.register(
         END_SLIME.mob,
-        SpawnLocationTypes.ON_GROUND,
-        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+        SpawnPlacementTypes.ON_GROUND,
+        Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
         LighterEndMobs::canSlimeSpawn
     );
-    SpawnRestriction.register(
+    SpawnPlacements.register(
         MOOSHROOM.mob,
-        SpawnLocationTypes.ON_GROUND,
-        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+        SpawnPlacementTypes.ON_GROUND,
+        Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
         LighterEndMobs::canPassiveSpawn
     );
-    SpawnRestriction.register(
+    SpawnPlacements.register(
         CHORUS_CRAB.mob,
-        SpawnLocationTypes.ON_GROUND,
-        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+        SpawnPlacementTypes.ON_GROUND,
+        Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
         LighterEndMobs::canCrabSpawn
     );
   }
 
-  public static boolean canAquaticMobSpawn(EntityType<? extends WaterCreatureEntity> type,
-      WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
-    return world.getFluidState(pos.down()).isIn(FluidTags.WATER)
-        && world.getBlockState(pos.up()).isOf(Blocks.WATER);
+  public static boolean canAquaticMobSpawn(EntityType<? extends WaterAnimal> type,
+      LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
+    return world.getFluidState(pos.below()).is(FluidTags.WATER)
+        && world.getBlockState(pos.above()).is(Blocks.WATER);
   }
 
   public static boolean canSlimeSpawn(
-      EntityType<? extends SlimeEntity> type,
-      WorldAccess world, SpawnReason reason, BlockPos pos, Random random
+      EntityType<? extends Slime> type,
+      LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random
   ) {
-    if (!world.getBlockState(pos.down()).isIn(LighterEndTags.SLIME_SPAWNABLE)) {
+    if (!world.getBlockState(pos.below()).is(LighterEndTags.SLIME_SPAWNABLE)) {
       return false;
     }
     return random.nextInt(4) == 0;
@@ -159,14 +159,14 @@ public class LighterEndMobs {
 
   public static boolean canDragonflySpawn(
       EntityType<? extends Entity> type,
-      WorldAccess world, SpawnReason reason, BlockPos pos, Random random
+      LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random
   ) {
     return random.nextInt(32) == 0;
   }
 
   public static boolean canCrabSpawn(
       EntityType<? extends Entity> type,
-      WorldAccess world, SpawnReason reason, BlockPos pos, Random random
+      LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random
   ) {
     //TODO: check for nearby water
     return random.nextInt(16) == 0;
@@ -174,7 +174,7 @@ public class LighterEndMobs {
 
   public static boolean canPassiveSpawn(
       EntityType<? extends Entity> type,
-      WorldAccess world, SpawnReason reason, BlockPos pos, Random random
+      LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random
   ) {
     return true;
   }

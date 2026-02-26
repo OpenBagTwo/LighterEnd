@@ -7,32 +7,32 @@ import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.world.LighterEndConfiguredFeatures;
 import io.github.openbagtwo.lighterend.world.gen.LighterEndWorldGen;
 import java.util.Map;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.SpawnLocating;
-import net.minecraft.server.world.ServerChunkManager;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.level.PlayerSpawnFinder;
+import net.minecraft.server.level.ServerChunkCache;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.progress.LevelLoadListener;
+import net.minecraft.util.Mth;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.SaveProperties;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldProperties;
-import net.minecraft.world.biome.source.BiomeAccess;
-import net.minecraft.world.biome.source.BiomeSource;
-import net.minecraft.world.biome.source.MultiNoiseBiomeSource;
-import net.minecraft.world.chunk.ChunkLoadProgress;
-import net.minecraft.world.dimension.DimensionOptions;
-import net.minecraft.world.gen.GeneratorOptions;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.chunk.NoiseChunkGenerator;
-import net.minecraft.world.level.ServerWorldProperties;
-import net.minecraft.world.level.UnmodifiableLevelProperties;
-import net.minecraft.world.level.storage.LevelStorage;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.BiomeManager;
+import net.minecraft.world.level.biome.BiomeSource;
+import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.dimension.LevelStem;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
+import net.minecraft.world.level.levelgen.WorldOptions;
+import net.minecraft.world.level.storage.DerivedLevelData;
+import net.minecraft.world.level.storage.LevelData;
+import net.minecraft.world.level.storage.LevelStorageSource;
+import net.minecraft.world.level.storage.ServerLevelData;
+import net.minecraft.world.level.storage.WorldData;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -48,35 +48,35 @@ public abstract class EndSpawnMixin {
   private static final float END_SPAWN_RADIUS = 10_000F;
 
   @Unique
-  private ServerWorld theEnd = null;
+  private ServerLevel theEnd = null;
 
   @Shadow
-  public abstract ServerWorld getWorld(RegistryKey<World> key);
+  public abstract ServerLevel getLevel(ResourceKey<Level> key);
 
-  @Accessor("worlds")
-  abstract Map<RegistryKey<World>, ServerWorld> getWorldz();
-
-  @Shadow
-  public abstract ChunkLoadProgress getChunkLoadProgress();
+  @Accessor("levels")
+  abstract Map<ResourceKey<Level>, ServerLevel> getWorldz();
 
   @Shadow
-  public abstract SaveProperties getSaveProperties();
+  public abstract LevelLoadListener getLevelLoadListener();
+
+  @Shadow
+  public abstract WorldData getWorldData();
 
   @Accessor
-  abstract LevelStorage.Session getSession();
+  abstract LevelStorageSource.LevelStorageAccess getStorageSource();
 
   @Inject(
-      method = "createWorlds",
+      method = "createLevels",
       at = @At(
           value = "INVOKE",
-          target = "Lnet/minecraft/command/DataCommandStorage;<init>(Lnet/minecraft/world/PersistentStateManager;)V"
+          target = "Lnet/minecraft/world/level/storage/CommandStorage;<init>(Lnet/minecraft/world/level/storage/DimensionDataStorage;)V"
       )
   )
   public void setEndSpawn(
       CallbackInfo ci,
-      @Local ServerWorldProperties serverWorldProperties,
-      @Local Registry<DimensionOptions> registry,
-      @Local GeneratorOptions generatorOptions
+      @Local ServerLevelData serverWorldProperties,
+      @Local Registry<LevelStem> registry,
+      @Local WorldOptions generatorOptions
   ) {
     if (!LighterEnd.CONFIG.enableEndSpawn()) {
       return;
@@ -85,68 +85,68 @@ public abstract class EndSpawnMixin {
       return;
     }
 
-    DimensionOptions endSettings = registry.get(DimensionOptions.END);
+    LevelStem endSettings = registry.getValue(LevelStem.END);
 
     if (endSettings == null) {
       return;
     }
 
     this.theEnd = loadTheEnd(
-        new UnmodifiableLevelProperties(
-            this.getSaveProperties(),
+        new DerivedLevelData(
+            this.getWorldData(),
             serverWorldProperties
         ),
         endSettings,
-        BiomeAccess.hashSeed(generatorOptions.getSeed())
+        BiomeManager.obfuscateSeed(generatorOptions.seed())
     );
-    this.getWorldz().put(World.END, this.theEnd);
+    this.getWorldz().put(Level.END, this.theEnd);
 
     setEndSpawn(
         this.theEnd,
         serverWorldProperties,
-        this.getChunkLoadProgress()
+        this.getLevelLoadListener()
     );
     serverWorldProperties.setInitialized(true);
   }
 
-  @Inject(method = "createWorlds", at = @At("TAIL"))
+  @Inject(method = "createLevels", at = @At("TAIL"))
   public void reInsertOurEnd(CallbackInfo ci) {
     if (this.theEnd != null) {
-      this.getWorldz().put(World.END, this.theEnd);
+      this.getWorldz().put(Level.END, this.theEnd);
       this.theEnd = null;
     }
   }
 
 
-  private ServerWorld loadTheEnd(
-      UnmodifiableLevelProperties unmodifiableLevelProperties,
-      DimensionOptions dimensionOptions,
+  private ServerLevel loadTheEnd(
+      DerivedLevelData unmodifiableLevelProperties,
+      LevelStem dimensionOptions,
       long biomeSeed
   ) {
 
     if (LighterEnd.CONFIG.generateBiomes()) {
-      ChunkGenerator defaultChunkGen = dimensionOptions.chunkGenerator();
+      ChunkGenerator defaultChunkGen = dimensionOptions.generator();
       BiomeSource defaultBiomes = defaultChunkGen.getBiomeSource();
       if (defaultBiomes instanceof MultiNoiseBiomeSource noiseBiomeSource
-          && defaultChunkGen instanceof NoiseChunkGenerator noiseChunkGen) {
+          && defaultChunkGen instanceof NoiseBasedChunkGenerator noiseChunkGen) {
         BiomeSource patchedBiomes = LighterEndWorldGen.addBiomesToNoiseSource(
             ((BiomeAccessor) noiseBiomeSource).accessBiomeEntries(),
-            ((MinecraftServer) (Object) this).getRegistryManager().getOrThrow(
-                RegistryKeys.BIOME)
+            ((MinecraftServer) (Object) this).registryAccess().lookupOrThrow(
+                Registries.BIOME)
         );
-        dimensionOptions = new DimensionOptions(
-            dimensionOptions.dimensionTypeEntry(),
-            new NoiseChunkGenerator(patchedBiomes, noiseChunkGen.getSettings())
+        dimensionOptions = new LevelStem(
+            dimensionOptions.type(),
+            new NoiseBasedChunkGenerator(patchedBiomes, noiseChunkGen.generatorSettings())
         );
       }
     }
 
-    return new ServerWorld(
+    return new ServerLevel(
         (MinecraftServer) (Object) this,
-        Util.getMainWorkerExecutor(),
-        this.getSession(),
+        Util.backgroundExecutor(),
+        this.getStorageSource(),
         unmodifiableLevelProperties,
-        World.END,
+        Level.END,
         dimensionOptions,
         false,
         biomeSeed,
@@ -157,52 +157,52 @@ public abstract class EndSpawnMixin {
   }
 
   private static void setEndSpawn(
-      ServerWorld world,
-      ServerWorldProperties worldProperties,
-      ChunkLoadProgress loadProgress
+      ServerLevel world,
+      ServerLevelData worldProperties,
+      LevelLoadListener loadProgress
   ) {
 
-    ServerChunkManager serverChunkManager = world.getChunkManager();
+    ServerChunkCache serverChunkManager = world.getChunkSource();
 
     ChunkPos chunkPos;
     int y;
     while (true) {
-      float angle = MathHelper.nextFloat(world.getRandom(), 0, MathHelper.TAU);
+      float angle = Mth.nextFloat(world.getRandom(), 0, Mth.TWO_PI);
       chunkPos = new ChunkPos(
           new BlockPos(
-              Math.round(END_SPAWN_RADIUS * MathHelper.cos(angle)),
+              Math.round(END_SPAWN_RADIUS * Mth.cos(angle)),
               64,
-              Math.round(END_SPAWN_RADIUS * MathHelper.sin(angle)))
+              Math.round(END_SPAWN_RADIUS * Mth.sin(angle)))
       );
-      loadProgress.init(ChunkLoadProgress.Stage.PREPARE_GLOBAL_SPAWN, 0);
-      loadProgress.initSpawnPos(world.getRegistryKey(), chunkPos);
-      y = serverChunkManager.getChunkGenerator().getSpawnHeight(world);
-      if (y < world.getBottomY()) {
-        BlockPos blockPos = chunkPos.getStartPos();
-        y = world.getTopY(Heightmap.Type.WORLD_SURFACE, blockPos.getX() + 8, blockPos.getZ() + 8);
+      loadProgress.start(LevelLoadListener.Stage.PREPARE_GLOBAL_SPAWN, 0);
+      loadProgress.updateFocus(world.dimension(), chunkPos);
+      y = serverChunkManager.getGenerator().getSpawnHeight(world);
+      if (y < world.getMinY()) {
+        BlockPos blockPos = chunkPos.getWorldPosition();
+        y = world.getHeight(Heightmap.Types.WORLD_SURFACE, blockPos.getX() + 8, blockPos.getZ() + 8);
       }
       if (
-          y > 50 && !world.getBiome(chunkPos.getStartPos().add(8, y, 8))
-              .isIn(LighterEndTags.INVALID_SPAWN_BIOMES)
+          y > 50 && !world.getBiome(chunkPos.getWorldPosition().offset(8, y, 8))
+              .is(LighterEndTags.INVALID_SPAWN_BIOMES)
       ) {
         break;
       }
     }
 
-    worldProperties.setSpawnPoint(WorldProperties.SpawnPoint.create(world.getRegistryKey(),
-        chunkPos.getStartPos().add(8, y, 8), 0.0F, 0.0F));
+    worldProperties.setSpawn(LevelData.RespawnData.of(world.dimension(),
+        chunkPos.getWorldPosition().offset(8, y, 8), 0.0F, 0.0F));
     int j = 0;
     int k = 0;
     int l = 0;
     int m = -1;
 
-    for (int n = 0; n < MathHelper.square(11); n++) {
+    for (int n = 0; n < Mth.square(11); n++) {
       if (j >= -5 && j <= 5 && k >= -5 && k <= 5) {
-        BlockPos blockPos2 = SpawnLocating.findServerSpawnPoint(world,
+        BlockPos blockPos2 = PlayerSpawnFinder.getSpawnPosInChunk(world,
             new ChunkPos(chunkPos.x + j, chunkPos.z + k));
         if (blockPos2 != null) {
-          worldProperties.setSpawnPoint(
-              WorldProperties.SpawnPoint.create(world.getRegistryKey(), blockPos2, 0.0F, 0.0F));
+          worldProperties.setSpawn(
+              LevelData.RespawnData.of(world.dimension(), blockPos2, 0.0F, 0.0F));
           break;
         }
       }
@@ -217,18 +217,18 @@ public abstract class EndSpawnMixin {
       k += m;
     }
 
-    world.getRegistryManager()
-        .getOptional(RegistryKeys.CONFIGURED_FEATURE)
+    world.registryAccess()
+        .lookup(Registries.CONFIGURED_FEATURE)
         .flatMap(
-            featureRegistry -> featureRegistry.getOptional(
+            featureRegistry -> featureRegistry.get(
                 LighterEndConfiguredFeatures.STARTER_CHEST))
         .ifPresent(
             feature -> feature.value()
-                .generate(world, serverChunkManager.getChunkGenerator(), world.random,
-                    worldProperties.getSpawnPoint().getPos())
+                .place(world, serverChunkManager.getGenerator(), world.random,
+                    worldProperties.getRespawnData().pos())
         );
 
-    loadProgress.finish(ChunkLoadProgress.Stage.PREPARE_GLOBAL_SPAWN);
+    loadProgress.finish(LevelLoadListener.Stage.PREPARE_GLOBAL_SPAWN);
 
   }
 

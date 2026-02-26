@@ -8,12 +8,12 @@ import io.github.openbagtwo.lighterend.utils.math.sdf.primitives.SDFLine;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Vector3f;
 
 public class MathUtils {
@@ -27,9 +27,9 @@ public class MathUtils {
     int count = points - 1;
     for (int i = 1; i < count; i++) {
       float delta = (float) i / (float) count;
-      float x = MathHelper.lerp(delta, x1, x2);
-      float y = MathHelper.lerp(delta, y1, y2);
-      float z = MathHelper.lerp(delta, z1, z2);
+      float x = Mth.lerp(delta, x1, x2);
+      float y = Mth.lerp(delta, y1, y2);
+      float z = Mth.lerp(delta, z1, z2);
       spline.add(new Vector3f(x, y, z));
     }
     spline.add(new Vector3f(x2, y2, z2));
@@ -54,7 +54,7 @@ public class MathUtils {
     }
   }
 
-  public static void offsetParts(List<Vector3f> spline, Random random, float dx, float dy,
+  public static void offsetParts(List<Vector3f> spline, RandomSource random, float dx, float dy,
       float dz) {
     int count = spline.size();
     for (int i = 1; i < count; i++) {
@@ -69,7 +69,7 @@ public class MathUtils {
   public static boolean fillLine(
       Vector3f start,
       Vector3f end,
-      StructureWorldAccess world,
+      WorldGenLevel world,
       BlockState state,
       BlockPos pos,
       Function<BlockState, Boolean> replace
@@ -78,7 +78,7 @@ public class MathUtils {
     float dy = end.y() - start.y();
     float dz = end.z() - start.z();
     float max = Math.max(Math.max(Math.abs(dx), Math.abs(dy)), Math.abs(dz));
-    int count = MathHelper.floor(max + 1);
+    int count = Mth.floor(max + 1);
     dx /= max;
     dy /= max;
     dz /= max;
@@ -88,16 +88,16 @@ public class MathUtils {
     boolean down = Math.abs(dy) > 0.2;
 
     BlockState bState;
-    Mutable bPos = new Mutable();
+    MutableBlockPos bPos = new MutableBlockPos();
     for (int i = 0; i < count; i++) {
       bPos.set(x + pos.getX(), y + pos.getY(), z + pos.getZ());
       bState = world.getBlockState(bPos);
       if (bState.equals(state) || replace.apply(bState)) {
-        world.setBlockState(bPos, state, Flags.SILENT);
+        world.setBlock(bPos, state, Flags.SILENT);
         bPos.setY(bPos.getY() - 1);
         bState = world.getBlockState(bPos);
         if (down && bState.equals(state) || replace.apply(bState)) {
-          world.setBlockState(bPos, state, Flags.SILENT);
+          world.setBlock(bPos, state, Flags.SILENT);
         }
       } else {
         return false;
@@ -109,11 +109,11 @@ public class MathUtils {
     bPos.set(end.x() + pos.getX(), end.y() + pos.getY(), end.z() + pos.getZ());
     bState = world.getBlockState(bPos);
     if (bState.equals(state) || replace.apply(bState)) {
-      world.setBlockState(bPos, state, Flags.SILENT);
+      world.setBlock(bPos, state, Flags.SILENT);
       bPos.setY(bPos.getY() - 1);
       bState = world.getBlockState(bPos);
       if (down && bState.equals(state) || replace.apply(bState)) {
-        world.setBlockState(bPos, state, Flags.SILENT);
+        world.setBlock(bPos, state, Flags.SILENT);
       }
       return true;
     } else {
@@ -124,7 +124,7 @@ public class MathUtils {
   public static void fillLineForce(
       Vector3f start,
       Vector3f end,
-      StructureWorldAccess world,
+      WorldGenLevel world,
       BlockState state,
       BlockPos pos,
       Function<BlockState, Boolean> replace
@@ -133,7 +133,7 @@ public class MathUtils {
     float dy = end.y() - start.y();
     float dz = end.z() - start.z();
     float max = Math.max(Math.max(Math.abs(dx), Math.abs(dy)), Math.abs(dz));
-    int count = MathHelper.floor(max + 1);
+    int count = Mth.floor(max + 1);
     dx /= max;
     dy /= max;
     dz /= max;
@@ -143,16 +143,16 @@ public class MathUtils {
     boolean down = Math.abs(dy) > 0.2;
 
     BlockState bState;
-    Mutable bPos = new Mutable();
+    MutableBlockPos bPos = new MutableBlockPos();
     for (int i = 0; i < count; i++) {
       bPos.set(x + pos.getX(), y + pos.getY(), z + pos.getZ());
       bState = world.getBlockState(bPos);
       if (replace.apply(bState)) {
-        world.setBlockState(bPos, state, Flags.SILENT);
+        world.setBlock(bPos, state, Flags.SILENT);
         bPos.setY(bPos.getY() - 1);
         bState = world.getBlockState(bPos);
         if (down && replace.apply(bState)) {
-          world.setBlockState(bPos, state, Flags.SILENT);
+          world.setBlock(bPos, state, Flags.SILENT);
         }
       }
       x += dx;
@@ -162,18 +162,18 @@ public class MathUtils {
     bPos.set(end.x() + pos.getX(), end.y() + pos.getY(), end.z() + pos.getZ());
     bState = world.getBlockState(bPos);
     if (replace.apply(bState)) {
-      world.setBlockState(bPos, state, Flags.SILENT);
+      world.setBlock(bPos, state, Flags.SILENT);
       bPos.setY(bPos.getY() - 1);
       bState = world.getBlockState(bPos);
       if (down && replace.apply(bState)) {
-        world.setBlockState(bPos, state, Flags.SILENT);
+        world.setBlock(bPos, state, Flags.SILENT);
       }
     }
   }
 
   public static boolean fillSpline(
       List<Vector3f> spline,
-      StructureWorldAccess world,
+      WorldGenLevel world,
       BlockState state,
       BlockPos pos,
       Function<BlockState, Boolean> replace
@@ -192,7 +192,7 @@ public class MathUtils {
 
   public static void fillSplineForce(
       List<Vector3f> spline,
-      StructureWorldAccess world,
+      WorldGenLevel world,
       BlockState state,
       BlockPos pos,
       Function<BlockState, Boolean> replace
@@ -219,12 +219,12 @@ public class MathUtils {
       List<Vector3f> spline,
       float scale,
       BlockPos start,
-      StructureWorldAccess world,
+      WorldGenLevel world,
       Function<BlockState, Boolean> canReplace
   ) {
     int count = spline.size();
     Vector3f vec = spline.get(0);
-    Mutable mut = new Mutable();
+    MutableBlockPos mut = new MutableBlockPos();
     float x1 = start.getX() + vec.x() * scale;
     float y1 = start.getY() + vec.y() * scale;
     float z1 = start.getZ() + vec.z() * scale;
@@ -239,8 +239,8 @@ public class MathUtils {
           continue;
         }
         float lerp = (py - y1) / (y2 - y1);
-        float x = MathHelper.lerp(lerp, x1, x2);
-        float z = MathHelper.lerp(lerp, z1, z2);
+        float x = Mth.lerp(lerp, x1, x2);
+        float z = Mth.lerp(lerp, z1, z2);
         mut.set(x, py, z);
         if (!canReplace.apply(world.getBlockState(mut))) {
           return false;
@@ -257,12 +257,12 @@ public class MathUtils {
   public static boolean canGenerate(
       List<Vector3f> spline,
       BlockPos start,
-      StructureWorldAccess world,
+      WorldGenLevel world,
       Function<BlockState, Boolean> canReplace
   ) {
     int count = spline.size();
     Vector3f vec = spline.get(0);
-    Mutable mut = new Mutable();
+    MutableBlockPos mut = new MutableBlockPos();
     float x1 = start.getX() + vec.x();
     float y1 = start.getY() + vec.y();
     float z1 = start.getZ() + vec.z();
@@ -277,8 +277,8 @@ public class MathUtils {
           continue;
         }
         float lerp = (py - y1) / (y2 - y1);
-        float x = MathHelper.lerp(lerp, x1, x2);
-        float z = MathHelper.lerp(lerp, z1, z2);
+        float x = Mth.lerp(lerp, x1, x2);
+        float z = Mth.lerp(lerp, z1, z2);
         mut.set(x, py, z);
         if (!canReplace.apply(world.getBlockState(mut))) {
           return false;
@@ -305,7 +305,7 @@ public class MathUtils {
     for (int i = 1; i < count; i++) {
       Vector3f pos = spline.get(i);
       float delta = (float) (i - 1) / max;
-      SDF line = new SDFLine().setRadius(MathHelper.lerp(delta, radius1, radius2))
+      SDF line = new SDFLine().setRadius(Mth.lerp(delta, radius1, radius2))
           .setStart(start.x(), start.y(), start.z())
           .setEnd(pos.x(), pos.y(), pos.z())
           .setBlock(placerFunction);
@@ -321,8 +321,8 @@ public class MathUtils {
     }
   }
 
-  public static Vector3f randomHorizontal(net.minecraft.util.math.random.Random random) {
-    float angleY = MathHelper.nextFloat(random, 0, PI2);
+  public static Vector3f randomHorizontal(net.minecraft.util.RandomSource random) {
+    float angleY = Mth.nextFloat(random, 0, PI2);
     float vx = (float) Math.sin(angleY);
     float vz = (float) Math.cos(angleY);
     return new Vector3f(vx, 0, vz);
@@ -343,9 +343,9 @@ public class MathUtils {
     float delta = index - i;
     Vector3f p1 = spline.get(i);
     Vector3f p2 = spline.get(i + 1);
-    float x = MathHelper.lerp(delta, p1.x(), p2.x());
-    float y = MathHelper.lerp(delta, p1.y(), p2.y());
-    float z = MathHelper.lerp(delta, p1.z(), p2.z());
+    float x = Mth.lerp(delta, p1.x(), p2.x());
+    float y = Mth.lerp(delta, p1.y(), p2.y());
+    float z = Mth.lerp(delta, p1.z(), p2.z());
     return new Vector3f(x, y, z);
   }
 }

@@ -2,12 +2,12 @@ package io.github.openbagtwo.lighterend.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import io.github.openbagtwo.lighterend.world.gen.LighterEndWorldGen;
-import net.minecraft.registry.Registry;
+import net.minecraft.core.Registry;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.dimension.DimensionOptions;
-import net.minecraft.world.gen.chunk.ChunkGeneratorSettings;
-import net.minecraft.world.gen.chunk.NoiseChunkGenerator;
-import net.minecraft.world.gen.surfacebuilder.MaterialRules;
+import net.minecraft.world.level.dimension.LevelStem;
+import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
+import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
+import net.minecraft.world.level.levelgen.SurfaceRules;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,17 +16,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MinecraftServer.class)
 public abstract class SurfaceGenMixin {
 
-  @Inject(at = @At("TAIL"), method = "createWorlds()V")
+  @Inject(at = @At("TAIL"), method = "createLevels()V")
   private void addSurfaceRules(CallbackInfo ci,
-      @Local Registry<DimensionOptions> registry) {
-    DimensionOptions stem = registry.get(DimensionOptions.END);
+      @Local Registry<LevelStem> registry) {
+    LevelStem stem = registry.getValue(LevelStem.END);
 
-    if (stem != null && stem.chunkGenerator() instanceof NoiseChunkGenerator generator) {
-      ChunkGeneratorSettings settings = generator.getSettings().value();
+    if (stem != null && stem.generator() instanceof NoiseBasedChunkGenerator generator) {
+      NoiseGeneratorSettings settings = generator.generatorSettings().value();
       ChunkGeneratorSettingsAccessor accessor = (ChunkGeneratorSettingsAccessor) (Object) settings;
 
       accessor.setSurfaceRule(
-          MaterialRules.sequence(LighterEndWorldGen.updateSurfaceRules(), settings.surfaceRule()));
+          SurfaceRules.sequence(LighterEndWorldGen.updateSurfaceRules(), settings.surfaceRule()));
     }
   }
 }

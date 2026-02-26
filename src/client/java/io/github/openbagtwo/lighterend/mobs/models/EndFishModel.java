@@ -1,14 +1,14 @@
 package io.github.openbagtwo.lighterend.mobs.models;
 
 import io.github.openbagtwo.lighterend.mobs.states.EndFishRenderState;
-import net.minecraft.client.model.ModelData;
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.model.ModelPartBuilder;
-import net.minecraft.client.model.ModelPartData;
-import net.minecraft.client.model.ModelTransform;
-import net.minecraft.client.model.TexturedModelData;
-import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.render.entity.model.EntityModelPartNames;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartNames;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class EndFishModel extends EntityModel<EndFishRenderState> {
 
@@ -19,69 +19,69 @@ public class EndFishModel extends EntityModel<EndFishRenderState> {
   private final ModelPart fin_right;
   private final ModelPart fin_left;
 
-  public static TexturedModelData getTexturedModelData() {
-    ModelData modelData = new ModelData();
-    ModelPartData modelPartData = modelData.getRoot();
+  public static LayerDefinition getTexturedModelData() {
+    MeshDefinition modelData = new MeshDefinition();
+    PartDefinition modelPartData = modelData.getRoot();
 
-    ModelPartData bodyPart = modelPartData.addChild(
-        EntityModelPartNames.BODY,
-        ModelPartBuilder.create().uv(0, 0).cuboid(-1.0F, -2.0F, -4.0F, 2.0F, 4.0F, 8.0F),
-        ModelTransform.origin(0.0F, 20.0F, 0.0F)
+    PartDefinition bodyPart = modelPartData.addOrReplaceChild(
+        PartNames.BODY,
+        CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -2.0F, -4.0F, 2.0F, 4.0F, 8.0F),
+        PartPose.offset(0.0F, 20.0F, 0.0F)
     );
 
-    bodyPart.addChild(
-        EntityModelPartNames.TOP_FIN,
-        ModelPartBuilder.create().uv(0, 6).cuboid(0.0F, -8.0F, 0.0F, 0.0F, 8.0F, 6.0F),
-        ModelTransform.of(0.0F, -2.0F, -4.0F, -0.6981F, 0.0F, 0.0F)
+    bodyPart.addOrReplaceChild(
+        PartNames.TOP_FIN,
+        CubeListBuilder.create().texOffs(0, 6).addBox(0.0F, -8.0F, 0.0F, 0.0F, 8.0F, 6.0F),
+        PartPose.offsetAndRotation(0.0F, -2.0F, -4.0F, -0.6981F, 0.0F, 0.0F)
     );
 
-    bodyPart.addChild(
-        EntityModelPartNames.BOTTOM_FIN,
-        ModelPartBuilder.create().uv(0, 6).cuboid(0.0F, 0.0F, 0.0F, 0.0F, 8.0F, 6.0F),
-        ModelTransform.of(0.0F, 2.0F, -4.0F, 0.6981F, 0.0F, 0.0F)
+    bodyPart.addOrReplaceChild(
+        PartNames.BOTTOM_FIN,
+        CubeListBuilder.create().texOffs(0, 6).addBox(0.0F, 0.0F, 0.0F, 0.0F, 8.0F, 6.0F),
+        PartPose.offsetAndRotation(0.0F, 2.0F, -4.0F, 0.6981F, 0.0F, 0.0F)
     );
 
-    bodyPart.addChild(
-        EntityModelPartNames.TAIL_FIN,
-        ModelPartBuilder.create().uv(0, 15).cuboid(0.0F, -5.0F, 0.0F, 0.0F, 5.0F, 5.0F),
-        ModelTransform.of(0.0F, 0.0F, 2.0F, -0.7854F, 0.0F, 0.0F)
+    bodyPart.addOrReplaceChild(
+        PartNames.TAIL_FIN,
+        CubeListBuilder.create().texOffs(0, 15).addBox(0.0F, -5.0F, 0.0F, 0.0F, 5.0F, 5.0F),
+        PartPose.offsetAndRotation(0.0F, 0.0F, 2.0F, -0.7854F, 0.0F, 0.0F)
     );
 
-    bodyPart.addChild(
-        EntityModelPartNames.RIGHT_FIN,
-        ModelPartBuilder.create().uv(0, 25).cuboid(-3.7071F, 0.7071F, -1.5F, 3.0F, 0.0F, 3.0F),
-        ModelTransform.of(-1.0F, 0.0F, -1.0F, 1.5708F, 0.7854F, 0.0F)
+    bodyPart.addOrReplaceChild(
+        PartNames.RIGHT_FIN,
+        CubeListBuilder.create().texOffs(0, 25).addBox(-3.7071F, 0.7071F, -1.5F, 3.0F, 0.0F, 3.0F),
+        PartPose.offsetAndRotation(-1.0F, 0.0F, -1.0F, 1.5708F, 0.7854F, 0.0F)
     );
 
-    bodyPart.addChild(
-        EntityModelPartNames.LEFT_FIN,
-        ModelPartBuilder.create().mirrored().uv(0, 25)
-            .cuboid(0.7071F, 0.7071F, -1.5F, 3.0F, 0.0F, 3.0F),
-        ModelTransform.of(-1.0F, 0.0F, -1.0F, 1.5708F, -0.7854F, 0.0F)
+    bodyPart.addOrReplaceChild(
+        PartNames.LEFT_FIN,
+        CubeListBuilder.create().mirror().texOffs(0, 25)
+            .addBox(0.7071F, 0.7071F, -1.5F, 3.0F, 0.0F, 3.0F),
+        PartPose.offsetAndRotation(-1.0F, 0.0F, -1.0F, 1.5708F, -0.7854F, 0.0F)
     );
 
-    return TexturedModelData.of(modelData, 32, 32);
+    return LayerDefinition.create(modelData, 32, 32);
   }
 
   public EndFishModel(ModelPart modelPart) {
     super(modelPart);
 
-    model = modelPart.getChild(EntityModelPartNames.BODY);
-    fin_top = model.getChild(EntityModelPartNames.TOP_FIN);
-    fin_bottom = model.getChild(EntityModelPartNames.BOTTOM_FIN);
-    flipper = model.getChild(EntityModelPartNames.TAIL_FIN);
-    fin_right = model.getChild(EntityModelPartNames.RIGHT_FIN);
-    fin_left = model.getChild(EntityModelPartNames.LEFT_FIN);
+    model = modelPart.getChild(PartNames.BODY);
+    fin_top = model.getChild(PartNames.TOP_FIN);
+    fin_bottom = model.getChild(PartNames.BOTTOM_FIN);
+    flipper = model.getChild(PartNames.TAIL_FIN);
+    fin_right = model.getChild(PartNames.RIGHT_FIN);
+    fin_left = model.getChild(PartNames.LEFT_FIN);
   }
 
   @Override
-  public void setAngles(EndFishRenderState state) {
-    float s1 = (float) Math.sin(state.age * 0.1);
-    float s2 = (float) Math.sin(state.age * 0.05);
-    flipper.yaw = s1 * 0.3F;
-    fin_top.pitch = s2 * 0.02F - 0.6981F;
-    fin_bottom.pitch = 0.6981F - s2 * 0.02F;
-    fin_left.yaw = s1 * 0.3F - 0.7854F;
-    fin_right.yaw = 0.7854F - s1 * 0.3F;
+  public void setupAnim(EndFishRenderState state) {
+    float s1 = (float) Math.sin(state.ageInTicks * 0.1);
+    float s2 = (float) Math.sin(state.ageInTicks * 0.05);
+    flipper.yRot = s1 * 0.3F;
+    fin_top.xRot = s2 * 0.02F - 0.6981F;
+    fin_bottom.xRot = 0.6981F - s2 * 0.02F;
+    fin_left.yRot = s1 * 0.3F - 0.7854F;
+    fin_right.yRot = 0.7854F - s1 * 0.3F;
   }
 }

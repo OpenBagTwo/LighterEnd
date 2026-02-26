@@ -1,10 +1,10 @@
 package io.github.openbagtwo.lighterend.mixin;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionTypes;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,23 +15,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class GravityStrengthMixin {
 
   @Shadow
-  public abstract World getEntityWorld();
+  public abstract Level level();
 
-  @Inject(method = "getFinalGravity", at = @At("RETURN"), cancellable = true)
+  @Inject(method = "getGravity", at = @At("RETURN"), cancellable = true)
   public void applyEndGravity(CallbackInfoReturnable<Double> cir) {
     if (
         LighterEnd.CONFIG.disableEndGravityWhileFlying()
             && (Entity) (Object) this instanceof LivingEntity player
     ) {
-      if (player.isGliding()) {
+      if (player.isFallFlying()) {
         return;
       }
     }
     double endGravity = LighterEnd.CONFIG.getEndGravity();
     if (
         endGravity >= 0.0
-            && DimensionTypes.THE_END.equals(
-            this.getEntityWorld().getDimensionEntry().getKey().orElse(null)
+            && BuiltinDimensionTypes.END.equals(
+            this.level().dimensionTypeRegistration().unwrapKey().orElse(null)
         )
     ) {
       cir.setReturnValue(cir.getReturnValue() * endGravity);

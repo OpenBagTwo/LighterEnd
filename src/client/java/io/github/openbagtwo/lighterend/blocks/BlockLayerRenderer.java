@@ -2,14 +2,14 @@ package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
-import net.minecraft.block.Block;
-import net.minecraft.client.render.BlockRenderLayer;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.world.level.block.Block;
 
 public class BlockLayerRenderer {
 
   public static void initialize() {
     BlockRenderLayerMap.putBlocks(
-        BlockRenderLayer.TRANSLUCENT,
+        ChunkSectionLayer.TRANSLUCENT,
         LighterEndBlocks.AURORA_CRYSTAL,
         LighterEndBlocks.UMBRELLA_MEMBRANE,
         LighterEndBlocks.OBELISK,
@@ -19,7 +19,7 @@ public class BlockLayerRenderer {
     );
 
     BlockRenderLayerMap.putBlocks(
-        BlockRenderLayer.CUTOUT,
+        ChunkSectionLayer.CUTOUT,
         LighterEndBlocks.CREEPING_MOSS,
         LighterEndBlocks.UMBRELLA_FERN,
         LighterEndBlocks.TALL_UMBRELLA_FERN,
@@ -72,8 +72,8 @@ public class BlockLayerRenderer {
         LighterEndBlocks.UMBRALITH_QUARTZ_ORE,
         LighterEndBlocks.UMBRALITH_REDSTONE_ORE
     );
-    for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.getAll()) {
-      BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT, chandelier);
+    for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.asList()) {
+      BlockRenderLayerMap.putBlocks(ChunkSectionLayer.CUTOUT, chandelier);
     }
 
   }

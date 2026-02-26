@@ -6,28 +6,28 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndParticles;
 import io.github.openbagtwo.lighterend.utils.GlobalState;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 public class Updraft extends BlockEntity {
 
-  private final static Vec3d POSITIVE_Y = new Vec3d(0.0f, 1.0f, 0.0f);
+  private final static Vec3 POSITIVE_Y = new Vec3(0.0f, 1.0f, 0.0f);
 
   public Updraft(BlockPos blockPos, BlockState blockState) {
     super(LighterEndBlockEntities.UPDRAFT, blockPos, blockState);
   }
 
   public static <T extends BlockEntity> void tick(
-      World level,
+      Level level,
       BlockPos worldPosition,
       BlockState state,
       T uncastedEntity
@@ -36,7 +36,7 @@ public class Updraft extends BlockEntity {
     if (
         level != null
             && uncastedEntity instanceof Updraft updraft
-            && state.isOf(LighterEndBlocks.HYDROTHERMAL_VENT)
+            && state.is(LighterEndBlocks.HYDROTHERMAL_VENT)
     ) {
       particleTick(level, worldPosition, state, updraft);
       serverTick(level, worldPosition, state, updraft);
@@ -44,36 +44,36 @@ public class Updraft extends BlockEntity {
   }
 
   private static void particleTick(
-      World level,
+      Level level,
       BlockPos worldPosition,
       BlockState state,
       Updraft updraft
   ) {
-    boolean active = state.get(HydrothermalVent.ACTIVATED);
+    boolean active = state.getValue(HydrothermalVent.ACTIVATED);
     if (active && level.random.nextInt(20) == 0) {
       double x = worldPosition.getX() + 0.5 * level.random.nextDouble();
       double y = worldPosition.getY() + 0.9 + level.random.nextDouble() * 0.3;
       double z = worldPosition.getZ() + 0.5 * level.random.nextDouble();
-      level.addParticleClient(LighterEndParticles.GEYSER, x, y, z, 0, 0.125, 0);
+      level.addParticle(LighterEndParticles.GEYSER, x, y, z, 0, 0.125, 0);
     }
   }
 
   private static void serverTick(
-      World level,
+      Level level,
       BlockPos worldPosition,
       BlockState state,
       Updraft updraft
   ) {
-    final Mutable POS = GlobalState.stateForThread().POS;
-    boolean active = state.get(HydrothermalVent.ACTIVATED);
+    final MutableBlockPos POS = GlobalState.stateForThread().POS;
+    boolean active = state.getValue(HydrothermalVent.ACTIVATED);
     POS.set(worldPosition).move(Direction.UP);
     int height = active ? 85 : 25;
-    Box box = new Box(POS.add(-1, 0, -1).toCenterPos(), POS.add(1, height, 1).toCenterPos());
-    List<LivingEntity> entities = level.getNonSpectatingEntities(LivingEntity.class, box);
+    AABB box = new AABB(POS.offset(-1, 0, -1).getCenter(), POS.offset(1, height, 1).getCenter());
+    List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, box);
     if (entities.size() > 0) {
       while (POS.getY() < box.maxY) {
         BlockState blockState = level.getBlockState(POS);
-        if (blockState.isOpaqueFullCube()) {
+        if (blockState.isSolidRender()) {
           break;
         }
         if (blockState.isAir()) {
@@ -82,8 +82,8 @@ public class Updraft extends BlockEntity {
           entities.stream()
               .filter(entity -> (int) entity.getY() == POS.getY() && hasElytra(entity)
                   && entity
-                  .isGliding())
-              .forEach(entity -> entity.updateVelocity(force, POSITIVE_Y));
+                  .isFallFlying())
+              .forEach(entity -> entity.moveRelative(force, POSITIVE_Y));
         }
         POS.move(Direction.UP);
       }
@@ -91,6 +91,6 @@ public class Updraft extends BlockEntity {
   }
 
   private static boolean hasElytra(LivingEntity entity) {
-    return entity.getEquippedStack(EquipmentSlot.CHEST).contains(DataComponentTypes.GLIDER);
+    return entity.getItemBySlot(EquipmentSlot.CHEST).has(DataComponents.GLIDER);
   }
 }

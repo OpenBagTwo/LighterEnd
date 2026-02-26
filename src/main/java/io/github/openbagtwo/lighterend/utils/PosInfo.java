@@ -1,22 +1,22 @@
 package io.github.openbagtwo.lighterend.utils;
 
 import java.util.Map;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class PosInfo implements Comparable<PosInfo> {
 
-  private static final BlockState AIR = Blocks.AIR.getDefaultState();
+  private static final BlockState AIR = Blocks.AIR.defaultBlockState();
   private final Map<BlockPos, PosInfo> blocks;
   private final Map<BlockPos, PosInfo> add;
   private final BlockPos pos;
   private BlockState state;
 
-  private static final ThreadLocal<Mutable> TL_POS = ThreadLocal.withInitial(() -> new Mutable());
+  private static final ThreadLocal<MutableBlockPos> TL_POS = ThreadLocal.withInitial(() -> new MutableBlockPos());
 
   public static PosInfo create(Map<BlockPos, PosInfo> blocks, Map<BlockPos, PosInfo> add,
       BlockPos pos) {
@@ -30,26 +30,26 @@ public class PosInfo implements Comparable<PosInfo> {
     blocks.put(pos, this);
   }
 
-  public static int downRay(WorldAccess world, BlockPos pos, int maxDist) {
+  public static int downRay(LevelAccessor world, BlockPos pos, int maxDist) {
     int length = 0;
-    for (int j = 1; j < maxDist && (world.isAir(pos.down(j))); j++) {
+    for (int j = 1; j < maxDist && (world.isEmptyBlock(pos.below(j))); j++) {
       length++;
     }
     return length;
   }
 
-  public static int downRayRep(WorldAccess world, BlockPos pos, int maxDist) {
-    final Mutable POS = TL_POS.get();
+  public static int downRayRep(LevelAccessor world, BlockPos pos, int maxDist) {
+    final MutableBlockPos POS = TL_POS.get();
     POS.set(pos);
-    for (int j = 1; j < maxDist && (world.getBlockState(POS)).isReplaceable(); j++) {
+    for (int j = 1; j < maxDist && (world.getBlockState(POS)).canBeReplaced(); j++) {
       POS.setY(POS.getY() - 1);
     }
     return pos.getY() - POS.getY();
   }
 
-  public static int upRay(WorldAccess world, BlockPos pos, int maxDist) {
+  public static int upRay(LevelAccessor world, BlockPos pos, int maxDist) {
     int length = 0;
-    for (int j = 1; j < maxDist && (world.isAir(pos.up(j))); j++) {
+    for (int j = 1; j < maxDist && (world.isEmptyBlock(pos.above(j))); j++) {
       length++;
     }
     return length;
@@ -80,16 +80,16 @@ public class PosInfo implements Comparable<PosInfo> {
   }
 
   public BlockState getState(Direction dir) {
-    PosInfo info = blocks.get(pos.offset(dir));
+    PosInfo info = blocks.get(pos.relative(dir));
     if (info == null) {
-      info = add.get(pos.offset(dir));
+      info = add.get(pos.relative(dir));
       return info == null ? AIR : info.getState();
     }
     return info.getState();
   }
 
   public BlockState getState(Direction dir, int distance) {
-    PosInfo info = blocks.get(pos.offset(dir, distance));
+    PosInfo info = blocks.get(pos.relative(dir, distance));
     if (info == null) {
       return AIR;
     }

@@ -4,79 +4,79 @@ import com.google.common.collect.Maps;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.EnumMap;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.ai.pathing.NavigationType;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class Chandelier extends Block {
 
-  public static final EnumProperty<Direction> FACING = Properties.FACING;
+  public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
 
   private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(
       Direction.class);
 
-  public Chandelier(Settings settings) {
+  public Chandelier(Properties settings) {
     super(
         settings
-            .mapColor(MapColor.IRON_GRAY)
-            .luminance((bs) -> 15)
-            .solid()
-            .nonOpaque()
-            .requiresTool()
-            .pistonBehavior(PistonBehavior.DESTROY)
+            .mapColor(MapColor.METAL)
+            .lightLevel((bs) -> 15)
+            .forceSolidOn()
+            .noOcclusion()
+            .requiresCorrectToolForDrops()
+            .pushReaction(PushReaction.DESTROY)
             .strength(2.5F)
-            .sounds(BlockSoundGroup.CHAIN)
+            .sound(SoundType.CHAIN)
     );
-    setDefaultState(getDefaultState().with(FACING, Direction.UP));
+    registerDefaultState(defaultBlockState().setValue(FACING, Direction.UP));
   }
 
   @Override
-  public VoxelShape getOutlineShape(
+  public VoxelShape getShape(
       BlockState state,
-      BlockView view,
+      BlockGetter view,
       BlockPos pos,
-      ShapeContext ePos
+      CollisionContext ePos
   ) {
-    return BOUNDING_SHAPES.get(state.get(FACING));
+    return BOUNDING_SHAPES.get(state.getValue(FACING));
   }
 
   @Override
-  protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
     stateManager.add(FACING);
   }
 
   @Override
-  public BlockState getPlacementState(ItemPlacementContext ctx) {
-    BlockState blockState = getDefaultState();
-    WorldView worldView = ctx.getWorld();
-    BlockPos blockPos = ctx.getBlockPos();
-    Direction[] directions = ctx.getPlacementDirections();
+  public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+    BlockState blockState = defaultBlockState();
+    LevelReader worldView = ctx.getLevel();
+    BlockPos blockPos = ctx.getClickedPos();
+    Direction[] directions = ctx.getNearestLookingDirections();
     for (Direction direction : directions) {
       Direction direction2 = direction.getOpposite();
-      blockState = blockState.with(FACING, direction2);
-      if (blockState.canPlaceAt(worldView, blockPos)) {
+      blockState = blockState.setValue(FACING, direction2);
+      if (blockState.canSurvive(worldView, blockPos)) {
         return blockState;
       }
     }
@@ -84,26 +84,26 @@ public class Chandelier extends Block {
   }
 
   @Override
-  public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-    Direction direction = state.get(FACING);
-    BlockPos blockPos = pos.offset(direction.getOpposite());
-    return sideCoversSmallSquare(world, blockPos, direction) || world.getBlockState(blockPos)
-        .isIn(BlockTags.LEAVES);
+  public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+    Direction direction = state.getValue(FACING);
+    BlockPos blockPos = pos.relative(direction.getOpposite());
+    return canSupportCenter(world, blockPos, direction) || world.getBlockState(blockPos)
+        .is(BlockTags.LEAVES);
   }
 
   @Override
-  protected BlockState getStateForNeighborUpdate(
+  protected BlockState updateShape(
       BlockState state,
-      WorldView world,
-      ScheduledTickView tickView,
+      LevelReader world,
+      ScheduledTickAccess tickView,
       BlockPos pos,
       Direction direction,
       BlockPos neighborPos,
       BlockState neighborState,
-      Random random
+      RandomSource random
   ) {
-    if (!canPlaceAt(state, world, pos)) {
-      return Blocks.AIR.getDefaultState();
+    if (!canSurvive(state, world, pos)) {
+      return Blocks.AIR.defaultBlockState();
     } else {
       return state;
     }
@@ -111,64 +111,64 @@ public class Chandelier extends Block {
 
 
   @Override
-  public BlockState rotate(BlockState state, BlockRotation rotation) {
-    return state.with(FACING, rotation.rotate(state.get(FACING)));
+  public BlockState rotate(BlockState state, Rotation rotation) {
+    return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
   }
 
   @Override
-  public BlockState mirror(BlockState state, BlockMirror mirror) {
-    return state.rotate(mirror.getRotation(state.get(FACING)));
+  public BlockState mirror(BlockState state, Mirror mirror) {
+    return state.rotate(mirror.getRotation(state.getValue(FACING)));
   }
 
   @Override
-  protected boolean canPathfindThrough(BlockState state, NavigationType type) {
+  protected boolean isPathfindable(BlockState state, PathComputationType type) {
     return false;
   }
 
   static {
-    BOUNDING_SHAPES.put(Direction.UP, Block.createCuboidShape(5, 0, 5, 11, 13, 11));
-    BOUNDING_SHAPES.put(Direction.DOWN, Block.createCuboidShape(5, 3, 5, 11, 16, 11));
-    BOUNDING_SHAPES.put(Direction.NORTH, VoxelShapes.cuboid(0.0, 0.0, 0.5, 1.0, 1.0, 1.0));
-    BOUNDING_SHAPES.put(Direction.SOUTH, VoxelShapes.cuboid(0.0, 0.0, 0.0, 1.0, 1.0, 0.5));
-    BOUNDING_SHAPES.put(Direction.WEST, VoxelShapes.cuboid(0.5, 0.0, 0.0, 1.0, 1.0, 1.0));
-    BOUNDING_SHAPES.put(Direction.EAST, VoxelShapes.cuboid(0.0, 0.0, 0.0, 0.5, 1.0, 1.0));
+    BOUNDING_SHAPES.put(Direction.UP, Block.box(5, 0, 5, 11, 13, 11));
+    BOUNDING_SHAPES.put(Direction.DOWN, Block.box(5, 3, 5, 11, 16, 11));
+    BOUNDING_SHAPES.put(Direction.NORTH, Shapes.box(0.0, 0.0, 0.5, 1.0, 1.0, 1.0));
+    BOUNDING_SHAPES.put(Direction.SOUTH, Shapes.box(0.0, 0.0, 0.0, 1.0, 1.0, 0.5));
+    BOUNDING_SHAPES.put(Direction.WEST, Shapes.box(0.5, 0.0, 0.0, 1.0, 1.0, 1.0));
+    BOUNDING_SHAPES.put(Direction.EAST, Shapes.box(0.0, 0.0, 0.0, 0.5, 1.0, 1.0));
   }
 
-  public static class Oxidizable extends Chandelier implements net.minecraft.block.Oxidizable {
+  public static class Oxidizable extends Chandelier implements net.minecraft.world.level.block.WeatheringCopper {
 
     public static final MapCodec<Oxidizable> CODEC = RecordCodecBuilder.mapCodec(
         instance -> instance.group(
-                net.minecraft.block.Oxidizable.OxidationLevel.CODEC.fieldOf("weathering_state")
+                net.minecraft.world.level.block.WeatheringCopper.WeatherState.CODEC.fieldOf("weathering_state")
                     .forGetter(
-                        Oxidizable::getDegradationLevel), createSettingsCodec()
+                        Oxidizable::getAge), propertiesCodec()
             )
             .apply(instance, Oxidizable::new)
     );
-    private final net.minecraft.block.Oxidizable.OxidationLevel oxidationLevel;
+    private final net.minecraft.world.level.block.WeatheringCopper.WeatherState oxidationLevel;
 
     @Override
-    public MapCodec<Oxidizable> getCodec() {
+    public MapCodec<Oxidizable> codec() {
       return CODEC;
     }
 
-    public Oxidizable(net.minecraft.block.Oxidizable.OxidationLevel oxidationLevel,
-        AbstractBlock.Settings settings) {
+    public Oxidizable(net.minecraft.world.level.block.WeatheringCopper.WeatherState oxidationLevel,
+        BlockBehaviour.Properties settings) {
       super(settings);
       this.oxidationLevel = oxidationLevel;
     }
 
     @Override
-    protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-      this.tickDegradation(state, world, pos, random);
+    protected void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+      this.changeOverTime(state, world, pos, random);
     }
 
     @Override
-    protected boolean hasRandomTicks(BlockState state) {
-      return net.minecraft.block.Oxidizable.getIncreasedOxidationBlock(state.getBlock())
+    protected boolean isRandomlyTicking(BlockState state) {
+      return net.minecraft.world.level.block.WeatheringCopper.getNext(state.getBlock())
           .isPresent();
     }
 
-    public net.minecraft.block.Oxidizable.OxidationLevel getDegradationLevel() {
+    public net.minecraft.world.level.block.WeatheringCopper.WeatherState getAge() {
       return this.oxidationLevel;
     }
   }
