@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.13-SNAPSHOT'
+    id 'fabric-loom' version '1.15-SNAPSHOT'
     id "fr.brouillard.oss.gradle.jgitver" version "0.9.1"
     id 'com.gradleup.shadow' version '9.2.2'
     id 'maven-publish'
