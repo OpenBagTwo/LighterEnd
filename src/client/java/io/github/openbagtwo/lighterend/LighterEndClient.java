@@ -1,7 +1,6 @@
 package io.github.openbagtwo.lighterend;
 
 import io.github.openbagtwo.lighterend.blocks.BlockEntityRenderer;
-import io.github.openbagtwo.lighterend.blocks.BlockLayerRenderer;
 import io.github.openbagtwo.lighterend.mobs.EntityModels;
 import io.github.openbagtwo.lighterend.networking.GravityPayload;
 import io.github.openbagtwo.lighterend.particles.Geyser;
@@ -12,7 +11,7 @@ import io.github.openbagtwo.lighterend.particles.TenaneaPetal;
 import io.github.openbagtwo.lighterend.registries.LighterEndParticles;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
@@ -22,18 +21,17 @@ public class LighterEndClient implements ClientModInitializer {
 
   @Override
   public void onInitializeClient() {
-    BlockLayerRenderer.initialize();
-    ParticleFactoryRegistry.getInstance()
+    ParticleProviderRegistry.getInstance()
         .register(LighterEndParticles.TENANEA_PETAL, TenaneaPetal.Factory::new);
-    ParticleFactoryRegistry.getInstance()
+    ParticleProviderRegistry.getInstance()
         .register(LighterEndParticles.AMBER_SPHERE, GlowingSphere.Factory::new);
-    ParticleFactoryRegistry.getInstance()
+    ParticleProviderRegistry.getInstance()
         .register(LighterEndParticles.GLOWING_SPHERE, GlowingSphere.Factory::new);
-    ParticleFactoryRegistry.getInstance()
+    ParticleProviderRegistry.getInstance()
         .register(LighterEndParticles.SNOWFLAKE, Snowflake.Factory::new);
-    ParticleFactoryRegistry.getInstance()
+    ParticleProviderRegistry.getInstance()
         .register(LighterEndParticles.SULPHUR, Sulphur.Factory::new);
-    ParticleFactoryRegistry.getInstance()
+    ParticleProviderRegistry.getInstance()
         .register(LighterEndParticles.GEYSER, Geyser.Factory::new);
 
     BlockEntityRenderer.initialize();

@@ -31,7 +31,7 @@ public class StarterChest extends Feature<NoneFeatureConfiguration> {
   public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
     RandomSource random = context.random();
     WorldGenLevel structureWorldAccess = context.level();
-    ChunkPos chunkPos = new ChunkPos(context.origin());
+    ChunkPos chunkPos = new ChunkPos(context.origin().getX(), context.origin().getZ());
     IntArrayList intArrayList = Util.toShuffledList(
         IntStream.rangeClosed(chunkPos.getMinBlockX(), chunkPos.getMaxBlockX()), random);
     IntArrayList intArrayList2 = Util.toShuffledList(
@@ -45,7 +45,8 @@ public class StarterChest extends Feature<NoneFeatureConfiguration> {
             Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, mutable);
         if (
             (
-                structureWorldAccess.isEmptyBlock(blockPos) || structureWorldAccess.getBlockState(blockPos)
+                structureWorldAccess.isEmptyBlock(blockPos) || structureWorldAccess.getBlockState(
+                        blockPos)
                     .getCollisionShape(structureWorldAccess, blockPos).isEmpty()
             )
                 && blockPos.getY() > 50

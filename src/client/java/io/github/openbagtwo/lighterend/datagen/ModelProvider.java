@@ -9,16 +9,23 @@ import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import io.github.openbagtwo.lighterend.registries.LighterEndMusicDiscs;
 import io.github.openbagtwo.lighterend.registries.LighterEndTrimming;
 import java.util.Arrays;
+import java.util.List;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.minecraft.client.color.item.Dye;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.BlockModelGenerators.BlockFamilyProvider;
 import net.minecraft.client.data.models.BlockModelGenerators.PlantType;
 import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators.TrimMaterialData;
+import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TexturedModel;
+import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.client.renderer.item.ItemModel.Unbaked;
+import net.minecraft.client.renderer.item.properties.select.TrimMaterialProperty;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
@@ -26,11 +33,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.minecraft.world.item.equipment.trim.MaterialAssetGroup;
-import net.minecraft.world.level.ItemLike;
 
 public class ModelProvider extends FabricModelProvider {
 
-  protected ModelProvider(FabricDataOutput output) {
+  protected ModelProvider(FabricPackOutput output) {
     super(output);
   }
 
@@ -93,9 +99,18 @@ public class ModelProvider extends FabricModelProvider {
         PlantType.NOT_TINTED
     );
 
-    blockModelGenerator.createTrivialCube(LighterEndBlocks.EMERALD_ICE);
-    blockModelGenerator.createTrivialCube(LighterEndBlocks.FERROUS_ICE);
-    blockModelGenerator.createTrivialCube(LighterEndBlocks.AUROUS_ICE);
+    blockModelGenerator.createTrivialBlock(
+        LighterEndBlocks.EMERALD_ICE,
+        TexturedModel.CUBE.updateTexture(mapping -> mapping.forceAllTranslucent())
+    );
+    blockModelGenerator.createTrivialBlock(
+        LighterEndBlocks.FERROUS_ICE,
+        TexturedModel.CUBE.updateTexture(mapping -> mapping.forceAllTranslucent())
+    );
+    blockModelGenerator.createTrivialBlock(
+        LighterEndBlocks.AUROUS_ICE,
+        TexturedModel.CUBE.updateTexture(mapping -> mapping.forceAllTranslucent())
+    );
 
     generateMaterialModels(blockModelGenerator, LighterEndBlocks.BORNITE);
 
@@ -224,10 +239,6 @@ public class ModelProvider extends FabricModelProvider {
       itemModelGenerator.generateFlatItem(item, ModelTemplates.FLAT_ITEM);
     }
 
-    for (ItemLike chandelier : LighterEndBlocks.COPPER_CHANDELIERS.asList()) {
-      itemModelGenerator.generateFlatItem(chandelier.asItem(), ModelTemplates.FLAT_ITEM);
-    }
-
     itemModelGenerator.generateTrimmableItem(
         LighterEndEquipment.SILK_ELYTRA,
         LighterEndEquipment.SILK_MATERIAL,
@@ -236,23 +247,7 @@ public class ModelProvider extends FabricModelProvider {
     );
 
     generateVanillaArmorTrims(itemModelGenerator);
-
-    registerArmorTrim(
-        itemModelGenerator,
-        LighterEndEquipment.SILK_ELYTRA,
-        LighterEndEquipment.SILK_MATERIAL,
-        Identifier.withDefaultNamespace("trims/items/chestplate_trim"),
-        true
-    );
   }
-
-
-  /**
-   * The following code is adapted from the Cinderscape mod by TerraformersMC
-   * https://github.com/TerraformersMC/Cinderscapes/blob/0e9d760/common/src/main/java/com/terraformersmc/cinderscapes/data/CinderscapesModelProvider.java
-   * under the terms of the GNU Lesser General Public License v3.0
-   * https://github.com/TerraformersMC/Cinderscapes/blob/0e9d760/LICENSE
-   */
 
 
   public static void generateVanillaArmorTrims(ItemModelGenerators itemModelGenerator) {
@@ -320,37 +315,48 @@ public class ModelProvider extends FabricModelProvider {
   private static void registerArmorTrim(
       ItemModelGenerators generator,
       Item armor,
-      ResourceKey<EquipmentAsset> equipmentKey,
-      Identifier trimIdPrefix,
+      ResourceKey<EquipmentAsset> equipmentAssetId,
+      Identifier slotTrimPrefix,
       boolean dyeable
   ) {
-    Identifier armorModelId = ModelLocationUtils.getModelLocation(armor);
-    Identifier armorTextures = TextureMapping.getItemTexture(armor);
-    Identifier armorOverlayTextures = TextureMapping.getItemTexture(armor, "_overlay");
 
-    var auroraTrimmer = new ItemModelGenerators.TrimMaterialData(
+    TrimMaterialData auroraTrimmer = new ItemModelGenerators.TrimMaterialData(
         MaterialAssetGroup.create("aurora"),
         LighterEndTrimming.AURORA
     );
 
-    Identifier trimmedModelId = armorModelId.withSuffix(
-        "_" + auroraTrimmer.assets().base().suffix() + "_trim"
-    );
-    Identifier trimTextureId = trimIdPrefix.withSuffix(
-        "_" + auroraTrimmer.assets().assetId(equipmentKey).suffix()
-    );
+    Identifier modelLocation = ModelLocationUtils.getModelLocation(armor);
+    var itemTexture = TextureMapping.getItemTexture(armor);
+    var overlayTexture = TextureMapping.getItemTexture(armor, "_overlay");
+
+    Identifier trimModelLocation = modelLocation.withSuffix(
+        "_" + auroraTrimmer.assets().base().suffix() + "_trim");
+    var trimOverlayTexture = new net.minecraft.client.resources.model.sprite.Material(
+        slotTrimPrefix.withSuffix("_" + auroraTrimmer.assets().assetId(equipmentAssetId).suffix()));
+    ItemModel.Unbaked trimModel;
     if (dyeable) {
-      ModelTemplates.THREE_LAYERED_ITEM.create(
-          trimmedModelId,
-          TextureMapping.layered(armorTextures, armorOverlayTextures, trimTextureId),
-          generator.modelOutput
-      );
+      generator.generateLayeredItem(trimModelLocation, itemTexture, overlayTexture,
+          trimOverlayTexture);
+      trimModel = ItemModelUtils.tintedModel(trimModelLocation, new Dye(-6265536));
     } else {
-      ModelTemplates.TWO_LAYERED_ITEM.create(
-          trimmedModelId,
-          TextureMapping.layered(armorTextures, trimTextureId),
-          generator.modelOutput
-      );
+      generator.generateLayeredItem(trimModelLocation, itemTexture, trimOverlayTexture);
+      trimModel = ItemModelUtils.plainModel(trimModelLocation);
     }
+
+    Unbaked untrimmedModel;
+    if (dyeable) {
+      ModelTemplates.TWO_LAYERED_ITEM.create(modelLocation,
+          TextureMapping.layered(itemTexture, overlayTexture), generator.modelOutput);
+      untrimmedModel = ItemModelUtils.tintedModel(modelLocation, new Dye(-6265536));
+    } else {
+      ModelTemplates.FLAT_ITEM.create(modelLocation, TextureMapping.layer0(itemTexture),
+          generator.modelOutput);
+      untrimmedModel = ItemModelUtils.plainModel(modelLocation);
+    }
+
+    generator.itemModelOutput.accept(armor,
+        ItemModelUtils.select(new TrimMaterialProperty(), untrimmedModel,
+            List.of(ItemModelUtils.when(
+                auroraTrimmer.materialKey(), trimModel))));
   }
 }

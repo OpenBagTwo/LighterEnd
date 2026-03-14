@@ -94,7 +94,8 @@ public class SilkMothNestEntity extends BlockEntity {
 
   public boolean isNearFire() {
     if (this.level != null) {
-      for (BlockPos blockPos : BlockPos.betweenClosed(this.worldPosition.offset(-1, -1, -1), this.worldPosition.offset(1, 1, 1))) {
+      for (BlockPos blockPos : BlockPos.betweenClosed(this.worldPosition.offset(-1, -1, -1),
+          this.worldPosition.offset(1, 1, 1))) {
         if (this.level.getBlockState(blockPos).getBlock() instanceof FireBlock) {
           return true;
         }
@@ -169,7 +170,7 @@ public class SilkMothNestEntity extends BlockEntity {
             if (current_fullness < SilkMothNest.MAX_FULLNESS) {
               int additional_fullness = 1;
               if (current_fullness + additional_fullness < SilkMothNest.MAX_FULLNESS) {
-                if (world.random.nextInt(100) == 0) {  // 1% chance of bonus fullness
+                if (world.getRandom().nextInt(100) == 0) {  // 1% chance of bonus fullness
                   additional_fullness += 1;
                 }
               }
@@ -338,7 +339,7 @@ public class SilkMothNestEntity extends BlockEntity {
           nbtCompound::remove);
       Entity entity = EntityType.loadEntityRecursive(nbtCompound, world, EntitySpawnReason.LOAD,
           entityx -> entityx);
-      if (entity != null && entity.getType().is(LighterEndTags.MOTH_NEST_INHABITORS)) {
+      if (entity != null && entity.is(LighterEndTags.MOTH_NEST_INHABITORS)) {
         entity.setNoGravity(true);
         if (entity instanceof SilkMoth mothEntity) {
           mothEntity.setHive(pos);
@@ -367,7 +368,8 @@ public class SilkMothNestEntity extends BlockEntity {
           entity.problemPath(),
           LighterEnd.LOGGER
       )) {
-        TagValueOutput nbtWriteView = TagValueOutput.createWithContext(logging, entity.registryAccess());
+        TagValueOutput nbtWriteView = TagValueOutput.createWithContext(logging,
+            entity.registryAccess());
         entity.save(nbtWriteView);
         SilkMothNestEntity.IRRELEVANT_NBT_TAGS.forEach(nbtWriteView::discard);
         CompoundTag nbtCompound = nbtWriteView.buildResult();

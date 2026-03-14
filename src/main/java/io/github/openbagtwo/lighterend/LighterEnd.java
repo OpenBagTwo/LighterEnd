@@ -73,7 +73,7 @@ public class LighterEnd implements ModInitializer {
     LighterEndWorldGen.addIceStars(CONFIG);
     LighterEndWorldGen.addOres(CONFIG);
 
-    PayloadTypeRegistry.playS2C().register(GravityPayload.ID, GravityPayload.CODEC);
+    PayloadTypeRegistry.clientboundPlay().register(GravityPayload.ID, GravityPayload.CODEC);
     ServerPlayConnectionEvents.JOIN.register((handler, sender, server) ->
         sender.sendPacket(
             new GravityPayload(

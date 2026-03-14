@@ -5,8 +5,8 @@ import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndLootTables;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableSubProvider;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
@@ -19,11 +19,11 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
-public class ChestLootTableProvider extends SimpleFabricLootTableProvider {
+public class ChestLootTableProvider extends SimpleFabricLootTableSubProvider {
 
 
   public ChestLootTableProvider(
-      FabricDataOutput output,
+      FabricPackOutput output,
       CompletableFuture<Provider> registryLookup
   ) {
     super(output, registryLookup, LootContextParamSets.CHEST);

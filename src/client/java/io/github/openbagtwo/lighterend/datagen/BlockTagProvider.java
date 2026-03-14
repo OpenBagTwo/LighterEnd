@@ -6,18 +6,18 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBlocks.Material;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
-public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
+public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
 
   protected BlockTagProvider(
-      FabricDataOutput output, CompletableFuture<Provider> future
+      FabricPackOutput output, CompletableFuture<Provider> future
   ) {
     super(output, future);
   }
@@ -193,6 +193,9 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
     valueLookupBuilder(BlockTags.INFINIBURN_OVERWORLD).add(LighterEndBlocks.BRIMSTONE);
 
+    valueLookupBuilder(BlockTags.SUPPORTS_CHORUS_FLOWER).addTag(LighterEndTags.END_SOIL);
+    valueLookupBuilder(BlockTags.SUPPORTS_CHORUS_PLANT).addTag(LighterEndTags.END_SOIL);
+
     valueLookupBuilder(LighterEndTags.END_MOSS_REPLACEABLE)
         .add(
             Blocks.END_STONE,
@@ -265,8 +268,5 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     valueLookupBuilder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_STONES);
     valueLookupBuilder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_SOIL);
     valueLookupBuilder(LighterEndTags.GROWS_SULPHUR_CRYSTALS).add(LighterEndBlocks.BRIMSTONE);
-
-
   }
-
 }

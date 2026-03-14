@@ -142,7 +142,7 @@ public class VentBubbleColumn extends Block implements BucketPickup, LiquidBlock
       InsideBlockEffectApplier handler,
       boolean bl
   ) {
-    if (entity.getType().is(LighterEndTags.IGNORES_GEYSER_BUBBLES)) {
+    if (entity.is(LighterEndTags.IGNORES_GEYSER_BUBBLES)) {
       return;
     }
     BlockState blockState = world.getBlockState(pos.above());
@@ -154,9 +154,9 @@ public class VentBubbleColumn extends Block implements BucketPickup, LiquidBlock
         for (int i = 0; i < 2; ++i) {
           serverWorld.sendParticles(
               ParticleTypes.SPLASH,
-              (double) pos.getX() + world.random.nextDouble(),
+              (double) pos.getX() + world.getRandom().nextDouble(),
               pos.getY() + 1,
-              (double) pos.getZ() + world.random.nextDouble(),
+              (double) pos.getZ() + world.getRandom().nextDouble(),
               1,
               0.0D,
               0.0D,
@@ -165,9 +165,9 @@ public class VentBubbleColumn extends Block implements BucketPickup, LiquidBlock
           );
           serverWorld.sendParticles(
               ParticleTypes.BUBBLE,
-              (double) pos.getX() + world.random.nextDouble(),
+              (double) pos.getX() + world.getRandom().nextDouble(),
               pos.getY() + 1,
-              (double) pos.getZ() + world.random.nextDouble(),
+              (double) pos.getZ() + world.getRandom().nextDouble(),
               1,
               0.0D,
               0.01D,

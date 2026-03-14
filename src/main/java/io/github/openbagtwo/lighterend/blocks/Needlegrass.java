@@ -56,12 +56,14 @@ public class Needlegrass extends VegetationBlock implements BonemealableBlock {
   }
 
   @Override
-  public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
+  public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos,
+      BlockState state) {
     return true;
   }
 
   @Override
-  public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
+  public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos,
+      BlockState state) {
     popResource(world, pos, new ItemStack(this));
   }
 
@@ -76,7 +78,7 @@ public class Needlegrass extends VegetationBlock implements BonemealableBlock {
   ) {
     if (
         entity instanceof LivingEntity
-            && !entity.getType().is(LighterEndTags.IMMUNE_TO_NEEDLEGRASS)
+            && !entity.is(LighterEndTags.IMMUNE_TO_NEEDLEGRASS)
     ) {
       entity.makeStuckInBlock(state, new Vec3(0.8F, 0.75, 0.8F));
       if (world instanceof ServerLevel serverWorld) {

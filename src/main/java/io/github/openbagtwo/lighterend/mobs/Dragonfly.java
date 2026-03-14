@@ -46,7 +46,7 @@ public class Dragonfly extends Animal implements FlyingAnimal {
     this.moveControl = new FlyingMoveControl(this, 20, true);
     this.lookControl = new DragonflyLookControl(this);
     this.setPathfindingMalus(PathType.WATER, -1.0F);
-    this.setPathfindingMalus(PathType.DANGER_FIRE, -1.0F);
+    this.setPathfindingMalus(PathType.FIRE_IN_NEIGHBOR, -1.0F);
     this.xpReward = 1;
   }
 

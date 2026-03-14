@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 public abstract class BiomeProvidingMixin {
 
 
-  @ModifyArgs(method = "createLevels", at = @At(value = "INVOKE", target = "net/minecraft/server/level/ServerLevel.<init> (Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lnet/minecraft/world/level/storage/ServerLevelData;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/level/dimension/LevelStem;ZJLjava/util/List;ZLnet/minecraft/world/RandomSequences;)V"))
+  @ModifyArgs(method = "createLevels", at = @At(value = "INVOKE", target = "net/minecraft/server/level/ServerLevel.<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lnet/minecraft/world/level/storage/ServerLevelData;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/level/dimension/LevelStem;ZJLjava/util/List;Z)V"))
   private void addModdedBiomes(Args args) {
     if (LighterEnd.CONFIG.generateBiomes()) {
       MinecraftServer server = args.get(0);

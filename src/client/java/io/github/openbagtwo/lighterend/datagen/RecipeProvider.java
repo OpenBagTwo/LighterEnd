@@ -10,7 +10,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
@@ -22,6 +22,7 @@ import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
@@ -29,7 +30,7 @@ import net.minecraft.world.level.block.Blocks;
 public class RecipeProvider extends FabricRecipeProvider {
 
   protected RecipeProvider(
-      FabricDataOutput output,
+      FabricPackOutput output,
       CompletableFuture<Provider> registriesFuture
   ) {
     super(output, registriesFuture);
@@ -208,9 +209,13 @@ public class RecipeProvider extends FabricRecipeProvider {
 
         generateWoodRecipes(LighterEndBlocks.UMBRELLA);
         SimpleCookingRecipeBuilder.smelting(
-                Ingredient.of(LighterEndBlocks.UMBRELLA_MEMBRANE), RecipeCategory.MISC,
-                Items.SLIME_BALL, 0.1F, 200)
-            .unlockedBy(getHasName(LighterEndBlocks.UMBRELLA_MEMBRANE),
+                Ingredient.of(LighterEndBlocks.UMBRELLA_MEMBRANE),
+                RecipeCategory.MISC,
+                CookingBookCategory.MISC,
+                Items.SLIME_BALL,
+                0.1F,
+                200
+            ).unlockedBy(getHasName(LighterEndBlocks.UMBRELLA_MEMBRANE),
                 this.has(LighterEndBlocks.UMBRELLA_MEMBRANE))
             .save(
                 output,
@@ -220,21 +225,49 @@ public class RecipeProvider extends FabricRecipeProvider {
                 )
             );
 
-        generateSmokingSmeltingRecipes(LighterEndItems.RAW_END_FISH, Items.GLOW_INK_SAC,
-            RecipeCategory.MISC);
+        generateSmokingSmeltingRecipes(
+            LighterEndItems.RAW_END_FISH,
+            Items.GLOW_INK_SAC,
+            RecipeCategory.MISC,
+            CookingBookCategory.MISC
+        );
 
-        generateSmokingSmeltingRecipes(LighterEndBlocks.CHARNIA_CYAN, Items.CYAN_DYE,
-            RecipeCategory.MISC);
-        generateSmokingSmeltingRecipes(LighterEndBlocks.CHARNIA_GREEN, Items.GREEN_DYE,
-            RecipeCategory.MISC);
-        generateSmokingSmeltingRecipes(LighterEndBlocks.CHARNIA_LIGHT_BLUE, Items.LIGHT_BLUE_DYE,
-            RecipeCategory.MISC);
-        generateSmokingSmeltingRecipes(LighterEndBlocks.CHARNIA_ORANGE, Items.ORANGE_DYE,
-            RecipeCategory.MISC);
-        generateSmokingSmeltingRecipes(LighterEndBlocks.CHARNIA_PURPLE, Items.PURPLE_DYE,
-            RecipeCategory.MISC);
-        generateSmokingSmeltingRecipes(LighterEndBlocks.CHARNIA_RED, Items.RED_DYE,
-            RecipeCategory.MISC);
+        generateSmokingSmeltingRecipes(
+            LighterEndBlocks.CHARNIA_CYAN,
+            Items.CYAN_DYE,
+            RecipeCategory.MISC,
+            CookingBookCategory.MISC
+        );
+        generateSmokingSmeltingRecipes(
+            LighterEndBlocks.CHARNIA_GREEN,
+            Items.GREEN_DYE,
+            RecipeCategory.MISC,
+            CookingBookCategory.MISC
+        );
+        generateSmokingSmeltingRecipes(
+            LighterEndBlocks.CHARNIA_LIGHT_BLUE,
+            Items.LIGHT_BLUE_DYE,
+            RecipeCategory.MISC,
+            CookingBookCategory.MISC
+        );
+        generateSmokingSmeltingRecipes(
+            LighterEndBlocks.CHARNIA_ORANGE,
+            Items.ORANGE_DYE,
+            RecipeCategory.MISC,
+            CookingBookCategory.MISC
+        );
+        generateSmokingSmeltingRecipes(
+            LighterEndBlocks.CHARNIA_PURPLE,
+            Items.PURPLE_DYE,
+            RecipeCategory.MISC,
+            CookingBookCategory.MISC
+        );
+        generateSmokingSmeltingRecipes(
+            LighterEndBlocks.CHARNIA_RED,
+            Items.RED_DYE,
+            RecipeCategory.MISC,
+            CookingBookCategory.MISC
+        );
 
         shaped(RecipeCategory.COMBAT, Items.SPECTRAL_ARROW, 4)
             .pattern("X")
@@ -254,8 +287,12 @@ public class RecipeProvider extends FabricRecipeProvider {
                 )
             );
 
-        generateSmokingSmeltingRecipes(LighterEndItems.END_LILY_LEAF,
-            LighterEndItems.DRIED_END_LILY_LEAF, RecipeCategory.MISC);
+        generateSmokingSmeltingRecipes(
+            LighterEndItems.END_LILY_LEAF,
+            LighterEndItems.DRIED_END_LILY_LEAF,
+            RecipeCategory.MISC,
+            CookingBookCategory.MISC
+        );
 
         shaped(RecipeCategory.MISC, Items.PAPER, 3)
             .pattern("###")
@@ -281,9 +318,14 @@ public class RecipeProvider extends FabricRecipeProvider {
         generateWoodRecipes(LighterEndBlocks.GLOWSHROOM);
 
         SimpleCookingRecipeBuilder.smelting(
-                Ingredient.of(LighterEndItems.END_CREAM), RecipeCategory.BREWING,
-                LighterEndItems.END_POWDER, 0.1F, 200)
-            .unlockedBy(getHasName(LighterEndItems.END_CREAM),
+                Ingredient.of(LighterEndItems.END_CREAM),
+                RecipeCategory.BREWING,
+                CookingBookCategory.MISC,
+                LighterEndItems.END_POWDER,
+                0.1F,
+                200
+            ).unlockedBy(
+                getHasName(LighterEndItems.END_CREAM),
                 has(LighterEndItems.END_CREAM))
             .save(
                 output,
@@ -394,6 +436,7 @@ public class RecipeProvider extends FabricRecipeProvider {
         SimpleCookingRecipeBuilder.smelting(
             Ingredient.of(LighterEndBlocks.FERROUS_ICE),
             RecipeCategory.MISC,
+            CookingBookCategory.MISC,
             Items.IRON_NUGGET,
             0.1F,
             200
@@ -411,6 +454,7 @@ public class RecipeProvider extends FabricRecipeProvider {
         SimpleCookingRecipeBuilder.smelting(
             Ingredient.of(LighterEndBlocks.EMERALD_ICE),
             RecipeCategory.MISC,
+            CookingBookCategory.MISC,
             Items.COPPER_NUGGET,
             0.1F,
             200
@@ -429,6 +473,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             List.of(LighterEndBlocks.END_STONE_REDSTONE_ORE,
                 LighterEndBlocks.UMBRALITH_REDSTONE_ORE),
             RecipeCategory.REDSTONE,
+            CookingBookCategory.MISC,
             Items.REDSTONE,
             0.7F,
             200,
@@ -438,6 +483,7 @@ public class RecipeProvider extends FabricRecipeProvider {
             List.of(LighterEndBlocks.END_STONE_REDSTONE_ORE,
                 LighterEndBlocks.UMBRALITH_REDSTONE_ORE),
             RecipeCategory.REDSTONE,
+            CookingBookCategory.MISC,
             Items.REDSTONE,
             0.7F,
             100,
@@ -561,6 +607,8 @@ public class RecipeProvider extends FabricRecipeProvider {
             );
 
         generateWoodRecipes(LighterEndBlocks.DRAGON);
+
+        dyedItem(LighterEndEquipment.SILK_ELYTRA, "dyed_armor");
       }
 
       public void generateMaterialRecipes(Material material) {
@@ -759,7 +807,8 @@ public class RecipeProvider extends FabricRecipeProvider {
       }
 
       public void generateCookingRecipes(ItemLike input, ItemLike product) {
-        generateSmokingSmeltingRecipes(input, product, RecipeCategory.FOOD);
+        generateSmokingSmeltingRecipes(input, product, RecipeCategory.FOOD,
+            CookingBookCategory.FOOD);
 
         SimpleCookingRecipeBuilder.campfireCooking(
             Ingredient.of(input),
@@ -783,12 +832,14 @@ public class RecipeProvider extends FabricRecipeProvider {
       public void generateSmokingSmeltingRecipes(
           ItemLike input,
           ItemLike product,
-          RecipeCategory category
+          RecipeCategory recipeCategory,
+          CookingBookCategory cookingCategory
       ) {
         String output_key = BuiltInRegistries.ITEM.getKey(product.asItem()).getPath();
         SimpleCookingRecipeBuilder.smelting(
             Ingredient.of(input),
-            category,
+            recipeCategory,
+            cookingCategory,
             product,
             0.35F,
             200
@@ -805,7 +856,7 @@ public class RecipeProvider extends FabricRecipeProvider {
         );
         SimpleCookingRecipeBuilder.smoking(
             Ingredient.of(input),
-            category,
+            recipeCategory,
             product,
             0.35F,
             100

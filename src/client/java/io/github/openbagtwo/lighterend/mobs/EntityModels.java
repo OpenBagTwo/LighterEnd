@@ -16,8 +16,8 @@ import io.github.openbagtwo.lighterend.mobs.renderers.GlossyMooshroomRenderer;
 import io.github.openbagtwo.lighterend.mobs.renderers.SilkMothRenderer;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import java.util.function.Function;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
 import net.minecraft.client.model.animal.cow.CowModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
@@ -38,42 +38,42 @@ public class EntityModels {
   public static final ModelLayerLocation CRAB_BABY = makeLayer("chorus_crab_baby");
 
   public static void initialize() {
-    EntityModelLayerRegistry.registerModelLayer(EntityModels.SILK_MOTH_MODEL,
+    ModelLayerRegistry.registerModelLayer(EntityModels.SILK_MOTH_MODEL,
         SilkMothModel::getTexturedModelData);
     register(LighterEndMobs.SILK_MOTH.mob, SilkMothRenderer::new);
 
-    EntityModelLayerRegistry.registerModelLayer(SILK_MOTH_BABY,
+    ModelLayerRegistry.registerModelLayer(SILK_MOTH_BABY,
         () -> SilkMothModel.getTexturedModelData().apply(SilkMothModel.BABY_TRANSFORMER));
 
-    EntityModelLayerRegistry.registerModelLayer(EntityModels.DRAGONFLY_MODEL,
+    ModelLayerRegistry.registerModelLayer(EntityModels.DRAGONFLY_MODEL,
         DragonflyModel::getTexturedModelData);
     register(LighterEndMobs.DRAGONFLY.mob, DragonflyRenderer::new);
 
-    EntityModelLayerRegistry.registerModelLayer(EntityModels.END_FISH_MODEL,
+    ModelLayerRegistry.registerModelLayer(EntityModels.END_FISH_MODEL,
         EndFishModel::getTexturedModelData);
     register(LighterEndMobs.END_FISH.mob, EndFishRenderer::new);
 
-    EntityModelLayerRegistry.registerModelLayer(EntityModels.CUBOZOA_MODEL,
+    ModelLayerRegistry.registerModelLayer(EntityModels.CUBOZOA_MODEL,
         CubozoaModel::getTexturedModelData);
     register(LighterEndMobs.CUBOZOA.mob, CubozoaRenderer::new);
 
-    EntityModelLayerRegistry.registerModelLayer(END_SLIME_MODEL,
+    ModelLayerRegistry.registerModelLayer(END_SLIME_MODEL,
         EndSlimeModel::getInnerTexturedModelData);
-    EntityModelLayerRegistry.registerModelLayer(
+    ModelLayerRegistry.registerModelLayer(
         END_SLIME_SHELL_MODEL,
         EndSlimeModel::getOuterTexturedModelData
     );
     register(LighterEndMobs.END_SLIME.mob, EndSlimeRenderer::new);
 
-    EntityModelLayerRegistry.registerModelLayer(EntityModels.MOOSHROOM_MODEL,
+    ModelLayerRegistry.registerModelLayer(EntityModels.MOOSHROOM_MODEL,
         CowModel::createBodyLayer);
     register(LighterEndMobs.MOOSHROOM.mob, GlossyMooshroomRenderer::new);
 
-    EntityModelLayerRegistry.registerModelLayer(EntityModels.CRAB_MODEL,
+    ModelLayerRegistry.registerModelLayer(EntityModels.CRAB_MODEL,
         CrabModel::getTexturedModelData);
     register(LighterEndMobs.CHORUS_CRAB.mob, CrabRenderer::new);
 
-    EntityModelLayerRegistry.registerModelLayer(CRAB_BABY,
+    ModelLayerRegistry.registerModelLayer(CRAB_BABY,
         () -> CrabModel.getTexturedModelData().apply(CrabModel.BABY_TRANSFORMER));
   }
 

@@ -34,7 +34,8 @@ public class EndLake extends Structure {
     return LighterEndStructures.END_LAKE;
   }
 
-  protected void generatePieces(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
+  protected void generatePieces(StructurePiecesBuilder structurePiecesBuilder,
+      GenerationContext context) {
     final RandomSource random = context.random();
     final ChunkPos chunkPos = context.chunkPos();
     final ChunkGenerator chunkGenerator = context.chunkGenerator();
@@ -81,7 +82,7 @@ public class EndLake extends Structure {
       LevelHeightAccessor levelHeightAccessor,
       RandomState rState
   ) {
-    LegacyRandomSource random = new LegacyRandomSource(chunkPos.x + chunkPos.z * 10387313);
+    LegacyRandomSource random = new LegacyRandomSource(chunkPos.x() + chunkPos.z() * 10387313);
     Rotation blockRotation = Rotation.getRandom(random);
 
     int offsetX = 5;
@@ -98,7 +99,8 @@ public class EndLake extends Structure {
     int blockX = chunkPos.getBlockX(7);
     int blockZ = chunkPos.getBlockZ(7);
     int minZ = Integer.MAX_VALUE;
-    BlockPos.MutableBlockPos result = new BlockPos.MutableBlockPos(blockX, Integer.MIN_VALUE, blockZ);
+    BlockPos.MutableBlockPos result = new BlockPos.MutableBlockPos(blockX, Integer.MIN_VALUE,
+        blockZ);
     for (int i = 0; i < 2; i++) {
       for (int j = 0; j < 2; j++) {
         int z = chunkGenerator.getFirstOccupiedHeight(

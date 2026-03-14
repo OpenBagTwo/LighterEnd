@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
@@ -42,7 +42,7 @@ import net.minecraft.world.level.biome.Biome;
 public class AdvancementProvider extends FabricAdvancementProvider {
 
   protected AdvancementProvider(
-      FabricDataOutput output,
+      FabricPackOutput output,
       CompletableFuture<Provider> registryLookup
   ) {
     super(output, registryLookup);

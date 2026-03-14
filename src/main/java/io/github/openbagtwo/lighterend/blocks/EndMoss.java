@@ -46,7 +46,8 @@ public class EndMoss extends BonemealableFeaturePlacerBlock {
   }
 
   @Override
-  protected void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+  protected void randomTick(BlockState state, ServerLevel world, BlockPos pos,
+      RandomSource random) {
     if (!stayAlive(state, world, pos)) {
       world.setBlockAndUpdate(pos, Blocks.END_STONE.defaultBlockState());
     }
@@ -60,7 +61,7 @@ public class EndMoss extends BonemealableFeaturePlacerBlock {
         state,
         blockState,
         Direction.UP,
-        blockState.getLightBlock()
+        blockState.getLightEmission()
     );
     return i < 15;
   }
@@ -76,7 +77,8 @@ public class EndMoss extends BonemealableFeaturePlacerBlock {
   }
 
   @Override
-  public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
+  public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos,
+      BlockState state) {
     return canGrow(world, pos);
   }
 
@@ -86,7 +88,8 @@ public class EndMoss extends BonemealableFeaturePlacerBlock {
   }
 
   @Override
-  public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
+  public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos,
+      BlockState state) {
     if (!canGrow(world, pos)) {
       return;
     }

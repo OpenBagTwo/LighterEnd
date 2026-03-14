@@ -42,7 +42,6 @@
       "environment": "client"
     }
   ],
-  "accessWidener": "lighterend.accesswidener",
   "name": "Lighter End",
   "version": "${version}"
 }

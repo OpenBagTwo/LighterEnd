@@ -3,16 +3,16 @@ package io.github.openbagtwo.lighterend.datagen;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.concurrent.CompletableFuture;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
 
-public class MobTagProvider extends FabricTagProvider.EntityTypeTagProvider {
+public class MobTagProvider extends FabricTagsProvider.EntityTypeTagsProvider {
 
   public MobTagProvider(
-      FabricDataOutput dataOutput,
+      FabricPackOutput dataOutput,
       CompletableFuture<Provider> registriesFuture
   ) {
     super(dataOutput, registriesFuture);

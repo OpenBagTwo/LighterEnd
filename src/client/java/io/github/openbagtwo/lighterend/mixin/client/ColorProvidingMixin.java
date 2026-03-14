@@ -4,6 +4,7 @@ import io.github.openbagtwo.lighterend.blocks.AuroraCrystalRenderer;
 import io.github.openbagtwo.lighterend.blocks.EndMossRenderer;
 import io.github.openbagtwo.lighterend.blocks.TenaneaFlowerRenderer;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
+import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.main.GameConfig;
@@ -23,14 +24,19 @@ public abstract class ColorProvidingMixin {
 
   @Inject(method = "<init>*", at = @At("TAIL"))
   private void provideColors(GameConfig args, CallbackInfo info) {
-    blockColors.register(AuroraCrystalRenderer.getBlockColor(),
-        LighterEndBlocks.AURORA_CRYSTAL);
-    blockColors.register(AuroraCrystalRenderer.getBlockColor(),
-        LighterEndBlocks.OBELISK);
-    blockColors.register(TenaneaFlowerRenderer.getBlockColor(),
-        LighterEndBlocks.TENANEA_FLOWER);
-    blockColors.register(EndMossRenderer.getBlockColor(),
-        LighterEndBlocks.END_MOSS);
+    blockColors.register(
+        List.of(AuroraCrystalRenderer.getBlockColor()),
+        LighterEndBlocks.AURORA_CRYSTAL,
+        LighterEndBlocks.OBELISK
+    );
+    blockColors.register(
+        List.of(TenaneaFlowerRenderer.getBlockColor()),
+        LighterEndBlocks.TENANEA_FLOWER
+    );
+    blockColors.register(
+        List.of(EndMossRenderer.getBlockColor()),
+        LighterEndBlocks.END_MOSS
+    );
   }
 
 }

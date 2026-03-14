@@ -80,7 +80,8 @@ public class Wood {
           settings -> new RotatedPillarBlock(
               applyLogSettings(
                   settings.mapColor(
-                      state -> state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? woodColor
+                      state -> state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y
+                          ? woodColor
                           : barkColor
                   )
               )
@@ -315,8 +316,8 @@ public class Wood {
     SoundType soundGroup = createWoodSoundGroup(name);
 
     return (new WoodTypeBuilder())
-        .soundGroup(soundGroup)
-        .hangingSignSoundGroup(createWoodSoundGroup(name + "_hanging_sign"))
+        .soundType(soundGroup)
+        .hangingSignSoundType(createWoodSoundGroup(name + "_hanging_sign"))
         .fenceGateCloseSound(LighterEndSounds.register("block." + name + "_fence_gate.close"))
         .fenceGateOpenSound(LighterEndSounds.register("block." + name + "_fence_gate.open"))
         .register(LighterEnd.of(name), createWoodSetType(name, soundGroup));
@@ -328,7 +329,7 @@ public class Wood {
         .openableByWindCharge(true)
         .buttonActivatedByArrows(true)
         .pressurePlateActivationRule(BlockSetType.PressurePlateSensitivity.EVERYTHING)
-        .soundGroup(soundGroup)
+        .soundType(soundGroup)
         .doorCloseSound(LighterEndSounds.register("block." + name + "_door.close"))
         .doorOpenSound(LighterEndSounds.register("block." + name + "_door.open"))
         .trapdoorCloseSound(LighterEndSounds.register("block." + name + "_trapdoor.close"))

@@ -117,7 +117,7 @@ public class ChorusCrab extends Animal {
   @Override
   public boolean canBeAffected(MobEffectInstance effect) {
     if (effect.is(MobEffects.POISON)) {
-      return !this.getType().is(EntityTypeTags.IGNORES_POISON_AND_REGEN);
+      return !this.is(EntityTypeTags.IGNORES_POISON_AND_REGEN);
     }
     return super.canBeAffected(effect);
   }
@@ -149,7 +149,8 @@ public class ChorusCrab extends Animal {
   }
 
   @Override
-  protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance localDifficulty) {
+  protected void populateDefaultEquipmentSlots(RandomSource random,
+      DifficultyInstance localDifficulty) {
     if (random.nextInt(512) == 0) {
       this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.DIAMOND_SWORD));
       this.setGuaranteedDrop(EquipmentSlot.MAINHAND);
@@ -210,7 +211,8 @@ public class ChorusCrab extends Animal {
   }
 
   @Override
-  public void finalizeSpawnChildFromBreeding(ServerLevel world, Animal other, @Nullable AgeableMob baby) {
+  public void finalizeSpawnChildFromBreeding(ServerLevel world, Animal other,
+      @Nullable AgeableMob baby) {
     super.finalizeSpawnChildFromBreeding(world, other, baby);
     if (baby != null) {
       baby.startRiding(this, true, true);
