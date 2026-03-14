@@ -3,6 +3,7 @@ package io.github.openbagtwo.lighterend.mobs.renderers;
 import static net.minecraft.client.renderer.entity.MushroomCowRenderer.BLOCK_DISPLAY_CONTEXT;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.Polypore;
 import io.github.openbagtwo.lighterend.mobs.GlossyMooshroom;
@@ -167,7 +168,8 @@ public class GlossyMooshroomRenderer extends
             );
             matrixStack.pushPose();
             matrixStack.scale(0.3F, -0.5F, -0.5F);
-            matrixStack.translate(-2.25F, -1.5F, -0.2F);
+            matrixStack.rotateAround(Axis.YP.rotationDegrees(180), 0, 0, 0);
+            matrixStack.translate(1.25F, -1.5F, -0.2F);
             this.renderMushroom(
                 matrixStack,
                 queue,
