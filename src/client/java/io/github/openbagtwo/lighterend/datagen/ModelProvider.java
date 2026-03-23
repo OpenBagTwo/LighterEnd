@@ -33,6 +33,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.minecraft.world.item.equipment.trim.MaterialAssetGroup;
+import net.minecraft.world.level.ItemLike;
 
 public class ModelProvider extends FabricModelProvider {
 
@@ -237,6 +238,10 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndMobs.CHORUS_CRAB.spawnEgg
     )) {
       itemModelGenerator.generateFlatItem(item, ModelTemplates.FLAT_ITEM);
+    }
+
+    for (ItemLike chandelier : LighterEndBlocks.COPPER_CHANDELIERS.asList()) {
+      itemModelGenerator.generateFlatItem(chandelier.asItem(), ModelTemplates.FLAT_ITEM);
     }
 
     itemModelGenerator.generateTrimmableItem(
