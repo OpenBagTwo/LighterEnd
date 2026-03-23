@@ -1,0 +1,13 @@
+{
+  "gives": {
+    "count": 1,
+    "id": "minecraft:emerald"
+  },
+  "max_uses": 8,
+  "reputation_discount": 0.05,
+  "wants": {
+    "count": 1,
+    "id": "lighterend:music_disc_strange_and_alien"
+  },
+  "xp": 30
+}
