@@ -34,12 +34,16 @@ public class GlossyMooshroomRenderer extends
     AgeableMobRenderer<GlossyMooshroom, LivingEntityRenderState, CowModel> {
 
   private static final List<Identifier> TEXTURES = Arrays.asList(
-      LighterEnd.of("textures/entity/glossy_mooshroom.png")
+      LighterEnd.of("textures/entity/glossy_mooshroom.png"),
+      LighterEnd.of("textures/entity/glossy_mooshroom_baby.png")
   );
 
   private static final List<RenderType> GLOW = Arrays.asList(
       RenderTypes.eyes(
           LighterEnd.of("textures/entity/glossy_mooshroom_glow.png")
+      ),
+      RenderTypes.eyes(
+          LighterEnd.of("textures/entity/glossy_mooshroom_baby_glow.png")
       )
   );
 
@@ -69,7 +73,9 @@ public class GlossyMooshroomRenderer extends
                       this.getParentModel(),
                       state,
                       matrices,
-                      GLOW.get(cowState.variant % GLOW.size()),
+                      GLOW.get(
+                          (cowState.variant % (GLOW.size() / 2)) * 2 + (cowState.isBaby ? 1 : 0)
+                      ),
                       light,
                       OverlayTexture.NO_OVERLAY,
                       -1,
@@ -84,10 +90,12 @@ public class GlossyMooshroomRenderer extends
 
   public Identifier getTextureLocation(LivingEntityRenderState state) {
     int variant = 0;
+    int baby = 0;
     if (state instanceof GlossyMooshroomRenderState cowState) {
       variant = cowState.variant;
+      baby = cowState.isBaby ? 1 : 0;
     }
-    return TEXTURES.get(variant % TEXTURES.size());
+    return TEXTURES.get((variant % (TEXTURES.size() / 2)) * 2 + baby);
   }
 
   public GlossyMooshroomRenderState createRenderState() {
