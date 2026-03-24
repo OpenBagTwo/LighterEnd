@@ -97,13 +97,20 @@ shadowJar {
     from sourceSets.client.output
 
     configurations = [project.configurations.shadow]
-    archiveClassifier.set("dev")
+    from("LICENSE") {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
+    from("LICENSE.BE") {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
     relocate "org.yaml", "${project.maven_group}.shadow.org.yaml"
 }
 
 jar {
-    dependsOn(shadowJar)
     from("LICENSE") {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
+    from("LICENSE.BE") {
         rename { "${it}_${project.base.archivesName.get()}" }
     }
 }
