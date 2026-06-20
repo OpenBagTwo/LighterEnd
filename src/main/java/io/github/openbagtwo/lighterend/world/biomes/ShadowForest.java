@@ -14,7 +14,7 @@ import net.minecraft.world.attribute.AmbientParticle;
 import net.minecraft.world.attribute.AmbientSounds;
 import net.minecraft.world.attribute.BackgroundMusic;
 import net.minecraft.world.attribute.EnvironmentAttributes;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
@@ -39,18 +39,19 @@ public class ShadowForest {
         .addSpawn(
             MobCategory.MONSTER,
             20,
-            new SpawnerData(EntityType.PHANTOM, 1, 1)
+            new SpawnerData(EntityTypes.PHANTOM, 1, 1)
         ).addSpawn(
             MobCategory.MONSTER,
             80,
-            new SpawnerData(EntityType.ENDERMAN, 1, 4)
+            new SpawnerData(EntityTypes.ENDERMAN, 1, 4)
         ).build();
 
     var genSettingsBuilder = new BiomeGenerationSettings.Builder(features, carvers)
         .addFeature(Decoration.SURFACE_STRUCTURES, EndPlacements.END_GATEWAY_RETURN)
         .addFeature(Decoration.SURFACE_STRUCTURES, LighterEndPlacedFeatures.DRAGON_TREE)
         .addFeature(Decoration.VEGETAL_DECORATION, LighterEndPlacedFeatures.PURPLE_POLYPORES)
-        .addFeature(Decoration.VEGETAL_DECORATION, LighterEndPlacedFeatures.SHADOW_FOREST_VEGETATION);
+        .addFeature(Decoration.VEGETAL_DECORATION,
+            LighterEndPlacedFeatures.SHADOW_FOREST_VEGETATION);
 
     for (ResourceKey<PlacedFeature> blob : LighterEndPlacedFeatures.JADESTONE_BLOBS) {
       genSettingsBuilder = genSettingsBuilder.addFeature(Decoration.UNDERGROUND_ORES, blob);

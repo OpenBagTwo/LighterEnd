@@ -68,7 +68,10 @@ public class Updraft extends BlockEntity {
     boolean active = state.getValue(HydrothermalVent.ACTIVATED);
     POS.set(worldPosition).move(Direction.UP);
     int height = active ? 85 : 25;
-    AABB box = new AABB(POS.offset(-1, 0, -1).getCenter(), POS.offset(1, height, 1).getCenter());
+    AABB box = new AABB(
+        Vec3.atCenterOf(POS.offset(-1, 0, -1)),
+        Vec3.atCenterOf(POS.offset(1, height, 1))
+    );
     List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, box);
     if (entities.size() > 0) {
       while (POS.getY() < box.maxY) {

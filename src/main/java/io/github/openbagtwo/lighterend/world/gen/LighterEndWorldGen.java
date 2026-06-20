@@ -1,13 +1,13 @@
 package io.github.openbagtwo.lighterend.world.gen;
 
+import static net.minecraft.world.level.levelgen.SurfaceRules.DEEP_UNDER_FLOOR;
 import static net.minecraft.world.level.levelgen.SurfaceRules.ON_FLOOR;
 import static net.minecraft.world.level.levelgen.SurfaceRules.VERY_DEEP_UNDER_FLOOR;
-import static net.minecraft.world.level.levelgen.SurfaceRules.DEEP_UNDER_FLOOR;
-import static net.minecraft.world.level.levelgen.SurfaceRules.isBiome;
-import static net.minecraft.world.level.levelgen.SurfaceRules.state;
 import static net.minecraft.world.level.levelgen.SurfaceRules.ifTrue;
-import static net.minecraft.world.level.levelgen.SurfaceRules.noiseCondition;
+import static net.minecraft.world.level.levelgen.SurfaceRules.isBiome;
+import static net.minecraft.world.level.levelgen.SurfaceRules.noiseCondition2d;
 import static net.minecraft.world.level.levelgen.SurfaceRules.sequence;
+import static net.minecraft.world.level.levelgen.SurfaceRules.state;
 
 import com.mojang.datafixers.util.Pair;
 import io.github.openbagtwo.lighterend.LighterEnd;
@@ -191,7 +191,8 @@ public class LighterEndWorldGen {
     barrensBiomes.add(Biomes.END_BARRENS);
     try {
       barrensBiomes.add(
-          ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("nullscape", "void_barrens"))
+          ResourceKey.create(Registries.BIOME,
+              Identifier.fromNamespaceAndPath("nullscape", "void_barrens"))
       );
     } catch (NullPointerException ignored) {
     }
@@ -213,7 +214,8 @@ public class LighterEndWorldGen {
     biomes.add(Biomes.END_HIGHLANDS);
     try {
       biomes.add(
-          ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("nullscape", "crystal_peaks"))
+          ResourceKey.create(Registries.BIOME,
+              Identifier.fromNamespaceAndPath("nullscape", "crystal_peaks"))
       );
     } catch (NullPointerException ignored) {
     }
@@ -250,10 +252,12 @@ public class LighterEndWorldGen {
 
     try {
       endStoneBiomes.add(
-          ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("nullscape", "crystal_peaks"))
+          ResourceKey.create(Registries.BIOME,
+              Identifier.fromNamespaceAndPath("nullscape", "crystal_peaks"))
       );
       endStoneBiomes.add(
-          ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("nullscape", "shadowlands"))
+          ResourceKey.create(Registries.BIOME,
+              Identifier.fromNamespaceAndPath("nullscape", "shadowlands"))
       );
     } catch (NullPointerException ignored) {
     }
@@ -280,13 +284,14 @@ public class LighterEndWorldGen {
     );
   }
 
-  public static RuleSource updateSurfaceRules() {
+  public static RuleSource updateSurfaceRules(final HolderGetter<Biome> biomes) {
     return sequence(
         ifTrue(
             ON_FLOOR,
             sequence(
                 ifTrue(
                     isBiome(
+                        biomes,
                         LighterEndBiomes.BLOSSOM_FOREST,
                         LighterEndBiomes.UMBRELLA_JUNGLE,
                         LighterEndBiomes.GLOWING_GRASSLAND,
@@ -295,7 +300,7 @@ public class LighterEndWorldGen {
                     ),
                     sequence(
                         ifTrue(
-                            noiseCondition(NoiseParameters.END_MOSS_SURFACE, -0.5, 0.5),
+                            noiseCondition2d(NoiseParameters.END_MOSS_SURFACE, -0.5, 0.5),
                             state(LighterEndBlocks.END_MOSS.defaultBlockState())
                         )
                     )
@@ -307,11 +312,12 @@ public class LighterEndWorldGen {
             sequence(
                 ifTrue(
                     isBiome(
+                        biomes,
                         LighterEndBiomes.UMBRA_VALLEY
                     ),
                     sequence(
                         ifTrue(
-                            noiseCondition(NoiseParameters.VIOLECITE_SURFACE, -0.05, 0.05),
+                            noiseCondition2d(NoiseParameters.VIOLECITE_SURFACE, -0.05, 0.05),
                             state(LighterEndBlocks.VIOLECITE.baseBlock.defaultBlockState())
                         ),
                         state(LighterEndBlocks.UMBRALITH.baseBlock.defaultBlockState())
@@ -324,11 +330,12 @@ public class LighterEndWorldGen {
             sequence(
                 ifTrue(
                     isBiome(
+                        biomes,
                         LighterEndBiomes.SULPHUR_SPRINGS
                     ),
                     sequence(
                         ifTrue(
-                            noiseCondition(NoiseParameters.SULPHUR_SURFACE, -0.3, 0.3),
+                            noiseCondition2d(NoiseParameters.SULPHUR_SURFACE, -0.3, 0.3),
                             state(LighterEndBlocks.BORNITE.baseBlock.defaultBlockState())
                         ),
                         state(Blocks.END_STONE.defaultBlockState())

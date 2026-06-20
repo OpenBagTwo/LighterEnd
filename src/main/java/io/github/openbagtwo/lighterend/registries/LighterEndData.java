@@ -31,7 +31,8 @@ public class LighterEndData {
 
   public static final DataComponentType<MothsComponent> MOTHS = registerDataComponent(
       "moths",
-      builder -> builder.persistent(MothsComponent.CODEC).networkSynchronized(MothsComponent.PACKET_CODEC)
+      builder -> builder.persistent(MothsComponent.CODEC)
+          .networkSynchronized(MothsComponent.STREAM_CODEC)
           .cacheEncoding()
   );
 
@@ -53,10 +54,9 @@ public class LighterEndData {
 
     public static final Codec<MothsComponent> CODEC = MothData.LIST_CODEC.xmap(
         MothsComponent::new, MothsComponent::moths);
-    public static final StreamCodec<ByteBuf, MothsComponent> PACKET_CODEC = MothData.PACKET_CODEC
+    public static final StreamCodec<RegistryFriendlyByteBuf, MothsComponent> STREAM_CODEC = MothData.STREAM_CODEC
         .apply(ByteBufCodecs.list())
-        .map(
-            MothsComponent::new, MothsComponent::moths);
+        .map(MothsComponent::new, MothsComponent::moths);
     public static final MothsComponent DEFAULT = new MothsComponent(List.of());
 
     @Override

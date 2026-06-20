@@ -44,6 +44,7 @@ import java.util.function.Function;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.references.BlockItemId;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -63,7 +64,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.TintedParticleLeavesBlock;
 import net.minecraft.world.level.block.WallBlock;
-import net.minecraft.world.level.block.WeatheringCopperBlocks;
+import net.minecraft.world.level.block.WeatheringCopperCollection;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -79,13 +80,16 @@ public class LighterEndBlocks {
           .strength(5F, 6F).requiresCorrectToolForDrops().sound(SoundType.STONE)));
   public static final Material VIOLECITE = new Material("violecite", MapColor.TERRACOTTA_BLACK);
   public static final Block MISSING_TILE = register("missing_tile", settings -> new Block(
-      settings.instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 9.0F)
+      settings.instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops()
+          .strength(3.0F, 9.0F)
           .mapColor(MapColor.TERRACOTTA_PURPLE)));
 
   public static final Material AZURE_JADESTONE = new Material("azure_jadestone",
       MapColor.COLOR_LIGHT_BLUE);
-  public static final Material SANDY_JADESTONE = new Material("sandy_jadestone", MapColor.COLOR_YELLOW);
-  public static final Material VIRID_JADESTONE = new Material("virid_jadestone", MapColor.COLOR_GREEN);
+  public static final Material SANDY_JADESTONE = new Material("sandy_jadestone",
+      MapColor.COLOR_YELLOW);
+  public static final Material VIRID_JADESTONE = new Material("virid_jadestone",
+      MapColor.COLOR_GREEN);
 
   public static Block DRAGON_BONE_BLOCK = register("dragon_bone_block",
       settings -> new RotatedPillarBlock(DragonBone.applySettings(settings)));
@@ -143,7 +147,8 @@ public class LighterEndBlocks {
       settings -> new FlowerPotBlock(UMBRELLA_TREE_SAPLING, applyFlowerPotSettings(settings)),
       false
   );
-  public static WoodSet UMBRELLA = new WoodSet("umbrella", MapColor.COLOR_BLUE, MapColor.COLOR_GREEN);
+  public static WoodSet UMBRELLA = new WoodSet("umbrella", MapColor.COLOR_BLUE,
+      MapColor.COLOR_GREEN);
   public static Block UMBRELLA_MEMBRANE = register("umbrella_membrane", UmbrellaMembrane::new);
 
   public static final Block CHARNIA_CYAN = register("charnia_cyan", Charnia::new);
@@ -161,7 +166,8 @@ public class LighterEndBlocks {
   public static final Block END_LOTUS_LEAF = register("end_lotus_leaf", EndLotus.Leaf::new, false);
   public static final Block END_LOTUS_SEED = register("end_lotus_seed", EndLotus.Seed::new);
 
-  public static final WoodSet LOTUS = new WoodSet("end_lotus", MapColor.COLOR_LIGHT_BLUE, MapColor.COLOR_CYAN);
+  public static final WoodSet LOTUS = new WoodSet("end_lotus", MapColor.COLOR_LIGHT_BLUE,
+      MapColor.COLOR_CYAN);
 
   public static final Block GLOWSHROOM_SAPLING = register("mossy_glowshroom_sapling",
       settings -> new Sapling(Glowshroom::new, settings.lightLevel((bs) -> 7)));
@@ -186,7 +192,8 @@ public class LighterEndBlocks {
       )
   );
   public static final Block GLOWSHROOM_FUR = register(
-      "mossy_glowshroom_fur", settings -> new Fur(settings, MapColor.COLOR_LIGHT_BLUE, 4, true), false
+      "mossy_glowshroom_fur", settings -> new Fur(settings, MapColor.COLOR_LIGHT_BLUE, 4, true),
+      false
   );
 
   public static final Block AGAVE = register("blue_vine", Agave::new, false);
@@ -225,10 +232,12 @@ public class LighterEndBlocks {
 
   public static final Block GOLD_CHANDELIER = register("gold_chandelier", Chandelier::new);
   public static final Block IRON_CHANDELIER = register("iron_chandelier", Chandelier::new);
-  public static final WeatheringCopperBlocks COPPER_CHANDELIERS = WeatheringCopperBlocks.create(
-      "copper_chandelier",
+  public static final WeatheringCopperCollection COPPER_CHANDELIERS = WeatheringCopperCollection.registerBlocks(
+      WeatheringCopperCollection.prefixWithState(
+          WeatheringCopperCollection.create("copper_chandelier")
+      ).map(BlockItemId::create),
       LighterEndBlocks::register,
-      Chandelier::new,
+      (s, p) -> new Chandelier(p),
       Chandelier.Oxidizable::new,
       oxidationLevel -> Properties.of()
           .mapColor(MapColor.METAL)
@@ -372,7 +381,8 @@ public class LighterEndBlocks {
       settings -> new FlowerPotBlock(DRAGON_SAPLING, applyFlowerPotSettings(settings)),
       false
   );
-  public static WoodSet DRAGON = new WoodSet("dragon_tree", MapColor.COLOR_BLACK, MapColor.COLOR_PURPLE);
+  public static WoodSet DRAGON = new WoodSet("dragon_tree", MapColor.COLOR_BLACK,
+      MapColor.COLOR_PURPLE);
   public static Block DRAGON_LEAVES = register(
       "dragon_tree_leaves",
       settings -> new TintedParticleLeavesBlock(
@@ -389,8 +399,12 @@ public class LighterEndBlocks {
     return register(name, factory, Properties.of(), hasItem);
   }
 
-  private static Block register(String name, Function<Properties, Block> factory, Properties settings) {
-    return register(name, factory, settings, true);
+  private static Block register(
+      BlockItemId itemId,
+      Function<Properties, Block> factory,
+      Properties settings
+  ) {
+    return register(itemId.toString(), factory, settings, true);
   }
 
   private static Block register(
@@ -475,7 +489,8 @@ public class LighterEndBlocks {
       tileWall = register(baseName + "_tile_wall",
           settings -> new WallBlock(applySettings(settings)));
 
-      pillar = register(baseName + "_pillar", settings -> new RotatedPillarBlock(applySettings(settings)));
+      pillar = register(baseName + "_pillar",
+          settings -> new RotatedPillarBlock(applySettings(settings)));
       button = register(baseName + "_button",
           settings -> new ButtonBlock(BlockSetType.POLISHED_BLACKSTONE, 30,
               settings.noCollision().strength(0.5F).pushReaction(PushReaction.DESTROY)));
@@ -497,7 +512,8 @@ public class LighterEndBlocks {
     }
 
     public Properties applySettings(Properties settings) {
-      return settings.instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 9.0F)
+      return settings.instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops()
+          .strength(3.0F, 9.0F)
           .mapColor(this.mapColor);
     }
   }

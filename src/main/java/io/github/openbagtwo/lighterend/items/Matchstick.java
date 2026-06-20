@@ -1,7 +1,7 @@
 package io.github.openbagtwo.lighterend.items;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;

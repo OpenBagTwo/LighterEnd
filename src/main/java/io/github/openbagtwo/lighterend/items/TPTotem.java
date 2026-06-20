@@ -168,7 +168,7 @@ public class TPTotem extends Item {
       user.teleport(
           new TeleportTransition(
               destinationDimension,
-              tpTarget.pos().getCenter(),
+              Vec3.atCenterOf(tpTarget.pos()),
               Vec3.ZERO,
               user.getYRot(),
               user.getXRot(),

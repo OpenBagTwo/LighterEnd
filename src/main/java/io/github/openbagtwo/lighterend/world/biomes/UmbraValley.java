@@ -14,7 +14,7 @@ import net.minecraft.world.attribute.AmbientParticle;
 import net.minecraft.world.attribute.AmbientSounds;
 import net.minecraft.world.attribute.BackgroundMusic;
 import net.minecraft.world.attribute.EnvironmentAttributes;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
@@ -39,15 +39,15 @@ public class UmbraValley {
         .addSpawn(
             MobCategory.MONSTER,
             19,
-            new SpawnerData(EntityType.PHANTOM, 1, 1)
+            new SpawnerData(EntityTypes.PHANTOM, 1, 1)
         ).addSpawn(
             MobCategory.MONSTER,
             80,
-            new SpawnerData(EntityType.ENDERMAN, 4, 4)
+            new SpawnerData(EntityTypes.ENDERMAN, 4, 4)
         ).addSpawn(
             MobCategory.MONSTER,
             1,
-            new SpawnerData(EntityType.ENDERMITE, 1, 1)
+            new SpawnerData(EntityTypes.ENDERMITE, 1, 1)
         ).build();
 
     var genSettingsBuilder = new BiomeGenerationSettings.Builder(features, carvers)

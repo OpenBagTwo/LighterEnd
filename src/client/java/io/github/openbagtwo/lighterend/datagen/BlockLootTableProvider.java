@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider;
-import net.minecraft.advancements.criterion.StatePropertiesPredicate;
+import net.minecraft.advancements.predicates.StatePropertiesPredicate;
 import net.minecraft.core.Holder.Reference;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
@@ -153,8 +153,8 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
 
     dropSelf(LighterEndBlocks.GOLD_CHANDELIER);
     dropSelf(LighterEndBlocks.IRON_CHANDELIER);
-    for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.asList()) {
-      dropSelf(chandelier);
+    for (var chandelier : LighterEndBlocks.COPPER_CHANDELIERS.asList()) {
+      dropSelf((Block) chandelier);
     }
 
     dropSelf(LighterEndBlocks.EMERALD_ICE);

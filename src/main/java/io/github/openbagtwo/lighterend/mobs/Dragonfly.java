@@ -28,7 +28,6 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
 import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -39,7 +38,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class Dragonfly extends Animal implements FlyingAnimal {
+public class Dragonfly extends Animal {
 
   public Dragonfly(EntityType<Dragonfly> entityType, Level world) {
     super(entityType, world);
@@ -114,6 +113,10 @@ public class Dragonfly extends Animal implements FlyingAnimal {
   }
 
   @Override
+  public boolean isFlapping() {
+    return this.isFlying();
+  }
+
   public boolean isFlying() {
     return !this.onGround();
   }

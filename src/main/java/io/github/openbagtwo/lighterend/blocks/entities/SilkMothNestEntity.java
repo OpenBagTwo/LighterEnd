@@ -13,7 +13,6 @@ import io.github.openbagtwo.lighterend.registries.LighterEndData.MothsComponent;
 import io.github.openbagtwo.lighterend.registries.LighterEndMobs;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
-import io.netty.buffer.ByteBuf;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -21,16 +20,17 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityProcessor;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.TypedEntityData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -297,22 +297,24 @@ public class SilkMothNestEntity extends BlockEntity {
     }
   }
 
-  public record MothData(CustomData entityData, int ticksInHive, int minTicksInHive) {
+  public record MothData(
+      TypedEntityData<EntityType<?>> entityData,
+      int ticksInHive,
+      int minTicksInHive
+  ) {
 
     public static final Codec<MothData> CODEC = RecordCodecBuilder.create(
         instance -> instance.group(
-                CustomData.CODEC.optionalFieldOf("entity_data", CustomData.EMPTY).forGetter(
-                    MothData::entityData),
-                Codec.INT.fieldOf("ticks_in_hive").forGetter(
-                    MothData::ticksInHive),
-                Codec.INT.fieldOf("min_ticks_in_hive").forGetter(
-                    MothData::minTicksInHive)
-            )
-            .apply(instance, MothData::new)
-    );
+            TypedEntityData.codec(EntityType.CODEC).fieldOf("entity_data").forGetter(
+                SilkMothNestEntity.MothData::entityData),
+            Codec.INT.fieldOf("ticks_in_hive").forGetter(MothData::ticksInHive),
+            Codec.INT.fieldOf("min_ticks_in_hive").forGetter(MothData::minTicksInHive)
+        ).apply(instance, MothData::new));
+
     public static final Codec<List<MothData>> LIST_CODEC = CODEC.listOf();
-    public static final StreamCodec<ByteBuf, MothData> PACKET_CODEC = StreamCodec.composite(
-        CustomData.STREAM_CODEC,
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, MothData> STREAM_CODEC = StreamCodec.composite(
+        TypedEntityData.streamCodec(EntityType.STREAM_CODEC),
         MothData::entityData,
         ByteBufCodecs.VAR_INT,
         MothData::ticksInHive,
@@ -322,23 +324,21 @@ public class SilkMothNestEntity extends BlockEntity {
     );
 
     public static MothData create(int ticksInHive) {
-      CompoundTag nbtCompound = new CompoundTag();
-      nbtCompound.putString("id",
-          BuiltInRegistries.ENTITY_TYPE.getKey(LighterEndMobs.SILK_MOTH.mob).toString());
-      return new MothData(
-          CustomData.of(nbtCompound),
-          ticksInHive,
-          MIN_OCCUPATION_TICKS
-      );
+      return new MothData(TypedEntityData.of(LighterEndMobs.SILK_MOTH.mob, new CompoundTag()),
+          ticksInHive, MIN_OCCUPATION_TICKS);
     }
 
     @Nullable
     public Entity loadEntity(Level world, BlockPos pos) {
-      CompoundTag nbtCompound = this.entityData.copyTag();
+      CompoundTag nbtCompound = this.entityData.copyTagWithoutId();
       SilkMothNestEntity.IRRELEVANT_NBT_TAGS.forEach(
           nbtCompound::remove);
-      Entity entity = EntityType.loadEntityRecursive(nbtCompound, world, EntitySpawnReason.LOAD,
-          entityx -> entityx);
+      Entity entity = EntityType.loadEntityRecursive(
+          this.entityData.type(),
+          nbtCompound, world,
+          EntitySpawnReason.LOAD,
+          EntityProcessor.NOP
+      );
       if (entity != null && entity.is(LighterEndTags.MOTH_NEST_INHABITORS)) {
         entity.setNoGravity(true);
         if (entity instanceof SilkMoth mothEntity) {
@@ -368,14 +368,18 @@ public class SilkMothNestEntity extends BlockEntity {
           entity.problemPath(),
           LighterEnd.LOGGER
       )) {
-        TagValueOutput nbtWriteView = TagValueOutput.createWithContext(logging,
-            entity.registryAccess());
+        TagValueOutput nbtWriteView = TagValueOutput.createWithContext(
+            logging, entity.registryAccess()
+        );
         entity.save(nbtWriteView);
         SilkMothNestEntity.IRRELEVANT_NBT_TAGS.forEach(nbtWriteView::discard);
         CompoundTag nbtCompound = nbtWriteView.buildResult();
-        mothData = new MothData(CustomData.of(nbtCompound), 0, MIN_OCCUPATION_TICKS);
+        mothData = new MothData(
+            TypedEntityData.of(entity.getType(), nbtCompound),
+            0,
+            MIN_OCCUPATION_TICKS
+        );
       }
-
       return mothData;
     }
   }

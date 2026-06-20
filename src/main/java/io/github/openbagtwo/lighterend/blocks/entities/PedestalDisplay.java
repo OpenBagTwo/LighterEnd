@@ -126,7 +126,7 @@ public class PedestalDisplay extends BlockEntity implements ItemOwner, ListBacke
 
   @Override
   public Vec3 position() {
-    return this.getBlockPos().getCenter();
+    return Vec3.atCenterOf(this.getBlockPos());
   }
 
   @Override

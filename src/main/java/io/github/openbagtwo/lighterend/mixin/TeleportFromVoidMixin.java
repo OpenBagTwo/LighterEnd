@@ -1,7 +1,7 @@
 package io.github.openbagtwo.lighterend.mixin;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndData;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;

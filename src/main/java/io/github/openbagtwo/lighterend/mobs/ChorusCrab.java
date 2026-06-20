@@ -20,6 +20,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -134,7 +135,7 @@ public class ChorusCrab extends Animal {
     if (spawnReason == EntitySpawnReason.BREEDING) {
       this.setPersistenceRequired();
     } else if (world.getRandom().nextInt(512) == 0) {
-      EnderMan rider = EntityType.ENDERMAN.create(this.level(), EntitySpawnReason.JOCKEY);
+      EnderMan rider = EntityTypes.ENDERMAN.create(this.level(), EntitySpawnReason.JOCKEY);
       if (rider != null) {
         rider.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
         rider.finalizeSpawn(world, difficulty, spawnReason, null);
