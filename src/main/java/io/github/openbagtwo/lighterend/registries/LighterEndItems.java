@@ -11,7 +11,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.food.Foods;
@@ -146,10 +145,14 @@ public class LighterEndItems {
     return register(name, Item::new, settings);
   }
 
-  public static Item register(String name, Function<Properties, Item> factory, Properties settings) {
-    Identifier id = LighterEnd.of(name);
-    ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, id);
-    return Registry.register(BuiltInRegistries.ITEM, key, factory.apply(settings.setId(key)));
+  public static Item register(String name, Function<Properties, Item> factory,
+      Properties settings) {
+    ResourceKey<Item> id = ResourceKey.create(Registries.ITEM, LighterEnd.of(name));
+    Item item = factory.apply(settings.setId(id));
+    if (item instanceof BlockItem blockItem) {
+      blockItem.registerBlocks(Item.BY_BLOCK, item);
+    }
+    return Registry.register(BuiltInRegistries.ITEM, id, item);
   }
 
   public static void initialize() {

@@ -45,7 +45,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.references.BlockItemId;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
@@ -232,10 +231,12 @@ public class LighterEndBlocks {
 
   public static final Block GOLD_CHANDELIER = register("gold_chandelier", Chandelier::new);
   public static final Block IRON_CHANDELIER = register("iron_chandelier", Chandelier::new);
-  public static final WeatheringCopperCollection COPPER_CHANDELIERS = WeatheringCopperCollection.registerBlocks(
+  public static final WeatheringCopperCollection<Block> COPPER_CHANDELIERS = WeatheringCopperCollection.registerBlocks(
       WeatheringCopperCollection.prefixWithState(
           WeatheringCopperCollection.create("copper_chandelier")
-      ).map(BlockItemId::create),
+      ).map(
+          (name) -> (BlockItemId.create(LighterEnd.of(name), LighterEnd.of(name)))
+      ),
       LighterEndBlocks::register,
       (s, p) -> new Chandelier(p),
       Chandelier.Oxidizable::new,
@@ -413,16 +414,23 @@ public class LighterEndBlocks {
       Properties settings,
       boolean hasItem
   ) {
-    Identifier id = LighterEnd.of(name);
-    Block block = factory.apply(settings.setId(ResourceKey.create(Registries.BLOCK, id)));
-
     if (hasItem) {
-      ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, id);
-      Registry.register(BuiltInRegistries.ITEM, itemKey,
-          new BlockItem(block, new Item.Properties().setId(itemKey)));
+      BlockItemId id = BlockItemId.create(LighterEnd.of(name), LighterEnd.of(name));
+      Block block = factory.apply(settings.setId(id.block()));
+      Registry.register(
+          BuiltInRegistries.ITEM, id.item(), new BlockItem(
+              block,
+              new Item.Properties()
+                  .setId(id.item())
+                  .useBlockDescriptionPrefix()
+                  .requiredFeatures(block.requiredFeatures())
+          )
+      );
+      return Registry.register(BuiltInRegistries.BLOCK, id.block(), block);
     }
-    ResourceKey<Block> blockKey = ResourceKey.create(Registries.BLOCK, id);
-    return Registry.register(BuiltInRegistries.BLOCK, blockKey, block);
+    ResourceKey<Block> id = ResourceKey.create(Registries.BLOCK, LighterEnd.of(name));
+    Block block = factory.apply(settings.setId(id));
+    return Registry.register(BuiltInRegistries.BLOCK, id, block);
   }
 
   public static void initialize() {

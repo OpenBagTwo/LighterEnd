@@ -77,15 +77,16 @@ public class LighterEndMobs {
 
   public static class LighterEndMob<T extends Entity> {
 
+    public final ResourceKey<EntityType<?>> id;
     public final EntityType<T> mob;
     public final Item spawnEgg;
 
     public LighterEndMob(String name, EntityType.Builder<T> settings) {
+      id = ResourceKey.create(Registries.ENTITY_TYPE, LighterEnd.of(name));
       mob = Registry.register(BuiltInRegistries.ENTITY_TYPE,
-          LighterEnd.of(name),
-          settings.build(
-              ResourceKey.create(
-                  Registries.ENTITY_TYPE, LighterEnd.of(name))));
+          id,
+          settings.build(id)
+      );
       spawnEgg = LighterEndItems.register(
           name + "_spawn_egg",
           (properties) -> new SpawnEggItem(properties.spawnEgg(mob)),
