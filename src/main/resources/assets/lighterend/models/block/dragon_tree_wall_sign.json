@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_wall_sign",
+  "textures": {
+    "all": "lighterend:block/dragon_tree_sign",
+    "particle": "lighterend:block/dragon_tree_planks"
+  }
+}

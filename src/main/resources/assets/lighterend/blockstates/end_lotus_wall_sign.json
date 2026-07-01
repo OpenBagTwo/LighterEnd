@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "lighterend:block/end_lotus_wall_sign",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "lighterend:block/end_lotus_wall_sign",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "lighterend:block/end_lotus_wall_sign"
+    },
+    "facing=west": {
+      "model": "lighterend:block/end_lotus_wall_sign",
+      "y": 90
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "lighterend:block/mossy_glowshroom_wall_hanging_sign",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "lighterend:block/mossy_glowshroom_wall_hanging_sign",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "lighterend:block/mossy_glowshroom_wall_hanging_sign"
+    },
+    "facing=west": {
+      "model": "lighterend:block/mossy_glowshroom_wall_hanging_sign",
+      "y": 90
+    }
+  }
+}
