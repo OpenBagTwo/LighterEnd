@@ -188,7 +188,8 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
 
     valueLookupBuilder(BlockTags.ICE).add(
         LighterEndBlocks.EMERALD_ICE,
-        LighterEndBlocks.FERROUS_ICE
+        LighterEndBlocks.FERROUS_ICE,
+        LighterEndBlocks.AUROUS_ICE
     );
 
     valueLookupBuilder(BlockTags.INFINIBURN_OVERWORLD).add(LighterEndBlocks.BRIMSTONE);
