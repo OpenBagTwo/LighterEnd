@@ -49,6 +49,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ButtonBlock;
@@ -237,7 +238,7 @@ public class LighterEndBlocks {
       ).map(
           (name) -> (BlockItemId.create(LighterEnd.of(name), LighterEnd.of(name)))
       ),
-      LighterEndBlocks::register,
+      (id, factory, properties) -> Blocks.register(id.block(), factory, properties),
       (s, p) -> new Chandelier(p),
       Chandelier.Oxidizable::new,
       oxidationLevel -> Properties.of()
@@ -249,6 +250,16 @@ public class LighterEndBlocks {
           .pushReaction(PushReaction.DESTROY)
           .strength(2.5F)
           .sound(SoundType.CHAIN)
+  );
+
+  public static final WeatheringCopperCollection<Item> COPPER_CHANDELIER_ITEMS = WeatheringCopperCollection.registerItems(
+      WeatheringCopperCollection.prefixWithState(
+          WeatheringCopperCollection.create("copper_chandelier")
+      ).map(
+          (name) -> (BlockItemId.create(LighterEnd.of(name), LighterEnd.of(name)))
+      ),
+      COPPER_CHANDELIERS,
+      Items::registerBlock
   );
 
   public static final Block EMERALD_ICE = register(
@@ -401,14 +412,6 @@ public class LighterEndBlocks {
   }
 
   private static Block register(
-      BlockItemId itemId,
-      Function<Properties, Block> factory,
-      Properties settings
-  ) {
-    return register(itemId.toString(), factory, settings, true);
-  }
-
-  private static Block register(
       String name,
       Function<Properties, Block> factory,
       Properties settings,
@@ -417,8 +420,9 @@ public class LighterEndBlocks {
     if (hasItem) {
       BlockItemId id = BlockItemId.create(LighterEnd.of(name), LighterEnd.of(name));
       Block block = factory.apply(settings.setId(id.block()));
-      Registry.register(
-          BuiltInRegistries.ITEM, id.item(), new BlockItem(
+      LighterEndItems.register(
+          id.item(),
+          new BlockItem(
               block,
               new Item.Properties()
                   .setId(id.item())

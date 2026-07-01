@@ -22,9 +22,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class EndBiomeMusicMixin {
 
   @Shadow
-  public @Nullable Screen screen;
-
-  @Shadow
   public @Nullable LocalPlayer player;
 
   @Shadow
@@ -36,18 +33,17 @@ public abstract class EndBiomeMusicMixin {
 
   @Inject(method = "getSituationalMusic", at = @At("HEAD"), cancellable = true)
   public void checkForEndMusic(CallbackInfoReturnable<Music> cir) {
-    Music musicSound = Optionull.map(this.screen, Screen::getBackgroundMusic);
-    Camera camera = this.gameRenderer.getMainCamera();
+    Music musicSound = Optionull.map(this.gui.screen(), Screen::getBackgroundMusic);
+    Camera camera = this.gameRenderer.mainCamera();
     if (
         LighterEnd.CONFIG.playEndBiomeMusic()
             && musicSound == null
             && this.player != null
-            && camera != null
     ) {
       Level world = this.player.level();
       if (
           world.dimension() == Level.END
-              && !this.gui.getBossOverlay().shouldPlayMusic()
+              && !this.gui.hud.getBossOverlay().shouldPlayMusic()
       ) {
         Music biomeMusic = camera.attributeProbe()
             .getValue(EnvironmentAttributes.BACKGROUND_MUSIC, 1.0F).select(

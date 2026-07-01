@@ -79,7 +79,7 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
       builder(BlockTags.WOODEN_PRESSURE_PLATES).add(
           wood.pressurePlate.properties().blockIdOrThrow()
       );
-      builder(BlockItemTags.LOGS_THAT_BURN).add(
+      builder(BlockItemTags.LOGS_THAT_BURN.block()).add(
           wood.log.properties().blockIdOrThrow(),
           wood.strippedLog.properties().blockIdOrThrow(),
           wood.wood.properties().blockIdOrThrow(),
@@ -167,7 +167,7 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
         LighterEndBlocks.AGAVE_BULB.properties().blockIdOrThrow()
     );
 
-    builder(BlockItemTags.SAPLINGS).add(
+    builder(BlockItemTags.SAPLINGS.block()).add(
         LighterEndBlocks.TENANEA_SAPLING.properties().blockIdOrThrow(),
         LighterEndBlocks.UMBRELLA_TREE_SAPLING.properties().blockIdOrThrow(),
         LighterEndBlocks.GLOWSHROOM_SAPLING.properties().blockIdOrThrow(),

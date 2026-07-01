@@ -6,6 +6,8 @@ import io.github.openbagtwo.lighterend.items.LighterEndFoodComponents;
 import io.github.openbagtwo.lighterend.items.Matchstick;
 import io.github.openbagtwo.lighterend.items.TPTotem;
 import io.github.openbagtwo.lighterend.registries.LighterEndData.SilkLevelComponent;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
@@ -23,6 +25,8 @@ import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.material.Fluids;
 
 public class LighterEndItems {
+
+  public static Map<Item, ResourceKey<Item>> idLookup = new HashMap<>();
 
   public static final Item AURORA_CRYSTAL_SHARD = register(
       "aurora_crystal_shard",
@@ -152,6 +156,11 @@ public class LighterEndItems {
     if (item instanceof BlockItem blockItem) {
       blockItem.registerBlocks(Item.BY_BLOCK, item);
     }
+    return register(id, item);
+  }
+
+  public static Item register(ResourceKey<Item> id, Item item) {
+    idLookup.put(item, id);
     return Registry.register(BuiltInRegistries.ITEM, id, item);
   }
 
