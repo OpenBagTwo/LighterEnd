@@ -7,7 +7,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypeIds;
 
 public class MobTagProvider extends FabricTagsProvider.EntityTypeTagsProvider {
 
@@ -20,49 +20,49 @@ public class MobTagProvider extends FabricTagsProvider.EntityTypeTagsProvider {
 
   @Override
   protected void addTags(Provider wrapperLookup) {
-    valueLookupBuilder(EntityTypeTags.ARTHROPOD).add(
-        LighterEndMobs.SILK_MOTH.mob,
-        LighterEndMobs.DRAGONFLY.mob,
-        LighterEndMobs.CHORUS_CRAB.mob
+    builder(EntityTypeTags.ARTHROPOD).add(
+        LighterEndMobs.SILK_MOTH.id,
+        LighterEndMobs.DRAGONFLY.id,
+        LighterEndMobs.CHORUS_CRAB.id
     );
-    valueLookupBuilder(EntityTypeTags.AQUATIC).add(
-        LighterEndMobs.END_FISH.mob,
-        LighterEndMobs.CUBOZOA.mob
+    builder(EntityTypeTags.AQUATIC).add(
+        LighterEndMobs.END_FISH.id,
+        LighterEndMobs.CUBOZOA.id
     );
-    valueLookupBuilder(EntityTypeTags.AXOLOTL_HUNT_TARGETS).add(
-        LighterEndMobs.END_FISH.mob,
-        LighterEndMobs.CUBOZOA.mob
-    );
-
-    valueLookupBuilder(EntityTypeTags.FROG_FOOD).add(
-        LighterEndMobs.DRAGONFLY.mob,
-        LighterEndMobs.END_SLIME.mob
+    builder(EntityTypeTags.AXOLOTL_HUNT_TARGETS).add(
+        LighterEndMobs.END_FISH.id,
+        LighterEndMobs.CUBOZOA.id
     );
 
-    valueLookupBuilder(EntityTypeTags.IMMUNE_TO_OOZING).add(
-        LighterEndMobs.END_SLIME.mob
+    builder(EntityTypeTags.FROG_FOOD).add(
+        LighterEndMobs.DRAGONFLY.id,
+        LighterEndMobs.END_SLIME.id
     );
 
-    valueLookupBuilder(EntityTypeTags.NON_CONTROLLING_RIDER).add(
-        LighterEndMobs.END_SLIME.mob
+    builder(EntityTypeTags.IMMUNE_TO_OOZING).add(
+        LighterEndMobs.END_SLIME.id
+    );
+
+    builder(EntityTypeTags.NON_CONTROLLING_RIDER).add(
+        LighterEndMobs.END_SLIME.id
     );
     // I like the idea of these weird-looking fish scaring pufferfish
-//    valueLookupBuilder(EntityTypeTags.NOT_SCARY_FOR_PUFFERFISH).add(
-//        LighterEndMobs.END_FISH.mob,
-//        LighterEndMobs.CUBOZOA.mob
+//    builder(EntityTypeTags.NOT_SCARY_FOR_PUFFERFISH).add(
+//        LighterEndMobs.END_FISH.id,
+//        LighterEndMobs.CUBOZOA.id
 //    );
-    valueLookupBuilder(LighterEndTags.MOTH_NEST_INHABITORS).add(
-        LighterEndMobs.SILK_MOTH.mob
+    builder(LighterEndTags.MOTH_NEST_INHABITORS).add(
+        LighterEndMobs.SILK_MOTH.id
     );
 
-    valueLookupBuilder(LighterEndTags.IGNORES_GEYSER_BUBBLES).add(
-        LighterEndMobs.END_FISH.mob,
-        LighterEndMobs.CUBOZOA.mob
+    builder(LighterEndTags.IGNORES_GEYSER_BUBBLES).add(
+        LighterEndMobs.END_FISH.id,
+        LighterEndMobs.CUBOZOA.id
     );
 
-    valueLookupBuilder(LighterEndTags.IMMUNE_TO_MURKWEED).add(
-        EntityType.ENDERMITE,
-        EntityType.PHANTOM
+    builder(LighterEndTags.IMMUNE_TO_MURKWEED).add(
+        EntityTypeIds.ENDERMITE,
+        EntityTypeIds.PHANTOM
     );
 
   }

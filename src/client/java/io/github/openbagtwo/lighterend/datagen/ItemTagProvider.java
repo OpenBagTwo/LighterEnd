@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 
@@ -39,25 +40,25 @@ public class ItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
           wood.wood.asItem(),
           wood.strippedWood.asItem()
       );
-      valueLookupBuilder(LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName)).add(
+      builder(LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName)).add(
           wood.strippedLog.asItem(),
           wood.strippedWood.asItem()
       );
-      valueLookupBuilder(ItemTags.LOGS_THAT_BURN).addTag(
+      builder(ItemTags.LOGS_THAT_BURN).addTag(
           LighterEndTags.LOG_TAGS.get(wood.baseName)
       );
-      valueLookupBuilder(ItemTags.PLANKS).add(wood.planks.asItem());
-      valueLookupBuilder(ItemTags.WOODEN_BUTTONS).add(wood.button.asItem());
-      valueLookupBuilder(ItemTags.WOODEN_DOORS).add(wood.door.asItem());
-      valueLookupBuilder(ItemTags.WOODEN_STAIRS).add(wood.stairs.asItem());
-      valueLookupBuilder(ItemTags.WOODEN_SLABS).add(wood.slab.asItem());
-      valueLookupBuilder(ItemTags.WOODEN_FENCES).add(wood.fence.asItem());
-      valueLookupBuilder(ItemTags.FENCE_GATES).add(wood.gate.asItem());
-      valueLookupBuilder(ItemTags.WOODEN_PRESSURE_PLATES).add(wood.pressurePlate.asItem());
-      valueLookupBuilder(ItemTags.WOODEN_TRAPDOORS).add(wood.trapdoor.asItem());
-      valueLookupBuilder(ItemTags.SIGNS).add(wood.sign.asItem());
-      valueLookupBuilder(ItemTags.HANGING_SIGNS).add(wood.hangingSign.asItem());
-      valueLookupBuilder(ItemTags.WOODEN_SHELVES).add(wood.shelf.asItem());
+      builder(ItemTags.PLANKS).add(wood.planks.asItem());
+      builder(ItemTags.WOODEN_BUTTONS).add(wood.button.asItem());
+      builder(ItemTags.WOODEN_DOORS).add(wood.door.asItem());
+      builder(ItemTags.WOODEN_STAIRS).add(wood.stairs.asItem());
+      builder(ItemTags.WOODEN_SLABS).add(wood.slab.asItem());
+      builder(ItemTags.WOODEN_FENCES).add(wood.fence.asItem());
+      builder(ItemTags.FENCE_GATES).add(wood.gate.asItem());
+      builder(ItemTags.WOODEN_PRESSURE_PLATES).add(wood.pressurePlate.asItem());
+      builder(ItemTags.WOODEN_TRAPDOORS).add(wood.trapdoor.asItem());
+      builder(ItemTags.SIGNS).add(wood.sign.asItem());
+      builder(ItemTags.HANGING_SIGNS).add(wood.hangingSign.asItem());
+      builder(ItemTags.WOODEN_SHELVES).add(wood.shelf.asItem());
 
     }
     for (Material material : Arrays.asList(
@@ -68,48 +69,48 @@ public class ItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
         LighterEndBlocks.UMBRALITH,
         LighterEndBlocks.BORNITE
     )) {
-      valueLookupBuilder(ItemTags.).add(material.button.asItem());
+      builder(BlockItemTags.BUTTONS).add(material.button.asItem());
     }
-    valueLookupBuilder(ItemTags.CHICKEN_FOOD).add(LighterEndBlocks.LUMECORN_SEED.asItem());
-    valueLookupBuilder(ItemTags.BEE_FOOD).add(LighterEndBlocks.TENANEA_FLOWER.asItem());
-    valueLookupBuilder(ItemTags.LEAVES).add(
+    builder(ItemTags.CHICKEN_FOOD).add(LighterEndBlocks.LUMECORN_SEED.asItem());
+    builder(ItemTags.BEE_FOOD).add(LighterEndBlocks.TENANEA_FLOWER.asItem());
+    builder(ItemTags.LEAVES).add(
         LighterEndBlocks.TENANEA_LEAVES.asItem(),
         LighterEndItems.GLOWSHROOM_FUR,
         LighterEndItems.AGAVE_FUR,
         LighterEndBlocks.DRAGON_LEAVES.asItem()
     );
 
-    valueLookupBuilder(ItemTags.FISHES).add(LighterEndItems.RAW_END_FISH);
+    builder(ItemTags.FISHES).add(LighterEndItems.RAW_END_FISH);
 
-    valueLookupBuilder(ItemTags.CHEST_ARMOR).add(
+    builder(ItemTags.CHEST_ARMOR).add(
         LighterEndEquipment.SILK_ELYTRA
     );  // this makes silk elytra trimmable
 
-    valueLookupBuilder(ItemTags.GAZE_DISGUISE_EQUIPMENT).addTag(LighterEndTags.FUR_ITEMS);
+    builder(ItemTags.GAZE_DISGUISE_EQUIPMENT).addTag(LighterEndTags.FUR_ITEMS);
 
-    valueLookupBuilder(ItemTags.BREWING_FUEL).add(LighterEndItems.END_POWDER);
+    builder(ItemTags.BREWING_FUEL).add(LighterEndItems.END_POWDER);
 
-    valueLookupBuilder(ItemTags.MEAT).add(
+    builder(ItemTags.MEAT).add(
         LighterEndItems.CRAB_MEAT,
         LighterEndItems.CRAB_CAKE
     );
 
-    valueLookupBuilder(ItemTags.PIGLIN_FOOD).add(
+    builder(ItemTags.PIGLIN_FOOD).add(
         LighterEndItems.CRAB_MEAT,
         LighterEndItems.CRAB_CAKE
     );
 
-    valueLookupBuilder(ItemTags.TRIM_MATERIALS).add(
+    builder(ItemTags.TRIM_MATERIALS).add(
         LighterEndItems.AURORA_CRYSTAL_SHARD
     );
 
-    valueLookupBuilder(ItemTags.CAULDRON_CAN_REMOVE_DYE).add(
+    builder(ItemTags.CAULDRON_CAN_REMOVE_DYE).add(
         LighterEndEquipment.SILK_ELYTRA
     );
 
-    valueLookupBuilder(LighterEndTags.REPAIRS_SILK_ARMOR).add(LighterEndItems.SILK);
+    builder(LighterEndTags.REPAIRS_SILK_ARMOR).add(LighterEndItems.SILK);
 
-    valueLookupBuilder(LighterEndTags.FLETCHINGS).add(
+    builder(LighterEndTags.FLETCHINGS).add(
         Items.FEATHER,
         LighterEndBlocks.CHARNIA_CYAN.asItem(),
         LighterEndBlocks.CHARNIA_GREEN.asItem(),
@@ -118,19 +119,19 @@ public class ItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
         LighterEndBlocks.CHARNIA_PURPLE.asItem(),
         LighterEndBlocks.CHARNIA_RED.asItem()
     );
-    valueLookupBuilder(LighterEndTags.FLETCHINGS).addTag(LighterEndTags.FUR_ITEMS);
+    builder(LighterEndTags.FLETCHINGS).addTag(LighterEndTags.FUR_ITEMS);
 
-    valueLookupBuilder(LighterEndTags.FUR_ITEMS).add(
+    builder(LighterEndTags.FUR_ITEMS).add(
         LighterEndItems.GLOWSHROOM_FUR,
         LighterEndItems.AGAVE_FUR
     );
 
-    valueLookupBuilder(LighterEndTags.POLYPORES).add(
+    builder(LighterEndTags.POLYPORES).add(
         LighterEndBlocks.AURANT_POLYPORE.asItem(),
         LighterEndBlocks.PURPLE_POLYPORE.asItem()
     );
 
-    valueLookupBuilder(LighterEndTags.MOOSHROOM_FOOD).add(
+    builder(LighterEndTags.MOOSHROOM_FOOD).add(
         LighterEndItems.LUMECORN_EAR
     );
   }

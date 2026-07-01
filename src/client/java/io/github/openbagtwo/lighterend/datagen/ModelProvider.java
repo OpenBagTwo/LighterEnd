@@ -155,9 +155,8 @@ public class ModelProvider extends FabricModelProvider {
         .pressurePlate(wood.pressurePlate);
     blockModelGenerator.createDoor(wood.door);
     blockModelGenerator.createTrapdoor(wood.trapdoor);
-    blockModelGenerator.createHangingSign(wood.strippedLog, wood.sign, wood.wallSign);
-    blockModelGenerator.createHangingSign(wood.strippedLog, wood.hangingSign,
-        wood.wallHangingSign);
+    blockModelGenerator.family(wood.strippedLog).sign(wood.sign);
+    blockModelGenerator.family(wood.strippedLog).hangingSign(wood.hangingSign);
     blockModelGenerator.createShelf(wood.shelf, wood.strippedLog);
   }
 

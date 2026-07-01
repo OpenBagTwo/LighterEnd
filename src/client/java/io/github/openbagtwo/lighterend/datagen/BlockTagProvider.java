@@ -10,9 +10,10 @@ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.references.BlockItemIds;
+import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 
 public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
 
@@ -25,8 +26,10 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
   @Override
   protected void addTags(HolderLookup.Provider lookup) {
 
-    valueLookupBuilder(BlockTags.IMPERMEABLE).add(LighterEndBlocks.AURORA_CRYSTAL);
-    valueLookupBuilder(BlockTags.SNIFFER_DIGGABLE_BLOCK).add(LighterEndBlocks.END_MOSS);
+    builder(BlockTags.IMPERMEABLE).add(
+        LighterEndBlocks.AURORA_CRYSTAL.properties().blockIdOrThrow());
+    builder(BlockTags.SNIFFER_DIGGABLE_BLOCK).add(
+        LighterEndBlocks.END_MOSS.properties().blockIdOrThrow());
 
     for (Material material : Arrays.asList(
         LighterEndBlocks.VIOLECITE,
@@ -37,16 +40,18 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
         LighterEndBlocks.BORNITE
     )) {
       for (Block block : material.blocks) {
-        valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
-        valueLookupBuilder(BlockTags.WALLS)
+        builder(BlockTags.MINEABLE_WITH_PICKAXE).add(block.properties().blockIdOrThrow());
+        builder(BlockTags.WALLS)
             .add(
-                material.baseWall,
-                material.brickWall,
-                material.polishedWall,
-                material.tileWall
+                material.baseWall.properties().blockIdOrThrow(),
+                material.brickWall.properties().blockIdOrThrow(),
+                material.polishedWall.properties().blockIdOrThrow(),
+                material.tileWall.properties().blockIdOrThrow()
             );
-        valueLookupBuilder(BlockTags.STONE_BUTTONS).add(material.button);
-        valueLookupBuilder(BlockTags.STONE_PRESSURE_PLATES).add(material.pressurePlate);
+        builder(BlockTags.STONE_BUTTONS).add(material.button.properties().blockIdOrThrow());
+        builder(BlockTags.STONE_PRESSURE_PLATES).add(
+            material.pressurePlate.properties().blockIdOrThrow()
+        );
       }
     }
 
@@ -58,216 +63,231 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
         LighterEndBlocks.DRAGON
     )) {
       for (Block block : wood.blocks) {
-        valueLookupBuilder(BlockTags.MINEABLE_WITH_AXE).add(block);
+        builder(BlockTags.MINEABLE_WITH_AXE).add(block.properties().blockIdOrThrow());
       }
-      valueLookupBuilder(BlockTags.MINEABLE_WITH_AXE).add(wood.wallSign, wood.wallHangingSign);
-      valueLookupBuilder(BlockTags.PLANKS).add(wood.planks);
-      valueLookupBuilder(BlockTags.WOODEN_BUTTONS).add(wood.button);
-      valueLookupBuilder(BlockTags.WOODEN_DOORS).add(wood.door);
-      valueLookupBuilder(BlockTags.WOODEN_STAIRS).add(wood.stairs);
-      valueLookupBuilder(BlockTags.WOODEN_SLABS).add(wood.slab);
-      valueLookupBuilder(BlockTags.WOODEN_FENCES).add(wood.fence);
-      valueLookupBuilder(BlockTags.FENCE_GATES).add(wood.gate);
-      valueLookupBuilder(BlockTags.WOODEN_PRESSURE_PLATES).add(wood.pressurePlate);
-      valueLookupBuilder(BlockTags.LOGS_THAT_BURN).add(
-          wood.log,
-          wood.strippedLog,
-          wood.wood,
-          wood.strippedWood
+      builder(BlockTags.MINEABLE_WITH_AXE).add(
+          wood.wallSign.properties().blockIdOrThrow(),
+          wood.wallHangingSign.properties().blockIdOrThrow()
+      );
+      builder(BlockTags.PLANKS).add(wood.planks.properties().blockIdOrThrow());
+      builder(BlockTags.WOODEN_BUTTONS).add(wood.button.properties().blockIdOrThrow());
+      builder(BlockTags.WOODEN_DOORS).add(wood.door.properties().blockIdOrThrow());
+      builder(BlockTags.WOODEN_STAIRS).add(wood.stairs.properties().blockIdOrThrow());
+      builder(BlockTags.WOODEN_SLABS).add(wood.slab.properties().blockIdOrThrow());
+      builder(BlockTags.WOODEN_FENCES).add(wood.fence.properties().blockIdOrThrow());
+      builder(BlockTags.FENCE_GATES).add(wood.gate.properties().blockIdOrThrow());
+      builder(BlockTags.WOODEN_PRESSURE_PLATES).add(
+          wood.pressurePlate.properties().blockIdOrThrow()
+      );
+      builder(BlockItemTags.LOGS_THAT_BURN).add(
+          wood.log.properties().blockIdOrThrow(),
+          wood.strippedLog.properties().blockIdOrThrow(),
+          wood.wood.properties().blockIdOrThrow(),
+          wood.strippedWood.properties().blockIdOrThrow()
       );  // this also adds them to #minecraft:logs
-      valueLookupBuilder(BlockTags.WOODEN_TRAPDOORS).add(wood.trapdoor);
-      valueLookupBuilder(BlockTags.STANDING_SIGNS).add(wood.sign);
-      valueLookupBuilder(BlockTags.WALL_SIGNS).add(wood.wallSign);
-      valueLookupBuilder(BlockTags.CEILING_HANGING_SIGNS).add(wood.hangingSign);
-      valueLookupBuilder(BlockTags.WALL_HANGING_SIGNS).add(wood.wallHangingSign);
-      valueLookupBuilder(BlockTags.CLIMBABLE).add(wood.ladder);
-      valueLookupBuilder(BlockTags.WOODEN_SHELVES).add(wood.shelf);
+      builder(BlockTags.WOODEN_TRAPDOORS).add(wood.trapdoor.properties().blockIdOrThrow());
+      builder(BlockTags.STANDING_SIGNS).add(wood.sign.properties().blockIdOrThrow());
+      builder(BlockTags.WALL_SIGNS).add(wood.wallSign.properties().blockIdOrThrow());
+      builder(BlockTags.CEILING_HANGING_SIGNS).add(wood.hangingSign.properties().blockIdOrThrow());
+      builder(BlockTags.WALL_HANGING_SIGNS).add(wood.wallHangingSign.properties().blockIdOrThrow());
+      builder(BlockTags.CLIMBABLE).add(wood.ladder.properties().blockIdOrThrow());
+      builder(BlockTags.WOODEN_SHELVES).add(wood.shelf.properties().blockIdOrThrow());
     }
 
-    valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
+    builder(BlockTags.MINEABLE_WITH_PICKAXE)
         .add(
-            LighterEndBlocks.ENDER_BLOCK,
-            LighterEndBlocks.MISSING_TILE,
-            LighterEndBlocks.DRAGON_BONE_BLOCK,
-            LighterEndBlocks.DRAGON_BONE_STAIRS,
-            LighterEndBlocks.DRAGON_BONE_SLAB,
-            LighterEndBlocks.END_MOSS,
-            LighterEndBlocks.END_FURNACE,
-            LighterEndBlocks.END_SMOKER,
-            LighterEndBlocks.GOLD_CHANDELIER,
-            LighterEndBlocks.IRON_CHANDELIER,
-            LighterEndBlocks.EMERALD_ICE,
-            LighterEndBlocks.FERROUS_ICE,
-            LighterEndBlocks.AUROUS_ICE,
-            LighterEndBlocks.END_STONE_QUARTZ_ORE,
-            LighterEndBlocks.END_STONE_REDSTONE_ORE,
-            LighterEndBlocks.UMBRALITH_QUARTZ_ORE,
-            LighterEndBlocks.UMBRALITH_REDSTONE_ORE,
-            LighterEndBlocks.BRIMSTONE,
-            LighterEndBlocks.HYDROTHERMAL_VENT
+            LighterEndBlocks.ENDER_BLOCK.properties().blockIdOrThrow(),
+            LighterEndBlocks.MISSING_TILE.properties().blockIdOrThrow(),
+            LighterEndBlocks.DRAGON_BONE_BLOCK.properties().blockIdOrThrow(),
+            LighterEndBlocks.DRAGON_BONE_STAIRS.properties().blockIdOrThrow(),
+            LighterEndBlocks.DRAGON_BONE_SLAB.properties().blockIdOrThrow(),
+            LighterEndBlocks.END_MOSS.properties().blockIdOrThrow(),
+            LighterEndBlocks.END_FURNACE.properties().blockIdOrThrow(),
+            LighterEndBlocks.END_SMOKER.properties().blockIdOrThrow(),
+            LighterEndBlocks.GOLD_CHANDELIER.properties().blockIdOrThrow(),
+            LighterEndBlocks.IRON_CHANDELIER.properties().blockIdOrThrow(),
+            LighterEndBlocks.EMERALD_ICE.properties().blockIdOrThrow(),
+            LighterEndBlocks.FERROUS_ICE.properties().blockIdOrThrow(),
+            LighterEndBlocks.AUROUS_ICE.properties().blockIdOrThrow(),
+            LighterEndBlocks.END_STONE_QUARTZ_ORE.properties().blockIdOrThrow(),
+            LighterEndBlocks.END_STONE_REDSTONE_ORE.properties().blockIdOrThrow(),
+            LighterEndBlocks.UMBRALITH_QUARTZ_ORE.properties().blockIdOrThrow(),
+            LighterEndBlocks.UMBRALITH_REDSTONE_ORE.properties().blockIdOrThrow(),
+            LighterEndBlocks.BRIMSTONE.properties().blockIdOrThrow(),
+            LighterEndBlocks.HYDROTHERMAL_VENT.properties().blockIdOrThrow()
         );
     for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.asList()) {
-      valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE).add(chandelier);
+      builder(BlockTags.MINEABLE_WITH_PICKAXE).add(chandelier.properties().blockIdOrThrow());
     }
 
-    valueLookupBuilder(BlockTags.NEEDS_STONE_TOOL)
-        .add(LighterEndBlocks.ENDER_BLOCK)
-        .add(LighterEndBlocks.HYDROTHERMAL_VENT);
+    builder(BlockTags.NEEDS_STONE_TOOL)
+        .add(LighterEndBlocks.ENDER_BLOCK.properties().blockIdOrThrow())
+        .add(LighterEndBlocks.HYDROTHERMAL_VENT.properties().blockIdOrThrow());
 
-    valueLookupBuilder(BlockTags.NEEDS_IRON_TOOL)
+    builder(BlockTags.NEEDS_IRON_TOOL)
         .add(
-            LighterEndBlocks.END_STONE_QUARTZ_ORE,
-            LighterEndBlocks.END_STONE_REDSTONE_ORE,
-            LighterEndBlocks.UMBRALITH_QUARTZ_ORE,
-            LighterEndBlocks.UMBRALITH_REDSTONE_ORE
+            LighterEndBlocks.END_STONE_QUARTZ_ORE.properties().blockIdOrThrow(),
+            LighterEndBlocks.END_STONE_REDSTONE_ORE.properties().blockIdOrThrow(),
+            LighterEndBlocks.UMBRALITH_QUARTZ_ORE.properties().blockIdOrThrow(),
+            LighterEndBlocks.UMBRALITH_REDSTONE_ORE.properties().blockIdOrThrow()
         );
 
-    valueLookupBuilder(BlockTags.ENDERMAN_HOLDABLE).add(
-        LighterEndBlocks.END_MOSS
+    builder(BlockTags.ENDERMAN_HOLDABLE).add(
+        LighterEndBlocks.END_MOSS.properties().blockIdOrThrow()
     );
-    valueLookupBuilder(BlockTags.ENDERMAN_HOLDABLE).addTag(LighterEndTags.FURS);
+    builder(BlockTags.ENDERMAN_HOLDABLE).addTag(LighterEndTags.FURS);
 
-    valueLookupBuilder(BlockTags.ANIMALS_SPAWNABLE_ON).add(LighterEndBlocks.END_MOSS);
-    valueLookupBuilder(BlockTags.REPLACEABLE_BY_TREES).add(LighterEndBlocks.END_MOSS);
-    valueLookupBuilder(BlockTags.SCULK_REPLACEABLE).add(LighterEndBlocks.END_MOSS);
-
-    valueLookupBuilder(BlockTags.FLOWERS).add(
-        LighterEndBlocks.CREEPING_MOSS,
-        LighterEndBlocks.UMBRELLA_FERN,
-        LighterEndBlocks.TALL_UMBRELLA_FERN,
-        LighterEndBlocks.TENANEA_FLOWER,
-        LighterEndBlocks.END_LOTUS_FLOWER
+    builder(BlockTags.ANIMALS_SPAWNABLE_ON).add(
+        LighterEndBlocks.END_MOSS.properties().blockIdOrThrow()
+    );
+    builder(BlockTags.REPLACEABLE_BY_TREES).add(
+        LighterEndBlocks.END_MOSS.properties().blockIdOrThrow()
+    );
+    builder(BlockTags.SCULK_REPLACEABLE).add(
+        LighterEndBlocks.END_MOSS.properties().blockIdOrThrow()
     );
 
-    valueLookupBuilder(BlockTags.MINEABLE_WITH_AXE).add(
-        LighterEndBlocks.LUMECORN_STEM,
-        LighterEndBlocks.END_LOTUS_STEM,
-        LighterEndBlocks.UMBRELLA_TREE_CLUSTER,
-        LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY,
-        LighterEndBlocks.GLOWSHROOM_CAP,
-        LighterEndBlocks.GLOWSHROOM_HYMENOPHORE,
-        LighterEndBlocks.END_LOTUS_STEM,
-        LighterEndBlocks.AGAVE,
-        LighterEndBlocks.AGAVE_BULB
+    builder(BlockTags.FLOWERS).add(
+        LighterEndBlocks.CREEPING_MOSS.properties().blockIdOrThrow(),
+        LighterEndBlocks.UMBRELLA_FERN.properties().blockIdOrThrow(),
+        LighterEndBlocks.TALL_UMBRELLA_FERN.properties().blockIdOrThrow(),
+        LighterEndBlocks.TENANEA_FLOWER.properties().blockIdOrThrow(),
+        LighterEndBlocks.END_LOTUS_FLOWER.properties().blockIdOrThrow()
     );
 
-    valueLookupBuilder(BlockTags.SAPLINGS).add(
-        LighterEndBlocks.TENANEA_SAPLING,
-        LighterEndBlocks.UMBRELLA_TREE_SAPLING,
-        LighterEndBlocks.GLOWSHROOM_SAPLING,
-        LighterEndBlocks.DRAGON_SAPLING
-    );
-    valueLookupBuilder(BlockTags.LEAVES).add(
-        LighterEndBlocks.TENANEA_LEAVES,
-        LighterEndBlocks.GLOWSHROOM_FUR,
-        LighterEndBlocks.AGAVE_FUR,
-        LighterEndBlocks.DRAGON_LEAVES
-    );
-
-    valueLookupBuilder(BlockTags.FLOWER_POTS).add(
-        LighterEndBlocks.POTTED_TENANEA_SAPLING,
-        LighterEndBlocks.POTTED_UMBRELLA_SAPLING,
-        LighterEndBlocks.POTTED_GLOWSHROOM_SAPLING
+    builder(BlockTags.MINEABLE_WITH_AXE).add(
+        LighterEndBlocks.LUMECORN_STEM.properties().blockIdOrThrow(),
+        LighterEndBlocks.END_LOTUS_STEM.properties().blockIdOrThrow(),
+        LighterEndBlocks.UMBRELLA_TREE_CLUSTER.properties().blockIdOrThrow(),
+        LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY.properties().blockIdOrThrow(),
+        LighterEndBlocks.GLOWSHROOM_CAP.properties().blockIdOrThrow(),
+        LighterEndBlocks.GLOWSHROOM_HYMENOPHORE.properties().blockIdOrThrow(),
+        LighterEndBlocks.END_LOTUS_STEM.properties().blockIdOrThrow(),
+        LighterEndBlocks.AGAVE.properties().blockIdOrThrow(),
+        LighterEndBlocks.AGAVE_BULB.properties().blockIdOrThrow()
     );
 
-    valueLookupBuilder(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).add(
-        LighterEndBlocks.OBELISK
+    builder(BlockItemTags.SAPLINGS).add(
+        LighterEndBlocks.TENANEA_SAPLING.properties().blockIdOrThrow(),
+        LighterEndBlocks.UMBRELLA_TREE_SAPLING.properties().blockIdOrThrow(),
+        LighterEndBlocks.GLOWSHROOM_SAPLING.properties().blockIdOrThrow(),
+        LighterEndBlocks.DRAGON_SAPLING.properties().blockIdOrThrow()
     );
-    valueLookupBuilder(BlockTags.DRAGON_IMMUNE).add(
-        LighterEndBlocks.OBELISK
-    );
-    valueLookupBuilder(BlockTags.FEATURES_CANNOT_REPLACE).add(
-        LighterEndBlocks.OBELISK
-    );
-    valueLookupBuilder(BlockTags.GEODE_INVALID_BLOCKS).add(
-        LighterEndBlocks.OBELISK
-    );
-    valueLookupBuilder(BlockTags.WITHER_IMMUNE).add(
-        LighterEndBlocks.OBELISK
+    builder(BlockTags.LEAVES).add(
+        LighterEndBlocks.TENANEA_LEAVES.properties().blockIdOrThrow(),
+        LighterEndBlocks.GLOWSHROOM_FUR.properties().blockIdOrThrow(),
+        LighterEndBlocks.AGAVE_FUR.properties().blockIdOrThrow(),
+        LighterEndBlocks.DRAGON_LEAVES.properties().blockIdOrThrow()
     );
 
-    valueLookupBuilder(BlockTags.ICE).add(
-        LighterEndBlocks.EMERALD_ICE,
-        LighterEndBlocks.FERROUS_ICE,
-        LighterEndBlocks.AUROUS_ICE
+    builder(BlockTags.FLOWER_POTS).add(
+        LighterEndBlocks.POTTED_TENANEA_SAPLING.properties().blockIdOrThrow(),
+        LighterEndBlocks.POTTED_UMBRELLA_SAPLING.properties().blockIdOrThrow(),
+        LighterEndBlocks.POTTED_GLOWSHROOM_SAPLING.properties().blockIdOrThrow()
     );
 
-    valueLookupBuilder(BlockTags.INFINIBURN_OVERWORLD).add(LighterEndBlocks.BRIMSTONE);
+    builder(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).add(
+        LighterEndBlocks.OBELISK.properties().blockIdOrThrow()
+    );
+    builder(BlockTags.DRAGON_IMMUNE).add(
+        LighterEndBlocks.OBELISK.properties().blockIdOrThrow()
+    );
+    builder(BlockTags.FEATURES_CANNOT_REPLACE).add(
+        LighterEndBlocks.OBELISK.properties().blockIdOrThrow()
+    );
+    builder(BlockTags.GEODE_INVALID_BLOCKS).add(
+        LighterEndBlocks.OBELISK.properties().blockIdOrThrow()
+    );
+    builder(BlockTags.WITHER_IMMUNE).add(
+        LighterEndBlocks.OBELISK.properties().blockIdOrThrow()
+    );
 
-    valueLookupBuilder(BlockTags.SUPPORTS_CHORUS_FLOWER).addTag(LighterEndTags.END_SOIL);
-    valueLookupBuilder(BlockTags.SUPPORTS_CHORUS_PLANT).addTag(LighterEndTags.END_SOIL);
+    builder(BlockTags.ICE).add(
+        LighterEndBlocks.EMERALD_ICE.properties().blockIdOrThrow(),
+        LighterEndBlocks.FERROUS_ICE.properties().blockIdOrThrow(),
+        LighterEndBlocks.AUROUS_ICE.properties().blockIdOrThrow()
+    );
 
-    valueLookupBuilder(LighterEndTags.END_MOSS_REPLACEABLE)
+    builder(BlockTags.INFINIBURN_OVERWORLD).add(
+        LighterEndBlocks.BRIMSTONE.properties().blockIdOrThrow()
+    );
+
+    builder(BlockTags.SUPPORTS_CHORUS_FLOWER).addTag(LighterEndTags.END_SOIL);
+    builder(BlockTags.SUPPORTS_CHORUS_PLANT).addTag(LighterEndTags.END_SOIL);
+
+    builder(LighterEndTags.END_MOSS_REPLACEABLE)
         .add(
-            Blocks.END_STONE,
-            Blocks.BLACKSTONE,
-            Blocks.BASALT,
-            Blocks.DEAD_BRAIN_CORAL_BLOCK,
-            Blocks.DEAD_BUBBLE_CORAL_BLOCK,
-            Blocks.DEAD_FIRE_CORAL_BLOCK,
-            Blocks.DEAD_HORN_CORAL_BLOCK,
-            Blocks.DEAD_TUBE_CORAL_BLOCK,
-            LighterEndBlocks.UMBRALITH.baseBlock,
-            LighterEndBlocks.BRIMSTONE
+            BlockItemIds.END_STONE.block(),
+            BlockItemIds.BLACKSTONE.block(),
+            BlockItemIds.BASALT.block(),
+            BlockItemIds.DEAD_BRAIN_CORAL_BLOCK.block(),
+            BlockItemIds.DEAD_BUBBLE_CORAL_BLOCK.block(),
+            BlockItemIds.DEAD_FIRE_CORAL_BLOCK.block(),
+            BlockItemIds.DEAD_HORN_CORAL_BLOCK.block(),
+            BlockItemIds.DEAD_TUBE_CORAL_BLOCK.block(),
+            LighterEndBlocks.UMBRALITH.baseBlock.properties().blockIdOrThrow(),
+            LighterEndBlocks.BRIMSTONE.properties().blockIdOrThrow()
         );
-    valueLookupBuilder(LighterEndTags.END_SOIL)
+    builder(LighterEndTags.END_SOIL)
         .add(
-            LighterEndBlocks.END_MOSS,
-            LighterEndBlocks.UMBRALITH.baseBlock,
-            LighterEndBlocks.BRIMSTONE,
-            LighterEndBlocks.BORNITE.baseBlock
+            LighterEndBlocks.END_MOSS.properties().blockIdOrThrow(),
+            LighterEndBlocks.UMBRALITH.baseBlock.properties().blockIdOrThrow(),
+            LighterEndBlocks.BRIMSTONE.properties().blockIdOrThrow(),
+            LighterEndBlocks.BORNITE.baseBlock.properties().blockIdOrThrow()
         );
-    valueLookupBuilder(LighterEndTags.END_STONES)
+    builder(LighterEndTags.END_STONES)
         .add(
-            Blocks.END_STONE,
-            Blocks.BLACKSTONE,
-            Blocks.BASALT,
-            Blocks.DEAD_BRAIN_CORAL_BLOCK,
-            Blocks.DEAD_BUBBLE_CORAL_BLOCK,
-            Blocks.DEAD_FIRE_CORAL_BLOCK,
-            Blocks.DEAD_HORN_CORAL_BLOCK,
-            Blocks.DEAD_TUBE_CORAL_BLOCK,
-            LighterEndBlocks.VIOLECITE.baseBlock,
-            LighterEndBlocks.AZURE_JADESTONE.baseBlock,
-            LighterEndBlocks.SANDY_JADESTONE.baseBlock,
-            LighterEndBlocks.VIRID_JADESTONE.baseBlock,
-            LighterEndBlocks.UMBRALITH.baseBlock,
-            LighterEndBlocks.BRIMSTONE,
-            LighterEndBlocks.BORNITE.baseBlock
+            BlockItemIds.END_STONE.block(),
+            BlockItemIds.BLACKSTONE.block(),
+            BlockItemIds.BASALT.block(),
+            BlockItemIds.DEAD_BRAIN_CORAL_BLOCK.block(),
+            BlockItemIds.DEAD_BUBBLE_CORAL_BLOCK.block(),
+            BlockItemIds.DEAD_FIRE_CORAL_BLOCK.block(),
+            BlockItemIds.DEAD_HORN_CORAL_BLOCK.block(),
+            BlockItemIds.DEAD_TUBE_CORAL_BLOCK.block(),
+            LighterEndBlocks.VIOLECITE.baseBlock.properties().blockIdOrThrow(),
+            LighterEndBlocks.AZURE_JADESTONE.baseBlock.properties().blockIdOrThrow(),
+            LighterEndBlocks.SANDY_JADESTONE.baseBlock.properties().blockIdOrThrow(),
+            LighterEndBlocks.VIRID_JADESTONE.baseBlock.properties().blockIdOrThrow(),
+            LighterEndBlocks.UMBRALITH.baseBlock.properties().blockIdOrThrow(),
+            LighterEndBlocks.BRIMSTONE.properties().blockIdOrThrow(),
+            LighterEndBlocks.BORNITE.baseBlock.properties().blockIdOrThrow()
         );
-    valueLookupBuilder(LighterEndTags.AQUATIC_END_SOIL)
+    builder(LighterEndTags.AQUATIC_END_SOIL)
         .add(
-            Blocks.END_STONE,
-            Blocks.BLACKSTONE,
-            Blocks.SAND,
-            Blocks.SANDSTONE,
-            Blocks.RED_SAND,
-            Blocks.RED_SANDSTONE,
-            Blocks.GRAVEL,
-            Blocks.DIRT,
-            Blocks.COARSE_DIRT,
-            Blocks.MUD,
-            LighterEndBlocks.UMBRALITH.baseBlock,
-            LighterEndBlocks.END_MOSS,  // though pretty sure this won't survive underwater
-            LighterEndBlocks.BRIMSTONE,
-            LighterEndBlocks.BORNITE.baseBlock
+            BlockItemIds.END_STONE.block(),
+            BlockItemIds.BLACKSTONE.block(),
+            BlockItemIds.SAND.block(),
+            BlockItemIds.SANDSTONE.block(),
+            BlockItemIds.RED_SAND.block(),
+            BlockItemIds.RED_SANDSTONE.block(),
+            BlockItemIds.GRAVEL.block(),
+            BlockItemIds.DIRT.block(),
+            BlockItemIds.COARSE_DIRT.block(),
+            BlockItemIds.MUD.block(),
+            LighterEndBlocks.UMBRALITH.baseBlock.properties().blockIdOrThrow(),
+            LighterEndBlocks.END_MOSS.properties().blockIdOrThrow(),
+            LighterEndBlocks.BRIMSTONE.properties().blockIdOrThrow(),
+            LighterEndBlocks.BORNITE.baseBlock.properties().blockIdOrThrow()
         );
-    valueLookupBuilder(LighterEndTags.AQUATIC_END_VEGETATION)
+    builder(LighterEndTags.AQUATIC_END_VEGETATION)
         .add(
-            LighterEndBlocks.CHARNIA_CYAN,
-            LighterEndBlocks.CHARNIA_GREEN,
-            LighterEndBlocks.CHARNIA_LIGHT_BLUE,
-            LighterEndBlocks.CHARNIA_ORANGE,
-            LighterEndBlocks.CHARNIA_PURPLE,
-            LighterEndBlocks.CHARNIA_RED
+            LighterEndBlocks.CHARNIA_CYAN.properties().blockIdOrThrow(),
+            LighterEndBlocks.CHARNIA_GREEN.properties().blockIdOrThrow(),
+            LighterEndBlocks.CHARNIA_LIGHT_BLUE.properties().blockIdOrThrow(),
+            LighterEndBlocks.CHARNIA_ORANGE.properties().blockIdOrThrow(),
+            LighterEndBlocks.CHARNIA_PURPLE.properties().blockIdOrThrow(),
+            LighterEndBlocks.CHARNIA_RED.properties().blockIdOrThrow()
         );
-    valueLookupBuilder(LighterEndTags.FURS)
+    builder(LighterEndTags.FURS)
         .add(
-            LighterEndBlocks.AGAVE_FUR,
-            LighterEndBlocks.GLOWSHROOM_FUR
+            LighterEndBlocks.AGAVE_FUR.properties().blockIdOrThrow(),
+            LighterEndBlocks.GLOWSHROOM_FUR.properties().blockIdOrThrow()
         );
-    valueLookupBuilder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_STONES);
-    valueLookupBuilder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_SOIL);
-    valueLookupBuilder(LighterEndTags.GROWS_SULPHUR_CRYSTALS).add(LighterEndBlocks.BRIMSTONE);
+    builder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_STONES);
+    builder(LighterEndTags.SLIME_SPAWNABLE).addTag(LighterEndTags.END_SOIL);
+    builder(LighterEndTags.GROWS_SULPHUR_CRYSTALS).add(
+        LighterEndBlocks.BRIMSTONE.properties().blockIdOrThrow()
+    );
   }
 }
