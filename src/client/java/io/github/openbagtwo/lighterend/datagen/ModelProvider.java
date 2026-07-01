@@ -102,15 +102,15 @@ public class ModelProvider extends FabricModelProvider {
 
     blockModelGenerator.createTrivialBlock(
         LighterEndBlocks.EMERALD_ICE,
-        TexturedModel.CUBE.updateTexture(mapping -> mapping.forceAllTranslucent())
+        TexturedModel.CUBE.updateTexture(TextureMapping::forceAllTranslucent)
     );
     blockModelGenerator.createTrivialBlock(
         LighterEndBlocks.FERROUS_ICE,
-        TexturedModel.CUBE.updateTexture(mapping -> mapping.forceAllTranslucent())
+        TexturedModel.CUBE.updateTexture(TextureMapping::forceAllTranslucent)
     );
     blockModelGenerator.createTrivialBlock(
         LighterEndBlocks.AUROUS_ICE,
-        TexturedModel.CUBE.updateTexture(mapping -> mapping.forceAllTranslucent())
+        TexturedModel.CUBE.updateTexture(TextureMapping::forceAllTranslucent)
     );
 
     generateMaterialModels(blockModelGenerator, LighterEndBlocks.BORNITE);
@@ -152,7 +152,8 @@ public class ModelProvider extends FabricModelProvider {
         .wood(wood.strippedWood);
     blockModelGenerator.family(wood.planks).stairs(wood.stairs)
         .slab(wood.slab).fence(wood.fence).fenceGate(wood.gate).button(wood.button)
-        .pressurePlate(wood.pressurePlate).sign(wood.sign).hangingSign(wood.hangingSign);
+        .pressurePlate(wood.pressurePlate);
+//    blockModelGenerator.family(wood.strippedLog).sign(wood.sign).hangingSign(wood.hangingSign);
     blockModelGenerator.createDoor(wood.door);
     blockModelGenerator.createTrapdoor(wood.trapdoor);
     blockModelGenerator.createShelf(wood.shelf, wood.strippedLog);

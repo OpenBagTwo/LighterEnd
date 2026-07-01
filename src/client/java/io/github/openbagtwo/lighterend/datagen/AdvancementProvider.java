@@ -190,7 +190,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         ).save(consumer, LighterEnd.MOD_ID + "/shear_mooshroom");
 
     AdvancementHolder wear_fur = Advancement.Builder.advancement().parent(acquire_claw).display(
-            LighterEndBlocks.AGAVE_FUR.asItem(),
+            LighterEndItems.AGAVE_FUR,
             title("wear_fur"),
             description("wear_fur"),
             null,

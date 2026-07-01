@@ -149,8 +149,11 @@ public class LighterEndItems {
     return register(name, Item::new, settings);
   }
 
-  public static Item register(String name, Function<Properties, Item> factory,
-      Properties settings) {
+  public static Item register(
+      String name,
+      Function<Properties, Item> factory,
+      Properties settings
+  ) {
     ResourceKey<Item> id = ResourceKey.create(Registries.ITEM, LighterEnd.of(name));
     Item item = factory.apply(settings.setId(id));
     if (item instanceof BlockItem blockItem) {
