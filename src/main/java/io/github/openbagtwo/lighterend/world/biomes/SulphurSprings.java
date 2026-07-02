@@ -52,8 +52,11 @@ public class SulphurSprings {
             MobCategory.MONSTER,
             1,
             new SpawnerData(EntityTypes.ENDERMITE, 1, 1)
-        )
-        .build();
+        ).addSpawn(
+            MobCategory.MONSTER,
+            100,
+            new SpawnerData(EntityTypes.SULFUR_CUBE, 2, 4)
+        ).build();
 
     var genSettingsBuilder = new BiomeGenerationSettings.Builder(features, carvers)
         .addFeature(Decoration.RAW_GENERATION, LighterEndPlacedFeatures.GEYSER)

@@ -73,6 +73,13 @@ public class ItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
       builder(BlockItemTags.BUTTONS.item()).add(
           LighterEndItems.idLookup.get(material.button.asItem())
       );
+      builder(ItemTags.SULFUR_CUBE_ARCHETYPE_SLOW_BOUNCY).add(
+          LighterEndItems.idLookup.get(material.baseBlock.asItem()),
+          LighterEndItems.idLookup.get(material.bricks.asItem()),
+          LighterEndItems.idLookup.get(material.polished.asItem()),
+          LighterEndItems.idLookup.get(material.tiles.asItem()),
+          LighterEndItems.idLookup.get(material.pillar.asItem())
+      );
     }
     builder(ItemTags.CHICKEN_FOOD).add(
         LighterEndItems.idLookup.get(LighterEndBlocks.LUMECORN_SEED.asItem()));
@@ -111,6 +118,40 @@ public class ItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
 
     builder(ItemTags.CAULDRON_CAN_REMOVE_DYE).add(
         LighterEndItems.idLookup.get(LighterEndEquipment.SILK_ELYTRA)
+    );
+
+//    builder(ItemTags.SULFUR_CUBE_ARCHETYPE_BOUNCY).add(
+//
+//    );
+    builder(ItemTags.SULFUR_CUBE_ARCHETYPE_FAST_FLAT).add(
+        LighterEndItems.idLookup.get(LighterEndBlocks.END_MOSS.asItem())
+    );
+    builder(ItemTags.SULFUR_CUBE_ARCHETYPE_FAST_SLIDING).add(
+        LighterEndItems.idLookup.get(LighterEndBlocks.AUROUS_ICE.asItem()),
+        LighterEndItems.idLookup.get(LighterEndBlocks.EMERALD_ICE.asItem()),
+        LighterEndItems.idLookup.get(LighterEndBlocks.FERROUS_ICE.asItem())
+    );
+//    builder(ItemTags.SULFUR_CUBE_ARCHETYPE_HIGH_RESISTANCE).add(
+//
+//    );
+    builder(ItemTags.SULFUR_CUBE_ARCHETYPE_REGULAR).add(
+        LighterEndItems.idLookup.get(LighterEndBlocks.DRAGON_BONE_BLOCK.asItem()),
+        LighterEndItems.idLookup.get(LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY.asItem())
+    );
+    builder(ItemTags.SULFUR_CUBE_ARCHETYPE_SLOW_BOUNCY).add(
+        LighterEndItems.idLookup.get(LighterEndBlocks.AURORA_CRYSTAL.asItem()),
+        LighterEndItems.idLookup.get(LighterEndBlocks.MISSING_TILE.asItem()),
+        LighterEndItems.idLookup.get(LighterEndBlocks.END_STONE_REDSTONE_ORE.asItem()),
+        LighterEndItems.idLookup.get(LighterEndBlocks.END_STONE_QUARTZ_ORE.asItem()),
+        LighterEndItems.idLookup.get(LighterEndBlocks.UMBRALITH_REDSTONE_ORE.asItem()),
+        LighterEndItems.idLookup.get(LighterEndBlocks.UMBRALITH_QUARTZ_ORE.asItem()),
+        LighterEndItems.idLookup.get(LighterEndBlocks.BRIMSTONE.asItem())
+    );
+    builder(ItemTags.SULFUR_CUBE_ARCHETYPE_SLOW_FLAT).add(
+        LighterEndItems.idLookup.get(LighterEndBlocks.ENDER_BLOCK.asItem())
+    );
+    builder(ItemTags.SULFUR_CUBE_ARCHETYPE_SLOW_SLIDING).add(
+        LighterEndItems.idLookup.get(LighterEndBlocks.UMBRELLA_TREE_CLUSTER.asItem())
     );
 
     builder(LighterEndTags.REPAIRS_SILK_ARMOR).add(

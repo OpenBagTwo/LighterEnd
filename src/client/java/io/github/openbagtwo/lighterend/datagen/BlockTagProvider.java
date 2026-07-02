@@ -215,6 +215,11 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
     builder(BlockTags.SUPPORTS_CHORUS_FLOWER).addTag(LighterEndTags.END_SOIL);
     builder(BlockTags.SUPPORTS_CHORUS_PLANT).addTag(LighterEndTags.END_SOIL);
 
+    builder(BlockTags.SULFUR_SPIKE_REPLACEABLE).add(
+        LighterEndBlocks.BRIMSTONE.properties().blockIdOrThrow(),
+        LighterEndBlocks.BORNITE.baseBlock.properties().blockIdOrThrow()
+    );
+
     builder(LighterEndTags.END_MOSS_REPLACEABLE)
         .add(
             BlockItemIds.END_STONE.block(),
