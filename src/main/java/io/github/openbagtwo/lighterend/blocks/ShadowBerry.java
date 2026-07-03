@@ -3,65 +3,65 @@ package io.github.openbagtwo.lighterend.blocks;
 import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition.Builder;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.material.PushReaction;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CropBlock;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.item.ItemConvertible;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.state.StateManager.Builder;
+import net.minecraft.state.property.IntProperty;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 
 public class ShadowBerry extends CropBlock {
 
-  public static final MapCodec<ShadowBerry> CODEC = simpleCodec(ShadowBerry::new);
-  private static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 8, 15);
+  public static final MapCodec<ShadowBerry> CODEC = createCodec(ShadowBerry::new);
+  private static final VoxelShape SHAPE = Block.createCuboidShape(1, 0, 1, 15, 8, 15);
   public static final int MAX_AGE = 3;
-  public static final IntegerProperty AGE = IntegerProperty.create("age", 0, MAX_AGE);
+  public static final IntProperty AGE = IntProperty.of("age", 0, MAX_AGE);
 
-  public ShadowBerry(Properties settings) {
+  public ShadowBerry(Settings settings) {
     super(
         settings
             .mapColor(MapColor.TERRACOTTA_BLACK)
             .noCollision()
-            .randomTicks()
-            .instabreak()
-            .sound(SoundType.CROP)
-            .pushReaction(PushReaction.DESTROY)
+            .ticksRandomly()
+            .breakInstantly()
+            .sounds(BlockSoundGroup.CROP)
+            .pistonBehavior(PistonBehavior.DESTROY)
     );
   }
 
   @Override
-  public MapCodec<ShadowBerry> codec() {
+  public MapCodec<ShadowBerry> getCodec() {
     return CODEC;
   }
 
   @Override
-  protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+  protected void appendProperties(Builder<Block, BlockState> builder) {
     builder.add(AGE);
   }
 
   @Override
-  public VoxelShape getShape(
+  public VoxelShape getOutlineShape(
       BlockState state,
-      BlockGetter world,
+      BlockView world,
       BlockPos pos,
-      CollisionContext context
+      ShapeContext context
   ) {
     return SHAPE;
   }
 
   @Override
-  protected IntegerProperty getAgeProperty() {
+  protected IntProperty getAgeProperty() {
     return AGE;
   }
 
@@ -71,24 +71,24 @@ public class ShadowBerry extends CropBlock {
   }
 
   @Override
-  public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+  public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
     if (random.nextInt(3) != 0) {
       super.randomTick(state, world, pos, random);
     }
   }
 
   @Override
-  protected ItemLike getBaseSeedId() {
+  protected ItemConvertible getSeedsItem() {
     return LighterEndItems.SHADOW_BERRY_SEEDS;
   }
 
   @Override
-  protected int getBonemealAgeIncrease(Level world) {
+  protected int getGrowthAmount(World world) {
     return 1;
   }
 
   @Override
-  protected boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
-    return world.getBlockState(pos.below()).is(LighterEndTags.END_SOIL);
+  protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+    return world.getBlockState(pos.down()).isIn(LighterEndTags.END_SOIL);
   }
 }

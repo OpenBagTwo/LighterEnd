@@ -3,144 +3,144 @@ package io.github.openbagtwo.lighterend.blocks;
 import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndParticles;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.ScheduledTickAccess;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.GrowingPlantHeadBlock;
-import net.minecraft.world.level.block.MultifaceBlock;
-import net.minecraft.world.level.block.NetherVines;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.material.PushReaction;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.AbstractPlantStemBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.MultifaceBlock;
+import net.minecraft.block.VineLogic;
+import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
+import net.minecraft.world.tick.ScheduledTickView;
 
-public class TenaneaFlower extends GrowingPlantHeadBlock {
+public class TenaneaFlower extends AbstractPlantStemBlock {
 
-  public static final MapCodec<TenaneaFlower> CODEC = simpleCodec(TenaneaFlower::new);
-  private static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 16, 14);
-  public static final BooleanProperty TIP = BlockStateProperties.TIP;
+  public static final MapCodec<TenaneaFlower> CODEC = createCodec(TenaneaFlower::new);
+  private static final VoxelShape SHAPE = Block.createCuboidShape(2, 0, 2, 14, 16, 14);
+  public static final BooleanProperty TIP = Properties.TIP;
   public static final Vec3i[] COLORS;
 
-  public TenaneaFlower(BlockBehaviour.Properties settings) {
+  public TenaneaFlower(AbstractBlock.Settings settings) {
     super(
         settings
-            .mapColor(MapColor.COLOR_MAGENTA)
+            .mapColor(MapColor.MAGENTA)
             .replaceable()
             .noCollision()
-            .instabreak()
-            .noOcclusion()
-            .sound(SoundType.GRASS)
-            .pushReaction(PushReaction.DESTROY)
-            .offsetType(OffsetType.NONE)
-            .ignitedByLava()
-            .randomTicks()
-            .lightLevel((bs) -> 8),
+            .breakInstantly()
+            .nonOpaque()
+            .sounds(BlockSoundGroup.GRASS)
+            .pistonBehavior(PistonBehavior.DESTROY)
+            .offset(OffsetType.NONE)
+            .burnable()
+            .ticksRandomly()
+            .luminance((bs) -> 8),
         Direction.DOWN,
         SHAPE,
         false,
         0.1
     );
-    this.registerDefaultState(this.stateDefinition.any().setValue(TIP, true));
+    this.setDefaultState(this.stateManager.getDefaultState().with(TIP, true));
   }
 
   @Override
-  protected int getBlocksToGrowWhenBonemealed(RandomSource random) {
-    return NetherVines.getBlocksToGrowWhenBonemealed(random);
+  protected int getGrowthLength(Random random) {
+    return VineLogic.getGrowthLength(random);
   }
 
   @Override
-  protected boolean canGrowInto(BlockState state) {
-    return NetherVines.isValidGrowthState(state);
+  protected boolean chooseStemState(BlockState state) {
+    return VineLogic.isValidForWeepingStem(state);
   }
 
   @Override
-  protected Block getBodyBlock() {
+  protected Block getPlant() {
     return LighterEndBlocks.TENANEA_FLOWER;
   }
 
   @Override
-  protected boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
-    BlockPos blockPos = pos.relative(Direction.UP);
+  protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+    BlockPos blockPos = pos.offset(Direction.UP);
     BlockState blockState = world.getBlockState(blockPos);
     // TODO once Tenanea Leaves are a thing:
     // return blockState.isOf(LighterEndBlocks.TENANEA_LEAVES) || || blockState.isOf(
     //        LighterEndBlocks.TENANEA_FLOWER);
-    return MultifaceBlock.canAttachTo(world, Direction.UP, blockPos, blockState) || blockState.is(
+    return MultifaceBlock.canGrowOn(world, Direction.UP, blockPos, blockState) || blockState.isOf(
         LighterEndBlocks.TENANEA_FLOWER);
   }
 
   @Override
-  protected BlockState updateShape(
+  protected BlockState getStateForNeighborUpdate(
       BlockState state,
-      LevelReader world,
-      ScheduledTickAccess tickView,
+      WorldView world,
+      ScheduledTickView tickView,
       BlockPos pos,
       Direction direction,
       BlockPos neighborPos,
       BlockState neighborState,
-      RandomSource random
+      Random random
   ) {
-    super.updateShape(state, world, tickView, pos, direction, neighborPos,
+    super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos,
         neighborState, random);
 
-    return state.setValue(TIP, !world.getBlockState(pos.below()).is(this));
+    return state.with(TIP, !world.getBlockState(pos.down()).isOf(this));
   }
 
   @Override
-  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-    super.createBlockStateDefinition(builder);
+  protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    super.appendProperties(builder);
     builder.add(TIP);
   }
 
   @Override
-  public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
-    return world.getBlockState(this.getTipPos(world, pos).below()).isAir();
+  public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
+    return world.getBlockState(this.getTipPos(world, pos).down()).isAir();
   }
 
-  public BlockPos getTipPos(BlockGetter world, BlockPos pos) {
-    BlockPos.MutableBlockPos mutable = pos.mutable();
+  public BlockPos getTipPos(BlockView world, BlockPos pos) {
+    BlockPos.Mutable mutable = pos.mutableCopy();
 
     BlockState blockState;
     do {
       mutable.move(Direction.DOWN);
       blockState = world.getBlockState(mutable);
-    } while (blockState.is(this));
+    } while (blockState.isOf(this));
 
-    return mutable.relative(Direction.UP).immutable();
+    return mutable.offset(Direction.UP).toImmutable();
   }
 
   @Override
-  public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
-    super.performBonemeal(world, random, pos, state);
-    world.setBlockAndUpdate(this.getTipPos(world, pos), state.setValue(TIP, true));
+  public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
+    super.grow(world, random, pos, state);
+    world.setBlockState(this.getTipPos(world, pos), state.with(TIP, true));
   }
 
   @Override
-  public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
-    super.animateTick(state, world, pos, random);
+  public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+    super.randomDisplayTick(state, world, pos, random);
     if (random.nextInt(32) == 0) {
       double x = (double) pos.getX() + random.nextGaussian() + 0.5;
       double z = (double) pos.getZ() + random.nextGaussian() + 0.5;
       double y = (double) pos.getY() + random.nextDouble();
-      world.addParticle(LighterEndParticles.TENANEA_PETAL, x, y, z, 0, 0, 0);
+      world.addParticleClient(LighterEndParticles.TENANEA_PETAL, x, y, z, 0, 0, 0);
     }
 
   }
 
   @Override
-  public MapCodec<TenaneaFlower> codec() {
+  public MapCodec<TenaneaFlower> getCodec() {
     return CODEC;
   }
 

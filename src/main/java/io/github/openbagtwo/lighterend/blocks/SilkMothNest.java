@@ -12,154 +12,154 @@ import io.github.openbagtwo.lighterend.utils.Flags;
 import io.github.openbagtwo.lighterend.utils.GlobalState;
 import io.github.openbagtwo.lighterend.utils.PosInfo;
 import java.util.List;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Direction.Plane;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.EnchantmentTags;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.Containers;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.boss.wither.WitherBoss;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.item.PrimedTnt;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.hurtingprojectile.WitherSkull;
-import net.minecraft.world.entity.vehicle.minecart.MinecartTNT;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.ScheduledTickAccess;
-import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.FireBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.FireBlock;
+import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.enums.NoteBlockInstrument;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.TntEntity;
+import net.minecraft.entity.boss.WitherEntity;
+import net.minecraft.entity.mob.CreeperEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.WitherSkullEntity;
+import net.minecraft.entity.vehicle.TntMinecartEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.loot.context.LootWorldContext;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.EnchantmentTags;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.stat.Stats;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.EnumProperty;
+import net.minecraft.state.property.IntProperty;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Type;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.GameRules;
+import net.minecraft.world.Heightmap;
+import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
+import net.minecraft.world.event.GameEvent;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
-public class SilkMothNest extends BaseEntityBlock {
+public class SilkMothNest extends BlockWithEntity {
 
-  public static final MapCodec<SilkMothNest> CODEC = simpleCodec(SilkMothNest::new);
-  public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
+  public static final MapCodec<SilkMothNest> CODEC = createCodec(SilkMothNest::new);
+  public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
   public static final int MAX_FULLNESS = 3;
-  public static final IntegerProperty FULLNESS = IntegerProperty.create("fullness", 0, MAX_FULLNESS);
+  public static final IntProperty FULLNESS = IntProperty.of("fullness", 0, MAX_FULLNESS);
 
-  public static final VoxelShape OUTLINE_SHAPE = Shapes.or(
-      Block.box(0, 0, 0, 16, 13, 16),
-      Block.box(3, 12, 3, 13, 16, 13)
+  public static final VoxelShape OUTLINE_SHAPE = VoxelShapes.union(
+      Block.createCuboidShape(0, 0, 0, 16, 13, 16),
+      Block.createCuboidShape(3, 12, 3, 13, 16, 13)
   );
 
 
   @Override
-  public MapCodec<SilkMothNest> codec() {
+  public MapCodec<SilkMothNest> getCodec() {
     return CODEC;
   }
 
-  public SilkMothNest(BlockBehaviour.Properties settings) {
+  public SilkMothNest(AbstractBlock.Settings settings) {
     super(
         settings
             .mapColor(MapColor.TERRACOTTA_YELLOW)
             .instrument(NoteBlockInstrument.BASS)
             .strength(0.3F)
-            .sound(SoundType.WOOD)
-            .noOcclusion()
-            .ignitedByLava()
+            .sounds(BlockSoundGroup.WOOD)
+            .nonOpaque()
+            .burnable()
     );
-    this.registerDefaultState(
-        this.stateDefinition.any().setValue(FULLNESS, 0).setValue(FACING, Direction.NORTH));
+    this.setDefaultState(
+        this.stateManager.getDefaultState().with(FULLNESS, 0).with(FACING, Direction.NORTH));
   }
 
   @Override
-  protected boolean hasAnalogOutputSignal(BlockState state) {
+  protected boolean hasComparatorOutput(BlockState state) {
     return true;
   }
 
   @Override
-  protected int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos, Direction dir) {
-    return state.getValue(FULLNESS);
+  protected int getComparatorOutput(BlockState state, World world, BlockPos pos, Direction dir) {
+    return state.get(FULLNESS);
   }
 
   @Override
-  public void playerDestroy(
-      Level world,
-      Player player,
+  public void afterBreak(
+      World world,
+      PlayerEntity player,
       BlockPos pos,
       BlockState state,
       @Nullable BlockEntity blockEntity,
       ItemStack tool
   ) {
-    super.playerDestroy(world, player, pos, state, blockEntity, tool);
-    if (!world.isClientSide() && blockEntity instanceof SilkMothNestEntity nestEntity) {
-      if (!EnchantmentHelper.hasTag(
+    super.afterBreak(world, player, pos, state, blockEntity, tool);
+    if (!world.isClient() && blockEntity instanceof SilkMothNestEntity nestEntity) {
+      if (!EnchantmentHelper.hasAnyEnchantmentsIn(
           tool, EnchantmentTags.PREVENTS_BEE_SPAWNS_WHEN_MINING
       )) {
         nestEntity.tryReleaseMoths(state);
-        Containers.updateNeighboursAfterDestroy(state, world, pos);
+        ItemScatterer.onStateReplaced(state, world, pos);
 
       }
     }
   }
 
-  public static void dropSilk(Level world, BlockPos pos) {
-    popResource(world, pos, new ItemStack(LighterEndItems.SILK, 3));
+  public static void dropSilk(World world, BlockPos pos) {
+    dropStack(world, pos, new ItemStack(LighterEndItems.SILK, 3));
   }
 
   @Override
-  protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos,
-      Player player, InteractionHand hand, BlockHitResult hit) {
-    int i = state.getValue(FULLNESS);
+  protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos,
+      PlayerEntity player, Hand hand, BlockHitResult hit) {
+    int i = state.get(FULLNESS);
     boolean bl = false;
     if (i >= MAX_FULLNESS) {
       Item item = stack.getItem();
-      if (stack.is(Items.SHEARS)) {
+      if (stack.isOf(Items.SHEARS)) {
         world.playSound(player, player.getX(), player.getY(), player.getZ(),
-            LighterEndSounds.MOTH_NEST_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
+            LighterEndSounds.MOTH_NEST_SHEAR, SoundCategory.BLOCKS, 1.0F, 1.0F);
         dropSilk(world, pos);
-        stack.hurtAndBreak(1, player, hand.asEquipmentSlot());
+        stack.damage(1, player, hand.getEquipmentSlot());
         bl = true;
-        world.gameEvent(player, GameEvent.SHEAR, pos);
+        world.emitGameEvent(player, GameEvent.SHEAR, pos);
       }
 
-      if (!world.isClientSide() && bl) {
-        player.awardStat(Stats.ITEM_USED.get(item));
+      if (!world.isClient() && bl) {
+        player.incrementStat(Stats.USED.getOrCreateStat(item));
       }
     }
 
@@ -167,38 +167,38 @@ public class SilkMothNest extends BaseEntityBlock {
 
       this.takeSilk(world, state, pos);
 
-      return InteractionResult.SUCCESS;
+      return ActionResult.SUCCESS;
     } else {
-      return super.useItemOn(stack, state, world, pos, player, hand, hit);
+      return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
     }
   }
 
-  public void takeSilk(Level world, BlockState state, BlockPos pos) {
-    world.setBlock(pos, state.setValue(FULLNESS, 0), Block.UPDATE_ALL);
+  public void takeSilk(World world, BlockState state, BlockPos pos) {
+    world.setBlockState(pos, state.with(FULLNESS, 0), Block.NOTIFY_ALL);
   }
 
   @Override
-  public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-    return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+  public BlockState getPlacementState(ItemPlacementContext ctx) {
+    return this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
   }
 
   @Override
-  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+  protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
     builder.add(FULLNESS, FACING);
   }
 
   @Nullable
   @Override
-  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+  public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
     return new SilkMothNestEntity(pos, state);
   }
 
   @Nullable
   @Override
-  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state,
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state,
       BlockEntityType<T> type) {
-    return world.isClientSide() ? null
-        : createTickerHelper(
+    return world.isClient() ? null
+        : validateTicker(
             type,
             LighterEndBlockEntities.SILK_MOTH_NEST,
             SilkMothNestEntity::serverTick
@@ -206,18 +206,18 @@ public class SilkMothNest extends BaseEntityBlock {
   }
 
   @Override
-  public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+  public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
     if (
-        world instanceof ServerLevel serverWorld
-            && player.preventsBlockDrops()
-            && serverWorld.getGameRules().get(GameRules.BLOCK_DROPS)
+        world instanceof ServerWorld serverWorld
+            && player.shouldSkipBlockDrops()
+            && serverWorld.getGameRules().getBoolean(GameRules.DO_TILE_DROPS)
             && world.getBlockEntity(pos) instanceof SilkMothNestEntity nestEntity
     ) {
-      int fullness = state.getValue(FULLNESS);
+      int fullness = state.get(FULLNESS);
       boolean occupied = nestEntity.getOccupancy() > 0;
       if (occupied || fullness > 0) {
         ItemStack itemStack = new ItemStack(this);
-        itemStack.applyComponents(nestEntity.collectComponents());
+        itemStack.applyComponentsFrom(nestEntity.createComponentMap());
         itemStack.set(
             LighterEndData.SILK_LEVEL, new SilkLevelComponent(fullness));
         ItemEntity itemEntity = new ItemEntity(
@@ -227,91 +227,91 @@ public class SilkMothNest extends BaseEntityBlock {
             pos.getZ(),
             itemStack
         );
-        itemEntity.setDefaultPickUpDelay();
-        world.addFreshEntity(itemEntity);
+        itemEntity.setToDefaultPickupDelay();
+        world.spawnEntity(itemEntity);
       }
     }
 
-    return super.playerWillDestroy(world, pos, state, player);
+    return super.onBreak(world, pos, state, player);
   }
 
   @Override
-  protected List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-    Entity entity = builder.getOptionalParameter(LootContextParams.THIS_ENTITY);
-    if (entity instanceof PrimedTnt
-        || entity instanceof Creeper
-        || entity instanceof WitherSkull
-        || entity instanceof WitherBoss
-        || entity instanceof MinecartTNT) {
-      BlockEntity blockEntity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
+  protected List<ItemStack> getDroppedStacks(BlockState state, LootWorldContext.Builder builder) {
+    Entity entity = builder.getOptional(LootContextParameters.THIS_ENTITY);
+    if (entity instanceof TntEntity
+        || entity instanceof CreeperEntity
+        || entity instanceof WitherSkullEntity
+        || entity instanceof WitherEntity
+        || entity instanceof TntMinecartEntity) {
+      BlockEntity blockEntity = builder.getOptional(LootContextParameters.BLOCK_ENTITY);
       if (blockEntity instanceof SilkMothNestEntity nestEntity) {
         nestEntity.tryReleaseMoths(state);
       }
     }
 
-    return super.getDrops(state, builder);
+    return super.getDroppedStacks(state, builder);
   }
 
   @Override
-  protected ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state,
+  protected ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state,
       boolean includeData) {
-    ItemStack itemStack = super.getCloneItemStack(world, pos, state, includeData);
+    ItemStack itemStack = super.getPickStack(world, pos, state, includeData);
     if (includeData) {
-      itemStack.set(LighterEndData.SILK_LEVEL, new SilkLevelComponent(state.getValueOrElse(FULLNESS, 0)));
+      itemStack.set(LighterEndData.SILK_LEVEL, new SilkLevelComponent(state.get(FULLNESS, 0)));
     }
 
     return itemStack;
   }
 
   @Override
-  protected BlockState updateShape(
+  protected BlockState getStateForNeighborUpdate(
       BlockState state,
-      LevelReader world,
-      ScheduledTickAccess tickView,
+      WorldView world,
+      ScheduledTickView tickView,
       BlockPos pos,
       Direction direction,
       BlockPos neighborPos,
       BlockState neighborState,
-      RandomSource random
+      Random random
   ) {
     if (world.getBlockState(neighborPos).getBlock() instanceof FireBlock && world.getBlockEntity(
         pos) instanceof SilkMothNestEntity nestEntity) {
       nestEntity.tryReleaseMoths(state);
     }
 
-    return super.updateShape(state, world, tickView, pos, direction, neighborPos,
+    return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos,
         neighborState, random);
   }
 
   @Override
-  public BlockState rotate(BlockState state, Rotation rotation) {
-    return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+  public BlockState rotate(BlockState state, BlockRotation rotation) {
+    return state.with(FACING, rotation.rotate(state.get(FACING)));
   }
 
   @Override
-  public BlockState mirror(BlockState state, Mirror mirror) {
-    return state.rotate(mirror.getRotation(state.getValue(FACING)));
+  public BlockState mirror(BlockState state, BlockMirror mirror) {
+    return state.rotate(mirror.getRotation(state.get(FACING)));
   }
 
   @Override
-  public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos,
-      CollisionContext context) {
+  public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos,
+      ShapeContext context) {
     return SilkMothNest.OUTLINE_SHAPE;
   }
 
-  public static class SilkMothNestFeature extends Feature<NoneFeatureConfiguration> {
+  public static class SilkMothNestFeature extends Feature<DefaultFeatureConfig> {
 
     public SilkMothNestFeature() {
-      super(NoneFeatureConfiguration.CODEC);
+      super(DefaultFeatureConfig.CODEC);
     }
 
-    private boolean canGenerate(WorldGenLevel world, BlockPos pos) {
-      BlockState state = world.getBlockState(pos.above());
-      if (state.is(BlockTags.LEAVES) || state.is(BlockTags.LOGS)) {
+    private boolean canGenerate(StructureWorldAccess world, BlockPos pos) {
+      BlockState state = world.getBlockState(pos.up());
+      if (state.isIn(BlockTags.LEAVES) || state.isIn(BlockTags.LOGS)) {
         state = world.getBlockState(pos);
-        if (state.isAir() && world.isEmptyBlock(pos.below())) {
-          for (Direction dir : Plane.HORIZONTAL) {
-            return !world.getBlockState(pos.below().relative(dir)).blocksMotion();
+        if (state.isAir() && world.isAir(pos.down())) {
+          for (Direction dir : Type.HORIZONTAL) {
+            return !world.getBlockState(pos.down().offset(dir)).blocksMovement();
           }
         }
       }
@@ -319,22 +319,22 @@ public class SilkMothNest extends BaseEntityBlock {
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> generator) {
-      final MutableBlockPos POS = GlobalState.stateForThread().POS;
-      final RandomSource random = generator.random();
-      final BlockPos center = generator.origin();
-      final WorldGenLevel world = generator.level();
-      int maxY = world.getHeight(Heightmap.Types.WORLD_SURFACE, center.getX(), center.getZ());
+    public boolean generate(FeatureContext<DefaultFeatureConfig> generator) {
+      final Mutable POS = GlobalState.stateForThread().POS;
+      final Random random = generator.getRandom();
+      final BlockPos center = generator.getOrigin();
+      final StructureWorldAccess world = generator.getWorld();
+      int maxY = world.getTopY(Heightmap.Type.WORLD_SURFACE, center.getX(), center.getZ());
       int minY = PosInfo.upRay(world, new BlockPos(center.getX(), 0, center.getZ()), maxY);
       POS.set(center);
       for (int y = maxY; y > minY; y--) {
         POS.setY(y);
         if (canGenerate(world, POS)) {
-          Direction dir = Plane.HORIZONTAL.getRandomDirection(random);
-          world.setBlock(
+          Direction dir = Type.HORIZONTAL.random(random);
+          world.setBlockState(
               POS,
-              LighterEndBlocks.SILK_MOTH_NEST.defaultBlockState()
-                  .setValue(BlockStateProperties.HORIZONTAL_FACING, dir),
+              LighterEndBlocks.SILK_MOTH_NEST.getDefaultState()
+                  .with(Properties.HORIZONTAL_FACING, dir),
               Flags.SILENT
           );
           world.getBlockEntity(POS, LighterEndBlockEntities.SILK_MOTH_NEST).ifPresent(nest ->
@@ -342,10 +342,10 @@ public class SilkMothNest extends BaseEntityBlock {
                   random.nextInt(SilkMothNestEntity.MIN_OCCUPATION_TICKS))));
 
           POS.setY(y - 1);
-          world.setBlock(
+          world.setBlockState(
               POS,
-              LighterEndBlocks.SILK_MOTH_NEST.defaultBlockState()
-                  .setValue(BlockStateProperties.HORIZONTAL_FACING, dir),
+              LighterEndBlocks.SILK_MOTH_NEST.getDefaultState()
+                  .with(Properties.HORIZONTAL_FACING, dir),
               Flags.SILENT
           );
           world.getBlockEntity(POS, LighterEndBlockEntities.SILK_MOTH_NEST).ifPresent(nest ->

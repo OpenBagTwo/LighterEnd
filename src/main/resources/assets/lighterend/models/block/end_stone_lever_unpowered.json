@@ -165,7 +165,7 @@
   "textures": {
     "base": "minecraft:block/end_stone",
     "groove": "lighterend:block/end_stone_lever_groove_unpowered",
-    "lever": "lighterend:block/end_stone_lever",
+    "lever": "lighterend:item/end_stone_lever",
     "particle": "minecraft:block/end_stone"
   }
 }

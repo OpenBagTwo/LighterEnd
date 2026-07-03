@@ -4,19 +4,19 @@ import com.google.common.collect.Maps;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.items.ArmoredElytra;
 import java.util.Map;
-import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Item.Properties;
-import net.minecraft.world.item.equipment.ArmorMaterial;
-import net.minecraft.world.item.equipment.ArmorType;
-import net.minecraft.world.item.equipment.EquipmentAsset;
+import net.minecraft.item.Item;
+import net.minecraft.item.Item.Settings;
+import net.minecraft.item.equipment.ArmorMaterial;
+import net.minecraft.item.equipment.EquipmentAsset;
+import net.minecraft.item.equipment.EquipmentType;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.util.Identifier;
 
 public class LighterEndEquipment {
 
 
-  public static final ResourceKey<EquipmentAsset> SILK_MATERIAL = ResourceKey.create(
-      ResourceKey.createRegistryKey(Identifier.withDefaultNamespace("equipment_asset")),
+  public static final RegistryKey<EquipmentAsset> SILK_MATERIAL = RegistryKey.of(
+      RegistryKey.ofRegistry(Identifier.ofVanilla("equipment_asset")),
       LighterEnd.of("silk")
   );
 
@@ -24,11 +24,11 @@ public class LighterEndEquipment {
       10, // durability base puts it between gold and iron
       Maps.newEnumMap(
           Map.of(
-              ArmorType.BOOTS, 1,  // nerf boot defense
-              ArmorType.LEGGINGS, 6,
-              ArmorType.CHESTPLATE, 8,
-              ArmorType.HELMET, 3,
-              ArmorType.BODY, 4  // on par with chainmail
+              EquipmentType.BOOTS, 1,  // nerf boot defense
+              EquipmentType.LEGGINGS, 6,
+              EquipmentType.CHESTPLATE, 8,
+              EquipmentType.HELMET, 3,
+              EquipmentType.BODY, 4  // on par with chainmail
           )
       ),
       25, // enchantability on par with gold
@@ -42,7 +42,7 @@ public class LighterEndEquipment {
   public static final Item SILK_ELYTRA = LighterEndItems.register(
       "silk_elytra",
       settings -> new ArmoredElytra(settings, SILK_ARMOR, 100, 0.95F, false),
-      new Properties()
+      new Settings()
   );
 
   public static void initialize() {

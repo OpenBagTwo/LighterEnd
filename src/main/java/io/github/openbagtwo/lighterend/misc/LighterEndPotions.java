@@ -4,27 +4,27 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
-import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.item.Items;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.Potions;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 
 public class LighterEndPotions {
 
-  public final static Holder<Potion> END_VEIL = register(
-      "end_veil", new Potion("end_veil", new MobEffectInstance(StatusEffects.END_VEIL, 3600))
+  public final static RegistryEntry<Potion> END_VEIL = register(
+      "end_veil", new Potion("end_veil", new StatusEffectInstance(StatusEffects.END_VEIL, 3600))
   );
-  public final static Holder<Potion> LONG_END_VEIL = register(
+  public final static RegistryEntry<Potion> LONG_END_VEIL = register(
       "long_end_veil",
-      new Potion("end_veil", new MobEffectInstance(StatusEffects.END_VEIL, 9600))
+      new Potion("end_veil", new StatusEffectInstance(StatusEffects.END_VEIL, 9600))
   );
 
-  private static Holder<Potion> register(String name, Potion potion) {
-    return Registry.registerForHolder(BuiltInRegistries.POTION, LighterEnd.of(name), potion);
+  private static RegistryEntry<Potion> register(String name, Potion potion) {
+    return Registry.registerReference(Registries.POTION, LighterEnd.of(name), potion);
   }
 
   public static void initialize() {
@@ -33,7 +33,7 @@ public class LighterEndPotions {
     //       (gotta figure out how to get at the tag registryLookup)
 
     FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
-      builder.registerPotionRecipe(Potions.WATER, Ingredient.of(
+      builder.registerPotionRecipe(Potions.WATER, Ingredient.ofItems(
               LighterEndBlocks.AURANT_POLYPORE, LighterEndBlocks.PURPLE_POLYPORE
           ),
           Potions.AWKWARD
@@ -41,18 +41,18 @@ public class LighterEndPotions {
     });
 
     FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
-      builder.registerPotionRecipe(Potions.AWKWARD, Ingredient.of(
+      builder.registerPotionRecipe(Potions.AWKWARD, Ingredient.ofItems(
               LighterEndItems.AGAVE_FUR, LighterEndItems.GLOWSHROOM_FUR
           ),
           END_VEIL
       );
     });
     FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
-      builder.addMix(END_VEIL, Items.REDSTONE, LONG_END_VEIL);
+      builder.registerPotionRecipe(END_VEIL, Items.REDSTONE, LONG_END_VEIL);
     });
 
     FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
-      builder.registerPotionRecipe(Potions.AWKWARD, Ingredient.of(
+      builder.registerPotionRecipe(Potions.AWKWARD, Ingredient.ofItems(
               LighterEndItems.SHADOW_BERRY_JAM
           ),
           Potions.NIGHT_VISION

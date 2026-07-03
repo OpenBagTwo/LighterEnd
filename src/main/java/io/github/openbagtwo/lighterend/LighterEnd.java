@@ -26,7 +26,7 @@ import io.github.openbagtwo.lighterend.world.gen.LighterEndWorldGen;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
-import net.minecraft.resources.Identifier;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +40,7 @@ public class LighterEnd implements ModInitializer {
   public static final Config CONFIG = Config.loadConfiguration();
 
   public static Identifier of(String name) {
-    return Identifier.fromNamespaceAndPath(MOD_ID, name);
+    return Identifier.of(MOD_ID, name);
   }
 
   @Override

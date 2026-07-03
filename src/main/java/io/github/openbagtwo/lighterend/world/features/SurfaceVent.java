@@ -1,52 +1,52 @@
 package io.github.openbagtwo.lighterend.world.features;
 
-import static net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE;
+import static net.minecraft.world.Heightmap.Type.WORLD_SURFACE;
 
 import io.github.openbagtwo.lighterend.blocks.HydrothermalVent;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 
-public class SurfaceVent extends Feature<NoneFeatureConfiguration> {
+public class SurfaceVent extends Feature<DefaultFeatureConfig> {
 
   public SurfaceVent() {
-    super(NoneFeatureConfiguration.CODEC);
+    super(DefaultFeatureConfig.CODEC);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-    final RandomSource random = context.random();
-    BlockPos pos = context.origin();
-    final WorldGenLevel world = context.level();
-    pos = world.getHeightmapPos(WORLD_SURFACE,
+  public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
+    final Random random = context.getRandom();
+    BlockPos pos = context.getOrigin();
+    final StructureWorldAccess world = context.getWorld();
+    pos = world.getTopPosition(WORLD_SURFACE,
         new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16))
     );
-    if (!world.getBlockState(pos.below(3)).is(LighterEndTags.END_STONES)) {
+    if (!world.getBlockState(pos.down(3)).isIn(LighterEndTags.END_STONES)) {
       return false;
     }
 
-    MutableBlockPos mut = new MutableBlockPos();
-    int count = Mth.nextInt(random, 15, 30);
-    BlockState vent = LighterEndBlocks.HYDROTHERMAL_VENT.defaultBlockState()
-        .setValue(HydrothermalVent.WATERLOGGED, false)
-        .setValue(HydrothermalVent.ACTIVATED, true);
+    Mutable mut = new Mutable();
+    int count = MathHelper.nextInt(random, 15, 30);
+    BlockState vent = LighterEndBlocks.HYDROTHERMAL_VENT.getDefaultState()
+        .with(HydrothermalVent.WATERLOGGED, false)
+        .with(HydrothermalVent.ACTIVATED, true);
     for (int i = 0; i < count; i++) {
       mut.set(pos)
           .move(
-              Mth.floor(random.nextGaussian() * 2 + 0.5),
+              MathHelper.floor(random.nextGaussian() * 2 + 0.5),
               5,
-              Mth.floor(random.nextGaussian() * 2 + 0.5)
+              MathHelper.floor(random.nextGaussian() * 2 + 0.5)
           );
-      int dist = Mth.floor(2 - Math.sqrt(
+      int dist = MathHelper.floor(2 - Math.sqrt(
           Math.pow(mut.getX() - pos.getX(), 2)
               + Math.pow(mut.getZ() - pos.getZ(), 2)
       )) + random.nextInt(2);
@@ -57,18 +57,18 @@ public class SurfaceVent extends Feature<NoneFeatureConfiguration> {
           state = world.getBlockState(mut);
         }
         if (
-            state.is(LighterEndTags.END_STONES)
-                && !world.getBlockState(mut.above()).is(LighterEndBlocks.HYDROTHERMAL_VENT)
+            state.isIn(LighterEndTags.END_STONES)
+                && !world.getBlockState(mut.up()).isOf(LighterEndBlocks.HYDROTHERMAL_VENT)
         ) {
           for (int j = 0; j <= dist; j++) {
-            world.setBlock(
+            world.setBlockState(
                 mut,
-                LighterEndBlocks.BORNITE.baseBlock.defaultBlockState(),
+                LighterEndBlocks.BORNITE.baseBlock.getDefaultState(),
                 Flags.SILENT
             );
             mut.setY(mut.getY() + 1);
           }
-          world.setBlock(mut, vent, Flags.SILENT);
+          world.setBlockState(mut, vent, Flags.SILENT);
         }
       }
     }

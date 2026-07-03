@@ -3,50 +3,50 @@ package io.github.openbagtwo.lighterend.blocks;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.CeilingHangingSignBlock;
-import net.minecraft.world.level.block.StandingSignBlock;
-import net.minecraft.world.level.block.WallHangingSignBlock;
-import net.minecraft.world.level.block.WallSignBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.HangingSignBlockEntity;
-import net.minecraft.world.level.block.entity.SignBlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.HangingSignBlock;
+import net.minecraft.block.SignBlock;
+import net.minecraft.block.WallHangingSignBlock;
+import net.minecraft.block.WallSignBlock;
+import net.minecraft.block.WoodType;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.entity.HangingSignBlockEntity;
+import net.minecraft.block.entity.SignBlockEntity;
+import net.minecraft.block.enums.NoteBlockInstrument;
+import net.minecraft.util.math.BlockPos;
 
 public class Signs {
 
-  public static class LighterEndStandingSignBlock extends StandingSignBlock {
+  public static class LighterEndStandingSignBlock extends SignBlock {
 
-    public static final MapCodec<StandingSignBlock> CODEC =
+    public static final MapCodec<SignBlock> CODEC =
         RecordCodecBuilder.mapCodec((instance) ->
             instance.group(
                     WoodType.CODEC.fieldOf("wood_type")
-                        .forGetter((obj) -> obj.type()),
-                    propertiesCodec())
+                        .forGetter((obj) -> obj.getWoodType()),
+                    createSettingsCodec())
                 .apply(instance, LighterEndStandingSignBlock::new));
 
-    public LighterEndStandingSignBlock(WoodType woodType, Properties properties) {
+    public LighterEndStandingSignBlock(WoodType woodType, Settings properties) {
       super(
           woodType,
           properties
-              .forceSolidOn()
+              .solid()
               .instrument(NoteBlockInstrument.BASS)
               .noCollision()
               .strength(1.0F)
-              .ignitedByLava()
+              .burnable()
       );
     }
 
     @Override
-    public MapCodec<StandingSignBlock> codec() {
+    public MapCodec<SignBlock> getCodec() {
       return CODEC;
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
       return new LighterEndSignBlockEntity(pos, state);
     }
   }
@@ -57,62 +57,62 @@ public class Signs {
         RecordCodecBuilder.mapCodec((instance) ->
             instance.group(
                     WoodType.CODEC.fieldOf("wood_type")
-                        .forGetter((obj) -> obj.type()),
-                    propertiesCodec())
+                        .forGetter((obj) -> obj.getWoodType()),
+                    createSettingsCodec())
                 .apply(instance, LighterEndWallSignBlock::new));
 
-    public LighterEndWallSignBlock(WoodType woodType, Properties properties) {
+    public LighterEndWallSignBlock(WoodType woodType, Settings properties) {
       super(
           woodType,
           properties
-              .forceSolidOn()
+              .solid()
               .instrument(NoteBlockInstrument.BASS)
               .noCollision()
               .strength(1.0F)
-              .ignitedByLava()
+              .burnable()
       );
     }
 
     @Override
-    public MapCodec<WallSignBlock> codec() {
+    public MapCodec<WallSignBlock> getCodec() {
       return CODEC;
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
       return new LighterEndSignBlockEntity(pos, state);
     }
   }
 
-  public static class LighterEndCeilingHangingSignBlock extends CeilingHangingSignBlock {
+  public static class LighterEndCeilingHangingSignBlock extends HangingSignBlock {
 
-    public static final MapCodec<CeilingHangingSignBlock> CODEC =
+    public static final MapCodec<HangingSignBlock> CODEC =
         RecordCodecBuilder.mapCodec((instance) ->
             instance.group(
                     WoodType.CODEC.fieldOf("wood_type")
-                        .forGetter((obj) -> obj.type()),
-                    propertiesCodec())
+                        .forGetter((obj) -> obj.getWoodType()),
+                    createSettingsCodec())
                 .apply(instance, LighterEndCeilingHangingSignBlock::new));
 
-    public LighterEndCeilingHangingSignBlock(WoodType woodType, Properties properties) {
+    public LighterEndCeilingHangingSignBlock(WoodType woodType, Settings properties) {
       super(
           woodType,
           properties
-              .forceSolidOn()
+              .solid()
               .instrument(NoteBlockInstrument.BASS)
               .noCollision()
               .strength(1.0F)
-              .ignitedByLava()
+              .burnable()
       );
     }
 
     @Override
-    public MapCodec<CeilingHangingSignBlock> codec() {
+    public MapCodec<HangingSignBlock> getCodec() {
       return CODEC;
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
       return new LighterEndHangingSignBlockEntity(pos, state);
     }
   }
@@ -123,29 +123,29 @@ public class Signs {
         RecordCodecBuilder.mapCodec((instance) ->
             instance.group(
                     WoodType.CODEC.fieldOf("wood_type")
-                        .forGetter((obj) -> obj.type()),
-                    propertiesCodec())
+                        .forGetter((obj) -> obj.getWoodType()),
+                    createSettingsCodec())
                 .apply(instance, LighterEndWallHangingSignBlock::new));
 
-    public LighterEndWallHangingSignBlock(WoodType woodType, Properties properties) {
+    public LighterEndWallHangingSignBlock(WoodType woodType, Settings properties) {
       super(
           woodType,
           properties
-              .forceSolidOn()
+              .solid()
               .instrument(NoteBlockInstrument.BASS)
               .noCollision()
               .strength(1.0F)
-              .ignitedByLava()
+              .burnable()
       );
     }
 
     @Override
-    public MapCodec<WallHangingSignBlock> codec() {
+    public MapCodec<WallHangingSignBlock> getCodec() {
       return CODEC;
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
       return new LighterEndHangingSignBlockEntity(pos, state);
     }
   }
@@ -169,8 +169,8 @@ public class Signs {
     }
 
     @Override
-    public boolean isValidBlockState(BlockState blockState) {
-      return this.getType().isValid(blockState);
+    public boolean supports(BlockState blockState) {
+      return this.getType().supports(blockState);
     }
   }
 }

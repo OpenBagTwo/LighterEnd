@@ -21,22 +21,22 @@ import io.github.openbagtwo.lighterend.utils.math.sdf.primitives.SDFSphere;
 import io.github.openbagtwo.lighterend.world.gen.noise.OpenSimplexNoise;
 import java.util.List;
 import java.util.function.Function;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 import org.joml.Vector3f;
 
-public class Glowshroom extends Feature<NoneFeatureConfiguration> {
+public class Glowshroom extends Feature<DefaultFeatureConfig> {
 
   public Glowshroom() {
-    super(NoneFeatureConfiguration.CODEC);
+    super(DefaultFeatureConfig.CODEC);
   }
 
   private static final Function<BlockState, Boolean> REPLACE;
@@ -51,12 +51,12 @@ public class Glowshroom extends Feature<NoneFeatureConfiguration> {
   private static final SDF.Primitive ROOTS;
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-    final RandomSource random = featureConfig.random();
-    final BlockPos blockPos = featureConfig.origin();
-    final WorldGenLevel world = featureConfig.level();
-    BlockState down = world.getBlockState(blockPos.below());
-    if (!down.is(LighterEndTags.END_SOIL)) {
+  public boolean generate(FeatureContext<DefaultFeatureConfig> featureConfig) {
+    final Random random = featureConfig.getRandom();
+    final BlockPos blockPos = featureConfig.getOrigin();
+    final StructureWorldAccess world = featureConfig.getWorld();
+    BlockState down = world.getBlockState(blockPos.down());
+    if (!down.isIn(LighterEndTags.END_SOIL)) {
       return false;
     }
 
@@ -65,19 +65,19 @@ public class Glowshroom extends Feature<NoneFeatureConfiguration> {
     CONE_GLOW.setBlock(LighterEndBlocks.GLOWSHROOM_HYMENOPHORE);
     ROOTS.setBlock(LighterEndBlocks.GLOWSHROOM.wood);
 
-    float height = Mth.nextFloat(random, 10F, 25F);
-    int count = Mth.floor(height / 4);
+    float height = MathHelper.nextFloat(random, 10F, 25F);
+    int count = MathHelper.floor(height / 4);
     List<Vector3f> spline = MathUtils.makeSpline(0, 0, 0, 0, height, 0, count);
     MathUtils.offsetParts(spline, random, 1F, 0, 1F);
     SDF sdf = MathUtils.buildSDF(spline, 2.1F, 1.5F,
-        (pos) -> LighterEndBlocks.GLOWSHROOM.log.defaultBlockState());
+        (pos) -> LighterEndBlocks.GLOWSHROOM.log.getDefaultState());
     Vector3f pos = spline.get(spline.size() - 1);
-    float scale = Mth.nextFloat(random, 0.75F, 1.1F);
+    float scale = MathHelper.nextFloat(random, 0.75F, 1.1F);
 
     if (!MathUtils.canGenerate(spline, scale, blockPos, world, REPLACE)) {
       return false;
     }
-    world.setBlock(blockPos, Blocks.AIR.defaultBlockState(), Flags.SILENT);
+    world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Flags.SILENT);
 
     CENTER.set(blockPos.getX(), 0, blockPos.getZ());
     HEAD_POS.setTranslate(pos.x(), pos.y(), pos.z());
@@ -88,56 +88,56 @@ public class Glowshroom extends Feature<NoneFeatureConfiguration> {
         .addPostProcess(
             (info) -> {
               if (
-                  info.getState().is(LighterEndBlocks.GLOWSHROOM.log)
-                      || info.getState().is(LighterEndBlocks.GLOWSHROOM.wood)
+                  info.getState().isOf(LighterEndBlocks.GLOWSHROOM.log)
+                      || info.getState().isOf(LighterEndBlocks.GLOWSHROOM.wood)
               ) {
                 if (
                     random.nextBoolean()
                         && info.getStateUp().getBlock() == LighterEndBlocks.GLOWSHROOM_CAP
                 ) {
-                  info.setState(LighterEndBlocks.GLOWSHROOM_CAP.defaultBlockState()
-                      .setValue(GlowshroomCap.TRANSITION, true));
+                  info.setState(LighterEndBlocks.GLOWSHROOM_CAP.getDefaultState()
+                      .with(GlowshroomCap.TRANSITION, true));
                   return info.getState();
                 } else if (
                     !(
-                        info.getStateUp().is(LighterEndBlocks.GLOWSHROOM.log)
-                            || info.getStateUp().is(LighterEndBlocks.GLOWSHROOM.wood)
+                        info.getStateUp().isOf(LighterEndBlocks.GLOWSHROOM.log)
+                            || info.getStateUp().isOf(LighterEndBlocks.GLOWSHROOM.wood)
                     ) ||
                         !(
-                            info.getStateDown().is(LighterEndBlocks.GLOWSHROOM.log)
-                                || info.getStateDown().is(LighterEndBlocks.GLOWSHROOM.wood)
+                            info.getStateDown().isOf(LighterEndBlocks.GLOWSHROOM.log)
+                                || info.getStateDown().isOf(LighterEndBlocks.GLOWSHROOM.wood)
                         )
                 ) {
-                  info.setState(LighterEndBlocks.GLOWSHROOM.wood.defaultBlockState());
+                  info.setState(LighterEndBlocks.GLOWSHROOM.wood.getDefaultState());
                   return info.getState();
                 }
               } else if (info.getState().getBlock() == LighterEndBlocks.GLOWSHROOM_CAP) {
                 if (
-                    info.getStateDown().is(LighterEndBlocks.GLOWSHROOM.log)
-                        || info.getStateDown().is(LighterEndBlocks.GLOWSHROOM.wood)
+                    info.getStateDown().isOf(LighterEndBlocks.GLOWSHROOM.log)
+                        || info.getStateDown().isOf(LighterEndBlocks.GLOWSHROOM.wood)
                 ) {
-                  info.setState(LighterEndBlocks.GLOWSHROOM_CAP.defaultBlockState()
-                      .setValue(GlowshroomCap.TRANSITION, true));
+                  info.setState(LighterEndBlocks.GLOWSHROOM_CAP.getDefaultState()
+                      .with(GlowshroomCap.TRANSITION, true));
                   return info.getState();
                 }
 
-                info.setState(LighterEndBlocks.GLOWSHROOM_CAP.defaultBlockState());
+                info.setState(LighterEndBlocks.GLOWSHROOM_CAP.getDefaultState());
                 return info.getState();
               } else if (info.getState().getBlock() == LighterEndBlocks.GLOWSHROOM_HYMENOPHORE) {
-                for (Direction dir : Direction.Plane.HORIZONTAL) {
-                  if (info.getState(dir) == Blocks.AIR.defaultBlockState()) {
+                for (Direction dir : Direction.Type.HORIZONTAL) {
+                  if (info.getState(dir) == Blocks.AIR.getDefaultState()) {
                     info.setBlockPos(
-                        info.getPos().relative(dir),
-                        LighterEndBlocks.GLOWSHROOM_FUR.defaultBlockState().setValue(Fur.FACING, dir)
+                        info.getPos().offset(dir),
+                        LighterEndBlocks.GLOWSHROOM_FUR.getDefaultState().with(Fur.FACING, dir)
                     );
                   }
                 }
 
                 if (info.getStateDown().getBlock() != LighterEndBlocks.GLOWSHROOM_HYMENOPHORE) {
                   info.setBlockPos(
-                      info.getPos().below(),
-                      LighterEndBlocks.GLOWSHROOM_FUR.defaultBlockState()
-                          .setValue(Fur.FACING, Direction.DOWN)
+                      info.getPos().down(),
+                      LighterEndBlocks.GLOWSHROOM_FUR.getDefaultState()
+                          .with(Fur.FACING, Direction.DOWN)
                   );
                 }
               }
@@ -175,7 +175,7 @@ public class Glowshroom extends Feature<NoneFeatureConfiguration> {
     OpenSimplexNoise noise = new OpenSimplexNoise(1234);
     cones = new SDFCoordsModify().setFunction(
         (pos) -> {
-          float dist = Mth.sqrt(pos.x() * pos.x() + pos.z() * pos.z());
+          float dist = MathHelper.sqrt(pos.x() * pos.x() + pos.z() * pos.z());
           float y = pos.y() + (float) noise.eval(
               pos.x() * 0.1 + CENTER.x(),
               pos.z() * 0.1 + CENTER.z()

@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 @Mixin(value = TheEndBiomeData.Overrides.class)
 public abstract class BiggerBiomesMixin {
 
-  @ModifyConstant(method = "pick(Lnet/minecraft/core/Holder;Lnet/minecraft/core/Holder;Ljava/util/Map;IILnet/minecraft/world/level/biome/Climate$Sampler;)Lnet/minecraft/core/Holder;", constant = @Constant(doubleValue = 64.0))
+  @ModifyConstant(method = "pick(Lnet/minecraft/registry/entry/RegistryEntry;Lnet/minecraft/registry/entry/RegistryEntry;Ljava/util/Map;IILnet/minecraft/world/biome/source/util/MultiNoiseUtil$MultiNoiseSampler;)Lnet/minecraft/registry/entry/RegistryEntry;", constant = @Constant(doubleValue = 64.0))
   private double resizeEnd(double constant) {
     if (LighterEnd.CONFIG.generateBiomes()) {
       return 256.0;

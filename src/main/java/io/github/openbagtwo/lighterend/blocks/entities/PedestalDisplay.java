@@ -1,33 +1,37 @@
 package io.github.openbagtwo.lighterend.blocks.entities;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.Containers;
-import net.minecraft.world.entity.ItemOwner;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.ListBackedContainer;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventories;
+import net.minecraft.inventory.ListInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
+import net.minecraft.util.HeldItemContext;
+import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
-public class PedestalDisplay extends BlockEntity implements ItemOwner, ListBackedContainer {
+public class PedestalDisplay extends BlockEntity implements HeldItemContext, ListInventory {
 
-  private final NonNullList<ItemStack> inventory = NonNullList.withSize(1, ItemStack.EMPTY);
+  private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
   private float rotation = 0;
 
   public PedestalDisplay(BlockPos pos, BlockState state) {
     super(LighterEndBlockEntities.PEDESTAL, pos, state);
+  }
+
+  public DefaultedList<ItemStack> getItems() {
+    return inventory;
   }
 
   public float getRenderingRotation() {
@@ -39,41 +43,41 @@ public class PedestalDisplay extends BlockEntity implements ItemOwner, ListBacke
   }
 
   @Override
-  protected void loadAdditional(ValueInput view) {
-    super.loadAdditional(view);
+  protected void readData(ReadView view) {
+    super.readData(view);
     this.inventory.clear();
-    ContainerHelper.loadAllItems(view, this.inventory);
+    Inventories.readData(view, this.inventory);
   }
 
   @Override
-  protected void saveAdditional(ValueOutput view) {
-    super.saveAdditional(view);
-    ContainerHelper.saveAllItems(view, this.inventory, true);
+  protected void writeData(WriteView view) {
+    super.writeData(view);
+    Inventories.writeData(view, this.inventory, true);
   }
 
   @Override
-  public void preRemoveSideEffects(BlockPos pos, BlockState oldState) {
-    Containers.dropContents(level, pos, this);
-    super.preRemoveSideEffects(pos, oldState);
+  public void onBlockReplaced(BlockPos pos, BlockState oldState) {
+    ItemScatterer.spawn(world, pos, this);
+    super.onBlockReplaced(pos, oldState);
   }
 
   @Override
-  public Packet<ClientGamePacketListener> getUpdatePacket() {
-    return ClientboundBlockEntityDataPacket.create(this);
+  public Packet<ClientPlayPacketListener> toUpdatePacket() {
+    return BlockEntityUpdateS2CPacket.create(this);
   }
 
   @Override
-  public CompoundTag getUpdateTag(HolderLookup.Provider registryLookup) {
-    return saveWithoutMetadata(registryLookup);
+  public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
+    return createNbt(registryLookup);
   }
 
   @Override
-  public NonNullList<ItemStack> getItems() {
+  public DefaultedList<ItemStack> getHeldStacks() {
     return this.inventory;
   }
 
   @Override
-  public int getContainerSize() {
+  public int size() {
     return inventory.size();
   }
 
@@ -83,17 +87,17 @@ public class PedestalDisplay extends BlockEntity implements ItemOwner, ListBacke
   }
 
   @Override
-  public ItemStack getItem(int slot) {
+  public ItemStack getStack(int slot) {
     return inventory.getFirst();
   }
 
   @Override
-  public ItemStack removeItem(int slot, int amount) {
-    return this.removeItemNoUpdate(slot);
+  public ItemStack removeStack(int slot, int amount) {
+    return this.removeStack(slot);
   }
 
   @Override
-  public ItemStack removeItemNoUpdate(int slot) {
+  public ItemStack removeStack(int slot) {
     if (slot == 0) {
       ItemStack stack = inventory.getFirst();
       inventory.set(0, ItemStack.EMPTY);
@@ -103,34 +107,34 @@ public class PedestalDisplay extends BlockEntity implements ItemOwner, ListBacke
   }
 
   @Override
-  public void setItem(int slot, ItemStack stack) {
+  public void setStack(int slot, ItemStack stack) {
     if (slot == 0) {
       inventory.set(0, stack);
     }
   }
 
   @Override
-  public boolean stillValid(Player player) {
+  public boolean canPlayerUse(PlayerEntity player) {
     return true;
   }
 
   @Override
-  public void clearContent() {
-    this.removeItemNoUpdate(0);
+  public void clear() {
+    this.removeStack(0);
   }
 
   @Override
-  public Level level() {
-    return this.level;
+  public World getEntityWorld() {
+    return this.world;
   }
 
   @Override
-  public Vec3 position() {
-    return this.getBlockPos().getCenter();
+  public Vec3d getEntityPos() {
+    return this.getPos().toCenterPos();
   }
 
   @Override
-  public float getVisualRotationYInDegrees() {
+  public float getBodyYaw() {
     return 0;
   }
 }

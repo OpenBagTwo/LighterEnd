@@ -1,9 +1,9 @@
 package io.github.openbagtwo.lighterend.blocks;
 
-import net.minecraft.client.color.block.BlockColor;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
-import net.minecraft.util.Mth;
+import net.minecraft.client.color.block.BlockColorProvider;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3i;
 
 public class TenaneaFlowerRenderer {
 
@@ -14,15 +14,15 @@ public class TenaneaFlowerRenderer {
       new Vec3i(255, 87, 182)
   };
 
-  public static BlockColor getBlockColor() {
+  public static BlockColorProvider getBlockColor() {
     return (state, world, pos, tintIndex) -> {
       if (pos == null) {
-        pos = BlockPos.ZERO;
+        pos = BlockPos.ORIGIN;
       }
 
       long i = (getRandom(pos.getX(), pos.getZ()) & 63) + pos.getY();
       double delta = i * 0.1;
-      int index = Mth.floor(delta);
+      int index = MathHelper.floor(delta);
       int index2 = (index + 1) & 3;
       delta -= index;
       index &= 3;
@@ -30,9 +30,9 @@ public class TenaneaFlowerRenderer {
       Vec3i color1 = COLORS[index];
       Vec3i color2 = COLORS[index2];
 
-      int r = Mth.floor(Mth.lerp(delta, color1.getX(), color2.getX()));
-      int g = Mth.floor(Mth.lerp(delta, color1.getY(), color2.getY()));
-      int b = Mth.floor(Mth.lerp(delta, color1.getZ(), color2.getZ()));
+      int r = MathHelper.floor(MathHelper.lerp(delta, color1.getX(), color2.getX()));
+      int g = MathHelper.floor(MathHelper.lerp(delta, color1.getY(), color2.getY()));
+      int b = MathHelper.floor(MathHelper.lerp(delta, color1.getZ(), color2.getZ()));
       float[] hsb = RGBtoHSB(r, g, b, new float[3]);
 
       return HSBtoRGB(hsb[0], Math.max(0.5F, hsb[1]), hsb[2]);

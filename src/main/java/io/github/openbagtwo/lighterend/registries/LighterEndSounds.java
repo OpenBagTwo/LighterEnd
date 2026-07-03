@@ -1,11 +1,11 @@
 package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Identifier;
 
 public class LighterEndSounds {
 
@@ -36,63 +36,63 @@ public class LighterEndSounds {
   public static final SoundEvent MATCH_STRIKE = register("item.matchstick.use");
   public static final SoundEvent WET_FUR = register("item.armor.wet_fur");
 
-  public static final Holder<SoundEvent> EQUIP_SILK = registerReference(
+  public static final RegistryEntry<SoundEvent> EQUIP_SILK = registerReference(
       "item.armor.equip_silk");
-  public static final Holder<SoundEvent> EQUIP_FUR = registerReference(
+  public static final RegistryEntry<SoundEvent> EQUIP_FUR = registerReference(
       "item.armor.equip_fur");
-  public static final Holder<SoundEvent> DRINK_UMBRELLA_JUICE = registerReference(
+  public static final RegistryEntry<SoundEvent> DRINK_UMBRELLA_JUICE = registerReference(
       "item.umbrella_juice.drink");
-  public static final Holder<SoundEvent> EAT_SHADOW_BERRY_JAM = registerReference(
+  public static final RegistryEntry<SoundEvent> EAT_SHADOW_BERRY_JAM = registerReference(
       "item.shadow_berry_jam.drink");
 
-  public static final Holder<SoundEvent> BLOSSOM_AMBIENT = registerReference(
+  public static final RegistryEntry<SoundEvent> BLOSSOM_AMBIENT = registerReference(
       "ambient.blossom.loop");
-  public static final Holder<SoundEvent> BLOSSOM_MUSIC = registerReference("music.blossom");
+  public static final RegistryEntry<SoundEvent> BLOSSOM_MUSIC = registerReference("music.blossom");
 
-  public static final Holder<SoundEvent> UMBRELLA_AMBIENT = registerReference(
+  public static final RegistryEntry<SoundEvent> UMBRELLA_AMBIENT = registerReference(
       "ambient.umbrella.loop");
-  public static final Holder<SoundEvent> UMBRELLA_MUSIC = registerReference(
+  public static final RegistryEntry<SoundEvent> UMBRELLA_MUSIC = registerReference(
       "music.umbrella");
 
-  public static final Holder<SoundEvent> GRASSLAND_AMBIENT = registerReference(
+  public static final RegistryEntry<SoundEvent> GRASSLAND_AMBIENT = registerReference(
       "ambient.grassland.loop");
-  public static final Holder<SoundEvent> GRASSLAND_MUSIC = registerReference(
+  public static final RegistryEntry<SoundEvent> GRASSLAND_MUSIC = registerReference(
       "music.grassland");
 
-  public static final Holder<SoundEvent> LAKE_AMBIENT = registerReference(
+  public static final RegistryEntry<SoundEvent> LAKE_AMBIENT = registerReference(
       "ambient.lake.loop");
-  public static final Holder<SoundEvent> LAKE_MUSIC = registerReference(
+  public static final RegistryEntry<SoundEvent> LAKE_MUSIC = registerReference(
       "music.lake");
 
-  public static final Holder<SoundEvent> UMBRA_VALLEY_AMBIENT = registerReference(
+  public static final RegistryEntry<SoundEvent> UMBRA_VALLEY_AMBIENT = registerReference(
       "ambient.umbra_valley.loop");
-  public static final Holder<SoundEvent> UMBRA_VALLEY_MUSIC = registerReference(
+  public static final RegistryEntry<SoundEvent> UMBRA_VALLEY_MUSIC = registerReference(
       "music.umbra_valley");
 
-  public static final Holder<SoundEvent> MUSHROOMLANDS_AMBIENT = registerReference(
+  public static final RegistryEntry<SoundEvent> MUSHROOMLANDS_AMBIENT = registerReference(
       "ambient.mushroomlands.loop");
-  public static final Holder<SoundEvent> MUSHROOMLANDS_MUSIC = registerReference(
+  public static final RegistryEntry<SoundEvent> MUSHROOMLANDS_MUSIC = registerReference(
       "music.mushroomlands");
 
-  public static final Holder<SoundEvent> SULPHUR_AMBIENT = registerReference(
+  public static final RegistryEntry<SoundEvent> SULPHUR_AMBIENT = registerReference(
       "ambient.sulphur.loop");
-  public static final Holder<SoundEvent> SULPHUR_MUSIC = registerReference(
+  public static final RegistryEntry<SoundEvent> SULPHUR_MUSIC = registerReference(
       "music.sulphur");
 
-  public static final Holder<SoundEvent> SHADOW_AMBIENT = registerReference(
+  public static final RegistryEntry<SoundEvent> SHADOW_AMBIENT = registerReference(
       "ambient.shadow.loop");
-  public static final Holder<SoundEvent> SHADOW_MUSIC = registerReference(
+  public static final RegistryEntry<SoundEvent> SHADOW_MUSIC = registerReference(
       "music.shadow");
 
 
   public static SoundEvent register(String name) {
     Identifier id = LighterEnd.of(name);
-    return Registry.register(BuiltInRegistries.SOUND_EVENT, id, SoundEvent.createVariableRangeEvent(id));
+    return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
   }
 
-  public static Holder.Reference<SoundEvent> registerReference(String name) {
+  public static RegistryEntry.Reference<SoundEvent> registerReference(String name) {
     Identifier id = LighterEnd.of(name);
-    return Registry.registerForHolder(BuiltInRegistries.SOUND_EVENT, id, SoundEvent.createVariableRangeEvent(id));
+    return Registry.registerReference(Registries.SOUND_EVENT, id, SoundEvent.of(id));
   }
 
   public static void initialize() {

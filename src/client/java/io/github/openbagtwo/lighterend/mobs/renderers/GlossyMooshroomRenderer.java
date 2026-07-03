@@ -1,6 +1,5 @@
 package io.github.openbagtwo.lighterend.mobs.renderers;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.Polypore;
 import io.github.openbagtwo.lighterend.mobs.GlossyMooshroom;
@@ -8,68 +7,68 @@ import io.github.openbagtwo.lighterend.mobs.states.GlossyMooshroomRenderState;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import java.util.Arrays;
 import java.util.List;
-import net.minecraft.client.model.animal.cow.CowModel;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.block.model.BlockStateModel;
-import net.minecraft.client.renderer.entity.AgeableMobRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.EyesLayer;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.client.renderer.rendertype.RenderType;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.Identifier;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.BlockRenderManager;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
+import net.minecraft.client.render.entity.AgeableMobEntityRenderer;
+import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.LivingEntityRenderer;
+import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
+import net.minecraft.client.render.entity.feature.FeatureRenderer;
+import net.minecraft.client.render.entity.feature.FeatureRendererContext;
+import net.minecraft.client.render.entity.model.CowEntityModel;
+import net.minecraft.client.render.entity.model.EntityModelLayers;
+import net.minecraft.client.render.entity.state.LivingEntityRenderState;
+import net.minecraft.client.render.model.BlockStateModel;
+import net.minecraft.client.texture.SpriteAtlasTexture;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 
 public class GlossyMooshroomRenderer extends
-    AgeableMobRenderer<GlossyMooshroom, LivingEntityRenderState, CowModel> {
+    AgeableMobEntityRenderer<GlossyMooshroom, LivingEntityRenderState, CowEntityModel> {
 
   private static final List<Identifier> TEXTURES = Arrays.asList(
       LighterEnd.of("textures/entity/glossy_mooshroom.png")
   );
 
-  private static final List<RenderType> GLOW = Arrays.asList(
-      RenderTypes.eyes(
+  private static final List<RenderLayer> GLOW = Arrays.asList(
+      RenderLayer.getEyes(
           LighterEnd.of("textures/entity/glossy_mooshroom_glow.png")
       )
   );
 
-  public GlossyMooshroomRenderer(EntityRendererProvider.Context context) {
-    super(context, new CowModel(context.bakeLayer(ModelLayers.MOOSHROOM)),
-        new CowModel(context.bakeLayer(ModelLayers.MOOSHROOM_BABY)), 0.7F);
-    this.addLayer(new PolyporeFeatureRenderer(this, context.getBlockRenderDispatcher()));
-    this.addLayer(
-        new EyesLayer<>(this) {
+  public GlossyMooshroomRenderer(EntityRendererFactory.Context context) {
+    super(context, new CowEntityModel(context.getPart(EntityModelLayers.MOOSHROOM)),
+        new CowEntityModel(context.getPart(EntityModelLayers.MOOSHROOM_BABY)), 0.7F);
+    this.addFeature(new PolyporeFeatureRenderer(this, context.getBlockRenderManager()));
+    this.addFeature(
+        new EyesFeatureRenderer<>(this) {
           @Override
-          public RenderType renderType() {
+          public RenderLayer getEyesTexture() {
             return GLOW.get(0);
           }
 
           @Override
-          public void submit(
-              PoseStack matrices,
-              SubmitNodeCollector queue,
+          public void render(
+              MatrixStack matrices,
+              OrderedRenderCommandQueue queue,
               int light,
               LivingEntityRenderState state,
               float limbAngle,
               float limbDistance
           ) {
             if (state instanceof GlossyMooshroomRenderState cowState) {
-              queue.order(1)
+              queue.getBatchingQueue(1)
                   .submitModel(
-                      this.getParentModel(),
+                      this.getContextModel(),
                       state,
                       matrices,
                       GLOW.get(cowState.variant % GLOW.size()),
                       light,
-                      OverlayTexture.NO_OVERLAY,
+                      OverlayTexture.DEFAULT_UV,
                       -1,
                       null,
                       state.outlineColor,
@@ -80,7 +79,7 @@ public class GlossyMooshroomRenderer extends
         });
   }
 
-  public Identifier getTextureLocation(LivingEntityRenderState state) {
+  public Identifier getTexture(LivingEntityRenderState state) {
     int variant = 0;
     if (state instanceof GlossyMooshroomRenderState cowState) {
       variant = cowState.variant;
@@ -93,7 +92,7 @@ public class GlossyMooshroomRenderer extends
   }
 
   public void updateRenderState(GlossyMooshroom cow, LivingEntityRenderState state, float f) {
-    super.extractRenderState(cow, state, f);
+    super.updateRenderState(cow, state, f);
     if (state instanceof GlossyMooshroomRenderState cowState) {
       cowState.variant = cow.getVariant();
       cowState.sheared = cow.isSheared();
@@ -101,45 +100,45 @@ public class GlossyMooshroomRenderer extends
   }
 
   public static class PolyporeFeatureRenderer extends
-      RenderLayer<LivingEntityRenderState, CowModel> {
+      FeatureRenderer<LivingEntityRenderState, CowEntityModel> {
 
-    private final BlockRenderDispatcher blockRenderManager;
+    private final BlockRenderManager blockRenderManager;
 
     public PolyporeFeatureRenderer(
-        RenderLayerParent<LivingEntityRenderState, CowModel> context,
-        BlockRenderDispatcher blockRenderManager) {
+        FeatureRendererContext<LivingEntityRenderState, CowEntityModel> context,
+        BlockRenderManager blockRenderManager) {
       super(context);
       this.blockRenderManager = blockRenderManager;
     }
 
     @Override
-    public void submit(
-        PoseStack matrixStack,
-        SubmitNodeCollector queue,
+    public void render(
+        MatrixStack matrixStack,
+        OrderedRenderCommandQueue queue,
         int light,
         LivingEntityRenderState state,
         float f,
         float g
     ) {
       if (state instanceof GlossyMooshroomRenderState cowState) {
-        if (!cowState.sheared && !cowState.isBaby) {
-          boolean renderAsModel = cowState.appearsGlowing() && cowState.isInvisible;
-          if (!cowState.isInvisible || renderAsModel) {
+        if (!cowState.sheared && !cowState.baby) {
+          boolean renderAsModel = cowState.hasOutline() && cowState.invisible;
+          if (!cowState.invisible || renderAsModel) {
             BlockState polyphore;
             if (cowState.variant == 0) {
-              polyphore = LighterEndBlocks.AURANT_POLYPORE.defaultBlockState().setValue(
+              polyphore = LighterEndBlocks.AURANT_POLYPORE.getDefaultState().with(
                   Polypore.FACING, Direction.WEST
               );
             } else if (cowState.variant == 1) {
-              polyphore = LighterEndBlocks.PURPLE_POLYPORE.defaultBlockState().setValue(
+              polyphore = LighterEndBlocks.PURPLE_POLYPORE.getDefaultState().with(
                   Polypore.FACING, Direction.WEST
               );
             } else {
               return;
             }
-            int overlay = LivingEntityRenderer.getOverlayCoords(cowState, 0.0F);
-            BlockStateModel blockStateModel = this.blockRenderManager.getBlockModel(polyphore);
-            matrixStack.pushPose();
+            int overlay = LivingEntityRenderer.getOverlay(cowState, 0.0F);
+            BlockStateModel blockStateModel = this.blockRenderManager.getModel(polyphore);
+            matrixStack.push();
             matrixStack.scale(-0.3F, -0.5F, 0.5F);
             matrixStack.translate(-2.25F, -1.5F, 0);
             this.renderMushroom(
@@ -152,12 +151,12 @@ public class GlossyMooshroomRenderer extends
                 blockStateModel,
                 cowState.outlineColor
             );
-            matrixStack.popPose();
+            matrixStack.pop();
 
-            blockStateModel = this.blockRenderManager.getBlockModel(
-                polyphore.setValue(Polypore.FACING, Direction.EAST)
+            blockStateModel = this.blockRenderManager.getModel(
+                polyphore.with(Polypore.FACING, Direction.EAST)
             );
-            matrixStack.pushPose();
+            matrixStack.push();
             matrixStack.scale(0.3F, -0.5F, -0.5F);
             matrixStack.translate(-2.25F, -1.5F, -0.2F);
             this.renderMushroom(
@@ -170,15 +169,15 @@ public class GlossyMooshroomRenderer extends
                 blockStateModel,
                 cowState.outlineColor
             );
-            matrixStack.popPose();
+            matrixStack.pop();
           }
         }
       }
     }
 
     private void renderMushroom(
-        PoseStack matrices,
-        SubmitNodeCollector queue,
+        MatrixStack matrices,
+        OrderedRenderCommandQueue queue,
         int light,
         boolean renderAsModel,
         BlockState mushroomState,
@@ -187,9 +186,9 @@ public class GlossyMooshroomRenderer extends
         int color
     ) {
       if (renderAsModel) {
-        queue.submitBlockModel(
+        queue.submitBlockStateModel(
             matrices,
-            RenderTypes.outline(TextureAtlas.LOCATION_BLOCKS),
+            RenderLayer.getOutline(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE),
             mushroomModel,
             0.0F, 0.0F, 0.0F, light, overlay, color
         );

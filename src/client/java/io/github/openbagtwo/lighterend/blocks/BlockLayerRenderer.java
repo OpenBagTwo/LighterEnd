@@ -2,14 +2,14 @@ package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
-import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.block.Block;
+import net.minecraft.client.render.BlockRenderLayer;
 
 public class BlockLayerRenderer {
 
   public static void initialize() {
     BlockRenderLayerMap.putBlocks(
-        ChunkSectionLayer.TRANSLUCENT,
+        BlockRenderLayer.TRANSLUCENT,
         LighterEndBlocks.AURORA_CRYSTAL,
         LighterEndBlocks.UMBRELLA_MEMBRANE,
         LighterEndBlocks.OBELISK,
@@ -19,7 +19,7 @@ public class BlockLayerRenderer {
     );
 
     BlockRenderLayerMap.putBlocks(
-        ChunkSectionLayer.CUTOUT,
+        BlockRenderLayer.CUTOUT,
         LighterEndBlocks.CREEPING_MOSS,
         LighterEndBlocks.UMBRELLA_FERN,
         LighterEndBlocks.TALL_UMBRELLA_FERN,
@@ -64,7 +64,14 @@ public class BlockLayerRenderer {
         LighterEndBlocks.NEEDLEGRASS,
         LighterEndBlocks.MURKWEED,
         LighterEndBlocks.DRAGON_SAPLING,
-        LighterEndBlocks.POTTED_DRAGON_SAPLING,
+        LighterEndBlocks.POTTED_DRAGON_SAPLING
+    );
+    for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.getAll()) {
+      BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT, chandelier);
+    }
+
+    BlockRenderLayerMap.putBlocks(
+        BlockRenderLayer.CUTOUT_MIPPED,
         LighterEndBlocks.END_MOSS,
         LighterEndBlocks.UMBRALITH.baseBlock,
         LighterEndBlocks.END_STONE_QUARTZ_ORE,
@@ -72,10 +79,6 @@ public class BlockLayerRenderer {
         LighterEndBlocks.UMBRALITH_QUARTZ_ORE,
         LighterEndBlocks.UMBRALITH_REDSTONE_ORE
     );
-    for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.asList()) {
-      BlockRenderLayerMap.putBlocks(ChunkSectionLayer.CUTOUT, chandelier);
-    }
-
   }
 
 }

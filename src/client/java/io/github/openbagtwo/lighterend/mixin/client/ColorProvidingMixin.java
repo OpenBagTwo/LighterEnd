@@ -4,9 +4,9 @@ import io.github.openbagtwo.lighterend.blocks.AuroraCrystalRenderer;
 import io.github.openbagtwo.lighterend.blocks.EndMossRenderer;
 import io.github.openbagtwo.lighterend.blocks.TenaneaFlowerRenderer;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.RunArgs;
 import net.minecraft.client.color.block.BlockColors;
-import net.minecraft.client.main.GameConfig;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Minecraft.class)
+@Mixin(MinecraftClient.class)
 public abstract class ColorProvidingMixin {
 
   @Final
@@ -22,14 +22,14 @@ public abstract class ColorProvidingMixin {
   private BlockColors blockColors;
 
   @Inject(method = "<init>*", at = @At("TAIL"))
-  private void provideColors(GameConfig args, CallbackInfo info) {
-    blockColors.register(AuroraCrystalRenderer.getBlockColor(),
+  private void provideColors(RunArgs args, CallbackInfo info) {
+    blockColors.registerColorProvider(AuroraCrystalRenderer.getBlockColor(),
         LighterEndBlocks.AURORA_CRYSTAL);
-    blockColors.register(AuroraCrystalRenderer.getBlockColor(),
+    blockColors.registerColorProvider(AuroraCrystalRenderer.getBlockColor(),
         LighterEndBlocks.OBELISK);
-    blockColors.register(TenaneaFlowerRenderer.getBlockColor(),
+    blockColors.registerColorProvider(TenaneaFlowerRenderer.getBlockColor(),
         LighterEndBlocks.TENANEA_FLOWER);
-    blockColors.register(EndMossRenderer.getBlockColor(),
+    blockColors.registerColorProvider(EndMossRenderer.getBlockColor(),
         LighterEndBlocks.END_MOSS);
   }
 

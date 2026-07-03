@@ -13,278 +13,272 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.advancements.AdvancementRequirements.Strategy;
-import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.AdvancementType;
-import net.minecraft.advancements.criterion.BlockPredicate;
-import net.minecraft.advancements.criterion.EffectsChangedTrigger;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.ItemUsedOnLocationTrigger;
-import net.minecraft.advancements.criterion.LocationPredicate;
-import net.minecraft.advancements.criterion.MobEffectsPredicate;
-import net.minecraft.advancements.criterion.PlayerInteractTrigger;
-import net.minecraft.advancements.criterion.PlayerTrigger;
-import net.minecraft.advancements.criterion.RecipeCraftedTrigger;
-import net.minecraft.advancements.criterion.UsedTotemTrigger;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.biome.Biome;
+import net.minecraft.advancement.Advancement;
+import net.minecraft.advancement.AdvancementEntry;
+import net.minecraft.advancement.AdvancementFrame;
+import net.minecraft.advancement.AdvancementRequirements.CriterionMerger;
+import net.minecraft.advancement.AdvancementRewards;
+import net.minecraft.advancement.criterion.EffectsChangedCriterion;
+import net.minecraft.advancement.criterion.InventoryChangedCriterion;
+import net.minecraft.advancement.criterion.ItemCriterion;
+import net.minecraft.advancement.criterion.PlayerInteractedWithEntityCriterion;
+import net.minecraft.advancement.criterion.RecipeCraftedCriterion;
+import net.minecraft.advancement.criterion.TickCriterion;
+import net.minecraft.advancement.criterion.UsedTotemCriterion;
+import net.minecraft.item.Items;
+import net.minecraft.predicate.BlockPredicate;
+import net.minecraft.predicate.entity.EntityEffectPredicate;
+import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.LocationPredicate;
+import net.minecraft.predicate.item.ItemPredicate;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper.WrapperLookup;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+import net.minecraft.world.biome.Biome;
 
 public class AdvancementProvider extends FabricAdvancementProvider {
 
   protected AdvancementProvider(
       FabricDataOutput output,
-      CompletableFuture<Provider> registryLookup
+      CompletableFuture<WrapperLookup> registryLookup
   ) {
     super(output, registryLookup);
   }
 
   @Override
   public void generateAdvancement(
-      Provider lookup,
-      Consumer<AdvancementHolder> consumer
+      WrapperLookup lookup,
+      Consumer<AdvancementEntry> consumer
   ) {
-    AdvancementHolder root = Advancement.Builder.advancement().display(
+    AdvancementEntry root = Advancement.Builder.create().display(
         LighterEndItems.AURORA_CRYSTAL_SHARD,
         title("root"),
         description("root"),
         LighterEnd.of("block/ender_block"),
-        AdvancementType.CHALLENGE,
+        AdvancementFrame.CHALLENGE,
         false,
         false,
         false
-    ).addCriterion(
+    ).criterion(
         LighterEnd.MOD_ID + "_loaded",
-        PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.location())
-    ).save(consumer, LighterEnd.MOD_ID + "/root");
+        TickCriterion.Conditions.createLocation(LocationPredicate.Builder.create())
+    ).build(consumer, LighterEnd.MOD_ID + "/root");
 
     // end_lake was created by hand
-    AdvancementHolder end_lake = new AdvancementHolder(
-        Identifier.parse(LighterEnd.MOD_ID + "/end_lake"),
+    AdvancementEntry end_lake = new AdvancementEntry(Identifier.of(LighterEnd.MOD_ID + "/end_lake"),
         null);
 
-    AdvancementHolder sulphur_springs = Advancement.Builder.advancement().parent(end_lake).display(
+    AdvancementEntry sulphur_springs = Advancement.Builder.create().parent(end_lake).display(
         LighterEndBlocks.HYDROTHERMAL_VENT.asItem(),
         title("sulphur_springs"),
         description("sulphur_springs"),
         null,
-        AdvancementType.TASK,
+        AdvancementFrame.TASK,
         true,
         true,
         false
-    ).addCriterion(
+    ).criterion(
         "found_sulphur_spring",
-        PlayerTrigger.TriggerInstance.located(
-            LocationPredicate.Builder.inBiome(
-                lookup.lookupOrThrow(Registries.BIOME).getOrThrow(LighterEndBiomes.SULPHUR_SPRINGS)
+        TickCriterion.Conditions.createLocation(
+            LocationPredicate.Builder.createBiome(
+                lookup.getOrThrow(RegistryKeys.BIOME).getOrThrow(LighterEndBiomes.SULPHUR_SPRINGS)
             )
         )
-    ).save(consumer, LighterEnd.MOD_ID + "/sulphur_springs");
+    ).build(consumer, LighterEnd.MOD_ID + "/sulphur_springs");
 
-    AdvancementHolder craft_spectral_arrow = Advancement.Builder.advancement().parent(end_lake)
-        .display(
-            LighterEndItems.GLOW_BARB,
-            title("craft_spectral_arrow"),
-            description("craft_spectral_arrow"),
-            null,
-            AdvancementType.GOAL,
-            true,
-            true,
-            false
-        ).addCriterion(
-            "craft_spectral_arrows",
-            RecipeCraftedTrigger.TriggerInstance.craftedItem(
-                ResourceKey.create(Registries.RECIPE, LighterEnd.of("combat/spectral_arrow"))
-            )
-        ).save(consumer, LighterEnd.MOD_ID + "/craft_spectral_arrows");
+    AdvancementEntry craft_spectral_arrow = Advancement.Builder.create().parent(end_lake).display(
+        LighterEndItems.GLOW_BARB,
+        title("craft_spectral_arrow"),
+        description("craft_spectral_arrow"),
+        null,
+        AdvancementFrame.GOAL,
+        true,
+        true,
+        false
+    ).criterion(
+        "craft_spectral_arrows",
+        RecipeCraftedCriterion.Conditions.create(
+            RegistryKey.of(RegistryKeys.RECIPE, LighterEnd.of("combat/spectral_arrow"))
+        )
+    ).build(consumer, LighterEnd.MOD_ID + "/craft_spectral_arrows");
 
-    AdvancementHolder tether_totem = Advancement.Builder.advancement().parent(root).display(
+    AdvancementEntry tether_totem = Advancement.Builder.create().parent(root).display(
         LighterEndBlocks.OBELISK.asItem(),
         title("use_obelisk"),
         description("use_obelisk"),
         null,
-        AdvancementType.TASK,
+        AdvancementFrame.TASK,
         true,
         true,
         false
-    ).addCriterion(
+    ).criterion(
         "use_obelisk",
-        ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(
-            LocationPredicate.Builder.location().setBlock(
-                BlockPredicate.Builder.block().of(
-                    lookup.lookupOrThrow(Registries.BLOCK),
+        ItemCriterion.Conditions.createItemUsedOnBlock(
+            LocationPredicate.Builder.create().block(
+                BlockPredicate.Builder.create().blocks(
+                    lookup.getOrThrow(RegistryKeys.BLOCK),
                     LighterEndBlocks.OBELISK
                 )
             ),
-            ItemPredicate.Builder.item().of(
-                lookup.lookupOrThrow(Registries.ITEM),
+            ItemPredicate.Builder.create().items(
+                lookup.getOrThrow(RegistryKeys.ITEM),
                 LighterEndItems.TOTEM_OF_TELEPORTATION
             )
         )
-    ).save(consumer, LighterEnd.MOD_ID + "/use_obelisk");
+    ).build(consumer, LighterEnd.MOD_ID + "/use_obelisk");
 
-    AdvancementHolder use_totem = Advancement.Builder.advancement().parent(tether_totem).display(
+    AdvancementEntry use_totem = Advancement.Builder.create().parent(tether_totem).display(
         LighterEndItems.TOTEM_OF_TELEPORTATION,
         title("use_totem"),
         description("use_totem"),
         null,
-        AdvancementType.GOAL,
+        AdvancementFrame.GOAL,
         true,
         true,
         false
-    ).addCriterion(
+    ).criterion(
         "use_totem",
-        UsedTotemTrigger.TriggerInstance.usedTotem(
-            lookup.lookupOrThrow(Registries.ITEM),
+        UsedTotemCriterion.Conditions.create(
+            lookup.getOrThrow(RegistryKeys.ITEM),
             LighterEndItems.TOTEM_OF_TELEPORTATION
         )
-    ).save(consumer, LighterEnd.MOD_ID + "/use_totem");
+    ).build(consumer, LighterEnd.MOD_ID + "/use_totem");
 
-    AdvancementHolder acquire_claw = Advancement.Builder.advancement().parent(root).display(
+    AdvancementEntry acquire_claw = Advancement.Builder.create().parent(root).display(
         LighterEndItems.CRAB_CLAW,
         title("acquire_claw"),
         description("acquire_claw"),
         null,
-        AdvancementType.TASK,
+        AdvancementFrame.TASK,
         true,
         true,
         false
-    ).addCriterion(
-        "acquire_claw", InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndItems.CRAB_CLAW)
-    ).save(consumer, LighterEnd.MOD_ID + "/acquire_claw");
+    ).criterion(
+        "acquire_claw", InventoryChangedCriterion.Conditions.items(LighterEndItems.CRAB_CLAW)
+    ).build(consumer, LighterEnd.MOD_ID + "/acquire_claw");
 
-    AdvancementHolder shear_mooshroom = Advancement.Builder.advancement().parent(acquire_claw)
-        .display(
-            Items.SHEARS,
-            title("shear_mooshroom"),
-            description("shear_mooshroom"),
-            null,
-            AdvancementType.TASK,
-            true,
-            true,
-            false
-        ).addCriterion(
-            "shear_mooshroom",
-            PlayerInteractTrigger.TriggerInstance.itemUsedOnEntity(
-                ItemPredicate.Builder.item()
-                    .of(lookup.lookupOrThrow(Registries.ITEM), Items.SHEARS),
-                Optional.of(
-                    EntityPredicate.wrap(
-                        EntityPredicate.Builder.entity()
-                            .of(
-                                lookup.lookupOrThrow(Registries.ENTITY_TYPE),
-                                LighterEndMobs.MOOSHROOM.mob
-                            )
-                    )
+    AdvancementEntry shear_mooshroom = Advancement.Builder.create().parent(acquire_claw).display(
+        Items.SHEARS,
+        title("shear_mooshroom"),
+        description("shear_mooshroom"),
+        null,
+        AdvancementFrame.TASK,
+        true,
+        true,
+        false
+    ).criterion(
+        "shear_mooshroom",
+        PlayerInteractedWithEntityCriterion.Conditions.create(
+            ItemPredicate.Builder.create()
+                .items(lookup.getOrThrow(RegistryKeys.ITEM), Items.SHEARS),
+            Optional.of(
+                EntityPredicate.contextPredicateFromEntityPredicate(
+                    EntityPredicate.Builder.create()
+                        .type(
+                            lookup.getOrThrow(RegistryKeys.ENTITY_TYPE),
+                            LighterEndMobs.MOOSHROOM.mob
+                        )
                 )
             )
-        ).save(consumer, LighterEnd.MOD_ID + "/shear_mooshroom");
+        )
+    ).build(consumer, LighterEnd.MOD_ID + "/shear_mooshroom");
 
-    AdvancementHolder wear_fur = Advancement.Builder.advancement().parent(acquire_claw).display(
+    AdvancementEntry wear_fur = Advancement.Builder.create().parent(acquire_claw).display(
             LighterEndBlocks.AGAVE_FUR.asItem(),
             title("wear_fur"),
             description("wear_fur"),
             null,
-            AdvancementType.TASK,
+            AdvancementFrame.TASK,
             true,
             true,
             false
-        ).requirements(Strategy.OR)
-        .addCriterion(
-            "wear_agave_fur",
-            InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndItems.AGAVE_FUR)
-        ).addCriterion(
+        ).criteriaMerger(CriterionMerger.OR)
+        .criterion(
+            "wear_agave_fur", InventoryChangedCriterion.Conditions.items(LighterEndItems.AGAVE_FUR)
+        ).criterion(
             "wear_glowshroom_fur",
-            InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndItems.GLOWSHROOM_FUR)
-        ).save(consumer, LighterEnd.MOD_ID + "/wear_fur");
+            InventoryChangedCriterion.Conditions.items(LighterEndItems.GLOWSHROOM_FUR)
+        ).build(consumer, LighterEnd.MOD_ID + "/wear_fur");
 
-    AdvancementHolder drink_end_veil_potion = Advancement.Builder.advancement().parent(wear_fur)
-        .display(
-            Items.PLAYER_HEAD,
-            title("drink_end_veil_potion"),
-            description("drink_end_veil_potion"),
-            null,
-            AdvancementType.GOAL,
-            true,
-            true,
-            false
-        ).addCriterion(
-            "drink_end_veil_potion",
-            EffectsChangedTrigger.TriggerInstance.hasEffects(
-                MobEffectsPredicate.Builder.effects().and(StatusEffects.END_VEIL)
-            )
-        ).save(consumer, LighterEnd.MOD_ID + "/drink_end_veil_potion");
+    AdvancementEntry drink_end_veil_potion = Advancement.Builder.create().parent(wear_fur).display(
+        Items.PLAYER_HEAD,
+        title("drink_end_veil_potion"),
+        description("drink_end_veil_potion"),
+        null,
+        AdvancementFrame.GOAL,
+        true,
+        true,
+        false
+    ).criterion(
+        "drink_end_veil_potion",
+        EffectsChangedCriterion.Conditions.create(
+            EntityEffectPredicate.Builder.create().addEffect(StatusEffects.END_VEIL)
+        )
+    ).build(consumer, LighterEnd.MOD_ID + "/drink_end_veil_potion");
 
-    AdvancementHolder acquire_silk = Advancement.Builder.advancement().parent(acquire_claw).display(
+    AdvancementEntry acquire_silk = Advancement.Builder.create().parent(acquire_claw).display(
             LighterEndItems.SILK,
             title("acquire_silk"),
             description("acquire_silk"),
             null,
-            AdvancementType.TASK,
+            AdvancementFrame.TASK,
             true,
             true,
             false
-        ).requirements(Strategy.OR)
-        .addCriterion(
-            "acquire_silk", InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndItems.SILK)
-        ).addCriterion(
+        ).criteriaMerger(CriterionMerger.OR)
+        .criterion(
+            "acquire_silk", InventoryChangedCriterion.Conditions.items(LighterEndItems.SILK)
+        ).criterion(
             "acquire_silk_matrix",
-            InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndItems.SILK_MATRIX)
-        ).save(consumer, LighterEnd.MOD_ID + "/acquire_silk");
+            InventoryChangedCriterion.Conditions.items(LighterEndItems.SILK_MATRIX)
+        ).build(consumer, LighterEnd.MOD_ID + "/acquire_silk");
 
-    AdvancementHolder acquire_silk_elytra = Advancement.Builder.advancement().parent(acquire_silk)
+    AdvancementEntry acquire_silk_elytra = Advancement.Builder.create().parent(acquire_silk)
         .display(
             LighterEndEquipment.SILK_ELYTRA,
             title("acquire_silk_elytra"),
             description("acquire_silk_elytra"),
             null,
-            AdvancementType.CHALLENGE,
+            AdvancementFrame.CHALLENGE,
             true,
             true,
             false
-        ).addCriterion(
+        ).criterion(
             "acquire_silk_elytra",
-            InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndEquipment.SILK_ELYTRA)
+            InventoryChangedCriterion.Conditions.items(LighterEndEquipment.SILK_ELYTRA)
         ).rewards(AdvancementRewards.Builder.experience(50))
-        .save(consumer, LighterEnd.MOD_ID + "/acquire_silk_elytra");
+        .build(consumer, LighterEnd.MOD_ID + "/acquire_silk_elytra");
 
-    AdvancementHolder acquire_end_cream = Advancement.Builder.advancement().parent(root).display(
+    AdvancementEntry acquire_end_cream = Advancement.Builder.create().parent(root).display(
         LighterEndItems.END_CREAM,
         title("acquire_end_cream"),
         description("acquire_end_cream"),
         null,
-        AdvancementType.TASK,
+        AdvancementFrame.TASK,
         true,
         true,
         false
-    ).addCriterion(
-        "acquire_end_cream",
-        InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndItems.END_CREAM)
-    ).save(consumer, LighterEnd.MOD_ID + "/acquire_end_cream");
+    ).criterion(
+        "acquire_end_cream", InventoryChangedCriterion.Conditions.items(LighterEndItems.END_CREAM)
+    ).build(consumer, LighterEnd.MOD_ID + "/acquire_end_cream");
 
-    Advancement.Builder allBiomesBuilder = Advancement.Builder.advancement().parent(sulphur_springs)
+    Advancement.Builder allBiomesBuilder = Advancement.Builder.create().parent(sulphur_springs)
         .display(
             LighterEndBlocks.END_MOSS.asItem(),
             title("all_the_biomes"),
             description("all_the_biomes"),
             null,
-            AdvancementType.CHALLENGE,
+            AdvancementFrame.CHALLENGE,
             false,
             false,
             false
-        ).requirements(Strategy.AND);
+        ).criteriaMerger(CriterionMerger.AND);
 
     int xpReward = 0;
-    for (ResourceKey<Biome> biome : List.of(
+    for (RegistryKey<Biome> biome : List.of(
         LighterEndBiomes.BLOSSOM_FOREST,
         LighterEndBiomes.UMBRELLA_JUNGLE,
         LighterEndBiomes.GLOWING_GRASSLAND,
@@ -295,28 +289,27 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         LighterEndBiomes.SULPHUR_SPRINGS,
         LighterEndBiomes.SHADOW_FOREST
     )) {
-      allBiomesBuilder = allBiomesBuilder.addCriterion(
-          biome.identifier().getPath(),
-          PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inBiome(
-                  lookup.lookupOrThrow(Registries.BIOME).getOrThrow(biome)
+      allBiomesBuilder = allBiomesBuilder.criterion(
+          biome.getValue().getPath(),
+          TickCriterion.Conditions.createLocation(LocationPredicate.Builder.createBiome(
+                  lookup.getOrThrow(RegistryKeys.BIOME).getOrThrow(biome)
               )
           )
       );
       xpReward += 50;
     }
 
-    AdvancementHolder all_the_biomes = allBiomesBuilder.rewards(
+    AdvancementEntry all_the_biomes = allBiomesBuilder.rewards(
         AdvancementRewards.Builder.experience(xpReward)
-    ).save(consumer, LighterEnd.MOD_ID + "/all_the_biomes");
+    ).build(consumer, LighterEnd.MOD_ID + "/all_the_biomes");
   }
 
-  private static MutableComponent title(String path) {
-    return Component.translatable(
-        String.format("advancements.%s.%s.title", LighterEnd.MOD_ID, path));
+  private static MutableText title(String path) {
+    return Text.translatable(String.format("advancements.%s.%s.title", LighterEnd.MOD_ID, path));
   }
 
-  private static MutableComponent description(String path) {
-    return Component.translatable(
+  private static MutableText description(String path) {
+    return Text.translatable(
         String.format("advancements.%s.%s.description", LighterEnd.MOD_ID, path));
   }
 }

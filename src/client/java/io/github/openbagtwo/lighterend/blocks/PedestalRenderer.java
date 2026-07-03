@@ -1,32 +1,32 @@
 package io.github.openbagtwo.lighterend.blocks;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import io.github.openbagtwo.lighterend.blocks.PedestalRenderer.RenderState;
 import io.github.openbagtwo.lighterend.blocks.entities.PedestalDisplay;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
-import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
-import net.minecraft.client.renderer.item.ItemModelResolver;
-import net.minecraft.client.renderer.item.ItemStackRenderState;
-import net.minecraft.client.renderer.state.CameraRenderState;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.client.item.ItemModelManager;
+import net.minecraft.client.render.LightmapTextureManager;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.render.block.entity.state.BlockEntityRenderState;
+import net.minecraft.client.render.command.ModelCommandRenderer;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
+import net.minecraft.client.render.item.ItemRenderState;
+import net.minecraft.client.render.state.CameraRenderState;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemDisplayContext;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RotationAxis;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.LightType;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class PedestalRenderer implements BlockEntityRenderer<PedestalDisplay, RenderState> {
 
-  private final ItemModelResolver itemModelManager;
+  private final ItemModelManager itemModelManager;
 
-  public PedestalRenderer(BlockEntityRendererProvider.Context context) {
-    itemModelManager = context.itemModelResolver();
+  public PedestalRenderer(BlockEntityRendererFactory.Context context) {
+    itemModelManager = context.itemModelManager();
   }
 
   @Override
@@ -35,13 +35,13 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalDisplay, Re
   }
 
   @Override
-  public void extractRenderState(
+  public void updateRenderState(
       PedestalDisplay blockEntity,
       RenderState state,
       float tickProgress,
-      Vec3 cameraPos,
-      @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
-    BlockEntityRenderer.super.extractRenderState(
+      Vec3d cameraPos,
+      @Nullable ModelCommandRenderer.CrumblingOverlayCommand crumblingOverlay) {
+    BlockEntityRenderer.super.updateRenderState(
         blockEntity,
         state,
         tickProgress,
@@ -49,48 +49,41 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalDisplay, Re
         crumblingOverlay
     );
 
-    state.lightPosition = blockEntity.getBlockPos();
-    state.blockEntityWorld = blockEntity.getLevel();
+    state.lightPosition = blockEntity.getPos();
+    state.blockEntityWorld = blockEntity.getWorld();
     state.rotation = blockEntity.getRenderingRotation();
 
-    itemModelManager.updateForTopItem(
-        state.itemRenderState,
-        blockEntity.getItem(0),
-        ItemDisplayContext.FIXED,
-        blockEntity.getLevel(),
-        null,
-        0
-    );
+    itemModelManager.clearAndUpdate(state.itemRenderState,
+        blockEntity.getStack(0), ItemDisplayContext.FIXED, blockEntity.getWorld(), null, 0);
   }
 
   @Override
-  public void submit(
-      RenderState state, PoseStack matrices,
-      SubmitNodeCollector queue, CameraRenderState cameraState) {
-    matrices.pushPose();
+  public void render(
+      RenderState state, MatrixStack matrices,
+      OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
+    matrices.push();
 
     matrices.translate(0.5f, 1.4f, 0.5f);
-    matrices.mulPose(Axis.YP.rotationDegrees(state.rotation));
+    matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(state.rotation));
 
-    state.itemRenderState.submit(matrices, queue,
-        getLightLevel(state.blockEntityWorld, state.blockPos),
-        OverlayTexture.NO_OVERLAY, 0);
+    state.itemRenderState.render(matrices, queue, getLightLevel(state.blockEntityWorld, state.pos),
+        OverlayTexture.DEFAULT_UV, 0);
 
-    matrices.popPose();
+    matrices.pop();
   }
 
-  private int getLightLevel(Level world, BlockPos pos) {
-    int bLight = world.getBrightness(LightLayer.BLOCK, pos);
-    int sLight = world.getBrightness(LightLayer.SKY, pos);
-    return LightTexture.pack(bLight, sLight);
+  private int getLightLevel(World world, BlockPos pos) {
+    int bLight = world.getLightLevel(LightType.BLOCK, pos);
+    int sLight = world.getLightLevel(LightType.SKY, pos);
+    return LightmapTextureManager.pack(bLight, sLight);
   }
 
   public static class RenderState extends BlockEntityRenderState {
 
     public BlockPos lightPosition;
-    public Level blockEntityWorld;
+    public World blockEntityWorld;
     public float rotation;
 
-    final ItemStackRenderState itemRenderState = new ItemStackRenderState();
+    final ItemRenderState itemRenderState = new ItemRenderState();
   }
 }

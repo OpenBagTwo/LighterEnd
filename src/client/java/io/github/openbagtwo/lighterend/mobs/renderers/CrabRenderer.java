@@ -1,76 +1,75 @@
 package io.github.openbagtwo.lighterend.mobs.renderers;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.mobs.ChorusCrab;
 import io.github.openbagtwo.lighterend.mobs.EntityModels;
 import io.github.openbagtwo.lighterend.mobs.models.CrabModel;
-import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.entity.AgeableMobRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.entity.state.HoldingEntityRenderState;
-import net.minecraft.client.renderer.item.ItemStackRenderState;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.Identifier;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
+import net.minecraft.client.render.entity.AgeableMobEntityRenderer;
+import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.feature.FeatureRenderer;
+import net.minecraft.client.render.entity.feature.FeatureRendererContext;
+import net.minecraft.client.render.entity.state.ItemHolderEntityRenderState;
+import net.minecraft.client.render.item.ItemRenderState;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.RotationAxis;
 
 public class CrabRenderer extends
-    AgeableMobRenderer<ChorusCrab, HoldingEntityRenderState, CrabModel> {
+    AgeableMobEntityRenderer<ChorusCrab, ItemHolderEntityRenderState, CrabModel> {
 
   private static final Identifier TEXTURE = LighterEnd.of("textures/entity/chorus_crab.png");
 
-  public CrabRenderer(EntityRendererProvider.Context ctx) {
+  public CrabRenderer(EntityRendererFactory.Context ctx) {
     super(
         ctx,
-        new CrabModel(ctx.bakeLayer(EntityModels.CRAB_MODEL)),
-        new CrabModel(ctx.bakeLayer(EntityModels.CRAB_BABY)),
+        new CrabModel(ctx.getPart(EntityModels.CRAB_MODEL)),
+        new CrabModel(ctx.getPart(EntityModels.CRAB_BABY)),
         1.2f
     );
-    this.addLayer(new HeldItemRenderer(this));
+    this.addFeature(new HeldItemRenderer(this));
   }
 
   @Override
-  public HoldingEntityRenderState createRenderState() {
-    return new HoldingEntityRenderState();
+  public ItemHolderEntityRenderState createRenderState() {
+    return new ItemHolderEntityRenderState();
   }
 
   @Override
-  public Identifier getTextureLocation(HoldingEntityRenderState state) {
+  public Identifier getTexture(ItemHolderEntityRenderState state) {
     return TEXTURE;
   }
 
   @Override
-  public void extractRenderState(ChorusCrab crab, HoldingEntityRenderState state, float f) {
-    super.extractRenderState(crab, state, f);
-    HoldingEntityRenderState.extractHoldingEntityRenderState(crab, state, this.itemModelResolver);
+  public void updateRenderState(ChorusCrab crab, ItemHolderEntityRenderState state, float f) {
+    super.updateRenderState(crab, state, f);
+    ItemHolderEntityRenderState.update(crab, state, this.itemModelResolver);
   }
 
   public static class HeldItemRenderer extends
-      RenderLayer<HoldingEntityRenderState, CrabModel> {
+      FeatureRenderer<ItemHolderEntityRenderState, CrabModel> {
 
     public HeldItemRenderer(
-        RenderLayerParent<HoldingEntityRenderState, CrabModel> context) {
+        FeatureRendererContext<ItemHolderEntityRenderState, CrabModel> context) {
       super(context);
     }
 
-    @Override
-    public void submit(
-        PoseStack matrixStack,
-        SubmitNodeCollector orderedRenderCommandQueue,
+    public void render(
+        MatrixStack matrixStack,
+        OrderedRenderCommandQueue orderedRenderCommandQueue,
         int i,
-        HoldingEntityRenderState state,
+        ItemHolderEntityRenderState state,
         float f,
         float g
     ) {
-      ItemStackRenderState itemRenderState = state.heldItem;
+      ItemRenderState itemRenderState = state.itemRenderState;
       if (!itemRenderState.isEmpty()) {
-        matrixStack.pushPose();
-        matrixStack.translate(this.getParentModel().pincer_left.x / 16.0F,
-            this.getParentModel().pincer_left.y / 16.0F,
-            this.getParentModel().pincer_left.z / 16.0F);
-        if (state.isBaby) {
+        matrixStack.push();
+        matrixStack.translate(this.getContextModel().pincer_left.originX / 16.0F,
+            this.getContextModel().pincer_left.originY / 16.0F,
+            this.getContextModel().pincer_left.originZ / 16.0F);
+        if (state.baby) {
           matrixStack.scale(1F, 1F, 1F);
           matrixStack.translate(0.1F, 1.4F, 0.55F);
         } else {
@@ -78,17 +77,17 @@ public class CrabRenderer extends
           matrixStack.translate(0.23F, 0.65F, -0.03F);
         }
 
-        matrixStack.mulPose(Axis.YN.rotationDegrees(160F));
-        matrixStack.mulPose(Axis.ZP.rotationDegrees(135F));
+        matrixStack.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(160F));
+        matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(135F));
 
-        itemRenderState.submit(
+        itemRenderState.render(
             matrixStack,
             orderedRenderCommandQueue,
             i,
-            OverlayTexture.NO_OVERLAY,
+            OverlayTexture.DEFAULT_UV,
             state.outlineColor
         );
-        matrixStack.popPose();
+        matrixStack.pop();
       }
     }
   }

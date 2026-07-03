@@ -2,62 +2,62 @@ package io.github.openbagtwo.lighterend.blocks;
 
 import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.VegetationBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Fertilizable;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.PlantBlock;
+import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 
-public class CreepingMoss extends VegetationBlock implements BonemealableBlock {
+public class CreepingMoss extends PlantBlock implements Fertilizable {
 
-  public static final MapCodec<CreepingMoss> CODEC = simpleCodec(CreepingMoss::new);
+  public static final MapCodec<CreepingMoss> CODEC = createCodec(CreepingMoss::new);
 
-  public CreepingMoss(Properties settings) {
+  public CreepingMoss(Settings settings) {
     super(
         settings
-            .mapColor(MapColor.COLOR_LIGHT_BLUE)
+            .mapColor(MapColor.LIGHT_BLUE)
             .replaceable()
             .noCollision()
-            .instabreak()
-            .noOcclusion()
-            .sound(SoundType.GRASS)
-            .pushReaction(PushReaction.DESTROY)
-            .offsetType(OffsetType.XZ)
-            .ignitedByLava()
-            .lightLevel((bs) -> 5)
+            .breakInstantly()
+            .nonOpaque()
+            .sounds(BlockSoundGroup.GRASS)
+            .pistonBehavior(PistonBehavior.DESTROY)
+            .offset(OffsetType.XZ)
+            .burnable()
+            .luminance((bs) -> 5)
     );
   }
 
   @Override
-  protected boolean mayPlaceOn(BlockState floor, BlockGetter world, BlockPos pos) {
-    return floor.is(LighterEndTags.END_SOIL);
+  protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
+    return floor.isIn(LighterEndTags.END_SOIL);
   }
 
   @Override
-  protected MapCodec<? extends VegetationBlock> codec() {
+  protected MapCodec<? extends PlantBlock> getCodec() {
     return CODEC;
   }
 
   @Override
-  public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
+  public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
     return true;
   }
 
   @Override
-  public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
+  public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
     return true;
   }
 
   @Override
-  public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
-    popResource(world, pos, new ItemStack(this));
+  public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
+    dropStack(world, pos, new ItemStack(this));
   }
 }

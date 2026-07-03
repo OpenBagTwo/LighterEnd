@@ -3,7 +3,7 @@
 ![server + client mod](https://img.shields.io/badge/Server\/Client-both-purple)
 ![mod loader: fabric](https://img.shields.io/badge/Mod_Loader-fabric-a4cc37)
 [![build status](https://github.com/OpenBagTwo/LighterEnd/actions/workflows/build.yml/badge.svg)](https://github.com/OpenBagTwo/LighterEnd/actions/workflows/build.yml)
-![supported versions](https://img.shields.io/badge/Supported_Versions-1.21.5--1.21.11-blue)
+![supported versions](https://img.shields.io/badge/Supported_Versions-1.21.5--1.21.10-blue)
 [![Modrinth Downloads](https://img.shields.io/modrinth/dt/lighterend)](https://modrinth.com/mod/lighterend)
 
 ***A reimagined vision of a Better End***

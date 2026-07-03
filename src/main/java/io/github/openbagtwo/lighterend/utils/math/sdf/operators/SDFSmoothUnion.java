@@ -1,7 +1,7 @@
 package io.github.openbagtwo.lighterend.utils.math.sdf.operators;
 
 import io.github.openbagtwo.lighterend.utils.math.sdf.SDF;
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 
 public class SDFSmoothUnion extends SDF.BinaryOperator {
 
@@ -17,7 +17,7 @@ public class SDFSmoothUnion extends SDF.BinaryOperator {
     float a = this.sourceA.getDistance(x, y, z);
     float b = this.sourceB.getDistance(x, y, z);
     this.selectValue(a, b);
-    float h = Mth.clamp(0.5F + 0.5F * (b - a) / radius, 0F, 1F);
-    return Mth.lerp(h, b, a) - radius * h * (1F - h);
+    float h = MathHelper.clamp(0.5F + 0.5F * (b - a) / radius, 0F, 1F);
+    return MathHelper.lerp(h, b, a) - radius * h * (1F - h);
   }
 }

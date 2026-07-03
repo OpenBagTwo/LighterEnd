@@ -1,7 +1,7 @@
 package io.github.openbagtwo.lighterend.utils.math.sdf.primitives;
 
 import io.github.openbagtwo.lighterend.utils.math.sdf.SDF;
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 
 public class SDFTorus extends SDF.Primitive {
 
@@ -20,7 +20,7 @@ public class SDFTorus extends SDF.Primitive {
 
   @Override
   public float getDistance(float x, float y, float z) {
-    float nx = Mth.sqrt(x * x + z * z) - this.radiusBig;
-    return Mth.sqrt(nx * nx + y * y) - radiusSmall;
+    float nx = MathHelper.sqrt(x * x + z * z) - this.radiusBig;
+    return MathHelper.sqrt(nx * nx + y * y) - radiusSmall;
   }
 }

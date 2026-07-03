@@ -6,27 +6,27 @@ import io.github.openbagtwo.lighterend.utils.Flags;
 import io.github.openbagtwo.lighterend.utils.PosInfo;
 import java.util.Set;
 import java.util.stream.IntStream;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FallingBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FallingBlock;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.WorldAccess;
+import net.minecraft.world.dimension.DimensionType;
 
 public class BlockFixer {
 
-  private static final BlockState AIR = Blocks.AIR.defaultBlockState();
-  private static final BlockState WATER = Blocks.WATER.defaultBlockState();
+  private static final BlockState AIR = Blocks.AIR.getDefaultState();
+  private static final BlockState WATER = Blocks.WATER.getDefaultState();
 
-  public static void fixBlocks(LevelAccessor level, BlockPos start, BlockPos end) {
-    final Registry<DimensionType> registry = level.registryAccess()
-        .lookupOrThrow(Registries.DIMENSION_TYPE);
-    final Identifier dimKey = registry.getKey(level.dimensionType());
+  public static void fixBlocks(WorldAccess level, BlockPos start, BlockPos end) {
+    final Registry<DimensionType> registry = level.getRegistryManager()
+        .getOrThrow(RegistryKeys.DIMENSION_TYPE);
+    final Identifier dimKey = registry.getId(level.getDimension());
     if (dimKey != null && "world_blender".equals(dimKey.getNamespace())) {
       return;
     }
@@ -34,10 +34,10 @@ public class BlockFixer {
     final int dx = end.getX() - start.getX() + 1;
     final int dz = end.getZ() - start.getZ() + 1;
     final int count = dx * dz;
-    final int minY = Math.max(start.getY(), level.getMinY());
-    final int maxY = Math.min(end.getY(), level.getMaxY());
+    final int minY = Math.max(start.getY(), level.getBottomY());
+    final int maxY = Math.min(end.getY(), level.getTopYInclusive());
     IntStream.range(0, count).forEach(index -> {
-      MutableBlockPos POS = new MutableBlockPos();
+      Mutable POS = new Mutable();
       POS.setX((index % dx) + start.getX());
       POS.setZ((index / dx) + start.getZ());
       BlockState state;
@@ -46,15 +46,15 @@ public class BlockFixer {
         state = level.getBlockState(POS);
 
         if (state.getBlock() instanceof Fur) {
-          doubleCheck.add(POS.immutable());
+          doubleCheck.add(POS.toImmutable());
         }
         // Liquids
         else if (!state.getFluidState().isEmpty()) {
-          if (!state.canSurvive(level, POS)) {
+          if (!state.canPlaceAt(level, POS)) {
             setWithoutUpdate(level, POS, WATER);
             POS.setY(POS.getY() - 1);
             state = level.getBlockState(POS);
-            while (!state.canSurvive(level, POS)) {
+            while (!state.canPlaceAt(level, POS)) {
               state = state.getFluidState().isEmpty() ? AIR : WATER;
               setWithoutUpdate(level, POS, state);
               POS.setY(POS.getY() - 1);
@@ -62,7 +62,7 @@ public class BlockFixer {
             }
           }
           POS.setY(y - 1);
-          if (level.isEmptyBlock(POS)) {
+          if (level.isAir(POS)) {
             POS.setY(y);
             while (!level.getFluidState(POS).isEmpty()) {
               setWithoutUpdate(level, POS, AIR);
@@ -70,10 +70,10 @@ public class BlockFixer {
             }
             continue;
           }
-          for (Direction dir : Direction.Plane.HORIZONTAL) {
-            if (level.isEmptyBlock(POS.relative(dir))) {
+          for (Direction dir : Direction.Type.HORIZONTAL) {
+            if (level.isAir(POS.offset(dir))) {
               try {
-                level.createTick(POS, state.getFluidState().getType(), 0);
+                level.createOrderedTick(POS, state.getFluidState().getFluid(), 0);
               } catch (Exception e) {
               }
               break;
@@ -111,31 +111,31 @@ public class BlockFixer {
 //          if (!level.getBlockState(POS.up()).isOf(EndBlocks.CAVE_PUMPKIN_SEED)) {
 //            setWithoutUpdate(level, POS, AIR);
 //          }
-        } else if (!state.canSurvive(level, POS)) {
+        } else if (!state.canPlaceAt(level, POS)) {
           // Chorus
-          if (state.is(Blocks.CHORUS_PLANT)) {
+          if (state.isOf(Blocks.CHORUS_PLANT)) {
             Set<BlockPos> ends = Sets.newHashSet();
             Set<BlockPos> add = Sets.newHashSet();
-            ends.add(POS.immutable());
+            ends.add(POS.toImmutable());
 
             for (int i = 0; i < 64 && !ends.isEmpty(); i++) {
               ends.forEach((pos) -> {
                 setWithoutUpdate(level, pos, AIR);
-                for (Direction dir : Direction.Plane.HORIZONTAL) {
-                  BlockPos p = pos.relative(dir);
+                for (Direction dir : Direction.Type.HORIZONTAL) {
+                  BlockPos p = pos.offset(dir);
                   BlockState st = level.getBlockState(p);
-                  if ((st.is(Blocks.CHORUS_PLANT) || st.is(Blocks.CHORUS_FLOWER))
-                      && !st.canSurvive(
+                  if ((st.isOf(Blocks.CHORUS_PLANT) || st.isOf(Blocks.CHORUS_FLOWER))
+                      && !st.canPlaceAt(
                       level,
                       p
                   )) {
                     add.add(p);
                   }
                 }
-                BlockPos p = pos.above();
+                BlockPos p = pos.up();
                 BlockState st = level.getBlockState(p);
-                if ((st.is(Blocks.CHORUS_PLANT) || st.is(Blocks.CHORUS_FLOWER))
-                    && !st.canSurvive(
+                if ((st.isOf(Blocks.CHORUS_PLANT) || st.isOf(Blocks.CHORUS_FLOWER))
+                    && !st.canPlaceAt(
                     level,
                     p
                 )) {
@@ -154,19 +154,19 @@ public class BlockFixer {
             POS.setY(POS.getY() - 1);
             state = level.getBlockState(POS);
 
-            int ray = PosInfo.downRayRep(level, POS.immutable(), 64);
+            int ray = PosInfo.downRayRep(level, POS.toImmutable(), 64);
             if (ray > 32) {
-              setWithoutUpdate(level, POS, Blocks.END_STONE.defaultBlockState());
+              setWithoutUpdate(level, POS, Blocks.END_STONE.getDefaultState());
               if (level.getRandom().nextBoolean()) {
                 POS.setY(POS.getY() - 1);
                 state = level.getBlockState(POS);
-                setWithoutUpdate(level, POS, Blocks.END_STONE.defaultBlockState());
+                setWithoutUpdate(level, POS, Blocks.END_STONE.getDefaultState());
               }
             } else {
               POS.setY(y);
               BlockState replacement = AIR;
-              for (Direction dir : Direction.Plane.HORIZONTAL) {
-                state = level.getBlockState(POS.relative(dir));
+              for (Direction dir : Direction.Type.HORIZONTAL) {
+                state = level.getBlockState(POS.offset(dir));
                 if (!state.getFluidState().isEmpty()) {
                   replacement = state;
                   break;
@@ -186,19 +186,19 @@ public class BlockFixer {
     });
 
     doubleCheck.forEach((pos) -> {
-      if (!level.getBlockState(pos).canSurvive(level, pos)) {
+      if (!level.getBlockState(pos).canPlaceAt(level, pos)) {
         setWithoutUpdate(level, pos, AIR);
       }
     });
   }
 
   private static BlockState getAirOrFluid(BlockState state) {
-    return state.getFluidState().isEmpty() ? AIR : state.getFluidState().createLegacyBlock();
+    return state.getFluidState().isEmpty() ? AIR : state.getFluidState().getBlockState();
   }
 
-  private static void setWithoutUpdate(LevelAccessor world, BlockPos pos, BlockState state) {
+  private static void setWithoutUpdate(WorldAccess world, BlockPos pos, BlockState state) {
     synchronized (world) {
-      world.setBlock(pos, state, Flags.SILENT);
+      world.setBlockState(pos, state, Flags.SILENT);
     }
   }
 }

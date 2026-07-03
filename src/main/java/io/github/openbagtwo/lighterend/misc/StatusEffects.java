@@ -1,28 +1,28 @@
 package io.github.openbagtwo.lighterend.misc;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 
 public class StatusEffects {
 
-  public final static Holder<MobEffect> END_VEIL = registerEffect("end_veil",
+  public final static RegistryEntry<StatusEffect> END_VEIL = registerEffect("end_veil",
       new EndVeilEffect());
 
 
-  public static class EndVeilEffect extends MobEffect {
+  public static class EndVeilEffect extends StatusEffect {
 
     public EndVeilEffect() {
-      super(MobEffectCategory.BENEFICIAL, 0x0D554A);
+      super(StatusEffectCategory.BENEFICIAL, 0x0D554A);
     }
   }
 
-  public static <E extends MobEffect> Holder<MobEffect> registerEffect(String name,
+  public static <E extends StatusEffect> RegistryEntry<StatusEffect> registerEffect(String name,
       E effect) {
-    return Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, LighterEnd.of(name), effect);
+    return Registry.registerReference(Registries.STATUS_EFFECT, LighterEnd.of(name), effect);
   }
 
   public static void initialize() {

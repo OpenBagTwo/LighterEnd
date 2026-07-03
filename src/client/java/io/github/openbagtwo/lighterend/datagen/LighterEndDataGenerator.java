@@ -8,8 +8,8 @@ import io.github.openbagtwo.lighterend.world.gen.noise.NoiseParameters;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator.Pack;
-import net.minecraft.core.RegistrySetBuilder;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.registry.RegistryBuilder;
+import net.minecraft.registry.RegistryKeys;
 
 public class LighterEndDataGenerator implements DataGeneratorEntrypoint {
 
@@ -29,20 +29,20 @@ public class LighterEndDataGenerator implements DataGeneratorEntrypoint {
   }
 
   @Override
-  public void buildRegistry(RegistrySetBuilder registryBuilder) {
-    registryBuilder.add(
-        Registries.CONFIGURED_FEATURE,
+  public void buildRegistry(RegistryBuilder registryBuilder) {
+    registryBuilder.addRegistry(
+        RegistryKeys.CONFIGURED_FEATURE,
         LighterEndConfiguredFeatures::bootstrap
     );
-    registryBuilder.add(
-        Registries.PLACED_FEATURE,
+    registryBuilder.addRegistry(
+        RegistryKeys.PLACED_FEATURE,
         LighterEndPlacedFeatures::bootstrap
     );
-    registryBuilder.add(
-        Registries.BIOME,
+    registryBuilder.addRegistry(
+        RegistryKeys.BIOME,
         LighterEndBiomes::bootstrap
     );
-    registryBuilder.add(Registries.NOISE, NoiseParameters::bootstrap);
-    registryBuilder.add(Registries.TRIM_MATERIAL, LighterEndTrimming::bootstrap);
+    registryBuilder.addRegistry(RegistryKeys.NOISE_PARAMETERS, NoiseParameters::bootstrap);
+    registryBuilder.addRegistry(RegistryKeys.TRIM_MATERIAL, LighterEndTrimming::bootstrap);
   }
 }

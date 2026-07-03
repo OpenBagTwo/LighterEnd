@@ -1,6 +1,5 @@
 package io.github.openbagtwo.lighterend.world.features;
 
-import com.mojang.math.Axis;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.math.MathUtils;
@@ -11,38 +10,39 @@ import io.github.openbagtwo.lighterend.utils.math.sdf.operators.SDFRotate;
 import io.github.openbagtwo.lighterend.utils.math.sdf.operators.SDFUnion;
 import io.github.openbagtwo.lighterend.utils.math.sdf.primitives.SDFTorus;
 import io.github.openbagtwo.lighterend.world.gen.noise.OpenSimplexNoise;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.levelgen.Heightmap.Types;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RotationAxis;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.Heightmap.Type;
+import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 
-public class UmbralithArch extends Feature<NoneFeatureConfiguration> {
+public class UmbralithArch extends Feature<DefaultFeatureConfig> {
 
   public UmbralithArch() {
-    super(NoneFeatureConfiguration.CODEC);
+    super(DefaultFeatureConfig.CODEC);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featurePlaceContext) {
-    final WorldGenLevel world = featurePlaceContext.level();
-    BlockPos origin = featurePlaceContext.origin();
-    RandomSource random = featurePlaceContext.random();
+  public boolean generate(FeatureContext<DefaultFeatureConfig> featurePlaceContext) {
+    final StructureWorldAccess world = featurePlaceContext.getWorld();
+    BlockPos origin = featurePlaceContext.getOrigin();
+    Random random = featurePlaceContext.getRandom();
 
-    BlockPos pos = world.getHeightmapPos(Types.WORLD_SURFACE_WG,
+    BlockPos pos = world.getTopPosition(Type.WORLD_SURFACE_WG,
         new BlockPos((origin.getX() & 0xFFFFFFF0) | 7, 0, (origin.getZ() & 0xFFFFFFF0) | 7));
 
-    if (!world.getBlockState(pos.below(5)).is(LighterEndTags.END_STONES)) {
+    if (!world.getBlockState(pos.down(5)).isIn(LighterEndTags.END_STONES)) {
       return false;
     }
 
-    float bigRadius = Mth.nextFloat(random, 10F, 20F);
-    float smallRadius = Mth.nextFloat(random, 3F, 7F);
+    float bigRadius = MathHelper.nextFloat(random, 10F, 20F);
+    float smallRadius = MathHelper.nextFloat(random, 3F, 7F);
     if (smallRadius + bigRadius > 23) {
       smallRadius = 23 - bigRadius;
     }
@@ -66,7 +66,7 @@ public class UmbralithArch extends Feature<NoneFeatureConfiguration> {
 
     arch.addPostProcess((info) -> {
       if (info.getStateUp().isAir()) {
-        return LighterEndBlocks.UMBRALITH.baseBlock.defaultBlockState();
+        return LighterEndBlocks.UMBRALITH.baseBlock.getDefaultState();
       }
       return info.getState();
     });
@@ -75,43 +75,43 @@ public class UmbralithArch extends Feature<NoneFeatureConfiguration> {
     if (side > 47) {
       side = 47;
     }
-    arch.fillArea(world, pos, AABB.ofSize(Vec3.atCenterOf(pos), side, side, side));
+    arch.fillArea(world, pos, Box.of(Vec3d.ofCenter(pos), side, side, side));
 
     return true;
   }
 
-  public static class Thin extends Feature<NoneFeatureConfiguration> {
+  public static class Thin extends Feature<DefaultFeatureConfig> {
 
     public Thin() {
-      super(NoneFeatureConfiguration.CODEC);
+      super(DefaultFeatureConfig.CODEC);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featurePlaceContext) {
-      final WorldGenLevel world = featurePlaceContext.level();
-      BlockPos origin = featurePlaceContext.origin();
-      RandomSource random = featurePlaceContext.random();
+    public boolean generate(FeatureContext<DefaultFeatureConfig> featurePlaceContext) {
+      final StructureWorldAccess world = featurePlaceContext.getWorld();
+      BlockPos origin = featurePlaceContext.getOrigin();
+      Random random = featurePlaceContext.getRandom();
 
-      BlockPos pos = world.getHeightmapPos(Types.WORLD_SURFACE_WG,
+      BlockPos pos = world.getTopPosition(Type.WORLD_SURFACE_WG,
           new BlockPos((origin.getX() & 0xFFFFFFF0) | 7, 0, (origin.getZ() & 0xFFFFFFF0) | 7));
 
-      if (!world.getBlockState(pos.below(5)).is(LighterEndTags.END_STONES)) {
+      if (!world.getBlockState(pos.down(5)).isIn(LighterEndTags.END_STONES)) {
         return false;
       }
 
       SDF sdf = null;
-      float bigRadius = Mth.nextFloat(random, 15F, 20F);
+      float bigRadius = MathHelper.nextFloat(random, 15F, 20F);
       float variation = bigRadius * 0.3F;
-      int count = Mth.nextInt(random, 2, 4);
+      int count = MathHelper.nextInt(random, 2, 4);
 
       for (int i = 0; i < count; i++) {
-        float smallRadius = Mth.nextFloat(random, 0.6F, 1.3F);
+        float smallRadius = MathHelper.nextFloat(random, 0.6F, 1.3F);
         SDF arch = new SDFTorus().setBigRadius(bigRadius - random.nextFloat() * variation)
             .setSmallRadius(smallRadius)
             .setBlock(LighterEndBlocks.UMBRALITH.baseBlock);
         float angle =
             (i - count * 0.5F) * 0.3F + random.nextFloat() * 0.05F + (float) Math.PI * 0.5F;
-        arch = new SDFRotate().setRotation(Axis.XP, angle).setSource(arch);
+        arch = new SDFRotate().setRotation(RotationAxis.POSITIVE_X, angle).setSource(arch);
         sdf = sdf == null ? arch : new SDFUnion().setSourceA(sdf).setSourceB(arch);
       }
 
@@ -128,14 +128,14 @@ public class UmbralithArch extends Feature<NoneFeatureConfiguration> {
       }).setSource(sdf);
       sdf = new SDFDisplace().setFunction(vec -> {
         float offset = vec.y() / bigRadius - 0.5F;
-        return Mth.clamp(offset * 3, -10F, 0F);
+        return MathHelper.clamp(offset * 3, -10F, 0F);
       }).setSource(sdf);
 
       float side = (bigRadius + 2.5F) * 2;
       if (side > 47) {
         side = 47;
       }
-      sdf.fillArea(world, pos, AABB.ofSize(Vec3.atCenterOf(pos), side, side, side));
+      sdf.fillArea(world, pos, Box.of(Vec3d.ofCenter(pos), side, side, side));
       return true;
     }
   }

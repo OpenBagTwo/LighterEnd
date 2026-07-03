@@ -1,19 +1,19 @@
 package io.github.openbagtwo.lighterend.mixin;
 
 import io.github.openbagtwo.lighterend.misc.StatusEffects;
-import net.minecraft.world.entity.monster.EnderMan;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.mob.EndermanEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(EnderMan.class)
+@Mixin(EndermanEntity.class)
 public abstract class EndVeilMixin {
 
-  @Inject(method = "isBeingStaredBy", at = @At("HEAD"), cancellable = true)
-  public void checkForEndVeil(Player player, CallbackInfoReturnable<Boolean> cir) {
-    if (player.hasEffect(StatusEffects.END_VEIL)) {
+  @Inject(method = "isPlayerStaring", at = @At("HEAD"), cancellable = true)
+  public void checkForEndVeil(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
+    if (player.hasStatusEffect(StatusEffects.END_VEIL)) {
       cir.setReturnValue(false);
       cir.cancel();
     }

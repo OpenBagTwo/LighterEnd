@@ -8,22 +8,22 @@ import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.RegistryWrapper.WrapperLookup;
+import net.minecraft.registry.tag.BlockTags;
 
 public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
   protected BlockTagProvider(
-      FabricDataOutput output, CompletableFuture<Provider> future
+      FabricDataOutput output, CompletableFuture<WrapperLookup> future
   ) {
     super(output, future);
   }
 
   @Override
-  protected void addTags(HolderLookup.Provider lookup) {
+  protected void configure(RegistryWrapper.WrapperLookup lookup) {
 
     valueLookupBuilder(BlockTags.IMPERMEABLE).add(LighterEndBlocks.AURORA_CRYSTAL);
     valueLookupBuilder(BlockTags.SNIFFER_DIGGABLE_BLOCK).add(LighterEndBlocks.END_MOSS);
@@ -37,7 +37,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.BORNITE
     )) {
       for (Block block : material.blocks) {
-        valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
+        valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(block);
         valueLookupBuilder(BlockTags.WALLS)
             .add(
                 material.baseWall,
@@ -58,9 +58,9 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.DRAGON
     )) {
       for (Block block : wood.blocks) {
-        valueLookupBuilder(BlockTags.MINEABLE_WITH_AXE).add(block);
+        valueLookupBuilder(BlockTags.AXE_MINEABLE).add(block);
       }
-      valueLookupBuilder(BlockTags.MINEABLE_WITH_AXE).add(wood.wallSign, wood.wallHangingSign);
+      valueLookupBuilder(BlockTags.AXE_MINEABLE).add(wood.wallSign, wood.wallHangingSign);
       valueLookupBuilder(BlockTags.PLANKS).add(wood.planks);
       valueLookupBuilder(BlockTags.WOODEN_BUTTONS).add(wood.button);
       valueLookupBuilder(BlockTags.WOODEN_DOORS).add(wood.door);
@@ -84,7 +84,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
       valueLookupBuilder(BlockTags.WOODEN_SHELVES).add(wood.shelf);
     }
 
-    valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
+    valueLookupBuilder(BlockTags.PICKAXE_MINEABLE)
         .add(
             LighterEndBlocks.ENDER_BLOCK,
             LighterEndBlocks.MISSING_TILE,
@@ -106,8 +106,8 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.BRIMSTONE,
             LighterEndBlocks.HYDROTHERMAL_VENT
         );
-    for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.asList()) {
-      valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE).add(chandelier);
+    for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.getAll()) {
+      valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(chandelier);
     }
 
     valueLookupBuilder(BlockTags.NEEDS_STONE_TOOL)
@@ -139,7 +139,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         LighterEndBlocks.END_LOTUS_FLOWER
     );
 
-    valueLookupBuilder(BlockTags.MINEABLE_WITH_AXE).add(
+    valueLookupBuilder(BlockTags.AXE_MINEABLE).add(
         LighterEndBlocks.LUMECORN_STEM,
         LighterEndBlocks.END_LOTUS_STEM,
         LighterEndBlocks.UMBRELLA_TREE_CLUSTER,
