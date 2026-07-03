@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "lighterend:item/silk_elytra",
-    "layer1": "lighterend:item/silk_elytra_overlay",
-    "layer2": "minecraft:trims/items/chestplate_trim_aurora"
-  }
-}

@@ -69,7 +69,7 @@ public abstract class EndSpawnMixin {
       method = "createLevels",
       at = @At(
           value = "INVOKE",
-          target = "Lnet/minecraft/world/level/storage/CommandStorage;<init>(Lnet/minecraft/world/level/storage/SavedDataStorage;)V"
+          target = "Lnet/minecraft/world/level/storage/CommandStorage;<init>(Lnet/minecraft/world/level/storage/DimensionDataStorage;)V"
       )
   )
   public void setEndSpawn(
@@ -151,7 +151,8 @@ public abstract class EndSpawnMixin {
         false,
         biomeSeed,
         ImmutableList.of(),
-        false
+        false,
+        null
     );
   }
 
@@ -168,16 +169,17 @@ public abstract class EndSpawnMixin {
     while (true) {
       float angle = Mth.nextFloat(world.getRandom(), 0, Mth.TWO_PI);
       chunkPos = new ChunkPos(
-          Math.round(END_SPAWN_RADIUS * Mth.cos(angle)),
-          Math.round(END_SPAWN_RADIUS * Mth.sin(angle))
+          new BlockPos(
+              Math.round(END_SPAWN_RADIUS * Mth.cos(angle)),
+              64,
+              Math.round(END_SPAWN_RADIUS * Mth.sin(angle)))
       );
       loadProgress.start(LevelLoadListener.Stage.PREPARE_GLOBAL_SPAWN, 0);
       loadProgress.updateFocus(world.dimension(), chunkPos);
       y = serverChunkManager.getGenerator().getSpawnHeight(world);
       if (y < world.getMinY()) {
         BlockPos blockPos = chunkPos.getWorldPosition();
-        y = world.getHeight(Heightmap.Types.WORLD_SURFACE, blockPos.getX() + 8,
-            blockPos.getZ() + 8);
+        y = world.getHeight(Heightmap.Types.WORLD_SURFACE, blockPos.getX() + 8, blockPos.getZ() + 8);
       }
       if (
           y > 50 && !world.getBiome(chunkPos.getWorldPosition().offset(8, y, 8))
@@ -197,7 +199,7 @@ public abstract class EndSpawnMixin {
     for (int n = 0; n < Mth.square(11); n++) {
       if (j >= -5 && j <= 5 && k >= -5 && k <= 5) {
         BlockPos blockPos2 = PlayerSpawnFinder.getSpawnPosInChunk(world,
-            new ChunkPos(chunkPos.x() + j, chunkPos.z() + k));
+            new ChunkPos(chunkPos.x + j, chunkPos.z + k));
         if (blockPos2 != null) {
           worldProperties.setSpawn(
               LevelData.RespawnData.of(world.dimension(), blockPos2, 0.0F, 0.0F));
@@ -222,7 +224,7 @@ public abstract class EndSpawnMixin {
                 LighterEndConfiguredFeatures.STARTER_CHEST))
         .ifPresent(
             feature -> feature.value()
-                .place(world, serverChunkManager.getGenerator(), world.getRandom(),
+                .place(world, serverChunkManager.getGenerator(), world.random,
                     worldProperties.getRespawnData().pos())
         );
 

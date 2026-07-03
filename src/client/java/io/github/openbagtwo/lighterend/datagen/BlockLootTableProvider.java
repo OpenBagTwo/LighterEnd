@@ -10,8 +10,8 @@ import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.core.Holder.Reference;
 import net.minecraft.core.HolderLookup;
@@ -40,10 +40,10 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
-public class BlockLootTableProvider extends FabricBlockLootSubProvider {
+public class BlockLootTableProvider extends FabricBlockLootTableProvider {
 
   protected BlockLootTableProvider(
-      FabricPackOutput dataOutput,
+      FabricDataOutput dataOutput,
       CompletableFuture<Provider> registryLookup
   ) {
     super(dataOutput, registryLookup);

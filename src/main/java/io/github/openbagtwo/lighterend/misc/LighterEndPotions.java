@@ -3,7 +3,7 @@ package io.github.openbagtwo.lighterend.misc;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
-import net.fabricmc.fabric.api.registry.FabricPotionBrewingBuilder;
+import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -32,7 +32,7 @@ public class LighterEndPotions {
     // TODO: replace manual lists of items with item tags
     //       (gotta figure out how to get at the tag registryLookup)
 
-    FabricPotionBrewingBuilder.BUILD.register(builder -> {
+    FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
       builder.registerPotionRecipe(Potions.WATER, Ingredient.of(
               LighterEndBlocks.AURANT_POLYPORE, LighterEndBlocks.PURPLE_POLYPORE
           ),
@@ -40,18 +40,18 @@ public class LighterEndPotions {
       );
     });
 
-    FabricPotionBrewingBuilder.BUILD.register(builder -> {
+    FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
       builder.registerPotionRecipe(Potions.AWKWARD, Ingredient.of(
               LighterEndItems.AGAVE_FUR, LighterEndItems.GLOWSHROOM_FUR
           ),
           END_VEIL
       );
     });
-    FabricPotionBrewingBuilder.BUILD.register(builder -> {
+    FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
       builder.addMix(END_VEIL, Items.REDSTONE, LONG_END_VEIL);
     });
 
-    FabricPotionBrewingBuilder.BUILD.register(builder -> {
+    FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
       builder.registerPotionRecipe(Potions.AWKWARD, Ingredient.of(
               LighterEndItems.SHADOW_BERRY_JAM
           ),

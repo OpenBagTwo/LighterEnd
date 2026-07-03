@@ -3,8 +3,8 @@ package io.github.openbagtwo.lighterend.datagen;
 import io.github.openbagtwo.lighterend.registries.LighterEndBiomes;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.concurrent.CompletableFuture;
-import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
@@ -12,10 +12,10 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 
-public class BiomeTagProvider extends FabricTagsProvider<Biome> {
+public class BiomeTagProvider extends FabricTagProvider<Biome> {
 
   public BiomeTagProvider(
-      FabricPackOutput output,
+      FabricDataOutput output,
       CompletableFuture<HolderLookup.Provider> future
   ) {
     super(output, Registries.BIOME, future);

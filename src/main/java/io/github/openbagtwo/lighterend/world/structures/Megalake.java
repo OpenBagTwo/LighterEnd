@@ -85,7 +85,7 @@ public class Megalake extends Structure {
       LevelHeightAccessor levelHeightAccessor,
       RandomState rState
   ) {
-    LegacyRandomSource random = new LegacyRandomSource(chunkPos.x() + chunkPos.z() * 10387313);
+    LegacyRandomSource random = new LegacyRandomSource(chunkPos.x + chunkPos.z * 10387313);
     Rotation blockRotation = Rotation.getRandom(random);
 
     int offsetX = 5;
@@ -102,8 +102,7 @@ public class Megalake extends Structure {
     int blockX = chunkPos.getBlockX(7);
     int blockZ = chunkPos.getBlockZ(7);
     int minZ = Integer.MAX_VALUE;
-    BlockPos.MutableBlockPos result = new BlockPos.MutableBlockPos(blockX, Integer.MIN_VALUE,
-        blockZ);
+    BlockPos.MutableBlockPos result = new BlockPos.MutableBlockPos(blockX, Integer.MIN_VALUE, blockZ);
     for (int i = 0; i < 2; i++) {
       for (int j = 0; j < 2; j++) {
         int z = chunkGenerator.getFirstOccupiedHeight(
