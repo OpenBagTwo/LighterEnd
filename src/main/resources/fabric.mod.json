@@ -42,6 +42,7 @@
       "environment": "client"
     }
   ],
+  "accessWidener": "lighterend.classtweaker",
   "name": "Lighter End",
   "version": "${version}"
 }

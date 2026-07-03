@@ -13,6 +13,7 @@
     "EndMossSplootMixin",
     "EndSpawnMixin",
     "EndVeilMixin",
+    "FreeTheOverworldMixin",
     "GlideDecayMixin",
     "GravityEffectsMixin",
     "GravityStrengthMixin",
