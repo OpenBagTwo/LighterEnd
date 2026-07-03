@@ -74,6 +74,11 @@ public class Config {
   protected boolean bonemealUnderwaterInEndMakesEndVegetation;
 
   /**
+   * Whether to silence some obnoxious worldgen warnings
+   */
+  protected boolean silenceUnsafeTerrainReadWarnings;
+
+  /**
    * Whether new worlds should have their spawn points in The End
    */
   protected boolean endSpawn;
@@ -123,6 +128,10 @@ public class Config {
     return this.bonemealUnderwaterInEndMakesEndVegetation;
   }
 
+  public boolean silenceUnsafeTerrainReadWarnings() {
+    return this.silenceUnsafeTerrainReadWarnings;
+  }
+
   public boolean enableEndSpawn() {
     return this.endSpawn;
   }
@@ -139,6 +148,7 @@ public class Config {
   private static final boolean DEFAULT_MUSIC_DISCS_IN_END_CITIES = true;
   private static final boolean DEFAULT_CUSTOM_END_FISHING = true;
   private static final boolean DEFAULT_UNDERWATER_BONEMEAL_SETTING = true;
+  private static final boolean DEFAULT_SILENCE_UNSAFE_TERRAIN_READ_WARNINGS = true;
   private static final boolean DEFAULT_END_SPAWN = false;
 
 
@@ -197,6 +207,7 @@ public class Config {
     writeme.put("customize_end_fishing", this.customEndFishing);
     writeme.put("bonemealing_underwater_in_the_end_produces_end_vegetation",
         this.bonemealUnderwaterInEndMakesEndVegetation);
+    writeme.put("silence_unsafe_terrain_read_warnings", this.silenceUnsafeTerrainReadWarnings);
     writeme.put("spawn_in_end", this.endSpawn);
 
     (new Yaml(configFormat)).dump(writeme, configWriter);
@@ -220,6 +231,7 @@ public class Config {
     config.musicDiscsInEndCities = DEFAULT_MUSIC_DISCS_IN_END_CITIES;
     config.customEndFishing = DEFAULT_CUSTOM_END_FISHING;
     config.bonemealUnderwaterInEndMakesEndVegetation = DEFAULT_UNDERWATER_BONEMEAL_SETTING;
+    config.silenceUnsafeTerrainReadWarnings = DEFAULT_SILENCE_UNSAFE_TERRAIN_READ_WARNINGS;
     config.endSpawn = DEFAULT_END_SPAWN;
     return config;
   }
@@ -304,6 +316,12 @@ public class Config {
           settings.getOrDefault(
               "bonemealing_underwater_in_the_end_produces_end_vegetation",
               DEFAULT_UNDERWATER_BONEMEAL_SETTING
+          ).toString()
+      );
+      config.silenceUnsafeTerrainReadWarnings = Boolean.parseBoolean(
+          settings.getOrDefault(
+              "silence_unsafe_terrain_read_warnings",
+              DEFAULT_SILENCE_UNSAFE_TERRAIN_READ_WARNINGS
           ).toString()
       );
       config.endSpawn = Boolean.parseBoolean(

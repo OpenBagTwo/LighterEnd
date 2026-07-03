@@ -124,6 +124,19 @@ public class ConfigScreen extends OptionsSubScreen {
       );
       this.list.addBig(
           OptionInstance.createBoolean(
+              "Silence Minecraft Warnings about 'Unsafe Terrain Reads'",
+              OptionInstance.cachedConstantTooltip(Component.nullToEmpty(
+                  "LighterEnd generates terrain at a distance larger than Minecraft is comfortable with."
+                      + "\nThis produces a lot of log spam."
+                      + "\nWhen this option is enabled, those warnings will be suppressed."
+              )),
+              LighterEnd.CONFIG.silenceUnsafeTerrainReadWarnings, (value) -> {
+                LighterEnd.CONFIG.silenceUnsafeTerrainReadWarnings = value;
+              }
+          )
+      );
+      this.list.addBig(
+          OptionInstance.createBoolean(
               "End World Spawn",
               OptionInstance.cachedConstantTooltip(Component.nullToEmpty(
                   "New worlds will have their spawn points in The End."
