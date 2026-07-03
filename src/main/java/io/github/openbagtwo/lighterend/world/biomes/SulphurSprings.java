@@ -54,7 +54,7 @@ public class SulphurSprings {
             new SpawnerData(EntityTypes.ENDERMITE, 1, 1)
         ).addSpawn(
             MobCategory.MONSTER,
-            100,
+            50,
             new SpawnerData(EntityTypes.SULFUR_CUBE, 2, 4)
         ).build();
 
