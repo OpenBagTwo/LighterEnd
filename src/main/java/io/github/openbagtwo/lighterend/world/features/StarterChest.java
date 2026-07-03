@@ -3,6 +3,7 @@ package io.github.openbagtwo.lighterend.world.features;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndLootTables;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
+import java.util.Arrays;
 import java.util.stream.IntStream;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,47 +32,52 @@ public class StarterChest extends Feature<NoneFeatureConfiguration> {
   public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
     RandomSource random = context.random();
     WorldGenLevel structureWorldAccess = context.level();
-    ChunkPos chunkPos = new ChunkPos(context.origin().getX(), context.origin().getZ());
+    ChunkPos chunkPos = ChunkPos.containing(context.origin());
     IntArrayList intArrayList = Util.toShuffledList(
         IntStream.rangeClosed(chunkPos.getMinBlockX(), chunkPos.getMaxBlockX()), random);
     IntArrayList intArrayList2 = Util.toShuffledList(
         IntStream.rangeClosed(chunkPos.getMinBlockZ(), chunkPos.getMaxBlockZ()), random);
     BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
 
-    for (Integer integer : intArrayList) {
-      for (Integer integer2 : intArrayList2) {
-        mutable.set(integer, 0, integer2);
-        BlockPos blockPos = structureWorldAccess.getHeightmapPos(
-            Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, mutable);
-        if (
-            (
-                structureWorldAccess.isEmptyBlock(blockPos) || structureWorldAccess.getBlockState(
-                        blockPos)
-                    .getCollisionShape(structureWorldAccess, blockPos).isEmpty()
-            )
-                && blockPos.getY() > 50
-        ) {
-          structureWorldAccess.setBlock(
-              blockPos,
-              Blocks.BARREL.defaultBlockState().setValue(BarrelBlock.FACING, Direction.UP),
-              Block.UPDATE_CLIENTS);
-          RandomizableContainer.setBlockEntityLootTable(structureWorldAccess, random, blockPos,
-              LighterEndLootTables.STARTER_CHEST);
-          BlockState blockState = Blocks.END_ROD.defaultBlockState();
-
-          for (Direction direction : Direction.Plane.HORIZONTAL) {
-            BlockPos rodPos = blockPos.relative(direction);
-            if (blockState.canSurvive(structureWorldAccess, rodPos)) {
-              structureWorldAccess.setBlock(
-                  rodPos,
-                  blockState.setValue(EndRodBlock.FACING, direction),
-                  Block.UPDATE_CLIENTS
-              );
-
-            }
+    for (boolean tryFloating : Arrays.asList(false, true)) {
+      for (Integer integer : intArrayList) {
+        for (Integer integer2 : intArrayList2) {
+          mutable.set(integer, 0, integer2);
+          BlockPos blockPos = structureWorldAccess.getHeightmapPos(
+              Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, mutable);
+          if (tryFloating) {
+            blockPos = blockPos.above();
           }
+          if (
+              (
+                  structureWorldAccess.isEmptyBlock(blockPos) || structureWorldAccess.getBlockState(
+                          blockPos)
+                      .getCollisionShape(structureWorldAccess, blockPos).isEmpty()
+              )
+                  && blockPos.getY() > 50
+          ) {
+            structureWorldAccess.setBlock(
+                blockPos,
+                Blocks.BARREL.defaultBlockState().setValue(BarrelBlock.FACING, Direction.UP),
+                Block.UPDATE_CLIENTS);
+            RandomizableContainer.setBlockEntityLootTable(structureWorldAccess, random, blockPos,
+                LighterEndLootTables.STARTER_CHEST);
+            BlockState blockState = Blocks.END_ROD.defaultBlockState();
 
-          return true;
+            for (Direction direction : Direction.Plane.HORIZONTAL) {
+              BlockPos rodPos = blockPos.relative(direction);
+              if (blockState.canSurvive(structureWorldAccess, rodPos)) {
+                structureWorldAccess.setBlock(
+                    rodPos,
+                    blockState.setValue(EndRodBlock.FACING, direction),
+                    Block.UPDATE_CLIENTS
+                );
+
+              }
+            }
+
+            return true;
+          }
         }
       }
     }
