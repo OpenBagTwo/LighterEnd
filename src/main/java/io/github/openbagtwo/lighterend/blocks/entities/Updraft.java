@@ -50,7 +50,7 @@ public class Updraft extends BlockEntity {
       Updraft updraft
   ) {
     boolean active = state.getValue(HydrothermalVent.ACTIVATED);
-    if (active && level.getRandom().nextInt(20) == 0) {
+    if (active && (level.getRandom().nextInt(512) == 0)) {
       double x = worldPosition.getX() + 0.5 * level.getRandom().nextDouble();
       double y = worldPosition.getY() + 0.9 + level.getRandom().nextDouble() * 0.3;
       double z = worldPosition.getZ() + 0.5 * level.getRandom().nextDouble();
