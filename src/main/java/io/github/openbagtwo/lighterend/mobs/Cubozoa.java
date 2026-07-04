@@ -143,7 +143,7 @@ public class Cubozoa extends SchoolingFishEntity {
   public void onPlayerCollision(PlayerEntity player) {
     if (player instanceof ServerPlayerEntity serverPlayer
         && player.damage(
-        serverPlayer.getEntityWorld(),
+        serverPlayer.getWorld(),
         this.getDamageSources().mobAttack(this), 0.5F)
     ) {
       if (!this.isSilent()) {

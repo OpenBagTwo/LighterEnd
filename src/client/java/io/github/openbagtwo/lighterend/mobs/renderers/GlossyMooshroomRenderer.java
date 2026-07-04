@@ -10,8 +10,10 @@ import java.util.List;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.block.BlockModelRenderer;
 import net.minecraft.client.render.block.BlockRenderManager;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.AgeableMobEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
@@ -54,25 +56,23 @@ public class GlossyMooshroomRenderer extends
           @Override
           public void render(
               MatrixStack matrices,
-              OrderedRenderCommandQueue queue,
+              VertexConsumerProvider vertexConsumers,
               int light,
               LivingEntityRenderState state,
               float limbAngle,
               float limbDistance
           ) {
             if (state instanceof GlossyMooshroomRenderState cowState) {
-              queue.getBatchingQueue(1)
-                  .submitModel(
-                      this.getContextModel(),
-                      state,
+              VertexConsumer vertexConsumer = vertexConsumers.getBuffer(
+                  GLOW.get(cowState.variant % GLOW.size())
+              );
+              this.getContextModel()
+                  .render(
                       matrices,
-                      GLOW.get(cowState.variant % GLOW.size()),
-                      light,
+                      vertexConsumer,
+                      15728640,
                       OverlayTexture.DEFAULT_UV,
-                      -1,
-                      null,
-                      state.outlineColor,
-                      null
+                      0xffffffff
                   );
             }
           }
@@ -111,19 +111,18 @@ public class GlossyMooshroomRenderer extends
       this.blockRenderManager = blockRenderManager;
     }
 
-    @Override
     public void render(
         MatrixStack matrixStack,
-        OrderedRenderCommandQueue queue,
-        int light,
+        VertexConsumerProvider vertexConsumerProvider,
+        int i,
         LivingEntityRenderState state,
         float f,
         float g
     ) {
       if (state instanceof GlossyMooshroomRenderState cowState) {
         if (!cowState.sheared && !cowState.baby) {
-          boolean renderAsModel = cowState.hasOutline() && cowState.invisible;
-          if (!cowState.invisible || renderAsModel) {
+          boolean bl = cowState.hasOutline && cowState.invisible;
+          if (!cowState.invisible || bl) {
             BlockState polyphore;
             if (cowState.variant == 0) {
               polyphore = LighterEndBlocks.AURANT_POLYPORE.getDefaultState().with(
@@ -136,21 +135,13 @@ public class GlossyMooshroomRenderer extends
             } else {
               return;
             }
-            int overlay = LivingEntityRenderer.getOverlay(cowState, 0.0F);
+            int j = LivingEntityRenderer.getOverlay(cowState, 0.0F);
             BlockStateModel blockStateModel = this.blockRenderManager.getModel(polyphore);
             matrixStack.push();
             matrixStack.scale(-0.3F, -0.5F, 0.5F);
             matrixStack.translate(-2.25F, -1.5F, 0);
-            this.renderMushroom(
-                matrixStack,
-                queue,
-                light,
-                renderAsModel,
-                polyphore,
-                overlay,
-                blockStateModel,
-                cowState.outlineColor
-            );
+            this.renderMushroom(matrixStack, vertexConsumerProvider, i, bl, polyphore, j,
+                blockStateModel);
             matrixStack.pop();
 
             blockStateModel = this.blockRenderManager.getModel(
@@ -159,16 +150,8 @@ public class GlossyMooshroomRenderer extends
             matrixStack.push();
             matrixStack.scale(0.3F, -0.5F, -0.5F);
             matrixStack.translate(-2.25F, -1.5F, -0.2F);
-            this.renderMushroom(
-                matrixStack,
-                queue,
-                light,
-                renderAsModel,
-                polyphore,
-                overlay,
-                blockStateModel,
-                cowState.outlineColor
-            );
+            this.renderMushroom(matrixStack, vertexConsumerProvider, i, bl, polyphore, j,
+                blockStateModel);
             matrixStack.pop();
           }
         }
@@ -177,25 +160,28 @@ public class GlossyMooshroomRenderer extends
 
     private void renderMushroom(
         MatrixStack matrices,
-        OrderedRenderCommandQueue queue,
+        VertexConsumerProvider vertexConsumers,
         int light,
         boolean renderAsModel,
         BlockState mushroomState,
         int overlay,
-        BlockStateModel mushroomModel,
-        int color
+        BlockStateModel mushroomModel
     ) {
       if (renderAsModel) {
-        queue.submitBlockStateModel(
-            matrices,
-            RenderLayer.getOutline(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE),
-            mushroomModel,
-            0.0F, 0.0F, 0.0F, light, overlay, color
+        BlockModelRenderer.render(
+            matrices.peek(),
+            vertexConsumers.getBuffer(
+                RenderLayer.getOutline(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE)),
+            mushroomModel, 0.0F, 0.0F, 0.0F, light, overlay
         );
-
-
       } else {
-        queue.submitBlock(matrices, mushroomState, light, overlay, color);
+        this.blockRenderManager.renderBlockAsEntity(
+            mushroomState,
+            matrices,
+            vertexConsumers,
+            light,
+            overlay
+        );
       }
     }
   }

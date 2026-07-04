@@ -46,7 +46,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockSetType;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ButtonBlock;
-import net.minecraft.block.CopperBlockSet;
 import net.minecraft.block.ExperienceDroppingBlock;
 import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.block.LeverBlock;
@@ -225,21 +224,7 @@ public class LighterEndBlocks {
 
   public static final Block GOLD_CHANDELIER = register("gold_chandelier", Chandelier::new);
   public static final Block IRON_CHANDELIER = register("iron_chandelier", Chandelier::new);
-  public static final CopperBlockSet COPPER_CHANDELIERS = CopperBlockSet.create(
-      "copper_chandelier",
-      LighterEndBlocks::register,
-      Chandelier::new,
-      Chandelier.Oxidizable::new,
-      oxidationLevel -> Settings.create()
-          .mapColor(MapColor.IRON_GRAY)
-          .luminance((bs) -> 15)
-          .solid()
-          .nonOpaque()
-          .requiresTool()
-          .pistonBehavior(PistonBehavior.DESTROY)
-          .strength(2.5F)
-          .sounds(BlockSoundGroup.CHAIN)
-  );
+
 
   public static final Block EMERALD_ICE = register(
       "emerald_ice",

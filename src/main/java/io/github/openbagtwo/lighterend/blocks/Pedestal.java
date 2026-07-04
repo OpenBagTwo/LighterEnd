@@ -5,7 +5,6 @@ import io.github.openbagtwo.lighterend.blocks.entities.PedestalDisplay;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.InteractibleSlotContainer;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
@@ -21,9 +20,8 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
 
-public class Pedestal extends BlockWithEntity implements InteractibleSlotContainer {
+public class Pedestal extends BlockWithEntity {
 
   private static final VoxelShape SHAPE;
 
@@ -63,7 +61,7 @@ public class Pedestal extends BlockWithEntity implements InteractibleSlotContain
       Hand hand,
       BlockHitResult hit
   ) {
-    if ((world.getBlockEntity(pos) instanceof PedestalDisplay display) && (!world.isClient())) {
+    if (world.getBlockEntity(pos) instanceof PedestalDisplay display && !world.isClient()) {
 
       boolean makeSound = false;
       ItemStack toInsert = ItemStack.EMPTY;
@@ -86,22 +84,11 @@ public class Pedestal extends BlockWithEntity implements InteractibleSlotContain
         display.markDirty();
         player.getInventory().markDirty();
         world.playSound(player, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 2f);
-        world.emitGameEvent(GameEvent.ENTITY_INTERACT, pos, GameEvent.Emitter.of(state));
         world.updateListeners(pos, state, state, Block.NOTIFY_ALL);
       }
     }
 
     return ActionResult.SUCCESS;
-  }
-
-  @Override
-  public int getRows() {
-    return 1;
-  }
-
-  @Override
-  public int getColumns() {
-    return 1;
   }
 
   static {
@@ -112,6 +99,5 @@ public class Pedestal extends BlockWithEntity implements InteractibleSlotContain
     VoxelShape basin = VoxelShapes.union(basinDown, basinUp);
     SHAPE = VoxelShapes.union(basin, pillarDefault, pedestalDefault);
   }
-
 
 }

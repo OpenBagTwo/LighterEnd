@@ -66,12 +66,7 @@ public class Murkweed extends PlantBlock {
 
   @Override
   protected void onEntityCollision(
-      BlockState state,
-      World world,
-      BlockPos pos,
-      Entity entity,
-      EntityCollisionHandler handler,
-      boolean bl
+      BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler
   ) {
     if (
         entity instanceof LivingEntity livingEntity

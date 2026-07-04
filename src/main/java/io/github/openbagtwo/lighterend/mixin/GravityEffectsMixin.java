@@ -23,7 +23,7 @@ public abstract class GravityEffectsMixin extends GravityStrengthMixin {
   public void increaseSafeFallHeight(CallbackInfoReturnable<Double> cir) {
     double endGravity = LighterEnd.CONFIG.getEndGravity();
     if (endGravity >= 0.0 && DimensionTypes.THE_END.equals(
-        this.getEntityWorld().getDimensionEntry().getKey().orElse(null))) {
+        this.getWorld().getDimensionEntry().getKey().orElse(null))) {
       cir.setReturnValue(cir.getReturnValue()
           - (1 - endGravity) * this.getAttributeValue(EntityAttributes.SAFE_FALL_DISTANCE)
           / endGravity);
@@ -34,7 +34,7 @@ public abstract class GravityEffectsMixin extends GravityStrengthMixin {
   public void decreaseFallDamage(CallbackInfoReturnable<Integer> cir) {
     double endGravity = LighterEnd.CONFIG.getEndGravity();
     if (endGravity >= 0.0 && DimensionTypes.THE_END.equals(
-        this.getEntityWorld().getDimensionEntry().getKey().orElse(null))) {
+        this.getWorld().getDimensionEntry().getKey().orElse(null))) {
 
       // TODO: this is bad math—replace with a full @Override that recomputes the value
       cir.setReturnValue(MathHelper.floor(cir.getReturnValue() * endGravity));

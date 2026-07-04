@@ -16,6 +16,7 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnLocationTypes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.SpawnRestriction;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.passive.AbstractCowEntity;
@@ -88,7 +89,7 @@ public class LighterEndMobs {
                   RegistryKeys.ENTITY_TYPE, LighterEnd.of(name))));
       spawnEgg = LighterEndItems.register(
           name + "_spawn_egg",
-          (properties) -> new SpawnEggItem(properties.spawnEgg(mob)),
+          (properties) -> new SpawnEggItem((EntityType<? extends MobEntity>) mob, properties),
           new Settings()
       );
     }

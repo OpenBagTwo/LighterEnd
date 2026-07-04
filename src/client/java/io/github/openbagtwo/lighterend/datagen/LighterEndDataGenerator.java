@@ -17,7 +17,6 @@ public class LighterEndDataGenerator implements DataGeneratorEntrypoint {
   public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
     Pack pack = fabricDataGenerator.createPack();
     pack.addProvider(BlockLootTableProvider::new);
-    pack.addProvider(ChestLootTableProvider::new);
     pack.addProvider(ModelProvider::new);
     pack.addProvider(RecipeProvider::new);
     pack.addProvider(BlockTagProvider::new);

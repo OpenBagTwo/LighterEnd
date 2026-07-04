@@ -159,7 +159,7 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
   @Override
   public void tickMovement() {
     super.tickMovement();
-    if (!this.getEntityWorld().isClient()) {
+    if (!this.getWorld().isClient()) {
       if (this.ticksLeftUntilEnterHive > 0) {
         this.ticksLeftUntilEnterHive--;
       }
@@ -217,7 +217,7 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
     if (!this.hivePos.isWithinDistance(this.getBlockPos(), MAX_DISTANCE_FROM_HIVE)) {
       return null;
     }
-    return this.getEntityWorld().getBlockEntity(
+    return this.getWorld().getBlockEntity(
         this.hivePos, LighterEndBlockEntities.SILK_MOTH_NEST
     ).orElse(null);
 
@@ -278,7 +278,7 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
     public boolean canStart() {
       if (
           SilkMoth.this.hivePos != null && SilkMoth.this.canEnterHive()
-              && SilkMoth.this.hivePos.isWithinDistance(SilkMoth.this.getEntityPos(), 2.0)
+              && SilkMoth.this.hivePos.isWithinDistance(SilkMoth.this.getPos(), 2.0)
       ) {
         SilkMothNestEntity nest = SilkMoth.this.getHive();
         if (nest != null && nest.getOccupancy() < SilkMothNestEntity.MAX_MOTH_COUNT) {
@@ -310,17 +310,17 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
 
     @Override
     public void start() {
-      if (SilkMoth.this.hivePos != null && SilkMoth.this.getEntityWorld()
+      if (SilkMoth.this.hivePos != null && SilkMoth.this.getWorld()
           .isPosLoaded(SilkMoth.this.hivePos) && SilkMoth.this.getHive() == null) {
         SilkMoth.this.clearHivePos();
       }
 
-      this.lastValidateTime = SilkMoth.this.getEntityWorld().getTime();
+      this.lastValidateTime = SilkMoth.this.getWorld().getTime();
     }
 
     @Override
     public boolean canStart() {
-      return SilkMoth.this.getEntityWorld().getTime()
+      return SilkMoth.this.getWorld().getTime()
           > this.lastValidateTime + this.ticksUntilNextValidate;
     }
 
@@ -351,7 +351,7 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
               MAX_DISTANCE_FROM_HIVE)
               && SilkMoth.this.canEnterHive()
               && !this.isCloseEnough(SilkMoth.this.hivePos)
-              && SilkMoth.this.getEntityWorld().getBlockState(SilkMoth.this.hivePos)
+              && SilkMoth.this.getWorld().getBlockState(SilkMoth.this.hivePos)
               .isOf(LighterEndBlocks.SILK_MOTH_NEST)
       );
     }
@@ -383,8 +383,8 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
         if (this.ticks > this.getTickCount(MIN_TICKS_BETWEEN_ENTERING_HIVE)) {
           this.makeChosenHivePossibleHive();
         } else if (!SilkMoth.this.navigation.isFollowingPath()) {
-          if (!SilkMoth.this.hivePos.isWithinDistance(SilkMoth.this.getEntityPos(), 16)) {
-            if (!SilkMoth.this.hivePos.isWithinDistance(SilkMoth.this.getEntityPos(),
+          if (!SilkMoth.this.hivePos.isWithinDistance(SilkMoth.this.getPos(), 16)) {
+            if (!SilkMoth.this.hivePos.isWithinDistance(SilkMoth.this.getPos(),
                 MAX_DISTANCE_FROM_HIVE)) {
               SilkMoth.this.clearHivePos();
             } else {
@@ -411,7 +411,7 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
     }
 
     private boolean startMovingToFar(BlockPos pos) {
-      int i = pos.isWithinDistance(SilkMoth.this.getEntityPos(), 3) ? 1 : 2;
+      int i = pos.isWithinDistance(SilkMoth.this.getPos(), 3) ? 1 : 2;
       SilkMoth.this.navigation.setRangeMultiplier(10.0F);
       SilkMoth.this.navigation.startMovingTo(pos.getX(), pos.getY(), pos.getZ(), i, 1.0);
       return SilkMoth.this.navigation.getCurrentPath() != null
@@ -486,7 +486,7 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
 
     private List<BlockPos> getNearbyFreeHives() {
       BlockPos blockPos = SilkMoth.this.getBlockPos();
-      World world = SilkMoth.this.getEntityWorld();
+      World world = SilkMoth.this.getWorld();
 
       List<BlockPos> nearbyHives = new ArrayList<>();
       for (int dy = 0; dy <= 10 && dy >= -10; dy = (dy <= 0 ? 1 : 0) - dy) {
@@ -545,7 +545,7 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
       if (SilkMoth.this.getHive() != null && SilkMoth.this.hivePos.isWithinDistance(
           SilkMoth.this.getBlockPos(), this.getMaxWanderDistance())) {
         Vec3d vec3d = Vec3d.ofCenter(SilkMoth.this.hivePos);
-        vec3d2 = vec3d.subtract(SilkMoth.this.getEntityPos()).normalize();
+        vec3d2 = vec3d.subtract(SilkMoth.this.getPos()).normalize();
       } else {
         vec3d2 = SilkMoth.this.getRotationVec(0.0F);
       }

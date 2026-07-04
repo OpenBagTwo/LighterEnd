@@ -67,12 +67,7 @@ public class Needlegrass extends PlantBlock implements Fertilizable {
 
   @Override
   protected void onEntityCollision(
-      BlockState state,
-      World world,
-      BlockPos pos,
-      Entity entity,
-      EntityCollisionHandler handler,
-      boolean bl
+      BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler
   ) {
     if (
         entity instanceof LivingEntity
@@ -81,7 +76,7 @@ public class Needlegrass extends PlantBlock implements Fertilizable {
       entity.slowMovement(state, new Vec3d(0.8F, 0.75, 0.8F));
       if (world instanceof ServerWorld serverWorld) {
         Vec3d vec3d = entity.isControlledByPlayer() ? entity.getMovement()
-            : entity.getLastRenderPos().subtract(entity.getEntityPos());
+            : entity.getLastRenderPos().subtract(entity.getPos());
         if (vec3d.horizontalLengthSquared() > 0.0) {
           if (Math.abs(vec3d.getX()) >= 0.003F || Math.abs(vec3d.getZ()) >= 0.003F) {
             entity.damage(serverWorld, world.getDamageSources().sweetBerryBush(), 1.0F);

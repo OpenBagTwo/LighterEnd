@@ -71,12 +71,5 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
         LighterEndBiomes.SULPHUR_SPRINGS,
         LighterEndBiomes.SHADOW_FOREST
     );
-
-    builder(LighterEndTags.INVALID_SPAWN_BIOMES).add(
-        BiomeKeys.THE_VOID,
-        BiomeKeys.END_BARRENS,
-        BiomeKeys.SMALL_END_ISLANDS,
-        LighterEndBiomes.STARFIELD
-    );
   }
 }

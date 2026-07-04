@@ -1,7 +1,6 @@
 package io.github.openbagtwo.lighterend.misc;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import io.github.openbagtwo.lighterend.blocks.Shelf;
 import io.github.openbagtwo.lighterend.blocks.Signs;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
@@ -63,7 +62,6 @@ public class Wood {
     public final Block wallSign;
     public final Block hangingSign;
     public final Block wallHangingSign;
-    public final Block shelf;
     // public final Block stool;
     public final List<Block> blocks;
     private final MapColor woodColor;
@@ -253,16 +251,6 @@ public class Wood {
               ).useBlockPrefixedTranslationKey()
           )
       );
-      shelf = LighterEndBlocks.register(
-          baseName + "_shelf",
-          settings -> new Shelf(
-              settings.mapColor(planks.getDefaultMapColor())
-                  .instrument(NoteBlockInstrument.BASS)
-                  .sounds(BlockSoundGroup.SHELF)
-                  .burnable()
-                  .strength(2.0F, 3.0F)
-          )
-      );
 
       for (Block block : Arrays.asList(log, strippedLog, wood, strippedWood)) {
         FlammableBlockRegistry.getDefaultInstance().add(block, 5, 5);
@@ -270,7 +258,6 @@ public class Wood {
       for (Block block : Arrays.asList(planks, slab, stairs, fence, gate)) {
         FlammableBlockRegistry.getDefaultInstance().add(block, 5, 20);
       }
-      FlammableBlockRegistry.getDefaultInstance().add(shelf, 30, 20);
 
       blocks = Arrays.asList(
           log,
@@ -288,8 +275,7 @@ public class Wood {
           pressurePlate,
           ladder,
           sign,
-          hangingSign,
-          shelf
+          hangingSign
       );
     }
 

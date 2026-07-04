@@ -2,7 +2,6 @@ package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.Furnaces;
-import io.github.openbagtwo.lighterend.blocks.Shelf;
 import io.github.openbagtwo.lighterend.blocks.Signs.LighterEndHangingSignBlockEntity;
 import io.github.openbagtwo.lighterend.blocks.Signs.LighterEndSignBlockEntity;
 import io.github.openbagtwo.lighterend.blocks.entities.PedestalDisplay;
@@ -47,18 +46,6 @@ public class LighterEndBlockEntities {
           LighterEndBlocks.GLOWSHROOM.wallHangingSign,
           LighterEndBlocks.DRAGON.hangingSign,
           LighterEndBlocks.DRAGON.wallHangingSign
-      ).build(null));
-
-  public static final BlockEntityType<Shelf.Entity> SHELF = Registry.register(
-      Registries.BLOCK_ENTITY_TYPE,
-      LighterEnd.of("shelf"),
-      FabricBlockEntityTypeBuilder.create(
-          Shelf.Entity::new,
-          LighterEndBlocks.TENANEA.shelf,
-          LighterEndBlocks.UMBRELLA.shelf,
-          LighterEndBlocks.LOTUS.shelf,
-          LighterEndBlocks.GLOWSHROOM.shelf,
-          LighterEndBlocks.DRAGON.shelf
       ).build(null));
 
   public static final BlockEntityType<Furnaces.EndFurnaceEntity> END_FURNACE = Registry.register(

@@ -1,17 +1,16 @@
 package io.github.openbagtwo.lighterend.particles;
 
-import net.minecraft.client.particle.BillboardParticle;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFactory;
+import net.minecraft.client.particle.ParticleTextureSheet;
+import net.minecraft.client.particle.SpriteBillboardParticle;
 import net.minecraft.client.particle.SpriteProvider;
-import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
 
-public class Geyser extends BillboardParticle {
+public class Geyser extends SpriteBillboardParticle {
 
   private final Mutable mut = new Mutable();
   private boolean changeDir = false;
@@ -25,9 +24,10 @@ public class Geyser extends BillboardParticle {
       double vX,
       double vY,
       double vZ,
-      Sprite sprite
+      SpriteProvider sprites
   ) {
-    super(world, x, y, z, vX, vY, vZ, sprite);
+    super(world, x, y, z, vX, vY, vZ);
+    this.setSprite(sprites);
 
     this.maxAge = MathHelper.nextInt(random, 400, 800);
     this.scale = MathHelper.nextFloat(random, 0.5F, 1.0F);
@@ -65,8 +65,8 @@ public class Geyser extends BillboardParticle {
   }
 
   @Override
-  public BillboardParticle.RenderType getRenderType() {
-    return BillboardParticle.RenderType.PARTICLE_ATLAS_TRANSLUCENT;
+  public ParticleTextureSheet getType() {
+    return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
   }
 
   public static class Factory implements ParticleFactory<SimpleParticleType> {
@@ -86,10 +86,9 @@ public class Geyser extends BillboardParticle {
         double z,
         double vX,
         double vY,
-        double vZ,
-        Random random
+        double vZ
     ) {
-      return new Geyser(world, x, y, z, 0, 0.125, 0, this.sprites.getSprite(random));
+      return new Geyser(world, x, y, z, 0, 0.125, 0, sprites);
     }
   }
 }

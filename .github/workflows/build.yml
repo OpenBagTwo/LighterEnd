@@ -6,15 +6,13 @@ on:
     - 1.21.5
     - 1.21.8
     - 1.21.9
-    - 1.21.11
-    - 26.1
   release:
     types: [published]
 jobs:
   build:
     strategy:
       matrix:
-        java: [25]
+        java: [21]
     runs-on: ubuntu-latest
     steps:
     - name: checkout repository
@@ -39,7 +37,7 @@ jobs:
     - name: build
       run: sh gradlew build
     - name: capture build artifacts
-      if: ${{ matrix.java == '25' }}
+      if: ${{ matrix.java == '21' }}
       uses: actions/upload-artifact@v4
       with:
         name: Artifacts

@@ -96,14 +96,6 @@ public class ModelProvider extends FabricModelProvider {
     blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.FERROUS_ICE);
     blockModelGenerator.registerSimpleCubeAll(LighterEndBlocks.AUROUS_ICE);
 
-    LighterEndBlocks.COPPER_CHANDELIERS.getWaxingMap()
-        .forEach(
-            (unwaxed, waxed) -> blockModelGenerator.registerWaxable(
-                unwaxed.asItem(),
-                waxed.asItem()
-            )
-        );
-
     generateMaterialModels(blockModelGenerator, LighterEndBlocks.BORNITE);
 
     generateWoodModels(blockModelGenerator, LighterEndBlocks.DRAGON);
@@ -149,7 +141,6 @@ public class ModelProvider extends FabricModelProvider {
     blockModelGenerator.registerHangingSign(wood.strippedLog, wood.sign, wood.wallSign);
     blockModelGenerator.registerHangingSign(wood.strippedLog, wood.hangingSign,
         wood.wallHangingSign);
-    blockModelGenerator.registerShelf(wood.shelf, wood.strippedLog);
   }
 
   @Override
@@ -270,14 +261,6 @@ public class ModelProvider extends FabricModelProvider {
         ItemModelGenerator.LEGGINGS_TRIM_ID_PREFIX, true);
     registerArmorTrim(itemModelGenerator, Items.LEATHER_BOOTS, EquipmentAssetKeys.LEATHER,
         ItemModelGenerator.BOOTS_TRIM_ID_PREFIX, true);
-    registerArmorTrim(itemModelGenerator, Items.COPPER_HELMET, EquipmentAssetKeys.COPPER,
-        ItemModelGenerator.HELMET_TRIM_ID_PREFIX, false);
-    registerArmorTrim(itemModelGenerator, Items.COPPER_CHESTPLATE, EquipmentAssetKeys.COPPER,
-        ItemModelGenerator.CHESTPLATE_TRIM_ID_PREFIX, false);
-    registerArmorTrim(itemModelGenerator, Items.COPPER_LEGGINGS, EquipmentAssetKeys.COPPER,
-        ItemModelGenerator.LEGGINGS_TRIM_ID_PREFIX, false);
-    registerArmorTrim(itemModelGenerator, Items.COPPER_BOOTS, EquipmentAssetKeys.COPPER,
-        ItemModelGenerator.BOOTS_TRIM_ID_PREFIX, false);
     registerArmorTrim(itemModelGenerator, Items.CHAINMAIL_HELMET, EquipmentAssetKeys.CHAINMAIL,
         ItemModelGenerator.HELMET_TRIM_ID_PREFIX, false);
     registerArmorTrim(itemModelGenerator, Items.CHAINMAIL_CHESTPLATE, EquipmentAssetKeys.CHAINMAIL,

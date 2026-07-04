@@ -1,16 +1,15 @@
 package io.github.openbagtwo.lighterend.particles;
 
-import net.minecraft.client.particle.BillboardParticle;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFactory;
+import net.minecraft.client.particle.ParticleTextureSheet;
+import net.minecraft.client.particle.SpriteBillboardParticle;
 import net.minecraft.client.particle.SpriteProvider;
-import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
 
-public class Sulphur extends BillboardParticle {
+public class Sulphur extends SpriteBillboardParticle {
 
   private int ticks;
   private double preVX;
@@ -25,9 +24,10 @@ public class Sulphur extends BillboardParticle {
       double x,
       double y,
       double z,
-      Sprite sprite
+      SpriteProvider sprites
   ) {
-    super(world, x, y, z, sprite);
+    super(world, x, y, z);
+    this.setSprite(sprites);
 
     this.maxAge = MathHelper.nextInt(random, 150, 300);
     this.scale = MathHelper.nextFloat(random, 0.05F, 0.15F);
@@ -78,8 +78,8 @@ public class Sulphur extends BillboardParticle {
   }
 
   @Override
-  public BillboardParticle.RenderType getRenderType() {
-    return BillboardParticle.RenderType.PARTICLE_ATLAS_TRANSLUCENT;
+  public ParticleTextureSheet getType() {
+    return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
   }
 
   public static class Factory implements ParticleFactory<SimpleParticleType> {
@@ -99,10 +99,9 @@ public class Sulphur extends BillboardParticle {
         double z,
         double vX,
         double vY,
-        double vZ,
-        Random random
+        double vZ
     ) {
-      return new Sulphur(world, x, y, z, this.sprites.getSprite(random));
+      return new Sulphur(world, x, y, z, sprites);
     }
   }
 }

@@ -373,25 +373,6 @@ public class RecipeProvider extends FabricRecipeProvider {
                 this.conditionsFromItem(LighterEndItems.LUMECORN_EAR)
             ).offerTo(exporter);
 
-        createShaped(RecipeCategory.DECORATIONS, LighterEndBlocks.COPPER_CHANDELIERS.unaffected())
-            .input('r', LighterEndItems.LUMECORN_EAR)
-            .input('n', Items.COPPER_NUGGET)
-            .input('i', Items.COPPER_INGOT)
-            .pattern("r r")
-            .pattern("n n")
-            .pattern(" i ")
-            .criterion(
-                hasItem(LighterEndItems.LUMECORN_EAR),
-                this.conditionsFromItem(LighterEndItems.LUMECORN_EAR)
-            ).offerTo(exporter);
-        LighterEndBlocks.COPPER_CHANDELIERS.getWaxingMap().forEach(
-            (unwaxed, waxed) -> createShapeless(RecipeCategory.DECORATIONS, waxed)
-                .input(unwaxed)
-                .input(Items.HONEYCOMB)
-                .criterion(hasItem(unwaxed), this.conditionsFromItem(unwaxed))
-                .offerTo(exporter)
-        );
-
         CookingRecipeJsonBuilder.createSmelting(
             Ingredient.ofItem(LighterEndBlocks.FERROUS_ICE),
             RecipeCategory.MISC,
@@ -406,23 +387,6 @@ public class RecipeProvider extends FabricRecipeProvider {
             RegistryKey.of(
                 RegistryKeys.RECIPE,
                 LighterEnd.of("smelting_iron_from_ice")
-            )
-        );
-
-        CookingRecipeJsonBuilder.createSmelting(
-            Ingredient.ofItem(LighterEndBlocks.EMERALD_ICE),
-            RecipeCategory.MISC,
-            Items.COPPER_NUGGET,
-            0.1F,
-            200
-        ).criterion(
-            hasItem(LighterEndBlocks.EMERALD_ICE),
-            conditionsFromItem(LighterEndBlocks.EMERALD_ICE)
-        ).offerTo(
-            exporter,
-            RegistryKey.of(
-                RegistryKeys.RECIPE,
-                LighterEnd.of("smelting_copper_from_ice")
             )
         );
 
@@ -721,21 +685,10 @@ public class RecipeProvider extends FabricRecipeProvider {
         createShaped(RecipeCategory.DECORATIONS, wood.hangingSign, 6)
             .group("hanging_sign")
             .input('#', LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName))
-            .input('X', Items.IRON_CHAIN)
+            .input('X', Items.CHAIN)
             .pattern("X X")
             .pattern("###")
             .pattern("###")
-            .criterion(
-                hasItem(wood.strippedLog),
-                this.conditionsFromTag(LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName))
-            ).offerTo(this.exporter);
-
-        createShaped(RecipeCategory.DECORATIONS, wood.shelf, 6)
-            .input('#', LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName))
-            .pattern("###")
-            .pattern("   ")
-            .pattern("###")
-            .group("shelf")
             .criterion(
                 hasItem(wood.strippedLog),
                 this.conditionsFromTag(LighterEndTags.STRIPPED_LOG_TAGS.get(wood.baseName))

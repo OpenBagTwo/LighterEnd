@@ -81,7 +81,6 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
       valueLookupBuilder(BlockTags.CEILING_HANGING_SIGNS).add(wood.hangingSign);
       valueLookupBuilder(BlockTags.WALL_HANGING_SIGNS).add(wood.wallHangingSign);
       valueLookupBuilder(BlockTags.CLIMBABLE).add(wood.ladder);
-      valueLookupBuilder(BlockTags.WOODEN_SHELVES).add(wood.shelf);
     }
 
     valueLookupBuilder(BlockTags.PICKAXE_MINEABLE)
@@ -106,9 +105,6 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
             LighterEndBlocks.BRIMSTONE,
             LighterEndBlocks.HYDROTHERMAL_VENT
         );
-    for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.getAll()) {
-      valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(chandelier);
-    }
 
     valueLookupBuilder(BlockTags.NEEDS_STONE_TOOL)
         .add(LighterEndBlocks.ENDER_BLOCK)

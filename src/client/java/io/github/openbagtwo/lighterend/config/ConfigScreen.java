@@ -122,18 +122,6 @@ public class ConfigScreen extends GameOptionsScreen {
               }
           )
       );
-      this.body.addSingleOptionEntry(
-          SimpleOption.ofBoolean(
-              "End World Spawn",
-              SimpleOption.constantTooltip(Text.of(
-                  "New worlds will have their spawn points in The End."
-                      + "\n\nHighly experimental.\nEnable at your own risk."
-              )),
-              LighterEnd.CONFIG.endSpawn, (value) -> {
-                LighterEnd.CONFIG.endSpawn = value;
-              }
-          )
-      );
     }
   }
 
