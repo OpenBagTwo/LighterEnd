@@ -19,11 +19,10 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.SchoolingFishEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -76,15 +75,15 @@ public class EndFish extends SchoolingFishEntity {
   }
 
   @Override
-  public void writeCustomData(WriteView view) {
-    super.writeCustomData(view);
-    view.putInt("Variant", this.getVariant());
+  public void writeCustomDataToNbt(NbtCompound nbt) {
+    super.writeCustomDataToNbt(nbt);
+    nbt.putInt("Variant", this.getVariant());
   }
 
   @Override
-  protected void readCustomData(ReadView view) {
-    super.readCustomData(view);
-    this.setVariant(view.getInt("Variant", 0));
+  public void readCustomDataFromNbt(NbtCompound nbt) {
+    super.readCustomDataFromNbt(nbt);
+    this.setVariant(nbt.getInt("Variant", 0));
   }
 
   @Override

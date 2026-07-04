@@ -12,9 +12,6 @@ public class EndMossRenderer {
   public static BlockColorProvider getBlockColor() {
     return (state, world, pos, tintIndex) -> {
       if (world != null && pos != null) {
-        if (!world.hasBiomes()) {
-          return 0x4ad6d5;
-        }
         RegistryEntry<Biome> biome = world.getBiomeFabric(pos);
         if (biome.isIn(BiomeTags.IS_END)) {
           if (biome.isIn(LighterEndTags.VANILLA_END_BIOMES)) {

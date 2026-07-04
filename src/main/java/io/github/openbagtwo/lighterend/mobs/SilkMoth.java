@@ -35,11 +35,10 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -101,7 +100,7 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
       }
 
     };
-    birdNavigation.setCanOpenDoors(false);
+    birdNavigation.setCanPathThroughDoors(false);
     birdNavigation.setCanSwim(false);
     birdNavigation.setMaxFollowRange(48.0F);
     return birdNavigation;
@@ -130,17 +129,15 @@ public class SilkMoth extends AnimalEntity implements Flutterer {
   }
 
   @Override
-  public void writeCustomData(WriteView view) {
-    super.writeCustomData(view);
-    if (this.hivePos != null) {
-      view.putNullable("hive_pos", BlockPos.CODEC, this.hivePos);
-    }
+  public void writeCustomDataToNbt(NbtCompound nbt) {
+    super.writeCustomDataToNbt(nbt);
+    nbt.putNullable("hive_pos", BlockPos.CODEC, this.hivePos);
   }
 
   @Override
-  protected void readCustomData(ReadView view) {
-    super.readCustomData(view);
-    this.hivePos = view.read("hive_pos", BlockPos.CODEC).orElse(null);
+  public void readCustomDataFromNbt(NbtCompound nbt) {
+    super.readCustomDataFromNbt(nbt);
+    this.hivePos = nbt.get("hive_pos", BlockPos.CODEC).orElse(null);
   }
 
   @Override

@@ -3,7 +3,6 @@ package io.github.openbagtwo.lighterend.blocks.entities;
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.SilkMothNest;
 import io.github.openbagtwo.lighterend.mobs.SilkMoth;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
@@ -30,11 +29,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.storage.NbtWriteView;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.ErrorReporter;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -235,19 +231,18 @@ public class SilkMothNestEntity extends BlockEntity {
   }
 
   @Override
-  protected void readData(ReadView view) {
-    super.readData(view);
+  protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+    super.readNbt(nbt, registries);
     this.moths.clear();
-    for (MothData data : view.read("moths", MothData.LIST_CODEC).orElse(List.of())) {
+    for (MothData data : nbt.get("moths", MothData.LIST_CODEC).orElse(List.of())) {
       this.addMoth(data);
     }
   }
 
   @Override
-  protected void writeData(WriteView view) {
-    super.writeData(view);
-    view.put("moths", MothData.LIST_CODEC,
-        this.createMothData());
+  protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+    super.writeNbt(nbt, registries);
+    nbt.put("moths", MothData.LIST_CODEC, this.createMothData());
   }
 
   @Override
@@ -266,9 +261,9 @@ public class SilkMothNestEntity extends BlockEntity {
   }
 
   @Override
-  public void removeFromCopiedStackData(WriteView view) {
-    super.removeFromCopiedStackData(view);
-    view.remove("moths");
+  public void removeFromCopiedStackNbt(NbtCompound nbt) {
+    super.removeFromCopiedStackNbt(nbt);
+    nbt.remove("moths");
   }
 
   private List<MothData> createMothData() {
@@ -362,19 +357,11 @@ public class SilkMothNestEntity extends BlockEntity {
     }
 
     public static MothData of(Entity entity) {
-      MothData mothData;
-      try (ErrorReporter.Logging logging = new ErrorReporter.Logging(
-          entity.getErrorReporterContext(),
-          LighterEnd.LOGGER
-      )) {
-        NbtWriteView nbtWriteView = NbtWriteView.create(logging, entity.getRegistryManager());
-        entity.saveData(nbtWriteView);
-        SilkMothNestEntity.IRRELEVANT_NBT_TAGS.forEach(nbtWriteView::remove);
-        NbtCompound nbtCompound = nbtWriteView.getNbt();
-        mothData = new MothData(NbtComponent.of(nbtCompound), 0, MIN_OCCUPATION_TICKS);
-      }
+      NbtCompound nbtCompound = new NbtCompound();
+      entity.saveNbt(nbtCompound);
+      SilkMothNestEntity.IRRELEVANT_NBT_TAGS.forEach(nbtCompound::remove);
 
-      return mothData;
+      return new MothData(NbtComponent.of(nbtCompound), 0, MIN_OCCUPATION_TICKS);
     }
   }
 }

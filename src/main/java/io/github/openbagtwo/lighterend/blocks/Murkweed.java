@@ -11,8 +11,8 @@ import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.particle.EntityEffectParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.particle.TintedParticleEffect;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
@@ -54,7 +54,7 @@ public class Murkweed extends PlantBlock {
     double z = pos.getZ() + random.nextDouble();
     double v = random.nextDouble() * 0.1;
     world.addParticleClient(
-        TintedParticleEffect.create(ParticleTypes.ENTITY_EFFECT, 0xFFFFFFFF),
+        EntityEffectParticleEffect.create(ParticleTypes.ENTITY_EFFECT, 0xFFFFFFFF),
         x,
         y,
         z,
