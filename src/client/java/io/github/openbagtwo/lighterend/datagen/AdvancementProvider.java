@@ -190,7 +190,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         ).save(consumer, LighterEnd.MOD_ID + "/shear_mooshroom");
 
     AdvancementHolder wear_fur = Advancement.Builder.advancement().parent(acquire_claw).display(
-            LighterEndItems.AGAVE_FUR,
+            LighterEndBlocks.AGAVE_FUR.asItem(),
             title("wear_fur"),
             description("wear_fur"),
             null,
@@ -201,10 +201,10 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         ).requirements(Strategy.OR)
         .addCriterion(
             "wear_agave_fur",
-            InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndItems.AGAVE_FUR)
+            InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndBlocks.AGAVE_FUR)
         ).addCriterion(
             "wear_glowshroom_fur",
-            InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndItems.GLOWSHROOM_FUR)
+            InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndBlocks.GLOWSHROOM_FUR)
         ).save(consumer, LighterEnd.MOD_ID + "/wear_fur");
 
     AdvancementHolder drink_end_veil_potion = Advancement.Builder.advancement().parent(wear_fur)

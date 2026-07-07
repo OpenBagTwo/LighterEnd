@@ -1,7 +1,6 @@
 package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import io.github.openbagtwo.lighterend.items.Fur;
 import io.github.openbagtwo.lighterend.items.LighterEndFoodComponents;
 import io.github.openbagtwo.lighterend.items.Matchstick;
 import io.github.openbagtwo.lighterend.items.TPTotem;
@@ -77,17 +76,6 @@ public class LighterEndItems {
 
   public static final Item END_LILY_LEAF = register("end_lily_leaf");
   public static final Item DRIED_END_LILY_LEAF = register("end_lily_leaf_dried");
-
-  public static final Item GLOWSHROOM_FUR = register(
-      "mossy_glowshroom_fur",
-      settings -> new Fur(LighterEndBlocks.GLOWSHROOM_FUR, settings),
-      new Properties()
-  );
-  public static final Item AGAVE_FUR = register(
-      "blue_vine_fur",
-      settings -> new Fur(LighterEndBlocks.AGAVE_FUR, settings),
-      new Properties()
-  );
 
   public static final Item END_CREAM = register("end_cream");
   public static final Item END_POWDER = register("end_powder");

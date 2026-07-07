@@ -133,7 +133,7 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
 
     add(
         LighterEndBlocks.GLOWSHROOM_FUR,
-        (block -> this.createShearsOrSilkTouchOnlyDrop(LighterEndItems.GLOWSHROOM_FUR))
+        (block -> this.createShearsOrSilkTouchOnlyDrop(LighterEndBlocks.GLOWSHROOM_FUR))
     );
     dropSelf(LighterEndBlocks.GLOWSHROOM_CAP);
     dropSelf(LighterEndBlocks.GLOWSHROOM_HYMENOPHORE);
@@ -142,7 +142,7 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
     dropSelf(LighterEndBlocks.AGAVE_BULB);
     add(
         LighterEndBlocks.AGAVE_FUR,
-        (block -> this.createShearsOrSilkTouchOnlyDrop(LighterEndItems.AGAVE_FUR))
+        (block -> this.createShearsOrSilkTouchOnlyDrop(LighterEndBlocks.AGAVE_FUR))
     );
     dropSelf(LighterEndBlocks.AURANT_POLYPORE);
     dropSelf(LighterEndBlocks.PURPLE_POLYPORE);

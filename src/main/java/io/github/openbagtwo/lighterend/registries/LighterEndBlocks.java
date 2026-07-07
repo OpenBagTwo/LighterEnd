@@ -33,6 +33,7 @@ import io.github.openbagtwo.lighterend.blocks.UmbrellaFern.TallUmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaMembrane;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaTreeCluster;
 import io.github.openbagtwo.lighterend.blocks.VentBubbleColumn;
+import io.github.openbagtwo.lighterend.items.FurItem;
 import io.github.openbagtwo.lighterend.misc.Wood.WoodSet;
 import io.github.openbagtwo.lighterend.world.features.trees.DragonTree;
 import io.github.openbagtwo.lighterend.world.features.trees.Glowshroom;
@@ -191,17 +192,15 @@ public class LighterEndBlocks {
               .sound(SoundType.WART_BLOCK)
       )
   );
-  public static final Block GLOWSHROOM_FUR = register(
-      "mossy_glowshroom_fur", settings -> new Fur(settings, MapColor.COLOR_LIGHT_BLUE, 4, true),
-      false
+  public static final Block GLOWSHROOM_FUR = registerFur(
+      "mossy_glowshroom_fur", settings -> new Fur(settings, MapColor.COLOR_LIGHT_BLUE, 4, true)
   );
 
   public static final Block AGAVE = register("blue_vine", Agave::new, false);
   public static final Block AGAVE_BULB = register("blue_vine_lantern", Agave.Bulb::new);
-  public static final Block AGAVE_FUR = register(
+  public static final Block AGAVE_FUR = registerFur(
       "blue_vine_fur",
-      settings -> new Fur(settings, MapColor.WARPED_WART_BLOCK, 0, false),
-      false
+      settings -> new Fur(settings, MapColor.WARPED_WART_BLOCK, 0, false)
   );
   public static final Block AGAVE_SEED = register(
       "blue_vine_seed", settings -> new Sapling(Agave.AgaveFeature::new, settings)
@@ -435,6 +434,22 @@ public class LighterEndBlocks {
     ResourceKey<Block> id = ResourceKey.create(Registries.BLOCK, LighterEnd.of(name));
     Block block = factory.apply(settings.setId(id));
     return Registry.register(BuiltInRegistries.BLOCK, id, block);
+  }
+
+  private static Block registerFur(String name, Function<Properties, Block> factory) {
+    BlockItemId id = BlockItemId.create(LighterEnd.of(name), LighterEnd.of(name));
+    Block block = factory.apply(Properties.of().setId(id.block()));
+    LighterEndItems.register(
+        id.item(),
+        new FurItem(
+            block,
+            new Item.Properties()
+                .setId(id.item())
+                .useBlockDescriptionPrefix()
+                .requiredFeatures(block.requiredFeatures())
+        )
+    );
+    return Registry.register(BuiltInRegistries.BLOCK, id.block(), block);
   }
 
   public static void initialize() {

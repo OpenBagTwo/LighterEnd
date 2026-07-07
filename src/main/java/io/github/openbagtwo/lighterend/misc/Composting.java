@@ -24,11 +24,11 @@ public class Composting {
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.CHARNIA_RED, 0.65F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.END_LILY_SEED, 0.3F);
     CompostableRegistry.INSTANCE.add(LighterEndItems.END_LILY_LEAF, 0.65F);
-    CompostableRegistry.INSTANCE.add(LighterEndItems.GLOWSHROOM_FUR, 0.65F);
+    CompostableRegistry.INSTANCE.add(LighterEndBlocks.GLOWSHROOM_FUR, 0.65F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.GLOWSHROOM_CAP, 0.65F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.GLOWSHROOM_HYMENOPHORE, 0.65F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.GLOWSHROOM_SAPLING, 0.3F);
-    CompostableRegistry.INSTANCE.add(LighterEndItems.AGAVE_FUR, 0.65F);
+    CompostableRegistry.INSTANCE.add(LighterEndBlocks.AGAVE_FUR, 0.65F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.AGAVE_BULB, 0.65F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.AGAVE_SEED, 0.3F);
     CompostableRegistry.INSTANCE.add(LighterEndItems.SHADOW_BERRY_SEEDS, 0.3F);

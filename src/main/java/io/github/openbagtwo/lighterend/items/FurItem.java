@@ -7,9 +7,9 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.block.Block;
 
-public class Fur extends BlockItem {
+public class FurItem extends BlockItem {
 
-  public Fur(Block furBlock, Properties settings) {
+  public FurItem(Block furBlock, Properties settings) {
     super(
         furBlock,
         settings.component(

@@ -87,8 +87,8 @@ public class ItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
         LighterEndItems.idLookup.get(LighterEndBlocks.TENANEA_FLOWER.asItem()));
     builder(ItemTags.LEAVES).add(
         LighterEndItems.idLookup.get(LighterEndBlocks.TENANEA_LEAVES.asItem()),
-        LighterEndItems.idLookup.get(LighterEndItems.GLOWSHROOM_FUR),
-        LighterEndItems.idLookup.get(LighterEndItems.AGAVE_FUR),
+        LighterEndItems.idLookup.get(LighterEndBlocks.GLOWSHROOM_FUR.asItem()),
+        LighterEndItems.idLookup.get(LighterEndBlocks.AGAVE_FUR.asItem()),
         LighterEndItems.idLookup.get(LighterEndBlocks.DRAGON_LEAVES.asItem())
     );
 
@@ -170,8 +170,8 @@ public class ItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
     builder(LighterEndTags.FLETCHINGS).addTag(LighterEndTags.FUR_ITEMS);
 
     builder(LighterEndTags.FUR_ITEMS).add(
-        LighterEndItems.idLookup.get(LighterEndItems.GLOWSHROOM_FUR),
-        LighterEndItems.idLookup.get(LighterEndItems.AGAVE_FUR)
+        LighterEndItems.idLookup.get(LighterEndBlocks.GLOWSHROOM_FUR.asItem()),
+        LighterEndItems.idLookup.get(LighterEndBlocks.AGAVE_FUR.asItem())
     );
 
     builder(LighterEndTags.POLYPORES).add(
