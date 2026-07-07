@@ -171,13 +171,13 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
     add(LighterEndBlocks.HYDROTHERMAL_VENT, this::createSilkTouchOnlyTable);
 
     add(
-        LighterEndBlocks.SHADOW_BERRY,
+        LighterEndBlocks.SHADOW_BERRY_SEEDS,
         createCropDrops(
-            LighterEndBlocks.SHADOW_BERRY,
+            LighterEndBlocks.SHADOW_BERRY_SEEDS,
             LighterEndItems.SHADOW_BERRY,
-            LighterEndItems.SHADOW_BERRY_SEEDS,
+            LighterEndBlocks.SHADOW_BERRY_SEEDS.asItem(),
             LootItemBlockStatePropertyCondition.hasBlockStateProperties(
-                LighterEndBlocks.SHADOW_BERRY
+                LighterEndBlocks.SHADOW_BERRY_SEEDS
             ).setProperties(
                 StatePropertiesPredicate.Builder.properties().hasProperty(
                     ShadowBerry.AGE,
@@ -240,7 +240,7 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
                 .when(this.hasSilkTouch())
                 .setRolls(ConstantValue.exactly(1.0F))
                 .add(
-                    LootItem.lootTableItem(LighterEndItems.SILK_MOTH_NEST)
+                    LootItem.lootTableItem(LighterEndBlocks.SILK_MOTH_NEST)
                         .apply(
                             CopyComponentsFunction.copyComponentsFromBlockEntity(
                                 LootContextParams.BLOCK_ENTITY).include(LighterEndData.MOTHS)

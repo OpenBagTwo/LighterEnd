@@ -1,7 +1,7 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import com.mojang.serialization.MapCodec;
-import io.github.openbagtwo.lighterend.registries.LighterEndItems;
+import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -79,7 +79,7 @@ public class ShadowBerry extends CropBlock {
 
   @Override
   protected ItemLike getBaseSeedId() {
-    return LighterEndItems.SHADOW_BERRY_SEEDS;
+    return LighterEndBlocks.SHADOW_BERRY_SEEDS;
   }
 
   @Override

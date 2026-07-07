@@ -35,12 +35,14 @@ import io.github.openbagtwo.lighterend.blocks.UmbrellaTreeCluster;
 import io.github.openbagtwo.lighterend.blocks.VentBubbleColumn;
 import io.github.openbagtwo.lighterend.items.FurItem;
 import io.github.openbagtwo.lighterend.misc.Wood.WoodSet;
+import io.github.openbagtwo.lighterend.registries.LighterEndData.SilkLevelComponent;
 import io.github.openbagtwo.lighterend.world.features.trees.DragonTree;
 import io.github.openbagtwo.lighterend.world.features.trees.Glowshroom;
 import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
 import io.github.openbagtwo.lighterend.world.features.trees.UmbrellaTree;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -135,7 +137,19 @@ public class LighterEndBlocks {
           applyLeafSettings(settings.mapColor(MapColor.COLOR_PINK))
       )
   );
-  public static Block SILK_MOTH_NEST = register("silk_moth_nest", SilkMothNest::new, false);
+  public static Block SILK_MOTH_NEST = registerSpecialBlockItem(
+      "silk_moth_nest",
+      SilkMothNest::new,
+      (block, id) -> new BlockItem(
+          block,
+          new Item.Properties()
+              .setId(id.item())
+              .useBlockDescriptionPrefix()
+              .requiredFeatures(block.requiredFeatures())
+              .component(LighterEndData.MOTHS, LighterEndData.MothsComponent.DEFAULT)
+              .component(LighterEndData.SILK_LEVEL, new SilkLevelComponent(0))
+      )
+  );
 
   public static Block UMBRELLA_TREE_CLUSTER = register("umbrella_tree_cluster",
       UmbrellaTreeCluster::new);
@@ -192,15 +206,29 @@ public class LighterEndBlocks {
               .sound(SoundType.WART_BLOCK)
       )
   );
-  public static final Block GLOWSHROOM_FUR = registerFur(
-      "mossy_glowshroom_fur", settings -> new Fur(settings, MapColor.COLOR_LIGHT_BLUE, 4, true)
+  public static final Block GLOWSHROOM_FUR = registerSpecialBlockItem(
+      "mossy_glowshroom_fur", settings -> new Fur(settings, MapColor.COLOR_LIGHT_BLUE, 4, true),
+      (block, id) -> new FurItem(
+          block,
+          new Item.Properties()
+              .setId(id.item())
+              .useBlockDescriptionPrefix()
+              .requiredFeatures(block.requiredFeatures())
+      )
   );
 
   public static final Block AGAVE = register("blue_vine", Agave::new, false);
   public static final Block AGAVE_BULB = register("blue_vine_lantern", Agave.Bulb::new);
-  public static final Block AGAVE_FUR = registerFur(
+  public static final Block AGAVE_FUR = registerSpecialBlockItem(
       "blue_vine_fur",
-      settings -> new Fur(settings, MapColor.WARPED_WART_BLOCK, 0, false)
+      settings -> new Fur(settings, MapColor.WARPED_WART_BLOCK, 0, false),
+      (block, id) -> new FurItem(
+          block,
+          new Item.Properties()
+              .setId(id.item())
+              .useBlockDescriptionPrefix()
+              .requiredFeatures(block.requiredFeatures())
+      )
   );
   public static final Block AGAVE_SEED = register(
       "blue_vine_seed", settings -> new Sapling(Agave.AgaveFeature::new, settings)
@@ -368,10 +396,17 @@ public class LighterEndBlocks {
       TubeWorm::new
   );
 
-  public static final Block SHADOW_BERRY = register(
+  public static final Block SHADOW_BERRY_SEEDS = registerSpecialBlockItem(
       "shadow_berry",
+      "shadow_berry_seeds",
       ShadowBerry::new,
-      false
+      (block, id) -> new BlockItem(
+          block,
+          new Item.Properties()
+              .setId(id.item())
+              .useItemDescriptionPrefix()
+              .requiredFeatures(block.requiredFeatures())
+      )
   );
   public static final Block SHADOW_GRASS = register(
       "shadow_plant",
@@ -436,19 +471,23 @@ public class LighterEndBlocks {
     return Registry.register(BuiltInRegistries.BLOCK, id, block);
   }
 
-  private static Block registerFur(String name, Function<Properties, Block> factory) {
-    BlockItemId id = BlockItemId.create(LighterEnd.of(name), LighterEnd.of(name));
+  private static Block registerSpecialBlockItem(
+      String name,
+      Function<Properties, Block> factory,
+      BiFunction<Block, BlockItemId, BlockItem> itemFactory
+  ) {
+    return registerSpecialBlockItem(name, name, factory, itemFactory);
+  }
+
+  private static Block registerSpecialBlockItem(
+      String blockName,
+      String itemName,
+      Function<Properties, Block> factory,
+      BiFunction<Block, BlockItemId, BlockItem> itemFactory
+  ) {
+    BlockItemId id = BlockItemId.create(LighterEnd.of(blockName), LighterEnd.of(itemName));
     Block block = factory.apply(Properties.of().setId(id.block()));
-    LighterEndItems.register(
-        id.item(),
-        new FurItem(
-            block,
-            new Item.Properties()
-                .setId(id.item())
-                .useBlockDescriptionPrefix()
-                .requiredFeatures(block.requiredFeatures())
-        )
-    );
+    LighterEndItems.register(id.item(), itemFactory.apply(block, id));
     return Registry.register(BuiltInRegistries.BLOCK, id.block(), block);
   }
 

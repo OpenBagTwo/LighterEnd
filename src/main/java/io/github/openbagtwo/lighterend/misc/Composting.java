@@ -31,7 +31,7 @@ public class Composting {
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.AGAVE_FUR, 0.65F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.AGAVE_BULB, 0.65F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.AGAVE_SEED, 0.3F);
-    CompostableRegistry.INSTANCE.add(LighterEndItems.SHADOW_BERRY_SEEDS, 0.3F);
+    CompostableRegistry.INSTANCE.add(LighterEndBlocks.SHADOW_BERRY_SEEDS, 0.3F);
     CompostableRegistry.INSTANCE.add(LighterEndItems.SHADOW_BERRY, 0.65F);
     CompostableRegistry.INSTANCE.add(LighterEndItems.SHADOW_BERRY_COOKED, 0.85F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.SHADOW_GRASS, 0.3F);

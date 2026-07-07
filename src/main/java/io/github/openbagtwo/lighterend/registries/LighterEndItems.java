@@ -4,7 +4,6 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.items.LighterEndFoodComponents;
 import io.github.openbagtwo.lighterend.items.Matchstick;
 import io.github.openbagtwo.lighterend.items.TPTotem;
-import io.github.openbagtwo.lighterend.registries.LighterEndData.SilkLevelComponent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -40,16 +39,6 @@ public class LighterEndItems {
   );
   public static final Item SILK = register("silk_fiber");
   public static final Item SILK_MATRIX = register("silk_matrix");
-  public static Item SILK_MOTH_NEST = register(
-      "silk_moth_nest",
-      settings -> new BlockItem(
-          LighterEndBlocks.SILK_MOTH_NEST,
-          settings
-              .component(LighterEndData.MOTHS, LighterEndData.MothsComponent.DEFAULT)
-              .component(LighterEndData.SILK_LEVEL, new SilkLevelComponent(0))
-      ),
-      new Properties()
-  );
 
   public static final Item UMBRELLA_JUICE = register(
       "umbrella_juice",
@@ -103,14 +92,6 @@ public class LighterEndItems {
 
   public static final Item MATCHSTICK = register("matchstick", Matchstick::new, new Properties());
 
-  public static final Item SHADOW_BERRY_SEEDS = register(
-      "shadow_berry_seeds",
-      settings -> new BlockItem(
-          LighterEndBlocks.SHADOW_BERRY,
-          settings.useItemDescriptionPrefix()
-      ),
-      new Properties()
-  );
   public static final Item SHADOW_BERRY = register(
       "shadow_berry",
       new Properties().food(LighterEndFoodComponents.SHADOW_BERRY)

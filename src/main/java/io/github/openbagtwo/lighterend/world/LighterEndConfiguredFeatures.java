@@ -309,7 +309,7 @@ public class LighterEndConfiguredFeatures {
                     .add(LighterEndBlocks.SHADOW_GRASS.defaultBlockState(), 40)
                     .add(LighterEndBlocks.NEEDLEGRASS.defaultBlockState(), 20)
                     .add(
-                        LighterEndBlocks.SHADOW_BERRY.defaultBlockState()
+                        LighterEndBlocks.SHADOW_BERRY_SEEDS.defaultBlockState()
                             .setValue(ShadowBerry.AGE, 0),
                         20)
                     .add(LighterEndBlocks.MURKWEED.defaultBlockState(), 20)
@@ -326,7 +326,7 @@ public class LighterEndConfiguredFeatures {
                     .add(LighterEndBlocks.SHADOW_GRASS.defaultBlockState(), 40)
                     .add(LighterEndBlocks.NEEDLEGRASS.defaultBlockState(), 40)
                     .add(
-                        LighterEndBlocks.SHADOW_BERRY.defaultBlockState()
+                        LighterEndBlocks.SHADOW_BERRY_SEEDS.defaultBlockState()
                             .setValue(ShadowBerry.AGE, ShadowBerry.MAX_AGE),
                         10
                     ).add(LighterEndBlocks.MURKWEED.defaultBlockState(), 10)
