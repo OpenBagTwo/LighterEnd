@@ -125,7 +125,7 @@ public class Wood {
                   .strength(3.0F)
                   .noOcclusion()
                   .ignitedByLava()
-                  .pushReaction(PushReaction.DESTROY)
+                  .pushReaction(PushReaction.POPPED)
           )
       );
       trapdoor = LighterEndBlocks.register(
@@ -167,7 +167,7 @@ public class Wood {
           settings -> new ButtonBlock(
               woodType.setType(),
               30,
-              settings.noCollision().strength(0.5F).pushReaction(PushReaction.DESTROY)
+              settings.noCollision().strength(0.5F).pushReaction(PushReaction.POPPED)
           )
       );
       pressurePlate = LighterEndBlocks.register(
@@ -180,7 +180,7 @@ public class Wood {
                   .noCollision()
                   .strength(0.5F)
                   .ignitedByLava()
-                  .pushReaction(PushReaction.DESTROY)
+                  .pushReaction(PushReaction.POPPED)
           )
       );
       ladder = LighterEndBlocks.register(
@@ -190,7 +190,7 @@ public class Wood {
                   .strength(0.4F)
                   .sound(SoundType.LADDER)
                   .noOcclusion()
-                  .pushReaction(PushReaction.DESTROY)
+                  .pushReaction(PushReaction.POPPED)
           )
       );
       sign = LighterEndBlocks.register(

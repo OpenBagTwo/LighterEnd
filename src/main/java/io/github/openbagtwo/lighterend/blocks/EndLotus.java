@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import com.google.common.collect.Maps;
+import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
@@ -35,9 +37,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -61,7 +62,7 @@ public class EndLotus extends Block {
             .sound(SoundType.WOOD)
             .strength(0.2F)
             .ignitedByLava()
-            .pushReaction(PushReaction.DESTROY)
+            .pushReaction(PushReaction.POPPED)
             .noOcclusion()
             .instabreak()
             .lightLevel(bs -> 15)
@@ -135,7 +136,7 @@ public class EndLotus extends Block {
               .instrument(NoteBlockInstrument.BASS)
               .strength(2.0F, 3.0F)
               .sound(SoundType.BAMBOO_WOOD)
-              .pushReaction(PushReaction.DESTROY)
+              .pushReaction(PushReaction.POPPED)
               .noOcclusion()
               .forceSolidOn()
               .ignitedByLava()
@@ -156,12 +157,14 @@ public class EndLotus extends Block {
     protected VoxelShape getShape(
         BlockState state, BlockGetter world, BlockPos pos, CollisionContext context
     ) {
-      return state.getValue(LEAF) ? SHAPES.get(Axis.Y) : SHAPES.get(state.getValue(FACING).getAxis());
+      return state.getValue(LEAF) ? SHAPES.get(Axis.Y)
+          : SHAPES.get(state.getValue(FACING).getAxis());
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-      return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+      return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false)
+          : super.getFluidState(state);
     }
 
     @Override
@@ -236,7 +239,7 @@ public class EndLotus extends Block {
               .instabreak()
               .sound(SoundType.LILY_PAD)
               .noOcclusion()
-              .pushReaction(PushReaction.DESTROY)
+              .pushReaction(PushReaction.POPPED)
       );
     }
 
@@ -319,24 +322,35 @@ public class EndLotus extends Block {
     }
 
     @Override
-    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(
+        Level world,
+        RandomSource random,
+        BlockPos pos,
+        BlockState state,
+        BonemealSource source
+    ) {
       return EndLotus.canGrow(world, pos);
     }
 
   }
 
-  public static class EndLotusFeature extends Feature<NoneFeatureConfiguration> {
+  public static class EndLotusFeature implements Feature {
 
     public EndLotusFeature() {
-      super(NoneFeatureConfiguration.CODEC);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-      final BlockPos pos = featureConfig.origin();
-      final WorldGenLevel world = featureConfig.level();
-      final RandomSource random = featureConfig.random();
+    public MapCodec<EndLotusFeature> codec() {
+      return MapCodec.unit(EndLotusFeature::new);
+    }
 
+    @Override
+    public boolean place(
+        final WorldGenLevel world,
+        final ChunkGenerator chunkGenerator,
+        final RandomSource random,
+        final BlockPos pos
+    ) {
       if (EndLotus.canGrow(world, pos)) {
         BlockState startLeaf = LighterEndBlocks.END_LOTUS_STEM.defaultBlockState()
             .setValue(Stem.LEAF, true);

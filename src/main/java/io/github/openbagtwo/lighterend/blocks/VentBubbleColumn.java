@@ -48,7 +48,7 @@ public class VentBubbleColumn extends Block implements BucketPickup, LiquidBlock
             .replaceable()
             .noCollision()
             .noLootTable()
-            .pushReaction(PushReaction.DESTROY)
+            .pushReaction(PushReaction.POPPED)
             .liquid()
             .sound(SoundType.EMPTY)
             .noOcclusion()

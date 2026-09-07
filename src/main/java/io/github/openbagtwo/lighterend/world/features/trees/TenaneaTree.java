@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.world.features.trees;
 
 import com.google.common.collect.Lists;
+import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
@@ -26,28 +27,31 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import org.joml.Vector3f;
 
-public class TenaneaTree extends Feature<NoneFeatureConfiguration> {
+public class TenaneaTree implements Feature {
 
   private static final Function<BlockState, Boolean> REPLACE;
   private static final Function<BlockState, Boolean> IGNORE;
   private static final List<Vector3f> SPLINE;
 
   public TenaneaTree() {
-    super(NoneFeatureConfiguration.CODEC);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+  public MapCodec<TenaneaTree> codec() {
+    return MapCodec.unit(TenaneaTree::new);
+  }
 
-    final RandomSource random = featureConfig.random();
-    final BlockPos pos = featureConfig.origin();
-    final WorldGenLevel world = featureConfig.level();
-
+  @Override
+  public boolean place(
+      final WorldGenLevel world,
+      final ChunkGenerator chunkGenerator,
+      final RandomSource random,
+      final BlockPos pos
+  ) {
     if (!world.getBlockState(pos.below()).is(LighterEndTags.END_SOIL)) {
       return false;
     }

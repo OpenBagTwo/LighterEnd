@@ -1,17 +1,18 @@
 package io.github.openbagtwo.lighterend.blocks;
 
+import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
-import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.grower.TreeGrower;
@@ -28,9 +30,8 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -201,7 +202,7 @@ public class Lumecorn extends Block {
               .noCollision()
               .instabreak()
               .sound(SoundType.CROP)
-              .pushReaction(PushReaction.DESTROY)
+              .pushReaction(PushReaction.POPPED)
               .ignitedByLava()
               .randomTicks()
       );
@@ -209,7 +210,8 @@ public class Lumecorn extends Block {
     }
 
     @Override
-    public void advanceTree(ServerLevel world, BlockPos pos, BlockState state, RandomSource random) {
+    public void advanceTree(ServerLevel world, BlockPos pos, BlockState state,
+        RandomSource random) {
       if (!isAllowedToGrow(world, pos)) {
         return;
       }
@@ -219,9 +221,7 @@ public class Lumecorn extends Block {
         if (!world.getBlockState(pos.below()).is(LighterEndTags.END_SOIL)) {
           return;
         }
-        FeaturePlaceContext<NoneFeatureConfiguration> context = new FeaturePlaceContext<>(null, world,
-            world.getChunkSource().getGenerator(), random, pos, new NoneFeatureConfiguration());
-        new LumecornFeature().place(context);
+        new LumecornFeature().place(world, world.getChunkSource().getGenerator(), random, pos);
       }
     }
 
@@ -231,7 +231,8 @@ public class Lumecorn extends Block {
     }
 
     @Override
-    protected void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+    protected void randomTick(BlockState state, ServerLevel world, BlockPos pos,
+        RandomSource random) {
       if (random.nextInt(3) == 0) {
         this.advanceTree(world, pos, state, random);
       }
@@ -244,7 +245,12 @@ public class Lumecorn extends Block {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(
+        final LevelReader world,
+        final BlockPos pos,
+        final BlockState state,
+        final BonemealSource source
+    ) {
       return isAllowedToGrow(world, pos);
     }
 
@@ -286,18 +292,23 @@ public class Lumecorn extends Block {
     }
   }
 
-  public static class LumecornFeature extends Feature<NoneFeatureConfiguration> {
+  public static class LumecornFeature implements Feature {
 
     public LumecornFeature() {
-      super(NoneFeatureConfiguration.CODEC);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-      final RandomSource random = featureConfig.random();
-      final BlockPos pos = featureConfig.origin();
-      final WorldGenLevel world = featureConfig.level();
+    public MapCodec<LumecornFeature> codec() {
+      return MapCodec.unit(LumecornFeature::new);
+    }
 
+    @Override
+    public boolean place(
+        final WorldGenLevel world,
+        final ChunkGenerator chunkGenerator,
+        final RandomSource random,
+        final BlockPos pos
+    ) {
       int height = random.nextIntBetweenInclusive(4, 7);
       BlockPos.MutableBlockPos mut = new BlockPos.MutableBlockPos().set(pos);
       for (int i = 1; i < height; i++) {
@@ -367,8 +378,9 @@ public class Lumecorn extends Block {
 
   public static final TreeGrower LUMECORN_GENERATOR = new TreeGrower(
       LighterEnd.MOD_ID + ":lumecorn",
-      Optional.empty(),
-      Optional.empty(),  // we're completely overriding lumecorn generation
-      Optional.empty()
+      WeightedList.of(), // we're completely overriding lumecorn generation
+      WeightedList.of(),
+      WeightedList.of(),
+      null
   );
 }

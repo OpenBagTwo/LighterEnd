@@ -251,7 +251,7 @@ public class LighterEndBlocks {
               .noCollision()
               .strength(1.0F)
               .sound(SoundType.STONE)
-              .pushReaction(PushReaction.DESTROY)
+              .pushReaction(PushReaction.POPPED)
       )
   );
 
@@ -274,7 +274,7 @@ public class LighterEndBlocks {
           .forceSolidOn()
           .noOcclusion()
           .requiresCorrectToolForDrops()
-          .pushReaction(PushReaction.DESTROY)
+          .pushReaction(PushReaction.POPPED)
           .strength(2.5F)
           .sound(SoundType.CHAIN)
   );
@@ -559,7 +559,7 @@ public class LighterEndBlocks {
           settings -> new RotatedPillarBlock(applySettings(settings)));
       button = register(baseName + "_button",
           settings -> new ButtonBlock(BlockSetType.POLISHED_BLACKSTONE, 30,
-              settings.noCollision().strength(0.5F).pushReaction(PushReaction.DESTROY)));
+              settings.noCollision().strength(0.5F).pushReaction(PushReaction.POPPED)));
       pressurePlate = register(baseName + "_pressure_plate",
           settings -> new PressurePlateBlock(BlockSetType.POLISHED_BLACKSTONE,
               settings.mapColor(mapColor)
@@ -567,7 +567,7 @@ public class LighterEndBlocks {
                   .instrument(NoteBlockInstrument.BASEDRUM)
                   .noCollision()
                   .strength(0.5F)
-                  .pushReaction(PushReaction.DESTROY)));
+                  .pushReaction(PushReaction.POPPED)));
       pedestal = register(baseName + "_pedestal",
           settings -> new Pedestal(applySettings(settings))
       );
@@ -592,14 +592,13 @@ public class LighterEndBlocks {
         .noOcclusion()
         .isValidSpawn(Blocks::ocelotOrParrot)
         .isSuffocating(Blocks::never)
-        .isViewBlocking(Blocks::never)
         .ignitedByLava()
-        .pushReaction(PushReaction.DESTROY)
+        .pushReaction(PushReaction.POPPED)
         .isRedstoneConductor(Blocks::never);
   }
 
   public static Properties applyFlowerPotSettings(Properties settings) {
-    return settings.instabreak().noOcclusion().pushReaction(PushReaction.DESTROY);
+    return settings.instabreak().noOcclusion().pushReaction(PushReaction.POPPED);
   }
 
 }

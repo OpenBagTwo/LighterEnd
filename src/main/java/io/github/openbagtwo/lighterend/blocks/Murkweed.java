@@ -1,6 +1,5 @@
 package io.github.openbagtwo.lighterend.blocks;
 
-import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ColorParticleOption;
@@ -21,8 +20,6 @@ import net.minecraft.world.level.material.PushReaction;
 
 public class Murkweed extends VegetationBlock {
 
-  public static final MapCodec<Murkweed> CODEC = simpleCodec(Murkweed::new);
-
   public Murkweed(Properties settings) {
     super(
         settings
@@ -32,7 +29,7 @@ public class Murkweed extends VegetationBlock {
             .instabreak()
             .noOcclusion()
             .sound(SoundType.GRASS)
-            .pushReaction(PushReaction.DESTROY)
+            .pushReaction(PushReaction.POPPED)
             .ignitedByLava()
     );
   }
@@ -40,11 +37,6 @@ public class Murkweed extends VegetationBlock {
   @Override
   protected boolean mayPlaceOn(BlockState floor, BlockGetter world, BlockPos pos) {
     return floor.is(LighterEndTags.END_SOIL);
-  }
-
-  @Override
-  protected MapCodec<? extends VegetationBlock> codec() {
-    return CODEC;
   }
 
   @Override

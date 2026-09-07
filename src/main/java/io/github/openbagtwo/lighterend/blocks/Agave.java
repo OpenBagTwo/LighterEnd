@@ -1,5 +1,6 @@
 package io.github.openbagtwo.lighterend.blocks;
 
+import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
@@ -23,9 +24,8 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathComputationType;
@@ -48,7 +48,7 @@ public class Agave extends Block {
             .dynamicShape()
             .noOcclusion()
             .instabreak()
-            .pushReaction(PushReaction.DESTROY)
+            .pushReaction(PushReaction.POPPED)
             .instrument(NoteBlockInstrument.BASS)
             .strength(2.0F, 3.0F)
             .sound(SoundType.GRASS)
@@ -169,7 +169,8 @@ public class Agave extends Block {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
+    protected void createBlockStateDefinition(
+        StateDefinition.Builder<Block, BlockState> stateManager) {
       stateManager.add(NATURAL);
     }
 
@@ -208,18 +209,23 @@ public class Agave extends Block {
     }
   }
 
-  public static class AgaveFeature extends Feature<NoneFeatureConfiguration> {
+  public static class AgaveFeature implements Feature {
 
     public AgaveFeature() {
-      super(NoneFeatureConfiguration.CODEC);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-      final RandomSource random = featureConfig.random();
-      final BlockPos pos = featureConfig.origin();
-      final WorldGenLevel world = featureConfig.level();
+    public MapCodec<AgaveFeature> codec() {
+      return MapCodec.unit(AgaveFeature::new);
+    }
 
+    @Override
+    public boolean place(
+        final WorldGenLevel world,
+        final ChunkGenerator chunkGenerator,
+        final RandomSource random,
+        final BlockPos pos
+    ) {
       int height = Mth.nextInt(random, 2, 5);
       int h = PosInfo.upRay(world, pos, height + 2);
       if (h < height + 1) {
@@ -234,7 +240,8 @@ public class Agave extends Block {
           shape = Shape.TOP;
         }
         world.setBlock(
-            pos.above(i), LighterEndBlocks.AGAVE.defaultBlockState().setValue(SHAPE, shape), Flags.SILENT
+            pos.above(i), LighterEndBlocks.AGAVE.defaultBlockState().setValue(SHAPE, shape),
+            Flags.SILENT
         );
       }
       placeBulb(world, pos.above(height + 1));

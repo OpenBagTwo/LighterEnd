@@ -17,6 +17,7 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Plane;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
@@ -60,12 +61,11 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -77,21 +77,15 @@ import org.jetbrains.annotations.Nullable;
 
 public class SilkMothNest extends BaseEntityBlock {
 
-  public static final MapCodec<SilkMothNest> CODEC = simpleCodec(SilkMothNest::new);
   public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
   public static final int MAX_FULLNESS = 3;
-  public static final IntegerProperty FULLNESS = IntegerProperty.create("fullness", 0, MAX_FULLNESS);
+  public static final IntegerProperty FULLNESS = IntegerProperty.create("fullness", 0,
+      MAX_FULLNESS);
 
   public static final VoxelShape OUTLINE_SHAPE = Shapes.or(
       Block.box(0, 0, 0, 16, 13, 16),
       Block.box(3, 12, 3, 13, 16, 13)
   );
-
-
-  @Override
-  public MapCodec<SilkMothNest> codec() {
-    return CODEC;
-  }
 
   public SilkMothNest(BlockBehaviour.Properties settings) {
     super(
@@ -119,12 +113,12 @@ public class SilkMothNest extends BaseEntityBlock {
 
   @Override
   public void playerDestroy(
-      Level world,
-      Player player,
-      BlockPos pos,
-      BlockState state,
-      @Nullable BlockEntity blockEntity,
-      ItemStack tool
+      final ServerLevel world,
+      final ServerPlayer player,
+      final BlockPos pos,
+      final BlockState state,
+      final @org.jspecify.annotations.Nullable BlockEntity blockEntity,
+      final ItemStack tool
   ) {
     super.playerDestroy(world, player, pos, state, blockEntity, tool);
     if (!world.isClientSide() && blockEntity instanceof SilkMothNestEntity nestEntity) {
@@ -143,7 +137,8 @@ public class SilkMothNest extends BaseEntityBlock {
   }
 
   @Override
-  protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos,
+  protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world,
+      BlockPos pos,
       Player player, InteractionHand hand, BlockHitResult hit) {
     int i = state.getValue(FULLNESS);
     boolean bl = false;
@@ -257,7 +252,8 @@ public class SilkMothNest extends BaseEntityBlock {
       boolean includeData) {
     ItemStack itemStack = super.getCloneItemStack(world, pos, state, includeData);
     if (includeData) {
-      itemStack.set(LighterEndData.SILK_LEVEL, new SilkLevelComponent(state.getValueOrElse(FULLNESS, 0)));
+      itemStack.set(LighterEndData.SILK_LEVEL,
+          new SilkLevelComponent(state.getValueOrElse(FULLNESS, 0)));
     }
 
     return itemStack;
@@ -299,10 +295,14 @@ public class SilkMothNest extends BaseEntityBlock {
     return SilkMothNest.OUTLINE_SHAPE;
   }
 
-  public static class SilkMothNestFeature extends Feature<NoneFeatureConfiguration> {
+  public static class SilkMothNestFeature implements Feature {
 
     public SilkMothNestFeature() {
-      super(NoneFeatureConfiguration.CODEC);
+    }
+
+    @Override
+    public MapCodec<SilkMothNestFeature> codec() {
+      return MapCodec.unit(SilkMothNestFeature::new);
     }
 
     private boolean canGenerate(WorldGenLevel world, BlockPos pos) {
@@ -311,7 +311,7 @@ public class SilkMothNest extends BaseEntityBlock {
         state = world.getBlockState(pos);
         if (state.isAir() && world.isEmptyBlock(pos.below())) {
           for (Direction dir : Plane.HORIZONTAL) {
-            return !world.getBlockState(pos.below().relative(dir)).blocksMotion();
+            return !world.getBlockState(pos.below().relative(dir)).is(BlockTags.BLOCKS_MOTION);
           }
         }
       }
@@ -319,11 +319,13 @@ public class SilkMothNest extends BaseEntityBlock {
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> generator) {
+    public boolean place(
+        final WorldGenLevel world,
+        final ChunkGenerator chunkGenerator,
+        final RandomSource random,
+        final BlockPos center
+    ) {
       final MutableBlockPos POS = GlobalState.stateForThread().POS;
-      final RandomSource random = generator.random();
-      final BlockPos center = generator.origin();
-      final WorldGenLevel world = generator.level();
       int maxY = world.getHeight(Heightmap.Types.WORLD_SURFACE, center.getX(), center.getZ());
       int minY = PosInfo.upRay(world, new BlockPos(center.getX(), 0, center.getZ()), maxY);
       POS.set(center);

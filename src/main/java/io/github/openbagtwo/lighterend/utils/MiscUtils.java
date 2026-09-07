@@ -10,7 +10,7 @@ public class MiscUtils {
   public static Boolean replaceableOrPlant(BlockState state) {
     final Block block = state.getBlock();
 
-    if (state.getPistonPushReaction() == PushReaction.DESTROY && block.defaultDestroyTime() == 0) {
+    if (state.getPistonPushReaction() == PushReaction.POPPED && block.defaultDestroyTime() == 0) {
       return true;
     }
 

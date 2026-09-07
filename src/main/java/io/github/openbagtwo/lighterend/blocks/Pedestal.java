@@ -1,6 +1,5 @@
 package io.github.openbagtwo.lighterend.blocks;
 
-import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.blocks.entities.PedestalDisplay;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -27,10 +26,8 @@ public class Pedestal extends BaseEntityBlock implements SelectableSlotContainer
 
   private static final VoxelShape SHAPE;
 
-  public static final MapCodec<Pedestal> CODEC = Pedestal.simpleCodec(Pedestal::new);
-
   public Pedestal(Properties settings) {
-    super(settings.pushReaction(PushReaction.BLOCK));
+    super(settings.pushReaction(PushReaction.IMMOVEABLE));
   }
 
   @Override
@@ -41,11 +38,6 @@ public class Pedestal extends BaseEntityBlock implements SelectableSlotContainer
       CollisionContext context
   ) {
     return SHAPE;
-  }
-
-  @Override
-  protected MapCodec<? extends BaseEntityBlock> codec() {
-    return CODEC;
   }
 
   @Override

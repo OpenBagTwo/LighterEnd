@@ -1,6 +1,7 @@
 package io.github.openbagtwo.lighterend.world.features.trees;
 
 import com.google.common.collect.Lists;
+import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaMembrane;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaTreeCluster;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
@@ -27,27 +28,31 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import org.joml.Vector3f;
 
-public class UmbrellaTree extends Feature<NoneFeatureConfiguration> {
+public class UmbrellaTree implements Feature {
 
   private static final Function<BlockState, Boolean> REPLACE;
   private static final List<Vector3f> SPLINE;
   private static final List<Vector3f> ROOT;
 
   public UmbrellaTree() {
-    super(NoneFeatureConfiguration.CODEC);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-    final RandomSource random = featureConfig.random();
-    final BlockPos pos = featureConfig.origin();
-    final WorldGenLevel world = featureConfig.level();
-    final NoneFeatureConfiguration config = featureConfig.config();
+  public MapCodec<UmbrellaTree> codec() {
+    return MapCodec.unit(UmbrellaTree::new);
+  }
+
+  @Override
+  public boolean place(
+      final WorldGenLevel world,
+      final ChunkGenerator chunkGenerator,
+      final RandomSource random,
+      final BlockPos pos
+  ) {
     if (!world.getBlockState(pos.below()).is(LighterEndTags.END_SOIL)) {
       return false;
     }
@@ -67,10 +72,7 @@ public class UmbrellaTree extends Feature<NoneFeatureConfiguration> {
     SDF sdf = null;
     List<Center> centers = Lists.newArrayList();
 
-    float scale = 1;
-    if (config != null) {
-      scale = Mth.nextFloat(random, 1F, 1.7F);
-    }
+    float scale = Mth.nextFloat(random, 1F, 1.7F);
 
     for (int i = 0; i < count; i++) {
       float angle =

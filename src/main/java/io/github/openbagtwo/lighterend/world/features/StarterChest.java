@@ -1,5 +1,6 @@
 package io.github.openbagtwo.lighterend.world.features;
 
+import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndLootTables;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
@@ -17,22 +18,28 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EndRodBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class StarterChest extends Feature<NoneFeatureConfiguration> {
+public class StarterChest implements Feature {
 
   public StarterChest() {
-    super(NoneFeatureConfiguration.CODEC);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-    RandomSource random = context.random();
-    WorldGenLevel structureWorldAccess = context.level();
-    ChunkPos chunkPos = ChunkPos.containing(context.origin());
+  public MapCodec<StarterChest> codec() {
+    return MapCodec.unit(StarterChest::new);
+  }
+
+  @Override
+  public boolean place(
+      final WorldGenLevel structureWorldAccess,
+      final ChunkGenerator chunkGenerator,
+      final RandomSource random,
+      final BlockPos origin
+  ) {
+    ChunkPos chunkPos = ChunkPos.containing(origin);
     IntArrayList intArrayList = Util.toShuffledList(
         IntStream.rangeClosed(chunkPos.getMinBlockX(), chunkPos.getMaxBlockX()), random);
     IntArrayList intArrayList2 = Util.toShuffledList(

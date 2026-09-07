@@ -44,7 +44,7 @@ public class SulphurCrystal extends Block implements SimpleWaterloggedBlock, Liq
         settings
             .mapColor(MapColor.COLOR_YELLOW)
             .sound(SoundType.GLASS)
-            .pushReaction(PushReaction.DESTROY)
+            .pushReaction(PushReaction.POPPED)
     );
   }
 

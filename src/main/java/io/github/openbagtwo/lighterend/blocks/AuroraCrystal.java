@@ -22,7 +22,6 @@ public class AuroraCrystal extends TransparentBlock {
             .isValidSpawn(Blocks::never)
             .isRedstoneConductor(Blocks::never)
             .isSuffocating(Blocks::never)
-            .isViewBlocking(Blocks::never)
             .strength(0.5F)
             .lightLevel((bs) -> 15)
             .mapColor(MapColor.COLOR_MAGENTA)

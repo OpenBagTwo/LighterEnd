@@ -1,30 +1,36 @@
 package io.github.openbagtwo.lighterend.world.features;
 
+import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.blocks.EndLotus;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.utils.Flags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class LotusLeaf extends Feature<NoneFeatureConfiguration> {
+public class LotusLeaf implements Feature {
 
   public LotusLeaf() {
-    super(NoneFeatureConfiguration.CODEC);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+  public MapCodec<LotusLeaf> codec() {
+    return MapCodec.unit(LotusLeaf::new);
+  }
 
-    final BlockPos pos = featureConfig.origin();
-    final WorldGenLevel world = featureConfig.level();
-
+  @Override
+  public boolean place(
+      final WorldGenLevel world,
+      final ChunkGenerator chunkGenerator,
+      final RandomSource random,
+      final BlockPos pos
+  ) {
     if (!canGenerate(world, pos)) {
       return false;
     }

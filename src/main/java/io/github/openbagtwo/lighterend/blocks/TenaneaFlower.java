@@ -1,6 +1,5 @@
 package io.github.openbagtwo.lighterend.blocks;
 
-import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndParticles;
 import net.minecraft.core.BlockPos;
@@ -13,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.GrowingPlantHeadBlock;
 import net.minecraft.world.level.block.MultifaceBlock;
 import net.minecraft.world.level.block.NetherVines;
@@ -28,7 +28,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class TenaneaFlower extends GrowingPlantHeadBlock {
 
-  public static final MapCodec<TenaneaFlower> CODEC = simpleCodec(TenaneaFlower::new);
   private static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 16, 14);
   public static final BooleanProperty TIP = BlockStateProperties.TIP;
   public static final Vec3i[] COLORS;
@@ -42,7 +41,7 @@ public class TenaneaFlower extends GrowingPlantHeadBlock {
             .instabreak()
             .noOcclusion()
             .sound(SoundType.GRASS)
-            .pushReaction(PushReaction.DESTROY)
+            .pushReaction(PushReaction.POPPED)
             .offsetType(OffsetType.NONE)
             .ignitedByLava()
             .randomTicks()
@@ -122,8 +121,14 @@ public class TenaneaFlower extends GrowingPlantHeadBlock {
   }
 
   @Override
-  public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
-    super.performBonemeal(world, random, pos, state);
+  public void performBonemeal(
+      ServerLevel world,
+      RandomSource random,
+      BlockPos pos,
+      BlockState state,
+      BonemealSource source
+  ) {
+    super.performBonemeal(world, random, pos, state, source);
     world.setBlockAndUpdate(this.getTipPos(world, pos), state.setValue(TIP, true));
   }
 
@@ -138,12 +143,6 @@ public class TenaneaFlower extends GrowingPlantHeadBlock {
     }
 
   }
-
-  @Override
-  public MapCodec<TenaneaFlower> codec() {
-    return CODEC;
-  }
-
 
   static {
     COLORS = new Vec3i[]{

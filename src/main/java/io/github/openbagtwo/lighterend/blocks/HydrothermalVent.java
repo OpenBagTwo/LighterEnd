@@ -1,6 +1,5 @@
 package io.github.openbagtwo.lighterend.blocks;
 
-import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.blocks.entities.Updraft;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.utils.Flags;
@@ -43,8 +42,6 @@ import org.jetbrains.annotations.Nullable;
 public class HydrothermalVent extends BaseEntityBlock implements LiquidBlockContainer,
     SimpleWaterloggedBlock {
 
-  public static final MapCodec<HydrothermalVent> CODEC = simpleCodec(HydrothermalVent::new);
-
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
   public static final BooleanProperty ACTIVATED = BooleanProperty.create("active");
   private static final VoxelShape SHAPE = Block.box(1, 1, 1, 15, 16, 15);
@@ -56,16 +53,11 @@ public class HydrothermalVent extends BaseEntityBlock implements LiquidBlockCont
             .sound(SoundType.STONE)
             .requiresCorrectToolForDrops()
             .strength(1.5F, 6.0F)
-            .pushReaction(PushReaction.DESTROY)
+            .pushReaction(PushReaction.POPPED)
             .mapColor(MapColor.STONE)
     );
     this.registerDefaultState(
         defaultBlockState().setValue(WATERLOGGED, false).setValue(ACTIVATED, false));
-  }
-
-  @Override
-  public MapCodec<HydrothermalVent> codec() {
-    return CODEC;
   }
 
   @Override

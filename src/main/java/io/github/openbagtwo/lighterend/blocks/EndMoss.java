@@ -13,11 +13,12 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.BonemealableFeaturePlacerBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.lighting.LightEngine;
 import net.minecraft.world.level.material.MapColor;
 
@@ -28,7 +29,7 @@ public class EndMoss extends BonemealableFeaturePlacerBlock {
      by the biome in which the blocks are placed.
    */
 
-  private final ResourceKey<ConfiguredFeature<?, ?>> feature;
+  private final ResourceKey<Feature> feature;
 
   public EndMoss(Properties settings) {
     super(
@@ -77,24 +78,39 @@ public class EndMoss extends BonemealableFeaturePlacerBlock {
   }
 
   @Override
-  public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos,
-      BlockState state) {
+  public boolean isBonemealSuccess(
+      Level world,
+      RandomSource random,
+      BlockPos pos,
+      BlockState state,
+      BonemealSource source
+  ) {
     return canGrow(world, pos);
   }
 
   @Override
-  public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
+  public boolean isValidBonemealTarget(
+      LevelReader world,
+      BlockPos pos,
+      BlockState state,
+      BonemealSource source
+  ) {
     return world.getBlockState(pos.above()).isAir() && this.canGrow(world, pos);
   }
 
   @Override
-  public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos,
-      BlockState state) {
+  public void performBonemeal(
+      ServerLevel world,
+      RandomSource random,
+      BlockPos pos,
+      BlockState state,
+      BonemealSource source
+  ) {
     if (!canGrow(world, pos)) {
       return;
     }
 
-    ResourceKey<ConfiguredFeature<?, ?>> patch;
+    ResourceKey<Feature> patch;
     if (world.getBiome(pos).is(LighterEndBiomes.SHADOW_FOREST)) {
       patch = LighterEndConfiguredFeatures.SHADOW_MOSS_PATCH_BONEMEAL;
     } else {
@@ -102,7 +118,7 @@ public class EndMoss extends BonemealableFeaturePlacerBlock {
     }
 
     world.registryAccess()
-        .lookup(Registries.CONFIGURED_FEATURE)
+        .lookup(Registries.FEATURE)
         .flatMap(registry -> registry.get(patch))
         .ifPresent(entry -> entry.value().place(
                 world,

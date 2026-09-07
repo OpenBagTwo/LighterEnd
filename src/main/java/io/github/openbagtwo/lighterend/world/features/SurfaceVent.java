@@ -2,6 +2,7 @@ package io.github.openbagtwo.lighterend.world.features;
 
 import static net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE;
 
+import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.blocks.HydrothermalVent;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
@@ -12,23 +13,33 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class SurfaceVent extends Feature<NoneFeatureConfiguration> {
+public class SurfaceVent implements Feature {
 
   public SurfaceVent() {
-    super(NoneFeatureConfiguration.CODEC);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-    final RandomSource random = context.random();
-    BlockPos pos = context.origin();
-    final WorldGenLevel world = context.level();
-    pos = world.getHeightmapPos(WORLD_SURFACE,
-        new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16))
+  public MapCodec<SurfaceVent> codec() {
+    return MapCodec.unit(SurfaceVent::new);
+  }
+
+  @Override
+  public boolean place(
+      final WorldGenLevel world,
+      final ChunkGenerator chunkGenerator,
+      final RandomSource random,
+      final BlockPos origin
+  ) {
+    BlockPos pos = world.getHeightmapPos(
+        WORLD_SURFACE,
+        new BlockPos(
+            origin.getX() + random.nextInt(16),
+            origin.getY(),
+            origin.getZ() + random.nextInt(16)
+        )
     );
     if (!world.getBlockState(pos.below(3)).is(LighterEndTags.END_STONES)) {
       return false;

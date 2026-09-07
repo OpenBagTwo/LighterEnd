@@ -8,6 +8,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.TallFlowerBlock;
@@ -27,7 +28,7 @@ public class UmbrellaFern extends TallGrassBlock {
             .instabreak()
             .noOcclusion()
             .sound(SoundType.GRASS)
-            .pushReaction(PushReaction.DESTROY)
+            .pushReaction(PushReaction.POPPED)
             .offsetType(OffsetType.XZ)
             .ignitedByLava()
             .lightLevel((bs) -> 2)
@@ -40,12 +41,24 @@ public class UmbrellaFern extends TallGrassBlock {
   }
 
   @Override
-  public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
-    return getGrownBlock(state).defaultBlockState().canSurvive(world, pos) && world.isEmptyBlock(pos.above());
+  public boolean isValidBonemealTarget(
+      LevelReader world,
+      BlockPos pos,
+      BlockState state,
+      BonemealSource source
+  ) {
+    return getGrownBlock(state).defaultBlockState().canSurvive(world, pos) && world.isEmptyBlock(
+        pos.above());
   }
 
   @Override
-  public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
+  public void performBonemeal(
+      ServerLevel world,
+      RandomSource random,
+      BlockPos pos,
+      BlockState state,
+      BonemealSource source
+  ) {
     DoublePlantBlock.placeAt(world, getGrownBlock(state).defaultBlockState(), pos, 2);
   }
 
@@ -64,7 +77,7 @@ public class UmbrellaFern extends TallGrassBlock {
               .instabreak()
               .noOcclusion()
               .sound(SoundType.GRASS)
-              .pushReaction(PushReaction.DESTROY)
+              .pushReaction(PushReaction.POPPED)
               .offsetType(OffsetType.NONE)
               .ignitedByLava()
               .lightLevel((bs) -> 8)
@@ -72,7 +85,13 @@ public class UmbrellaFern extends TallGrassBlock {
     }
 
     @Override
-    public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
+    public void performBonemeal(
+        ServerLevel world,
+        RandomSource random,
+        BlockPos pos,
+        BlockState state,
+        BonemealSource source
+    ) {
       popResource(world, pos, new ItemStack(LighterEndBlocks.UMBRELLA_FERN));
     }
 

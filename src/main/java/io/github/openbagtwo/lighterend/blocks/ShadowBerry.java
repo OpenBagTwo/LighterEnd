@@ -1,6 +1,5 @@
 package io.github.openbagtwo.lighterend.blocks;
 
-import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import net.minecraft.core.BlockPos;
@@ -23,7 +22,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class ShadowBerry extends CropBlock {
 
-  public static final MapCodec<ShadowBerry> CODEC = simpleCodec(ShadowBerry::new);
   private static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 8, 15);
   public static final int MAX_AGE = 3;
   public static final IntegerProperty AGE = IntegerProperty.create("age", 0, MAX_AGE);
@@ -36,13 +34,8 @@ public class ShadowBerry extends CropBlock {
             .randomTicks()
             .instabreak()
             .sound(SoundType.CROP)
-            .pushReaction(PushReaction.DESTROY)
+            .pushReaction(PushReaction.POPPED)
     );
-  }
-
-  @Override
-  public MapCodec<ShadowBerry> codec() {
-    return CODEC;
   }
 
   @Override

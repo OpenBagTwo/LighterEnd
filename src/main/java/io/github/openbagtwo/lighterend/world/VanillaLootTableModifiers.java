@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 public class VanillaLootTableModifiers {
 
@@ -15,7 +15,7 @@ public class VanillaLootTableModifiers {
           if (BuiltInLootTables.END_CITY_TREASURE.equals(key)) {
             if (config.musicDiscsAreFoundInEndCities()) {
               tableBuilder.pool(LootPool.lootPool()
-                  .setRolls(UniformGenerator.between(0, 1))
+                  .setRolls(ContextIntProviders.between(0, 1))
                   .add(LootItem.lootTableItem(LighterEndMusicDiscs.STRANGE_AND_ALIEN))
                   .add(LootItem.lootTableItem(LighterEndMusicDiscs.GRASPING_AT_STARS))
                   .add(LootItem.lootTableItem(LighterEndMusicDiscs.ENDSEEKER))

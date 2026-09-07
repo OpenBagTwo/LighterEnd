@@ -4,6 +4,7 @@ import static net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE;
 import static net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE_WG;
 
 import com.mojang.math.Axis;
+import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.BlockFixer;
 import io.github.openbagtwo.lighterend.blocks.HydrothermalVent;
 import io.github.openbagtwo.lighterend.blocks.TubeWorm;
@@ -36,25 +37,29 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class Geyser extends Feature<NoneFeatureConfiguration> {
+public class Geyser implements Feature {
 
   protected static final Function<BlockState, Boolean> REPLACE1;
   protected static final Function<BlockState, Boolean> REPLACE2;
   private static final Function<BlockState, Boolean> IGNORE;
 
   public Geyser() {
-    super(NoneFeatureConfiguration.CODEC);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-    final RandomSource random = context.random();
-    final WorldGenLevel world = context.level();
-    final BlockPos pos = world.getHeightmapPos(WORLD_SURFACE_WG, context.origin());
-    final ChunkGenerator chunkGenerator = context.chunkGenerator();
+  public MapCodec<Geyser> codec() {
+    return MapCodec.unit(Geyser::new);
+  }
+
+  @Override
+  public boolean place(
+      final WorldGenLevel world,
+      final ChunkGenerator chunkGenerator,
+      final RandomSource random,
+      final BlockPos origin
+  ) {
+    final BlockPos pos = world.getHeightmapPos(WORLD_SURFACE_WG, origin);
 
     if (pos.getY() < 10) {
       return false;
@@ -297,18 +302,11 @@ public class Geyser extends Feature<NoneFeatureConfiguration> {
       }
     }
 
-    FeaturePlaceContext<NoneFeatureConfiguration> featureContext = new FeaturePlaceContext<>(
-        null,
-        world,
-        chunkGenerator,
-        random,
-        pos,
-        new NoneFeatureConfiguration()
-    );
-    (new SulphurLake()).place(featureContext);
+    (new SulphurLake()).place(world, chunkGenerator, random, pos);
 
     double distance = radius1 * 1.7;
-    BlockPos start = pos.offset((int) -distance, (int) (-halfHeight - 15 - distance), (int) -distance);
+    BlockPos start = pos.offset((int) -distance, (int) (-halfHeight - 15 - distance),
+        (int) -distance);
     BlockPos end = pos.offset((int) distance, (int) (-halfHeight - 5 + distance), (int) distance);
     BlockFixer.fixBlocks(world, start, end);
 

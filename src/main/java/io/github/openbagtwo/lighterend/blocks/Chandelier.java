@@ -45,7 +45,7 @@ public class Chandelier extends Block {
             .forceSolidOn()
             .noOcclusion()
             .requiresCorrectToolForDrops()
-            .pushReaction(PushReaction.DESTROY)
+            .pushReaction(PushReaction.POPPED)
             .strength(2.5F)
             .sound(SoundType.CHAIN)
     );
@@ -63,7 +63,8 @@ public class Chandelier extends Block {
   }
 
   @Override
-  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
+  protected void createBlockStateDefinition(
+      StateDefinition.Builder<Block, BlockState> stateManager) {
     stateManager.add(FACING);
   }
 
@@ -134,11 +135,13 @@ public class Chandelier extends Block {
     BOUNDING_SHAPES.put(Direction.EAST, Shapes.box(0.0, 0.0, 0.0, 0.5, 1.0, 1.0));
   }
 
-  public static class Oxidizable extends Chandelier implements net.minecraft.world.level.block.WeatheringCopper {
+  public static class Oxidizable extends Chandelier implements
+      net.minecraft.world.level.block.WeatheringCopper {
 
     public static final MapCodec<Oxidizable> CODEC = RecordCodecBuilder.mapCodec(
         instance -> instance.group(
-                net.minecraft.world.level.block.WeatheringCopper.WeatherState.CODEC.fieldOf("weathering_state")
+                net.minecraft.world.level.block.WeatheringCopper.WeatherState.CODEC.fieldOf(
+                        "weathering_state")
                     .forGetter(
                         Oxidizable::getAge), propertiesCodec()
             )
@@ -158,7 +161,8 @@ public class Chandelier extends Block {
     }
 
     @Override
-    protected void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+    protected void randomTick(BlockState state, ServerLevel world, BlockPos pos,
+        RandomSource random) {
       this.changeOverTime(state, world, pos, random);
     }
 

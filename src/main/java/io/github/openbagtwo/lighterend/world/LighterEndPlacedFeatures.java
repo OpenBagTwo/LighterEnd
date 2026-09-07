@@ -82,7 +82,7 @@ public class LighterEndPlacedFeatures {
 
   public static void bootstrap(BootstrapContext<PlacedFeature> context) {
 
-    var configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
+    var configuredFeatures = context.lookup(Registries.FEATURE);
 
     context.register(
         END_MOSS_VEGETATION,
@@ -236,7 +236,8 @@ public class LighterEndPlacedFeatures {
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_COPPER),
               List.of(
                   RarityFilter.onAverageOnceEvery(rarity * 2),
-                  HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(256)),
+                  HeightRangePlacement.uniform(VerticalAnchor.bottom(),
+                      VerticalAnchor.absolute(256)),
                   InSquarePlacement.spread()
                   // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
@@ -248,7 +249,8 @@ public class LighterEndPlacedFeatures {
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_COPPER_SMALL),
               List.of(
                   RarityFilter.onAverageOnceEvery(rarity),
-                  HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(256)),
+                  HeightRangePlacement.uniform(VerticalAnchor.bottom(),
+                      VerticalAnchor.absolute(256)),
                   InSquarePlacement.spread()
                   // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
@@ -260,7 +262,8 @@ public class LighterEndPlacedFeatures {
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_IRON),
               List.of(
                   RarityFilter.onAverageOnceEvery(rarity * 2),
-                  HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(256)),
+                  HeightRangePlacement.uniform(VerticalAnchor.bottom(),
+                      VerticalAnchor.absolute(256)),
                   InSquarePlacement.spread()
                   // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
@@ -272,7 +275,8 @@ public class LighterEndPlacedFeatures {
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_IRON_SMALL),
               List.of(
                   RarityFilter.onAverageOnceEvery(rarity),
-                  HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(256)),
+                  HeightRangePlacement.uniform(VerticalAnchor.bottom(),
+                      VerticalAnchor.absolute(256)),
                   InSquarePlacement.spread()
                   // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
@@ -284,7 +288,8 @@ public class LighterEndPlacedFeatures {
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_GOLD),
               List.of(
                   RarityFilter.onAverageOnceEvery(rarity * 2),
-                  HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(256)),
+                  HeightRangePlacement.uniform(VerticalAnchor.bottom(),
+                      VerticalAnchor.absolute(256)),
                   InSquarePlacement.spread()
                   // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
@@ -296,7 +301,8 @@ public class LighterEndPlacedFeatures {
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_GOLD_SMALL),
               List.of(
                   RarityFilter.onAverageOnceEvery(rarity),
-                  HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(256)),
+                  HeightRangePlacement.uniform(VerticalAnchor.bottom(),
+                      VerticalAnchor.absolute(256)),
                   InSquarePlacement.spread()
                   // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
