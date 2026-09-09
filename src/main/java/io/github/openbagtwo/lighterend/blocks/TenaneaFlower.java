@@ -104,7 +104,12 @@ public class TenaneaFlower extends GrowingPlantHeadBlock {
   }
 
   @Override
-  public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
+  public boolean isValidBonemealTarget(
+      LevelReader world,
+      BlockPos pos,
+      BlockState state,
+      BonemealSource source
+  ) {
     return world.getBlockState(this.getTipPos(world, pos).below()).isAir();
   }
 

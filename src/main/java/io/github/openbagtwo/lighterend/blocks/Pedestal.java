@@ -4,6 +4,7 @@ import io.github.openbagtwo.lighterend.blocks.entities.PedestalDisplay;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -68,7 +69,7 @@ public class Pedestal extends BaseEntityBlock implements SelectableSlotContainer
       if (!display.isEmpty()) {
         ItemStack stackOnPedestal = display.getItem(0);
         if (!player.getInventory().add(stackOnPedestal)) {
-          player.drop(stackOnPedestal, false);
+          player.drop(stackOnPedestal, false, Prediction.PREDICTED);
         }
         makeSound = true;
         display.clearContent();

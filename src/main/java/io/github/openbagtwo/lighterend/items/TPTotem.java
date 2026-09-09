@@ -26,6 +26,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.ExtraCodecs;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -102,7 +103,7 @@ public class TPTotem extends Item {
       itemStack.consume(1, playerEntity);
       newStack.set(LighterEndData.TOTEM_TARGET, target);
       if (!playerEntity.getInventory().add(newStack)) {
-        playerEntity.drop(newStack, false);
+        playerEntity.drop(newStack, false, Prediction.PREDICTED);
       }
     }
     return InteractionResult.SUCCESS;

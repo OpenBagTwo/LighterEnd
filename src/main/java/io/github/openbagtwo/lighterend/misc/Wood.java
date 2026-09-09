@@ -17,7 +17,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.SignItem;
+import net.minecraft.world.item.StandingAndWallBlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ButtonBlock;
@@ -214,9 +214,10 @@ public class Wood {
       );
       LighterEndItems.register(
           baseName + "_sign",
-          settings -> new SignItem(
+          settings -> new StandingAndWallBlockItem(
               sign,
               wallSign,
+              Direction.DOWN,
               settings
           ),
           new Item.Properties().stacksTo(16).setId(

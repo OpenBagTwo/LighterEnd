@@ -1,8 +1,6 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import com.google.common.collect.Maps;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.EnumMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -138,21 +136,7 @@ public class Chandelier extends Block {
   public static class Oxidizable extends Chandelier implements
       net.minecraft.world.level.block.WeatheringCopper {
 
-    public static final MapCodec<Oxidizable> CODEC = RecordCodecBuilder.mapCodec(
-        instance -> instance.group(
-                net.minecraft.world.level.block.WeatheringCopper.WeatherState.CODEC.fieldOf(
-                        "weathering_state")
-                    .forGetter(
-                        Oxidizable::getAge), propertiesCodec()
-            )
-            .apply(instance, Oxidizable::new)
-    );
     private final net.minecraft.world.level.block.WeatheringCopper.WeatherState oxidationLevel;
-
-    @Override
-    public MapCodec<Oxidizable> codec() {
-      return CODEC;
-    }
 
     public Oxidizable(net.minecraft.world.level.block.WeatheringCopper.WeatherState oxidationLevel,
         BlockBehaviour.Properties settings) {
