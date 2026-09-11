@@ -34,8 +34,10 @@ public class EndLake extends Structure {
     return LighterEndStructures.END_LAKE;
   }
 
-  protected void generatePieces(StructurePiecesBuilder structurePiecesBuilder,
-      GenerationContext context) {
+  protected void generatePieces(
+      StructurePiecesBuilder structurePiecesBuilder,
+      GenerationContext context
+  ) {
     final RandomSource random = context.random();
     final ChunkPos chunkPos = context.chunkPos();
     final ChunkGenerator chunkGenerator = context.chunkGenerator();
@@ -55,9 +57,10 @@ public class EndLake extends Structure {
     }
   }
 
-  protected Holder<Biome> getNoiseBiome(ChunkGenerator cg, RandomState rState, int i, int j,
-      int k) {
-    return cg.getBiomeSource().getNoiseBiome(i, j, k, rState.sampler());
+  protected Holder<Biome> getNoiseBiome(
+      ChunkGenerator cg, RandomState rState, int i, int j, int k
+  ) {
+    return cg.getBiomeSource().createCachingResolver(rState).getNoiseBiome(i, j, k);
   }
 
   @Override

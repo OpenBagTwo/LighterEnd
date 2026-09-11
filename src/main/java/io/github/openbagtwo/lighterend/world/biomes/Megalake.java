@@ -11,6 +11,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.EndPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ARGB;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.attribute.AmbientSounds;
 import net.minecraft.world.attribute.BackgroundMusic;
 import net.minecraft.world.attribute.EnvironmentAttributes;
@@ -19,7 +20,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
@@ -32,9 +32,10 @@ public class Megalake {
 
     MobSpawnSettings spawns = new MobSpawnSettings.Builder()
         .addSpawn(
+            LighterEndMobs.CHORUS_CRAB.mob,
             MobCategory.AMBIENT,  //dirty hack for issues with the creature group
             1,
-            new SpawnerData(LighterEndMobs.CHORUS_CRAB.mob, 1, 4)
+            new UniformInt(1, 4)
         )
         .build();
 

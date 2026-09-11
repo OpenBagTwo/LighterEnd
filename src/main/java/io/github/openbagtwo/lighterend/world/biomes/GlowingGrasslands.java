@@ -10,6 +10,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.EndPlacements;
 import net.minecraft.util.ARGB;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.attribute.AmbientSounds;
 import net.minecraft.world.attribute.BackgroundMusic;
 import net.minecraft.world.attribute.EnvironmentAttributes;
@@ -18,7 +20,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
@@ -31,14 +32,16 @@ public class GlowingGrasslands {
 
     MobSpawnSettings spawns = new MobSpawnSettings.Builder()
         .addSpawn(
+            LighterEndMobs.MOOSHROOM.mob,
             MobCategory.CREATURE,
             1,
-            new SpawnerData(LighterEndMobs.MOOSHROOM.mob, 2, 4)
+            new UniformInt(2, 4)
         )
         .addSpawn(
+            LighterEndMobs.DRAGONFLY.mob,
             MobCategory.AMBIENT,
             1,
-            new SpawnerData(LighterEndMobs.DRAGONFLY.mob, 1, 1)
+            new ConstantInt(1)
         )
         .build();
 

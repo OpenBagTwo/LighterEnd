@@ -11,6 +11,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.EndPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ARGB;
+import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.attribute.AmbientParticle;
 import net.minecraft.world.attribute.AmbientSounds;
 import net.minecraft.world.attribute.BackgroundMusic;
@@ -21,7 +22,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
@@ -34,17 +34,20 @@ public class UmbraValley {
 
     MobSpawnSettings spawns = new MobSpawnSettings.Builder()
         .addSpawn(
+            EntityTypes.PHANTOM,
             MobCategory.MONSTER,
             19,
-            new SpawnerData(EntityTypes.PHANTOM, 1, 1)
+            new ConstantInt(1)
         ).addSpawn(
+            EntityTypes.ENDERMAN,
             MobCategory.MONSTER,
             80,
-            new SpawnerData(EntityTypes.ENDERMAN, 4, 4)
+            new ConstantInt(4)
         ).addSpawn(
+            EntityTypes.ENDERMITE,
             MobCategory.MONSTER,
             1,
-            new SpawnerData(EntityTypes.ENDERMITE, 1, 1)
+            new ConstantInt(1)
         ).build();
 
     var genSettingsBuilder = new BiomeGenerationSettings.Builder(features, carvers)

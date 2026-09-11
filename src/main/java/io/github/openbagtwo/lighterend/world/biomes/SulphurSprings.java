@@ -11,6 +11,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.EndPlacements;
 import net.minecraft.util.ARGB;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.attribute.AmbientParticle;
 import net.minecraft.world.attribute.AmbientSounds;
 import net.minecraft.world.attribute.BackgroundMusic;
@@ -21,7 +23,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
@@ -34,25 +35,30 @@ public class SulphurSprings {
 
     MobSpawnSettings spawns = new MobSpawnSettings.Builder()
         .addSpawn(
+            LighterEndMobs.END_FISH.mob,
             MobCategory.WATER_AMBIENT,
             1,
-            new SpawnerData(LighterEndMobs.END_FISH.mob, 3, 8)
+            new UniformInt(3, 8)
         ).addSpawn(
+            LighterEndMobs.CUBOZOA.mob,
             MobCategory.WATER_AMBIENT,
             1,
-            new SpawnerData(LighterEndMobs.CUBOZOA.mob, 3, 8)
+            new UniformInt(3, 8)
         ).addSpawn(
+            EntityTypes.ENDERMAN,
             MobCategory.MONSTER,
             20,
-            new SpawnerData(EntityTypes.ENDERMAN, 1, 4)
+            new UniformInt(1, 4)
         ).addSpawn(
+            EntityTypes.ENDERMITE,
             MobCategory.MONSTER,
             1,
-            new SpawnerData(EntityTypes.ENDERMITE, 1, 1)
+            new ConstantInt(1)
         ).addSpawn(
+            EntityTypes.SULFUR_CUBE,
             MobCategory.MONSTER,
             50,
-            new SpawnerData(EntityTypes.SULFUR_CUBE, 2, 4)
+            new UniformInt(2, 4)
         ).build();
 
     var genSettingsBuilder = new BiomeGenerationSettings.Builder(features, carvers)

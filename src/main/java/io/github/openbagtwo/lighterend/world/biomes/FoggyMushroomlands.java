@@ -12,6 +12,8 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.EndPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ARGB;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.attribute.AmbientParticle;
 import net.minecraft.world.attribute.AmbientSounds;
 import net.minecraft.world.attribute.BackgroundMusic;
@@ -21,7 +23,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
@@ -34,19 +35,22 @@ public class FoggyMushroomlands {
 
     MobSpawnSettings spawns = new MobSpawnSettings.Builder()
         .addSpawn(
+            LighterEndMobs.MOOSHROOM.mob,
             MobCategory.CREATURE,
             1,
-            new SpawnerData(LighterEndMobs.MOOSHROOM.mob, 4, 8)
+            new UniformInt(4, 8)
         )
         .addSpawn(
+            LighterEndMobs.DRAGONFLY.mob,
             MobCategory.AMBIENT,
             1,
-            new SpawnerData(LighterEndMobs.DRAGONFLY.mob, 1, 1)
+            new ConstantInt(1)
         )
         .addSpawn(
+            LighterEndMobs.END_SLIME.mob,
             MobCategory.MONSTER,
             10,
-            new SpawnerData(LighterEndMobs.END_SLIME.mob, 1, 2)
+            new UniformInt(1, 2)
         )
         .build();
 

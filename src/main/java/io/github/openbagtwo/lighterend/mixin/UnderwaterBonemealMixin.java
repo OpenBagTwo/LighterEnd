@@ -10,8 +10,6 @@ import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,13 +32,13 @@ public abstract class UnderwaterBonemealMixin {
         if (!(world instanceof ServerLevel)) {
           cir.setReturnValue(true);
         } else {
-          FeaturePlaceContext<NoneFeatureConfiguration> context = new FeaturePlaceContext<>(null,
-              (ServerLevel) world,
-              ((ServerLevel) world).getChunkSource().getGenerator(), world.getRandom(),
-              blockPos,
-              new NoneFeatureConfiguration());
 
-          boolean success = new UnderwaterPlants().place(context);
+          boolean success = new UnderwaterPlants().place(
+              (ServerLevel) world,
+              ((ServerLevel) world).getChunkSource().getGenerator(),
+              world.getRandom(),
+              blockPos
+          );
           if (success) {
             stack.shrink(1);
           }

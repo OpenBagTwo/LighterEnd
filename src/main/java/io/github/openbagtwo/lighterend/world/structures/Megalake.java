@@ -67,16 +67,22 @@ public class Megalake extends Structure {
         context.randomState()
     );
     if (pos.getY() >= 10) {
-      return Optional.of(new Structure.GenerationStub(pos, (structurePiecesBuilder) -> {
-        generatePieces(structurePiecesBuilder, context);
-      }));
+      return Optional.of(
+          new Structure.GenerationStub(
+              pos,
+              (structurePiecesBuilder) -> {
+                generatePieces(structurePiecesBuilder, context);
+              }
+          )
+      );
     }
     return Optional.empty();
   }
 
-  protected Holder<Biome> getNoiseBiome(ChunkGenerator cg, RandomState rState, int i, int j,
-      int k) {
-    return cg.getBiomeSource().getNoiseBiome(i, j, k, rState.sampler());
+  protected Holder<Biome> getNoiseBiome(
+      ChunkGenerator cg, RandomState rState, int i, int j, int k
+  ) {
+    return cg.getBiomeSource().createCachingResolver(rState).getNoiseBiome(i, j, k);
   }
 
   private static BlockPos getGenerationHeight(
@@ -121,5 +127,4 @@ public class Megalake extends Structure {
 
     return result;
   }
-
 }
