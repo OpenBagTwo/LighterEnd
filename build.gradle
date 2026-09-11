@@ -58,7 +58,7 @@ dependencies {
 
     compileOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
     runtimeOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
-//    runtimeOnly("maven.modrinth:jade:${project.jade_version}")
+    runtimeOnly("maven.modrinth:jade:${project.jade_version}")
 //    compileOnly("com.github.glitchfiend:TerraBlender-fabric:${project.terrablender_version}")
     // Only comment in the line below when you're explicitly testing TerraBlender compat
 //    runtimeOnly("com.github.glitchfiend:TerraBlender-fabric:${project.terrablender_version}")
