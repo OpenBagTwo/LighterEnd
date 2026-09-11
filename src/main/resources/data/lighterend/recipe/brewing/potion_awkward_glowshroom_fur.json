@@ -1,0 +1,20 @@
+{
+  "input": {
+    "item": "minecraft:potion",
+    "potion_contents": {
+      "potions": "minecraft:awkward"
+    }
+  },
+  "output": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "lighterend:end_veil"
+      }
+    },
+    "id": "minecraft:potion"
+  },
+  "reagent": {
+    "item": "lighterend:mossy_glowshroom_fur"
+  },
+  "type": "minecraft:brewing"
+}

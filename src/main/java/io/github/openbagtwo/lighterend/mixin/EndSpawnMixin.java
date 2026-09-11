@@ -216,7 +216,7 @@ public abstract class EndSpawnMixin {
     }
 
     world.registryAccess()
-        .lookup(Registries.CONFIGURED_FEATURE)
+        .lookup(Registries.FEATURE)
         .flatMap(
             featureRegistry -> featureRegistry.get(
                 LighterEndConfiguredFeatures.STARTER_CHEST))

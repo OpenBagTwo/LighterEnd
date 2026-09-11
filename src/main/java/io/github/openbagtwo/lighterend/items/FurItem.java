@@ -6,6 +6,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 public class FurItem extends BlockItem {
 
@@ -18,7 +19,7 @@ public class FurItem extends BlockItem {
                 .setSwappable(false)
                 .setEquipSound(LighterEndSounds.EQUIP_FUR)
                 .build()
-        )
+        ).compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
     );
   }
 }

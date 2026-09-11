@@ -8,6 +8,7 @@ import java.util.EnumSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
@@ -67,7 +68,7 @@ public class Dragonfly extends Animal {
     FlyingPathNavigation birdNavigation = new FlyingPathNavigation(this, world) {
       public boolean isStableDestination(BlockPos pos) {
         BlockState state = this.level.getBlockState(pos);
-        return state.isAir() || !state.blocksMotion();
+        return state.isAir() || !state.is(BlockTags.BLOCKS_MOTION);
       }
 
       public void tick() {

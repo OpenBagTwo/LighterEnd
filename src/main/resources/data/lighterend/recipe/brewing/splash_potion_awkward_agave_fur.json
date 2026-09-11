@@ -1,0 +1,20 @@
+{
+  "input": {
+    "item": "minecraft:splash_potion",
+    "potion_contents": {
+      "potions": "minecraft:awkward"
+    }
+  },
+  "output": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "lighterend:end_veil"
+      }
+    },
+    "id": "minecraft:splash_potion"
+  },
+  "reagent": {
+    "item": "lighterend:blue_vine_fur"
+  },
+  "type": "minecraft:brewing"
+}

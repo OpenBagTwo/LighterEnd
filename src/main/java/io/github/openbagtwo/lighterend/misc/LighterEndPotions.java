@@ -1,17 +1,11 @@
 package io.github.openbagtwo.lighterend.misc;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
-import io.github.openbagtwo.lighterend.registries.LighterEndItems;
-import net.fabricmc.fabric.api.registry.FabricPotionBrewingBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.crafting.Ingredient;
 
 public class LighterEndPotions {
 
@@ -28,36 +22,6 @@ public class LighterEndPotions {
   }
 
   public static void initialize() {
-
-    // TODO: replace manual lists of items with item tags
-    //       (gotta figure out how to get at the tag registryLookup)
-
-    FabricPotionBrewingBuilder.BUILD.register(builder -> {
-      builder.registerPotionRecipe(Potions.WATER, Ingredient.of(
-              LighterEndBlocks.AURANT_POLYPORE, LighterEndBlocks.PURPLE_POLYPORE
-          ),
-          Potions.AWKWARD
-      );
-    });
-
-    FabricPotionBrewingBuilder.BUILD.register(builder -> {
-      builder.registerPotionRecipe(Potions.AWKWARD, Ingredient.of(
-              LighterEndBlocks.AGAVE_FUR, LighterEndBlocks.GLOWSHROOM_FUR
-          ),
-          END_VEIL
-      );
-    });
-    FabricPotionBrewingBuilder.BUILD.register(builder -> {
-      builder.addMix(END_VEIL, Items.REDSTONE, LONG_END_VEIL);
-    });
-
-    FabricPotionBrewingBuilder.BUILD.register(builder -> {
-      builder.registerPotionRecipe(Potions.AWKWARD, Ingredient.of(
-              LighterEndItems.SHADOW_BERRY_JAM
-          ),
-          Potions.NIGHT_VISION
-      );
-    });
   }
 
 }

@@ -1,13 +1,13 @@
 package io.github.openbagtwo.lighterend.world.gen;
 
-import static net.minecraft.world.level.levelgen.SurfaceRules.DEEP_UNDER_FLOOR;
-import static net.minecraft.world.level.levelgen.SurfaceRules.ON_FLOOR;
-import static net.minecraft.world.level.levelgen.SurfaceRules.VERY_DEEP_UNDER_FLOOR;
-import static net.minecraft.world.level.levelgen.SurfaceRules.ifTrue;
-import static net.minecraft.world.level.levelgen.SurfaceRules.isBiome;
-import static net.minecraft.world.level.levelgen.SurfaceRules.noiseCondition2d;
-import static net.minecraft.world.level.levelgen.SurfaceRules.sequence;
-import static net.minecraft.world.level.levelgen.SurfaceRules.state;
+import static net.minecraft.data.worldgen.material.VanillaMaterialConditions.DEEP_UNDER_FLOOR;
+import static net.minecraft.data.worldgen.material.VanillaMaterialConditions.ON_FLOOR;
+import static net.minecraft.data.worldgen.material.VanillaMaterialConditions.VERY_DEEP_UNDER_FLOOR;
+import static net.minecraft.world.level.levelgen.material.MaterialRules.ifTrue;
+import static net.minecraft.world.level.levelgen.material.MaterialRules.isBiome;
+import static net.minecraft.world.level.levelgen.material.MaterialRules.noiseCondition2d;
+import static net.minecraft.world.level.levelgen.material.MaterialRules.sequence;
+import static net.minecraft.world.level.levelgen.material.MaterialRules.state;
 
 import com.mojang.datafixers.util.Pair;
 import io.github.openbagtwo.lighterend.LighterEnd;
@@ -34,7 +34,9 @@ import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
-import net.minecraft.world.level.levelgen.SurfaceRules.RuleSource;
+import net.minecraft.world.level.levelgen.material.MaterialRules;
+import net.minecraft.world.level.levelgen.material.condition.MaterialCondition;
+import net.minecraft.world.level.levelgen.material.rule.MaterialRule;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class LighterEndWorldGen {
@@ -284,10 +286,13 @@ public class LighterEndWorldGen {
     );
   }
 
-  public static RuleSource updateSurfaceRules(final HolderGetter<Biome> biomes) {
+  public static MaterialRule updateSurfaceRules(
+      final HolderGetter<Biome> biomes,
+      final HolderGetter<MaterialCondition> conditions
+  ) {
     return sequence(
         ifTrue(
-            ON_FLOOR,
+            MaterialRules.getCondition(conditions, ON_FLOOR),
             sequence(
                 ifTrue(
                     isBiome(
@@ -308,7 +313,7 @@ public class LighterEndWorldGen {
             )
         ),
         ifTrue(
-            VERY_DEEP_UNDER_FLOOR,
+            MaterialRules.getCondition(conditions, VERY_DEEP_UNDER_FLOOR),
             sequence(
                 ifTrue(
                     isBiome(
@@ -326,7 +331,7 @@ public class LighterEndWorldGen {
             )
         ),
         ifTrue(
-            DEEP_UNDER_FLOOR,
+            MaterialRules.getCondition(conditions, DEEP_UNDER_FLOOR),
             sequence(
                 ifTrue(
                     isBiome(

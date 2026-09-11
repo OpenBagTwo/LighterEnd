@@ -1,0 +1,20 @@
+{
+  "input": {
+    "item": "minecraft:potion",
+    "potion_contents": {
+      "potions": "lighterend:end_veil"
+    }
+  },
+  "output": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "lighterend:long_end_veil"
+      }
+    },
+    "id": "minecraft:potion"
+  },
+  "reagent": {
+    "item": "minecraft:redstone"
+  },
+  "type": "minecraft:brewing"
+}

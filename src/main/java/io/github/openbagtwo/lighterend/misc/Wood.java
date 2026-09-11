@@ -8,10 +8,10 @@ import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import java.util.Arrays;
 import java.util.List;
+import net.fabricmc.fabric.api.item.v1.BlockTransformerHelper;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.BlockSetTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.WoodTypeBuilder;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
-import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -100,8 +100,8 @@ public class Wood {
           settings -> new RotatedPillarBlock(
               applyLogSettings(settings.mapColor(woodColor))));
 
-      StrippableBlockRegistry.register(log, strippedLog);
-      StrippableBlockRegistry.register(wood, strippedWood);
+      BlockTransformerHelper.registerStripping(log, strippedLog);
+      BlockTransformerHelper.registerStripping(wood, strippedWood);
 
       planks = LighterEndBlocks.register(
           baseName + "_planks",

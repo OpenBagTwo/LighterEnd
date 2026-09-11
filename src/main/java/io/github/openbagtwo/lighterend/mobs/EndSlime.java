@@ -304,7 +304,7 @@ public class EndSlime extends Slime {
       EndSlime.this.lookAt(EndSlime.this.getTarget(), 10.0F, 10.0F);
       ((EndSlimeMoveControl) EndSlime.this.getMoveControl()).look(
           EndSlime.this.getYRot(),
-          EndSlime.this.isDealsDamage()
+          EndSlime.this.canDealDamage()
       );
     }
   }

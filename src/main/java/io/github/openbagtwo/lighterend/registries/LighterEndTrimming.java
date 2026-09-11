@@ -8,7 +8,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Util;
-import net.minecraft.world.item.equipment.trim.MaterialAssetGroup;
 import net.minecraft.world.item.equipment.trim.TrimMaterial;
 
 public class LighterEndTrimming {
@@ -22,7 +21,7 @@ public class LighterEndTrimming {
     registerable.register(
         AURORA,
         new TrimMaterial(
-            MaterialAssetGroup.create("aurora"),
+            LighterEnd.of("trim/aurora"),
             Component.translatable(Util.makeDescriptionId("trim_material", AURORA.identifier()))
                 .withStyle(Style.EMPTY.withColor(TextColor.parseColor("#a791fe").getOrThrow()))
         )

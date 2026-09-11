@@ -12,18 +12,20 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.WeatheringCopper;
@@ -40,9 +42,10 @@ public class RecipeProvider extends FabricRecipeProvider {
   @Override
   protected net.minecraft.data.recipes.RecipeProvider createRecipeProvider(
       HolderLookup.Provider registryLookup,
-      RecipeOutput exporter
+      BootstrapContext<Recipe<?>> recipes,
+      BootstrapContext<Advancement> advancements
   ) {
-    return new net.minecraft.data.recipes.RecipeProvider(registryLookup, exporter) {
+    return new net.minecraft.data.recipes.RecipeProvider(recipes, advancements) {
       @Override
       public void buildRecipes() {
         twoByTwoPacker(
@@ -440,7 +443,7 @@ public class RecipeProvider extends FabricRecipeProvider {
               .requires(unwaxed)
               .requires(Items.HONEYCOMB)
               .unlockedBy(getHasName(unwaxed), this.has(unwaxed))
-              .save(exporter);
+              .save(this.output);
         }
 
         SimpleCookingRecipeBuilder.smelting(
@@ -619,6 +622,8 @@ public class RecipeProvider extends FabricRecipeProvider {
         generateWoodRecipes(LighterEndBlocks.DRAGON);
 
         dyedItem(LighterEndEquipment.SILK_ELYTRA, "dyed_armor");
+
+
       }
 
       public void generateMaterialRecipes(Material material) {
