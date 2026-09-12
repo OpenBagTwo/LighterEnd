@@ -88,10 +88,11 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         )
     ).save(consumer, LighterEnd.of("sulphur_springs"));
 
-    // end_lake was created by hand
+    // craft_spectral_arrow will be created by hand
     AdvancementHolder craft_spectral_arrow = new AdvancementHolder(
-        Identifier.parse(LighterEnd.MOD_ID + "/combat/craft_spectral_arrows"),
-        null);
+        Identifier.parse(LighterEnd.MOD_ID + "craft_spectral_arrows"),
+        null
+    );
 
     AdvancementHolder tether_totem = Advancement.Builder.advancement().parent(root).display(
         LighterEndBlocks.OBELISK.asItem(),

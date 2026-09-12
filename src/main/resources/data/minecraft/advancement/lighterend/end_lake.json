@@ -2,33 +2,29 @@
   "criteria": {
     "found_end_lake": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "location": {
-                "structures": "lighterend:end_lake"
-              }
+        "player": {
+          "entity": "this",
+          "predicate": {
+            "minecraft:location": {
+              "structures": "lighterend:end_lake"
             }
-          }
-        ]
+          },
+          "type": "minecraft:entity_properties"
+        }
       },
       "trigger": "minecraft:location"
     },
     "found_megalake": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "location": {
-                "structures": "lighterend:megalake"
-              }
+        "player": {
+          "entity": "this",
+          "predicate": {
+            "minecraft:location": {
+              "structures": "lighterend:megalake"
             }
-          }
-        ]
+          },
+          "type": "minecraft:entity_properties"
+        }
       },
       "trigger": "minecraft:location"
     }
