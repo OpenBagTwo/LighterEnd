@@ -40,9 +40,11 @@ public class TenaneaTree implements Feature {
   public TenaneaTree() {
   }
 
+  public static final MapCodec<TenaneaTree> CODEC = MapCodec.unit(TenaneaTree::new);
+
   @Override
   public MapCodec<TenaneaTree> codec() {
-    return MapCodec.unit(TenaneaTree::new);
+    return CODEC;
   }
 
   @Override

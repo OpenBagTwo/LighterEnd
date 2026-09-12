@@ -30,9 +30,11 @@ public class SulphurLake implements Feature {
   public SulphurLake() {
   }
 
+  public static final MapCodec<SulphurLake> CODEC = MapCodec.unit(SulphurLake::new);
+
   @Override
   public MapCodec<SulphurLake> codec() {
-    return MapCodec.unit(SulphurLake::new);
+    return CODEC;
   }
 
   @Override

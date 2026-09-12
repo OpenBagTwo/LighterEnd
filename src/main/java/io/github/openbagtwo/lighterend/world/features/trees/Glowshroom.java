@@ -49,9 +49,11 @@ public class Glowshroom implements Feature {
   private static final SDF.Primitive CONE_GLOW;
   private static final SDF.Primitive ROOTS;
 
+  public static final MapCodec<Glowshroom> CODEC = MapCodec.unit(Glowshroom::new);
+
   @Override
   public MapCodec<Glowshroom> codec() {
-    return MapCodec.unit(Glowshroom::new);
+    return CODEC;
   }
 
   @Override

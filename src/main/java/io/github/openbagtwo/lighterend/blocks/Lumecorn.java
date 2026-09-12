@@ -297,9 +297,11 @@ public class Lumecorn extends Block {
     public LumecornFeature() {
     }
 
+    public static final MapCodec<LumecornFeature> CODEC = MapCodec.unit(LumecornFeature::new);
+
     @Override
     public MapCodec<LumecornFeature> codec() {
-      return MapCodec.unit(LumecornFeature::new);
+      return CODEC;
     }
 
     @Override

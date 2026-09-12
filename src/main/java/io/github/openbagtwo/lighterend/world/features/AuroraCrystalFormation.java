@@ -24,9 +24,13 @@ public class AuroraCrystalFormation implements Feature {
   public AuroraCrystalFormation() {
   }
 
+  public static final MapCodec<AuroraCrystalFormation> CODEC = MapCodec.unit(
+      AuroraCrystalFormation::new
+  );
+
   @Override
   public MapCodec<AuroraCrystalFormation> codec() {
-    return MapCodec.unit(AuroraCrystalFormation::new);
+    return CODEC;
   }
 
   @Override

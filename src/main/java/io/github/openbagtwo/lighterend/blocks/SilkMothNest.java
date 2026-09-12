@@ -300,9 +300,13 @@ public class SilkMothNest extends BaseEntityBlock {
     public SilkMothNestFeature() {
     }
 
+    public static final MapCodec<SilkMothNestFeature> CODEC = MapCodec.unit(
+        SilkMothNestFeature::new
+    );
+
     @Override
     public MapCodec<SilkMothNestFeature> codec() {
-      return MapCodec.unit(SilkMothNestFeature::new);
+      return CODEC;
     }
 
     private boolean canGenerate(WorldGenLevel world, BlockPos pos) {

@@ -18,9 +18,11 @@ public class UnderwaterPlants implements Feature {
   public UnderwaterPlants() {
   }
 
+  public static final MapCodec<UnderwaterPlants> CODEC = MapCodec.unit(UnderwaterPlants::new);
+
   @Override
   public MapCodec<UnderwaterPlants> codec() {
-    return MapCodec.unit(UnderwaterPlants::new);
+    return CODEC;
   }
 
   @Override

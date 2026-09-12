@@ -27,9 +27,11 @@ public class StarterChest implements Feature {
   public StarterChest() {
   }
 
+  public static final MapCodec<StarterChest> CODEC = MapCodec.unit(StarterChest::new);
+
   @Override
   public MapCodec<StarterChest> codec() {
-    return MapCodec.unit(StarterChest::new);
+    return CODEC;
   }
 
   @Override

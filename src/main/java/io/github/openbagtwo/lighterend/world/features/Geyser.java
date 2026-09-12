@@ -47,9 +47,11 @@ public class Geyser implements Feature {
   public Geyser() {
   }
 
+  public static final MapCodec<Geyser> CODEC = MapCodec.unit(Geyser::new);
+
   @Override
   public MapCodec<Geyser> codec() {
-    return MapCodec.unit(Geyser::new);
+    return CODEC;
   }
 
   @Override

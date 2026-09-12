@@ -44,9 +44,11 @@ public class DragonTree implements Feature {
   public DragonTree() {
   }
 
+  public static final MapCodec<DragonTree> CODEC = MapCodec.unit(DragonTree::new);
+
   @Override
   public MapCodec<DragonTree> codec() {
-    return MapCodec.unit(DragonTree::new);
+    return CODEC;
   }
 
   @Override

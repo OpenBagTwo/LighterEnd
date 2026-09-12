@@ -30,9 +30,11 @@ public class SulphurCave implements Feature {
   public SulphurCave() {
   }
 
+  public static final MapCodec<SulphurCave> CODEC = MapCodec.unit(SulphurCave::new);
+
   @Override
   public MapCodec<SulphurCave> codec() {
-    return MapCodec.unit(SulphurCave::new);
+    return CODEC;
   }
 
   @Override

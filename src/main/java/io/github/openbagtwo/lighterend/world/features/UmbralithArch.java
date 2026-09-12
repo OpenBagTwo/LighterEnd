@@ -27,9 +27,11 @@ public class UmbralithArch implements Feature {
   public UmbralithArch() {
   }
 
+  public static final MapCodec<UmbralithArch> CODEC = MapCodec.unit(UmbralithArch::new);
+
   @Override
   public MapCodec<UmbralithArch> codec() {
-    return MapCodec.unit(UmbralithArch::new);
+    return CODEC;
   }
 
   @Override
@@ -90,9 +92,11 @@ public class UmbralithArch implements Feature {
     public Thin() {
     }
 
+    public static final MapCodec<Thin> CODEC = MapCodec.unit(Thin::new);
+
     @Override
     public MapCodec<Thin> codec() {
-      return MapCodec.unit(Thin::new);
+      return Thin.CODEC;
     }
 
     @Override

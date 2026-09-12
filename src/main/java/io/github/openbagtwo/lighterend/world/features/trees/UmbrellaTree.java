@@ -41,9 +41,11 @@ public class UmbrellaTree implements Feature {
   public UmbrellaTree() {
   }
 
+  public static final MapCodec<UmbrellaTree> CODEC = MapCodec.unit(UmbrellaTree::new);
+
   @Override
   public MapCodec<UmbrellaTree> codec() {
-    return MapCodec.unit(UmbrellaTree::new);
+    return CODEC;
   }
 
   @Override

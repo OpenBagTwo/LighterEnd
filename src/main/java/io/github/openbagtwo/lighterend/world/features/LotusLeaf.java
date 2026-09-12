@@ -19,9 +19,11 @@ public class LotusLeaf implements Feature {
   public LotusLeaf() {
   }
 
+  public static final MapCodec<LotusLeaf> CODEC = MapCodec.unit(LotusLeaf::new);
+
   @Override
   public MapCodec<LotusLeaf> codec() {
-    return MapCodec.unit(LotusLeaf::new);
+    return CODEC;
   }
 
   @Override

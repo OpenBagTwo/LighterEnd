@@ -339,9 +339,11 @@ public class EndLotus extends Block {
     public EndLotusFeature() {
     }
 
+    public static final MapCodec<EndLotusFeature> CODEC = MapCodec.unit(EndLotusFeature::new);
+
     @Override
     public MapCodec<EndLotusFeature> codec() {
-      return MapCodec.unit(EndLotusFeature::new);
+      return CODEC;
     }
 
     @Override

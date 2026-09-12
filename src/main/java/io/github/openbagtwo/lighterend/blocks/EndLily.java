@@ -195,9 +195,11 @@ public class EndLily extends Block implements LiquidBlockContainer {
     public EndLilyFeature() {
     }
 
+    public static final MapCodec<EndLilyFeature> CODEC = MapCodec.unit(EndLilyFeature::new);
+
     @Override
     public MapCodec<EndLilyFeature> codec() {
-      return MapCodec.unit(EndLilyFeature::new);
+      return CODEC;
     }
 
     @Override

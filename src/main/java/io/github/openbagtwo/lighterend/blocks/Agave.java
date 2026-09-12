@@ -214,9 +214,11 @@ public class Agave extends Block {
     public AgaveFeature() {
     }
 
+    public static final MapCodec<AgaveFeature> CODEC = MapCodec.unit(AgaveFeature::new);
+
     @Override
     public MapCodec<AgaveFeature> codec() {
-      return MapCodec.unit(AgaveFeature::new);
+      return CODEC;
     }
 
     @Override

@@ -21,9 +21,11 @@ public class SurfaceVent implements Feature {
   public SurfaceVent() {
   }
 
+  public static final MapCodec<SurfaceVent> CODEC = MapCodec.unit(SurfaceVent::new);
+
   @Override
   public MapCodec<SurfaceVent> codec() {
-    return MapCodec.unit(SurfaceVent::new);
+    return CODEC;
   }
 
   @Override
