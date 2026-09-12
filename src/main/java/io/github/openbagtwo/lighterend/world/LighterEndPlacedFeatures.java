@@ -1,5 +1,6 @@
 package io.github.openbagtwo.lighterend.world;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
@@ -10,12 +11,16 @@ import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.placement.BiomeFilter;
+import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter;
 import net.minecraft.world.level.levelgen.placement.CountPlacement;
 import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.RarityFilter;
 
 public class LighterEndPlacedFeatures {
@@ -100,16 +105,17 @@ public class LighterEndPlacedFeatures {
         LUMECORN,
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.LUMECORN),
-            VegetationPlacements.treePlacement(
+            treePlacement(
                 PlacementUtils.countExtra(3, 0.5f, 2),
-                LighterEndBlocks.LUMECORN_SEED)
+                LighterEndBlocks.LUMECORN_SEED
+            )
         )
     );
     context.register(
         TENANEA_TREE,
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.TENANEA_TREE),
-            VegetationPlacements.treePlacement(
+            treePlacement(
                 PlacementUtils.countExtra(10, 0.5f, 2),
                 LighterEndBlocks.TENANEA_SAPLING)
         )
@@ -125,7 +131,7 @@ public class LighterEndPlacedFeatures {
         UMBRELLA_TREE,
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.UMBRELLA_TREE),
-            VegetationPlacements.treePlacement(
+            treePlacement(
                 PlacementUtils.countExtra(1, 0.1f, 1),
                 LighterEndBlocks.UMBRELLA_TREE_SAPLING
             )
@@ -207,7 +213,7 @@ public class LighterEndPlacedFeatures {
         GLOWSHROOM,
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.GLOWSHROOM),
-            VegetationPlacements.treePlacement(
+            treePlacement(
                 RarityFilter.onAverageOnceEvery(8),
                 LighterEndBlocks.GLOWSHROOM_SAPLING
             )
@@ -217,7 +223,7 @@ public class LighterEndPlacedFeatures {
         AGAVE,
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.AGAVE),
-            VegetationPlacements.treePlacement(
+            treePlacement(
                 PlacementUtils.countExtra(3, 0.5f, 2),
                 LighterEndBlocks.AGAVE_SEED)
         )
@@ -449,7 +455,7 @@ public class LighterEndPlacedFeatures {
         DRAGON_TREE,
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.DRAGON_TREE),
-            VegetationPlacements.treePlacement(
+            treePlacement(
                 PlacementUtils.countExtra(10, 0.5f, 2),
                 LighterEndBlocks.DRAGON_SAPLING)
         )
@@ -466,12 +472,20 @@ public class LighterEndPlacedFeatures {
             )
         )
     );
-
-
   }
 
   public static ResourceKey<PlacedFeature> of(String id) {
     return ResourceKey.create(Registries.PLACED_FEATURE, LighterEnd.of(id));
+  }
+
+  public static List<PlacementModifier> treePlacement(PlacementModifier frequency, Block sapling) {
+    return ImmutableList.<PlacementModifier>builder()
+        .add(frequency)
+        .add(InSquarePlacement.spread())
+        .add(PlacementUtils.HEIGHTMAP_WORLD_SURFACE)
+        .add(BiomeFilter.biome())
+        .add(BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(sapling)))
+        .build();
   }
 
 }
