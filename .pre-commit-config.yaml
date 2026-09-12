@@ -1,6 +1,6 @@
 repos:
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-  rev: v2.15.0
+  rev: v2.16.0
   hooks:
   - id: pretty-format-yaml
     args: [--autofix]
@@ -17,7 +17,7 @@ repos:
   - id: check-executables-have-shebangs
   - id: end-of-file-fixer
 - repo: https://github.com/igorshubovych/markdownlint-cli
-  rev: v0.46.0
+  rev: v0.49.1
   hooks:
   - id: markdownlint-fix
     args: [--disable, MD013, MD033, MD036 --]

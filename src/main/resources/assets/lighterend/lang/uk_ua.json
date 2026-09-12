@@ -671,6 +671,7 @@
   "minecraft.overworld": "Верхній світ",
   "minecraft.the_end": "Енд",
   "minecraft.the_nether": "Незер",
+  "modmenu.descriptionTranslation.lighterend": "Приносячи світло й життя в найбезлюдніший вимір. Продовження BetterEnd.",
   "resourcepacks.lighterend.visibly_waxed.description": "Надає вощеним люстрам виразну текстуру предмета",
   "resourcepacks.lighterend.visibly_waxed.title": "Помітно вощені люстри",
   "resourcepacks.lighterend.wing_trims.description": "Застосує орнаменти обладунків до шару шовкових елітр",
@@ -721,6 +722,5 @@
   "tag.item.lighterend.glossy_mooshroom_food": "Їжа глянцевих мушрумів",
   "tag.item.lighterend.polypores": "Гриби, що живуть на корі LighterEnd, з яких можна варити незграбні зілля",
   "tag.item.lighterend.repairs_silk_armor": "Предмети, які можуть лагодити шовкові елітри",
-  "trim_material.lighterend.aurora": "Авроровий матеріал",
-  "modmenu.descriptionTranslation.lighterend": "Приносячи світло й життя в найбезлюдніший вимір. Продовження BetterEnd."
+  "trim_material.lighterend.aurora": "Авроровий матеріал"
 }
