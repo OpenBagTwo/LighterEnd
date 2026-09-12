@@ -1,0 +1,29 @@
+{
+  "criteria": {
+    "craft_spectral_arrows": {
+      "conditions": {
+        "recipes": "lighterend:spectral_arrow"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.lighterend.craft_spectral_arrow.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "id": "lighterend:glow_barb"
+    },
+    "title": {
+      "translate": "advancements.lighterend.craft_spectral_arrow.title"
+    }
+  },
+  "parent": "minecraft:lighterend/end_lake",
+  "requirements": [
+    [
+      "craft_spectral_arrows"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -88,7 +88,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         )
     ).save(consumer, LighterEnd.of("sulphur_springs"));
 
-    // craft_spectral_arrow will be created by hand
+    // craft_spectral_arrow was created by hand
     AdvancementHolder craft_spectral_arrow = new AdvancementHolder(
         Identifier.parse(LighterEnd.MOD_ID + "craft_spectral_arrows"),
         null
