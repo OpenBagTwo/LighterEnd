@@ -41,7 +41,7 @@
       "translate": "advancements.lighterend.end_lake.title"
     }
   },
-  "parent": "minecraft:lighterend/root",
+  "parent": "lighterend:root",
   "requirements": [
     [
       "found_end_lake",

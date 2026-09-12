@@ -33,7 +33,6 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
@@ -67,9 +66,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
     ).save(consumer, LighterEnd.of("root"));
 
     // end_lake was created by hand
-    AdvancementHolder end_lake = new AdvancementHolder(
-        Identifier.parse(LighterEnd.MOD_ID + "/end_lake"),
-        null);
+    AdvancementHolder end_lake = new AdvancementHolder(LighterEnd.of("end_lake"), null);
 
     AdvancementHolder sulphur_springs = Advancement.Builder.advancement().parent(end_lake).display(
         LighterEndBlocks.HYDROTHERMAL_VENT.asItem(),
@@ -90,7 +87,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
 
     // craft_spectral_arrow was created by hand
     AdvancementHolder craft_spectral_arrow = new AdvancementHolder(
-        Identifier.parse(LighterEnd.MOD_ID + "craft_spectral_arrows"),
+        LighterEnd.of("craft_spectral_arrows"),
         null
     );
 

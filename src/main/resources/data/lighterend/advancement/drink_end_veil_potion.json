@@ -32,7 +32,7 @@
       "translate": "advancements.lighterend.drink_end_veil_potion.title"
     }
   },
-  "parent": "minecraft:lighterend/wear_fur",
+  "parent": "lighterend:wear_fur",
   "requirements": [
     [
       "drink_end_veil_potion"
