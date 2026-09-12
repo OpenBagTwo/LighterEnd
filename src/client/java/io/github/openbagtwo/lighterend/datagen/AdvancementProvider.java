@@ -28,10 +28,8 @@ import net.minecraft.advancements.triggers.InventoryChangeTrigger;
 import net.minecraft.advancements.triggers.ItemUsedOnLocationTrigger;
 import net.minecraft.advancements.triggers.PlayerInteractTrigger;
 import net.minecraft.advancements.triggers.PlayerTrigger;
-import net.minecraft.advancements.triggers.RecipeCraftedTrigger;
 import net.minecraft.advancements.triggers.UsedTotemTrigger;
 import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -90,26 +88,10 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         )
     ).save(consumer, LighterEnd.of("sulphur_springs"));
 
-    AdvancementHolder craft_spectral_arrow = Advancement.Builder.advancement().parent(end_lake)
-        .display(
-            LighterEndItems.GLOW_BARB,
-            title("craft_spectral_arrow"),
-            description("craft_spectral_arrow"),
-            AdvancementType.GOAL,
-            true,
-            true,
-            false
-        ).addCriterion(
-            "craft_spectral_arrows",
-            RecipeCraftedTrigger.TriggerInstance.craftedItem(
-                HolderSet.direct(
-                    lookup.lookupOrThrow(Registries.RECIPE).getOrThrow(
-                        ResourceKey.create(Registries.RECIPE,
-                            LighterEnd.of("spectral_arrow"))
-                    )
-                )
-            )
-        ).save(consumer, LighterEnd.of("craft_spectral_arrows"));
+    // end_lake was created by hand
+    AdvancementHolder craft_spectral_arrow = new AdvancementHolder(
+        Identifier.parse(LighterEnd.MOD_ID + "/combat/craft_spectral_arrows"),
+        null);
 
     AdvancementHolder tether_totem = Advancement.Builder.advancement().parent(root).display(
         LighterEndBlocks.OBELISK.asItem(),
