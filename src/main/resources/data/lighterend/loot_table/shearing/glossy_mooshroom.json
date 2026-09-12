@@ -1,37 +1,32 @@
 {
   "pools": [
     {
-      "bonus_rolls": 0.0,
       "entries": [
         {
           "children": [
             {
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "lighterend:variant": 0
-                    }
+              "condition": {
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "lighterend:variant": 0
                   }
-                }
-              ],
+                },
+                "type": "minecraft:entity_properties"
+              },
               "type": "minecraft:loot_table",
               "value": "lighterend:shearing/mooshroom/aurant"
             },
             {
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "lighterend:variant": 1
-                    }
+              "condition": {
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "lighterend:variant": 1
                   }
-                }
-              ],
+                },
+                "type": "minecraft:entity_properties"
+              },
               "type": "minecraft:loot_table",
               "value": "lighterend:shearing/mooshroom/purple"
             }
