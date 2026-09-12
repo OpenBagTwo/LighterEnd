@@ -1,6 +1,5 @@
 package io.github.openbagtwo.lighterend.world;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
@@ -106,7 +105,7 @@ public class LighterEndPlacedFeatures {
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.LUMECORN),
             treePlacement(
-                PlacementUtils.countExtra(3, 0.5f, 2),
+                PlacementUtils.countExtra(3, 0.25f, 1),
                 LighterEndBlocks.LUMECORN_SEED
             )
         )
@@ -132,7 +131,7 @@ public class LighterEndPlacedFeatures {
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.UMBRELLA_TREE),
             treePlacement(
-                PlacementUtils.countExtra(1, 0.1f, 1),
+                PlacementUtils.countExtra(1, 0.05f, 1),
                 LighterEndBlocks.UMBRELLA_TREE_SAPLING
             )
         )
@@ -456,7 +455,7 @@ public class LighterEndPlacedFeatures {
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.DRAGON_TREE),
             treePlacement(
-                PlacementUtils.countExtra(10, 0.5f, 2),
+                PlacementUtils.countExtra(5, 0.5f, 2),
                 LighterEndBlocks.DRAGON_SAPLING)
         )
     );
@@ -479,13 +478,13 @@ public class LighterEndPlacedFeatures {
   }
 
   public static List<PlacementModifier> treePlacement(PlacementModifier frequency, Block sapling) {
-    return ImmutableList.<PlacementModifier>builder()
-        .add(frequency)
-        .add(InSquarePlacement.spread())
-        .add(PlacementUtils.HEIGHTMAP_WORLD_SURFACE)
-        .add(BiomeFilter.biome())
-        .add(BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(sapling)))
-        .build();
+    return List.of(
+        frequency,
+        InSquarePlacement.spread(),
+        PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+        BiomeFilter.biome(),
+        BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(sapling))
+    );
   }
 
 }
