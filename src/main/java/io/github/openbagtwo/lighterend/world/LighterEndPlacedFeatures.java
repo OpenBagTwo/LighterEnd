@@ -91,7 +91,7 @@ public class LighterEndPlacedFeatures {
             List.of(
                 CountPlacement.of(20),
                 InSquarePlacement.spread(),
-                PlacementUtils.HEIGHTMAP,
+                PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
                 BiomeFilter.biome()
             )
         )

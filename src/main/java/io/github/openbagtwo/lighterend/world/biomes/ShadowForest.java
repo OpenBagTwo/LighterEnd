@@ -50,8 +50,10 @@ public class ShadowForest {
         .addFeature(Decoration.SURFACE_STRUCTURES, EndPlacements.END_GATEWAY_RETURN)
         .addFeature(Decoration.SURFACE_STRUCTURES, LighterEndPlacedFeatures.DRAGON_TREE)
         .addFeature(Decoration.VEGETAL_DECORATION, LighterEndPlacedFeatures.PURPLE_POLYPORES)
-        .addFeature(Decoration.VEGETAL_DECORATION,
-            LighterEndPlacedFeatures.SHADOW_FOREST_VEGETATION);
+        .addFeature(
+            Decoration.VEGETAL_DECORATION,
+            LighterEndPlacedFeatures.SHADOW_FOREST_VEGETATION
+        );
 
     for (ResourceKey<PlacedFeature> blob : LighterEndPlacedFeatures.JADESTONE_BLOBS) {
       genSettingsBuilder = genSettingsBuilder.addFeature(Decoration.UNDERGROUND_ORES, blob);
