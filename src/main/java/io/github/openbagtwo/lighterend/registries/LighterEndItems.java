@@ -76,7 +76,10 @@ public class LighterEndItems {
   public static final Item DRIED_END_LILY_LEAF = register("end_lily_leaf_dried");
 
   public static final Item END_CREAM = register("end_cream");
-  public static final Item END_POWDER = register("end_powder");
+  public static final Item END_POWDER = register(
+      "end_powder",
+      new Properties().brewingFuel(ContextIntProviders.BREWING_DEFAULT_USES)
+  );
 
   public static final Item CRAB_CLAW = register("crab_claw");
   public static final Item CRAB_MEAT = register(

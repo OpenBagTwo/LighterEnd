@@ -14,9 +14,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider;
 import net.minecraft.advancements.predicates.StatePropertiesPredicate;
 import net.minecraft.core.Holder.Reference;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -35,10 +33,9 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.AllOfCondition;
 import net.minecraft.world.level.storage.loot.predicates.InvertedLootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.predicates.MatchBlock;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 public class BlockLootTableProvider extends FabricBlockLootSubProvider {
 
@@ -176,9 +173,9 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
             LighterEndBlocks.SHADOW_BERRY_SEEDS,
             LighterEndItems.SHADOW_BERRY,
             LighterEndBlocks.SHADOW_BERRY_SEEDS.asItem(),
-            LootItemBlockStatePropertyCondition.hasBlockStateProperties(
-                LighterEndBlocks.SHADOW_BERRY_SEEDS
-            ).setProperties(
+            MatchBlock.blockMatches(
+                this.blocks,
+                LighterEndBlocks.SHADOW_BERRY_SEEDS,
                 StatePropertiesPredicate.Builder.properties().hasProperty(
                     ShadowBerry.AGE,
                     ShadowBerry.MAX_AGE
@@ -193,7 +190,7 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
             block,
             this.applyExplosionDecay(
                 block, LootItem.lootTableItem(Items.STICK)
-                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                    .apply(SetItemCountFunction.setCount(ContextIntProviders.between(0, 2)))
             )
         )
     );
@@ -209,15 +206,17 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
     /* Note: It is intentional (for now) that you can essentially dupe Aurora Crystals with a
              Fortune pick. It was present in BetterEnd and is (IMO) a reasonable way for Aurora
              Crystals to be renewable. */
-    HolderLookup.RegistryLookup<Enchantment> impl = this.registries.lookupOrThrow(
-        Registries.ENCHANTMENT);
     return this.createSilkTouchDispatchTable(
         LighterEndBlocks.AURORA_CRYSTAL,
         this.applyExplosionDecay(
             LighterEndBlocks.AURORA_CRYSTAL,
             LootItem.lootTableItem(LighterEndItems.AURORA_CRYSTAL_SHARD)
-                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F)))
-                .apply(ApplyBonusCount.addOreBonusCount(impl.getOrThrow(Enchantments.FORTUNE)))
+                .apply(SetItemCountFunction.setCount(ContextIntProviders.between(1, 4)))
+                .apply(
+                    ApplyBonusCount.addOreBonusCount(
+                        this.enchantments.getOrThrow(Enchantments.FORTUNE)
+                    )
+                )
         )
     );
   }
@@ -227,7 +226,7 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
         .withPool(
             this.applyExplosionCondition(
                 LighterEndItems.LUMECORN_EAR,
-                LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 2.0F))
+                LootPool.lootPool().setRolls(ContextIntProviders.between(1, 2))
                     .add(LootItem.lootTableItem(LighterEndItems.LUMECORN_EAR))
             )
         );
@@ -238,7 +237,7 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
         .withPool(
             LootPool.lootPool()
                 .when(this.hasSilkTouch())
-                .setRolls(ConstantValue.exactly(1.0F))
+                .setRolls(ContextIntProviders.exactly(1))
                 .add(
                     LootItem.lootTableItem(LighterEndBlocks.SILK_MOTH_NEST)
                         .apply(
@@ -253,12 +252,11 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
   }
 
   public LootTable.Builder endLilyDrops() {
-    Reference<Enchantment> fortune = this.registries.lookupOrThrow(Registries.ENCHANTMENT)
-        .getOrThrow(Enchantments.FORTUNE);
+    Reference<Enchantment> fortune = this.enchantments.getOrThrow(Enchantments.FORTUNE);
 
-    LootItemCondition.Builder topCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(
-        LighterEndBlocks.END_LILY
-    ).setProperties(
+    LootItemCondition.Builder topCondition = MatchBlock.blockMatches(
+        this.blocks,
+        LighterEndBlocks.END_LILY,
         StatePropertiesPredicate.Builder.properties().hasProperty(EndLily.IS_TOP, true)
     );
 
@@ -289,7 +287,7 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
         .withPool(
             this.applyExplosionCondition(
                 LighterEndBlocks.END_LOTUS_SEED,
-                LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 2.0F))
+                LootPool.lootPool().setRolls(ContextIntProviders.between(1, 2))
                     .add(LootItem.lootTableItem(LighterEndBlocks.END_LOTUS_SEED))
             )
         );
@@ -297,12 +295,11 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
 
   private LootTable.Builder sulphurCrystalDrops() {
 
-    Reference<Enchantment> fortune = this.registries.lookupOrThrow(Registries.ENCHANTMENT)
-        .getOrThrow(Enchantments.FORTUNE);
+    Reference<Enchantment> fortune = this.enchantments.getOrThrow(Enchantments.FORTUNE);
 
-    LootItemCondition.Builder fullyGrownCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(
-        LighterEndBlocks.SULPHUR_CRYSTAL
-    ).setProperties(
+    LootItemCondition.Builder fullyGrownCondition = MatchBlock.blockMatches(
+        this.blocks,
+        LighterEndBlocks.SULPHUR_CRYSTAL,
         StatePropertiesPredicate.Builder.properties()
             .hasProperty(SulphurCrystal.STAGE, SulphurCrystal.MAX_STAGE)
     );
@@ -312,14 +309,14 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
         .withPool(
             LootPool.lootPool()
                 .when(this.hasSilkTouch())
-                .setRolls(ConstantValue.exactly(1))
+                .setRolls(ContextIntProviders.exactly(1))
                 .add(LootItem.lootTableItem(LighterEndBlocks.SULPHUR_CRYSTAL)
                     .apply(SetItemCountFunction
-                        .setCount(UniformGenerator.between(1, 3))
+                        .setCount(ContextIntProviders.between(1, 3))
                         .when(fullyGrownCondition)
                     )
                     .apply(SetItemCountFunction
-                        .setCount(ConstantValue.exactly(1))
+                        .setCount(ContextIntProviders.exactly(1))
                         .when(InvertedLootItemCondition.invert(fullyGrownCondition))
                     )
                     .apply(ApplyBonusCount
@@ -333,10 +330,10 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
                 .when(AllOfCondition.allOf(
                     InvertedLootItemCondition.invert(this.hasSilkTouch()),
                     fullyGrownCondition))
-                .setRolls(ConstantValue.exactly(1))
+                .setRolls(ContextIntProviders.exactly(1))
                 .add(LootItem.lootTableItem(LighterEndItems.CRYSTALLINE_SULPHUR)
                     .apply(SetItemCountFunction
-                        .setCount(UniformGenerator.between(1, 3))
+                        .setCount(ContextIntProviders.between(1, 3))
                     )
                     .apply(ApplyExplosionDecay.explosionDecay())
                 )

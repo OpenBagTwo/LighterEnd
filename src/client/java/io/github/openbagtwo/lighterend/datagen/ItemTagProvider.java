@@ -100,7 +100,11 @@ public class ItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
 
     builder(ItemTags.GAZE_DISGUISE_EQUIPMENT).addTag(LighterEndTags.FUR_ITEMS);
 
-    builder(ItemTags.BREWING_FUEL).add(LighterEndItems.idLookup.get(LighterEndItems.END_POWDER));
+    builder(ItemTags.BREWING_POTION_INPUTS).addTag(LighterEndTags.FUR_ITEMS);
+    builder(ItemTags.BREWING_POTION_INPUTS).addTag(LighterEndTags.POLYPORES);
+    builder(ItemTags.BREWING_POTION_INPUTS).add(
+        LighterEndItems.idLookup.get(LighterEndItems.SHADOW_BERRY_JAM)
+    );
 
     builder(ItemTags.MEAT).add(
         LighterEndItems.idLookup.get(LighterEndItems.CRAB_MEAT),

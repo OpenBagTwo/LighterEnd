@@ -78,8 +78,8 @@ public class CrabRenderer extends
           matrixStack.translate(0.23F, 0.65F, -0.03F);
         }
 
-        matrixStack.mulPose(Axis.YN.rotationDegrees(160F));
-        matrixStack.mulPose(Axis.ZP.rotationDegrees(135F));
+        matrixStack.rotate(Axis.YN.rotationDegrees(160F));
+        matrixStack.rotate(Axis.ZP.rotationDegrees(135F));
 
         itemRenderState.submit(
             matrixStack,

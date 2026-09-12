@@ -70,7 +70,7 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalDisplay, Re
     matrices.pushPose();
 
     matrices.translate(0.5f, 1.4f, 0.5f);
-    matrices.mulPose(Axis.YP.rotationDegrees(state.rotation));
+    matrices.rotate(Axis.YP.rotationDegrees(state.rotation));
 
     state.itemRenderState.submit(matrices, queue,
         getLightLevel(state.blockEntityWorld, state.blockPos),

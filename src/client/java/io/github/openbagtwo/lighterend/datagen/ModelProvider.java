@@ -10,6 +10,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndMusicDiscs;
 import io.github.openbagtwo.lighterend.registries.LighterEndTrimming;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.minecraft.client.color.item.Dye;
@@ -17,7 +18,6 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.BlockModelGenerators.BlockFamilyProvider;
 import net.minecraft.client.data.models.BlockModelGenerators.PlantType;
 import net.minecraft.client.data.models.ItemModelGenerators;
-import net.minecraft.client.data.models.ItemModelGenerators.TrimMaterialData;
 import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
@@ -32,7 +32,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
-import net.minecraft.world.item.equipment.trim.MaterialAssetGroup;
 import net.minecraft.world.level.ItemLike;
 
 public class ModelProvider extends FabricModelProvider {
@@ -254,9 +253,9 @@ public class ModelProvider extends FabricModelProvider {
 
     itemModelGenerator.generateTrimmableItem(
         LighterEndEquipment.SILK_ELYTRA,
-        LighterEndEquipment.SILK_MATERIAL,
         Identifier.withDefaultNamespace("trims/items/chestplate_trim"),
-        true
+        true,
+        Map.of()
     );
 
     generateVanillaArmorTrims(itemModelGenerator);
@@ -333,19 +332,15 @@ public class ModelProvider extends FabricModelProvider {
       boolean dyeable
   ) {
 
-    TrimMaterialData auroraTrimmer = new ItemModelGenerators.TrimMaterialData(
-        MaterialAssetGroup.create("aurora"),
-        LighterEndTrimming.AURORA
-    );
-
     Identifier modelLocation = ModelLocationUtils.getModelLocation(armor);
     var itemTexture = TextureMapping.getItemTexture(armor);
     var overlayTexture = TextureMapping.getItemTexture(armor, "_overlay");
 
     Identifier trimModelLocation = modelLocation.withSuffix(
-        "_" + auroraTrimmer.assets().base().suffix() + "_trim");
+        "_" + "aurora_trim");
     var trimOverlayTexture = new net.minecraft.client.resources.model.sprite.Material(
-        slotTrimPrefix.withSuffix("_" + auroraTrimmer.assets().assetId(equipmentAssetId).suffix()));
+        slotTrimPrefix.withSuffix("_aurora")
+    );
     ItemModel.Unbaked trimModel;
     if (dyeable) {
       generator.generateLayeredItem(trimModelLocation, itemTexture, overlayTexture,
@@ -370,6 +365,6 @@ public class ModelProvider extends FabricModelProvider {
     generator.itemModelOutput.accept(armor,
         ItemModelUtils.select(new TrimMaterialProperty(), untrimmedModel,
             List.of(ItemModelUtils.when(
-                auroraTrimmer.materialKey(), trimModel))));
+                LighterEndTrimming.AURORA, trimModel))));
   }
 }

@@ -31,7 +31,7 @@ public class LighterEndDataGenerator implements DataGeneratorEntrypoint {
   @Override
   public void buildRegistry(RegistrySetBuilder registryBuilder) {
     registryBuilder.add(
-        Registries.CONFIGURED_FEATURE,
+        Registries.FEATURE,
         LighterEndConfiguredFeatures::bootstrap
     );
     registryBuilder.add(
