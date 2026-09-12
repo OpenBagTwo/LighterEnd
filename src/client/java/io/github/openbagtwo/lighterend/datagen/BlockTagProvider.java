@@ -94,6 +94,13 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
       builder(BlockTags.WOODEN_SHELVES).add(wood.shelf.properties().blockIdOrThrow());
     }
 
+    builder(BlockTags.STAIRS).add(
+        LighterEndBlocks.DRAGON_BONE_STAIRS.properties().blockIdOrThrow()
+    );
+    builder(BlockTags.SLABS).add(
+        LighterEndBlocks.DRAGON_BONE_SLAB.properties().blockIdOrThrow()
+    );
+
     builder(BlockTags.MINEABLE_WITH_PICKAXE)
         .add(
             LighterEndBlocks.ENDER_BLOCK.properties().blockIdOrThrow(),
@@ -118,6 +125,7 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
         );
     for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.asList()) {
       builder(BlockTags.MINEABLE_WITH_PICKAXE).add(chandelier.properties().blockIdOrThrow());
+      builder(BlockTags.BLOCKS_MOTION).add(chandelier.properties().blockIdOrThrow());
     }
 
     builder(BlockTags.NEEDS_STONE_TOOL)
@@ -218,6 +226,54 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
     builder(BlockTags.SULFUR_SPIKE_REPLACEABLE).add(
         LighterEndBlocks.BRIMSTONE.properties().blockIdOrThrow(),
         LighterEndBlocks.BORNITE.baseBlock.properties().blockIdOrThrow()
+    );
+
+    builder(BlockTags.BLOCKS_MOTION)
+        .addTag(LighterEndTags.END_STONES)
+        .addTag(LighterEndTags.END_SOIL)
+        .add(
+            LighterEndBlocks.AURORA_CRYSTAL.properties().blockIdOrThrow(),
+            LighterEndBlocks.ENDER_BLOCK.properties().blockIdOrThrow(),
+            LighterEndBlocks.MISSING_TILE.properties().blockIdOrThrow(),
+            LighterEndBlocks.GOLD_CHANDELIER.properties().blockIdOrThrow(),
+            LighterEndBlocks.IRON_CHANDELIER.properties().blockIdOrThrow(),
+            // copper is handled above with the pickaxe-mineable tag
+            LighterEndBlocks.EMERALD_ICE.properties().blockIdOrThrow(),
+            LighterEndBlocks.FERROUS_ICE.properties().blockIdOrThrow(),
+            LighterEndBlocks.AUROUS_ICE.properties().blockIdOrThrow(),
+            LighterEndBlocks.DRAGON_BONE_BLOCK.properties().blockIdOrThrow(),
+            LighterEndBlocks.LUMECORN.properties().blockIdOrThrow(),
+            LighterEndBlocks.AGAVE.properties().blockIdOrThrow(),
+            LighterEndBlocks.AGAVE_BULB.properties().blockIdOrThrow(),
+            LighterEndBlocks.END_SMOKER.properties().blockIdOrThrow(),
+            LighterEndBlocks.END_FURNACE.properties().blockIdOrThrow(),
+            LighterEndBlocks.GLOWSHROOM_CAP.properties().blockIdOrThrow(),
+            LighterEndBlocks.GLOWSHROOM_HYMENOPHORE.properties().blockIdOrThrow(),
+            LighterEndBlocks.UMBRELLA_MEMBRANE.properties().blockIdOrThrow(),
+            LighterEndBlocks.UMBRELLA_TREE_CLUSTER.properties().blockIdOrThrow(),
+            LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY.properties().blockIdOrThrow(),
+            LighterEndBlocks.OBELISK.properties().blockIdOrThrow()
+        );
+
+    builder(BlockTags.WASHED_AWAY_BY_FLUIDS)
+        .add(
+            LighterEndBlocks.CREEPING_MOSS.properties().blockIdOrThrow(),
+            LighterEndBlocks.UMBRELLA_FERN.properties().blockIdOrThrow(),
+            LighterEndBlocks.TALL_UMBRELLA_FERN.properties().blockIdOrThrow(),
+            LighterEndBlocks.SHADOW_BERRY_SEEDS.properties().blockIdOrThrow(),
+            LighterEndBlocks.NEEDLEGRASS.properties().blockIdOrThrow(),
+            LighterEndBlocks.END_LEVER.properties().blockIdOrThrow(),
+            LighterEndBlocks.LUMECORN_SEED.properties().blockIdOrThrow(),
+            LighterEndBlocks.AGAVE_SEED.properties().blockIdOrThrow(),
+            LighterEndBlocks.MURKWEED.properties().blockIdOrThrow(),
+            LighterEndBlocks.PURPLE_POLYPORE.properties().blockIdOrThrow()
+        ).addTag(LighterEndTags.FURS);
+
+    builder(BlockTags.ORES).add(
+        LighterEndBlocks.END_STONE_REDSTONE_ORE.properties().blockIdOrThrow(),
+        LighterEndBlocks.UMBRALITH_REDSTONE_ORE.properties().blockIdOrThrow(),
+        LighterEndBlocks.END_STONE_QUARTZ_ORE.properties().blockIdOrThrow(),
+        LighterEndBlocks.UMBRALITH_QUARTZ_ORE.properties().blockIdOrThrow()
     );
 
     builder(LighterEndTags.END_MOSS_REPLACEABLE)
