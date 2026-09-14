@@ -733,7 +733,7 @@ public class LighterEndBlocks {
     return Registry.register(BuiltInRegistries.BLOCK, id, block);
   }
 
-  private static Block registerSpecialBlockItem(
+  public static Block registerSpecialBlockItem(
       String name,
       Function<Properties, Block> factory,
       BiFunction<Block, BlockItemId, BlockItem> itemFactory
@@ -741,7 +741,7 @@ public class LighterEndBlocks {
     return registerSpecialBlockItem(name, name, factory, itemFactory);
   }
 
-  private static Block registerSpecialBlockItem(
+  public static Block registerSpecialBlockItem(
       String blockName,
       String itemName,
       Function<Properties, Block> factory,
