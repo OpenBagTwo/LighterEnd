@@ -103,7 +103,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         ).addCriterion(
             "craft_spectral_arrows",
             RecipeCraftedTrigger.TriggerInstance.craftedItem(
-                ResourceKey.create(Registries.RECIPE, LighterEnd.of("combat/spectral_arrow"))
+                ResourceKey.create(Registries.RECIPE, LighterEnd.of("spectral_arrow"))
             )
         ).save(consumer, LighterEnd.MOD_ID + "/craft_spectral_arrows");
 
