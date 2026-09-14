@@ -14,6 +14,7 @@ public class Composting {
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.TENANEA_FLOWER, 0.65F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.TENANEA_SAPLING, 0.3F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.TENANEA_LEAVES, 0.3F);
+    CompostableRegistry.INSTANCE.add(LighterEndBlocks.UMBRELLA_TREE_SAPLING, 0.3F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.UMBRELLA_TREE_CLUSTER, 0.85F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY, 0.65F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.CHARNIA_CYAN, 0.65F);
@@ -23,6 +24,7 @@ public class Composting {
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.CHARNIA_PURPLE, 0.65F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.CHARNIA_RED, 0.65F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.END_LILY_SEED, 0.3F);
+    CompostableRegistry.INSTANCE.add(LighterEndBlocks.END_LOTUS_SEED, 0.3F);
     CompostableRegistry.INSTANCE.add(LighterEndItems.END_LILY_LEAF, 0.65F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.GLOWSHROOM_FUR, 0.65F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.GLOWSHROOM_CAP, 0.65F);
@@ -39,6 +41,8 @@ public class Composting {
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.MURKWEED, 0.5F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.DRAGON_LEAVES, 0.3F);
     CompostableRegistry.INSTANCE.add(LighterEndBlocks.DRAGON_SAPLING, 0.3F);
+    CompostableRegistry.INSTANCE.add(LighterEndBlocks.AURANT_POLYPORE, 0.65F);
+    CompostableRegistry.INSTANCE.add(LighterEndBlocks.PURPLE_POLYPORE, 0.65F);
   }
 
 }
