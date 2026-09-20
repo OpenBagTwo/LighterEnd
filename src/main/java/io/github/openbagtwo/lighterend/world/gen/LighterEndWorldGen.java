@@ -24,6 +24,7 @@ import net.fabricmc.fabric.api.biome.v1.TheEndBiomes;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
@@ -40,6 +41,10 @@ import net.minecraft.world.level.levelgen.material.rule.MaterialRule;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class LighterEndWorldGen {
+
+  public static final ResourceKey<MaterialRule> SURFACE = ResourceKey.create(
+      Registries.MATERIAL_RULE, LighterEnd.of("surface")
+  );
 
   public static BiomeSource addBiomesToNoiseSource(
       Climate.ParameterList<Holder<Biome>> defaultBiomes,
@@ -347,6 +352,16 @@ public class LighterEndWorldGen {
                     )
                 )
             )
+        )
+    );
+  }
+
+  public static void bootstrap(BootstrapContext<MaterialRule> context) {
+    context.register(
+        SURFACE,
+        LighterEndWorldGen.updateSurfaceRules(
+            context.lookup(Registries.BIOME),
+            context.lookup(Registries.MATERIAL_CONDITION)
         )
     );
   }

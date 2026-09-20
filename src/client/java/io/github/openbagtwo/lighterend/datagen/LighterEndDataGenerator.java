@@ -4,6 +4,7 @@ import io.github.openbagtwo.lighterend.registries.LighterEndBiomes;
 import io.github.openbagtwo.lighterend.registries.LighterEndTrimming;
 import io.github.openbagtwo.lighterend.world.LighterEndConfiguredFeatures;
 import io.github.openbagtwo.lighterend.world.LighterEndPlacedFeatures;
+import io.github.openbagtwo.lighterend.world.gen.LighterEndWorldGen;
 import io.github.openbagtwo.lighterend.world.gen.noise.NoiseParameters;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -26,6 +27,7 @@ public class LighterEndDataGenerator implements DataGeneratorEntrypoint {
     pack.addProvider(BiomeTagProvider::new);
     pack.addProvider(RegistryProvider::new);
     pack.addProvider(AdvancementProvider::new);
+    pack.addProvider(SurfaceRuleProvider::new);
   }
 
   @Override
@@ -43,6 +45,10 @@ public class LighterEndDataGenerator implements DataGeneratorEntrypoint {
         LighterEndBiomes::bootstrap
     );
     registryBuilder.add(Registries.NOISE, NoiseParameters::bootstrap);
+    registryBuilder.add(
+        Registries.MATERIAL_RULE,
+        LighterEndWorldGen::bootstrap
+    );
     registryBuilder.add(Registries.TRIM_MATERIAL, LighterEndTrimming::bootstrap);
   }
 }
