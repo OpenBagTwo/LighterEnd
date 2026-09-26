@@ -80,7 +80,8 @@ public class GlossyMooshroomRenderer extends
                       OverlayTexture.NO_OVERLAY,
                       -1,
                       null,
-                      state.outlineColor
+                      state.outlineColor,
+                      null
                   );
             }
           }

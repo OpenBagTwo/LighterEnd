@@ -16,7 +16,8 @@ import net.minecraft.world.level.storage.loot.LootTable.Builder;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 public class ChestLootTableProvider extends SimpleFabricLootTableSubProvider {
 
@@ -35,60 +36,52 @@ public class ChestLootTableProvider extends SimpleFabricLootTableSubProvider {
         LootTable.lootTable()
             .withPool(
                 LootPool.lootPool()
-                    .setRolls(ContextIntProviders.exactly(1))
+                    .setRolls(ConstantValue.exactly(1.0F))
                     .add(LootItem.lootTableItem(Items.COPPER_AXE))
                     .add(LootItem.lootTableItem(Items.WOODEN_AXE).setWeight(3))
             )
             .withPool(
                 LootPool.lootPool()
-                    .setRolls(ContextIntProviders.exactly(1))
+                    .setRolls(ConstantValue.exactly(1.0F))
                     .add(LootItem.lootTableItem(Items.COPPER_PICKAXE))
                     .add(LootItem.lootTableItem(Items.WOODEN_PICKAXE).setWeight(3))
             )
             .withPool(
                 LootPool.lootPool()
-                    .setRolls(ContextIntProviders.exactly(3))
+                    .setRolls(ConstantValue.exactly(3.0F))
                     .add(LootItem.lootTableItem(LighterEndItems.SHADOW_BERRY).setWeight(5).apply(
-                        SetItemCountFunction.setCount(ContextIntProviders.between(1, 2))))
+                        SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                     .add(LootItem.lootTableItem(LighterEndItems.POPPED_LUMECORN).setWeight(3).apply(
-                        SetItemCountFunction.setCount(ContextIntProviders.between(1, 2))))
+                        SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                     .add(LootItem.lootTableItem(LighterEndItems.CRAB_CAKE).setWeight(3).apply(
-                        SetItemCountFunction.setCount(ContextIntProviders.between(1, 2))))
+                        SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
             )
             .withPool(
                 LootPool.lootPool()
-                    .setRolls(ContextIntProviders.exactly(4))
+                    .setRolls(ConstantValue.exactly(4.0F))
                     .add(LootItem.lootTableItem(Items.STICK).setWeight(10).apply(
                         SetItemCountFunction.setCount(
-                            ContextIntProviders.between(1, 12))))
+                            UniformGenerator.between(1.0F, 12.0F))))
                     // the line below is kind of a troll, since Tenanea logs don't generate naturally
                     .add(LootItem.lootTableItem(LighterEndBlocks.TENANEA.log).setWeight(3).apply(
-                        SetItemCountFunction.setCount(ContextIntProviders.between(1, 3))))
+                        SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
                     .add(LootItem.lootTableItem(LighterEndBlocks.UMBRELLA.log).setWeight(3).apply(
-                        SetItemCountFunction.setCount(ContextIntProviders.between(1, 3))))
+                        SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
                     .add(LootItem.lootTableItem(LighterEndBlocks.LOTUS.log).setWeight(3).apply(
-                        SetItemCountFunction.setCount(ContextIntProviders.between(1, 3))))
+                        SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
                     .add(LootItem.lootTableItem(LighterEndBlocks.GLOWSHROOM.log).setWeight(3).apply(
-                        SetItemCountFunction.setCount(ContextIntProviders.between(1, 3))))
+                        SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
                     .add(LootItem.lootTableItem(LighterEndBlocks.DRAGON.log).setWeight(3).apply(
-                        SetItemCountFunction.setCount(ContextIntProviders.between(1, 3))))
+                        SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
 
             )
             .withPool(
                 LootPool.lootPool()
-                    .setRolls(ContextIntProviders.exactly(1))
+                    .setRolls(ConstantValue.exactly(1.0F))
                     .add(LootItem.lootTableItem(LighterEndItems.CRAB_CLAW).setWeight(5).apply(
-                        SetItemCountFunction.setCount(ContextIntProviders.between(2, 4))))
+                        SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F))))
                     .add(LootItem.lootTableItem(Items.SHEARS))
             )
-    );
-  }
-
-  @Override
-  public void run() {
-    generate(
-        (key, builder) -> {
-        }
     );
   }
 }

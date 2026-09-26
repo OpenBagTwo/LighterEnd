@@ -1,8 +1,7 @@
 package io.github.openbagtwo.lighterend.mixin;
 
-import net.minecraft.core.Holder;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
-import net.minecraft.world.level.levelgen.material.rule.MaterialRule;
+import net.minecraft.world.level.levelgen.SurfaceRules;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.gen.Accessor;
@@ -12,6 +11,6 @@ public interface ChunkGeneratorSettingsAccessor {
 
   @Mutable
   @Accessor
-  void setMaterialRule(Holder<MaterialRule> materialRule);
+  void setSurfaceRule(SurfaceRules.RuleSource surfaceRule);
 
 }

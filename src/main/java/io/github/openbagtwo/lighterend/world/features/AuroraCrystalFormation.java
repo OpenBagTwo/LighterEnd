@@ -1,6 +1,5 @@
 package io.github.openbagtwo.lighterend.world.features;
 
-import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
@@ -15,33 +14,24 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import org.joml.Vector3f;
 
-public class AuroraCrystalFormation implements Feature {
+public class AuroraCrystalFormation extends Feature<NoneFeatureConfiguration> {
 
   public AuroraCrystalFormation() {
-  }
-
-  public static final MapCodec<AuroraCrystalFormation> CODEC = MapCodec.unit(
-      AuroraCrystalFormation::new
-  );
-
-  @Override
-  public MapCodec<AuroraCrystalFormation> codec() {
-    return CODEC;
+    super(NoneFeatureConfiguration.CODEC);
   }
 
   @Override
-  public boolean place(
-      final WorldGenLevel world,
-      final ChunkGenerator chunkGenerator,
-      final RandomSource random,
-      final BlockPos origin
-  ) {
-    int maxY = origin.getY() + PosInfo.upRay(world, origin, 16);
-    int minY = origin.getY() - PosInfo.downRay(world, origin, 16);
+  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+    final RandomSource random = featureConfig.random();
+    BlockPos pos = featureConfig.origin();
+    final WorldGenLevel world = featureConfig.level();
+    int maxY = pos.getY() + PosInfo.upRay(world, pos, 16);
+    int minY = pos.getY() - PosInfo.downRay(world, pos, 16);
 
     if (maxY - minY < 10) {
       return false;
@@ -49,10 +39,10 @@ public class AuroraCrystalFormation implements Feature {
 
     int height = Mth.nextInt(random, 5, 25);
 
-    BlockPos pos = new BlockPos(
-        origin.getX(),
+    pos = new BlockPos(
+        pos.getX(),
         Mth.nextInt(random, minY, minY + height / 2),
-        origin.getZ());
+        pos.getZ());
 
     SDF prism = new SDFHexPrism().setHeight(height)
         .setRadius(Mth.nextFloat(random, 1.7F, 3F))

@@ -1,7 +1,8 @@
 package io.github.openbagtwo.lighterend.world.features;
 
+import static net.minecraft.world.level.levelgen.Heightmap.Types;
+
 import com.google.common.collect.Sets;
-import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.blocks.Brimstone;
 import io.github.openbagtwo.lighterend.blocks.SulphurCrystal;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
@@ -18,38 +19,31 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Fluids;
 
-public class SulphurLake implements Feature {
+public class SulphurLake extends Feature<NoneFeatureConfiguration> {
 
   private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);
 
   public SulphurLake() {
-  }
-
-  public static final MapCodec<SulphurLake> CODEC = MapCodec.unit(SulphurLake::new);
-
-  @Override
-  public MapCodec<SulphurLake> codec() {
-    return CODEC;
+    super(NoneFeatureConfiguration.CODEC);
   }
 
   @Override
-  public boolean place(
-      final WorldGenLevel world,
-      final ChunkGenerator chunkGenerator,
-      final RandomSource random,
-      final BlockPos origin
-  ) {
-    BlockPos blockPos = world.getHeightmapPos(Types.WORLD_SURFACE_WG, origin);
+  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+    BlockPos blockPos = context.origin();
+    final WorldGenLevel world = context.level();
+    blockPos = world.getHeightmapPos(Types.WORLD_SURFACE_WG, blockPos);
 
     if (blockPos.getY() < 57) {
       return false;
     }
 
+    final RandomSource random = context.random();
     final MutableBlockPos POS = GlobalState.stateForThread().POS;
     double radius = Mth.nextDouble(random, 10., 20.);
     int dist2 = Mth.floor(radius * 1.5);

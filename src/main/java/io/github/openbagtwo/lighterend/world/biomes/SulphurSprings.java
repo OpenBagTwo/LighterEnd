@@ -10,9 +10,6 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.EndPlacements;
-import net.minecraft.util.ARGB;
-import net.minecraft.util.valueproviders.ConstantInt;
-import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.attribute.AmbientParticle;
 import net.minecraft.world.attribute.AmbientSounds;
 import net.minecraft.world.attribute.BackgroundMusic;
@@ -23,42 +20,42 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
-import net.minecraft.world.level.levelgen.carver.WorldCarver;
+import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class SulphurSprings {
 
   public static Biome create(BootstrapContext<Biome> context) {
-    HolderGetter<PlacedFeature> features = context.lookup(Registries.PLACED_FEATURE);
-    HolderGetter<WorldCarver> carvers = context.lookup(Registries.CARVER);
+    HolderGetter<PlacedFeature> features = context.lookup(
+        Registries.PLACED_FEATURE
+    );
+    HolderGetter<ConfiguredWorldCarver<?>> carvers = context.lookup(
+        Registries.CONFIGURED_CARVER
+    );
 
     MobSpawnSettings spawns = new MobSpawnSettings.Builder()
         .addSpawn(
-            LighterEndMobs.END_FISH.mob,
             MobCategory.WATER_AMBIENT,
             1,
-            new UniformInt(3, 8)
+            new SpawnerData(LighterEndMobs.END_FISH.mob, 3, 8)
         ).addSpawn(
-            LighterEndMobs.CUBOZOA.mob,
             MobCategory.WATER_AMBIENT,
             1,
-            new UniformInt(3, 8)
+            new SpawnerData(LighterEndMobs.CUBOZOA.mob, 3, 8)
         ).addSpawn(
-            EntityTypes.ENDERMAN,
             MobCategory.MONSTER,
             20,
-            new UniformInt(1, 4)
+            new SpawnerData(EntityTypes.ENDERMAN, 1, 4)
         ).addSpawn(
-            EntityTypes.ENDERMITE,
             MobCategory.MONSTER,
             1,
-            new ConstantInt(1)
+            new SpawnerData(EntityTypes.ENDERMITE, 1, 1)
         ).addSpawn(
-            EntityTypes.SULFUR_CUBE,
             MobCategory.MONSTER,
             50,
-            new UniformInt(2, 4)
+            new SpawnerData(EntityTypes.SULFUR_CUBE, 2, 4)
         ).build();
 
     var genSettingsBuilder = new BiomeGenerationSettings.Builder(features, carvers)
@@ -84,9 +81,9 @@ public class SulphurSprings {
         .generationSettings(genSettingsBuilder.build())
         .setAttribute(EnvironmentAttributes.AMBIENT_PARTICLES,
             AmbientParticle.of(LighterEndParticles.SULPHUR, 0.001F))
-        .setAttribute(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(0x000000))
-        .setAttribute(EnvironmentAttributes.FOG_COLOR, ARGB.vector3fFromRGB24(0xCFC23E))
-        .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, ARGB.vector3fFromRGB24(0x1E413D))
+        .setAttribute(EnvironmentAttributes.SKY_COLOR, 0x000000)
+        .setAttribute(EnvironmentAttributes.FOG_COLOR, 0xCFC23E)
+        .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 0x1E413D)
         .setAttribute(
             EnvironmentAttributes.AMBIENT_SOUNDS,
             new AmbientSounds(

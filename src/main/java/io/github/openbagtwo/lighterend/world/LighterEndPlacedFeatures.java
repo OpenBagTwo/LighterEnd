@@ -10,16 +10,12 @@ import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
-import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.placement.BiomeFilter;
-import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter;
 import net.minecraft.world.level.levelgen.placement.CountPlacement;
 import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.RarityFilter;
 
 public class LighterEndPlacedFeatures {
@@ -86,7 +82,7 @@ public class LighterEndPlacedFeatures {
 
   public static void bootstrap(BootstrapContext<PlacedFeature> context) {
 
-    var configuredFeatures = context.lookup(Registries.FEATURE);
+    var configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
     context.register(
         END_MOSS_VEGETATION,
@@ -104,17 +100,16 @@ public class LighterEndPlacedFeatures {
         LUMECORN,
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.LUMECORN),
-            treePlacement(
-                PlacementUtils.countExtra(3, 0.25f, 1),
-                LighterEndBlocks.LUMECORN_SEED
-            )
+            VegetationPlacements.treePlacement(
+                PlacementUtils.countExtra(3, 0.5f, 2),
+                LighterEndBlocks.LUMECORN_SEED)
         )
     );
     context.register(
         TENANEA_TREE,
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.TENANEA_TREE),
-            treePlacement(
+            VegetationPlacements.treePlacement(
                 PlacementUtils.countExtra(10, 0.5f, 2),
                 LighterEndBlocks.TENANEA_SAPLING)
         )
@@ -130,8 +125,8 @@ public class LighterEndPlacedFeatures {
         UMBRELLA_TREE,
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.UMBRELLA_TREE),
-            treePlacement(
-                PlacementUtils.countExtra(1, 0.05f, 1),
+            VegetationPlacements.treePlacement(
+                PlacementUtils.countExtra(1, 0.1f, 1),
                 LighterEndBlocks.UMBRELLA_TREE_SAPLING
             )
         )
@@ -212,7 +207,7 @@ public class LighterEndPlacedFeatures {
         GLOWSHROOM,
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.GLOWSHROOM),
-            treePlacement(
+            VegetationPlacements.treePlacement(
                 RarityFilter.onAverageOnceEvery(8),
                 LighterEndBlocks.GLOWSHROOM_SAPLING
             )
@@ -222,7 +217,7 @@ public class LighterEndPlacedFeatures {
         AGAVE,
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.AGAVE),
-            treePlacement(
+            VegetationPlacements.treePlacement(
                 PlacementUtils.countExtra(3, 0.5f, 2),
                 LighterEndBlocks.AGAVE_SEED)
         )
@@ -241,8 +236,7 @@ public class LighterEndPlacedFeatures {
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_COPPER),
               List.of(
                   RarityFilter.onAverageOnceEvery(rarity * 2),
-                  HeightRangePlacement.uniform(VerticalAnchor.bottom(),
-                      VerticalAnchor.absolute(256)),
+                  HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(256)),
                   InSquarePlacement.spread()
                   // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
@@ -254,8 +248,7 @@ public class LighterEndPlacedFeatures {
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_COPPER_SMALL),
               List.of(
                   RarityFilter.onAverageOnceEvery(rarity),
-                  HeightRangePlacement.uniform(VerticalAnchor.bottom(),
-                      VerticalAnchor.absolute(256)),
+                  HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(256)),
                   InSquarePlacement.spread()
                   // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
@@ -267,8 +260,7 @@ public class LighterEndPlacedFeatures {
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_IRON),
               List.of(
                   RarityFilter.onAverageOnceEvery(rarity * 2),
-                  HeightRangePlacement.uniform(VerticalAnchor.bottom(),
-                      VerticalAnchor.absolute(256)),
+                  HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(256)),
                   InSquarePlacement.spread()
                   // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
@@ -280,8 +272,7 @@ public class LighterEndPlacedFeatures {
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_IRON_SMALL),
               List.of(
                   RarityFilter.onAverageOnceEvery(rarity),
-                  HeightRangePlacement.uniform(VerticalAnchor.bottom(),
-                      VerticalAnchor.absolute(256)),
+                  HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(256)),
                   InSquarePlacement.spread()
                   // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
@@ -293,8 +284,7 @@ public class LighterEndPlacedFeatures {
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_GOLD),
               List.of(
                   RarityFilter.onAverageOnceEvery(rarity * 2),
-                  HeightRangePlacement.uniform(VerticalAnchor.bottom(),
-                      VerticalAnchor.absolute(256)),
+                  HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(256)),
                   InSquarePlacement.spread()
                   // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
@@ -306,8 +296,7 @@ public class LighterEndPlacedFeatures {
               configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.ICE_STAR_GOLD_SMALL),
               List.of(
                   RarityFilter.onAverageOnceEvery(rarity),
-                  HeightRangePlacement.uniform(VerticalAnchor.bottom(),
-                      VerticalAnchor.absolute(256)),
+                  HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(256)),
                   InSquarePlacement.spread()
                   // lack of BiomePlacementModifier is intentional--the effects are dramatic
               )
@@ -454,8 +443,8 @@ public class LighterEndPlacedFeatures {
         DRAGON_TREE,
         new PlacedFeature(
             configuredFeatures.getOrThrow(LighterEndConfiguredFeatures.DRAGON_TREE),
-            treePlacement(
-                PlacementUtils.countExtra(5, 0.5f, 2),
+            VegetationPlacements.treePlacement(
+                PlacementUtils.countExtra(10, 0.5f, 2),
                 LighterEndBlocks.DRAGON_SAPLING)
         )
     );
@@ -471,20 +460,12 @@ public class LighterEndPlacedFeatures {
             )
         )
     );
+
+
   }
 
   public static ResourceKey<PlacedFeature> of(String id) {
     return ResourceKey.create(Registries.PLACED_FEATURE, LighterEnd.of(id));
-  }
-
-  public static List<PlacementModifier> treePlacement(PlacementModifier frequency, Block sapling) {
-    return List.of(
-        frequency,
-        InSquarePlacement.spread(),
-        PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
-        BiomeFilter.biome(),
-        BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(sapling))
-    );
   }
 
 }

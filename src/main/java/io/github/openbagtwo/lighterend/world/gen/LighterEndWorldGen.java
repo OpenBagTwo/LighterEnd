@@ -1,13 +1,13 @@
 package io.github.openbagtwo.lighterend.world.gen;
 
-import static net.minecraft.data.worldgen.material.VanillaMaterialConditions.DEEP_UNDER_FLOOR;
-import static net.minecraft.data.worldgen.material.VanillaMaterialConditions.ON_FLOOR;
-import static net.minecraft.data.worldgen.material.VanillaMaterialConditions.VERY_DEEP_UNDER_FLOOR;
-import static net.minecraft.world.level.levelgen.material.MaterialRules.ifTrue;
-import static net.minecraft.world.level.levelgen.material.MaterialRules.isBiome;
-import static net.minecraft.world.level.levelgen.material.MaterialRules.noiseCondition2d;
-import static net.minecraft.world.level.levelgen.material.MaterialRules.sequence;
-import static net.minecraft.world.level.levelgen.material.MaterialRules.state;
+import static net.minecraft.world.level.levelgen.SurfaceRules.DEEP_UNDER_FLOOR;
+import static net.minecraft.world.level.levelgen.SurfaceRules.ON_FLOOR;
+import static net.minecraft.world.level.levelgen.SurfaceRules.VERY_DEEP_UNDER_FLOOR;
+import static net.minecraft.world.level.levelgen.SurfaceRules.ifTrue;
+import static net.minecraft.world.level.levelgen.SurfaceRules.isBiome;
+import static net.minecraft.world.level.levelgen.SurfaceRules.noiseCondition2d;
+import static net.minecraft.world.level.levelgen.SurfaceRules.sequence;
+import static net.minecraft.world.level.levelgen.SurfaceRules.state;
 
 import com.mojang.datafixers.util.Pair;
 import io.github.openbagtwo.lighterend.LighterEnd;
@@ -24,7 +24,6 @@ import net.fabricmc.fabric.api.biome.v1.TheEndBiomes;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
@@ -35,16 +34,10 @@ import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
-import net.minecraft.world.level.levelgen.material.MaterialRules;
-import net.minecraft.world.level.levelgen.material.condition.MaterialCondition;
-import net.minecraft.world.level.levelgen.material.rule.MaterialRule;
+import net.minecraft.world.level.levelgen.SurfaceRules.RuleSource;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class LighterEndWorldGen {
-
-  public static final ResourceKey<MaterialRule> SURFACE = ResourceKey.create(
-      Registries.MATERIAL_RULE, LighterEnd.of("surface")
-  );
 
   public static BiomeSource addBiomesToNoiseSource(
       Climate.ParameterList<Holder<Biome>> defaultBiomes,
@@ -291,13 +284,10 @@ public class LighterEndWorldGen {
     );
   }
 
-  public static MaterialRule updateSurfaceRules(
-      final HolderGetter<Biome> biomes,
-      final HolderGetter<MaterialCondition> conditions
-  ) {
+  public static RuleSource updateSurfaceRules(final HolderGetter<Biome> biomes) {
     return sequence(
         ifTrue(
-            MaterialRules.getCondition(conditions, ON_FLOOR),
+            ON_FLOOR,
             sequence(
                 ifTrue(
                     isBiome(
@@ -318,7 +308,7 @@ public class LighterEndWorldGen {
             )
         ),
         ifTrue(
-            MaterialRules.getCondition(conditions, VERY_DEEP_UNDER_FLOOR),
+            VERY_DEEP_UNDER_FLOOR,
             sequence(
                 ifTrue(
                     isBiome(
@@ -336,7 +326,7 @@ public class LighterEndWorldGen {
             )
         ),
         ifTrue(
-            MaterialRules.getCondition(conditions, DEEP_UNDER_FLOOR),
+            DEEP_UNDER_FLOOR,
             sequence(
                 ifTrue(
                     isBiome(
@@ -352,16 +342,6 @@ public class LighterEndWorldGen {
                     )
                 )
             )
-        )
-    );
-  }
-
-  public static void bootstrap(BootstrapContext<MaterialRule> context) {
-    context.register(
-        SURFACE,
-        LighterEndWorldGen.updateSurfaceRules(
-            context.lookup(Registries.BIOME),
-            context.lookup(Registries.MATERIAL_CONDITION)
         )
     );
   }

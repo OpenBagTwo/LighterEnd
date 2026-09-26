@@ -8,17 +8,16 @@ import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import java.util.Arrays;
 import java.util.List;
-import net.fabricmc.fabric.api.item.v1.BlockTransformerHelper;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.BlockSetTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.WoodTypeBuilder;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
+import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.StandingAndWallBlockItem;
+import net.minecraft.world.item.SignItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ButtonBlock;
@@ -38,7 +37,6 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 public class Wood {
 
@@ -77,8 +75,7 @@ public class Wood {
       this.woodType = createWoodType(baseName);
       this.logSounds = createWoodSoundGroup(baseName + "_log");
 
-      log = LighterEndBlocks.registerSpecialBlockItem(
-          baseName + "_log",
+      log = LighterEndBlocks.register(baseName + "_log",
           settings -> new RotatedPillarBlock(
               applyLogSettings(
                   settings.mapColor(
@@ -87,102 +84,39 @@ public class Wood {
                           : barkColor
                   )
               )
-          ),
-          (block, id) -> new BlockItem(
-              block,
-              new Item.Properties()
-                  .setId(id.item())
-                  .useBlockDescriptionPrefix()
-                  .requiredFeatures(block.requiredFeatures())
-                  .cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS)
           )
       );
-      strippedLog = LighterEndBlocks.registerSpecialBlockItem(
-          baseName + "_stripped_log",
+      strippedLog = LighterEndBlocks.register(baseName + "_stripped_log",
           settings -> new RotatedPillarBlock(
               applyLogSettings(settings.mapColor(woodColor))
-          ),
-          (block, id) -> new BlockItem(
-              block,
-              new Item.Properties()
-                  .setId(id.item())
-                  .useBlockDescriptionPrefix()
-                  .requiredFeatures(block.requiredFeatures())
-                  .cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS)
           )
       );
-      wood = LighterEndBlocks.registerSpecialBlockItem(
-          baseName + "_wood",
+      wood = LighterEndBlocks.register(baseName + "_wood",
           settings -> new RotatedPillarBlock(
               applyLogSettings(settings.mapColor(barkColor))
-          ),
-          (block, id) -> new BlockItem(
-              block,
-              new Item.Properties()
-                  .setId(id.item())
-                  .useBlockDescriptionPrefix()
-                  .requiredFeatures(block.requiredFeatures())
-                  .cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS)
           )
       );
-      strippedWood = LighterEndBlocks.registerSpecialBlockItem(
-          baseName + "_stripped_wood",
+      strippedWood = LighterEndBlocks.register(baseName + "_stripped_wood",
           settings -> new RotatedPillarBlock(
-              applyLogSettings(settings.mapColor(woodColor))
-          ),
-          (block, id) -> new BlockItem(
-              block,
-              new Item.Properties()
-                  .setId(id.item())
-                  .useBlockDescriptionPrefix()
-                  .requiredFeatures(block.requiredFeatures())
-                  .cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS)
-          )
-      );
+              applyLogSettings(settings.mapColor(woodColor))));
 
-      BlockTransformerHelper.registerStripping(log, strippedLog);
-      BlockTransformerHelper.registerStripping(wood, strippedWood);
+      StrippableBlockRegistry.register(log, strippedLog);
+      StrippableBlockRegistry.register(wood, strippedWood);
 
-      planks = LighterEndBlocks.registerSpecialBlockItem(
+      planks = LighterEndBlocks.register(
           baseName + "_planks",
-          settings -> new Block(applyPlankSettings(settings)),
-          (block, id) -> new BlockItem(
-              block,
-              new Item.Properties()
-                  .setId(id.item())
-                  .useBlockDescriptionPrefix()
-                  .requiredFeatures(block.requiredFeatures())
-                  .cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS)
-          )
+          settings -> new Block(applyPlankSettings(settings))
       );
-      slab = LighterEndBlocks.registerSpecialBlockItem(
+      slab = LighterEndBlocks.register(
           baseName + "_slab",
-          settings -> new SlabBlock(applyPlankSettings(settings)),
-          (block, id) -> new BlockItem(
-              block,
-              new Item.Properties()
-                  .setId(id.item())
-                  .useBlockDescriptionPrefix()
-                  .requiredFeatures(block.requiredFeatures())
-                  .cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_SLABS)
-          )
+          settings -> new SlabBlock(applyPlankSettings(settings))
       );
-      stairs = LighterEndBlocks.registerSpecialBlockItem(
+      stairs = LighterEndBlocks.register(
           baseName + "_stairs",
-          settings -> new StairBlock(
-              planks.defaultBlockState(), applyPlankSettings(settings)
-          ),
-          (block, id) -> new BlockItem(
-              block,
-              new Item.Properties()
-                  .setId(id.item())
-                  .useBlockDescriptionPrefix()
-                  .requiredFeatures(block.requiredFeatures())
-                  .cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS)
-          )
+          settings -> new StairBlock(planks.defaultBlockState(), applyPlankSettings(settings))
       );
 
-      door = LighterEndBlocks.registerSpecialBlockItem(
+      door = LighterEndBlocks.register(
           baseName + "_door",
           settings -> new DoorBlock(
               woodType.setType(),
@@ -191,19 +125,10 @@ public class Wood {
                   .strength(3.0F)
                   .noOcclusion()
                   .ignitedByLava()
-                  .pushReaction(PushReaction.POPPED)
-          ),
-          (block, id) -> new BlockItem(
-              block,
-              new Item.Properties()
-                  .setId(id.item())
-                  .useBlockDescriptionPrefix()
-                  .requiredFeatures(block.requiredFeatures())
-                  .cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_ITEMS_LARGE)
+                  .pushReaction(PushReaction.DESTROY)
           )
-
       );
-      trapdoor = LighterEndBlocks.registerSpecialBlockItem(
+      trapdoor = LighterEndBlocks.register(
           baseName + "_trapdoor",
           settings -> new TrapDoorBlock(
               woodType.setType(),
@@ -213,17 +138,9 @@ public class Wood {
                   .noOcclusion()
                   .isValidSpawn(Blocks::never)
                   .ignitedByLava()
-          ),
-          (block, id) -> new BlockItem(
-              block,
-              new Item.Properties()
-                  .setId(id.item())
-                  .useBlockDescriptionPrefix()
-                  .requiredFeatures(block.requiredFeatures())
-                  .cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS)
           )
       );
-      fence = LighterEndBlocks.registerSpecialBlockItem(
+      fence = LighterEndBlocks.register(
           baseName + "_fence",
           settings -> new FenceBlock(
               settings.mapColor(planks.defaultMapColor())
@@ -231,17 +148,9 @@ public class Wood {
                   .strength(2.0F, 3.0F)
                   .ignitedByLava()
                   .sound(woodType.soundType())
-          ),
-          (block, id) -> new BlockItem(
-              block,
-              new Item.Properties()
-                  .setId(id.item())
-                  .useBlockDescriptionPrefix()
-                  .requiredFeatures(block.requiredFeatures())
-                  .cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS)
           )
       );
-      gate = LighterEndBlocks.registerSpecialBlockItem(
+      gate = LighterEndBlocks.register(
           baseName + "_fence_gate",
           settings -> new FenceGateBlock(
               woodType,
@@ -251,33 +160,17 @@ public class Wood {
                   .instrument(NoteBlockInstrument.BASS)
                   .strength(2.0F, 3.0F)
                   .ignitedByLava()
-          ),
-          (block, id) -> new BlockItem(
-              block,
-              new Item.Properties()
-                  .setId(id.item())
-                  .useBlockDescriptionPrefix()
-                  .requiredFeatures(block.requiredFeatures())
-                  .cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS)
           )
       );
-      button = LighterEndBlocks.registerSpecialBlockItem(
+      button = LighterEndBlocks.register(
           baseName + "_button",
           settings -> new ButtonBlock(
               woodType.setType(),
               30,
-              settings.noCollision().strength(0.5F).pushReaction(PushReaction.POPPED)
-          ),
-          (block, id) -> new BlockItem(
-              block,
-              new Item.Properties()
-                  .setId(id.item())
-                  .useBlockDescriptionPrefix()
-                  .requiredFeatures(block.requiredFeatures())
-                  .cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_ITEMS_EXTRA_SMALL)
+              settings.noCollision().strength(0.5F).pushReaction(PushReaction.DESTROY)
           )
       );
-      pressurePlate = LighterEndBlocks.registerSpecialBlockItem(
+      pressurePlate = LighterEndBlocks.register(
           baseName + "_pressure_plate",
           settings -> new PressurePlateBlock(
               woodType.setType(),
@@ -287,33 +180,17 @@ public class Wood {
                   .noCollision()
                   .strength(0.5F)
                   .ignitedByLava()
-                  .pushReaction(PushReaction.POPPED)
-          ),
-          (block, id) -> new BlockItem(
-              block,
-              new Item.Properties()
-                  .setId(id.item())
-                  .useBlockDescriptionPrefix()
-                  .requiredFeatures(block.requiredFeatures())
-                  .cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS)
+                  .pushReaction(PushReaction.DESTROY)
           )
       );
-      ladder = LighterEndBlocks.registerSpecialBlockItem(
+      ladder = LighterEndBlocks.register(
           baseName + "_ladder",
           settings -> new LadderBlock(
               settings
                   .strength(0.4F)
                   .sound(SoundType.LADDER)
                   .noOcclusion()
-                  .pushReaction(PushReaction.POPPED)
-          ),
-          (block, id) -> new BlockItem(
-              block,
-              new Item.Properties()
-                  .setId(id.item())
-                  .useBlockDescriptionPrefix()
-                  .requiredFeatures(block.requiredFeatures())
-                  .cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS)
+                  .pushReaction(PushReaction.DESTROY)
           )
       );
       sign = LighterEndBlocks.register(
@@ -337,18 +214,14 @@ public class Wood {
       );
       LighterEndItems.register(
           baseName + "_sign",
-          settings -> new StandingAndWallBlockItem(
+          settings -> new SignItem(
               sign,
               wallSign,
-              Direction.DOWN,
               settings
           ),
-          new Item.Properties()
-              .stacksTo(16).setId(
-                  ResourceKey.create(Registries.ITEM, LighterEnd.of(baseName + "_sign"))
-              ).useBlockDescriptionPrefix()
-              .cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_ITEMS_LARGE)
-              .signText()
+          new Item.Properties().stacksTo(16).setId(
+              ResourceKey.create(Registries.ITEM, LighterEnd.of(baseName + "_sign"))
+          ).useBlockDescriptionPrefix()
       );
       hangingSign = LighterEndBlocks.register(
           baseName + "_hanging_sign",
@@ -376,14 +249,11 @@ public class Wood {
               wallHangingSign,
               settings
           ),
-          new Item.Properties()
-              .stacksTo(16).setId(
-                  ResourceKey.create(Registries.ITEM, LighterEnd.of(baseName + "_hanging_sign"))
-              ).useBlockDescriptionPrefix()
-              .cookingFuel(ContextIntProviders.COOKING_TIME_HANGING_SIGNS)
-              .signText()
+          new Item.Properties().stacksTo(16).setId(
+              ResourceKey.create(Registries.ITEM, LighterEnd.of(baseName + "_hanging_sign"))
+          ).useBlockDescriptionPrefix()
       );
-      shelf = LighterEndBlocks.registerSpecialBlockItem(
+      shelf = LighterEndBlocks.register(
           baseName + "_shelf",
           settings -> new Shelf(
               settings.mapColor(planks.defaultMapColor())
@@ -391,14 +261,6 @@ public class Wood {
                   .sound(SoundType.SHELF)
                   .ignitedByLava()
                   .strength(2.0F, 3.0F)
-          ),
-          (block, id) -> new BlockItem(
-              block,
-              new Item.Properties()
-                  .setId(id.item())
-                  .useBlockDescriptionPrefix()
-                  .requiredFeatures(block.requiredFeatures())
-                  .cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS)
           )
       );
 

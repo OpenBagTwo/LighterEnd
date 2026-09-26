@@ -1,7 +1,6 @@
 package io.github.openbagtwo.lighterend.world.features;
 
 import com.mojang.math.Axis;
-import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.math.MathUtils;
@@ -16,31 +15,25 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-public class UmbralithArch implements Feature {
+public class UmbralithArch extends Feature<NoneFeatureConfiguration> {
 
   public UmbralithArch() {
-  }
-
-  public static final MapCodec<UmbralithArch> CODEC = MapCodec.unit(UmbralithArch::new);
-
-  @Override
-  public MapCodec<UmbralithArch> codec() {
-    return CODEC;
+    super(NoneFeatureConfiguration.CODEC);
   }
 
   @Override
-  public boolean place(
-      final WorldGenLevel world,
-      final ChunkGenerator chunkGenerator,
-      final RandomSource random,
-      final BlockPos origin
-  ) {
+  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featurePlaceContext) {
+    final WorldGenLevel world = featurePlaceContext.level();
+    BlockPos origin = featurePlaceContext.origin();
+    RandomSource random = featurePlaceContext.random();
+
     BlockPos pos = world.getHeightmapPos(Types.WORLD_SURFACE_WG,
         new BlockPos((origin.getX() & 0xFFFFFFF0) | 7, 0, (origin.getZ() & 0xFFFFFFF0) | 7));
 
@@ -87,25 +80,18 @@ public class UmbralithArch implements Feature {
     return true;
   }
 
-  public static class Thin implements Feature {
+  public static class Thin extends Feature<NoneFeatureConfiguration> {
 
     public Thin() {
-    }
-
-    public static final MapCodec<Thin> CODEC = MapCodec.unit(Thin::new);
-
-    @Override
-    public MapCodec<Thin> codec() {
-      return Thin.CODEC;
+      super(NoneFeatureConfiguration.CODEC);
     }
 
     @Override
-    public boolean place(
-        final WorldGenLevel world,
-        final ChunkGenerator chunkGenerator,
-        final RandomSource random,
-        final BlockPos origin
-    ) {
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featurePlaceContext) {
+      final WorldGenLevel world = featurePlaceContext.level();
+      BlockPos origin = featurePlaceContext.origin();
+      RandomSource random = featurePlaceContext.random();
+
       BlockPos pos = world.getHeightmapPos(Types.WORLD_SURFACE_WG,
           new BlockPos((origin.getX() & 0xFFFFFFF0) | 7, 0, (origin.getZ() & 0xFFFFFFF0) | 7));
 

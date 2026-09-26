@@ -1,7 +1,6 @@
 package io.github.openbagtwo.lighterend.world.features;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.utils.math.sdf.SDF;
@@ -17,41 +16,25 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import org.joml.Vector3f;
 
-public class IceStar implements Feature {
+public class IceStar extends Feature<IceStar.Config> {
 
-  final int variant;
-  final float minSize;
-  final float maxSize;
-  final int minCount;
-  final int maxCount;
-
-  public IceStar(int variant, float minSize, float maxSize, int minCount, int maxCount) {
-    this.variant = variant;
-    this.minSize = minSize;
-    this.maxSize = maxSize;
-    this.minCount = minCount;
-    this.maxCount = maxCount;
+  public IceStar() {
+    super(IceStar.Config.CODEC);
   }
 
   @Override
-  public MapCodec<IceStar> codec() {
-    return CODEC;
-  }
-
-  @Override
-  public boolean place(
-      final WorldGenLevel world,
-      final ChunkGenerator chunkGenerator,
-      final RandomSource random,
-      final BlockPos origin
-  ) {
-
-    float size = Mth.nextFloat(random, this.minSize, this.maxSize);
-    int count = Mth.nextInt(random, this.minCount, this.maxCount);
+  public boolean place(FeaturePlaceContext<IceStar.Config> featureConfig) {
+    final RandomSource random = featureConfig.random();
+    BlockPos pos = featureConfig.origin();
+    final WorldGenLevel world = featureConfig.level();
+    Config cfg = featureConfig.config();
+    float size = Mth.nextFloat(random, cfg.minSize, cfg.maxSize);
+    int count = Mth.nextInt(random, cfg.minCount, cfg.maxCount);
     List<Vector3f> points = getFibonacciPoints(count);
     SDF sdf = null;
     SDF spike = new SDFCappedCone().setRadius1(3 + (size - 5) * 0.2F)
@@ -74,9 +57,9 @@ public class IceStar implements Feature {
       sdf = (sdf == null) ? rotated : new SDFUnion().setSourceA(sdf).setSourceB(rotated);
     }
 
-    int x1 = (origin.getX() >> 4) << 4;
-    int z1 = (origin.getZ() >> 4) << 4;
-    BlockPos pos = new BlockPos(x1 + random.nextInt(16), Mth.nextInt(random, 32, 128),
+    int x1 = (pos.getX() >> 4) << 4;
+    int z1 = (pos.getZ() >> 4) << 4;
+    pos = new BlockPos(x1 + random.nextInt(16), Mth.nextInt(random, 32, 128),
         z1 + random.nextInt(16));
 
     final float ancientRadius = size * 0.7F;
@@ -90,7 +73,7 @@ public class IceStar implements Feature {
     final BlockState dense;
     final BlockState ancient;
 
-    switch (this.variant % 3) {
+    switch (cfg.variant % 3) {
       case 2:
         ice = LighterEndBlocks.AUROUS_ICE.defaultBlockState();
         dense = Blocks.RAW_GOLD_BLOCK.defaultBlockState();
@@ -176,12 +159,21 @@ public class IceStar implements Feature {
     return new Vector3f(cx, cy, cz);
   }
 
-  public static final MapCodec<IceStar> CODEC = RecordCodecBuilder.mapCodec(instance -> instance
-      .group(
-          Codec.INT.fieldOf("variant").forGetter(o -> o.variant),
-          Codec.FLOAT.fieldOf("min_size").forGetter(o -> o.minSize),
-          Codec.FLOAT.fieldOf("max_size").forGetter(o -> o.maxSize),
-          Codec.INT.fieldOf("min_count").forGetter(o -> o.minCount),
-          Codec.INT.fieldOf("max_count").forGetter(o -> o.maxCount)
-      ).apply(instance, IceStar::new));
+  public record Config(
+      int variant,
+      float minSize,
+      float maxSize,
+      int minCount,
+      int maxCount
+  ) implements FeatureConfiguration {
+
+    public static final Codec<Config> CODEC = RecordCodecBuilder.create(instance -> instance
+        .group(
+            Codec.INT.fieldOf("variant").forGetter(o -> o.variant),
+            Codec.FLOAT.fieldOf("min_size").forGetter(o -> o.minSize),
+            Codec.FLOAT.fieldOf("max_size").forGetter(o -> o.maxSize),
+            Codec.INT.fieldOf("min_count").forGetter(o -> o.minCount),
+            Codec.INT.fieldOf("max_count").forGetter(o -> o.maxCount)
+        ).apply(instance, Config::new));
+  }
 }

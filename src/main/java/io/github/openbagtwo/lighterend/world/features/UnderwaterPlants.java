@@ -1,6 +1,5 @@
 package io.github.openbagtwo.lighterend.world.features;
 
-import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import net.minecraft.core.BlockPos;
@@ -10,28 +9,22 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class UnderwaterPlants implements Feature {
+public class UnderwaterPlants extends Feature<NoneFeatureConfiguration> {
 
   public UnderwaterPlants() {
-  }
-
-  public static final MapCodec<UnderwaterPlants> CODEC = MapCodec.unit(UnderwaterPlants::new);
-
-  @Override
-  public MapCodec<UnderwaterPlants> codec() {
-    return CODEC;
+    super(NoneFeatureConfiguration.CODEC);
   }
 
   @Override
-  public boolean place(
-      final WorldGenLevel world,
-      final ChunkGenerator chunkGenerator,
-      final RandomSource random,
-      final BlockPos blockPos
-  ) {
+  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+    final RandomSource random = featureConfig.random();
+    final BlockPos blockPos = featureConfig.origin();
+    final WorldGenLevel world = featureConfig.level();
+
     label80:
     for (int i = 0; i < 128; i++) {
       BlockPos blockPos2 = blockPos;

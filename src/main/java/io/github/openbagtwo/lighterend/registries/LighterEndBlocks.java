@@ -74,7 +74,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 public class LighterEndBlocks {
 
@@ -105,75 +104,22 @@ public class LighterEndBlocks {
 
   public static Block END_MOSS = register("end_moss", EndMoss::new);
 
-  public static Block CREEPING_MOSS = registerSpecialBlockItem(
-      "creeping_moss",
-      CreepingMoss::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_LOW_MEDIUM)
-      )
-  );
+  public static Block CREEPING_MOSS = register("creeping_moss", CreepingMoss::new);
 
-  public static Block UMBRELLA_FERN = registerSpecialBlockItem(
-      "umbrella_fern",
-      UmbrellaFern::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_LOW_MEDIUM)
-      )
-  );
+  public static Block UMBRELLA_FERN = register("umbrella_fern", UmbrellaFern::new);
+
   public static Block TALL_UMBRELLA_FERN = register("umbrella_fern_tall", TallUmbrellaFern::new,
       false);
 
-  public static Block LUMECORN_SEED = registerSpecialBlockItem(
-      "lumecorn_seed",
-      Lumecorn.LumecornSeed::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
-      )
-  );
+  public static Block LUMECORN_SEED = register("lumecorn_seed", Lumecorn.LumecornSeed::new);
   public static Block LUMECORN = register("lumecorn", Lumecorn::new, false);
   public static Block LUMECORN_STEM = register("lumecorn_stem", Lumecorn.LumecornStem::new, false);
 
   public static Material UMBRALITH = new Material("umbralith", MapColor.COLOR_BLACK);
 
-  public static Block TENANEA_FLOWER = registerSpecialBlockItem(
-      "tenanea_flower",
-      TenaneaFlower::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
-      )
-  );
-  public static Block TENANEA_SAPLING = registerSpecialBlockItem(
-      "tenanea_sapling",
-      settings -> new Sapling(TenaneaTree::new, settings.mapColor(MapColor.COLOR_PINK)),
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
-      )
-  );
+  public static Block TENANEA_FLOWER = register("tenanea_flower", TenaneaFlower::new);
+  public static Block TENANEA_SAPLING = register("tenanea_sapling",
+      settings -> new Sapling(TenaneaTree::new, settings.mapColor(MapColor.COLOR_PINK)));
   public static Block POTTED_TENANEA_SAPLING = register(
       "potted_tenanea_sapling",
       settings -> new FlowerPotBlock(TENANEA_SAPLING, applyFlowerPotSettings(settings)),
@@ -184,19 +130,11 @@ public class LighterEndBlocks {
       MapColor.TERRACOTTA_YELLOW,
       MapColor.COLOR_MAGENTA
   );
-  public static Block TENANEA_LEAVES = registerSpecialBlockItem(
+  public static Block TENANEA_LEAVES = register(
       "tenanea_leaves",
       settings -> new TintedParticleLeavesBlock(
           0.01F,
           applyLeafSettings(settings.mapColor(MapColor.COLOR_PINK))
-      ),
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
       )
   );
   public static Block SILK_MOTH_NEST = registerSpecialBlockItem(
@@ -213,42 +151,12 @@ public class LighterEndBlocks {
       )
   );
 
-  public static Block UMBRELLA_TREE_CLUSTER = registerSpecialBlockItem(
-      "umbrella_tree_cluster",
-      UmbrellaTreeCluster::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM_HIGH)
-      )
-  );
-  public static Block UMBRELLA_TREE_CLUSTER_EMPTY = registerSpecialBlockItem(
-      "umbrella_tree_cluster_empty",
-      UmbrellaTreeCluster.EmptyCluster::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
-      )
-  );
-  public static Block UMBRELLA_TREE_SAPLING = registerSpecialBlockItem(
-      "umbrella_tree_sapling",
-      settings -> new Sapling(UmbrellaTree::new, settings.mapColor(MapColor.WARPED_WART_BLOCK)),
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
-      )
-  );
+  public static Block UMBRELLA_TREE_CLUSTER = register("umbrella_tree_cluster",
+      UmbrellaTreeCluster::new);
+  public static Block UMBRELLA_TREE_CLUSTER_EMPTY = register("umbrella_tree_cluster_empty",
+      UmbrellaTreeCluster.EmptyCluster::new);
+  public static Block UMBRELLA_TREE_SAPLING = register("umbrella_tree_sapling",
+      settings -> new Sapling(UmbrellaTree::new, settings.mapColor(MapColor.WARPED_WART_BLOCK)));
   public static Block POTTED_UMBRELLA_SAPLING = register(
       "potted_umbrella_tree_sapling",
       settings -> new FlowerPotBlock(UMBRELLA_TREE_SAPLING, applyFlowerPotSettings(settings)),
@@ -258,124 +166,26 @@ public class LighterEndBlocks {
       MapColor.COLOR_GREEN);
   public static Block UMBRELLA_MEMBRANE = register("umbrella_membrane", UmbrellaMembrane::new);
 
-  public static final Block CHARNIA_CYAN = registerSpecialBlockItem(
-      "charnia_cyan",
-      Charnia::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
-      )
-  );
-  public static final Block CHARNIA_GREEN = registerSpecialBlockItem(
-      "charnia_green",
-      Charnia::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
-      )
-  );
-  public static final Block CHARNIA_LIGHT_BLUE = registerSpecialBlockItem(
-      "charnia_light_blue",
-      Charnia::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
-      )
-  );
-  public static final Block CHARNIA_ORANGE = registerSpecialBlockItem(
-      "charnia_orange",
-      Charnia::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
-      )
-  );
-  public static final Block CHARNIA_PURPLE = registerSpecialBlockItem(
-      "charnia_purple",
-      Charnia::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
-      )
-  );
-  public static final Block CHARNIA_RED = registerSpecialBlockItem(
-      "charnia_red",
-      Charnia::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
-      )
-  );
+  public static final Block CHARNIA_CYAN = register("charnia_cyan", Charnia::new);
+  public static final Block CHARNIA_GREEN = register("charnia_green", Charnia::new);
+  public static final Block CHARNIA_LIGHT_BLUE = register("charnia_light_blue", Charnia::new);
+  public static final Block CHARNIA_ORANGE = register("charnia_orange", Charnia::new);
+  public static final Block CHARNIA_PURPLE = register("charnia_purple", Charnia::new);
+  public static final Block CHARNIA_RED = register("charnia_red", Charnia::new);
 
   public static final Block END_LILY = register("end_lily", EndLily::new, false);
-  public static final Block END_LILY_SEED = registerSpecialBlockItem(
-      "end_lily_seed",
-      EndLily.Seed::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
-      )
-  );
+  public static final Block END_LILY_SEED = register("end_lily_seed", EndLily.Seed::new);
 
   public static final Block END_LOTUS_FLOWER = register("end_lotus_flower", EndLotus::new, false);
   public static final Block END_LOTUS_STEM = register("end_lotus_stem", EndLotus.Stem::new);
   public static final Block END_LOTUS_LEAF = register("end_lotus_leaf", EndLotus.Leaf::new, false);
-  public static final Block END_LOTUS_SEED = registerSpecialBlockItem(
-      "end_lotus_seed",
-      EndLotus.Seed::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
-      )
-  );
+  public static final Block END_LOTUS_SEED = register("end_lotus_seed", EndLotus.Seed::new);
 
   public static final WoodSet LOTUS = new WoodSet("end_lotus", MapColor.COLOR_LIGHT_BLUE,
       MapColor.COLOR_CYAN);
 
-  public static final Block GLOWSHROOM_SAPLING = registerSpecialBlockItem(
-      "mossy_glowshroom_sapling",
-      settings -> new Sapling(Glowshroom::new, settings.lightLevel((bs) -> 7)),
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
-      )
-  );
+  public static final Block GLOWSHROOM_SAPLING = register("mossy_glowshroom_sapling",
+      settings -> new Sapling(Glowshroom::new, settings.lightLevel((bs) -> 7)));
   public static Block POTTED_GLOWSHROOM_SAPLING = register(
       "potted_mossy_glowshroom_sapling",
       settings -> new FlowerPotBlock(GLOWSHROOM_SAPLING, applyFlowerPotSettings(settings)),
@@ -420,42 +230,17 @@ public class LighterEndBlocks {
               .requiredFeatures(block.requiredFeatures())
       )
   );
-  public static final Block AGAVE_SEED = registerSpecialBlockItem(
-      "blue_vine_seed",
-      settings -> new Sapling(Agave.AgaveFeature::new, settings),
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
-      )
+  public static final Block AGAVE_SEED = register(
+      "blue_vine_seed", settings -> new Sapling(Agave.AgaveFeature::new, settings)
   );
 
-  public static final Block AURANT_POLYPORE = registerSpecialBlockItem(
+  public static final Block AURANT_POLYPORE = register(
       "aurant_polypore",
-      settings -> new Polypore(settings, MapColor.CRIMSON_HYPHAE, 13),
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
-      )
+      settings -> new Polypore(settings, MapColor.CRIMSON_HYPHAE, 13)
   );
-  public static final Block PURPLE_POLYPORE = registerSpecialBlockItem(
+  public static final Block PURPLE_POLYPORE = register(
       "purple_polypore",
-      settings -> new Polypore(settings, MapColor.COLOR_MAGENTA, 0),
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
-      )
+      settings -> new Polypore(settings, MapColor.COLOR_MAGENTA, 0)
   );
 
   public static final Block END_FURNACE = register("end_stone_furnace", Furnaces.EndFurnace::new);
@@ -466,7 +251,7 @@ public class LighterEndBlocks {
               .noCollision()
               .strength(1.0F)
               .sound(SoundType.STONE)
-              .pushReaction(PushReaction.POPPED)
+              .pushReaction(PushReaction.DESTROY)
       )
   );
 
@@ -489,7 +274,7 @@ public class LighterEndBlocks {
           .forceSolidOn()
           .noOcclusion()
           .requiresCorrectToolForDrops()
-          .pushReaction(PushReaction.POPPED)
+          .pushReaction(PushReaction.DESTROY)
           .strength(2.5F)
           .sound(SoundType.CHAIN)
   );
@@ -621,57 +406,22 @@ public class LighterEndBlocks {
               .setId(id.item())
               .useItemDescriptionPrefix()
               .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
       )
   );
-  public static final Block SHADOW_GRASS = registerSpecialBlockItem(
+  public static final Block SHADOW_GRASS = register(
       "shadow_plant",
-      ShadowGrass::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
-      )
+      ShadowGrass::new
   );
-  public static final Block NEEDLEGRASS = registerSpecialBlockItem(
+  public static final Block NEEDLEGRASS = register(
       "needlegrass",
-      Needlegrass::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
-      )
+      Needlegrass::new
   );
-  public static final Block MURKWEED = registerSpecialBlockItem(
+  public static final Block MURKWEED = register(
       "murkweed",
-      Murkweed::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_LOW_MEDIUM)
-      )
+      Murkweed::new
   );
-  public static Block DRAGON_SAPLING = registerSpecialBlockItem(
-      "dragon_tree_sapling",
-      settings -> new Sapling(DragonTree::new, settings.mapColor(MapColor.COLOR_MAGENTA)),
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
-      )
-  );
+  public static Block DRAGON_SAPLING = register("dragon_tree_sapling",
+      settings -> new Sapling(DragonTree::new, settings.mapColor(MapColor.COLOR_MAGENTA)));
   public static Block POTTED_DRAGON_SAPLING = register(
       "potted_dragon_tree_sapling",
       settings -> new FlowerPotBlock(DRAGON_SAPLING, applyFlowerPotSettings(settings)),
@@ -679,19 +429,11 @@ public class LighterEndBlocks {
   );
   public static WoodSet DRAGON = new WoodSet("dragon_tree", MapColor.COLOR_BLACK,
       MapColor.COLOR_PURPLE);
-  public static Block DRAGON_LEAVES = registerSpecialBlockItem(
+  public static Block DRAGON_LEAVES = register(
       "dragon_tree_leaves",
       settings -> new TintedParticleLeavesBlock(
           0.01F,
           applyLeafSettings(settings.mapColor(MapColor.COLOR_MAGENTA))
-      ),
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
       )
   );
 
@@ -729,7 +471,7 @@ public class LighterEndBlocks {
     return Registry.register(BuiltInRegistries.BLOCK, id, block);
   }
 
-  public static Block registerSpecialBlockItem(
+  private static Block registerSpecialBlockItem(
       String name,
       Function<Properties, Block> factory,
       BiFunction<Block, BlockItemId, BlockItem> itemFactory
@@ -737,7 +479,7 @@ public class LighterEndBlocks {
     return registerSpecialBlockItem(name, name, factory, itemFactory);
   }
 
-  public static Block registerSpecialBlockItem(
+  private static Block registerSpecialBlockItem(
       String blockName,
       String itemName,
       Function<Properties, Block> factory,
@@ -817,7 +559,7 @@ public class LighterEndBlocks {
           settings -> new RotatedPillarBlock(applySettings(settings)));
       button = register(baseName + "_button",
           settings -> new ButtonBlock(BlockSetType.POLISHED_BLACKSTONE, 30,
-              settings.noCollision().strength(0.5F).pushReaction(PushReaction.POPPED)));
+              settings.noCollision().strength(0.5F).pushReaction(PushReaction.DESTROY)));
       pressurePlate = register(baseName + "_pressure_plate",
           settings -> new PressurePlateBlock(BlockSetType.POLISHED_BLACKSTONE,
               settings.mapColor(mapColor)
@@ -825,7 +567,7 @@ public class LighterEndBlocks {
                   .instrument(NoteBlockInstrument.BASEDRUM)
                   .noCollision()
                   .strength(0.5F)
-                  .pushReaction(PushReaction.POPPED)));
+                  .pushReaction(PushReaction.DESTROY)));
       pedestal = register(baseName + "_pedestal",
           settings -> new Pedestal(applySettings(settings))
       );
@@ -850,13 +592,14 @@ public class LighterEndBlocks {
         .noOcclusion()
         .isValidSpawn(Blocks::ocelotOrParrot)
         .isSuffocating(Blocks::never)
+        .isViewBlocking(Blocks::never)
         .ignitedByLava()
-        .pushReaction(PushReaction.POPPED)
+        .pushReaction(PushReaction.DESTROY)
         .isRedstoneConductor(Blocks::never);
   }
 
   public static Properties applyFlowerPotSettings(Properties settings) {
-    return settings.instabreak().noOcclusion().pushReaction(PushReaction.POPPED);
+    return settings.instabreak().noOcclusion().pushReaction(PushReaction.DESTROY);
   }
 
 }

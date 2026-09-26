@@ -1,10 +1,10 @@
 package io.github.openbagtwo.lighterend.blocks;
 
+import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.blocks.entities.PedestalDisplay;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -27,8 +27,10 @@ public class Pedestal extends BaseEntityBlock implements SelectableSlotContainer
 
   private static final VoxelShape SHAPE;
 
+  public static final MapCodec<Pedestal> CODEC = Pedestal.simpleCodec(Pedestal::new);
+
   public Pedestal(Properties settings) {
-    super(settings.pushReaction(PushReaction.IMMOVEABLE));
+    super(settings.pushReaction(PushReaction.BLOCK));
   }
 
   @Override
@@ -39,6 +41,11 @@ public class Pedestal extends BaseEntityBlock implements SelectableSlotContainer
       CollisionContext context
   ) {
     return SHAPE;
+  }
+
+  @Override
+  protected MapCodec<? extends BaseEntityBlock> codec() {
+    return CODEC;
   }
 
   @Override
@@ -69,7 +76,7 @@ public class Pedestal extends BaseEntityBlock implements SelectableSlotContainer
       if (!display.isEmpty()) {
         ItemStack stackOnPedestal = display.getItem(0);
         if (!player.getInventory().add(stackOnPedestal)) {
-          player.drop(stackOnPedestal, false, Prediction.PREDICTED);
+          player.drop(stackOnPedestal, false);
         }
         makeSound = true;
         display.clearContent();

@@ -1,6 +1,5 @@
 package io.github.openbagtwo.lighterend.blocks;
 
-import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import io.github.openbagtwo.lighterend.utils.Flags;
@@ -20,14 +19,14 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -58,7 +57,7 @@ public class EndLily extends Block implements LiquidBlockContainer {
         .instabreak()
         .offsetType(OffsetType.XZ)
         .sound(SoundType.WET_GRASS)
-        .pushReaction(PushReaction.POPPED)
+        .pushReaction(PushReaction.DESTROY)
         .lightLevel((state) -> state.getValue(IS_TOP) ? 13 : 0)
     );
   }
@@ -103,8 +102,7 @@ public class EndLily extends Block implements LiquidBlockContainer {
 
   @Override
   public FluidState getFluidState(BlockState state) {
-    return state.getValue(IS_TOP) ? Fluids.EMPTY.defaultFluidState()
-        : Fluids.WATER.getSource(false);
+    return state.getValue(IS_TOP) ? Fluids.EMPTY.defaultFluidState() : Fluids.WATER.getSource(false);
   }
 
   @Override
@@ -178,37 +176,23 @@ public class EndLily extends Block implements LiquidBlockContainer {
     }
 
     @Override
-    public boolean isBonemealSuccess(
-        Level world,
-        RandomSource random,
-        BlockPos pos,
-        BlockState state,
-        final BonemealSource source
-    ) {
+    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
       return EndLily.canGrow(world, pos);
     }
 
   }
 
-  public static class EndLilyFeature implements Feature {
+  public static class EndLilyFeature extends Feature<NoneFeatureConfiguration> {
 
     public EndLilyFeature() {
-    }
-
-    public static final MapCodec<EndLilyFeature> CODEC = MapCodec.unit(EndLilyFeature::new);
-
-    @Override
-    public MapCodec<EndLilyFeature> codec() {
-      return CODEC;
+      super(NoneFeatureConfiguration.CODEC);
     }
 
     @Override
-    public boolean place(
-        final WorldGenLevel world,
-        final ChunkGenerator chunkGenerator,
-        final RandomSource random,
-        final BlockPos pos
-    ) {
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+      final BlockPos pos = featureConfig.origin();
+      final WorldGenLevel world = featureConfig.level();
+
       if (EndLily.canGrow(world, pos)) {
         world.setBlock(
             pos,

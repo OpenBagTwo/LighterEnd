@@ -4,8 +4,8 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndBiomes;
 import io.github.openbagtwo.lighterend.world.gen.LighterEndWorldGen;
 import terrablender.api.EndBiomeRegistry;
-import terrablender.api.MaterialRuleManager;
-import terrablender.api.MaterialRuleManager.RuleCategory;
+import terrablender.api.SurfaceRuleManager;
+import terrablender.api.SurfaceRuleManager.RuleCategory;
 import terrablender.api.TerraBlenderApi;
 
 public class TerraBlender implements TerraBlenderApi {
@@ -40,7 +40,11 @@ public class TerraBlender implements TerraBlenderApi {
     EndBiomeRegistry.registerIslandBiome(LighterEndBiomes.STARFIELD, 1);
     EndBiomeRegistry.registerEdgeBiome(LighterEndBiomes.STARFIELD, 2);
 
-    MaterialRuleManager.addRules(RuleCategory.END, LighterEnd.MOD_ID, LighterEndWorldGen.SURFACE);
+    SurfaceRuleManager.addSurfaceRules(
+        RuleCategory.END,
+        LighterEnd.MOD_ID,
+        biomes -> LighterEndWorldGen.updateSurfaceRules(biomes)
+    );
 
     LighterEnd.LOGGER.info("Registered " + LighterEnd.MOD_NAME + "'s biomes with TerraBlender");
   }

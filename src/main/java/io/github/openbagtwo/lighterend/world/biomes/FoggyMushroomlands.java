@@ -11,9 +11,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.EndPlacements;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.ARGB;
-import net.minecraft.util.valueproviders.ConstantInt;
-import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.attribute.AmbientParticle;
 import net.minecraft.world.attribute.AmbientSounds;
 import net.minecraft.world.attribute.BackgroundMusic;
@@ -23,34 +20,36 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
-import net.minecraft.world.level.levelgen.carver.WorldCarver;
+import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class FoggyMushroomlands {
 
   public static Biome create(BootstrapContext<Biome> context) {
-    HolderGetter<PlacedFeature> features = context.lookup(Registries.PLACED_FEATURE);
-    HolderGetter<WorldCarver> carvers = context.lookup(Registries.CARVER);
+    HolderGetter<PlacedFeature> features = context.lookup(
+        Registries.PLACED_FEATURE
+    );
+    HolderGetter<ConfiguredWorldCarver<?>> carvers = context.lookup(
+        Registries.CONFIGURED_CARVER
+    );
 
     MobSpawnSettings spawns = new MobSpawnSettings.Builder()
         .addSpawn(
-            LighterEndMobs.MOOSHROOM.mob,
             MobCategory.CREATURE,
             1,
-            new UniformInt(4, 8)
+            new SpawnerData(LighterEndMobs.MOOSHROOM.mob, 4, 8)
         )
         .addSpawn(
-            LighterEndMobs.DRAGONFLY.mob,
             MobCategory.AMBIENT,
             1,
-            new ConstantInt(1)
+            new SpawnerData(LighterEndMobs.DRAGONFLY.mob, 1, 1)
         )
         .addSpawn(
-            LighterEndMobs.END_SLIME.mob,
             MobCategory.MONSTER,
             10,
-            new UniformInt(1, 2)
+            new SpawnerData(LighterEndMobs.END_SLIME.mob, 1, 2)
         )
         .build();
 
@@ -81,9 +80,9 @@ public class FoggyMushroomlands {
         .generationSettings(genSettingsBuilder.build())
         .setAttribute(EnvironmentAttributes.AMBIENT_PARTICLES,
             AmbientParticle.of(LighterEndParticles.GLOWING_SPHERE, 0.001F))
-        .setAttribute(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(0x000000))
-        .setAttribute(EnvironmentAttributes.FOG_COLOR, ARGB.vector3fFromRGB24(0x297AAD))
-        .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, ARGB.vector3fFromRGB24(0x77E3FA))
+        .setAttribute(EnvironmentAttributes.SKY_COLOR, 0x000000)
+        .setAttribute(EnvironmentAttributes.FOG_COLOR, 0x297AAD)
+        .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 0x77E3FA)
         .setAttribute(
             EnvironmentAttributes.AMBIENT_SOUNDS,
             new AmbientSounds(

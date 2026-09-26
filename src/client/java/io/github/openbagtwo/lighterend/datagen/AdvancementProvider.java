@@ -33,6 +33,7 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
@@ -51,7 +52,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
       Provider lookup,
       Consumer<AdvancementHolder> consumer
   ) {
-    AdvancementHolder root = Advancement.Builder.advancement().rootDisplay(
+    AdvancementHolder root = Advancement.Builder.advancement().display(
         LighterEndItems.AURORA_CRYSTAL_SHARD,
         title("root"),
         description("root"),
@@ -63,15 +64,18 @@ public class AdvancementProvider extends FabricAdvancementProvider {
     ).addCriterion(
         LighterEnd.MOD_ID + "_loaded",
         PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.location())
-    ).save(consumer, LighterEnd.of("root"));
+    ).save(consumer, LighterEnd.MOD_ID + "/root");
 
     // end_lake was created by hand
-    AdvancementHolder end_lake = new AdvancementHolder(LighterEnd.of("end_lake"), null);
+    AdvancementHolder end_lake = new AdvancementHolder(
+        Identifier.parse(LighterEnd.MOD_ID + "/end_lake"),
+        null);
 
     AdvancementHolder sulphur_springs = Advancement.Builder.advancement().parent(end_lake).display(
         LighterEndBlocks.HYDROTHERMAL_VENT.asItem(),
         title("sulphur_springs"),
         description("sulphur_springs"),
+        null,
         AdvancementType.TASK,
         true,
         true,
@@ -83,11 +87,11 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                 lookup.lookupOrThrow(Registries.BIOME).getOrThrow(LighterEndBiomes.SULPHUR_SPRINGS)
             )
         )
-    ).save(consumer, LighterEnd.of("sulphur_springs"));
+    ).save(consumer, LighterEnd.MOD_ID + "/sulphur_springs");
 
     // craft_spectral_arrow was created by hand
     AdvancementHolder craft_spectral_arrow = new AdvancementHolder(
-        LighterEnd.of("craft_spectral_arrows"),
+        Identifier.parse(LighterEnd.MOD_ID + "/end_lake"),
         null
     );
 
@@ -95,6 +99,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         LighterEndBlocks.OBELISK.asItem(),
         title("use_obelisk"),
         description("use_obelisk"),
+        null,
         AdvancementType.TASK,
         true,
         true,
@@ -113,12 +118,13 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                 LighterEndItems.TOTEM_OF_TELEPORTATION
             )
         )
-    ).save(consumer, LighterEnd.of("use_obelisk"));
+    ).save(consumer, LighterEnd.MOD_ID + "/use_obelisk");
 
     AdvancementHolder use_totem = Advancement.Builder.advancement().parent(tether_totem).display(
         LighterEndItems.TOTEM_OF_TELEPORTATION,
         title("use_totem"),
         description("use_totem"),
+        null,
         AdvancementType.GOAL,
         true,
         true,
@@ -129,25 +135,27 @@ public class AdvancementProvider extends FabricAdvancementProvider {
             lookup.lookupOrThrow(Registries.ITEM),
             LighterEndItems.TOTEM_OF_TELEPORTATION
         )
-    ).save(consumer, LighterEnd.of("use_totem"));
+    ).save(consumer, LighterEnd.MOD_ID + "/use_totem");
 
     AdvancementHolder acquire_claw = Advancement.Builder.advancement().parent(root).display(
         LighterEndItems.CRAB_CLAW,
         title("acquire_claw"),
         description("acquire_claw"),
+        null,
         AdvancementType.TASK,
         true,
         true,
         false
     ).addCriterion(
         "acquire_claw", InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndItems.CRAB_CLAW)
-    ).save(consumer, LighterEnd.of("acquire_claw"));
+    ).save(consumer, LighterEnd.MOD_ID + "/acquire_claw");
 
     AdvancementHolder shear_mooshroom = Advancement.Builder.advancement().parent(acquire_claw)
         .display(
             Items.SHEARS,
             title("shear_mooshroom"),
             description("shear_mooshroom"),
+            null,
             AdvancementType.TASK,
             true,
             true,
@@ -167,12 +175,13 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                     )
                 )
             )
-        ).save(consumer, LighterEnd.of("shear_mooshroom"));
+        ).save(consumer, LighterEnd.MOD_ID + "/shear_mooshroom");
 
     AdvancementHolder wear_fur = Advancement.Builder.advancement().parent(acquire_claw).display(
             LighterEndBlocks.AGAVE_FUR.asItem(),
             title("wear_fur"),
             description("wear_fur"),
+            null,
             AdvancementType.TASK,
             true,
             true,
@@ -184,13 +193,14 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         ).addCriterion(
             "wear_glowshroom_fur",
             InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndBlocks.GLOWSHROOM_FUR)
-        ).save(consumer, LighterEnd.of("wear_fur"));
+        ).save(consumer, LighterEnd.MOD_ID + "/wear_fur");
 
     AdvancementHolder drink_end_veil_potion = Advancement.Builder.advancement().parent(wear_fur)
         .display(
             Items.PLAYER_HEAD,
             title("drink_end_veil_potion"),
             description("drink_end_veil_potion"),
+            null,
             AdvancementType.GOAL,
             true,
             true,
@@ -200,12 +210,13 @@ public class AdvancementProvider extends FabricAdvancementProvider {
             EffectsChangedTrigger.TriggerInstance.hasEffects(
                 MobEffectsPredicate.Builder.effects().and(StatusEffects.END_VEIL)
             )
-        ).save(consumer, LighterEnd.of("drink_end_veil_potion"));
+        ).save(consumer, LighterEnd.MOD_ID + "/drink_end_veil_potion");
 
     AdvancementHolder acquire_silk = Advancement.Builder.advancement().parent(acquire_claw).display(
             LighterEndItems.SILK,
             title("acquire_silk"),
             description("acquire_silk"),
+            null,
             AdvancementType.TASK,
             true,
             true,
@@ -216,13 +227,14 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         ).addCriterion(
             "acquire_silk_matrix",
             InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndItems.SILK_MATRIX)
-        ).save(consumer, LighterEnd.of("acquire_silk"));
+        ).save(consumer, LighterEnd.MOD_ID + "/acquire_silk");
 
     AdvancementHolder acquire_silk_elytra = Advancement.Builder.advancement().parent(acquire_silk)
         .display(
             LighterEndEquipment.SILK_ELYTRA,
             title("acquire_silk_elytra"),
             description("acquire_silk_elytra"),
+            null,
             AdvancementType.CHALLENGE,
             true,
             true,
@@ -231,12 +243,13 @@ public class AdvancementProvider extends FabricAdvancementProvider {
             "acquire_silk_elytra",
             InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndEquipment.SILK_ELYTRA)
         ).rewards(AdvancementRewards.Builder.experience(50))
-        .save(consumer, LighterEnd.of("acquire_silk_elytra"));
+        .save(consumer, LighterEnd.MOD_ID + "/acquire_silk_elytra");
 
     AdvancementHolder acquire_end_cream = Advancement.Builder.advancement().parent(root).display(
         LighterEndItems.END_CREAM,
         title("acquire_end_cream"),
         description("acquire_end_cream"),
+        null,
         AdvancementType.TASK,
         true,
         true,
@@ -244,13 +257,14 @@ public class AdvancementProvider extends FabricAdvancementProvider {
     ).addCriterion(
         "acquire_end_cream",
         InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndItems.END_CREAM)
-    ).save(consumer, LighterEnd.of("acquire_end_cream"));
+    ).save(consumer, LighterEnd.MOD_ID + "/acquire_end_cream");
 
     Advancement.Builder allBiomesBuilder = Advancement.Builder.advancement().parent(sulphur_springs)
         .display(
             LighterEndBlocks.END_MOSS.asItem(),
             title("all_the_biomes"),
             description("all_the_biomes"),
+            null,
             AdvancementType.CHALLENGE,
             false,
             false,
@@ -281,7 +295,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
 
     AdvancementHolder all_the_biomes = allBiomesBuilder.rewards(
         AdvancementRewards.Builder.experience(xpReward)
-    ).save(consumer, LighterEnd.of("all_the_biomes"));
+    ).save(consumer, LighterEnd.MOD_ID + "/all_the_biomes");
   }
 
   private static MutableComponent title(String path) {

@@ -13,7 +13,7 @@
             "items": "#lighterend:end_fletchings"
           }
         ],
-        "recipes": "lighterend:spectral_arrow"
+        "recipe_id": "lighterend:spectral_arrow"
       },
       "trigger": "minecraft:recipe_crafted"
     }

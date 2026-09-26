@@ -1,9 +1,9 @@
 {
   "sources": [
     {
-      "palette_key": "minecraft:trim_base",
+      "palette_key": "minecraft:trims/color_palettes/trim_palette",
       "permutations": {
-        "aurora": "lighterend:trim/aurora"
+        "aurora": "lighterend:trims/color_palettes/aurora"
       },
       "textures": [
         "minecraft:trims/items/helmet_trim",

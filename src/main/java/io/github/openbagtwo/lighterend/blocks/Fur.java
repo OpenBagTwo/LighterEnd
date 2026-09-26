@@ -54,13 +54,12 @@ public class Fur extends Block implements SimpleWaterloggedBlock {
             .noCollision()
             .instabreak()
             .ignitedByLava()
-            .pushReaction(PushReaction.POPPED)
+            .pushReaction(PushReaction.DESTROY)
             .lightLevel(bs -> luminance)
             .ignitedByLava()
             .sound(wet ? SoundType.WET_GRASS : SoundType.GRASS)
     );
-    registerDefaultState(
-        defaultBlockState().setValue(WATERLOGGED, false).setValue(FACING, Direction.UP));
+    registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(FACING, Direction.UP));
   }
 
   @Override

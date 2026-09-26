@@ -5,16 +5,14 @@
       "bounding_box": "piece",
       "spawns": [
         {
-          "count": {
-            "max_inclusive": 8,
-            "min_inclusive": 2,
-            "type": "minecraft:uniform"
-          },
+          "maxCount": 8,
+          "minCount": 2,
           "type": "lighterend:end_fish",
           "weight": 2
         },
         {
-          "count": 1,
+          "maxCount": 1,
+          "minCount": 1,
           "type": "lighterend:cubozoa",
           "weight": 1
         }

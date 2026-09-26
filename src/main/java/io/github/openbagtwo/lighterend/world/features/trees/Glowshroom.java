@@ -1,6 +1,5 @@
 package io.github.openbagtwo.lighterend.world.features.trees;
 
-import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.blocks.Fur;
 import io.github.openbagtwo.lighterend.blocks.GlowshroomCap;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
@@ -29,13 +28,15 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import org.joml.Vector3f;
 
-public class Glowshroom implements Feature {
+public class Glowshroom extends Feature<NoneFeatureConfiguration> {
 
   public Glowshroom() {
+    super(NoneFeatureConfiguration.CODEC);
   }
 
   private static final Function<BlockState, Boolean> REPLACE;
@@ -49,20 +50,11 @@ public class Glowshroom implements Feature {
   private static final SDF.Primitive CONE_GLOW;
   private static final SDF.Primitive ROOTS;
 
-  public static final MapCodec<Glowshroom> CODEC = MapCodec.unit(Glowshroom::new);
-
   @Override
-  public MapCodec<Glowshroom> codec() {
-    return CODEC;
-  }
-
-  @Override
-  public boolean place(
-      final WorldGenLevel world,
-      final ChunkGenerator chunkGenerator,
-      final RandomSource random,
-      final BlockPos blockPos
-  ) {
+  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+    final RandomSource random = featureConfig.random();
+    final BlockPos blockPos = featureConfig.origin();
+    final WorldGenLevel world = featureConfig.level();
     BlockState down = world.getBlockState(blockPos.below());
     if (!down.is(LighterEndTags.END_SOIL)) {
       return false;
@@ -136,8 +128,7 @@ public class Glowshroom implements Feature {
                   if (info.getState(dir) == Blocks.AIR.defaultBlockState()) {
                     info.setBlockPos(
                         info.getPos().relative(dir),
-                        LighterEndBlocks.GLOWSHROOM_FUR.defaultBlockState()
-                            .setValue(Fur.FACING, dir)
+                        LighterEndBlocks.GLOWSHROOM_FUR.defaultBlockState().setValue(Fur.FACING, dir)
                     );
                   }
                 }

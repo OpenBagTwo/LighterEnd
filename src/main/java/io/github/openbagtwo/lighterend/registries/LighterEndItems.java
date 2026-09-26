@@ -21,7 +21,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 public class LighterEndItems {
 
@@ -31,10 +30,7 @@ public class LighterEndItems {
       "aurora_crystal_shard",
       new Properties().trimMaterial(LighterEndTrimming.AURORA)
   );
-  public static final Item LUMECORN_EAR = register(
-      "lumecorn_rod",
-      new Properties().compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
-  );
+  public static final Item LUMECORN_EAR = register("lumecorn_rod");
   public static final Item POPPED_LUMECORN = register(
       "lumecorn_popped",
       new Properties().food(
@@ -63,23 +59,15 @@ public class LighterEndItems {
           SoundEvents.BUCKET_EMPTY_FISH, settings),
       new Item.Properties().stacksTo(1)
           .component(DataComponents.BUCKET_ENTITY_DATA, CustomData.EMPTY));
-  public static final Item RAW_END_FISH = register(
-      "end_fish",
-      new Properties().food(Foods.TROPICAL_FISH)
-  );
+  public static final Item RAW_END_FISH = register("end_fish", new Properties()
+      .food(Foods.TROPICAL_FISH));
   public static final Item GLOW_BARB = register("glow_barb");
 
-  public static final Item END_LILY_LEAF = register(
-      "end_lily_leaf",
-      new Properties().compostable(ContextIntProviders.COMPOSTABLE_LOW_MEDIUM)
-  );
+  public static final Item END_LILY_LEAF = register("end_lily_leaf");
   public static final Item DRIED_END_LILY_LEAF = register("end_lily_leaf_dried");
 
   public static final Item END_CREAM = register("end_cream");
-  public static final Item END_POWDER = register(
-      "end_powder",
-      new Properties().brewingFuel(ContextIntProviders.BREWING_DEFAULT_USES)
-  );
+  public static final Item END_POWDER = register("end_powder");
 
   public static final Item CRAB_CLAW = register("crab_claw");
   public static final Item CRAB_MEAT = register(
@@ -106,15 +94,11 @@ public class LighterEndItems {
 
   public static final Item SHADOW_BERRY = register(
       "shadow_berry",
-      new Properties()
-          .food(LighterEndFoodComponents.SHADOW_BERRY)
-          .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
+      new Properties().food(LighterEndFoodComponents.SHADOW_BERRY)
   );
   public static final Item SHADOW_BERRY_COOKED = register(
       "shadow_berry_cooked",
-      new Properties()
-          .food(LighterEndFoodComponents.SHADOW_BERRY_COOKED)
-          .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM_HIGH)
+      new Properties().food(LighterEndFoodComponents.SHADOW_BERRY_COOKED)
   );
   public static final Item SHADOW_BERRY_JAM = register(
       "shadow_berry_jam",

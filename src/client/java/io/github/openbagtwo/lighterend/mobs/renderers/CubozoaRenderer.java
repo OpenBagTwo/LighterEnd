@@ -58,7 +58,8 @@ public class CubozoaRenderer extends
                 OverlayTexture.NO_OVERLAY,
                 0xffffffff,
                 null,
-                state.outlineColor
+                state.outlineColor,
+                null
             );
       }
     });

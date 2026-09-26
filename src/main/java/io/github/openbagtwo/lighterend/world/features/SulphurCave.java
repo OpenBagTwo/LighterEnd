@@ -1,7 +1,6 @@
 package io.github.openbagtwo.lighterend.world.features;
 
 import com.google.common.collect.Sets;
-import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.BlockFixer;
 import io.github.openbagtwo.lighterend.blocks.HydrothermalVent;
 import io.github.openbagtwo.lighterend.blocks.TubeWorm;
@@ -21,35 +20,28 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class SulphurCave implements Feature {
+public class SulphurCave extends Feature<NoneFeatureConfiguration> {
 
   public SulphurCave() {
-  }
-
-  public static final MapCodec<SulphurCave> CODEC = MapCodec.unit(SulphurCave::new);
-
-  @Override
-  public MapCodec<SulphurCave> codec() {
-    return CODEC;
+    super(NoneFeatureConfiguration.CODEC);
   }
 
   @Override
-  public boolean place(
-      final WorldGenLevel world,
-      final ChunkGenerator chunkGenerator,
-      final RandomSource random,
-      final BlockPos origin
-  ) {
+  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+    final RandomSource random = context.random();
+    BlockPos pos = context.origin();
+    final WorldGenLevel world = context.level();
     int radius = Mth.nextInt(random, 10, 30);
 
-    int top = world.getHeight(Heightmap.Types.WORLD_SURFACE_WG, origin.getX(), origin.getZ());
+    int top = world.getHeight(Heightmap.Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
     MutableBlockPos bpos = new MutableBlockPos();
-    bpos.setX(origin.getX());
-    bpos.setZ(origin.getZ());
+    bpos.setX(pos.getX());
+    bpos.setZ(pos.getZ());
     bpos.setY(top - 1);
 
     BlockState state = world.getBlockState(bpos);
@@ -74,7 +66,7 @@ public class SulphurCave implements Feature {
     }
 
     MutableBlockPos mut = new MutableBlockPos();
-    BlockPos pos = new BlockPos(origin.getX(), Mth.nextInt(random, bottom, top), origin.getZ());
+    pos = new BlockPos(pos.getX(), Mth.nextInt(random, bottom, top), pos.getZ());
 
     OpenSimplexNoise noise = new OpenSimplexNoise(MathUtils.getSeed(534, pos.getX(), pos.getZ()));
 

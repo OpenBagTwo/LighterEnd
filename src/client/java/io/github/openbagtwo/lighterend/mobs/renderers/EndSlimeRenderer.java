@@ -71,7 +71,8 @@ public class EndSlimeRenderer extends
                 OverlayTexture.NO_OVERLAY,
                 0xffffffff,
                 null,
-                state.outlineColor
+                state.outlineColor,
+                null
             );
       }
     });
@@ -148,7 +149,8 @@ public class EndSlimeRenderer extends
                   j,
                   -1,
                   null,
-                  state.outlineColor
+                  state.outlineColor,
+                  null
               );
         } else {
           queue.order(1)
@@ -161,7 +163,8 @@ public class EndSlimeRenderer extends
                   j,
                   -1,
                   null,
-                  state.outlineColor
+                  state.outlineColor,
+                  null
               );
         }
       }

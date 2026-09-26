@@ -1,5 +1,6 @@
 package io.github.openbagtwo.lighterend.blocks;
 
+import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -8,7 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.VegetationBlock;
@@ -17,6 +17,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 
 public class CreepingMoss extends VegetationBlock implements BonemealableBlock {
+
+  public static final MapCodec<CreepingMoss> CODEC = simpleCodec(CreepingMoss::new);
 
   public CreepingMoss(Properties settings) {
     super(
@@ -27,7 +29,7 @@ public class CreepingMoss extends VegetationBlock implements BonemealableBlock {
             .instabreak()
             .noOcclusion()
             .sound(SoundType.GRASS)
-            .pushReaction(PushReaction.POPPED)
+            .pushReaction(PushReaction.DESTROY)
             .offsetType(OffsetType.XZ)
             .ignitedByLava()
             .lightLevel((bs) -> 5)
@@ -39,36 +41,23 @@ public class CreepingMoss extends VegetationBlock implements BonemealableBlock {
     return floor.is(LighterEndTags.END_SOIL);
   }
 
+  @Override
+  protected MapCodec<? extends VegetationBlock> codec() {
+    return CODEC;
+  }
 
   @Override
-  public boolean isValidBonemealTarget(
-      LevelReader world,
-      BlockPos pos,
-      BlockState state,
-      BonemealSource source
-  ) {
+  public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
     return true;
   }
 
   @Override
-  public boolean isBonemealSuccess(
-      Level world,
-      RandomSource random,
-      BlockPos pos,
-      BlockState state,
-      BonemealSource source
-  ) {
+  public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
     return true;
   }
 
   @Override
-  public void performBonemeal(
-      ServerLevel world,
-      RandomSource random,
-      BlockPos pos,
-      BlockState state,
-      BonemealSource source
-  ) {
+  public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
     popResource(world, pos, new ItemStack(this));
   }
 }

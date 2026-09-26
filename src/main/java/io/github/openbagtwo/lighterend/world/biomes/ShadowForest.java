@@ -10,9 +10,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.EndPlacements;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.ARGB;
-import net.minecraft.util.valueproviders.ConstantInt;
-import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.attribute.AmbientParticle;
 import net.minecraft.world.attribute.AmbientSounds;
 import net.minecraft.world.attribute.BackgroundMusic;
@@ -23,37 +20,38 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
-import net.minecraft.world.level.levelgen.carver.WorldCarver;
+import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class ShadowForest {
 
   public static Biome create(BootstrapContext<Biome> context) {
-    HolderGetter<PlacedFeature> features = context.lookup(Registries.PLACED_FEATURE);
-    HolderGetter<WorldCarver> carvers = context.lookup(Registries.CARVER);
+    HolderGetter<PlacedFeature> features = context.lookup(
+        Registries.PLACED_FEATURE
+    );
+    HolderGetter<ConfiguredWorldCarver<?>> carvers = context.lookup(
+        Registries.CONFIGURED_CARVER
+    );
 
     MobSpawnSettings spawns = new MobSpawnSettings.Builder()
         .addSpawn(
-            EntityTypes.PHANTOM,
             MobCategory.MONSTER,
             20,
-            new ConstantInt(1)
+            new SpawnerData(EntityTypes.PHANTOM, 1, 1)
         ).addSpawn(
-            EntityTypes.ENDERMAN,
             MobCategory.MONSTER,
             80,
-            new UniformInt(1, 4)
+            new SpawnerData(EntityTypes.ENDERMAN, 1, 4)
         ).build();
 
     var genSettingsBuilder = new BiomeGenerationSettings.Builder(features, carvers)
         .addFeature(Decoration.SURFACE_STRUCTURES, EndPlacements.END_GATEWAY_RETURN)
         .addFeature(Decoration.SURFACE_STRUCTURES, LighterEndPlacedFeatures.DRAGON_TREE)
         .addFeature(Decoration.VEGETAL_DECORATION, LighterEndPlacedFeatures.PURPLE_POLYPORES)
-        .addFeature(
-            Decoration.VEGETAL_DECORATION,
-            LighterEndPlacedFeatures.SHADOW_FOREST_VEGETATION
-        );
+        .addFeature(Decoration.VEGETAL_DECORATION,
+            LighterEndPlacedFeatures.SHADOW_FOREST_VEGETATION);
 
     for (ResourceKey<PlacedFeature> blob : LighterEndPlacedFeatures.JADESTONE_BLOBS) {
       genSettingsBuilder = genSettingsBuilder.addFeature(Decoration.UNDERGROUND_ORES, blob);
@@ -73,9 +71,9 @@ public class ShadowForest {
         .generationSettings(genSettingsBuilder.build())
         .setAttribute(EnvironmentAttributes.AMBIENT_PARTICLES,
             AmbientParticle.of(ParticleTypes.MYCELIUM, 0.01F))
-        .setAttribute(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(0x000000))
-        .setAttribute(EnvironmentAttributes.FOG_COLOR, ARGB.vector3fFromRGB24(0x000000))
-        .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, ARGB.vector3fFromRGB24(0x2A2D50))
+        .setAttribute(EnvironmentAttributes.SKY_COLOR, 0x000000)
+        .setAttribute(EnvironmentAttributes.FOG_COLOR, 0x000000)
+        .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 0x2A2D50)
         .setAttribute(
             EnvironmentAttributes.AMBIENT_SOUNDS,
             new AmbientSounds(

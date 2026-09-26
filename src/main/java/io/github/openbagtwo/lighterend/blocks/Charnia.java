@@ -1,5 +1,6 @@
 package io.github.openbagtwo.lighterend.blocks;
 
+import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,7 +16,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.SeagrassBlock;
@@ -33,7 +33,13 @@ import org.jetbrains.annotations.Nullable;
 
 public class Charnia extends VegetationBlock implements BonemealableBlock, LiquidBlockContainer {
 
+  public static final MapCodec<Charnia> CODEC = simpleCodec(Charnia::new);
   private static final VoxelShape SHAPE = SeagrassBlock.box(4, 0, 4, 12, 14, 12);
+
+  @Override
+  public MapCodec<Charnia> codec() {
+    return CODEC;
+  }
 
   public Charnia(Properties settings) {
     super(
@@ -45,7 +51,7 @@ public class Charnia extends VegetationBlock implements BonemealableBlock, Liqui
             .instabreak()
             .offsetType(OffsetType.XZ)
             .sound(SoundType.WET_GRASS)
-            .pushReaction(PushReaction.POPPED)
+            .pushReaction(PushReaction.DESTROY)
     );
   }
 
@@ -65,8 +71,7 @@ public class Charnia extends VegetationBlock implements BonemealableBlock, Liqui
   @Override
   public BlockState getStateForPlacement(BlockPlaceContext ctx) {
     FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
-    return fluidState.is(FluidTags.WATER) && fluidState.getAmount() == 8
-        ? super.getStateForPlacement(
+    return fluidState.is(FluidTags.WATER) && fluidState.getAmount() == 8 ? super.getStateForPlacement(
         ctx) : null;
   }
 
@@ -91,12 +96,7 @@ public class Charnia extends VegetationBlock implements BonemealableBlock, Liqui
   }
 
   @Override
-  public boolean isValidBonemealTarget(
-      LevelReader world,
-      BlockPos pos,
-      BlockState state,
-      final BonemealSource source
-  ) {
+  public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
     return world.getBlockState(pos.above()).is(Blocks.WATER);
   }
 
@@ -118,24 +118,12 @@ public class Charnia extends VegetationBlock implements BonemealableBlock, Liqui
   }
 
   @Override
-  public boolean isBonemealSuccess(
-      Level world,
-      RandomSource random,
-      BlockPos pos,
-      BlockState state,
-      BonemealSource source
-  ) {
+  public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
     return true;
   }
 
   @Override
-  public void performBonemeal(
-      ServerLevel world,
-      RandomSource random,
-      BlockPos pos,
-      BlockState state,
-      BonemealSource source
-  ) {
+  public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
     popResource(world, pos, new ItemStack(this));
   }
 

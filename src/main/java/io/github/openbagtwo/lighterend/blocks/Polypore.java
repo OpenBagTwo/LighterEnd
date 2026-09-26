@@ -43,7 +43,7 @@ public class Polypore extends Block {
             .mapColor(color)
             .noOcclusion()
             .instabreak()
-            .pushReaction(PushReaction.POPPED)
+            .pushReaction(PushReaction.DESTROY)
             .noCollision()
             .destroyTime(0.2F)
             .lightLevel(bs -> luminance)
@@ -53,8 +53,7 @@ public class Polypore extends Block {
   }
 
   @Override
-  protected void createBlockStateDefinition(
-      StateDefinition.Builder<Block, BlockState> stateManager) {
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
     stateManager.add(FACING);
   }
 

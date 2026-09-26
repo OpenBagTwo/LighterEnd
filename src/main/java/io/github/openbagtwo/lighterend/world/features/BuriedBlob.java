@@ -1,7 +1,6 @@
 package io.github.openbagtwo.lighterend.world.features;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -12,40 +11,26 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import org.jetbrains.annotations.Nullable;
 
-public class BuriedBlob implements Feature {
+public class BuriedBlob extends Feature<BuriedBlob.Config> {
 
-  final BlockState target;
-  final BlockState state;
-  final IntProvider radius;
-  final int depth;
-
-  public BuriedBlob(BlockState target, BlockState state, IntProvider radius, int depth) {
-    this.target = target;
-    this.state = state;
-    this.radius = radius;
-    this.depth = depth;
+  public BuriedBlob() {
+    super(Config.CODEC);
   }
 
   @Override
-  public MapCodec<BuriedBlob> codec() {
-    return CODEC;
-  }
-
-  @Override
-  public boolean place(
-      final WorldGenLevel structureWorldAccess,
-      final ChunkGenerator chunkGenerator,
-      final RandomSource random,
-      final BlockPos origin
-  ) {
-    Block block = this.target.getBlock();
+  public boolean place(FeaturePlaceContext<BuriedBlob.Config> context) {
+    Config config = context.config();
+    WorldGenLevel structureWorldAccess = context.level();
+    RandomSource random = context.random();
+    Block block = config.target.getBlock();
     var blockPos = moveDownToTarget(
         structureWorldAccess,
-        origin.mutable()
+        context.origin().mutable()
             .clamp(
                 Direction.Axis.Y,
                 structureWorldAccess.getMinY() + 1,
@@ -56,21 +41,21 @@ public class BuriedBlob implements Feature {
     if (blockPos == null) {
       return false;
     } else {
-      blockPos.move(Direction.DOWN, this.depth);
-      int i = this.radius.sample(random);
-      int j = this.radius.sample(random);
-      int k = this.radius.sample(random);
+      blockPos.move(Direction.DOWN, config.depth);
+      int i = config.getRadius().sample(random);
+      int j = config.getRadius().sample(random);
+      int k = config.getRadius().sample(random);
       int l = Math.max(i, Math.max(j, k));
       boolean bl = false;
 
-      for (BlockPos blockPos2 : BlockPos.withinBoxByManhattanDistance(blockPos, i, j, k)) {
+      for (BlockPos blockPos2 : BlockPos.withinManhattan(blockPos, i, j, k)) {
         if (blockPos2.distManhattan(blockPos) > l) {
           break;
         }
 
         BlockState blockState = structureWorldAccess.getBlockState(blockPos2);
         if (blockState.is(block)) {
-          this.setBlock(structureWorldAccess, blockPos2, this.state);
+          this.setBlock(structureWorldAccess, blockPos2, config.state);
           bl = true;
         }
       }
@@ -96,14 +81,33 @@ public class BuriedBlob implements Feature {
     return null;
   }
 
-  public static final MapCodec<BuriedBlob> CODEC = RecordCodecBuilder.mapCodec(
-      instance -> instance.group(
-              BlockState.CODEC.fieldOf("target").forGetter(blob -> blob.target),
-              BlockState.CODEC.fieldOf("state").forGetter(blob -> blob.state),
-              IntProviders.codec(0, 12).fieldOf("radius")
-                  .forGetter(blob -> blob.radius),
-              Codec.INT.fieldOf("depth").forGetter(blob -> blob.depth)
-          )
-          .apply(instance, BuriedBlob::new)
-  );
+  public static class Config implements FeatureConfiguration {
+
+    public static final Codec<Config> CODEC = RecordCodecBuilder.create(
+        instance -> instance.group(
+                BlockState.CODEC.fieldOf("target").forGetter(config -> config.target),
+                BlockState.CODEC.fieldOf("state").forGetter(config -> config.state),
+                IntProviders.codec(0, 12).fieldOf("radius")
+                    .forGetter(config -> config.radius),
+                Codec.INT.fieldOf("depth").forGetter(config -> config.depth)
+            )
+            .apply(instance, Config::new)
+    );
+
+    public final BlockState target;
+    public final BlockState state;
+    private final IntProvider radius;
+    private final int depth;
+
+    public Config(BlockState target, BlockState state, IntProvider radius, int depth) {
+      this.target = target;
+      this.state = state;
+      this.radius = radius;
+      this.depth = depth;
+    }
+
+    public IntProvider getRadius() {
+      return this.radius;
+    }
+  }
 }
