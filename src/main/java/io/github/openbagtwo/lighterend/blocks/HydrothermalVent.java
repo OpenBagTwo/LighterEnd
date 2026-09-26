@@ -40,8 +40,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class HydrothermalVent extends BaseEntityBlock implements LiquidBlockContainer,
-    SimpleWaterloggedBlock {
+public class HydrothermalVent extends BaseEntityBlock implements LiquidBlockContainer, SimpleWaterloggedBlock {
 
   public static final MapCodec<HydrothermalVent> CODEC = simpleCodec(HydrothermalVent::new);
 
@@ -59,8 +58,7 @@ public class HydrothermalVent extends BaseEntityBlock implements LiquidBlockCont
             .pushReaction(PushReaction.DESTROY)
             .mapColor(MapColor.STONE)
     );
-    this.registerDefaultState(
-        defaultBlockState().setValue(WATERLOGGED, false).setValue(ACTIVATED, false));
+    this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(ACTIVATED, false));
   }
 
   @Override
@@ -123,8 +121,7 @@ public class HydrothermalVent extends BaseEntityBlock implements LiquidBlockCont
       RandomSource random
   ) {
     if (!canSurvive(state, world, pos)) {
-      return state.getValue(WATERLOGGED) ? Blocks.WATER.defaultBlockState()
-          : Blocks.AIR.defaultBlockState();
+      return state.getValue(WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
     } else if (
         state.getValue(WATERLOGGED)
             && direction == Direction.UP
@@ -174,7 +171,7 @@ public class HydrothermalVent extends BaseEntityBlock implements LiquidBlockCont
     if (
         world instanceof ServerLevel
             && state.getValue(WATERLOGGED) && world.getBlockState(pos.above()).is(Blocks.WATER)) {
-      tick(state, (ServerLevel) world, pos, world.getRandom());
+      tick(state, (ServerLevel) world, pos, world.random);
     }
   }
 

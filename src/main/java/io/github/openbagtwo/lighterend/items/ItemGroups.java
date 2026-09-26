@@ -2,7 +2,7 @@ package io.github.openbagtwo.lighterend.items;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.registries.LighterEndItems;
-import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 public final class ItemGroups {
 
   public static final CreativeModeTab LighterEndItemGroup = register("lighterend_items",
-      FabricCreativeModeTab.builder()
+      FabricItemGroup.builder()
           .icon(() -> new ItemStack(
               LighterEndItems.AURORA_CRYSTAL_SHARD))
           .title(Component.translatable("itemGroup.lighterend.lighterend_items"))

@@ -6,7 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
-import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
@@ -87,7 +86,7 @@ public class BuriedBlob extends Feature<BuriedBlob.Config> {
         instance -> instance.group(
                 BlockState.CODEC.fieldOf("target").forGetter(config -> config.target),
                 BlockState.CODEC.fieldOf("state").forGetter(config -> config.state),
-                IntProviders.codec(0, 12).fieldOf("radius")
+                IntProvider.codec(0, 12).fieldOf("radius")
                     .forGetter(config -> config.radius),
                 Codec.INT.fieldOf("depth").forGetter(config -> config.depth)
             )

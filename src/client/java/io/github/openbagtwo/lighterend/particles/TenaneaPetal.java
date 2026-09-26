@@ -1,7 +1,7 @@
 package io.github.openbagtwo.lighterend.particles;
 
 import io.github.openbagtwo.lighterend.blocks.TenaneaFlowerRenderer;
-import net.minecraft.client.color.block.BlockTintSource;
+import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
@@ -15,7 +15,7 @@ import net.minecraft.util.RandomSource;
 
 public class TenaneaPetal extends SingleQuadParticle {
 
-  private static BlockTintSource provider;
+  private static BlockColor provider;
 
   private double preVX;
   private double preVY;
@@ -36,11 +36,7 @@ public class TenaneaPetal extends SingleQuadParticle {
     if (provider == null) {
       provider = TenaneaFlowerRenderer.getBlockColor();
     }
-    int color = provider.colorAsTerrainParticle(
-        null,
-        null,
-        new BlockPos((int) x, (int) y, (int) z)
-    );
+    int color = provider.getColor(null, null, new BlockPos((int) x, (int) y, (int) z), 0);
     this.rCol = ((color >> 16) & 255) / 255F;
     this.gCol = ((color >> 8) & 255) / 255F;
     this.bCol = ((color) & 255) / 255F;
@@ -59,7 +55,7 @@ public class TenaneaPetal extends SingleQuadParticle {
   }
 
   @Override
-  public int getLightCoords(float tint) {
+  public int getLightColor(float tint) {
     return 15728880;
   }
 

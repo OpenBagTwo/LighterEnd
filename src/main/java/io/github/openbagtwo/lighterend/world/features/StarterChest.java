@@ -32,7 +32,7 @@ public class StarterChest extends Feature<NoneFeatureConfiguration> {
   public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
     RandomSource random = context.random();
     WorldGenLevel structureWorldAccess = context.level();
-    ChunkPos chunkPos = ChunkPos.containing(context.origin());
+    ChunkPos chunkPos = new ChunkPos(context.origin());
     IntArrayList intArrayList = Util.toShuffledList(
         IntStream.rangeClosed(chunkPos.getMinBlockX(), chunkPos.getMaxBlockX()), random);
     IntArrayList intArrayList2 = Util.toShuffledList(
@@ -50,8 +50,8 @@ public class StarterChest extends Feature<NoneFeatureConfiguration> {
           }
           if (
               (
-                  structureWorldAccess.isEmptyBlock(blockPos) || structureWorldAccess.getBlockState(
-                          blockPos)
+                  structureWorldAccess.isEmptyBlock(blockPos)
+                      || structureWorldAccess.getBlockState(blockPos)
                       .getCollisionShape(structureWorldAccess, blockPos).isEmpty()
               )
                   && blockPos.getY() > 50
@@ -72,10 +72,8 @@ public class StarterChest extends Feature<NoneFeatureConfiguration> {
                     blockState.setValue(EndRodBlock.FACING, direction),
                     Block.UPDATE_CLIENTS
                 );
-
               }
             }
-
             return true;
           }
         }

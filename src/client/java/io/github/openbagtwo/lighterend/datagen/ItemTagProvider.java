@@ -8,17 +8,17 @@ import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
-import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 
-public class ItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
+public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
   public ItemTagProvider(
-      FabricPackOutput output,
+      FabricDataOutput output,
       CompletableFuture<Provider> future
   ) {
     super(output, future);
@@ -81,6 +81,10 @@ public class ItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
 
     valueLookupBuilder(ItemTags.FISHES).add(LighterEndItems.RAW_END_FISH);
 
+    valueLookupBuilder(ItemTags.DYEABLE).add(
+        LighterEndEquipment.SILK_ELYTRA
+    );
+
     valueLookupBuilder(ItemTags.CHEST_ARMOR).add(
         LighterEndEquipment.SILK_ELYTRA
     );  // this makes silk elytra trimmable
@@ -101,10 +105,6 @@ public class ItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
 
     valueLookupBuilder(ItemTags.TRIM_MATERIALS).add(
         LighterEndItems.AURORA_CRYSTAL_SHARD
-    );
-
-    valueLookupBuilder(ItemTags.CAULDRON_CAN_REMOVE_DYE).add(
-        LighterEndEquipment.SILK_ELYTRA
     );
 
     valueLookupBuilder(LighterEndTags.REPAIRS_SILK_ARMOR).add(LighterEndItems.SILK);

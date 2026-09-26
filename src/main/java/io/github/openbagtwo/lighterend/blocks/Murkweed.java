@@ -75,7 +75,7 @@ public class Murkweed extends VegetationBlock {
   ) {
     if (
         entity instanceof LivingEntity livingEntity
-            && !entity.is(LighterEndTags.IMMUNE_TO_MURKWEED)
+            && !entity.getType().is(LighterEndTags.IMMUNE_TO_MURKWEED)
     ) {
       if (!livingEntity.hasEffect(MobEffects.BLINDNESS)) {
         livingEntity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 50));

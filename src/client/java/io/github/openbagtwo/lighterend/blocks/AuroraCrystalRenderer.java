@@ -1,11 +1,9 @@
 package io.github.openbagtwo.lighterend.blocks;
 
-import net.minecraft.client.color.block.BlockTintSource;
-import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.block.state.BlockState;
 
 public class AuroraCrystalRenderer {
 
@@ -16,36 +14,27 @@ public class AuroraCrystalRenderer {
       new Vec3i(243, 58, 255)
   };
 
-  public static BlockTintSource getBlockColor() {
-    return new BlockTintSource() {
-      @Override
-      public int color(final BlockState state) {
-        return colorInWorld(state, null, BlockPos.ZERO);
+  public static BlockColor getBlockColor() {
+    return (state, world, pos, tintIndex) -> {
+      if (pos == null) {
+        pos = BlockPos.ZERO;
       }
 
-      @Override
-      public int colorInWorld(
-          final BlockState state,
-          final BlockAndTintGetter level,
-          final BlockPos pos
-      ) {
+      long i = (long) pos.getX() + (long) pos.getY() + (long) pos.getZ();
+      double delta = i * 0.1;
+      int index = Mth.floor(delta);
+      int index2 = (index + 1) & 3;
+      delta -= index;
+      index &= 3;
 
-        long i = (long) pos.getX() + (long) pos.getY() + (long) pos.getZ();
-        double delta = i * 0.1;
-        int index = Mth.floor(delta);
-        int index2 = (index + 1) & 3;
-        delta -= index;
-        index &= 3;
+      Vec3i color1 = COLORS[index];
+      Vec3i color2 = COLORS[index2];
 
-        Vec3i color1 = COLORS[index];
-        Vec3i color2 = COLORS[index2];
+      int r = Mth.floor(Mth.lerp(delta, color1.getX(), color2.getX()));
+      int g = Mth.floor(Mth.lerp(delta, color1.getY(), color2.getY()));
+      int b = Mth.floor(Mth.lerp(delta, color1.getZ(), color2.getZ()));
 
-        int r = Mth.floor(Mth.lerp(delta, color1.getX(), color2.getX()));
-        int g = Mth.floor(Mth.lerp(delta, color1.getY(), color2.getY()));
-        int b = Mth.floor(Mth.lerp(delta, color1.getZ(), color2.getZ()));
-
-        return AuroraCrystalRenderer.color(r, g, b);
-      }
+      return color(r, g, b);
     };
   }
 

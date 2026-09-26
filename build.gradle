@@ -1,7 +1,7 @@
 plugins {
-    id "net.fabricmc.fabric-loom" version '1.15-SNAPSHOT'
+    id 'fabric-loom' version '1.15-SNAPSHOT'
     id "fr.brouillard.oss.gradle.jgitver" version "0.9.1"
-    id 'com.gradleup.shadow' version '9.3.1'
+    id 'com.gradleup.shadow' version '9.2.2'
     id 'maven-publish'
 }
 
@@ -31,6 +31,8 @@ repositories {
 loom {
     splitEnvironmentSourceSets()
 
+    accessWidenerPath = file("src/main/resources/lighterend.accesswidener")
+
     mods {
         "lighterend" {
             sourceSet sourceSets.main
@@ -48,18 +50,17 @@ fabricApi {
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    implementation "net.fabricmc:fabric-loader:$project.loader_version"
 
-    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-
-    compileOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
-    runtimeOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
-    runtimeOnly("maven.modrinth:jade:${project.jade_version}")
-    compileOnly("com.github.glitchfiend:TerraBlender-fabric:${project.terrablender_version}")
+    modCompileOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
+    modRuntimeOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
+//    modRuntimeOnly("maven.modrinth:jade:${project.jade_version}")
+    modCompileOnly("com.github.glitchfiend:TerraBlender-fabric:${project.terrablender_version}")
     // Only comment in the line below when you're explicitly testing TerraBlender compat
-//    runtimeOnly("com.github.glitchfiend:TerraBlender-fabric:${project.terrablender_version}")
+//    modRuntimeOnly("com.github.glitchfiend:TerraBlender-fabric:${project.terrablender_version}")
 
 
     compileOnly "org.yaml:snakeyaml:2.2"
@@ -78,7 +79,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    it.options.release = 25
+    it.options.release = 21
 }
 
 java {
@@ -87,9 +88,15 @@ java {
     // If you remove this line, sources will not be generated.
     withSourcesJar()
 
-    sourceCompatibility = JavaVersion.VERSION_25
-    targetCompatibility = JavaVersion.VERSION_25
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
 }
 
 shadowJar {
@@ -97,22 +104,13 @@ shadowJar {
     from sourceSets.client.output
 
     configurations = [project.configurations.shadow]
-    from("LICENSE") {
-        rename { "${it}_${project.base.archivesName.get()}" }
-    }
-    from("LICENSE.BE") {
-        rename { "${it}_${project.base.archivesName.get()}" }
-    }
+    archiveClassifier.set("dev")
     relocate "org.yaml", "${project.maven_group}.shadow.org.yaml"
 }
 
-jar {
-    from("LICENSE") {
-        rename { "${it}_${project.base.archivesName.get()}" }
-    }
-    from("LICENSE.BE") {
-        rename { "${it}_${project.base.archivesName.get()}" }
-    }
+remapJar {
+    dependsOn(shadowJar)
+    inputFile = tasks.shadowJar.archiveFile
 }
 
 sourcesJar {

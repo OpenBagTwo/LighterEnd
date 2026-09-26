@@ -25,6 +25,6 @@ public class BlocksAreNotTooFarMixin {
     int x = blockPos.getX() >> 4;
     int z = blockPos.getZ() >> 4;
     cir.setReturnValue(
-        Math.abs(x - center.getPos().x()) < 2 && Math.abs(z - center.getPos().z()) < 2);
+        Math.abs(x - center.getPos().x) < 2 && Math.abs(z - center.getPos().z) < 2);
   }
 }

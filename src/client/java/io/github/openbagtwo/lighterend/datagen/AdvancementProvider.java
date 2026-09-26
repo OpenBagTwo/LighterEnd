@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
-import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
@@ -41,7 +41,7 @@ import net.minecraft.world.level.biome.Biome;
 public class AdvancementProvider extends FabricAdvancementProvider {
 
   protected AdvancementProvider(
-      FabricPackOutput output,
+      FabricDataOutput output,
       CompletableFuture<Provider> registryLookup
   ) {
     super(output, registryLookup);
@@ -91,7 +91,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
 
     // craft_spectral_arrow was created by hand
     AdvancementHolder craft_spectral_arrow = new AdvancementHolder(
-        Identifier.parse(LighterEnd.MOD_ID + "/end_lake"),
+        Identifier.parse(LighterEnd.MOD_ID + "/craft_spectral_arrows"),
         null
     );
 

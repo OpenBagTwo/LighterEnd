@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
 public class Oxidizing {
 
   public static void initialize() {
-    OxidizableBlocksRegistry.registerWeatheringCopperBlocks(LighterEndBlocks.COPPER_CHANDELIERS);
+    OxidizableBlocksRegistry.registerCopperBlockSet(LighterEndBlocks.COPPER_CHANDELIERS);
   }
 
 }

@@ -119,10 +119,7 @@
     }
   ],
   "textures": {
-    "crystal": {
-      "force_translucent": true,
-      "sprite": "lighterend:block/aurora_crystal"
-    },
+    "crystal": "lighterend:block/aurora_crystal",
     "particle": "lighterend:block/amber_block",
     "texture": "lighterend:block/respawn_obelisk_top_and_side"
   }

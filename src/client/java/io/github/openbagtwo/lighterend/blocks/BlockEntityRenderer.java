@@ -8,14 +8,14 @@ import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.ShelfRenderer;
-import net.minecraft.client.renderer.blockentity.StandingSignRenderer;
+import net.minecraft.client.renderer.blockentity.SignRenderer;
 
 public class BlockEntityRenderer {
 
   public static void initialize() {
     BlockEntityRenderers.register(
         LighterEndBlockEntities.SIGN,
-        StandingSignRenderer::new
+        SignRenderer::new
     );
     BlockEntityRenderers.register(
         LighterEndBlockEntities.HANGING_SIGN,
@@ -37,10 +37,10 @@ public class BlockEntityRenderer {
         LighterEndBlocks.GLOWSHROOM,
         LighterEndBlocks.DRAGON
     )) {
-      Sheets.SIGN_SPRITES.put(wood.woodType,
-          Sheets.getSignSprite(wood.woodType));
-      Sheets.HANGING_SIGN_SPRITES.put(wood.woodType,
-          Sheets.getHangingSignSprite(wood.woodType));
+      Sheets.SIGN_MATERIALS.put(wood.woodType,
+          Sheets.getSignMaterial(wood.woodType));
+      Sheets.HANGING_SIGN_MATERIALS.put(wood.woodType,
+          Sheets.getHangingSignMaterial(wood.woodType));
     }
   }
 

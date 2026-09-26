@@ -88,10 +88,10 @@ public class LakePiece extends BasePiece {
   ) {
     int minY = this.boundingBox.minY();
     int maxY = this.boundingBox.maxY();
-    int sx = SectionPos.sectionToBlockCoord(chunkPos.x());
-    int sz = SectionPos.sectionToBlockCoord(chunkPos.z());
+    int sx = SectionPos.sectionToBlockCoord(chunkPos.x);
+    int sz = SectionPos.sectionToBlockCoord(chunkPos.z);
     MutableBlockPos mut = new MutableBlockPos();
-    ChunkAccess chunk = world.getChunk(chunkPos.x(), chunkPos.z());
+    ChunkAccess chunk = world.getChunk(chunkPos.x, chunkPos.z);
     for (int x = 0; x < 16; x++) {
       mut.setX(x);
       int wx = x | sx;

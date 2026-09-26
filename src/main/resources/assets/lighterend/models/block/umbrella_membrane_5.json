@@ -1,9 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": {
-      "force_translucent": true,
-      "sprite": "lighterend:block/umbrella_membrane_5"
-    }
+    "all": "lighterend:block/umbrella_membrane_5"
   }
 }

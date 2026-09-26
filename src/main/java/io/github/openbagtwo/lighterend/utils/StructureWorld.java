@@ -50,7 +50,7 @@ public class StructureWorld {
   }
 
   public void setBlock(BlockPos pos, BlockState state) {
-    ChunkPos cPos = new ChunkPos(pos.getX(), pos.getZ());
+    ChunkPos cPos = new ChunkPos(pos);
 
     if (cPos.equals(lastPos)) {
       lastPart.addBlock(pos, state);
@@ -62,17 +62,17 @@ public class StructureWorld {
       part = new Part();
       parts.put(cPos, part);
 
-      if (cPos.x() < minX) {
-        minX = cPos.x();
+      if (cPos.x < minX) {
+        minX = cPos.x;
       }
-      if (cPos.x() > maxX) {
-        maxX = cPos.x();
+      if (cPos.x > maxX) {
+        maxX = cPos.x;
       }
-      if (cPos.z() < minZ) {
-        minZ = cPos.z();
+      if (cPos.z < minZ) {
+        minZ = cPos.z;
       }
-      if (cPos.z() > maxZ) {
-        maxZ = cPos.z();
+      if (cPos.z > maxZ) {
+        maxZ = cPos.z;
       }
     }
     if (pos.getY() < minY) {
@@ -90,7 +90,7 @@ public class StructureWorld {
   public boolean placeChunk(WorldGenLevel world, ChunkPos chunkPos) {
     Part part = parts.get(chunkPos);
     if (part != null) {
-      ChunkAccess chunk = world.getChunk(chunkPos.x(), chunkPos.z());
+      ChunkAccess chunk = world.getChunk(chunkPos.x, chunkPos.z);
       part.placeChunk(chunk);
       return true;
     }
@@ -108,7 +108,7 @@ public class StructureWorld {
     ListTag map = new ListTag();
     tag.put("parts", map);
     parts.forEach((pos, part) -> {
-      map.add(part.toNBT(pos.x(), pos.z()));
+      map.add(part.toNBT(pos.x, pos.z));
     });
     return tag;
   }
