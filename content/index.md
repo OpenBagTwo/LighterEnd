@@ -18,7 +18,7 @@ wonder and mystery. It adds:
 through a balanced gameplay experience that will make you want to explore, base and build in The
 End, and not just go straight home after raiding an End City.
 
-Lighter End is available for Minecraft 1.21.5-1.21.10 and can be downloaded through
+Lighter End is available for Minecraft 1.21.5-26.3 and can be downloaded through
 [Modrinth](https://modrinth.com/mod/lighterend/) or
 [GitHub](https://github.com/OpenBagTwo/LighterEnd/releases).
 

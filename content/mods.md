@@ -17,7 +17,7 @@ Lighter End was explicitly developed with
 world generation in mind and will inject its biomes
 into Nullscape's biome source.
 
-_last tested: [v1.2.14](https://modrinth.com/datapack/nullscape/version/JuMNLwUQ)_
+_last tested: [2.0.0 for 26.3](https://modrinth.com/datapack/nullscape/version/91zxeQD6)_
 
 ## Moog's End Structures
 
@@ -27,7 +27,7 @@ _last tested: [v1.2.14](https://modrinth.com/datapack/nullscape/version/JuMNLwUQ
 beautifully compliment Lighter End's general aesthetic.
 Use of MES is highly recommended.
 
-_last tested: [1.4.7 for 1.21.10](https://modrinth.com/mod/mes-moogs-end-structures/version/Am6lGk8F)_
+_last tested: [2.1.1 for 26.3]https://modrinth.com/mod/mes-moogs-end-structures/version/2.1.1)_
 
 ## Better End Sky
 
@@ -35,7 +35,7 @@ _last tested: [1.4.7 for 1.21.10](https://modrinth.com/mod/mes-moogs-end-structu
 
 [Better End Sky](https://modrinth.com/mod/better-end-sky) is fully compatible with Lighter End.
 
-_last tested: [0.3.0 for 1.21.10](https://modrinth.com/mod/better-end-sky/version/0.3.0+1.21.10)_
+_last tested: [0.3.1 for 26.3](https://modrinth.com/mod/better-end-sky/version/0.3.1+26.3)_
 
 ## Elytra Trims
 
@@ -46,7 +46,7 @@ While Lighter End only applies trims to Silk Elytra, the textures are adapted fr
 regular elytras to be trimmed as well. However, disabling the "Wing Trims" optional
 resource pack will disable wing trims with both mods.
 
-_last tested: [4.4.2 for 1.21.10](https://modrinth.com/mod/elytra-trims/version/4.4.2)_
+_last tested: [4.9.0 for 26.3](https://modrinth.com/mod/elytra-trims/version/zox5ML8k)_
 
 ## Stellarity
 
@@ -79,7 +79,7 @@ and arguably produces much more exciting worldgen results compared to vanilla. H
 choose to tweak TerraBlender's settings by editing the `terrablender.toml` file in your Minecraft's
 `config` folder to make vanilla biomes more common.
 
-_last tested: [21.10.0.0 for Fabric 1.21.10](https://modrinth.com/mod/terrablender/version/kzbTmNaX)_
+_last tested: [26.3.0.0.7 for Fabric 26.3](https://modrinth.com/mod/terrablender/version/wOaMFDM8)_
 
 ### Biomes O' Plenty
 
