@@ -162,16 +162,15 @@ public class ItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
         LighterEndItems.idLookup.get(LighterEndItems.SILK)
     );
 
-    builder(LighterEndTags.FLETCHINGS).add(
-        ItemIds.FEATHER,
+    builder(LighterEndTags.END_FLETCHINGS).add(
         LighterEndItems.idLookup.get(LighterEndBlocks.CHARNIA_CYAN.asItem()),
         LighterEndItems.idLookup.get(LighterEndBlocks.CHARNIA_GREEN.asItem()),
         LighterEndItems.idLookup.get(LighterEndBlocks.CHARNIA_LIGHT_BLUE.asItem()),
         LighterEndItems.idLookup.get(LighterEndBlocks.CHARNIA_ORANGE.asItem()),
         LighterEndItems.idLookup.get(LighterEndBlocks.CHARNIA_PURPLE.asItem()),
         LighterEndItems.idLookup.get(LighterEndBlocks.CHARNIA_RED.asItem())
-    );
-    builder(LighterEndTags.FLETCHINGS).addTag(LighterEndTags.FUR_ITEMS);
+    ).addTag(LighterEndTags.FUR_ITEMS);
+    builder(LighterEndTags.FLETCHINGS).addTag(LighterEndTags.END_FLETCHINGS).add(ItemIds.FEATHER);
 
     builder(LighterEndTags.FUR_ITEMS).add(
         LighterEndItems.idLookup.get(LighterEndBlocks.GLOWSHROOM_FUR.asItem()),

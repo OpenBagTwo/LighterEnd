@@ -62,6 +62,11 @@ public class LighterEndTags {
       LighterEnd.of("repairs_silk_armor")
   );
 
+  public static final TagKey<Item> END_FLETCHINGS = TagKey.create(
+      Registries.ITEM,
+      LighterEnd.of("end_fletchings")
+  );
+
   public static final TagKey<Item> FLETCHINGS = TagKey.create(
       Registries.ITEM,
       LighterEnd.of("fletchings")

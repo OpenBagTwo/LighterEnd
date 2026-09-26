@@ -717,6 +717,7 @@
   "tag.entity.lighterend.immune_to_murkweed": "Mobs that aren't blinded by murkweed",
   "tag.entity.lighterend.immune_to_needlegrass": "Mobs that don't take damage from needlegrass",
   "tag.entity.lighterend.lives_in_moth_nests": "Mobs that live in moth nests",
+  "tag.item.lighterend.end_fletchings": "Items that can be found in The End to craft the backs of arrows",
   "tag.item.lighterend.fletchings": "Items that can be used to craft the backs of arrows",
   "tag.item.lighterend.furs": "Fluffy outer plant leaves that Endermen find simply hilarious",
   "tag.item.lighterend.glossy_mooshroom_food": "Can be fed to Glossy Mooshrooms",

@@ -2,6 +2,17 @@
   "criteria": {
     "craft_spectral_arrows": {
       "conditions": {
+        "ingredients": [
+          {
+            "items": "minecraft:stick"
+          },
+          {
+            "items": "lighterend:glow_barb"
+          },
+          {
+            "items": "#lighterend:end_fletchings"
+          }
+        ],
         "recipes": "lighterend:spectral_arrow"
       },
       "trigger": "minecraft:recipe_crafted"
