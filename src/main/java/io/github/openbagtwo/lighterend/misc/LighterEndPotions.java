@@ -42,7 +42,7 @@ public class LighterEndPotions {
 
     FabricPotionBrewingBuilder.BUILD.register(builder -> {
       builder.registerPotionRecipe(Potions.AWKWARD, Ingredient.of(
-              LighterEndBlocks.AGAVE_FUR, LighterEndBlocks.GLOWSHROOM_FUR
+              LighterEndItems.AGAVE_FUR, LighterEndItems.GLOWSHROOM_FUR
           ),
           END_VEIL
       );

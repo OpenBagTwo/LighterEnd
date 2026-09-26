@@ -30,7 +30,7 @@
       "translate": "advancements.lighterend.craft_spectral_arrow.title"
     }
   },
-  "parent": "lighterend:end_lake",
+  "parent": "lighterend/end_lake",
   "requirements": [
     [
       "craft_spectral_arrows"

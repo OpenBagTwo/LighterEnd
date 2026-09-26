@@ -33,26 +33,22 @@ import io.github.openbagtwo.lighterend.blocks.UmbrellaFern.TallUmbrellaFern;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaMembrane;
 import io.github.openbagtwo.lighterend.blocks.UmbrellaTreeCluster;
 import io.github.openbagtwo.lighterend.blocks.VentBubbleColumn;
-import io.github.openbagtwo.lighterend.items.FurItem;
 import io.github.openbagtwo.lighterend.misc.Wood.WoodSet;
-import io.github.openbagtwo.lighterend.registries.LighterEndData.SilkLevelComponent;
 import io.github.openbagtwo.lighterend.world.features.trees.DragonTree;
 import io.github.openbagtwo.lighterend.world.features.trees.Glowshroom;
 import io.github.openbagtwo.lighterend.world.features.trees.TenaneaTree;
 import io.github.openbagtwo.lighterend.world.features.trees.UmbrellaTree;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.references.BlockItemId;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ButtonBlock;
@@ -67,7 +63,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.TintedParticleLeavesBlock;
 import net.minecraft.world.level.block.WallBlock;
-import net.minecraft.world.level.block.WeatheringCopperCollection;
+import net.minecraft.world.level.block.WeatheringCopperBlocks;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -83,16 +79,13 @@ public class LighterEndBlocks {
           .strength(5F, 6F).requiresCorrectToolForDrops().sound(SoundType.STONE)));
   public static final Material VIOLECITE = new Material("violecite", MapColor.TERRACOTTA_BLACK);
   public static final Block MISSING_TILE = register("missing_tile", settings -> new Block(
-      settings.instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops()
-          .strength(3.0F, 9.0F)
+      settings.instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 9.0F)
           .mapColor(MapColor.TERRACOTTA_PURPLE)));
 
   public static final Material AZURE_JADESTONE = new Material("azure_jadestone",
       MapColor.COLOR_LIGHT_BLUE);
-  public static final Material SANDY_JADESTONE = new Material("sandy_jadestone",
-      MapColor.COLOR_YELLOW);
-  public static final Material VIRID_JADESTONE = new Material("virid_jadestone",
-      MapColor.COLOR_GREEN);
+  public static final Material SANDY_JADESTONE = new Material("sandy_jadestone", MapColor.COLOR_YELLOW);
+  public static final Material VIRID_JADESTONE = new Material("virid_jadestone", MapColor.COLOR_GREEN);
 
   public static Block DRAGON_BONE_BLOCK = register("dragon_bone_block",
       settings -> new RotatedPillarBlock(DragonBone.applySettings(settings)));
@@ -137,19 +130,7 @@ public class LighterEndBlocks {
           applyLeafSettings(settings.mapColor(MapColor.COLOR_PINK))
       )
   );
-  public static Block SILK_MOTH_NEST = registerSpecialBlockItem(
-      "silk_moth_nest",
-      SilkMothNest::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-              .component(LighterEndData.MOTHS, LighterEndData.MothsComponent.DEFAULT)
-              .component(LighterEndData.SILK_LEVEL, new SilkLevelComponent(0))
-      )
-  );
+  public static Block SILK_MOTH_NEST = register("silk_moth_nest", SilkMothNest::new, false);
 
   public static Block UMBRELLA_TREE_CLUSTER = register("umbrella_tree_cluster",
       UmbrellaTreeCluster::new);
@@ -162,8 +143,7 @@ public class LighterEndBlocks {
       settings -> new FlowerPotBlock(UMBRELLA_TREE_SAPLING, applyFlowerPotSettings(settings)),
       false
   );
-  public static WoodSet UMBRELLA = new WoodSet("umbrella", MapColor.COLOR_BLUE,
-      MapColor.COLOR_GREEN);
+  public static WoodSet UMBRELLA = new WoodSet("umbrella", MapColor.COLOR_BLUE, MapColor.COLOR_GREEN);
   public static Block UMBRELLA_MEMBRANE = register("umbrella_membrane", UmbrellaMembrane::new);
 
   public static final Block CHARNIA_CYAN = register("charnia_cyan", Charnia::new);
@@ -181,8 +161,7 @@ public class LighterEndBlocks {
   public static final Block END_LOTUS_LEAF = register("end_lotus_leaf", EndLotus.Leaf::new, false);
   public static final Block END_LOTUS_SEED = register("end_lotus_seed", EndLotus.Seed::new);
 
-  public static final WoodSet LOTUS = new WoodSet("end_lotus", MapColor.COLOR_LIGHT_BLUE,
-      MapColor.COLOR_CYAN);
+  public static final WoodSet LOTUS = new WoodSet("end_lotus", MapColor.COLOR_LIGHT_BLUE, MapColor.COLOR_CYAN);
 
   public static final Block GLOWSHROOM_SAPLING = register("mossy_glowshroom_sapling",
       settings -> new Sapling(Glowshroom::new, settings.lightLevel((bs) -> 7)));
@@ -206,29 +185,16 @@ public class LighterEndBlocks {
               .sound(SoundType.WART_BLOCK)
       )
   );
-  public static final Block GLOWSHROOM_FUR = registerSpecialBlockItem(
-      "mossy_glowshroom_fur", settings -> new Fur(settings, MapColor.COLOR_LIGHT_BLUE, 4, true),
-      (block, id) -> new FurItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-      )
+  public static final Block GLOWSHROOM_FUR = register(
+      "mossy_glowshroom_fur", settings -> new Fur(settings, MapColor.COLOR_LIGHT_BLUE, 4, true), false
   );
 
   public static final Block AGAVE = register("blue_vine", Agave::new, false);
   public static final Block AGAVE_BULB = register("blue_vine_lantern", Agave.Bulb::new);
-  public static final Block AGAVE_FUR = registerSpecialBlockItem(
+  public static final Block AGAVE_FUR = register(
       "blue_vine_fur",
       settings -> new Fur(settings, MapColor.WARPED_WART_BLOCK, 0, false),
-      (block, id) -> new FurItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useBlockDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-      )
+      false
   );
   public static final Block AGAVE_SEED = register(
       "blue_vine_seed", settings -> new Sapling(Agave.AgaveFeature::new, settings)
@@ -259,14 +225,10 @@ public class LighterEndBlocks {
 
   public static final Block GOLD_CHANDELIER = register("gold_chandelier", Chandelier::new);
   public static final Block IRON_CHANDELIER = register("iron_chandelier", Chandelier::new);
-  public static final WeatheringCopperCollection<Block> COPPER_CHANDELIERS = WeatheringCopperCollection.registerBlocks(
-      WeatheringCopperCollection.prefixWithState(
-          WeatheringCopperCollection.create("copper_chandelier")
-      ).map(
-          (name) -> (BlockItemId.create(LighterEnd.of(name), LighterEnd.of(name)))
-      ),
-      (id, factory, properties) -> Blocks.register(id.block(), factory, properties),
-      (s, p) -> new Chandelier(p),
+  public static final WeatheringCopperBlocks COPPER_CHANDELIERS = WeatheringCopperBlocks.create(
+      "copper_chandelier",
+      LighterEndBlocks::register,
+      Chandelier::new,
       Chandelier.Oxidizable::new,
       oxidationLevel -> Properties.of()
           .mapColor(MapColor.METAL)
@@ -277,16 +239,6 @@ public class LighterEndBlocks {
           .pushReaction(PushReaction.DESTROY)
           .strength(2.5F)
           .sound(SoundType.CHAIN)
-  );
-
-  public static final WeatheringCopperCollection<Item> COPPER_CHANDELIER_ITEMS = WeatheringCopperCollection.registerItems(
-      WeatheringCopperCollection.prefixWithState(
-          WeatheringCopperCollection.create("copper_chandelier")
-      ).map(
-          (name) -> (BlockItemId.create(LighterEnd.of(name), LighterEnd.of(name)))
-      ),
-      COPPER_CHANDELIERS,
-      Items::registerBlock
   );
 
   public static final Block EMERALD_ICE = register(
@@ -396,17 +348,10 @@ public class LighterEndBlocks {
       TubeWorm::new
   );
 
-  public static final Block SHADOW_BERRY_SEEDS = registerSpecialBlockItem(
+  public static final Block SHADOW_BERRY = register(
       "shadow_berry",
-      "shadow_berry_seeds",
       ShadowBerry::new,
-      (block, id) -> new BlockItem(
-          block,
-          new Item.Properties()
-              .setId(id.item())
-              .useItemDescriptionPrefix()
-              .requiredFeatures(block.requiredFeatures())
-      )
+      false
   );
   public static final Block SHADOW_GRASS = register(
       "shadow_plant",
@@ -427,8 +372,7 @@ public class LighterEndBlocks {
       settings -> new FlowerPotBlock(DRAGON_SAPLING, applyFlowerPotSettings(settings)),
       false
   );
-  public static WoodSet DRAGON = new WoodSet("dragon_tree", MapColor.COLOR_BLACK,
-      MapColor.COLOR_PURPLE);
+  public static WoodSet DRAGON = new WoodSet("dragon_tree", MapColor.COLOR_BLACK, MapColor.COLOR_PURPLE);
   public static Block DRAGON_LEAVES = register(
       "dragon_tree_leaves",
       settings -> new TintedParticleLeavesBlock(
@@ -445,50 +389,26 @@ public class LighterEndBlocks {
     return register(name, factory, Properties.of(), hasItem);
   }
 
+  private static Block register(String name, Function<Properties, Block> factory, Properties settings) {
+    return register(name, factory, settings, true);
+  }
+
   private static Block register(
       String name,
       Function<Properties, Block> factory,
       Properties settings,
       boolean hasItem
   ) {
+    Identifier id = LighterEnd.of(name);
+    Block block = factory.apply(settings.setId(ResourceKey.create(Registries.BLOCK, id)));
+
     if (hasItem) {
-      BlockItemId id = BlockItemId.create(LighterEnd.of(name), LighterEnd.of(name));
-      Block block = factory.apply(settings.setId(id.block()));
-      LighterEndItems.register(
-          id.item(),
-          new BlockItem(
-              block,
-              new Item.Properties()
-                  .setId(id.item())
-                  .useBlockDescriptionPrefix()
-                  .requiredFeatures(block.requiredFeatures())
-          )
-      );
-      return Registry.register(BuiltInRegistries.BLOCK, id.block(), block);
+      ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, id);
+      Registry.register(BuiltInRegistries.ITEM, itemKey,
+          new BlockItem(block, new Item.Properties().setId(itemKey)));
     }
-    ResourceKey<Block> id = ResourceKey.create(Registries.BLOCK, LighterEnd.of(name));
-    Block block = factory.apply(settings.setId(id));
-    return Registry.register(BuiltInRegistries.BLOCK, id, block);
-  }
-
-  private static Block registerSpecialBlockItem(
-      String name,
-      Function<Properties, Block> factory,
-      BiFunction<Block, BlockItemId, BlockItem> itemFactory
-  ) {
-    return registerSpecialBlockItem(name, name, factory, itemFactory);
-  }
-
-  private static Block registerSpecialBlockItem(
-      String blockName,
-      String itemName,
-      Function<Properties, Block> factory,
-      BiFunction<Block, BlockItemId, BlockItem> itemFactory
-  ) {
-    BlockItemId id = BlockItemId.create(LighterEnd.of(blockName), LighterEnd.of(itemName));
-    Block block = factory.apply(Properties.of().setId(id.block()));
-    LighterEndItems.register(id.item(), itemFactory.apply(block, id));
-    return Registry.register(BuiltInRegistries.BLOCK, id.block(), block);
+    ResourceKey<Block> blockKey = ResourceKey.create(Registries.BLOCK, id);
+    return Registry.register(BuiltInRegistries.BLOCK, blockKey, block);
   }
 
   public static void initialize() {
@@ -555,8 +475,7 @@ public class LighterEndBlocks {
       tileWall = register(baseName + "_tile_wall",
           settings -> new WallBlock(applySettings(settings)));
 
-      pillar = register(baseName + "_pillar",
-          settings -> new RotatedPillarBlock(applySettings(settings)));
+      pillar = register(baseName + "_pillar", settings -> new RotatedPillarBlock(applySettings(settings)));
       button = register(baseName + "_button",
           settings -> new ButtonBlock(BlockSetType.POLISHED_BLACKSTONE, 30,
               settings.noCollision().strength(0.5F).pushReaction(PushReaction.DESTROY)));
@@ -578,8 +497,7 @@ public class LighterEndBlocks {
     }
 
     public Properties applySettings(Properties settings) {
-      return settings.instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops()
-          .strength(3.0F, 9.0F)
+      return settings.instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 9.0F)
           .mapColor(this.mapColor);
     }
   }

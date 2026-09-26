@@ -102,15 +102,15 @@ public class ModelProvider extends FabricModelProvider {
 
     blockModelGenerator.createTrivialBlock(
         LighterEndBlocks.EMERALD_ICE,
-        TexturedModel.CUBE.updateTexture(TextureMapping::forceAllTranslucent)
+        TexturedModel.CUBE.updateTexture(mapping -> mapping.forceAllTranslucent())
     );
     blockModelGenerator.createTrivialBlock(
         LighterEndBlocks.FERROUS_ICE,
-        TexturedModel.CUBE.updateTexture(TextureMapping::forceAllTranslucent)
+        TexturedModel.CUBE.updateTexture(mapping -> mapping.forceAllTranslucent())
     );
     blockModelGenerator.createTrivialBlock(
         LighterEndBlocks.AUROUS_ICE,
-        TexturedModel.CUBE.updateTexture(TextureMapping::forceAllTranslucent)
+        TexturedModel.CUBE.updateTexture(mapping -> mapping.forceAllTranslucent())
     );
 
     generateMaterialModels(blockModelGenerator, LighterEndBlocks.BORNITE);
@@ -153,9 +153,11 @@ public class ModelProvider extends FabricModelProvider {
     blockModelGenerator.family(wood.planks).stairs(wood.stairs)
         .slab(wood.slab).fence(wood.fence).fenceGate(wood.gate).button(wood.button)
         .pressurePlate(wood.pressurePlate);
-//    blockModelGenerator.family(wood.strippedLog).sign(wood.sign).hangingSign(wood.hangingSign);
     blockModelGenerator.createDoor(wood.door);
     blockModelGenerator.createTrapdoor(wood.trapdoor);
+    blockModelGenerator.createHangingSign(wood.strippedLog, wood.sign, wood.wallSign);
+    blockModelGenerator.createHangingSign(wood.strippedLog, wood.hangingSign,
+        wood.wallHangingSign);
     blockModelGenerator.createShelf(wood.shelf, wood.strippedLog);
   }
 
@@ -167,7 +169,7 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndItems.POPPED_LUMECORN,
         LighterEndItems.SILK,
         LighterEndItems.SILK_MATRIX,
-        LighterEndBlocks.SILK_MOTH_NEST.asItem(),
+        LighterEndItems.SILK_MOTH_NEST,
         LighterEndItems.UMBRELLA_JUICE,
         LighterEndItems.END_FISH_BUCKET,
         LighterEndItems.CUBOZOA_BUCKET,
@@ -175,8 +177,8 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndItems.GLOW_BARB,
         LighterEndItems.END_LILY_LEAF,
         LighterEndItems.DRIED_END_LILY_LEAF,
-        LighterEndBlocks.GLOWSHROOM_FUR.asItem(),
-        LighterEndBlocks.AGAVE_FUR.asItem(),
+        LighterEndItems.GLOWSHROOM_FUR,
+        LighterEndItems.AGAVE_FUR,
         LighterEndItems.END_CREAM,
         LighterEndItems.END_POWDER,
         LighterEndItems.CRAB_CLAW,
@@ -184,7 +186,7 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndItems.CRAB_CAKE,
         LighterEndItems.TOTEM_OF_TELEPORTATION,
         LighterEndItems.CRYSTALLINE_SULPHUR,
-        LighterEndBlocks.SHADOW_BERRY_SEEDS.asItem(),
+        LighterEndItems.SHADOW_BERRY_SEEDS,
         LighterEndItems.SHADOW_BERRY,
         LighterEndItems.SHADOW_BERRY_COOKED,
         LighterEndItems.SHADOW_BERRY_JAM,
@@ -196,13 +198,9 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndBlocks.UMBRELLA_FERN.asItem(),
         LighterEndBlocks.LUMECORN_SEED.asItem(),
         LighterEndBlocks.TENANEA.ladder.asItem(),
-        LighterEndBlocks.TENANEA.sign.asItem(),
-        LighterEndBlocks.TENANEA.hangingSign.asItem(),
         LighterEndBlocks.TENANEA_FLOWER.asItem(),
         LighterEndBlocks.TENANEA_SAPLING.asItem(),
         LighterEndBlocks.UMBRELLA.ladder.asItem(),
-        LighterEndBlocks.UMBRELLA.sign.asItem(),
-        LighterEndBlocks.UMBRELLA.hangingSign.asItem(),
         LighterEndBlocks.UMBRELLA_TREE_SAPLING.asItem(),
         LighterEndBlocks.CHARNIA_CYAN.asItem(),
         LighterEndBlocks.CHARNIA_GREEN.asItem(),
@@ -211,14 +209,10 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndBlocks.CHARNIA_PURPLE.asItem(),
         LighterEndBlocks.CHARNIA_RED.asItem(),
         LighterEndBlocks.LOTUS.ladder.asItem(),
-        LighterEndBlocks.LOTUS.sign.asItem(),
-        LighterEndBlocks.LOTUS.hangingSign.asItem(),
         LighterEndBlocks.END_LILY_SEED.asItem(),
         LighterEndBlocks.END_LOTUS_STEM.asItem(),
         LighterEndBlocks.END_LOTUS_SEED.asItem(),
         LighterEndBlocks.GLOWSHROOM.ladder.asItem(),
-        LighterEndBlocks.GLOWSHROOM.sign.asItem(),
-        LighterEndBlocks.GLOWSHROOM.hangingSign.asItem(),
         LighterEndBlocks.GLOWSHROOM_HYMENOPHORE.asItem(),
         LighterEndBlocks.GLOWSHROOM_SAPLING.asItem(),
         LighterEndBlocks.AGAVE_SEED.asItem(),
@@ -232,8 +226,6 @@ public class ModelProvider extends FabricModelProvider {
         LighterEndBlocks.NEEDLEGRASS.asItem(),
         LighterEndBlocks.MURKWEED.asItem(),
         LighterEndBlocks.DRAGON.ladder.asItem(),
-        LighterEndBlocks.DRAGON.sign.asItem(),
-        LighterEndBlocks.DRAGON.hangingSign.asItem(),
         LighterEndBlocks.DRAGON_SAPLING.asItem(),
         LighterEndMobs.SILK_MOTH.spawnEgg,
         LighterEndMobs.DRAGONFLY.spawnEgg,

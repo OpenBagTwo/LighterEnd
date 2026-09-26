@@ -18,17 +18,17 @@ import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements.Strategy;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
-import net.minecraft.advancements.predicates.BlockPredicate;
-import net.minecraft.advancements.predicates.ItemPredicate;
-import net.minecraft.advancements.predicates.LocationPredicate;
-import net.minecraft.advancements.predicates.MobEffectsPredicate;
-import net.minecraft.advancements.predicates.entity.EntityPredicate;
-import net.minecraft.advancements.triggers.EffectsChangedTrigger;
-import net.minecraft.advancements.triggers.InventoryChangeTrigger;
-import net.minecraft.advancements.triggers.ItemUsedOnLocationTrigger;
-import net.minecraft.advancements.triggers.PlayerInteractTrigger;
-import net.minecraft.advancements.triggers.PlayerTrigger;
-import net.minecraft.advancements.triggers.UsedTotemTrigger;
+import net.minecraft.advancements.criterion.BlockPredicate;
+import net.minecraft.advancements.criterion.EffectsChangedTrigger;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.criterion.ItemUsedOnLocationTrigger;
+import net.minecraft.advancements.criterion.LocationPredicate;
+import net.minecraft.advancements.criterion.MobEffectsPredicate;
+import net.minecraft.advancements.criterion.PlayerInteractTrigger;
+import net.minecraft.advancements.criterion.PlayerTrigger;
+import net.minecraft.advancements.criterion.UsedTotemTrigger;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -68,7 +68,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
 
     // end_lake was created by hand
     AdvancementHolder end_lake = new AdvancementHolder(
-        Identifier.parse(LighterEnd.MOD_ID + "/end_lake"),
+        Identifier.parse(LighterEnd.MOD_ID + "/craft_spectral_arrows"),
         null);
 
     AdvancementHolder sulphur_springs = Advancement.Builder.advancement().parent(end_lake).display(
@@ -189,10 +189,10 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         ).requirements(Strategy.OR)
         .addCriterion(
             "wear_agave_fur",
-            InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndBlocks.AGAVE_FUR)
+            InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndItems.AGAVE_FUR)
         ).addCriterion(
             "wear_glowshroom_fur",
-            InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndBlocks.GLOWSHROOM_FUR)
+            InventoryChangeTrigger.TriggerInstance.hasItems(LighterEndItems.GLOWSHROOM_FUR)
         ).save(consumer, LighterEnd.MOD_ID + "/wear_fur");
 
     AdvancementHolder drink_end_veil_potion = Advancement.Builder.advancement().parent(wear_fur)

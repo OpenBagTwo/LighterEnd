@@ -34,6 +34,7 @@ import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
 import net.minecraft.world.entity.ai.util.AirRandomPos;
 import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
@@ -46,7 +47,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-public class SilkMoth extends Animal {
+public class SilkMoth extends Animal implements FlyingAnimal {
 
   /**
    * the distance beyond which the moth will look for a new hive
@@ -194,10 +195,6 @@ public class SilkMoth extends Animal {
   }
 
   @Override
-  public boolean isFlapping() {
-    return this.isFlying();
-  }
-
   public boolean isFlying() {
     return !this.onGround();
   }
