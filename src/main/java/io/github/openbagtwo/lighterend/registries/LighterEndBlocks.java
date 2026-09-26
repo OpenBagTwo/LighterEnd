@@ -246,8 +246,7 @@ public class LighterEndBlocks {
               .setId(id.item())
               .useBlockDescriptionPrefix()
               .requiredFeatures(block.requiredFeatures())
-// TODO: enable when resolving https://github.com/OpenBagTwo/LighterEnd/issues/121
-//              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
+              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
       )
   );
   public static Block POTTED_UMBRELLA_SAPLING = register(
@@ -358,8 +357,7 @@ public class LighterEndBlocks {
               .setId(id.item())
               .useBlockDescriptionPrefix()
               .requiredFeatures(block.requiredFeatures())
-// TODO: enable when resolving https://github.com/OpenBagTwo/LighterEnd/issues/121
-//              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
+              .compostable(ContextIntProviders.COMPOSTABLE_LOW)
       )
   );
 
@@ -444,8 +442,7 @@ public class LighterEndBlocks {
               .setId(id.item())
               .useBlockDescriptionPrefix()
               .requiredFeatures(block.requiredFeatures())
-// TODO: enable when resolving https://github.com/OpenBagTwo/LighterEnd/issues/121
-//              .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
+              .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
       )
   );
   public static final Block PURPLE_POLYPORE = registerSpecialBlockItem(
@@ -457,8 +454,7 @@ public class LighterEndBlocks {
               .setId(id.item())
               .useBlockDescriptionPrefix()
               .requiredFeatures(block.requiredFeatures())
-// TODO: enable when resolving https://github.com/OpenBagTwo/LighterEnd/issues/121
-//              .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
+              .compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)
       )
   );
 
