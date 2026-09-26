@@ -75,7 +75,7 @@ public class Dragonfly extends AnimalEntity implements Flutterer {
         super.tick();
       }
     };
-    birdNavigation.setCanOpenDoors(false);
+    birdNavigation.setCanPathThroughDoors(false);
     birdNavigation.setCanSwim(false);
     return birdNavigation;
   }

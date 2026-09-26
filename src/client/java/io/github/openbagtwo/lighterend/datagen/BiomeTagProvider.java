@@ -24,7 +24,7 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
 
   @Override
   protected void configure(WrapperLookup lookup) {
-    builder(BiomeTags.IS_END).add(
+    getOrCreateTagBuilder(BiomeTags.IS_END).add(
         LighterEndBiomes.BLOSSOM_FOREST,
         LighterEndBiomes.UMBRELLA_JUNGLE,
         LighterEndBiomes.GLOWING_GRASSLAND,
@@ -35,7 +35,7 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
         LighterEndBiomes.SULPHUR_SPRINGS,
         LighterEndBiomes.SHADOW_FOREST
     );
-    builder(BiomeTags.END_CITY_HAS_STRUCTURE).add(
+    getOrCreateTagBuilder(BiomeTags.END_CITY_HAS_STRUCTURE).add(
         LighterEndBiomes.BLOSSOM_FOREST,
         LighterEndBiomes.UMBRELLA_JUNGLE,
         LighterEndBiomes.GLOWING_GRASSLAND,
@@ -44,24 +44,24 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
         LighterEndBiomes.SULPHUR_SPRINGS
     );
 
-    builder(LighterEndTags.VANILLA_END_BIOMES).add(
+    getOrCreateTagBuilder(LighterEndTags.VANILLA_END_BIOMES).add(
         BiomeKeys.END_BARRENS,
         BiomeKeys.SMALL_END_ISLANDS,
         BiomeKeys.END_MIDLANDS,
         BiomeKeys.END_HIGHLANDS
     );
 
-    builder(LighterEndTags.HAS_END_LAKES).addTag(
+    getOrCreateTagBuilder(LighterEndTags.HAS_END_LAKES).addTag(
         LighterEndTags.VANILLA_END_BIOMES
     );
-    builder(LighterEndTags.HAS_END_LAKES).add(
+    getOrCreateTagBuilder(LighterEndTags.HAS_END_LAKES).add(
         LighterEndBiomes.UMBRELLA_JUNGLE,
         LighterEndBiomes.GLOWING_GRASSLAND,
         LighterEndBiomes.FOGGY_MUSHROOMLANDS,
         LighterEndBiomes.SHADOW_FOREST
     );
 
-    builder(LighterEndTags.HAS_OBELISKS).add(
+    getOrCreateTagBuilder(LighterEndTags.HAS_OBELISKS).add(
         BiomeKeys.END_HIGHLANDS,
         LighterEndBiomes.GLOWING_GRASSLAND,
         LighterEndBiomes.UMBRELLA_JUNGLE,

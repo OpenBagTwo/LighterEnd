@@ -228,17 +228,6 @@ public class ChorusCrab extends AnimalEntity {
     this.dataTracker.set(CLIMBING, b);
   }
 
-  @Override
-  public boolean canImmediatelyDespawn(double d) {
-    return !this.hasCustomName() && !this.hasPassengers();
-  }
-
-  @Override
-  public void lovePlayer(@Nullable PlayerEntity player) {
-    this.setPersistent();
-    super.lovePlayer(player);
-  }
-
   class MateGoal extends AnimalMateGoal {
 
     public MateGoal(AnimalEntity crab) {

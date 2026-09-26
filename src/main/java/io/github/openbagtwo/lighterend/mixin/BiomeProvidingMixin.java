@@ -34,8 +34,7 @@ public abstract class BiomeProvidingMixin {
           BiomeSource patchedBiomes = LighterEndWorldGen.addBiomesToNoiseSource(
               ((BiomeAccessor) noiseBiomeSource).accessBiomeEntries(),
               server.getRegistryManager().getOrThrow(
-                  RegistryKeys.BIOME)
-          );
+                  RegistryKeys.BIOME));
           args.set(5, new DimensionOptions(dimensionOptions.dimensionTypeEntry(),
               new NoiseChunkGenerator(patchedBiomes, noiseChunkGen.getSettings())));
         }

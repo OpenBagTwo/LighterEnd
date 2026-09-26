@@ -22,6 +22,7 @@ import net.minecraft.advancement.criterion.EffectsChangedCriterion;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.advancement.criterion.ItemCriterion;
 import net.minecraft.advancement.criterion.PlayerInteractedWithEntityCriterion;
+import net.minecraft.advancement.criterion.RecipeCraftedCriterion;
 import net.minecraft.advancement.criterion.TickCriterion;
 import net.minecraft.advancement.criterion.UsedTotemCriterion;
 import net.minecraft.item.Items;

@@ -22,13 +22,12 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
@@ -109,15 +108,15 @@ public class EndSlime extends SlimeEntity {
   }
 
   @Override
-  public void writeCustomData(WriteView view) {
-    super.writeCustomData(view);
-    view.putInt("Variant", this.getSlimeType());
+  public void writeCustomDataToNbt(NbtCompound nbt) {
+    super.writeCustomDataToNbt(nbt);
+    nbt.putInt("Variant", this.getSlimeType());
   }
 
   @Override
-  protected void readCustomData(ReadView view) {
-    super.readCustomData(view);
-    this.setSlimeType(view.getInt("Variant", 0));
+  public void readCustomDataFromNbt(NbtCompound nbt) {
+    super.readCustomDataFromNbt(nbt);
+    this.setSlimeType(nbt.getInt("Variant", 0));
   }
 
   @Override

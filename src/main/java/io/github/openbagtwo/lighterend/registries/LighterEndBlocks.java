@@ -172,7 +172,8 @@ public class LighterEndBlocks {
   public static final WoodSet GLOWSHROOM = new WoodSet(
       "mossy_glowshroom",
       MapColor.GRAY,
-      MapColor.OAK_TAN);
+      MapColor.OAK_TAN
+  );
   public static final Block GLOWSHROOM_CAP = register("mossy_glowshroom_cap", GlowshroomCap::new);
   public static final Block GLOWSHROOM_HYMENOPHORE = register(
       "mossy_glowshroom_hymenophore",
@@ -224,7 +225,6 @@ public class LighterEndBlocks {
 
   public static final Block GOLD_CHANDELIER = register("gold_chandelier", Chandelier::new);
   public static final Block IRON_CHANDELIER = register("iron_chandelier", Chandelier::new);
-
 
   public static final Block EMERALD_ICE = register(
       "emerald_ice",
