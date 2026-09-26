@@ -135,12 +135,7 @@ public class VentBubbleColumn extends Block implements FluidDrainable, FluidFill
 
   @Override
   protected void onEntityCollision(
-      BlockState state,
-      World world,
-      BlockPos pos,
-      Entity entity,
-      EntityCollisionHandler handler,
-      boolean bl
+      BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler
   ) {
     if (entity.getType().isIn(LighterEndTags.IGNORES_GEYSER_BUBBLES)) {
       return;

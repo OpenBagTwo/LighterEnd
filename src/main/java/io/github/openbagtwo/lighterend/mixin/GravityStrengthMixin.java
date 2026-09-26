@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class GravityStrengthMixin {
 
   @Shadow
-  public abstract World getEntityWorld();
+  public abstract World getWorld();
 
   @Inject(method = "getFinalGravity", at = @At("RETURN"), cancellable = true)
   public void applyEndGravity(CallbackInfoReturnable<Double> cir) {
@@ -31,7 +31,7 @@ public abstract class GravityStrengthMixin {
     if (
         endGravity >= 0.0
             && DimensionTypes.THE_END.equals(
-            this.getEntityWorld().getDimensionEntry().getKey().orElse(null)
+            this.getWorld().getDimensionEntry().getKey().orElse(null)
         )
     ) {
       cir.setReturnValue(cir.getReturnValue() * endGravity);

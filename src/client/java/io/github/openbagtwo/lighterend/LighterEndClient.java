@@ -46,12 +46,6 @@ public class LighterEndClient implements ClientModInitializer {
               Text.translatable("resourcepacks.lighterend.wing_trims.title"),
               ResourcePackActivationType.DEFAULT_ENABLED
           );
-          ResourceManagerHelper.registerBuiltinResourcePack(
-              LighterEnd.of("visibly_waxed"),
-              container,
-              Text.translatable("resourcepacks.lighterend.visibly_waxed.title"),
-              ResourcePackActivationType.NORMAL
-          );
         }
     );
 

@@ -38,7 +38,7 @@ public abstract class EndBiomeMusicMixin {
   public void checkForEndMusic(CallbackInfoReturnable<MusicInstance> cir) {
     MusicSound musicSound = Nullables.map(this.currentScreen, Screen::getMusic);
     if (LighterEnd.CONFIG.playEndBiomeMusic() && musicSound == null && this.player != null) {
-      World world = this.player.getEntityWorld();
+      World world = this.player.getWorld();
       if (
           world.getRegistryKey() == World.END
               && !this.inGameHud.getBossBarHud().shouldPlayDragonMusic()

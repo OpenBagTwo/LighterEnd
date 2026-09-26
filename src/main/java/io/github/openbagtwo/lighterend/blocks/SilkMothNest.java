@@ -27,6 +27,7 @@ import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.TntEntity;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.mob.CreeperEntity;
@@ -113,7 +114,7 @@ public class SilkMothNest extends BlockWithEntity {
   }
 
   @Override
-  protected int getComparatorOutput(BlockState state, World world, BlockPos pos, Direction dir) {
+  protected int getComparatorOutput(BlockState state, World world, BlockPos pos) {
     return state.get(FULLNESS);
   }
 
@@ -153,7 +154,7 @@ public class SilkMothNest extends BlockWithEntity {
         world.playSound(player, player.getX(), player.getY(), player.getZ(),
             LighterEndSounds.MOTH_NEST_SHEAR, SoundCategory.BLOCKS, 1.0F, 1.0F);
         dropSilk(world, pos);
-        stack.damage(1, player, hand.getEquipmentSlot());
+        stack.damage(1, player, LivingEntity.getSlotForHand(hand));
         bl = true;
         world.emitGameEvent(player, GameEvent.SHEAR, pos);
       }

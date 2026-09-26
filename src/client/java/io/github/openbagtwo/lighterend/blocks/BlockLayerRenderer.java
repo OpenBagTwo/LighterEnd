@@ -2,7 +2,6 @@ package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
-import net.minecraft.block.Block;
 import net.minecraft.client.render.BlockRenderLayer;
 
 public class BlockLayerRenderer {
@@ -66,9 +65,6 @@ public class BlockLayerRenderer {
         LighterEndBlocks.DRAGON_SAPLING,
         LighterEndBlocks.POTTED_DRAGON_SAPLING
     );
-    for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.getAll()) {
-      BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT, chandelier);
-    }
 
     BlockRenderLayerMap.putBlocks(
         BlockRenderLayer.CUTOUT_MIPPED,

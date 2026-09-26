@@ -7,7 +7,6 @@ import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
 
 public class GlowingSphere extends AnimatedParticle {
 
@@ -24,14 +23,17 @@ public class GlowingSphere extends AnimatedParticle {
       double x,
       double y,
       double z,
-      SpriteProvider sprites
+      SpriteProvider sprites,
+      double r,
+      double g,
+      double b
   ) {
     super(world, x, y, z, sprites, 0);
     setSprite(sprites.getSprite(random));
     this.maxAge = MathHelper.nextInt(random, 150, 300);
     this.scale = MathHelper.nextFloat(random, 0.05F, 0.15F);
     this.setTargetColor(15916745);
-    this.updateSprite(spriteProvider);
+    this.setSpriteForAge(sprites);
 
     preVX = random.nextGaussian() * 0.02;
     preVY = random.nextGaussian() * 0.02;
@@ -80,10 +82,9 @@ public class GlowingSphere extends AnimatedParticle {
         double z,
         double vX,
         double vY,
-        double vZ,
-        Random random
+        double vZ
     ) {
-      return new GlowingSphere(world, x, y, z, sprites);
+      return new GlowingSphere(world, x, y, z, sprites, 1, 1, 1);
     }
   }
 }

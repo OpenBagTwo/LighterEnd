@@ -35,13 +35,13 @@ public abstract class EndMossSplootMixin extends LivingEntity {
 
   @Inject(method = "dropSeeds", at = @At("HEAD"), cancellable = true)
   public void dropEndSplootLoot(CallbackInfo ci) {
-    if (this.getEntityWorld() instanceof ServerWorld serverWorld
+    if (this.getWorld() instanceof ServerWorld serverWorld
         && this.dataTracker.get(getFinishDigTime()) == this.age) {
       BlockPos blockPos = this.getDigPos();
       if (serverWorld.getBlockState(blockPos.down()).isOf(LighterEndBlocks.END_MOSS)) {
         this.forEachGiftedItem(serverWorld, LighterEndLootTables.END_MOSS_SPLOOT_LOOT,
             (serverWorldx, itemStack) -> {
-              ItemEntity itemEntity = new ItemEntity(this.getEntityWorld(), blockPos.getX(),
+              ItemEntity itemEntity = new ItemEntity(this.getWorld(), blockPos.getX(),
                   blockPos.getY(), blockPos.getZ(), itemStack);
               itemEntity.setToDefaultPickupDelay();
               serverWorldx.spawnEntity(itemEntity);

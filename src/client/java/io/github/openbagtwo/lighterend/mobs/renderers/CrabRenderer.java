@@ -5,7 +5,7 @@ import io.github.openbagtwo.lighterend.mobs.ChorusCrab;
 import io.github.openbagtwo.lighterend.mobs.EntityModels;
 import io.github.openbagtwo.lighterend.mobs.models.CrabModel;
 import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.AgeableMobEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
@@ -57,7 +57,7 @@ public class CrabRenderer extends
 
     public void render(
         MatrixStack matrixStack,
-        OrderedRenderCommandQueue orderedRenderCommandQueue,
+        VertexConsumerProvider vertexConsumerProvider,
         int i,
         ItemHolderEntityRenderState state,
         float f,
@@ -80,13 +80,7 @@ public class CrabRenderer extends
         matrixStack.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(160F));
         matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(135F));
 
-        itemRenderState.render(
-            matrixStack,
-            orderedRenderCommandQueue,
-            i,
-            OverlayTexture.DEFAULT_UV,
-            state.outlineColor
-        );
+        itemRenderState.render(matrixStack, vertexConsumerProvider, i, OverlayTexture.DEFAULT_UV);
         matrixStack.pop();
       }
     }

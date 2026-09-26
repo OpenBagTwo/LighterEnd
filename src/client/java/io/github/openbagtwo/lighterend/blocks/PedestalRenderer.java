@@ -1,74 +1,54 @@
 package io.github.openbagtwo.lighterend.blocks;
 
-import io.github.openbagtwo.lighterend.blocks.PedestalRenderer.RenderState;
 import io.github.openbagtwo.lighterend.blocks.entities.PedestalDisplay;
-import net.minecraft.client.item.ItemModelManager;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.render.block.entity.state.BlockEntityRenderState;
-import net.minecraft.client.render.command.ModelCommandRenderer;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.item.ItemRenderState;
-import net.minecraft.client.render.state.CameraRenderState;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemDisplayContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
-public class PedestalRenderer implements BlockEntityRenderer<PedestalDisplay, RenderState> {
-
-  private final ItemModelManager itemModelManager;
+public class PedestalRenderer implements BlockEntityRenderer<PedestalDisplay> {
 
   public PedestalRenderer(BlockEntityRendererFactory.Context context) {
-    itemModelManager = context.itemModelManager();
-  }
-
-  @Override
-  public RenderState createRenderState() {
-    return new RenderState();
-  }
-
-  @Override
-  public void updateRenderState(
-      PedestalDisplay blockEntity,
-      RenderState state,
-      float tickProgress,
-      Vec3d cameraPos,
-      @Nullable ModelCommandRenderer.CrumblingOverlayCommand crumblingOverlay) {
-    BlockEntityRenderer.super.updateRenderState(
-        blockEntity,
-        state,
-        tickProgress,
-        cameraPos,
-        crumblingOverlay
-    );
-
-    state.lightPosition = blockEntity.getPos();
-    state.blockEntityWorld = blockEntity.getWorld();
-    state.rotation = blockEntity.getRenderingRotation();
-
-    itemModelManager.clearAndUpdate(state.itemRenderState,
-        blockEntity.getStack(0), ItemDisplayContext.FIXED, blockEntity.getWorld(), null, 0);
   }
 
   @Override
   public void render(
-      RenderState state, MatrixStack matrices,
-      OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
+      PedestalDisplay entity,
+      float tickDelta,
+      MatrixStack matrices,
+      VertexConsumerProvider vertexConsumers,
+      int light,
+      int overlay,
+      Vec3d cameraPos
+  ) {
+    ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
+    ItemStack stack = entity.getStack(0);
     matrices.push();
 
     matrices.translate(0.5f, 1.4f, 0.5f);
-    matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(state.rotation));
+    matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getRenderingRotation()));
 
-    state.itemRenderState.render(matrices, queue, getLightLevel(state.blockEntityWorld, state.pos),
-        OverlayTexture.DEFAULT_UV, 0);
-
+    itemRenderer.renderItem(
+        stack,
+        ItemDisplayContext.GUI,
+        getLightLevel(entity.getWorld(), entity.getPos()),
+        OverlayTexture.DEFAULT_UV,
+        matrices,
+        vertexConsumers,
+        entity.getWorld(),
+        1
+    );
     matrices.pop();
   }
 
@@ -76,14 +56,5 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalDisplay, Re
     int bLight = world.getLightLevel(LightType.BLOCK, pos);
     int sLight = world.getLightLevel(LightType.SKY, pos);
     return LightmapTextureManager.pack(bLight, sLight);
-  }
-
-  public static class RenderState extends BlockEntityRenderState {
-
-    public BlockPos lightPosition;
-    public World blockEntityWorld;
-    public float rotation;
-
-    final ItemRenderState itemRenderState = new ItemRenderState();
   }
 }

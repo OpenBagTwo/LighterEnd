@@ -25,7 +25,6 @@ import net.minecraft.loot.condition.AllOfLootCondition;
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
 import net.minecraft.loot.condition.InvertedLootCondition;
 import net.minecraft.loot.condition.LootCondition;
-import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.CopyComponentsLootFunction;
@@ -148,9 +147,6 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
 
     addDrop(LighterEndBlocks.GOLD_CHANDELIER);
     addDrop(LighterEndBlocks.IRON_CHANDELIER);
-    for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.getAll()) {
-      addDrop(chandelier);
-    }
 
     addDrop(LighterEndBlocks.EMERALD_ICE);
     addDrop(LighterEndBlocks.FERROUS_ICE);
@@ -234,11 +230,11 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
                 .rolls(ConstantLootNumberProvider.create(1.0F))
                 .with(
                     ItemEntry.builder(LighterEndItems.SILK_MOTH_NEST)
-                        .apply(
-                            CopyComponentsLootFunction.blockEntity(
-                                    LootContextParameters.BLOCK_ENTITY)
-                                .include(LighterEndData.MOTHS)
-                        ).apply(CopyStateLootFunction.builder(LighterEndBlocks.SILK_MOTH_NEST)
+                        .apply(CopyComponentsLootFunction.builder(
+                                CopyComponentsLootFunction.Source.BLOCK_ENTITY)
+                            .include(LighterEndData.MOTHS
+                            ))
+                        .apply(CopyStateLootFunction.builder(LighterEndBlocks.SILK_MOTH_NEST)
                             .addProperty(SilkMothNest.FULLNESS))
                 )
         );

@@ -144,7 +144,7 @@ public class EndSlime extends SlimeEntity {
   @Override
   public void remove(Entity.RemovalReason reason) {
     int i = this.getSize();
-    if (!this.getEntityWorld().isClient() && i > 1 && this.isDead()) {
+    if (!this.getWorld().isClient() && i > 1 && this.isDead()) {
       float f = this.getDimensions(this.getPose()).width();
       float g = f / 2.0F;
       int j = i / 2;
@@ -167,7 +167,7 @@ public class EndSlime extends SlimeEntity {
       }
     }
     if ((reason == Entity.RemovalReason.KILLED || reason == Entity.RemovalReason.DISCARDED)
-        && this.getEntityWorld() instanceof ServerWorld serverWorld) {
+        && this.getWorld() instanceof ServerWorld serverWorld) {
       this.onRemoval(serverWorld, reason);
     }
     this.setRemoved(reason);
@@ -198,7 +198,7 @@ public class EndSlime extends SlimeEntity {
             0,
             (int) (dz * speed * 4)
         );
-        int down = PosInfo.downRay(EndSlime.this.getEntityWorld(), pos, 16);
+        int down = PosInfo.downRay(EndSlime.this.getWorld(), pos, 16);
         return down < 5;
       }
 

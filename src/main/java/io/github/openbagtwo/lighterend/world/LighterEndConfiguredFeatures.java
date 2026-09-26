@@ -15,7 +15,6 @@ import io.github.openbagtwo.lighterend.world.features.Geyser;
 import io.github.openbagtwo.lighterend.world.features.IceStar;
 import io.github.openbagtwo.lighterend.world.features.LotusLeaf;
 import io.github.openbagtwo.lighterend.world.features.PurplePolypores;
-import io.github.openbagtwo.lighterend.world.features.StarterChest;
 import io.github.openbagtwo.lighterend.world.features.SulphurCave;
 import io.github.openbagtwo.lighterend.world.features.SulphurLake;
 import io.github.openbagtwo.lighterend.world.features.SurfaceVent;
@@ -239,13 +238,6 @@ public class LighterEndConfiguredFeatures {
   );
   public static final RegistryKey<ConfiguredFeature<?, ?>> PURPLE_POLYPORES = of(
       "purple_polypores");
-
-  public static final Feature<DefaultFeatureConfig> STARTER_CHEST_FEATURE = Registry.register(
-      Registries.FEATURE,
-      LighterEnd.of("starter_chest"),
-      new StarterChest()
-  );
-  public static final RegistryKey<ConfiguredFeature<?, ?>> STARTER_CHEST = of("starter_chest");
 
 
   public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
@@ -489,8 +481,6 @@ public class LighterEndConfiguredFeatures {
         PURPLE_POLYPORES_FEATURE,
         new PurplePolypores.Config(3)
     );
-
-    ConfiguredFeatures.register(context, STARTER_CHEST, STARTER_CHEST_FEATURE);
   }
 
   public static void initialize() {
