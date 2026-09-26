@@ -57,11 +57,11 @@ public class EndMoss extends BonemealableFeaturePlacerBlock {
     BlockPos blockPos = pos.above();
     BlockState blockState = world.getBlockState(blockPos);
 
-    int i = LightEngine.getLightDampeningInto(
+    int i = LightEngine.getLightBlockInto(
         state,
         blockState,
         Direction.UP,
-        blockState.getLightDampening()
+        blockState.getLightEmission()
     );
     return i < 15;
   }

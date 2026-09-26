@@ -213,10 +213,10 @@ public class LakePiece extends BasePiece {
                 }
               }
             } else if (chunk.getBlockState(mut.move(Direction.UP)).isAir()) {
-              chunk.markPosForPostProcessing(mut.move(Direction.DOWN).immutable());
+              chunk.markPosForPostprocessing(mut.move(Direction.DOWN).immutable());
             }
           } else if (chunk.getBlockState(mut).isRandomlyTicking()) {
-            chunk.markPosForPostProcessing(mut.immutable());
+            chunk.markPosForPostprocessing(mut.immutable());
           }
         }
       }

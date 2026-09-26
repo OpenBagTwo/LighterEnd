@@ -43,7 +43,7 @@ public class TerraBlender implements TerraBlenderApi {
     SurfaceRuleManager.addSurfaceRules(
         RuleCategory.END,
         LighterEnd.MOD_ID,
-        biomes -> LighterEndWorldGen.updateSurfaceRules(biomes)
+        LighterEndWorldGen.updateSurfaceRules()
     );
 
     LighterEnd.LOGGER.info("Registered " + LighterEnd.MOD_NAME + "'s biomes with TerraBlender");

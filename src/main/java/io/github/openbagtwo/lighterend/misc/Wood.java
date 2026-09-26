@@ -4,7 +4,6 @@ import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.blocks.Shelf;
 import io.github.openbagtwo.lighterend.blocks.Signs;
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
-import io.github.openbagtwo.lighterend.registries.LighterEndItems;
 import io.github.openbagtwo.lighterend.registries.LighterEndSounds;
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +12,8 @@ import net.fabricmc.fabric.api.object.builder.v1.block.type.WoodTypeBuilder;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.HangingSignItem;
@@ -212,16 +213,16 @@ public class Wood {
           ),
           false
       );
-      LighterEndItems.register(
-          baseName + "_sign",
-          settings -> new SignItem(
+      Registry.register(
+          BuiltInRegistries.ITEM,
+          LighterEnd.of(baseName + "_sign"),
+          new SignItem(
               sign,
               wallSign,
-              settings
-          ),
-          new Item.Properties().stacksTo(16).setId(
-              ResourceKey.create(Registries.ITEM, LighterEnd.of(baseName + "_sign"))
-          ).useBlockDescriptionPrefix()
+              new Item.Properties().stacksTo(16).setId(
+                  ResourceKey.create(Registries.ITEM, LighterEnd.of(baseName + "_sign"))
+              ).useBlockDescriptionPrefix()
+          )
       );
       hangingSign = LighterEndBlocks.register(
           baseName + "_hanging_sign",
@@ -242,16 +243,16 @@ public class Wood {
           ),
           false
       );
-      LighterEndItems.register(
-          baseName + "_hanging_sign",
-          settings -> new HangingSignItem(
+      Registry.register(
+          BuiltInRegistries.ITEM,
+          LighterEnd.of(baseName + "_hanging_sign"),
+          new HangingSignItem(
               hangingSign,
               wallHangingSign,
-              settings
-          ),
-          new Item.Properties().stacksTo(16).setId(
-              ResourceKey.create(Registries.ITEM, LighterEnd.of(baseName + "_hanging_sign"))
-          ).useBlockDescriptionPrefix()
+              new Item.Properties().stacksTo(16).setId(
+                  ResourceKey.create(Registries.ITEM, LighterEnd.of(baseName + "_hanging_sign"))
+              ).useBlockDescriptionPrefix()
+          )
       );
       shelf = LighterEndBlocks.register(
           baseName + "_shelf",

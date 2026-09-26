@@ -26,7 +26,6 @@ import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.WeatheringCopper;
 
 public class RecipeProvider extends FabricRecipeProvider {
 
@@ -111,7 +110,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                 has(Blocks.END_STONE)
             ).save(output);
 
-        shapeless(RecipeCategory.MISC, Items.DYE.cyan())
+        shapeless(RecipeCategory.MISC, Items.CYAN_DYE)
             .requires(LighterEndBlocks.CREEPING_MOSS)
             .unlockedBy(
                 getHasName(LighterEndBlocks.CREEPING_MOSS),
@@ -124,7 +123,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                 )
             );
 
-        shapeless(RecipeCategory.MISC, Items.DYE.orange())
+        shapeless(RecipeCategory.MISC, Items.ORANGE_DYE)
             .requires(LighterEndBlocks.UMBRELLA_FERN)
             .unlockedBy(
                 getHasName(LighterEndBlocks.UMBRELLA_FERN),
@@ -141,7 +140,7 @@ public class RecipeProvider extends FabricRecipeProvider {
 
         generateMaterialRecipes(LighterEndBlocks.UMBRALITH);
 
-        shapeless(RecipeCategory.MISC, Items.DYE.magenta())
+        shapeless(RecipeCategory.MISC, Items.MAGENTA_DYE)
             .requires(LighterEndBlocks.TENANEA_FLOWER)
             .unlockedBy(
                 getHasName(LighterEndBlocks.TENANEA_FLOWER),
@@ -186,7 +185,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                 has(LighterEndItems.SILK_MATRIX)
             ).save(output);
 
-        shaped(RecipeCategory.DECORATIONS, LighterEndBlocks.SILK_MOTH_NEST)
+        shaped(RecipeCategory.DECORATIONS, LighterEndItems.SILK_MOTH_NEST)
             .pattern(" P ")
             .pattern("PMP")
             .pattern("PPP")
@@ -235,37 +234,37 @@ public class RecipeProvider extends FabricRecipeProvider {
 
         generateSmokingSmeltingRecipes(
             LighterEndBlocks.CHARNIA_CYAN,
-            Items.DYE.cyan(),
+            Items.CYAN_DYE,
             RecipeCategory.MISC,
             CookingBookCategory.MISC
         );
         generateSmokingSmeltingRecipes(
             LighterEndBlocks.CHARNIA_GREEN,
-            Items.DYE.green(),
+            Items.GREEN_DYE,
             RecipeCategory.MISC,
             CookingBookCategory.MISC
         );
         generateSmokingSmeltingRecipes(
             LighterEndBlocks.CHARNIA_LIGHT_BLUE,
-            Items.DYE.lightBlue(),
+            Items.LIGHT_BLUE_DYE,
             RecipeCategory.MISC,
             CookingBookCategory.MISC
         );
         generateSmokingSmeltingRecipes(
             LighterEndBlocks.CHARNIA_ORANGE,
-            Items.DYE.orange(),
+            Items.ORANGE_DYE,
             RecipeCategory.MISC,
             CookingBookCategory.MISC
         );
         generateSmokingSmeltingRecipes(
             LighterEndBlocks.CHARNIA_PURPLE,
-            Items.DYE.purple(),
+            Items.PURPLE_DYE,
             RecipeCategory.MISC,
             CookingBookCategory.MISC
         );
         generateSmokingSmeltingRecipes(
             LighterEndBlocks.CHARNIA_RED,
-            Items.DYE.red(),
+            Items.RED_DYE,
             RecipeCategory.MISC,
             CookingBookCategory.MISC
         );
@@ -415,10 +414,8 @@ public class RecipeProvider extends FabricRecipeProvider {
                 this.has(LighterEndItems.LUMECORN_EAR)
             ).save(output);
 
-        shaped(
-            RecipeCategory.DECORATIONS,
-            LighterEndBlocks.COPPER_CHANDELIERS.weathering().unaffected()
-        ).define('r', LighterEndItems.LUMECORN_EAR)
+        shaped(RecipeCategory.DECORATIONS, LighterEndBlocks.COPPER_CHANDELIERS.unaffected())
+            .define('r', LighterEndItems.LUMECORN_EAR)
             .define('n', Items.COPPER_NUGGET)
             .define('i', Items.COPPER_INGOT)
             .pattern("r r")
@@ -428,20 +425,13 @@ public class RecipeProvider extends FabricRecipeProvider {
                 getHasName(LighterEndItems.LUMECORN_EAR),
                 this.has(LighterEndItems.LUMECORN_EAR)
             ).save(output);
-        for (var state : List.of(
-            WeatheringCopper.WeatherState.UNAFFECTED,
-            WeatheringCopper.WeatherState.EXPOSED,
-            WeatheringCopper.WeatherState.WEATHERED,
-            WeatheringCopper.WeatherState.OXIDIZED)
-        ) {
-          var waxed = LighterEndBlocks.COPPER_CHANDELIERS.waxed().pick(state);
-          var unwaxed = LighterEndBlocks.COPPER_CHANDELIERS.weathering().pick(state);
-          shapeless(RecipeCategory.DECORATIONS, waxed)
-              .requires(unwaxed)
-              .requires(Items.HONEYCOMB)
-              .unlockedBy(getHasName(unwaxed), this.has(unwaxed))
-              .save(exporter);
-        }
+        LighterEndBlocks.COPPER_CHANDELIERS.waxedMapping().forEach(
+            (unwaxed, waxed) -> shapeless(RecipeCategory.DECORATIONS, waxed)
+                .requires(unwaxed)
+                .requires(Items.HONEYCOMB)
+                .unlockedBy(getHasName(unwaxed), this.has(unwaxed))
+                .save(exporter)
+        );
 
         SimpleCookingRecipeBuilder.smelting(
             Ingredient.of(LighterEndBlocks.FERROUS_ICE),
@@ -603,7 +593,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                 this.has(LighterEndItems.SHADOW_BERRY_COOKED)
             ).save(this.output);
 
-        shapeless(RecipeCategory.MISC, Items.DYE.black())
+        shapeless(RecipeCategory.MISC, Items.BLACK_DYE)
             .requires(LighterEndBlocks.MURKWEED)
             .unlockedBy(
                 getHasName(LighterEndBlocks.MURKWEED),

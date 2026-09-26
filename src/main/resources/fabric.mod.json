@@ -9,9 +9,9 @@
   },
   "depends": {
     "fabric-api": "*",
-    "fabricloader": ">=0.19.0",
+    "fabricloader": ">=0.18.4",
     "java": ">=25",
-    "minecraft": ">26.1 <=26.2"
+    "minecraft": ">26.0 <=26.1"
   },
   "description": "Bringing light and life to the most desolate dimension. A continuation of BetterEnd",
   "entrypoints": {
@@ -42,7 +42,6 @@
       "environment": "client"
     }
   ],
-  "accessWidener": "lighterend.classtweaker",
   "name": "Lighter End",
   "version": "${version}"
 }

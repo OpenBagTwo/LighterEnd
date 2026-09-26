@@ -14,7 +14,7 @@ import net.minecraft.world.attribute.AmbientParticle;
 import net.minecraft.world.attribute.AmbientSounds;
 import net.minecraft.world.attribute.BackgroundMusic;
 import net.minecraft.world.attribute.EnvironmentAttributes;
-import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
@@ -47,16 +47,13 @@ public class SulphurSprings {
         ).addSpawn(
             MobCategory.MONSTER,
             20,
-            new SpawnerData(EntityTypes.ENDERMAN, 1, 4)
+            new SpawnerData(EntityType.ENDERMAN, 1, 4)
         ).addSpawn(
             MobCategory.MONSTER,
             1,
-            new SpawnerData(EntityTypes.ENDERMITE, 1, 1)
-        ).addSpawn(
-            MobCategory.MONSTER,
-            50,
-            new SpawnerData(EntityTypes.SULFUR_CUBE, 2, 4)
-        ).build();
+            new SpawnerData(EntityType.ENDERMITE, 1, 1)
+        )
+        .build();
 
     var genSettingsBuilder = new BiomeGenerationSettings.Builder(features, carvers)
         .addFeature(Decoration.RAW_GENERATION, LighterEndPlacedFeatures.GEYSER)

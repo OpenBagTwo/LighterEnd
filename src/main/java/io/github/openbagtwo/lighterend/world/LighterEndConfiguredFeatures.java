@@ -37,7 +37,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -253,7 +252,6 @@ public class LighterEndConfiguredFeatures {
     HolderGetter<ConfiguredFeature<?, ?>> lookup = context.lookup(
         Registries.CONFIGURED_FEATURE
     );
-    HolderGetter<Block> blocks = context.lookup(Registries.BLOCK);
 
     FeatureUtils.register(
         context,
@@ -285,7 +283,7 @@ public class LighterEndConfiguredFeatures {
         END_MOSS_PATCH_BONEMEAL,
         Feature.VEGETATION_PATCH,
         new VegetationPatchConfiguration(
-            blocks.getOrThrow(LighterEndTags.END_MOSS_REPLACEABLE),
+            LighterEndTags.END_MOSS_REPLACEABLE,
             BlockStateProvider.simple(LighterEndBlocks.END_MOSS),
             PlacementUtils.inlinePlaced(
                 lookup.getOrThrow(END_MOSS_PATCH)
@@ -309,8 +307,7 @@ public class LighterEndConfiguredFeatures {
                     .add(LighterEndBlocks.SHADOW_GRASS.defaultBlockState(), 40)
                     .add(LighterEndBlocks.NEEDLEGRASS.defaultBlockState(), 20)
                     .add(
-                        LighterEndBlocks.SHADOW_BERRY_SEEDS.defaultBlockState()
-                            .setValue(ShadowBerry.AGE, 0),
+                        LighterEndBlocks.SHADOW_BERRY.defaultBlockState().setValue(ShadowBerry.AGE, 0),
                         20)
                     .add(LighterEndBlocks.MURKWEED.defaultBlockState(), 20)
             )
@@ -326,7 +323,7 @@ public class LighterEndConfiguredFeatures {
                     .add(LighterEndBlocks.SHADOW_GRASS.defaultBlockState(), 40)
                     .add(LighterEndBlocks.NEEDLEGRASS.defaultBlockState(), 40)
                     .add(
-                        LighterEndBlocks.SHADOW_BERRY_SEEDS.defaultBlockState()
+                        LighterEndBlocks.SHADOW_BERRY.defaultBlockState()
                             .setValue(ShadowBerry.AGE, ShadowBerry.MAX_AGE),
                         10
                     ).add(LighterEndBlocks.MURKWEED.defaultBlockState(), 10)
@@ -338,7 +335,7 @@ public class LighterEndConfiguredFeatures {
         SHADOW_MOSS_PATCH_BONEMEAL,
         Feature.VEGETATION_PATCH,
         new VegetationPatchConfiguration(
-            blocks.getOrThrow(LighterEndTags.END_MOSS_REPLACEABLE),
+            LighterEndTags.END_MOSS_REPLACEABLE,
             BlockStateProvider.simple(LighterEndBlocks.END_MOSS),
             PlacementUtils.inlinePlaced(
                 lookup.getOrThrow(SHADOW_MOSS_PATCH)

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider;
-import net.minecraft.advancements.predicates.StatePropertiesPredicate;
+import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.core.Holder.Reference;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
@@ -133,7 +133,7 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
 
     add(
         LighterEndBlocks.GLOWSHROOM_FUR,
-        (block -> this.createShearsOrSilkTouchOnlyDrop(LighterEndBlocks.GLOWSHROOM_FUR))
+        (block -> this.createShearsOrSilkTouchOnlyDrop(LighterEndItems.GLOWSHROOM_FUR))
     );
     dropSelf(LighterEndBlocks.GLOWSHROOM_CAP);
     dropSelf(LighterEndBlocks.GLOWSHROOM_HYMENOPHORE);
@@ -142,7 +142,7 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
     dropSelf(LighterEndBlocks.AGAVE_BULB);
     add(
         LighterEndBlocks.AGAVE_FUR,
-        (block -> this.createShearsOrSilkTouchOnlyDrop(LighterEndBlocks.AGAVE_FUR))
+        (block -> this.createShearsOrSilkTouchOnlyDrop(LighterEndItems.AGAVE_FUR))
     );
     dropSelf(LighterEndBlocks.AURANT_POLYPORE);
     dropSelf(LighterEndBlocks.PURPLE_POLYPORE);
@@ -153,8 +153,8 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
 
     dropSelf(LighterEndBlocks.GOLD_CHANDELIER);
     dropSelf(LighterEndBlocks.IRON_CHANDELIER);
-    for (var chandelier : LighterEndBlocks.COPPER_CHANDELIERS.asList()) {
-      dropSelf((Block) chandelier);
+    for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.asList()) {
+      dropSelf(chandelier);
     }
 
     dropSelf(LighterEndBlocks.EMERALD_ICE);
@@ -171,13 +171,13 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
     add(LighterEndBlocks.HYDROTHERMAL_VENT, this::createSilkTouchOnlyTable);
 
     add(
-        LighterEndBlocks.SHADOW_BERRY_SEEDS,
+        LighterEndBlocks.SHADOW_BERRY,
         createCropDrops(
-            LighterEndBlocks.SHADOW_BERRY_SEEDS,
+            LighterEndBlocks.SHADOW_BERRY,
             LighterEndItems.SHADOW_BERRY,
-            LighterEndBlocks.SHADOW_BERRY_SEEDS.asItem(),
+            LighterEndItems.SHADOW_BERRY_SEEDS,
             LootItemBlockStatePropertyCondition.hasBlockStateProperties(
-                LighterEndBlocks.SHADOW_BERRY_SEEDS
+                LighterEndBlocks.SHADOW_BERRY
             ).setProperties(
                 StatePropertiesPredicate.Builder.properties().hasProperty(
                     ShadowBerry.AGE,
@@ -240,7 +240,7 @@ public class BlockLootTableProvider extends FabricBlockLootSubProvider {
                 .when(this.hasSilkTouch())
                 .setRolls(ConstantValue.exactly(1.0F))
                 .add(
-                    LootItem.lootTableItem(LighterEndBlocks.SILK_MOTH_NEST)
+                    LootItem.lootTableItem(LighterEndItems.SILK_MOTH_NEST)
                         .apply(
                             CopyComponentsFunction.copyComponentsFromBlockEntity(
                                 LootContextParams.BLOCK_ENTITY).include(LighterEndData.MOTHS)

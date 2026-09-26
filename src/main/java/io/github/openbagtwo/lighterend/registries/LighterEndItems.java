@@ -1,16 +1,17 @@
 package io.github.openbagtwo.lighterend.registries;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
+import io.github.openbagtwo.lighterend.items.Fur;
 import io.github.openbagtwo.lighterend.items.LighterEndFoodComponents;
 import io.github.openbagtwo.lighterend.items.Matchstick;
 import io.github.openbagtwo.lighterend.items.TPTotem;
-import java.util.HashMap;
-import java.util.Map;
+import io.github.openbagtwo.lighterend.registries.LighterEndData.SilkLevelComponent;
 import java.util.function.Function;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.food.Foods;
@@ -23,8 +24,6 @@ import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.material.Fluids;
 
 public class LighterEndItems {
-
-  public static Map<Item, ResourceKey<Item>> idLookup = new HashMap<>();
 
   public static final Item AURORA_CRYSTAL_SHARD = register(
       "aurora_crystal_shard",
@@ -39,6 +38,16 @@ public class LighterEndItems {
   );
   public static final Item SILK = register("silk_fiber");
   public static final Item SILK_MATRIX = register("silk_matrix");
+  public static Item SILK_MOTH_NEST = register(
+      "silk_moth_nest",
+      settings -> new BlockItem(
+          LighterEndBlocks.SILK_MOTH_NEST,
+          settings
+              .component(LighterEndData.MOTHS, LighterEndData.MothsComponent.DEFAULT)
+              .component(LighterEndData.SILK_LEVEL, new SilkLevelComponent(0))
+      ),
+      new Properties()
+  );
 
   public static final Item UMBRELLA_JUICE = register(
       "umbrella_juice",
@@ -66,6 +75,17 @@ public class LighterEndItems {
   public static final Item END_LILY_LEAF = register("end_lily_leaf");
   public static final Item DRIED_END_LILY_LEAF = register("end_lily_leaf_dried");
 
+  public static final Item GLOWSHROOM_FUR = register(
+      "mossy_glowshroom_fur",
+      settings -> new Fur(LighterEndBlocks.GLOWSHROOM_FUR, settings),
+      new Properties()
+  );
+  public static final Item AGAVE_FUR = register(
+      "blue_vine_fur",
+      settings -> new Fur(LighterEndBlocks.AGAVE_FUR, settings),
+      new Properties()
+  );
+
   public static final Item END_CREAM = register("end_cream");
   public static final Item END_POWDER = register("end_powder");
 
@@ -92,6 +112,14 @@ public class LighterEndItems {
 
   public static final Item MATCHSTICK = register("matchstick", Matchstick::new, new Properties());
 
+  public static final Item SHADOW_BERRY_SEEDS = register(
+      "shadow_berry_seeds",
+      settings -> new BlockItem(
+          LighterEndBlocks.SHADOW_BERRY,
+          settings.useItemDescriptionPrefix()
+      ),
+      new Properties()
+  );
   public static final Item SHADOW_BERRY = register(
       "shadow_berry",
       new Properties().food(LighterEndFoodComponents.SHADOW_BERRY)
@@ -118,22 +146,10 @@ public class LighterEndItems {
     return register(name, Item::new, settings);
   }
 
-  public static Item register(
-      String name,
-      Function<Properties, Item> factory,
-      Properties settings
-  ) {
-    ResourceKey<Item> id = ResourceKey.create(Registries.ITEM, LighterEnd.of(name));
-    Item item = factory.apply(settings.setId(id));
-    if (item instanceof BlockItem blockItem) {
-      blockItem.registerBlocks(Item.BY_BLOCK, item);
-    }
-    return register(id, item);
-  }
-
-  public static Item register(ResourceKey<Item> id, Item item) {
-    idLookup.put(item, id);
-    return Registry.register(BuiltInRegistries.ITEM, id, item);
+  public static Item register(String name, Function<Properties, Item> factory, Properties settings) {
+    Identifier id = LighterEnd.of(name);
+    ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, id);
+    return Registry.register(BuiltInRegistries.ITEM, key, factory.apply(settings.setId(key)));
   }
 
   public static void initialize() {
