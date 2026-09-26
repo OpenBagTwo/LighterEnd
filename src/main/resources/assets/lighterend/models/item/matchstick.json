@@ -1,0 +1,67 @@
+{
+  "display": {
+    "firstperson_lefthand": {
+      "translation": [
+        -2,
+        7,
+        0.5
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "translation": [
+        -2,
+        7,
+        0.5
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        180,
+        0
+      ]
+    },
+    "ground": {
+      "rotation": [
+        90,
+        0,
+        0
+      ],
+      "translation": [
+        4,
+        -3.75,
+        4
+      ]
+    },
+    "head": {
+      "translation": [
+        4.75,
+        14,
+        0.5
+      ]
+    },
+    "thirdperson_lefthand": {
+      "translation": [
+        -4.25,
+        5,
+        0.5
+      ]
+    },
+    "thirdperson_righthand": {
+      "translation": [
+        4.75,
+        5,
+        0.5
+      ]
+    }
+  },
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "lighterend:item/matchstick"
+  }
+}
