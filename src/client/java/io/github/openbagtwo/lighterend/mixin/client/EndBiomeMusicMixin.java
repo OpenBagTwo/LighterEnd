@@ -1,16 +1,19 @@
 package io.github.openbagtwo.lighterend.mixin.client;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import net.minecraft.Optionull;
-import net.minecraft.client.Camera;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.sounds.Music;
-import net.minecraft.world.attribute.EnvironmentAttributes;
-import net.minecraft.world.level.Level;
+import java.util.Optional;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.sound.MusicInstance;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.sound.MusicSound;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Nullables;
+import net.minecraft.util.collection.Pool;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,53 +21,46 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(Minecraft.class)
+@Mixin(MinecraftClient.class)
 public abstract class EndBiomeMusicMixin {
 
   @Shadow
-  public @Nullable Screen screen;
+  public @Nullable Screen currentScreen;
 
   @Shadow
-  public @Nullable LocalPlayer player;
+  public @Nullable ClientPlayerEntity player;
 
   @Shadow
-  public Gui gui;
-
-  @Shadow
-  public GameRenderer gameRenderer;
+  public InGameHud inGameHud;
 
 
-  @Inject(method = "getSituationalMusic", at = @At("HEAD"), cancellable = true)
-  public void checkForEndMusic(CallbackInfoReturnable<Music> cir) {
-    Music musicSound = Optionull.map(this.screen, Screen::getBackgroundMusic);
-    Camera camera = this.gameRenderer.getMainCamera();
-    if (
-        LighterEnd.CONFIG.playEndBiomeMusic()
-            && musicSound == null
-            && this.player != null
-            && camera != null
-    ) {
-      Level world = this.player.level();
+  @Inject(method = "getMusicInstance", at = @At("HEAD"), cancellable = true)
+  public void checkForEndMusic(CallbackInfoReturnable<MusicInstance> cir) {
+    MusicSound musicSound = Nullables.map(this.currentScreen, Screen::getMusic);
+    if (LighterEnd.CONFIG.playEndBiomeMusic() && musicSound == null && this.player != null) {
+      World world = this.player.getEntityWorld();
       if (
-          world.dimension() == Level.END
-              && !this.gui.getBossOverlay().shouldPlayMusic()
+          world.getRegistryKey() == World.END
+              && !this.inGameHud.getBossBarHud().shouldPlayDragonMusic()
       ) {
-        Music biomeMusic = camera.attributeProbe()
-            .getValue(EnvironmentAttributes.BACKGROUND_MUSIC, 1.0F).select(
-                this.player.getAbilities().instabuild && this.player.getAbilities().mayfly,
-                this.player.isUnderWater()
-            ).orElse(null);
-        if (biomeMusic != null && biomeMusic.replaceCurrentMusic()) {
+        RegistryEntry<Biome> registryEntry = world.getBiome(this.player.getBlockPos());
+        Biome biome = registryEntry.value();
+        Optional<Pool<MusicSound>> biomeMusic = biome.getMusic();
+        if (biomeMusic.isPresent()) {
+          float f = biome.getMusicVolume();
+          Optional<MusicSound> music = biomeMusic.get().getOrEmpty(world.random);
+          cir.setReturnValue(new MusicInstance(music.orElse(null), f));
+        } else {
           cir.setReturnValue(
-              new Music(
-                  biomeMusic.sound(),
-                  biomeMusic.minDelay(),
-                  biomeMusic.maxDelay(),
-                  false
+              new MusicInstance(
+                  new MusicSound(SoundEvents.MUSIC_END, 6000, 24000, false)
               )
           );
         }
+        cir.cancel();
       }
     }
+
   }
+
 }

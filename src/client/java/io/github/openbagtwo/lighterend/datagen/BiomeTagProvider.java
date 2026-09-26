@@ -5,25 +5,25 @@ import io.github.openbagtwo.lighterend.registries.LighterEndTags;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.tags.BiomeTags;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.RegistryWrapper.WrapperLookup;
+import net.minecraft.registry.tag.BiomeTags;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 
 public class BiomeTagProvider extends FabricTagProvider<Biome> {
 
   public BiomeTagProvider(
       FabricDataOutput output,
-      CompletableFuture<HolderLookup.Provider> future
+      CompletableFuture<RegistryWrapper.WrapperLookup> future
   ) {
-    super(output, Registries.BIOME, future);
+    super(output, RegistryKeys.BIOME, future);
   }
 
 
   @Override
-  protected void addTags(Provider lookup) {
+  protected void configure(WrapperLookup lookup) {
     builder(BiomeTags.IS_END).add(
         LighterEndBiomes.BLOSSOM_FOREST,
         LighterEndBiomes.UMBRELLA_JUNGLE,
@@ -35,7 +35,7 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
         LighterEndBiomes.SULPHUR_SPRINGS,
         LighterEndBiomes.SHADOW_FOREST
     );
-    builder(BiomeTags.HAS_END_CITY).add(
+    builder(BiomeTags.END_CITY_HAS_STRUCTURE).add(
         LighterEndBiomes.BLOSSOM_FOREST,
         LighterEndBiomes.UMBRELLA_JUNGLE,
         LighterEndBiomes.GLOWING_GRASSLAND,
@@ -45,10 +45,10 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
     );
 
     builder(LighterEndTags.VANILLA_END_BIOMES).add(
-        Biomes.END_BARRENS,
-        Biomes.SMALL_END_ISLANDS,
-        Biomes.END_MIDLANDS,
-        Biomes.END_HIGHLANDS
+        BiomeKeys.END_BARRENS,
+        BiomeKeys.SMALL_END_ISLANDS,
+        BiomeKeys.END_MIDLANDS,
+        BiomeKeys.END_HIGHLANDS
     );
 
     builder(LighterEndTags.HAS_END_LAKES).addTag(
@@ -62,7 +62,7 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
     );
 
     builder(LighterEndTags.HAS_OBELISKS).add(
-        Biomes.END_HIGHLANDS,
+        BiomeKeys.END_HIGHLANDS,
         LighterEndBiomes.GLOWING_GRASSLAND,
         LighterEndBiomes.UMBRELLA_JUNGLE,
         LighterEndBiomes.BLOSSOM_FOREST,
@@ -73,9 +73,9 @@ public class BiomeTagProvider extends FabricTagProvider<Biome> {
     );
 
     builder(LighterEndTags.INVALID_SPAWN_BIOMES).add(
-        Biomes.THE_VOID,
-        Biomes.END_BARRENS,
-        Biomes.SMALL_END_ISLANDS,
+        BiomeKeys.THE_VOID,
+        BiomeKeys.END_BARRENS,
+        BiomeKeys.SMALL_END_ISLANDS,
         LighterEndBiomes.STARFIELD
     );
   }

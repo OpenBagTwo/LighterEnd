@@ -20,64 +20,64 @@ import io.github.openbagtwo.lighterend.utils.math.sdf.primitives.SDFSphere;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 import org.joml.Vector3f;
 
-public class UmbrellaTree extends Feature<NoneFeatureConfiguration> {
+public class UmbrellaTree extends Feature<DefaultFeatureConfig> {
 
   private static final Function<BlockState, Boolean> REPLACE;
   private static final List<Vector3f> SPLINE;
   private static final List<Vector3f> ROOT;
 
   public UmbrellaTree() {
-    super(NoneFeatureConfiguration.CODEC);
+    super(DefaultFeatureConfig.CODEC);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-    final RandomSource random = featureConfig.random();
-    final BlockPos pos = featureConfig.origin();
-    final WorldGenLevel world = featureConfig.level();
-    final NoneFeatureConfiguration config = featureConfig.config();
-    if (!world.getBlockState(pos.below()).is(LighterEndTags.END_SOIL)) {
+  public boolean generate(FeatureContext<DefaultFeatureConfig> featureConfig) {
+    final Random random = featureConfig.getRandom();
+    final BlockPos pos = featureConfig.getOrigin();
+    final StructureWorldAccess world = featureConfig.getWorld();
+    final DefaultFeatureConfig config = featureConfig.getConfig();
+    if (!world.getBlockState(pos.down()).isIn(LighterEndTags.END_SOIL)) {
       return false;
     }
 
-    BlockState wood = LighterEndBlocks.UMBRELLA.wood.defaultBlockState();
-    BlockState membrane = LighterEndBlocks.UMBRELLA_MEMBRANE.defaultBlockState()
-        .setValue(UmbrellaMembrane.COLOR, 1);
-    BlockState center = LighterEndBlocks.UMBRELLA_MEMBRANE.defaultBlockState()
-        .setValue(UmbrellaMembrane.COLOR, 0);
-    BlockState fruit = LighterEndBlocks.UMBRELLA_TREE_CLUSTER.defaultBlockState()
-        .setValue(UmbrellaTreeCluster.NATURAL, true);
+    BlockState wood = LighterEndBlocks.UMBRELLA.wood.getDefaultState();
+    BlockState membrane = LighterEndBlocks.UMBRELLA_MEMBRANE.getDefaultState()
+        .with(UmbrellaMembrane.COLOR, 1);
+    BlockState center = LighterEndBlocks.UMBRELLA_MEMBRANE.getDefaultState()
+        .with(UmbrellaMembrane.COLOR, 0);
+    BlockState fruit = LighterEndBlocks.UMBRELLA_TREE_CLUSTER.getDefaultState()
+        .with(UmbrellaTreeCluster.NATURAL, true);
 
-    float size = Mth.nextFloat(random, 10, 20);
+    float size = MathHelper.nextFloat(random, 10, 20);
     int count = (int) (size * 0.15F);
     float var = MathUtils.PI2 / (float) (count * 3);
-    float start = Mth.nextFloat(random, 0, MathUtils.PI2);
+    float start = MathHelper.nextFloat(random, 0, MathUtils.PI2);
     SDF sdf = null;
     List<Center> centers = Lists.newArrayList();
 
     float scale = 1;
     if (config != null) {
-      scale = Mth.nextFloat(random, 1F, 1.7F);
+      scale = MathHelper.nextFloat(random, 1F, 1.7F);
     }
 
     for (int i = 0; i < count; i++) {
       float angle =
-          (float) i / (float) count * MathUtils.PI2 + Mth.nextFloat(random, 0, var) + start;
+          (float) i / (float) count * MathUtils.PI2 + MathHelper.nextFloat(random, 0, var) + start;
       List<Vector3f> spline = MathUtils.copySpline(SPLINE);
-      float sizeXZ = size + Mth.nextFloat(random, 0, size * 0.5F) * 0.7F;
-      MathUtils.scale(spline, sizeXZ, sizeXZ * Mth.nextFloat(random, 1F, 2F), sizeXZ);
+      float sizeXZ = size + MathHelper.nextFloat(random, 0, size * 0.5F) * 0.7F;
+      MathUtils.scale(spline, sizeXZ, sizeXZ * MathHelper.nextFloat(random, 1F, 2F), sizeXZ);
       MathUtils.rotateSpline(spline, angle);
       MathUtils.offsetParts(spline, random, 0.5F, 0, 0.5F);
 
@@ -86,14 +86,14 @@ public class UmbrellaTree extends Feature<NoneFeatureConfiguration> {
         SDF branch = MathUtils.buildSDF(spline, 1.2F * rScale, 0.8F * rScale, (bpos) -> wood);
 
         Vector3f vec = spline.get(spline.size() - 1);
-        float radius = size + Mth.nextFloat(random, 0, size * 0.5F) * 0.4F;
+        float radius = size + MathHelper.nextFloat(random, 0, size * 0.5F) * 0.4F;
 
         sdf = (sdf == null) ? branch : new SDFUnion().setSourceA(sdf).setSourceB(branch);
         SDF mem = makeMembrane(radius, random, membrane, center);
 
-        float px = Mth.floor(vec.x()) + 0.5F;
-        float py = Mth.floor(vec.y()) + 0.5F;
-        float pz = Mth.floor(vec.z()) + 0.5F;
+        float px = MathHelper.floor(vec.x()) + 0.5F;
+        float py = MathHelper.floor(vec.y()) + 0.5F;
+        float pz = MathHelper.floor(vec.z()) + 0.5F;
         mem = new SDFTranslate().setTranslate(px, py, pz).setSource(mem);
         sdf = new SDFSmoothUnion().setRadius(2).setSourceA(sdf).setSourceB(mem);
         centers.add(new Center(
@@ -120,7 +120,7 @@ public class UmbrellaTree extends Feature<NoneFeatureConfiguration> {
               && Arrays.asList(LighterEndBlocks.UMBRELLA.wood, LighterEndBlocks.UMBRELLA.log)
               .contains(info.getStateDown().getBlock())
       ) {
-        return LighterEndBlocks.UMBRELLA.log.defaultBlockState();
+        return LighterEndBlocks.UMBRELLA.log.getDefaultState();
       } else if (info.getState().equals(membrane)) {
         Center min = centers.get(0);
         double d = Double.MAX_VALUE;
@@ -132,9 +132,9 @@ public class UmbrellaTree extends Feature<NoneFeatureConfiguration> {
             min = c;
           }
         }
-        int color = Mth.floor(d / min.radius * 7);
-        color = Mth.clamp(color, 1, 7);
-        return info.getState().setValue(UmbrellaMembrane.COLOR, color);
+        int color = MathHelper.floor(d / min.radius * 7);
+        color = MathHelper.clamp(color, 1, 7);
+        return info.getState().with(UmbrellaMembrane.COLOR, color);
       }
       return info.getState();
     }).fillRecursive(world, pos);
@@ -142,11 +142,11 @@ public class UmbrellaTree extends Feature<NoneFeatureConfiguration> {
 
     for (Center c : centers) {
       if (!world.getBlockState(new BlockPos((int) c.px, (int) c.py, (int) c.pz)).isAir()) {
-        count = Mth.floor(Mth.nextFloat(random, 5F, 10F) * scale);
+        count = MathHelper.floor(MathHelper.nextFloat(random, 5F, 10F) * scale);
         float startAngle = random.nextFloat() * MathUtils.PI2;
         for (int i = 0; i < count; i++) {
           float angle = (float) i / count * MathUtils.PI2 + startAngle;
-          float dist = Mth.nextFloat(random, 1.5F, 2.5F) * scale;
+          float dist = MathHelper.nextFloat(random, 1.5F, 2.5F) * scale;
           double px = c.px + Math.sin(angle) * dist;
           double pz = c.pz + Math.cos(angle) * dist;
           makeFruits(world, px, c.py - 1, pz, fruit);
@@ -157,19 +157,19 @@ public class UmbrellaTree extends Feature<NoneFeatureConfiguration> {
     return true;
   }
 
-  private void makeRoots(WorldGenLevel world, BlockPos pos, float radius, RandomSource random,
+  private void makeRoots(StructureWorldAccess world, BlockPos pos, float radius, Random random,
       BlockState wood) {
     int count = (int) (radius * 1.5F);
     for (int i = 0; i < count; i++) {
       float angle = (float) i / (float) count * MathUtils.PI2;
-      float scale = radius * Mth.nextFloat(random, 0.85F, 1.15F);
+      float scale = radius * MathHelper.nextFloat(random, 0.85F, 1.15F);
 
       List<Vector3f> branch = MathUtils.copySpline(ROOT);
       MathUtils.rotateSpline(branch, angle);
       MathUtils.scale(branch, scale);
       Vector3f last = branch.get(branch.size() - 1);
-      if (world.getBlockState(pos.offset((int) last.x(), (int) last.y(), (int) last.z()))
-          .is(LighterEndTags.END_STONES)) {
+      if (world.getBlockState(pos.add((int) last.x(), (int) last.y(), (int) last.z()))
+          .isIn(LighterEndTags.END_STONES)) {
         MathUtils.fillSplineForce(branch, world, wood, pos, REPLACE);
       }
     }
@@ -177,7 +177,7 @@ public class UmbrellaTree extends Feature<NoneFeatureConfiguration> {
 
   private SDF makeMembrane(
       float radius,
-      RandomSource random,
+      Random random,
       BlockState membrane,
       BlockState center
   ) {
@@ -188,7 +188,7 @@ public class UmbrellaTree extends Feature<NoneFeatureConfiguration> {
     sphere = new SDFTranslate().setTranslate(0, 1 - radius * 0.5F, 0).setSource(sphere);
 
     float angle = random.nextFloat() * MathUtils.PI2;
-    int count = (int) Mth.nextFloat(random, radius, radius * 2);
+    int count = (int) MathHelper.nextFloat(random, radius, radius * 2);
     if (count < 5) {
       count = 5;
     }
@@ -201,16 +201,16 @@ public class UmbrellaTree extends Feature<NoneFeatureConfiguration> {
     return sphere;
   }
 
-  private void makeFruits(WorldGenLevel world, double px, double py, double pz,
+  private void makeFruits(StructureWorldAccess world, double px, double py, double pz,
       BlockState fruit) {
-    MutableBlockPos mut = new MutableBlockPos().set(px, py, pz);
+    Mutable mut = new Mutable().set(px, py, pz);
     for (int i = 0; i < 8; i++) {
       mut.move(Direction.DOWN);
-      if (world.isEmptyBlock(mut)) {
-        BlockState state = world.getBlockState(mut.above());
-        if (state.is(LighterEndBlocks.UMBRELLA_MEMBRANE)
-            && state.getValue(UmbrellaMembrane.COLOR) < 2) {
-          world.setBlock(mut, fruit, Flags.SILENT);
+      if (world.isAir(mut)) {
+        BlockState state = world.getBlockState(mut.up());
+        if (state.isOf(LighterEndBlocks.UMBRELLA_MEMBRANE)
+            && state.get(UmbrellaMembrane.COLOR) < 2) {
+          world.setBlockState(mut, fruit, Flags.SILENT);
         }
         break;
       }
@@ -236,7 +236,7 @@ public class UmbrellaTree extends Feature<NoneFeatureConfiguration> {
     MathUtils.offset(ROOT, new Vector3f(0, -0.45F, 0));
 
     REPLACE = (state) -> {
-      if (state.is(LighterEndBlocks.UMBRELLA_MEMBRANE)) {
+      if (state.isOf(LighterEndBlocks.UMBRELLA_MEMBRANE)) {
         return true;
       }
       return MiscUtils.replaceableOrPlant(state);

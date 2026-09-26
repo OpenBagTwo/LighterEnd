@@ -11,33 +11,33 @@ import net.fabricmc.fabric.api.object.builder.v1.block.type.BlockSetTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.WoodTypeBuilder;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.HangingSignItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.SignItem;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.ButtonBlock;
-import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.FenceBlock;
-import net.minecraft.world.level.block.FenceGateBlock;
-import net.minecraft.world.level.block.LadderBlock;
-import net.minecraft.world.level.block.PressurePlateBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.TrapDoorBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import net.minecraft.world.level.block.state.properties.BlockSetType;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.block.AbstractBlock.Settings;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockSetType;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ButtonBlock;
+import net.minecraft.block.DoorBlock;
+import net.minecraft.block.FenceBlock;
+import net.minecraft.block.FenceGateBlock;
+import net.minecraft.block.LadderBlock;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.PillarBlock;
+import net.minecraft.block.PressurePlateBlock;
+import net.minecraft.block.SlabBlock;
+import net.minecraft.block.StairsBlock;
+import net.minecraft.block.TrapdoorBlock;
+import net.minecraft.block.WoodType;
+import net.minecraft.block.enums.NoteBlockInstrument;
+import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.item.HangingSignItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.SignItem;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.math.Direction;
 
 public class Wood {
 
@@ -67,7 +67,7 @@ public class Wood {
     // public final Block stool;
     public final List<Block> blocks;
     private final MapColor woodColor;
-    private final SoundType logSounds;
+    private final BlockSoundGroup logSounds;
 
     public WoodSet(String name, MapColor barkColor, MapColor woodColor) {
       this.baseName = name;
@@ -77,27 +77,27 @@ public class Wood {
       this.logSounds = createWoodSoundGroup(baseName + "_log");
 
       log = LighterEndBlocks.register(baseName + "_log",
-          settings -> new RotatedPillarBlock(
+          settings -> new PillarBlock(
               applyLogSettings(
                   settings.mapColor(
-                      state -> state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? woodColor
+                      state -> state.get(PillarBlock.AXIS) == Direction.Axis.Y ? woodColor
                           : barkColor
                   )
               )
           )
       );
       strippedLog = LighterEndBlocks.register(baseName + "_stripped_log",
-          settings -> new RotatedPillarBlock(
+          settings -> new PillarBlock(
               applyLogSettings(settings.mapColor(woodColor))
           )
       );
       wood = LighterEndBlocks.register(baseName + "_wood",
-          settings -> new RotatedPillarBlock(
+          settings -> new PillarBlock(
               applyLogSettings(settings.mapColor(barkColor))
           )
       );
       strippedWood = LighterEndBlocks.register(baseName + "_stripped_wood",
-          settings -> new RotatedPillarBlock(
+          settings -> new PillarBlock(
               applyLogSettings(settings.mapColor(woodColor))));
 
       StrippableBlockRegistry.register(log, strippedLog);
@@ -113,41 +113,41 @@ public class Wood {
       );
       stairs = LighterEndBlocks.register(
           baseName + "_stairs",
-          settings -> new StairBlock(planks.defaultBlockState(), applyPlankSettings(settings))
+          settings -> new StairsBlock(planks.getDefaultState(), applyPlankSettings(settings))
       );
 
       door = LighterEndBlocks.register(
           baseName + "_door",
           settings -> new DoorBlock(
               woodType.setType(),
-              settings.mapColor(planks.defaultMapColor())
+              settings.mapColor(planks.getDefaultMapColor())
                   .instrument(NoteBlockInstrument.BASS)
                   .strength(3.0F)
-                  .noOcclusion()
-                  .ignitedByLava()
-                  .pushReaction(PushReaction.DESTROY)
+                  .nonOpaque()
+                  .burnable()
+                  .pistonBehavior(PistonBehavior.DESTROY)
           )
       );
       trapdoor = LighterEndBlocks.register(
           baseName + "_trapdoor",
-          settings -> new TrapDoorBlock(
+          settings -> new TrapdoorBlock(
               woodType.setType(),
-              settings.mapColor(planks.defaultMapColor())
+              settings.mapColor(planks.getDefaultMapColor())
                   .instrument(NoteBlockInstrument.BASS)
                   .strength(3.0F)
-                  .noOcclusion()
-                  .isValidSpawn(Blocks::never)
-                  .ignitedByLava()
+                  .nonOpaque()
+                  .allowsSpawning(Blocks::never)
+                  .burnable()
           )
       );
       fence = LighterEndBlocks.register(
           baseName + "_fence",
           settings -> new FenceBlock(
-              settings.mapColor(planks.defaultMapColor())
+              settings.mapColor(planks.getDefaultMapColor())
                   .instrument(NoteBlockInstrument.BASS)
                   .strength(2.0F, 3.0F)
-                  .ignitedByLava()
-                  .sound(woodType.soundType())
+                  .burnable()
+                  .sounds(woodType.soundType())
           )
       );
       gate = LighterEndBlocks.register(
@@ -155,11 +155,11 @@ public class Wood {
           settings -> new FenceGateBlock(
               woodType,
               settings
-                  .mapColor(planks.defaultMapColor())
-                  .forceSolidOn()
+                  .mapColor(planks.getDefaultMapColor())
+                  .solid()
                   .instrument(NoteBlockInstrument.BASS)
                   .strength(2.0F, 3.0F)
-                  .ignitedByLava()
+                  .burnable()
           )
       );
       button = LighterEndBlocks.register(
@@ -167,20 +167,20 @@ public class Wood {
           settings -> new ButtonBlock(
               woodType.setType(),
               30,
-              settings.noCollision().strength(0.5F).pushReaction(PushReaction.DESTROY)
+              settings.noCollision().strength(0.5F).pistonBehavior(PistonBehavior.DESTROY)
           )
       );
       pressurePlate = LighterEndBlocks.register(
           baseName + "_pressure_plate",
           settings -> new PressurePlateBlock(
               woodType.setType(),
-              settings.mapColor(planks.defaultMapColor())
-                  .forceSolidOn()
+              settings.mapColor(planks.getDefaultMapColor())
+                  .solid()
                   .instrument(NoteBlockInstrument.BASS)
                   .noCollision()
                   .strength(0.5F)
-                  .ignitedByLava()
-                  .pushReaction(PushReaction.DESTROY)
+                  .burnable()
+                  .pistonBehavior(PistonBehavior.DESTROY)
           )
       );
       ladder = LighterEndBlocks.register(
@@ -188,16 +188,16 @@ public class Wood {
           settings -> new LadderBlock(
               settings
                   .strength(0.4F)
-                  .sound(SoundType.LADDER)
-                  .noOcclusion()
-                  .pushReaction(PushReaction.DESTROY)
+                  .sounds(BlockSoundGroup.LADDER)
+                  .nonOpaque()
+                  .pistonBehavior(PistonBehavior.DESTROY)
           )
       );
       sign = LighterEndBlocks.register(
           baseName + "_sign",
           settings -> new Signs.LighterEndStandingSignBlock(
               woodType,
-              settings.mapColor(planks.defaultMapColor())
+              settings.mapColor(planks.getDefaultMapColor())
           ),
           false
       );
@@ -206,28 +206,28 @@ public class Wood {
           settings -> new Signs.LighterEndWallSignBlock(
               woodType,
               settings
-                  .mapColor(planks.defaultMapColor())
-                  .overrideLootTable(sign.getLootTable())
-                  .overrideDescription(sign.getDescriptionId())
+                  .mapColor(planks.getDefaultMapColor())
+                  .lootTable(sign.getLootTableKey())
+                  .overrideTranslationKey(sign.getTranslationKey())
           ),
           false
       );
       Registry.register(
-          BuiltInRegistries.ITEM,
+          Registries.ITEM,
           LighterEnd.of(baseName + "_sign"),
           new SignItem(
               sign,
               wallSign,
-              new Item.Properties().stacksTo(16).setId(
-                  ResourceKey.create(Registries.ITEM, LighterEnd.of(baseName + "_sign"))
-              ).useBlockDescriptionPrefix()
+              new Item.Settings().maxCount(16).registryKey(
+                  RegistryKey.of(RegistryKeys.ITEM, LighterEnd.of(baseName + "_sign"))
+              ).useBlockPrefixedTranslationKey()
           )
       );
       hangingSign = LighterEndBlocks.register(
           baseName + "_hanging_sign",
           settings -> new Signs.LighterEndCeilingHangingSignBlock(
               woodType,
-              settings.mapColor(planks.defaultMapColor())
+              settings.mapColor(planks.getDefaultMapColor())
           ),
           false
       );
@@ -236,30 +236,30 @@ public class Wood {
           settings -> new Signs.LighterEndWallHangingSignBlock(
               woodType,
               settings
-                  .overrideLootTable(hangingSign.getLootTable())
-                  .overrideDescription(hangingSign.getDescriptionId())
-                  .mapColor(planks.defaultMapColor())
+                  .lootTable(hangingSign.getLootTableKey())
+                  .overrideTranslationKey(hangingSign.getTranslationKey())
+                  .mapColor(planks.getDefaultMapColor())
           ),
           false
       );
       Registry.register(
-          BuiltInRegistries.ITEM,
+          Registries.ITEM,
           LighterEnd.of(baseName + "_hanging_sign"),
           new HangingSignItem(
               hangingSign,
               wallHangingSign,
-              new Item.Properties().stacksTo(16).setId(
-                  ResourceKey.create(Registries.ITEM, LighterEnd.of(baseName + "_hanging_sign"))
-              ).useBlockDescriptionPrefix()
+              new Item.Settings().maxCount(16).registryKey(
+                  RegistryKey.of(RegistryKeys.ITEM, LighterEnd.of(baseName + "_hanging_sign"))
+              ).useBlockPrefixedTranslationKey()
           )
       );
       shelf = LighterEndBlocks.register(
           baseName + "_shelf",
           settings -> new Shelf(
-              settings.mapColor(planks.defaultMapColor())
+              settings.mapColor(planks.getDefaultMapColor())
                   .instrument(NoteBlockInstrument.BASS)
-                  .sound(SoundType.SHELF)
-                  .ignitedByLava()
+                  .sounds(BlockSoundGroup.SHELF)
+                  .burnable()
                   .strength(2.0F, 3.0F)
           )
       );
@@ -293,26 +293,26 @@ public class Wood {
       );
     }
 
-    public Properties applyLogSettings(Properties settings) {
+    public Settings applyLogSettings(Settings settings) {
       return settings
           .instrument(NoteBlockInstrument.BASS)
-          .sound(this.logSounds)
+          .sounds(this.logSounds)
           .strength(2.0F)
-          .ignitedByLava();
+          .burnable();
     }
 
-    public Properties applyPlankSettings(Properties settings) {
+    public Settings applyPlankSettings(Settings settings) {
       return settings
           .mapColor(this.woodColor)
           .instrument(NoteBlockInstrument.BASS)
-          .sound(this.woodType.soundType())
+          .sounds(this.woodType.soundType())
           .strength(2.0F, 3.0F)
-          .ignitedByLava();
+          .burnable();
     }
   }
 
   public static WoodType createWoodType(String name) {
-    SoundType soundGroup = createWoodSoundGroup(name);
+    BlockSoundGroup soundGroup = createWoodSoundGroup(name);
 
     return (new WoodTypeBuilder())
         .soundGroup(soundGroup)
@@ -322,12 +322,12 @@ public class Wood {
         .register(LighterEnd.of(name), createWoodSetType(name, soundGroup));
   }
 
-  private static BlockSetType createWoodSetType(String name, SoundType soundGroup) {
+  private static BlockSetType createWoodSetType(String name, BlockSoundGroup soundGroup) {
     return (new BlockSetTypeBuilder())
         .openableByHand(true)
         .openableByWindCharge(true)
         .buttonActivatedByArrows(true)
-        .pressurePlateActivationRule(BlockSetType.PressurePlateSensitivity.EVERYTHING)
+        .pressurePlateActivationRule(BlockSetType.ActivationRule.EVERYTHING)
         .soundGroup(soundGroup)
         .doorCloseSound(LighterEndSounds.register("block." + name + "_door.close"))
         .doorOpenSound(LighterEndSounds.register("block." + name + "_door.open"))
@@ -341,8 +341,8 @@ public class Wood {
 
   }
 
-  private static SoundType createWoodSoundGroup(String name) {
-    return new SoundType(
+  private static BlockSoundGroup createWoodSoundGroup(String name) {
+    return new BlockSoundGroup(
         1.0F,
         1.0F,
         LighterEndSounds.register("block." + name + ".break"),

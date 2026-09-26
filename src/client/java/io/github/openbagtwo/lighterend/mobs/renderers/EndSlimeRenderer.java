@@ -1,6 +1,5 @@
 package io.github.openbagtwo.lighterend.mobs.renderers;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.openbagtwo.lighterend.LighterEnd;
 import io.github.openbagtwo.lighterend.mobs.EndSlime;
 import io.github.openbagtwo.lighterend.mobs.EntityModels;
@@ -8,22 +7,22 @@ import io.github.openbagtwo.lighterend.mobs.models.EndSlimeModel;
 import io.github.openbagtwo.lighterend.mobs.states.EndSlimeRenderState;
 import java.util.Arrays;
 import java.util.List;
-import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.EyesLayer;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.rendertype.RenderType;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.Identifier;
-import net.minecraft.util.Mth;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
+import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.LivingEntityRenderer;
+import net.minecraft.client.render.entity.MobEntityRenderer;
+import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
+import net.minecraft.client.render.entity.feature.FeatureRenderer;
+import net.minecraft.client.render.entity.feature.FeatureRendererContext;
+import net.minecraft.client.render.entity.model.LoadedEntityModels;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 
 public class EndSlimeRenderer extends
-    MobRenderer<EndSlime, EndSlimeRenderState, EndSlimeModel> {
+    MobEntityRenderer<EndSlime, EndSlimeRenderState, EndSlimeModel> {
 
   private static final List<Identifier> TEXTURES = Arrays.asList(
       LighterEnd.of("textures/entity/end_slime/end_slime.png"),
@@ -31,44 +30,43 @@ public class EndSlimeRenderer extends
       LighterEnd.of("textures/entity/end_slime/end_slime_lake.png"),
       LighterEnd.of("textures/entity/end_slime/end_slime_amber.png")
   );
-  private static final List<RenderType> GLOW = Arrays.asList(
-      RenderTypes.eyes(
+  private static final List<RenderLayer> GLOW = Arrays.asList(
+      RenderLayer.getEyes(
           LighterEnd.of("textures/entity/end_slime/end_slime_glow.png")),
-      RenderTypes.eyes(
+      RenderLayer.getEyes(
           LighterEnd.of("textures/entity/end_slime/end_slime_glow.png")),
-      RenderTypes.eyes(
+      RenderLayer.getEyes(
           LighterEnd.of("textures/entity/end_slime/end_slime_lake_glow.png")),
-      RenderTypes.eyes(
+      RenderLayer.getEyes(
           LighterEnd.of("textures/entity/end_slime/end_slime_amber_glow.png"))
   );
 
-  public EndSlimeRenderer(EntityRendererProvider.Context context) {
-    super(context, new EndSlimeModel(context.bakeLayer(EntityModels.END_SLIME_MODEL), false),
-        0.25F);
-    this.addLayer(new OverlayFeatureRenderer(this, context.getModelSet()));
-    this.addLayer(new EyesLayer<>(this) {
+  public EndSlimeRenderer(EntityRendererFactory.Context context) {
+    super(context, new EndSlimeModel(context.getPart(EntityModels.END_SLIME_MODEL), false), 0.25F);
+    this.addFeature(new OverlayFeatureRenderer(this, context.getEntityModels()));
+    this.addFeature(new EyesFeatureRenderer<>(this) {
       @Override
-      public RenderType renderType() {
+      public RenderLayer getEyesTexture() {
         return GLOW.get(0);
       }
 
       @Override
-      public void submit(
-          PoseStack matrices,
-          SubmitNodeCollector queue,
+      public void render(
+          MatrixStack matrices,
+          OrderedRenderCommandQueue queue,
           int light,
           EndSlimeRenderState state,
           float limbAngle,
           float limbDistance
       ) {
-        queue.order(1)
+        queue.getBatchingQueue(1)
             .submitModel(
-                this.getParentModel(),
+                this.getContextModel(),
                 state,
                 matrices,
                 GLOW.get(state.variant % GLOW.size()),
                 15728640,
-                OverlayTexture.NO_OVERLAY,
+                OverlayTexture.DEFAULT_UV,
                 0xffffffff,
                 null,
                 state.outlineColor,
@@ -84,7 +82,7 @@ public class EndSlimeRenderer extends
   }
 
   @Override
-  protected void scale(EndSlimeRenderState state, PoseStack matrixStack) {
+  protected void scale(EndSlimeRenderState state, MatrixStack matrixStack) {
     float f = 0.999F;
     matrixStack.scale(0.999F, 0.999F, 0.999F);
     matrixStack.translate(0.0F, 0.001F, 0.0F);
@@ -95,7 +93,7 @@ public class EndSlimeRenderer extends
   }
 
   @Override
-  public Identifier getTextureLocation(EndSlimeRenderState state) {
+  public Identifier getTexture(EndSlimeRenderState state) {
     return TEXTURES.get(state.variant % TEXTURES.size());
   }
 
@@ -105,46 +103,46 @@ public class EndSlimeRenderer extends
   }
 
   @Override
-  public void extractRenderState(EndSlime slime, EndSlimeRenderState state, float f) {
-    super.extractRenderState(slime, state, f);
+  public void updateRenderState(EndSlime slime, EndSlimeRenderState state, float f) {
+    super.updateRenderState(slime, state, f);
     state.variant = slime.getSlimeType();
-    state.stretch = Mth.lerp(f, slime.oSquish, slime.squish);
+    state.stretch = MathHelper.lerp(f, slime.lastStretch, slime.stretch);
     state.size = slime.getSize();
   }
 
   public static class OverlayFeatureRenderer extends
-      RenderLayer<EndSlimeRenderState, EndSlimeModel> {
+      FeatureRenderer<EndSlimeRenderState, EndSlimeModel> {
 
     private final EndSlimeModel model;
 
     public OverlayFeatureRenderer(
-        RenderLayerParent<EndSlimeRenderState, EndSlimeModel> context,
-        EntityModelSet loader) {
+        FeatureRendererContext<EndSlimeRenderState, EndSlimeModel> context,
+        LoadedEntityModels loader) {
       super(context);
-      this.model = new EndSlimeModel(loader.bakeLayer(EntityModels.END_SLIME_SHELL_MODEL), true);
+      this.model = new EndSlimeModel(loader.getModelPart(EntityModels.END_SLIME_SHELL_MODEL), true);
     }
 
     @Override
-    public void submit(
-        PoseStack matrixStack,
-        SubmitNodeCollector queue,
+    public void render(
+        MatrixStack matrixStack,
+        OrderedRenderCommandQueue queue,
         int light,
         EndSlimeRenderState state,
         float limbAngle,
         float limbDistance
     ) {
-      this.model.setupAnim(state);
+      this.model.setAngles(state);
 
-      boolean renderAsModel = state.appearsGlowing() && state.isInvisible;
-      if (!state.isInvisible || renderAsModel) {
-        int j = LivingEntityRenderer.getOverlayCoords(state, 0.0F);
+      boolean renderAsModel = state.hasOutline() && state.invisible;
+      if (!state.invisible || renderAsModel) {
+        int j = LivingEntityRenderer.getOverlay(state, 0.0F);
         if (renderAsModel) {
-          queue.order(1)
+          queue.getBatchingQueue(1)
               .submitModel(
                   this.model,
                   state,
                   matrixStack,
-                  RenderTypes.entityTranslucent(TEXTURES.get(state.variant % TEXTURES.size())),
+                  RenderLayer.getEntityTranslucent(TEXTURES.get(state.variant % TEXTURES.size())),
                   light,
                   j,
                   -1,
@@ -153,12 +151,12 @@ public class EndSlimeRenderer extends
                   null
               );
         } else {
-          queue.order(1)
+          queue.getBatchingQueue(1)
               .submitModel(
                   this.model,
                   state,
                   matrixStack,
-                  RenderTypes.entityTranslucent(TEXTURES.get(state.variant % TEXTURES.size())),
+                  RenderLayer.getEntityTranslucent(TEXTURES.get(state.variant % TEXTURES.size())),
                   light,
                   j,
                   -1,

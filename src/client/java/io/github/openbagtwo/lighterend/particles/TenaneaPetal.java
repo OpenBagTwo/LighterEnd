@@ -1,21 +1,21 @@
 package io.github.openbagtwo.lighterend.particles;
 
 import io.github.openbagtwo.lighterend.blocks.TenaneaFlowerRenderer;
-import net.minecraft.client.color.block.BlockColor;
-import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.color.block.BlockColorProvider;
+import net.minecraft.client.particle.BillboardParticle;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.SingleQuadParticle;
-import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
+import net.minecraft.client.particle.ParticleFactory;
+import net.minecraft.client.particle.SpriteProvider;
+import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.particle.SimpleParticleType;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
 
-public class TenaneaPetal extends SingleQuadParticle {
+public class TenaneaPetal extends BillboardParticle {
 
-  private static BlockColor provider;
+  private static BlockColorProvider provider;
 
   private double preVX;
   private double preVY;
@@ -25,11 +25,11 @@ public class TenaneaPetal extends SingleQuadParticle {
   private double nextVZ;
 
   protected TenaneaPetal(
-      ClientLevel world,
+      ClientWorld world,
       double x,
       double y,
       double z,
-      TextureAtlasSprite sprite
+      Sprite sprite
   ) {
     super(world, x, y, z, sprite);
 
@@ -37,12 +37,12 @@ public class TenaneaPetal extends SingleQuadParticle {
       provider = TenaneaFlowerRenderer.getBlockColor();
     }
     int color = provider.getColor(null, null, new BlockPos((int) x, (int) y, (int) z), 0);
-    this.rCol = ((color >> 16) & 255) / 255F;
-    this.gCol = ((color >> 8) & 255) / 255F;
-    this.bCol = ((color) & 255) / 255F;
+    this.red = ((color >> 16) & 255) / 255F;
+    this.green = ((color >> 8) & 255) / 255F;
+    this.blue = ((color) & 255) / 255F;
 
-    this.lifetime = Mth.nextInt(this.random, 120, 200);
-    this.quadSize = Mth.nextFloat(this.random, 0.05F, 0.15F);
+    this.maxAge = MathHelper.nextInt(this.random, 120, 200);
+    this.scale = MathHelper.nextFloat(this.random, 0.05F, 0.15F);
     this.setAlpha(0);
 
     this.preVX = 0;
@@ -55,7 +55,7 @@ public class TenaneaPetal extends SingleQuadParticle {
   }
 
   @Override
-  public int getLightColor(float tint) {
+  public int getBrightness(float tint) {
     return 15728880;
   }
 
@@ -74,47 +74,47 @@ public class TenaneaPetal extends SingleQuadParticle {
 
     if (this.age <= 40) {
       this.setAlpha(this.age / 40F);
-    } else if (this.age >= this.lifetime - 40) {
-      this.setAlpha((this.lifetime - this.age) / 40F);
+    } else if (this.age >= this.maxAge - 40) {
+      this.setAlpha((this.maxAge - this.age) / 40F);
     }
 
-    if (this.age >= this.lifetime) {
-      this.remove();
+    if (this.age >= this.maxAge) {
+      this.markDead();
     }
 
-    this.xd = Mth.lerp(delta, preVX, nextVX);
-    this.yd = Mth.lerp(delta, preVY, nextVY);
-    this.zd = Mth.lerp(delta, preVZ, nextVZ);
+    this.velocityX = MathHelper.lerp(delta, preVX, nextVX);
+    this.velocityY = MathHelper.lerp(delta, preVY, nextVY);
+    this.velocityZ = MathHelper.lerp(delta, preVZ, nextVZ);
 
     super.tick();
   }
 
   @Override
-  public SingleQuadParticle.Layer getLayer() {
-    return SingleQuadParticle.Layer.TRANSLUCENT;
+  public BillboardParticle.RenderType getRenderType() {
+    return BillboardParticle.RenderType.PARTICLE_ATLAS_TRANSLUCENT;
   }
 
-  public static class Factory implements ParticleProvider<SimpleParticleType> {
+  public static class Factory implements ParticleFactory<SimpleParticleType> {
 
-    private final SpriteSet sprites;
+    private final SpriteProvider sprites;
 
-    public Factory(SpriteSet sprites) {
+    public Factory(SpriteProvider sprites) {
       this.sprites = sprites;
     }
 
     @Override
     public Particle createParticle(
         SimpleParticleType type,
-        ClientLevel world,
+        ClientWorld world,
         double x,
         double y,
         double z,
         double vX,
         double vY,
         double vZ,
-        RandomSource random
+        Random random
     ) {
-      return new TenaneaPetal(world, x, y, z, sprites.get(random));
+      return new TenaneaPetal(world, x, y, z, sprites.getSprite(random));
     }
   }
 

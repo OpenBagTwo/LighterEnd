@@ -2,10 +2,10 @@ package io.github.openbagtwo.lighterend.mixin;
 
 
 import io.github.openbagtwo.lighterend.items.ArmoredElytra;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,13 +16,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class GlideDecayMixin {
 
   @Shadow
-  public abstract ItemStack getItemBySlot(EquipmentSlot equipmentSlot);
+  public abstract ItemStack getEquippedStack(EquipmentSlot equipmentSlot);
 
-  @Inject(method = "updateFallFlyingMovement(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;", at = @At("RETURN"), cancellable = true)
-  public void decayGlideVelocity(CallbackInfoReturnable<Vec3> cir) {
+  @Inject(method = "calcGlidingVelocity(Lnet/minecraft/util/math/Vec3d;)Lnet/minecraft/util/math/Vec3d;", at = @At("RETURN"), cancellable = true)
+  public void decayGlideVelocity(CallbackInfoReturnable<Vec3d> cir) {
     float decayFactor = 1.0F;
 
-    if (getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof ArmoredElytra elytra) {
+    if (getEquippedStack(EquipmentSlot.CHEST).getItem() instanceof ArmoredElytra elytra) {
       decayFactor = elytra.glideDecay;
     }
 

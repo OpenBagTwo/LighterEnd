@@ -2,96 +2,96 @@ package io.github.openbagtwo.lighterend.blocks;
 
 import com.mojang.serialization.MapCodec;
 import io.github.openbagtwo.lighterend.blocks.entities.PedestalDisplay;
-import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SelectableSlotContainer;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.material.PushReaction;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.InteractibleSlotContainer;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 
-public class Pedestal extends BaseEntityBlock implements SelectableSlotContainer {
+public class Pedestal extends BlockWithEntity implements InteractibleSlotContainer {
 
   private static final VoxelShape SHAPE;
 
-  public static final MapCodec<Pedestal> CODEC = Pedestal.simpleCodec(Pedestal::new);
+  public static final MapCodec<Pedestal> CODEC = Pedestal.createCodec(Pedestal::new);
 
-  public Pedestal(Properties settings) {
-    super(settings.pushReaction(PushReaction.BLOCK));
+  public Pedestal(Settings settings) {
+    super(settings.pistonBehavior(PistonBehavior.BLOCK));
   }
 
   @Override
-  protected VoxelShape getShape(
+  protected VoxelShape getOutlineShape(
       BlockState state,
-      BlockGetter world,
+      BlockView world,
       BlockPos pos,
-      CollisionContext context
+      ShapeContext context
   ) {
     return SHAPE;
   }
 
   @Override
-  protected MapCodec<? extends BaseEntityBlock> codec() {
+  protected MapCodec<? extends BlockWithEntity> getCodec() {
     return CODEC;
   }
 
   @Override
-  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+  public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
     return new PedestalDisplay(pos, state);
   }
 
   @Override
-  protected InteractionResult useItemOn(
+  protected ActionResult onUseWithItem(
       ItemStack stack,
       BlockState state,
-      Level world,
+      World world,
       BlockPos pos,
-      Player player,
-      InteractionHand hand,
+      PlayerEntity player,
+      Hand hand,
       BlockHitResult hit
   ) {
-    if ((world.getBlockEntity(pos) instanceof PedestalDisplay display) && (!world.isClientSide())) {
+    if ((world.getBlockEntity(pos) instanceof PedestalDisplay display) && (!world.isClient())) {
 
       boolean makeSound = false;
       ItemStack toInsert = ItemStack.EMPTY;
 
       if (!stack.isEmpty()) {
         toInsert = stack.copyWithCount(1);
-        stack.shrink(1);
+        stack.decrement(1);
         makeSound = true;
       }
       if (!display.isEmpty()) {
-        ItemStack stackOnPedestal = display.getItem(0);
-        if (!player.getInventory().add(stackOnPedestal)) {
-          player.drop(stackOnPedestal, false);
+        ItemStack stackOnPedestal = display.getStack(0);
+        if (!player.getInventory().insertStack(stackOnPedestal)) {
+          player.dropItem(stackOnPedestal, false);
         }
         makeSound = true;
-        display.clearContent();
+        display.clear();
       }
       if (makeSound) {
-        display.setItem(0, toInsert);
-        display.setChanged();
-        player.getInventory().setChanged();
-        world.playSound(player, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 2f);
-        world.gameEvent(GameEvent.ENTITY_INTERACT, pos, GameEvent.Context.of(state));
-        world.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
+        display.setStack(0, toInsert);
+        display.markDirty();
+        player.getInventory().markDirty();
+        world.playSound(player, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 2f);
+        world.emitGameEvent(GameEvent.ENTITY_INTERACT, pos, GameEvent.Emitter.of(state));
+        world.updateListeners(pos, state, state, Block.NOTIFY_ALL);
       }
     }
 
-    return InteractionResult.SUCCESS;
+    return ActionResult.SUCCESS;
   }
 
   @Override
@@ -105,12 +105,12 @@ public class Pedestal extends BaseEntityBlock implements SelectableSlotContainer
   }
 
   static {
-    VoxelShape basinUp = Block.box(2, 3, 2, 14, 4, 14);
-    VoxelShape basinDown = Block.box(0, 0, 0, 16, 3, 16);
-    VoxelShape pedestalDefault = Block.box(1, 12, 1, 15, 14, 15);
-    VoxelShape pillarDefault = Block.box(3, 0, 3, 13, 12, 13);
-    VoxelShape basin = Shapes.or(basinDown, basinUp);
-    SHAPE = Shapes.or(basin, pillarDefault, pedestalDefault);
+    VoxelShape basinUp = Block.createCuboidShape(2, 3, 2, 14, 4, 14);
+    VoxelShape basinDown = Block.createCuboidShape(0, 0, 0, 16, 3, 16);
+    VoxelShape pedestalDefault = Block.createCuboidShape(1, 12, 1, 15, 14, 15);
+    VoxelShape pillarDefault = Block.createCuboidShape(3, 0, 3, 13, 12, 13);
+    VoxelShape basin = VoxelShapes.union(basinDown, basinUp);
+    SHAPE = VoxelShapes.union(basin, pillarDefault, pedestalDefault);
   }
 
 

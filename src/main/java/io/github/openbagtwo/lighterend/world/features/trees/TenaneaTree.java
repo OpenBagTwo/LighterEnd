@@ -17,59 +17,59 @@ import io.github.openbagtwo.lighterend.world.gen.noise.OpenSimplexNoise;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.LeavesBlock;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 import org.joml.Vector3f;
 
-public class TenaneaTree extends Feature<NoneFeatureConfiguration> {
+public class TenaneaTree extends Feature<DefaultFeatureConfig> {
 
   private static final Function<BlockState, Boolean> REPLACE;
   private static final Function<BlockState, Boolean> IGNORE;
   private static final List<Vector3f> SPLINE;
 
   public TenaneaTree() {
-    super(NoneFeatureConfiguration.CODEC);
+    super(DefaultFeatureConfig.CODEC);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+  public boolean generate(FeatureContext<DefaultFeatureConfig> featureConfig) {
 
-    final RandomSource random = featureConfig.random();
-    final BlockPos pos = featureConfig.origin();
-    final WorldGenLevel world = featureConfig.level();
+    final Random random = featureConfig.getRandom();
+    final BlockPos pos = featureConfig.getOrigin();
+    final StructureWorldAccess world = featureConfig.getWorld();
 
-    if (!world.getBlockState(pos.below()).is(LighterEndTags.END_SOIL)) {
+    if (!world.getBlockState(pos.down()).isIn(LighterEndTags.END_SOIL)) {
       return false;
     }
 
-    float size = Mth.nextInt(random, 7, 10);
+    float size = MathHelper.nextInt(random, 7, 10);
     int count = (int) (size * 0.45F);
     float var = MathUtils.PI2 / (float) (count * 3);
-    float start = Mth.nextFloat(random, 0, MathUtils.PI2);
+    float start = MathHelper.nextFloat(random, 0, MathUtils.PI2);
     for (int i = 0; i < count; i++) {
       float angle =
-          (float) i / (float) count * MathUtils.PI2 + Mth.nextFloat(random, 0, var) + start;
+          (float) i / (float) count * MathUtils.PI2 + MathHelper.nextFloat(random, 0, var) + start;
       List<Vector3f> spline = MathUtils.copySpline(SPLINE);
       MathUtils.rotateSpline(spline, angle);
-      MathUtils.scale(spline, size + Mth.nextFloat(random, 0, size * 0.5F));
+      MathUtils.scale(spline, size + MathHelper.nextFloat(random, 0, size * 0.5F));
       MathUtils.offsetParts(spline, random, 1F, 0, 1F);
-      MathUtils.fillSpline(spline, world, LighterEndBlocks.TENANEA.wood.defaultBlockState(),
+      MathUtils.fillSpline(spline, world, LighterEndBlocks.TENANEA.wood.getDefaultState(),
           pos,
           REPLACE);
       Vector3f last = spline.getLast();
-      float leavesRadius = (size * 0.3F + Mth.nextFloat(random, 0.8F, 1.5F)) * 1.4F;
+      float leavesRadius = (size * 0.3F + MathHelper.nextFloat(random, 0.8F, 1.5F)) * 1.4F;
       OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
-      leavesBall(world, pos.offset((int) last.x(), (int) last.y(), (int) last.z()), leavesRadius,
+      leavesBall(world, pos.add((int) last.x(), (int) last.y(), (int) last.z()), leavesRadius,
           random, noise);
     }
 
@@ -77,15 +77,15 @@ public class TenaneaTree extends Feature<NoneFeatureConfiguration> {
   }
 
   private void leavesBall(
-      WorldGenLevel world,
+      StructureWorldAccess world,
       BlockPos pos,
       float radius,
-      RandomSource random,
+      Random random,
       OpenSimplexNoise noise
   ) {
     SDF sphere = new SDFSphere().setRadius(radius)
-        .setBlock(LighterEndBlocks.TENANEA_LEAVES.defaultBlockState()
-            .setValue(LeavesBlock.DISTANCE, 6));
+        .setBlock(LighterEndBlocks.TENANEA_LEAVES.getDefaultState()
+            .with(LeavesBlock.DISTANCE, 6));
     SDF sub = new SDFScale().setScale(5).setSource(sphere);
     sub = new SDFTranslate().setTranslate(0, -radius * 5, 0).setSource(sub);
     sphere = new SDFSubtract().setSourceA(sphere).setSourceB(sub);
@@ -95,30 +95,30 @@ public class TenaneaTree extends Feature<NoneFeatureConfiguration> {
         vec.y() * 0.2,
         vec.z() * 0.2
     ) * 2F).setSource(sphere);
-    sphere = new SDFDisplace().setFunction((vec) -> Mth.nextFloat(random, -1.5F, 1.5F))
+    sphere = new SDFDisplace().setFunction((vec) -> MathHelper.nextFloat(random, -1.5F, 1.5F))
         .setSource(sphere);
 
-    MutableBlockPos mut = new MutableBlockPos();
-    for (Direction d1 : Direction.Plane.HORIZONTAL) {
-      BlockPos p = mut.set(pos).move(Direction.UP).move(d1).immutable();
-      world.setBlock(p, LighterEndBlocks.TENANEA.wood.defaultBlockState(), Flags.SILENT);
-      for (Direction d2 : Direction.Plane.HORIZONTAL) {
+    Mutable mut = new Mutable();
+    for (Direction d1 : Direction.Type.HORIZONTAL) {
+      BlockPos p = mut.set(pos).move(Direction.UP).move(d1).toImmutable();
+      world.setBlockState(p, LighterEndBlocks.TENANEA.wood.getDefaultState(), Flags.SILENT);
+      for (Direction d2 : Direction.Type.HORIZONTAL) {
         mut.set(p).move(Direction.UP).move(d2);
-        world.setBlock(p, LighterEndBlocks.TENANEA.wood.defaultBlockState(), Flags.SILENT);
+        world.setBlockState(p, LighterEndBlocks.TENANEA.wood.getDefaultState(), Flags.SILENT);
       }
     }
 
-    BlockState top = LighterEndBlocks.TENANEA_FLOWER.defaultBlockState()
-        .setValue(BlockStateProperties.TIP, false);
-    BlockState middle = LighterEndBlocks.TENANEA_FLOWER.defaultBlockState()
-        .setValue(BlockStateProperties.TIP, false);
-    BlockState bottom = LighterEndBlocks.TENANEA_FLOWER.defaultBlockState()
-        .setValue(BlockStateProperties.TIP, true);
+    BlockState top = LighterEndBlocks.TENANEA_FLOWER.getDefaultState()
+        .with(Properties.TIP, false);
+    BlockState middle = LighterEndBlocks.TENANEA_FLOWER.getDefaultState()
+        .with(Properties.TIP, false);
+    BlockState bottom = LighterEndBlocks.TENANEA_FLOWER.getDefaultState()
+        .with(Properties.TIP, true);
 
     List<BlockPos> support = Lists.newArrayList();
     sphere.addPostProcess((info) -> {
       if (random.nextInt(6) == 0 && info.getStateDown().isAir()) {
-        BlockPos d = info.getPos().below();
+        BlockPos d = info.getPos().down();
         support.add(d);
       }
       if (random.nextInt(5) == 0) {
@@ -128,7 +128,7 @@ public class TenaneaTree extends Feature<NoneFeatureConfiguration> {
             return info.getState();
           }
         }
-        info.setState(LighterEndBlocks.TENANEA.wood.defaultBlockState());
+        info.setState(LighterEndBlocks.TENANEA.wood.getDefaultState());
       }
 
       if (Arrays.asList(LighterEndBlocks.TENANEA.log, LighterEndBlocks.TENANEA.wood)
@@ -146,9 +146,9 @@ public class TenaneaTree extends Feature<NoneFeatureConfiguration> {
                 mut.setY(y + info.getPos().getY());
                 BlockState state = info.getState(mut);
                 if (state.getBlock() instanceof LeavesBlock) {
-                  int distance = state.getValue(LeavesBlock.DISTANCE);
+                  int distance = state.get(LeavesBlock.DISTANCE);
                   if (d < distance) {
-                    info.setState(mut, state.setValue(LeavesBlock.DISTANCE, d));
+                    info.setState(mut, state.with(LeavesBlock.DISTANCE, d));
                   }
                 }
               }
@@ -159,24 +159,24 @@ public class TenaneaTree extends Feature<NoneFeatureConfiguration> {
       return info.getState();
     });
     sphere.fillRecursiveIgnore(world, pos, IGNORE);
-    world.setBlock(pos, LighterEndBlocks.TENANEA.wood.defaultBlockState(), Flags.SILENT);
+    world.setBlockState(pos, LighterEndBlocks.TENANEA.wood.getDefaultState(), Flags.SILENT);
 
     support.forEach((bpos) -> {
       BlockState state = world.getBlockState(bpos);
       if (state.isAir()) {
-        int count = Mth.nextInt(random, 3, 8);
+        int count = MathHelper.nextInt(random, 3, 8);
         mut.set(bpos);
-        if (world.getBlockState(mut.above()).is(LighterEndBlocks.TENANEA_LEAVES)) {
-          world.setBlock(mut, top, Flags.SILENT);
+        if (world.getBlockState(mut.up()).isOf(LighterEndBlocks.TENANEA_LEAVES)) {
+          world.setBlockState(mut, top, Flags.SILENT);
           for (int i = 1; i < count; i++) {
             mut.setY(mut.getY() - 1);
-            if (world.isEmptyBlock(mut.below())) {
-              world.setBlock(mut, middle, Flags.SILENT);
+            if (world.isAir(mut.down())) {
+              world.setBlockState(mut, middle, Flags.SILENT);
             } else {
               break;
             }
           }
-          world.setBlock(mut, bottom, Flags.SILENT);
+          world.setBlockState(mut, bottom, Flags.SILENT);
         }
       }
     });

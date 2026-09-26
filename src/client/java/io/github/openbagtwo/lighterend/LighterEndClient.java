@@ -16,7 +16,7 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.network.chat.Component;
+import net.minecraft.text.Text;
 
 public class LighterEndClient implements ClientModInitializer {
 
@@ -43,13 +43,13 @@ public class LighterEndClient implements ClientModInitializer {
           ResourceManagerHelper.registerBuiltinResourcePack(
               LighterEnd.of("wing_trims"),
               container,
-              Component.translatable("resourcepacks.lighterend.wing_trims.title"),
+              Text.translatable("resourcepacks.lighterend.wing_trims.title"),
               ResourcePackActivationType.DEFAULT_ENABLED
           );
           ResourceManagerHelper.registerBuiltinResourcePack(
               LighterEnd.of("visibly_waxed"),
               container,
-              Component.translatable("resourcepacks.lighterend.visibly_waxed.title"),
+              Text.translatable("resourcepacks.lighterend.visibly_waxed.title"),
               ResourcePackActivationType.NORMAL
           );
         }

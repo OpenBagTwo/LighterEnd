@@ -1,40 +1,40 @@
 package io.github.openbagtwo.lighterend.blocks;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.TransparentBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.TransparentBlock;
+import net.minecraft.block.enums.NoteBlockInstrument;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockView;
 
 public class AuroraCrystal extends TransparentBlock {
 
-  public AuroraCrystal(Properties properties) {
+  public AuroraCrystal(Settings properties) {
     super(
         properties
             .instrument(NoteBlockInstrument.HAT)
-            .sound(SoundType.GLASS)
-            .noOcclusion()
-            .isValidSpawn(Blocks::never)
-            .isRedstoneConductor(Blocks::never)
-            .isSuffocating(Blocks::never)
-            .isViewBlocking(Blocks::never)
+            .sounds(BlockSoundGroup.GLASS)
+            .nonOpaque()
+            .allowsSpawning(Blocks::never)
+            .solidBlock(Blocks::never)
+            .suffocates(Blocks::never)
+            .blockVision(Blocks::never)
             .strength(0.5F)
-            .lightLevel((bs) -> 15)
-            .mapColor(MapColor.COLOR_MAGENTA)
+            .luminance((bs) -> 15)
+            .mapColor(MapColor.MAGENTA)
     );
   }
 
   @Override
-  public VoxelShape getVisualShape(
+  public VoxelShape getCameraCollisionShape(
       BlockState blockState,
-      BlockGetter blockGetter,
+      BlockView blockGetter,
       BlockPos blockPos,
-      CollisionContext collisionContext
+      ShapeContext collisionContext
   ) {
     return this.getCollisionShape(blockState, blockGetter, blockPos, collisionContext);
   }

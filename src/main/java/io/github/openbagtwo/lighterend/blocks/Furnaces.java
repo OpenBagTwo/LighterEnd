@@ -1,65 +1,65 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlockEntities;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.stats.Stats;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.FurnaceMenu;
-import net.minecraft.world.inventory.SmokerMenu;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FurnaceBlock;
-import net.minecraft.world.level.block.SmokerBlock;
-import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.FuelValues;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FurnaceBlock;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.SmokerBlock;
+import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.enums.NoteBlockInstrument;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.FuelRegistry;
+import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.screen.FurnaceScreenHandler;
+import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.SmokerScreenHandler;
+import net.minecraft.stat.Stats;
+import net.minecraft.text.Text;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class Furnaces {
 
   public static class EndFurnace extends FurnaceBlock {
 
-    public EndFurnace(Properties settings) {
+    public EndFurnace(Settings settings) {
       super(
           settings
-              .mapColor(MapColor.SAND)
+              .mapColor(MapColor.PALE_YELLOW)
               .instrument(NoteBlockInstrument.BASEDRUM)
-              .requiresCorrectToolForDrops()
+              .requiresTool()
               .strength(7F)
-              .lightLevel(Blocks.litBlockEmission(13))
+              .luminance(Blocks.createLightLevelFromLitBlockState(13))
       );
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
       return new EndFurnaceEntity(pos, state);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
-        Level world, BlockState state, BlockEntityType<T> type
+        World world, BlockState state, BlockEntityType<T> type
     ) {
-      return createFurnaceTicker(world, type, LighterEndBlockEntities.END_FURNACE);
+      return validateTicker(world, type, LighterEndBlockEntities.END_FURNACE);
     }
 
     @Override
-    protected void openContainer(Level world, BlockPos pos, Player player) {
+    protected void openScreen(World world, BlockPos pos, PlayerEntity player) {
       BlockEntity blockEntity = world.getBlockEntity(pos);
       if (blockEntity instanceof EndFurnaceEntity) {
-        player.openMenu((MenuProvider) blockEntity);
-        player.awardStat(Stats.INTERACT_WITH_FURNACE);
+        player.openHandledScreen((NamedScreenHandlerFactory) blockEntity);
+        player.incrementStat(Stats.INTERACT_WITH_FURNACE);
       }
     }
   }
@@ -71,48 +71,48 @@ public class Furnaces {
     }
 
     @Override
-    protected Component getDefaultName() {
-      return Component.translatable("container.furnace");
+    protected Text getContainerName() {
+      return Text.translatable("container.furnace");
     }
 
     @Override
-    protected AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
-      return new FurnaceMenu(syncId, playerInventory, this, this.dataAccess);
+    protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+      return new FurnaceScreenHandler(syncId, playerInventory, this, this.propertyDelegate);
     }
   }
 
   public static class EndSmoker extends SmokerBlock {
 
-    public EndSmoker(Properties settings) {
+    public EndSmoker(Settings settings) {
       super(
           settings
-              .mapColor(MapColor.SAND)
+              .mapColor(MapColor.PALE_YELLOW)
               .instrument(NoteBlockInstrument.BASEDRUM)
-              .requiresCorrectToolForDrops()
+              .requiresTool()
               .strength(7F)
-              .lightLevel(Blocks.litBlockEmission(13))
+              .luminance(Blocks.createLightLevelFromLitBlockState(13))
       );
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
       return new EndSmokerEntity(pos, state);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
-        Level world, BlockState state, BlockEntityType<T> type
+        World world, BlockState state, BlockEntityType<T> type
     ) {
-      return createFurnaceTicker(world, type, LighterEndBlockEntities.END_SMOKER);
+      return validateTicker(world, type, LighterEndBlockEntities.END_SMOKER);
     }
 
     @Override
-    protected void openContainer(Level world, BlockPos pos, Player player) {
+    protected void openScreen(World world, BlockPos pos, PlayerEntity player) {
       BlockEntity blockEntity = world.getBlockEntity(pos);
       if (blockEntity instanceof EndSmokerEntity) {
-        player.openMenu((MenuProvider) blockEntity);
-        player.awardStat(Stats.INTERACT_WITH_SMOKER);
+        player.openHandledScreen((NamedScreenHandlerFactory) blockEntity);
+        player.incrementStat(Stats.INTERACT_WITH_SMOKER);
       }
     }
   }
@@ -124,18 +124,18 @@ public class Furnaces {
     }
 
     @Override
-    protected Component getDefaultName() {
-      return Component.translatable("container.smoker");
+    protected Text getContainerName() {
+      return Text.translatable("container.smoker");
     }
 
     @Override
-    protected int getBurnDuration(FuelValues fuelRegistry, ItemStack stack) {
-      return super.getBurnDuration(fuelRegistry, stack) / 2;
+    protected int getFuelTime(FuelRegistry fuelRegistry, ItemStack stack) {
+      return super.getFuelTime(fuelRegistry, stack) / 2;
     }
 
     @Override
-    protected AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
-      return new SmokerMenu(syncId, playerInventory, this, this.dataAccess);
+    protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+      return new SmokerScreenHandler(syncId, playerInventory, this, this.propertyDelegate);
     }
   }
 

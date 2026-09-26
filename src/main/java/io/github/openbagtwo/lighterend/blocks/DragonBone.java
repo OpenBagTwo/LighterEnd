@@ -1,18 +1,18 @@
 package io.github.openbagtwo.lighterend.blocks;
 
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
+import net.minecraft.block.AbstractBlock.Settings;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.enums.NoteBlockInstrument;
+import net.minecraft.sound.BlockSoundGroup;
 
 public class DragonBone {
 
-  public static Properties applySettings(Properties settings) {
+  public static Settings applySettings(Settings settings) {
     return settings
         .instrument(NoteBlockInstrument.XYLOPHONE)
-        .requiresCorrectToolForDrops()
+        .requiresTool()
         .strength(3.0F)
-        .sound(SoundType.BONE_BLOCK)
+        .sounds(BlockSoundGroup.BONE)
         .mapColor(MapColor.TERRACOTTA_BLACK);
   }
 

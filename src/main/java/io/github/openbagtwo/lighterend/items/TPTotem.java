@@ -13,109 +13,109 @@ import io.netty.buffer.ByteBuf;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
-import net.minecraft.ChatFormatting;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.GlobalPos;
-import net.minecraft.core.component.DataComponentGetter;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.fox.Fox;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.DeathProtection;
-import net.minecraft.world.item.component.TooltipProvider;
-import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
-import net.minecraft.world.item.consume_effects.ClearAllStatusEffectsConsumeEffect;
-import net.minecraft.world.item.consume_effects.ConsumeEffect;
-import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.portal.TeleportTransition;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.block.BlockState;
+import net.minecraft.component.ComponentsAccess;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DeathProtectionComponent;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.passive.FoxEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
+import net.minecraft.item.consume.ClearAllEffectsConsumeEffect;
+import net.minecraft.item.consume.ConsumeEffect;
+import net.minecraft.item.tooltip.TooltipAppender;
+import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Rarity;
+import net.minecraft.util.dynamic.Codecs;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.GlobalPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.TeleportTarget;
+import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 
 public class TPTotem extends Item {
 
-  public TPTotem(Properties settings) {
+  public TPTotem(Settings settings) {
     super(
         settings
-            .stacksTo(1)
+            .maxCount(1)
             .rarity(Rarity.UNCOMMON)
-            .component(DataComponents.DEATH_PROTECTION, TOTEM_EFFECTS)
+            .component(DataComponentTypes.DEATH_PROTECTION, TOTEM_EFFECTS)
     );
   }
 
   @Override
-  public boolean isFoil(ItemStack stack) {
-    return stack.has(LighterEndData.TOTEM_TARGET) || super.isFoil(stack);
+  public boolean hasGlint(ItemStack stack) {
+    return stack.contains(LighterEndData.TOTEM_TARGET) || super.hasGlint(stack);
   }
 
   @Override
-  public InteractionResult useOn(UseOnContext context) {
-    BlockPos blockPos = context.getClickedPos();
-    Level world = context.getLevel();
+  public ActionResult useOnBlock(ItemUsageContext context) {
+    BlockPos blockPos = context.getBlockPos();
+    World world = context.getWorld();
     BlockState state = world.getBlockState(blockPos);
 
-    if (!state.is(LighterEndBlocks.OBELISK)) {
-      return super.useOn(context);
+    if (!state.isOf(LighterEndBlocks.OBELISK)) {
+      return super.useOnBlock(context);
     }
 
-    switch (state.getValueOrElse(Obelisk.SHAPE, null)) {
+    switch (state.get(Obelisk.SHAPE, null)) {
       case Obelisk.Shape.TOP:
-        blockPos = blockPos.below();
+        blockPos = blockPos.down();
         break;
       case Obelisk.Shape.BOTTOM:
-        blockPos = blockPos.above();
+        blockPos = blockPos.up();
         break;
       case Obelisk.Shape.MIDDLE:
         break;
       default:
-        return super.useOn(context);
+        return super.useOnBlock(context);
     }
 
-    world.playSound(null, blockPos, LighterEndSounds.TP_TOTEM_TARGET_SET, SoundSource.PLAYERS,
+    world.playSound(null, blockPos, LighterEndSounds.TP_TOTEM_TARGET_SET, SoundCategory.PLAYERS,
         1.0F, 1.0F);
-    Player playerEntity = context.getPlayer();
-    ItemStack itemStack = context.getItemInHand();
+    PlayerEntity playerEntity = context.getPlayer();
+    ItemStack itemStack = context.getStack();
     Target target = new Target(
-        Optional.of(GlobalPos.of(world.dimension(), blockPos))
+        Optional.of(GlobalPos.create(world.getRegistryKey(), blockPos))
     );
-    if (!playerEntity.hasInfiniteMaterials() && itemStack.getCount() == 1) {
+    if (!playerEntity.isInCreativeMode() && itemStack.getCount() == 1) {
       itemStack.set(LighterEndData.TOTEM_TARGET, target);
     } else {
-      ItemStack newStack = itemStack.transmuteCopy(
+      ItemStack newStack = itemStack.copyComponentsToNewStack(
           LighterEndItems.TOTEM_OF_TELEPORTATION, 1);
-      itemStack.consume(1, playerEntity);
+      itemStack.decrementUnlessCreative(1, playerEntity);
       newStack.set(LighterEndData.TOTEM_TARGET, target);
-      if (!playerEntity.getInventory().add(newStack)) {
-        playerEntity.drop(newStack, false);
+      if (!playerEntity.getInventory().insertStack(newStack)) {
+        playerEntity.dropItem(newStack, false);
       }
     }
-    return InteractionResult.SUCCESS;
+    return ActionResult.SUCCESS;
 
   }
 
 
-  public static final DeathProtection TOTEM_EFFECTS = new DeathProtection(
+  public static final DeathProtectionComponent TOTEM_EFFECTS = new DeathProtectionComponent(
       List.of(
-          new ClearAllStatusEffectsConsumeEffect(),
-          new ApplyStatusEffectsConsumeEffect(
+          new ClearAllEffectsConsumeEffect(),
+          new ApplyEffectsConsumeEffect(
               List.of(
-                  new MobEffectInstance(MobEffects.REGENERATION, 900, 1)
+                  new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1)
               )
           ),
           new FixedTeleport()
@@ -127,12 +127,12 @@ public class TPTotem extends Item {
     private static final float DEFAULT_DIAMETER = 0F;
     public static final MapCodec<FixedTeleport> CODEC = RecordCodecBuilder.mapCodec(
         instance -> instance.group(
-            ExtraCodecs.POSITIVE_FLOAT.optionalFieldOf("diameter", DEFAULT_DIAMETER)
+            Codecs.POSITIVE_FLOAT.optionalFieldOf("diameter", DEFAULT_DIAMETER)
                 .forGetter(FixedTeleport::diameter)
         ).apply(instance, FixedTeleport::new)
     );
-    public static final StreamCodec<RegistryFriendlyByteBuf, FixedTeleport> STREAM_CODEC = StreamCodec.composite(
-        ByteBufCodecs.FLOAT,
+    public static final PacketCodec<RegistryByteBuf, FixedTeleport> PACKET_CODEC = PacketCodec.tuple(
+        PacketCodecs.FLOAT,
         FixedTeleport::diameter,
         FixedTeleport::new
     );
@@ -147,7 +147,7 @@ public class TPTotem extends Item {
     }
 
     @Override
-    public boolean apply(Level world, ItemStack stack, LivingEntity user) {
+    public boolean onConsume(World world, ItemStack stack, LivingEntity user) {
 
       Target target = stack.getComponents().get(LighterEndData.TOTEM_TARGET);
       if (target == null) {
@@ -158,44 +158,44 @@ public class TPTotem extends Item {
         return false;
       }
 
-      ServerLevel destinationDimension = world.getServer().getLevel(tpTarget.dimension());
+      ServerWorld destinationDimension = world.getServer().getWorld(tpTarget.dimension());
       if (destinationDimension == null) {
         return false;
       }
 
-      destinationDimension.getChunkAt(tpTarget.pos()).setLoaded(true);  // Unnecessary?
+      destinationDimension.getWorldChunk(tpTarget.pos()).setLoadedToWorld(true);  // Unnecessary?
 
-      user.teleport(
-          new TeleportTransition(
+      user.teleportTo(
+          new TeleportTarget(
               destinationDimension,
-              tpTarget.pos().getCenter(),
-              Vec3.ZERO,
-              user.getYRot(),
-              user.getXRot(),
-              TeleportTransition.DO_NOTHING)
+              tpTarget.pos().toCenterPos(),
+              Vec3d.ZERO,
+              user.getYaw(),
+              user.getPitch(),
+              TeleportTarget.NO_OP)
       );
 
-      world.gameEvent(GameEvent.TELEPORT, tpTarget.pos(), GameEvent.Context.of(user));
+      world.emitGameEvent(GameEvent.TELEPORT, tpTarget.pos(), GameEvent.Emitter.of(user));
 
-      if (user instanceof Fox) {
+      if (user instanceof FoxEntity) {
         world.playSound(null, user.getX(), user.getY(), user.getZ(),
-            SoundEvents.FOX_TELEPORT, SoundSource.NEUTRAL);
-      } else if (user instanceof Player) {
+            SoundEvents.ENTITY_FOX_TELEPORT, SoundCategory.NEUTRAL);
+      } else if (user instanceof PlayerEntity) {
         world.playSound(null, user.getX(), user.getY(), user.getZ(),
-            LighterEndSounds.TOTEM_TELEPORT, SoundSource.PLAYERS);
+            LighterEndSounds.TOTEM_TELEPORT, SoundCategory.PLAYERS);
       }
 
-      user.resetFallDistance();
+      user.onLanding();
 
-      if (user instanceof Player player) {
-        player.resetCurrentImpulseContext();
+      if (user instanceof PlayerEntity player) {
+        player.clearCurrentExplosion();
       }
 
       return true;
     }
   }
 
-  public record Target(Optional<GlobalPos> target) implements TooltipProvider {
+  public record Target(Optional<GlobalPos> target) implements TooltipAppender {
 
     public static final Codec<Target> CODEC = RecordCodecBuilder.create(
         instance -> instance.group(
@@ -204,33 +204,33 @@ public class TPTotem extends Item {
             )
             .apply(instance, Target::new)
     );
-    public static final StreamCodec<ByteBuf, Target> PACKET_CODEC = StreamCodec.composite(
-        GlobalPos.STREAM_CODEC.apply(ByteBufCodecs::optional),
+    public static final PacketCodec<ByteBuf, Target> PACKET_CODEC = PacketCodec.tuple(
+        GlobalPos.PACKET_CODEC.collect(PacketCodecs::optional),
         Target::target,
         Target::new
     );
 
     @Override
-    public void addToTooltip(
+    public void appendTooltip(
         Item.TooltipContext context,
-        Consumer<Component> textConsumer,
-        TooltipFlag type,
-        DataComponentGetter components
+        Consumer<Text> textConsumer,
+        TooltipType type,
+        ComponentsAccess components
     ) {
 
       if (this.target.isEmpty()) {
         textConsumer.accept(
-            Component.translatable(
+            Text.translatable(
                 "item." + LighterEnd.MOD_ID + ".totem_of_teleportation.no_target"
-            ).withStyle(ChatFormatting.GRAY)
+            ).formatted(Formatting.GRAY)
         );
       } else {
         textConsumer.accept(
-            Component.translatable(
+            Text.translatable(
                 "item." + LighterEnd.MOD_ID + ".totem_of_teleportation.targeting",
                 this.target.get().pos().toShortString(),
-                Component.translatable(this.target.get().dimension().identifier().toLanguageKey())
-            ).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)
+                Text.translatable(this.target.get().dimension().getValue().toTranslationKey())
+            ).formatted(Formatting.GRAY, Formatting.ITALIC)
         );
       }
     }

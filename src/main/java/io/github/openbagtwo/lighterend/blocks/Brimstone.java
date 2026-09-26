@@ -1,75 +1,75 @@
 package io.github.openbagtwo.lighterend.blocks;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndBlocks;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition.Builder;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.MapColor;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.enums.NoteBlockInstrument;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.StateManager.Builder;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 
 public class Brimstone extends Block {
 
-  public static final BooleanProperty ACTIVATED = BooleanProperty.create("active");
+  public static final BooleanProperty ACTIVATED = BooleanProperty.of("active");
 
-  public Brimstone(Properties settings) {
+  public Brimstone(Settings settings) {
     super(
         settings
             .instrument(NoteBlockInstrument.BASEDRUM)
-            .requiresCorrectToolForDrops()
+            .requiresTool()
             .strength(3.0F, 9.0F)
-            .mapColor(MapColor.COLOR_BROWN)
-            .randomTicks()
+            .mapColor(MapColor.BROWN)
+            .ticksRandomly()
     );
-    registerDefaultState(stateDefinition.any().setValue(ACTIVATED, false));
+    setDefaultState(stateManager.getDefaultState().with(ACTIVATED, false));
   }
 
   @Override
-  protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+  protected void appendProperties(Builder<Block, BlockState> builder) {
     builder.add(ACTIVATED);
   }
 
   @Override
-  protected void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+  protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
     boolean deactivate = true;
-    for (Direction dir : UPDATE_SHAPE_ORDER) {
-      if (world.getFluidState(pos.relative(dir)).getType().equals(Fluids.WATER)) {
+    for (Direction dir : DIRECTIONS) {
+      if (world.getFluidState(pos.offset(dir)).getFluid().equals(Fluids.WATER)) {
         deactivate = false;
         break;
       }
     }
-    if (state.getValue(ACTIVATED)) {
+    if (state.get(ACTIVATED)) {
       if (deactivate) {
-        world.setBlockAndUpdate(pos, defaultBlockState().setValue(ACTIVATED, false));
-      } else if (state.getValue(ACTIVATED) && random.nextInt(16) == 0) {
-        Direction dir = Direction.getRandom(random);
-        BlockPos side = pos.relative(dir);
+        world.setBlockState(pos, getDefaultState().with(ACTIVATED, false));
+      } else if (state.get(ACTIVATED) && random.nextInt(16) == 0) {
+        Direction dir = Direction.random(random);
+        BlockPos side = pos.offset(dir);
         BlockState sideState = world.getBlockState(side);
-        if (sideState.is(LighterEndBlocks.SULPHUR_CRYSTAL)) {
+        if (sideState.isOf(LighterEndBlocks.SULPHUR_CRYSTAL)) {
           if (
-              sideState.getValue(SulphurCrystal.STAGE) < SulphurCrystal.MAX_STAGE
-                  && sideState.getValue(SulphurCrystal.WATERLOGGED)
+              sideState.get(SulphurCrystal.STAGE) < SulphurCrystal.MAX_STAGE
+                  && sideState.get(SulphurCrystal.WATERLOGGED)
           ) {
-            int age = sideState.getValue(SulphurCrystal.STAGE) + 1;
-            world.setBlockAndUpdate(side, sideState.setValue(SulphurCrystal.STAGE, age));
+            int age = sideState.get(SulphurCrystal.STAGE) + 1;
+            world.setBlockState(side, sideState.with(SulphurCrystal.STAGE, age));
           }
-        } else if (sideState.is(Blocks.WATER)
+        } else if (sideState.isOf(Blocks.WATER)
         ) {
-          BlockState crystal = LighterEndBlocks.SULPHUR_CRYSTAL.defaultBlockState()
-              .setValue(SulphurCrystal.FACING, dir)
-              .setValue(SulphurCrystal.WATERLOGGED, true)
-              .setValue(SulphurCrystal.STAGE, 0);
-          world.setBlockAndUpdate(side, crystal);
+          BlockState crystal = LighterEndBlocks.SULPHUR_CRYSTAL.getDefaultState()
+              .with(SulphurCrystal.FACING, dir)
+              .with(SulphurCrystal.WATERLOGGED, true)
+              .with(SulphurCrystal.STAGE, 0);
+          world.setBlockState(side, crystal);
         }
       }
-    } else if (!deactivate && !state.getValue(ACTIVATED)) {
-      world.setBlockAndUpdate(pos, defaultBlockState().setValue(ACTIVATED, true));
+    } else if (!deactivate && !state.get(ACTIVATED)) {
+      world.setBlockState(pos, getDefaultState().with(ACTIVATED, true));
     }
   }
 }

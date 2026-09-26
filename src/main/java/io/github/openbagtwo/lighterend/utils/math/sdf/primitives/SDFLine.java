@@ -1,7 +1,7 @@
 package io.github.openbagtwo.lighterend.utils.math.sdf.primitives;
 
 import io.github.openbagtwo.lighterend.utils.math.sdf.SDF;
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 
 public class SDFLine extends SDF.Primitive {
 
@@ -44,7 +44,7 @@ public class SDFLine extends SDF.Primitive {
 
     float dpb = pax * bax + pay * bay + paz * baz;
     float dbb = bax * bax + bay * bay + baz * baz;
-    float h = Mth.clamp(dpb / dbb, 0F, 1F);
+    float h = MathHelper.clamp(dpb / dbb, 0F, 1F);
     return (float) Math.sqrt(
         Math.pow(pax - bax * h, 2)
             + Math.pow(pay - bay * h, 2)

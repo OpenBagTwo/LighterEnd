@@ -1,84 +1,84 @@
 package io.github.openbagtwo.lighterend.mixin;
 
 import io.github.openbagtwo.lighterend.registries.LighterEndTags;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.ScheduledTickAccess;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.ChorusPlantBlock;
-import net.minecraft.world.level.block.PipeBlock;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ChorusPlantBlock;
+import net.minecraft.block.ConnectingBlock;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.WorldView;
+import net.minecraft.world.tick.ScheduledTickView;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ChorusPlantBlock.class)
-public abstract class ChorusPlantMixin extends PipeBlock {
+public abstract class ChorusPlantMixin extends ConnectingBlock {
 
-  protected ChorusPlantMixin(float radius, Properties settings) {
+  protected ChorusPlantMixin(float radius, Settings settings) {
     super(radius, settings);
   }
 
-  @Inject(method = "updateShape", at = @At("HEAD"), cancellable = true)
+  @Inject(method = "getStateForNeighborUpdate", at = @At("HEAD"), cancellable = true)
   public void checkBelowForEndSoil(
       BlockState state,
-      LevelReader world,
-      ScheduledTickAccess tickView,
+      WorldView world,
+      ScheduledTickView tickView,
       BlockPos pos,
       Direction direction,
       BlockPos neighborPos,
       BlockState neighborState,
-      RandomSource random,
+      Random random,
       CallbackInfoReturnable<BlockState> cir) {
-    if ((state.canSurvive(world, pos))
+    if ((state.canPlaceAt(world, pos))
         && direction == Direction.DOWN
-        && neighborState.is(LighterEndTags.END_SOIL)) {
-      cir.setReturnValue(state.setValue(PROPERTY_BY_DIRECTION.get(direction), true));
+        && neighborState.isIn(LighterEndTags.END_SOIL)) {
+      cir.setReturnValue(state.with(FACING_PROPERTIES.get(direction), true));
       cir.cancel();
     }
   }
 
-  @Inject(method = "getStateWithConnections", at = @At("RETURN"), cancellable = true)
+  @Inject(method = "withConnectionProperties", at = @At("RETURN"), cancellable = true)
   private static void withConnectedEndSoil(
-      BlockGetter world, BlockPos pos, BlockState state, CallbackInfoReturnable<BlockState> cir
+      BlockView world, BlockPos pos, BlockState state, CallbackInfoReturnable<BlockState> cir
   ) {
-    BlockState down = world.getBlockState(pos.below());
+    BlockState down = world.getBlockState(pos.down());
     Block block = state.getBlock();
     cir.setReturnValue(
-        cir.getReturnValue().trySetValue(
+        cir.getReturnValue().withIfExists(
             DOWN,
-            down.is(block)
-                || down.is(Blocks.CHORUS_FLOWER)
-                || down.is(Blocks.END_STONE)
-                || down.is(LighterEndTags.END_SOIL)
+            down.isOf(block)
+                || down.isOf(Blocks.CHORUS_FLOWER)
+                || down.isOf(Blocks.END_STONE)
+                || down.isIn(LighterEndTags.END_SOIL)
         )
     );
   }
 
-  @Inject(method = "canSurvive", at = @At("HEAD"), cancellable = true)
+  @Inject(method = "canPlaceAt", at = @At("HEAD"), cancellable = true)
   public void placeOnEndSoil(
       BlockState state,
-      LevelReader world,
+      WorldView world,
       BlockPos pos,
       CallbackInfoReturnable<Boolean> cir
   ) {
-    if (world.getBlockState(pos.below()).is(LighterEndTags.END_SOIL)) {
+    if (world.getBlockState(pos.down()).isIn(LighterEndTags.END_SOIL)) {
       cir.setReturnValue(true);
       cir.cancel();
     }
-    for (Direction direction : Direction.Plane.HORIZONTAL) {
-      BlockPos horizontal = pos.relative(direction);
-      if (world.getBlockState(horizontal).is(Blocks.CHORUS_PLANT)) {
-        BlockState diagonal = world.getBlockState(horizontal.below());
+    for (Direction direction : Direction.Type.HORIZONTAL) {
+      BlockPos horizontal = pos.offset(direction);
+      if (world.getBlockState(horizontal).isOf(Blocks.CHORUS_PLANT)) {
+        BlockState diagonal = world.getBlockState(horizontal.down());
         if (
-            diagonal.is(Blocks.CHORUS_PLANT)
-                || diagonal.is(Blocks.END_STONE)
-                || diagonal.is(
+            diagonal.isOf(Blocks.CHORUS_PLANT)
+                || diagonal.isOf(Blocks.END_STONE)
+                || diagonal.isIn(
                 LighterEndTags.END_SOIL)
         ) {
           cir.setReturnValue(true);

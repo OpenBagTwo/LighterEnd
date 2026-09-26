@@ -12,39 +12,40 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.minecraft.advancements.criterion.StatePropertiesPredicate;
-import net.minecraft.core.Holder.Reference;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
-import net.minecraft.world.level.storage.loot.functions.ApplyExplosionDecay;
-import net.minecraft.world.level.storage.loot.functions.CopyBlockState;
-import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.level.storage.loot.predicates.AllOfCondition;
-import net.minecraft.world.level.storage.loot.predicates.InvertedLootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.DoorBlock;
+import net.minecraft.block.SlabBlock;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.Items;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.condition.AllOfLootCondition;
+import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
+import net.minecraft.loot.condition.InvertedLootCondition;
+import net.minecraft.loot.condition.LootCondition;
+import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.function.ApplyBonusLootFunction;
+import net.minecraft.loot.function.CopyComponentsLootFunction;
+import net.minecraft.loot.function.CopyStateLootFunction;
+import net.minecraft.loot.function.ExplosionDecayLootFunction;
+import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
+import net.minecraft.loot.provider.number.UniformLootNumberProvider;
+import net.minecraft.predicate.StatePredicate;
+import net.minecraft.predicate.StatePredicate.Builder;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.RegistryWrapper.WrapperLookup;
+import net.minecraft.registry.entry.RegistryEntry.Reference;
 
 public class BlockLootTableProvider extends FabricBlockLootTableProvider {
 
   protected BlockLootTableProvider(
       FabricDataOutput dataOutput,
-      CompletableFuture<Provider> registryLookup
+      CompletableFuture<WrapperLookup> registryLookup
   ) {
     super(dataOutput, registryLookup);
   }
@@ -66,11 +67,11 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
     )) {
       for (Block block : material) {
         if (block instanceof SlabBlock) {
-          add(block, this::createSlabItemTable);
+          addDrop(block, this::slabDrops);
         } else if (block instanceof DoorBlock) {
-          add(block, this::createDoorTable);
+          addDrop(block, this::doorDrops);
         } else {
-          dropSelf(block);
+          addDrop(block);
         }
       }
     }
@@ -80,265 +81,254 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
         LighterEndBlocks.POTTED_UMBRELLA_SAPLING,
         LighterEndBlocks.POTTED_GLOWSHROOM_SAPLING
     )) {
-      dropPottedContents(pot);
+      addPottedPlantDrops(pot);
     }
 
-    add(LighterEndBlocks.AURORA_CRYSTAL, auroraCrystalDrops());
-    dropSelf(LighterEndBlocks.ENDER_BLOCK);
+    addDrop(LighterEndBlocks.AURORA_CRYSTAL, auroraCrystalDrops());
+    addDrop(LighterEndBlocks.ENDER_BLOCK);
 
-    dropSelf(LighterEndBlocks.MISSING_TILE);
+    addDrop(LighterEndBlocks.MISSING_TILE);
 
-    dropSelf(LighterEndBlocks.DRAGON_BONE_BLOCK);
-    dropSelf(LighterEndBlocks.DRAGON_BONE_STAIRS);
-    add(LighterEndBlocks.DRAGON_BONE_SLAB, this::createSlabItemTable);
-    add(
-        LighterEndBlocks.END_MOSS,
-        block -> this.createSingleItemTableWithSilkTouch(
-            block,
-            Blocks.END_STONE
-        )
-    );
+    addDrop(LighterEndBlocks.DRAGON_BONE_BLOCK);
+    addDrop(LighterEndBlocks.DRAGON_BONE_STAIRS);
+    addDrop(LighterEndBlocks.DRAGON_BONE_SLAB, this::slabDrops);
+    addDrop(LighterEndBlocks.END_MOSS, this.drops(LighterEndBlocks.END_MOSS, Blocks.END_STONE));
 
-    add(LighterEndBlocks.CREEPING_MOSS, this::createShearsOrSilkTouchOnlyDrop);
-    add(LighterEndBlocks.UMBRELLA_FERN, this::createShearsOrSilkTouchOnlyDrop);
-    dropOther(LighterEndBlocks.TALL_UMBRELLA_FERN, LighterEndBlocks.UMBRELLA_FERN);
-    dropSelf(LighterEndBlocks.LUMECORN_SEED);
-    dropOther(LighterEndBlocks.LUMECORN_STEM, LighterEndBlocks.LUMECORN_SEED);
-    add(LighterEndBlocks.LUMECORN, lumecornEarDrops());
+    addDrop(LighterEndBlocks.CREEPING_MOSS, this::dropsWithSilkTouchOrShears);
+    addDrop(LighterEndBlocks.UMBRELLA_FERN, this::dropsWithSilkTouchOrShears);
+    addDrop(LighterEndBlocks.TALL_UMBRELLA_FERN, LighterEndBlocks.UMBRELLA_FERN);
+    addDrop(LighterEndBlocks.LUMECORN_SEED);
+    addDrop(LighterEndBlocks.LUMECORN_STEM, LighterEndBlocks.LUMECORN_SEED);
+    addDrop(LighterEndBlocks.LUMECORN, lumecornEarDrops());
 
-    add(LighterEndBlocks.TENANEA_FLOWER, this::createShearsOrSilkTouchOnlyDrop);
-    dropSelf(LighterEndBlocks.TENANEA_SAPLING);
-    add(LighterEndBlocks.TENANEA_LEAVES,
-        (leaves) -> this.createLeavesDrops(leaves, LighterEndBlocks.TENANEA_SAPLING,
+    addDrop(LighterEndBlocks.TENANEA_FLOWER, this::dropsWithSilkTouchOrShears);
+    addDrop(LighterEndBlocks.TENANEA_SAPLING);
+    addDrop(LighterEndBlocks.TENANEA_LEAVES,
+        (leaves) -> this.leavesDrops(leaves, LighterEndBlocks.TENANEA_SAPLING,
             0.025F, 0.03125F, 0.041666668F, 0.05F));
 
-    add(LighterEndBlocks.SILK_MOTH_NEST, mothNestDrops());
-    dropSelf(LighterEndBlocks.UMBRELLA_TREE_CLUSTER);
-    dropSelf(LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY);
+    addDrop(LighterEndBlocks.SILK_MOTH_NEST, mothNestDrops());
+    addDrop(LighterEndBlocks.UMBRELLA_TREE_CLUSTER);
+    addDrop(LighterEndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY);
 
-    dropSelf(LighterEndBlocks.UMBRELLA_MEMBRANE);
+    addDrop(LighterEndBlocks.UMBRELLA_MEMBRANE);
 
-    add(LighterEndBlocks.CHARNIA_CYAN, this::createShearsOrSilkTouchOnlyDrop);
-    add(LighterEndBlocks.CHARNIA_GREEN, this::createShearsOrSilkTouchOnlyDrop);
-    add(LighterEndBlocks.CHARNIA_LIGHT_BLUE, this::createShearsOrSilkTouchOnlyDrop);
-    add(LighterEndBlocks.CHARNIA_ORANGE, this::createShearsOrSilkTouchOnlyDrop);
-    add(LighterEndBlocks.CHARNIA_PURPLE, this::createShearsOrSilkTouchOnlyDrop);
-    add(LighterEndBlocks.CHARNIA_RED, this::createShearsOrSilkTouchOnlyDrop);
+    addDrop(LighterEndBlocks.CHARNIA_CYAN, this::dropsWithSilkTouchOrShears);
+    addDrop(LighterEndBlocks.CHARNIA_GREEN, this::dropsWithSilkTouchOrShears);
+    addDrop(LighterEndBlocks.CHARNIA_LIGHT_BLUE, this::dropsWithSilkTouchOrShears);
+    addDrop(LighterEndBlocks.CHARNIA_ORANGE, this::dropsWithSilkTouchOrShears);
+    addDrop(LighterEndBlocks.CHARNIA_PURPLE, this::dropsWithSilkTouchOrShears);
+    addDrop(LighterEndBlocks.CHARNIA_RED, this::dropsWithSilkTouchOrShears);
 
-    add(LighterEndBlocks.END_LILY, endLilyDrops());
-    add(LighterEndBlocks.END_LOTUS_FLOWER, lotusFlowerDrops());
-    dropSelf(LighterEndBlocks.END_LOTUS_STEM);
-    dropOther(LighterEndBlocks.END_LOTUS_LEAF, LighterEndItems.END_LILY_LEAF);
-    dropSelf(LighterEndBlocks.END_LOTUS_SEED);
+    addDrop(LighterEndBlocks.END_LILY, endLilyDrops());
+    addDrop(LighterEndBlocks.END_LOTUS_FLOWER, lotusFlowerDrops());
+    addDrop(LighterEndBlocks.END_LOTUS_STEM);
+    addDrop(LighterEndBlocks.END_LOTUS_LEAF, LighterEndItems.END_LILY_LEAF);
+    addDrop(LighterEndBlocks.END_LOTUS_SEED);
 
-    add(
+    addDrop(
         LighterEndBlocks.GLOWSHROOM_FUR,
-        (block -> this.createShearsOrSilkTouchOnlyDrop(LighterEndItems.GLOWSHROOM_FUR))
+        (block -> this.dropsWithSilkTouchOrShears(LighterEndItems.GLOWSHROOM_FUR))
     );
-    dropSelf(LighterEndBlocks.GLOWSHROOM_CAP);
-    dropSelf(LighterEndBlocks.GLOWSHROOM_HYMENOPHORE);
-    dropSelf(LighterEndBlocks.GLOWSHROOM_SAPLING);
-    dropOther(LighterEndBlocks.AGAVE, LighterEndBlocks.AGAVE_SEED);
-    dropSelf(LighterEndBlocks.AGAVE_BULB);
-    add(
+    addDrop(LighterEndBlocks.GLOWSHROOM_CAP);
+    addDrop(LighterEndBlocks.GLOWSHROOM_HYMENOPHORE);
+    addDrop(LighterEndBlocks.GLOWSHROOM_SAPLING);
+    addDrop(LighterEndBlocks.AGAVE, LighterEndBlocks.AGAVE_SEED);
+    addDrop(LighterEndBlocks.AGAVE_BULB);
+    addDrop(
         LighterEndBlocks.AGAVE_FUR,
-        (block -> this.createShearsOrSilkTouchOnlyDrop(LighterEndItems.AGAVE_FUR))
+        (block -> this.dropsWithSilkTouchOrShears(LighterEndItems.AGAVE_FUR))
     );
-    dropSelf(LighterEndBlocks.AURANT_POLYPORE);
-    dropSelf(LighterEndBlocks.PURPLE_POLYPORE);
-    add(LighterEndBlocks.END_FURNACE, this::createNameableBlockEntityTable);
-    add(LighterEndBlocks.END_SMOKER, this::createNameableBlockEntityTable);
+    addDrop(LighterEndBlocks.AURANT_POLYPORE);
+    addDrop(LighterEndBlocks.PURPLE_POLYPORE);
+    addDrop(LighterEndBlocks.END_FURNACE, this::nameableContainerDrops);
+    addDrop(LighterEndBlocks.END_SMOKER, this::nameableContainerDrops);
 
-    dropSelf(LighterEndBlocks.END_LEVER);
+    addDrop(LighterEndBlocks.END_LEVER);
 
-    dropSelf(LighterEndBlocks.GOLD_CHANDELIER);
-    dropSelf(LighterEndBlocks.IRON_CHANDELIER);
-    for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.asList()) {
-      dropSelf(chandelier);
+    addDrop(LighterEndBlocks.GOLD_CHANDELIER);
+    addDrop(LighterEndBlocks.IRON_CHANDELIER);
+    for (Block chandelier : LighterEndBlocks.COPPER_CHANDELIERS.getAll()) {
+      addDrop(chandelier);
     }
 
-    dropSelf(LighterEndBlocks.EMERALD_ICE);
-    dropSelf(LighterEndBlocks.FERROUS_ICE);
-    dropSelf(LighterEndBlocks.AUROUS_ICE);
+    addDrop(LighterEndBlocks.EMERALD_ICE);
+    addDrop(LighterEndBlocks.FERROUS_ICE);
+    addDrop(LighterEndBlocks.AUROUS_ICE);
 
-    add(LighterEndBlocks.END_STONE_REDSTONE_ORE, this::createRedstoneOreDrops);
-    add(LighterEndBlocks.UMBRALITH_REDSTONE_ORE, this::createRedstoneOreDrops);
-    add(LighterEndBlocks.END_STONE_QUARTZ_ORE, block -> this.createOreDrop(block, Items.QUARTZ));
-    add(LighterEndBlocks.UMBRALITH_QUARTZ_ORE, block -> this.createOreDrop(block, Items.QUARTZ));
+    addDrop(LighterEndBlocks.END_STONE_REDSTONE_ORE, this::redstoneOreDrops);
+    addDrop(LighterEndBlocks.UMBRALITH_REDSTONE_ORE, this::redstoneOreDrops);
+    addDrop(LighterEndBlocks.END_STONE_QUARTZ_ORE, block -> this.oreDrops(block, Items.QUARTZ));
+    addDrop(LighterEndBlocks.UMBRALITH_QUARTZ_ORE, block -> this.oreDrops(block, Items.QUARTZ));
 
-    dropSelf(LighterEndBlocks.BRIMSTONE);
-    add(LighterEndBlocks.SULPHUR_CRYSTAL, sulphurCrystalDrops());
-    add(LighterEndBlocks.HYDROTHERMAL_VENT, this::createSilkTouchOnlyTable);
+    addDrop(LighterEndBlocks.BRIMSTONE);
+    addDrop(LighterEndBlocks.SULPHUR_CRYSTAL, sulphurCrystalDrops());
+    addDrop(LighterEndBlocks.HYDROTHERMAL_VENT, this::dropsWithSilkTouch);
 
-    add(
+    addDrop(
         LighterEndBlocks.SHADOW_BERRY,
-        createCropDrops(
+        cropDrops(
             LighterEndBlocks.SHADOW_BERRY,
             LighterEndItems.SHADOW_BERRY,
             LighterEndItems.SHADOW_BERRY_SEEDS,
-            LootItemBlockStatePropertyCondition.hasBlockStateProperties(
-                LighterEndBlocks.SHADOW_BERRY
-            ).setProperties(
-                StatePropertiesPredicate.Builder.properties().hasProperty(
-                    ShadowBerry.AGE,
-                    ShadowBerry.MAX_AGE
+            BlockStatePropertyLootCondition.builder(
+                    LighterEndBlocks.SHADOW_BERRY)
+                .properties(Builder.create().exactMatch(ShadowBerry.AGE, ShadowBerry.MAX_AGE)
                 )
-            )
         )
     );
-    add(LighterEndBlocks.SHADOW_GRASS, this::createShearsOrSilkTouchOnlyDrop);
-    this.add(
+    addDrop(LighterEndBlocks.SHADOW_GRASS, this::dropsWithSilkTouchOrShears);
+    addDrop(
         LighterEndBlocks.NEEDLEGRASS,
-        block -> this.createShearsDispatchTable(
+        block -> this.dropsWithShears(
             block,
             this.applyExplosionDecay(
-                block, LootItem.lootTableItem(Items.STICK)
-                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                block,
+                ItemEntry
+                    .builder(Items.STICK)
+                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 2))
+                    )
             )
         )
     );
-    dropSelf(LighterEndBlocks.MURKWEED);
+    addDrop(LighterEndBlocks.MURKWEED);
 
-    add(LighterEndBlocks.DRAGON_LEAVES,
-        (leaves) -> this.createLeavesDrops(leaves, LighterEndBlocks.DRAGON_SAPLING,
+    addDrop(LighterEndBlocks.DRAGON_LEAVES,
+        (leaves) -> this.leavesDrops(leaves, LighterEndBlocks.DRAGON_SAPLING,
             0.025F, 0.03125F, 0.041666668F, 0.05F));
-    dropSelf(LighterEndBlocks.DRAGON_SAPLING);
+    addDrop(LighterEndBlocks.DRAGON_SAPLING);
   }
 
   private LootTable.Builder auroraCrystalDrops() {
     /* Note: It is intentional (for now) that you can essentially dupe Aurora Crystals with a
              Fortune pick. It was present in BetterEnd and is (IMO) a reasonable way for Aurora
              Crystals to be renewable. */
-    HolderLookup.RegistryLookup<Enchantment> impl = this.registries.lookupOrThrow(
-        Registries.ENCHANTMENT);
-    return this.createSilkTouchDispatchTable(
+    RegistryWrapper.Impl<Enchantment> impl = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT);
+    return this.dropsWithSilkTouch(
         LighterEndBlocks.AURORA_CRYSTAL,
         this.applyExplosionDecay(
             LighterEndBlocks.AURORA_CRYSTAL,
-            LootItem.lootTableItem(LighterEndItems.AURORA_CRYSTAL_SHARD)
-                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F)))
-                .apply(ApplyBonusCount.addOreBonusCount(impl.getOrThrow(Enchantments.FORTUNE)))
+            ItemEntry.builder(LighterEndItems.AURORA_CRYSTAL_SHARD)
+                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 4.0F)))
+                .apply(ApplyBonusLootFunction.oreDrops(impl.getOrThrow(Enchantments.FORTUNE)))
         )
     );
   }
 
   private LootTable.Builder lumecornEarDrops() {
-    return LootTable.lootTable()
-        .withPool(
-            this.applyExplosionCondition(
+    return LootTable.builder()
+        .pool(
+            this.addSurvivesExplosionCondition(
                 LighterEndItems.LUMECORN_EAR,
-                LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 2.0F))
-                    .add(LootItem.lootTableItem(LighterEndItems.LUMECORN_EAR))
+                LootPool.builder().rolls(UniformLootNumberProvider.create(1.0F, 2.0F))
+                    .with(ItemEntry.builder(LighterEndItems.LUMECORN_EAR))
             )
         );
   }
 
   private LootTable.Builder mothNestDrops() {
-    return LootTable.lootTable()
-        .withPool(
-            LootPool.lootPool()
-                .when(this.hasSilkTouch())
-                .setRolls(ConstantValue.exactly(1.0F))
-                .add(
-                    LootItem.lootTableItem(LighterEndItems.SILK_MOTH_NEST)
+    return LootTable.builder()
+        .pool(
+            LootPool.builder()
+                .conditionally(this.createSilkTouchCondition())
+                .rolls(ConstantLootNumberProvider.create(1.0F))
+                .with(
+                    ItemEntry.builder(LighterEndItems.SILK_MOTH_NEST)
                         .apply(
-                            CopyComponentsFunction.copyComponentsFromBlockEntity(
-                                LootContextParams.BLOCK_ENTITY).include(LighterEndData.MOTHS)
-                        ).apply(
-                            CopyBlockState.copyState(LighterEndBlocks.SILK_MOTH_NEST)
-                                .copy(SilkMothNest.FULLNESS)
-                        )
+                            CopyComponentsLootFunction.blockEntity(
+                                    LootContextParameters.BLOCK_ENTITY)
+                                .include(LighterEndData.MOTHS)
+                        ).apply(CopyStateLootFunction.builder(LighterEndBlocks.SILK_MOTH_NEST)
+                            .addProperty(SilkMothNest.FULLNESS))
                 )
         );
   }
 
   public LootTable.Builder endLilyDrops() {
-    Reference<Enchantment> fortune = this.registries.lookupOrThrow(Registries.ENCHANTMENT)
+    Reference<Enchantment> fortune = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT)
         .getOrThrow(Enchantments.FORTUNE);
 
-    LootItemCondition.Builder topCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(
+    LootCondition.Builder topCondition = BlockStatePropertyLootCondition.builder(
         LighterEndBlocks.END_LILY
-    ).setProperties(
-        StatePropertiesPredicate.Builder.properties().hasProperty(EndLily.IS_TOP, true)
-    );
+    ).properties(StatePredicate.Builder.create().exactMatch(EndLily.IS_TOP, true));
 
     return this.applyExplosionDecay(
         LighterEndBlocks.END_LILY,
-        LootTable.lootTable().withPool(
-            LootPool.lootPool()
-                .add(LootItem.lootTableItem(
-                    LighterEndItems.END_LILY_LEAF).when(topCondition)
+        LootTable.builder().pool(
+            LootPool.builder()
+                .with(ItemEntry.builder(
+                    LighterEndItems.END_LILY_LEAF).conditionally(topCondition)
                 ).apply(
-                    ApplyBonusCount.addBonusBinomialDistributionCount(
+                    ApplyBonusLootFunction.binomialWithBonusCount(
                         fortune, 0.5714286F, 3
                     )
                 )
         )
-    ).withPool(
-        LootPool.lootPool()
-            .when(topCondition)
-            .add(LootItem.lootTableItem(LighterEndBlocks.END_LILY_SEED).apply(
-                ApplyBonusCount.addBonusBinomialDistributionCount(
+    ).pool(
+        LootPool.builder()
+            .conditionally(topCondition)
+            .with(ItemEntry.builder(LighterEndBlocks.END_LILY_SEED).apply(
+                ApplyBonusLootFunction.binomialWithBonusCount(
                     fortune, 0.5714286F, 3)))
 
     );
   }
 
   private LootTable.Builder lotusFlowerDrops() {
-    return LootTable.lootTable()
-        .withPool(
-            this.applyExplosionCondition(
+    return LootTable.builder()
+        .pool(
+            this.addSurvivesExplosionCondition(
                 LighterEndBlocks.END_LOTUS_SEED,
-                LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 2.0F))
-                    .add(LootItem.lootTableItem(LighterEndBlocks.END_LOTUS_SEED))
+                LootPool.builder().rolls(UniformLootNumberProvider.create(1.0F, 2.0F))
+                    .with(ItemEntry.builder(LighterEndBlocks.END_LOTUS_SEED))
             )
         );
   }
 
   private LootTable.Builder sulphurCrystalDrops() {
 
-    Reference<Enchantment> fortune = this.registries.lookupOrThrow(Registries.ENCHANTMENT)
+    Reference<Enchantment> fortune = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT)
         .getOrThrow(Enchantments.FORTUNE);
 
-    LootItemCondition.Builder fullyGrownCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(
+    LootCondition.Builder fullyGrownCondition = BlockStatePropertyLootCondition.builder(
         LighterEndBlocks.SULPHUR_CRYSTAL
-    ).setProperties(
-        StatePropertiesPredicate.Builder.properties()
-            .hasProperty(SulphurCrystal.STAGE, SulphurCrystal.MAX_STAGE)
+    ).properties(
+        StatePredicate.Builder.create().exactMatch(SulphurCrystal.STAGE, SulphurCrystal.MAX_STAGE)
     );
 
     return LootTable
-        .lootTable()
-        .withPool(
-            LootPool.lootPool()
-                .when(this.hasSilkTouch())
-                .setRolls(ConstantValue.exactly(1))
-                .add(LootItem.lootTableItem(LighterEndBlocks.SULPHUR_CRYSTAL)
-                    .apply(SetItemCountFunction
-                        .setCount(UniformGenerator.between(1, 3))
-                        .when(fullyGrownCondition)
+        .builder()
+        .pool(
+            LootPool.builder()
+                .conditionally(this.createSilkTouchCondition())
+                .rolls(ConstantLootNumberProvider.create(1))
+                .with(ItemEntry.builder(LighterEndBlocks.SULPHUR_CRYSTAL)
+                    .apply(SetCountLootFunction
+                        .builder(UniformLootNumberProvider.create(1, 3))
+                        .conditionally(fullyGrownCondition)
                     )
-                    .apply(SetItemCountFunction
-                        .setCount(ConstantValue.exactly(1))
-                        .when(InvertedLootItemCondition.invert(fullyGrownCondition))
+                    .apply(SetCountLootFunction
+                        .builder(ConstantLootNumberProvider.create(1))
+                        .conditionally(InvertedLootCondition.builder(fullyGrownCondition))
                     )
-                    .apply(ApplyBonusCount
-                        .addOreBonusCount(fortune)
-                        .when(fullyGrownCondition)
+                    .apply(ApplyBonusLootFunction
+                        .oreDrops(fortune)
+                        .conditionally(fullyGrownCondition)
                     )
-                    .apply(ApplyExplosionDecay.explosionDecay())
+                    .apply(ExplosionDecayLootFunction.builder())
                 )
-        ).withPool(
-            LootPool.lootPool()
-                .when(AllOfCondition.allOf(
-                    InvertedLootItemCondition.invert(this.hasSilkTouch()),
+        )
+        .pool(
+            LootPool.builder()
+                .conditionally(AllOfLootCondition.builder(
+                    InvertedLootCondition.builder(this.createSilkTouchCondition()),
                     fullyGrownCondition))
-                .setRolls(ConstantValue.exactly(1))
-                .add(LootItem.lootTableItem(LighterEndItems.CRYSTALLINE_SULPHUR)
-                    .apply(SetItemCountFunction
-                        .setCount(UniformGenerator.between(1, 3))
+                .rolls(ConstantLootNumberProvider.create(1))
+                .with(ItemEntry.builder(LighterEndItems.CRYSTALLINE_SULPHUR)
+                    .apply(SetCountLootFunction
+                        .builder(UniformLootNumberProvider.create(1, 3))
                     )
-                    .apply(ApplyExplosionDecay.explosionDecay())
+                    .apply(ExplosionDecayLootFunction.builder())
                 )
         );
   }

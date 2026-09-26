@@ -10,15 +10,15 @@ import io.github.openbagtwo.lighterend.utils.math.sdf.operators.SDFUnion;
 import io.github.openbagtwo.lighterend.utils.math.sdf.primitives.SDFCappedCone;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.FeatureConfig;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 import org.joml.Vector3f;
 
 public class IceStar extends Feature<IceStar.Config> {
@@ -28,13 +28,13 @@ public class IceStar extends Feature<IceStar.Config> {
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<IceStar.Config> featureConfig) {
-    final RandomSource random = featureConfig.random();
-    BlockPos pos = featureConfig.origin();
-    final WorldGenLevel world = featureConfig.level();
-    Config cfg = featureConfig.config();
-    float size = Mth.nextFloat(random, cfg.minSize, cfg.maxSize);
-    int count = Mth.nextInt(random, cfg.minCount, cfg.maxCount);
+  public boolean generate(FeatureContext<IceStar.Config> featureConfig) {
+    final Random random = featureConfig.getRandom();
+    BlockPos pos = featureConfig.getOrigin();
+    final StructureWorldAccess world = featureConfig.getWorld();
+    Config cfg = featureConfig.getConfig();
+    float size = MathHelper.nextFloat(random, cfg.minSize, cfg.maxSize);
+    int count = MathHelper.nextInt(random, cfg.minCount, cfg.maxCount);
     List<Vector3f> points = getFibonacciPoints(count);
     SDF sdf = null;
     SDF spike = new SDFCappedCone().setRadius1(3 + (size - 5) * 0.2F)
@@ -59,7 +59,7 @@ public class IceStar extends Feature<IceStar.Config> {
 
     int x1 = (pos.getX() >> 4) << 4;
     int z1 = (pos.getZ() >> 4) << 4;
-    pos = new BlockPos(x1 + random.nextInt(16), Mth.nextInt(random, 32, 128),
+    pos = new BlockPos(x1 + random.nextInt(16), MathHelper.nextInt(random, 32, 128),
         z1 + random.nextInt(16));
 
     final float ancientRadius = size * 0.7F;
@@ -75,20 +75,20 @@ public class IceStar extends Feature<IceStar.Config> {
 
     switch (cfg.variant % 3) {
       case 2:
-        ice = LighterEndBlocks.AUROUS_ICE.defaultBlockState();
-        dense = Blocks.RAW_GOLD_BLOCK.defaultBlockState();
-        ancient = Blocks.RAW_GOLD_BLOCK.defaultBlockState();
+        ice = LighterEndBlocks.AUROUS_ICE.getDefaultState();
+        dense = Blocks.RAW_GOLD_BLOCK.getDefaultState();
+        ancient = Blocks.RAW_GOLD_BLOCK.getDefaultState();
         break;
       case 1:
-        ice = LighterEndBlocks.FERROUS_ICE.defaultBlockState();
-        dense = LighterEndBlocks.FERROUS_ICE.defaultBlockState();
-        ancient = Blocks.RAW_IRON_BLOCK.defaultBlockState();
+        ice = LighterEndBlocks.FERROUS_ICE.getDefaultState();
+        dense = LighterEndBlocks.FERROUS_ICE.getDefaultState();
+        ancient = Blocks.RAW_IRON_BLOCK.getDefaultState();
         break;
       case 0:
       default:
-        ice = LighterEndBlocks.EMERALD_ICE.defaultBlockState();
-        dense = Blocks.RAW_COPPER_BLOCK.defaultBlockState();
-        ancient = Blocks.RAW_COPPER_BLOCK.defaultBlockState();
+        ice = LighterEndBlocks.EMERALD_ICE.getDefaultState();
+        dense = Blocks.RAW_COPPER_BLOCK.getDefaultState();
+        ancient = Blocks.RAW_COPPER_BLOCK.getDefaultState();
     }
 
     final SDF sdfCopy = sdf;
@@ -98,7 +98,7 @@ public class IceStar extends Feature<IceStar.Config> {
       float px = bpos.getX() - center.getX();
       float py = bpos.getY() - center.getY();
       float pz = bpos.getZ() - center.getZ();
-      float distance = Mth.sqrt(px * px + py * py + pz * pz) + sdfCopy.getDistance(
+      float distance = MathHelper.sqrt(px * px + py * py + pz * pz) + sdfCopy.getDistance(
           px,
           py,
           pz
@@ -165,7 +165,7 @@ public class IceStar extends Feature<IceStar.Config> {
       float maxSize,
       int minCount,
       int maxCount
-  ) implements FeatureConfiguration {
+  ) implements FeatureConfig {
 
     public static final Codec<Config> CODEC = RecordCodecBuilder.create(instance -> instance
         .group(

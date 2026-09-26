@@ -1,12 +1,12 @@
 package io.github.openbagtwo.lighterend.mixin;
 
 import io.github.openbagtwo.lighterend.LighterEnd;
-import net.minecraft.core.Holder;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.dimension.DimensionTypes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,27 +17,27 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class GravityEffectsMixin extends GravityStrengthMixin {
 
   @Shadow
-  public abstract double getAttributeValue(Holder<Attribute> attribute);
+  public abstract double getAttributeValue(RegistryEntry<EntityAttribute> attribute);
 
-  @Inject(method = "calculateFallPower", at = @At("RETURN"), cancellable = true)
+  @Inject(method = "getUnsafeFallDistance", at = @At("RETURN"), cancellable = true)
   public void increaseSafeFallHeight(CallbackInfoReturnable<Double> cir) {
     double endGravity = LighterEnd.CONFIG.getEndGravity();
-    if (endGravity >= 0.0 && BuiltinDimensionTypes.END.equals(
-        this.level().dimensionTypeRegistration().unwrapKey().orElse(null))) {
+    if (endGravity >= 0.0 && DimensionTypes.THE_END.equals(
+        this.getEntityWorld().getDimensionEntry().getKey().orElse(null))) {
       cir.setReturnValue(cir.getReturnValue()
-          - (1 - endGravity) * this.getAttributeValue(Attributes.SAFE_FALL_DISTANCE)
+          - (1 - endGravity) * this.getAttributeValue(EntityAttributes.SAFE_FALL_DISTANCE)
           / endGravity);
     }
   }
 
-  @Inject(method = "calculateFallDamage", at = @At("RETURN"), cancellable = true)
+  @Inject(method = "computeFallDamage", at = @At("RETURN"), cancellable = true)
   public void decreaseFallDamage(CallbackInfoReturnable<Integer> cir) {
     double endGravity = LighterEnd.CONFIG.getEndGravity();
-    if (endGravity >= 0.0 && BuiltinDimensionTypes.END.equals(
-        this.level().dimensionTypeRegistration().unwrapKey().orElse(null))) {
+    if (endGravity >= 0.0 && DimensionTypes.THE_END.equals(
+        this.getEntityWorld().getDimensionEntry().getKey().orElse(null))) {
 
       // TODO: this is bad math—replace with a full @Override that recomputes the value
-      cir.setReturnValue(Mth.floor(cir.getReturnValue() * endGravity));
+      cir.setReturnValue(MathHelper.floor(cir.getReturnValue() * endGravity));
     }
   }
 

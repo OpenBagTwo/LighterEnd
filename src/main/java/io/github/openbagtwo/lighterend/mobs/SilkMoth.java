@@ -10,44 +10,44 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.FlyingMoveControl;
-import net.minecraft.world.entity.ai.control.LookControl;
-import net.minecraft.world.entity.ai.goal.BreedGoal;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.FollowParentGoal;
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.goal.TemptGoal;
-import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
-import net.minecraft.world.entity.ai.util.AirRandomPos;
-import net.minecraft.world.entity.ai.util.HoverRandomPos;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.FlyingAnimal;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.Path;
-import net.minecraft.world.level.pathfinder.PathType;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Flutterer;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.AboveGroundTargeting;
+import net.minecraft.entity.ai.NoPenaltySolidTargeting;
+import net.minecraft.entity.ai.NoWaterTargeting;
+import net.minecraft.entity.ai.control.FlightMoveControl;
+import net.minecraft.entity.ai.control.LookControl;
+import net.minecraft.entity.ai.goal.AnimalMateGoal;
+import net.minecraft.entity.ai.goal.FollowParentGoal;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.TemptGoal;
+import net.minecraft.entity.ai.pathing.BirdNavigation;
+import net.minecraft.entity.ai.pathing.EntityNavigation;
+import net.minecraft.entity.ai.pathing.Path;
+import net.minecraft.entity.ai.pathing.PathNodeType;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
-public class SilkMoth extends Animal implements FlyingAnimal {
+public class SilkMoth extends AnimalEntity implements Flutterer {
 
   /**
    * the distance beyond which the moth will look for a new hive
@@ -71,95 +71,95 @@ public class SilkMoth extends Animal implements FlyingAnimal {
   protected MoveToHiveGoal moveToHiveGoal;
 
 
-  public SilkMoth(EntityType<? extends SilkMoth> entityType, Level world) {
+  public SilkMoth(EntityType<? extends SilkMoth> entityType, World world) {
     super(entityType, world);
-    this.moveControl = new FlyingMoveControl(this, 20, true);
+    this.moveControl = new FlightMoveControl(this, 20, true);
     this.lookControl = new LookControl(this);
-    this.setPathfindingMalus(PathType.DANGER_FIRE, -1.0F);
-    this.setPathfindingMalus(PathType.WATER, -1.0F);
-    this.setPathfindingMalus(PathType.WATER_BORDER, 16.0F);
-    this.setPathfindingMalus(PathType.COCOA, -1.0F);
-    this.setPathfindingMalus(PathType.FENCE, -1.0F);
-    this.xpReward = 1;
+    this.setPathfindingPenalty(PathNodeType.DANGER_FIRE, -1.0F);
+    this.setPathfindingPenalty(PathNodeType.WATER, -1.0F);
+    this.setPathfindingPenalty(PathNodeType.WATER_BORDER, 16.0F);
+    this.setPathfindingPenalty(PathNodeType.COCOA, -1.0F);
+    this.setPathfindingPenalty(PathNodeType.FENCE, -1.0F);
+    this.experiencePoints = 1;
   }
 
-  public static AttributeSupplier.Builder createAttributes() {
-    return Animal.createAnimalAttributes()
-        .add(Attributes.MAX_HEALTH, 2.0D)
-        .add(Attributes.FOLLOW_RANGE, 16.0D)
-        .add(Attributes.FLYING_SPEED, 0.4D)
-        .add(Attributes.MOVEMENT_SPEED, 0.1D);
+  public static DefaultAttributeContainer.Builder createAttributes() {
+    return AnimalEntity.createAnimalAttributes()
+        .add(EntityAttributes.MAX_HEALTH, 2.0D)
+        .add(EntityAttributes.FOLLOW_RANGE, 16.0D)
+        .add(EntityAttributes.FLYING_SPEED, 0.4D)
+        .add(EntityAttributes.MOVEMENT_SPEED, 0.1D);
   }
 
   @Override
-  protected PathNavigation createNavigation(Level world) {
-    FlyingPathNavigation birdNavigation = new FlyingPathNavigation(this, world) {
+  protected EntityNavigation createNavigation(World world) {
+    BirdNavigation birdNavigation = new BirdNavigation(this, world) {
       @Override
-      public boolean isStableDestination(BlockPos pos) {
-        BlockState state = this.level.getBlockState(pos);
+      public boolean isValidPosition(BlockPos pos) {
+        BlockState state = this.world.getBlockState(pos);
         return !state.isAir();
       }
 
     };
     birdNavigation.setCanOpenDoors(false);
-    birdNavigation.setCanFloat(false);
-    birdNavigation.setRequiredPathLength(48.0F);
+    birdNavigation.setCanSwim(false);
+    birdNavigation.setMaxFollowRange(48.0F);
     return birdNavigation;
   }
 
   @Override
-  public float getWalkTargetValue(BlockPos pos, LevelReader world) {
+  public float getPathfindingFavor(BlockPos pos, WorldView world) {
     return world.getBlockState(pos).isAir() ? 10.0F : 0.0F;
   }
 
   @Override
-  protected void registerGoals() {
-    this.goalSelector.addGoal(0, new EnterHiveGoal());
-    this.goalSelector.addGoal(1, new BreedGoal(this, 1.0));
-    this.goalSelector.addGoal(
+  protected void initGoals() {
+    this.goalSelector.add(0, new EnterHiveGoal());
+    this.goalSelector.add(1, new AnimalMateGoal(this, 1.0));
+    this.goalSelector.add(
         2,
-        new TemptGoal(this, 1.25, Ingredient.of(LighterEndBlocks.TENANEA_FLOWER), false)
+        new TemptGoal(this, 1.25, Ingredient.ofItems(LighterEndBlocks.TENANEA_FLOWER), false)
     );
-    this.goalSelector.addGoal(2, new ValidateHiveGoal());
-    this.goalSelector.addGoal(3, new FollowParentGoal(this, 1.25));
-    this.goalSelector.addGoal(3, new FindHiveGoal());
+    this.goalSelector.add(2, new ValidateHiveGoal());
+    this.goalSelector.add(3, new FollowParentGoal(this, 1.25));
+    this.goalSelector.add(3, new FindHiveGoal());
     this.moveToHiveGoal = new MoveToHiveGoal();
-    this.goalSelector.addGoal(3, moveToHiveGoal);
-    this.goalSelector.addGoal(4, new WanderAroundGoal());
-    this.goalSelector.addGoal(5, new FloatGoal(this));
+    this.goalSelector.add(3, moveToHiveGoal);
+    this.goalSelector.add(4, new WanderAroundGoal());
+    this.goalSelector.add(5, new SwimGoal(this));
   }
 
   @Override
-  public void addAdditionalSaveData(ValueOutput view) {
-    super.addAdditionalSaveData(view);
+  public void writeCustomData(WriteView view) {
+    super.writeCustomData(view);
     if (this.hivePos != null) {
-      view.storeNullable("hive_pos", BlockPos.CODEC, this.hivePos);
+      view.putNullable("hive_pos", BlockPos.CODEC, this.hivePos);
     }
   }
 
   @Override
-  protected void readAdditionalSaveData(ValueInput view) {
-    super.readAdditionalSaveData(view);
+  protected void readCustomData(ReadView view) {
+    super.readCustomData(view);
     this.hivePos = view.read("hive_pos", BlockPos.CODEC).orElse(null);
   }
 
   @Override
-  protected void customServerAiStep(ServerLevel world) {
-    if (this.isInWater()) {
+  protected void mobTick(ServerWorld world) {
+    if (this.isTouchingWater()) {
       this.ticksInsideWater++;
     } else {
       this.ticksInsideWater = 0;
     }
 
     if (this.ticksInsideWater > 20) {
-      this.hurtServer(world, this.damageSources().drown(), 1.0F);
+      this.damage(world, this.getDamageSources().drown(), 1.0F);
     }
   }
 
   @Override
-  public void aiStep() {
-    super.aiStep();
-    if (!this.level().isClientSide()) {
+  public void tickMovement() {
+    super.tickMovement();
+    if (!this.getEntityWorld().isClient()) {
       if (this.ticksLeftUntilEnterHive > 0) {
         this.ticksLeftUntilEnterHive--;
       }
@@ -168,25 +168,25 @@ public class SilkMoth extends Animal implements FlyingAnimal {
         this.ticksLeftUntilFindHive--;
       }
 
-      if (this.tickCount % 20 == 0 && this.getHive() == null) {
+      if (this.age % 20 == 0 && this.getHive() == null) {
         this.hivePos = null;
       }
     }
   }
 
   @Override
-  public boolean isFood(ItemStack itemStack) {
-    return itemStack.is(LighterEndBlocks.TENANEA_FLOWER.asItem());
+  public boolean isBreedingItem(ItemStack itemStack) {
+    return itemStack.isOf(LighterEndBlocks.TENANEA_FLOWER.asItem());
   }
 
   @Override
-  protected void checkFallDamage(double heightDifference, boolean onGround, BlockState state,
+  protected void fall(double heightDifference, boolean onGround, BlockState state,
       BlockPos landedPosition) {
   }
 
   @Override
-  protected Entity.MovementEmission getMovementEmission() {
-    return Entity.MovementEmission.EVENTS;
+  protected Entity.MoveEffect getMoveEffect() {
+    return Entity.MoveEffect.EVENTS;
   }
 
   @Override
@@ -195,18 +195,18 @@ public class SilkMoth extends Animal implements FlyingAnimal {
   }
 
   @Override
-  public boolean isFlying() {
-    return !this.onGround();
+  public boolean isInAir() {
+    return !this.isOnGround();
   }
 
   @Override
-  public boolean isNoGravity() {
+  public boolean hasNoGravity() {
     return true;
   }
 
   @Override
-  public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
-    return LighterEndMobs.SILK_MOTH.mob.create(world, EntitySpawnReason.BREEDING);
+  public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
+    return LighterEndMobs.SILK_MOTH.mob.create(world, SpawnReason.BREEDING);
   }
 
   @Nullable
@@ -214,10 +214,10 @@ public class SilkMoth extends Animal implements FlyingAnimal {
     if (this.hivePos == null) {
       return null;
     }
-    if (!this.hivePos.closerThan(this.blockPosition(), MAX_DISTANCE_FROM_HIVE)) {
+    if (!this.hivePos.isWithinDistance(this.getBlockPos(), MAX_DISTANCE_FROM_HIVE)) {
       return null;
     }
-    return this.level().getBlockEntity(
+    return this.getEntityWorld().getBlockEntity(
         this.hivePos, LighterEndBlockEntities.SILK_MOTH_NEST
     ).orElse(null);
 
@@ -245,9 +245,9 @@ public class SilkMoth extends Animal implements FlyingAnimal {
   }
 
   protected void startMovingTo(BlockPos pos) {
-    Vec3 vec3d = Vec3.atBottomCenterOf(pos);
+    Vec3d vec3d = Vec3d.ofBottomCenter(pos);
     int i = 0;
-    BlockPos blockPos = this.blockPosition();
+    BlockPos blockPos = this.getBlockPos();
     int j = (int) vec3d.y - blockPos.getY();
     if (j > 2) {
       i = 4;
@@ -257,16 +257,16 @@ public class SilkMoth extends Animal implements FlyingAnimal {
 
     int k = 6;
     int l = 8;
-    int m = blockPos.distManhattan(pos);
+    int m = blockPos.getManhattanDistance(pos);
     if (m < 15) {
       k = m / 2;
       l = m / 2;
     }
 
-    Vec3 vec3d2 = AirRandomPos.getPosTowards(this, k, l, i, vec3d, (float) (Math.PI / 10));
+    Vec3d vec3d2 = NoWaterTargeting.find(this, k, l, i, vec3d, (float) (Math.PI / 10));
     if (vec3d2 != null) {
-      this.navigation.setMaxVisitedNodesMultiplier(0.5F);
-      this.navigation.moveTo(vec3d2.x, vec3d2.y, vec3d2.z, 1.0);
+      this.navigation.setRangeMultiplier(0.5F);
+      this.navigation.startMovingTo(vec3d2.x, vec3d2.y, vec3d2.z, 1.0);
     }
   }
 
@@ -275,10 +275,10 @@ public class SilkMoth extends Animal implements FlyingAnimal {
   class EnterHiveGoal extends Goal {
 
     @Override
-    public boolean canUse() {
+    public boolean canStart() {
       if (
           SilkMoth.this.hivePos != null && SilkMoth.this.canEnterHive()
-              && SilkMoth.this.hivePos.closerToCenterThan(SilkMoth.this.position(), 2.0)
+              && SilkMoth.this.hivePos.isWithinDistance(SilkMoth.this.getEntityPos(), 2.0)
       ) {
         SilkMothNestEntity nest = SilkMoth.this.getHive();
         if (nest != null && nest.getOccupancy() < SilkMothNestEntity.MAX_MOTH_COUNT) {
@@ -290,7 +290,7 @@ public class SilkMoth extends Animal implements FlyingAnimal {
     }
 
     @Override
-    public boolean canContinueToUse() {
+    public boolean shouldContinue() {
       return false;
     }
 
@@ -305,27 +305,27 @@ public class SilkMoth extends Animal implements FlyingAnimal {
 
   class ValidateHiveGoal extends Goal {
 
-    private final int ticksUntilNextValidate = Mth.nextInt(SilkMoth.this.random, 20, 40);
+    private final int ticksUntilNextValidate = MathHelper.nextInt(SilkMoth.this.random, 20, 40);
     private long lastValidateTime = -1L;
 
     @Override
     public void start() {
-      if (SilkMoth.this.hivePos != null && SilkMoth.this.level()
-          .isLoaded(SilkMoth.this.hivePos) && SilkMoth.this.getHive() == null) {
+      if (SilkMoth.this.hivePos != null && SilkMoth.this.getEntityWorld()
+          .isPosLoaded(SilkMoth.this.hivePos) && SilkMoth.this.getHive() == null) {
         SilkMoth.this.clearHivePos();
       }
 
-      this.lastValidateTime = SilkMoth.this.level().getGameTime();
+      this.lastValidateTime = SilkMoth.this.getEntityWorld().getTime();
     }
 
     @Override
-    public boolean canUse() {
-      return SilkMoth.this.level().getGameTime()
+    public boolean canStart() {
+      return SilkMoth.this.getEntityWorld().getTime()
           > this.lastValidateTime + this.ticksUntilNextValidate;
     }
 
     @Override
-    public boolean canContinueToUse() {
+    public boolean shouldContinue() {
       return false;
     }
   }
@@ -340,25 +340,25 @@ public class SilkMoth extends Animal implements FlyingAnimal {
     private int ticksUntilLost;
 
     public MoveToHiveGoal() {
-      this.setFlags(EnumSet.of(Goal.Flag.MOVE));
+      this.setControls(EnumSet.of(Goal.Control.MOVE));
     }
 
     @Override
-    public boolean canUse() {
+    public boolean canStart() {
       return (
           SilkMoth.this.hivePos != null
-              && SilkMoth.this.hivePos.closerThan(SilkMoth.this.blockPosition(),
+              && SilkMoth.this.hivePos.isWithinDistance(SilkMoth.this.getBlockPos(),
               MAX_DISTANCE_FROM_HIVE)
               && SilkMoth.this.canEnterHive()
               && !this.isCloseEnough(SilkMoth.this.hivePos)
-              && SilkMoth.this.level().getBlockState(SilkMoth.this.hivePos)
-              .is(LighterEndBlocks.SILK_MOTH_NEST)
+              && SilkMoth.this.getEntityWorld().getBlockState(SilkMoth.this.hivePos)
+              .isOf(LighterEndBlocks.SILK_MOTH_NEST)
       );
     }
 
     @Override
-    public boolean canContinueToUse() {
-      return this.canUse();
+    public boolean shouldContinue() {
+      return this.canStart();
     }
 
     @Override
@@ -373,18 +373,18 @@ public class SilkMoth extends Animal implements FlyingAnimal {
       this.ticks = 0;
       this.ticksUntilLost = 0;
       SilkMoth.this.navigation.stop();
-      SilkMoth.this.navigation.resetMaxVisitedNodesMultiplier();
+      SilkMoth.this.navigation.resetRangeMultiplier();
     }
 
     @Override
     public void tick() {
       if (SilkMoth.this.hivePos != null) {
         this.ticks++;
-        if (this.ticks > this.adjustedTickDelay(MIN_TICKS_BETWEEN_ENTERING_HIVE)) {
+        if (this.ticks > this.getTickCount(MIN_TICKS_BETWEEN_ENTERING_HIVE)) {
           this.makeChosenHivePossibleHive();
-        } else if (!SilkMoth.this.navigation.isInProgress()) {
-          if (!SilkMoth.this.hivePos.closerToCenterThan(SilkMoth.this.position(), 16)) {
-            if (!SilkMoth.this.hivePos.closerToCenterThan(SilkMoth.this.position(),
+        } else if (!SilkMoth.this.navigation.isFollowingPath()) {
+          if (!SilkMoth.this.hivePos.isWithinDistance(SilkMoth.this.getEntityPos(), 16)) {
+            if (!SilkMoth.this.hivePos.isWithinDistance(SilkMoth.this.getEntityPos(),
                 MAX_DISTANCE_FROM_HIVE)) {
               SilkMoth.this.clearHivePos();
             } else {
@@ -395,7 +395,7 @@ public class SilkMoth extends Animal implements FlyingAnimal {
             if (!bl) {
               this.makeChosenHivePossibleHive();
             } else if (
-                this.path != null && SilkMoth.this.navigation.getPath().sameAs(this.path)
+                this.path != null && SilkMoth.this.navigation.getCurrentPath().equalsPath(this.path)
             ) {
               this.ticksUntilLost++;
               if (this.ticksUntilLost > 60) {
@@ -403,7 +403,7 @@ public class SilkMoth extends Animal implements FlyingAnimal {
                 this.ticksUntilLost = 0;
               }
             } else {
-              this.path = SilkMoth.this.navigation.getPath();
+              this.path = SilkMoth.this.navigation.getCurrentPath();
             }
           }
         }
@@ -411,11 +411,11 @@ public class SilkMoth extends Animal implements FlyingAnimal {
     }
 
     private boolean startMovingToFar(BlockPos pos) {
-      int i = pos.closerToCenterThan(SilkMoth.this.position(), 3) ? 1 : 2;
-      SilkMoth.this.navigation.setMaxVisitedNodesMultiplier(10.0F);
-      SilkMoth.this.navigation.moveTo(pos.getX(), pos.getY(), pos.getZ(), i, 1.0);
-      return SilkMoth.this.navigation.getPath() != null
-          && SilkMoth.this.navigation.getPath().canReach();
+      int i = pos.isWithinDistance(SilkMoth.this.getEntityPos(), 3) ? 1 : 2;
+      SilkMoth.this.navigation.setRangeMultiplier(10.0F);
+      SilkMoth.this.navigation.startMovingTo(pos.getX(), pos.getY(), pos.getZ(), i, 1.0);
+      return SilkMoth.this.navigation.getCurrentPath() != null
+          && SilkMoth.this.navigation.getCurrentPath().reachesTarget();
     }
 
     boolean isPossibleHive(BlockPos pos) {
@@ -443,12 +443,12 @@ public class SilkMoth extends Animal implements FlyingAnimal {
     }
 
     private boolean isCloseEnough(BlockPos pos) {
-      if (pos.closerThan(SilkMoth.this.blockPosition(), 2)) {
+      if (pos.isWithinDistance(SilkMoth.this.getBlockPos(), 2)) {
         return true;
       } else {
-        Path path = SilkMoth.this.navigation.getPath();
-        return path != null && path.getTarget().equals(pos) && path.canReach()
-            && path.isDone();
+        Path path = SilkMoth.this.navigation.getCurrentPath();
+        return path != null && path.getTarget().equals(pos) && path.reachesTarget()
+            && path.isFinished();
       }
     }
   }
@@ -456,14 +456,14 @@ public class SilkMoth extends Animal implements FlyingAnimal {
   class FindHiveGoal extends Goal {
 
     @Override
-    public boolean canUse() {
+    public boolean canStart() {
       return SilkMoth.this.ticksLeftUntilFindHive <= 0
           && SilkMoth.this.hivePos == null
           && SilkMoth.this.canEnterHive();
     }
 
     @Override
-    public boolean canContinueToUse() {
+    public boolean shouldContinue() {
       return false;
     }
 
@@ -485,8 +485,8 @@ public class SilkMoth extends Animal implements FlyingAnimal {
     }
 
     private List<BlockPos> getNearbyFreeHives() {
-      BlockPos blockPos = SilkMoth.this.blockPosition();
-      Level world = SilkMoth.this.level();
+      BlockPos blockPos = SilkMoth.this.getBlockPos();
+      World world = SilkMoth.this.getEntityWorld();
 
       List<BlockPos> nearbyHives = new ArrayList<>();
       for (int dy = 0; dy <= 10 && dy >= -10; dy = (dy <= 0 ? 1 : 0) - dy) {
@@ -497,8 +497,8 @@ public class SilkMoth extends Animal implements FlyingAnimal {
           for (int dz = 0; dz <= MAX_DISTANCE_FROM_HIVE - Math.abs(dy) - Math.abs(dx)
               && dz >= -MAX_DISTANCE_FROM_HIVE + Math.abs(dy) + Math.abs(dx);
               dz = (dz <= 0 ? 1 : 0) - dz) {
-            BlockPos blockPos2 = blockPos.offset(dx, dy, dz);
-            if (!blockPos2.closerThan(blockPos, MAX_DISTANCE_FROM_HIVE)) {
+            BlockPos blockPos2 = blockPos.add(dx, dy, dz);
+            if (!blockPos2.isWithinDistance(blockPos, MAX_DISTANCE_FROM_HIVE)) {
               continue;
             }
             if (world.getBlockEntity(blockPos2) instanceof SilkMothNestEntity nest) {
@@ -509,7 +509,7 @@ public class SilkMoth extends Animal implements FlyingAnimal {
           }
         }
       }
-      nearbyHives.sort(Comparator.comparingDouble(pos -> pos.distSqr(blockPos)));
+      nearbyHives.sort(Comparator.comparingDouble(pos -> pos.getSquaredDistance(blockPos)));
       return nearbyHives;
     }
   }
@@ -517,43 +517,43 @@ public class SilkMoth extends Animal implements FlyingAnimal {
   class WanderAroundGoal extends Goal {
 
     WanderAroundGoal() {
-      this.setFlags(EnumSet.of(Flag.MOVE));
+      this.setControls(EnumSet.of(Control.MOVE));
     }
 
     @Override
-    public boolean canUse() {
-      return SilkMoth.this.navigation.isDone() && SilkMoth.this.random.nextInt(10) == 0;
+    public boolean canStart() {
+      return SilkMoth.this.navigation.isIdle() && SilkMoth.this.random.nextInt(10) == 0;
     }
 
     @Override
-    public boolean canContinueToUse() {
-      return SilkMoth.this.navigation.isInProgress();
+    public boolean shouldContinue() {
+      return SilkMoth.this.navigation.isFollowingPath();
     }
 
     @Override
     public void start() {
-      Vec3 vec3d = this.getRandomLocation();
+      Vec3d vec3d = this.getRandomLocation();
       if (vec3d != null) {
-        SilkMoth.this.navigation.moveTo(
-            SilkMoth.this.navigation.createPath(BlockPos.containing(vec3d), 1), 1.0);
+        SilkMoth.this.navigation.startMovingAlong(
+            SilkMoth.this.navigation.findPathTo(BlockPos.ofFloored(vec3d), 1), 1.0);
       }
     }
 
     @Nullable
-    private Vec3 getRandomLocation() {
-      Vec3 vec3d2;
-      if (SilkMoth.this.getHive() != null && SilkMoth.this.hivePos.closerThan(
-          SilkMoth.this.blockPosition(), this.getMaxWanderDistance())) {
-        Vec3 vec3d = Vec3.atCenterOf(SilkMoth.this.hivePos);
-        vec3d2 = vec3d.subtract(SilkMoth.this.position()).normalize();
+    private Vec3d getRandomLocation() {
+      Vec3d vec3d2;
+      if (SilkMoth.this.getHive() != null && SilkMoth.this.hivePos.isWithinDistance(
+          SilkMoth.this.getBlockPos(), this.getMaxWanderDistance())) {
+        Vec3d vec3d = Vec3d.ofCenter(SilkMoth.this.hivePos);
+        vec3d2 = vec3d.subtract(SilkMoth.this.getEntityPos()).normalize();
       } else {
-        vec3d2 = SilkMoth.this.getViewVector(0.0F);
+        vec3d2 = SilkMoth.this.getRotationVec(0.0F);
       }
 
-      Vec3 vec3d3 = HoverRandomPos.getPos(SilkMoth.this, 8, 7, vec3d2.x, vec3d2.z,
+      Vec3d vec3d3 = AboveGroundTargeting.find(SilkMoth.this, 8, 7, vec3d2.x, vec3d2.z,
           (float) (Math.PI / 2), 3, 1);
       return vec3d3 != null ? vec3d3
-          : AirAndWaterRandomPos.getPos(SilkMoth.this, 8, 4, -2, vec3d2.x, vec3d2.z,
+          : NoPenaltySolidTargeting.find(SilkMoth.this, 8, 4, -2, vec3d2.x, vec3d2.z,
               (float) (Math.PI / 2));
     }
 

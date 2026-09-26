@@ -1,6 +1,6 @@
 package io.github.openbagtwo.lighterend.world.features;
 
-import static net.minecraft.world.level.levelgen.Heightmap.Types;
+import static net.minecraft.world.Heightmap.Type;
 
 import com.google.common.collect.Sets;
 import io.github.openbagtwo.lighterend.blocks.Brimstone;
@@ -11,42 +11,41 @@ import io.github.openbagtwo.lighterend.utils.Flags;
 import io.github.openbagtwo.lighterend.utils.GlobalState;
 import io.github.openbagtwo.lighterend.world.gen.noise.OpenSimplexNoise;
 import java.util.Set;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.Heightmap.Types;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.material.Fluids;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 
-public class SulphurLake extends Feature<NoneFeatureConfiguration> {
+public class SulphurLake extends Feature<DefaultFeatureConfig> {
 
   private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);
 
   public SulphurLake() {
-    super(NoneFeatureConfiguration.CODEC);
+    super(DefaultFeatureConfig.CODEC);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-    BlockPos blockPos = context.origin();
-    final WorldGenLevel world = context.level();
-    blockPos = world.getHeightmapPos(Types.WORLD_SURFACE_WG, blockPos);
+  public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
+    BlockPos blockPos = context.getOrigin();
+    final StructureWorldAccess world = context.getWorld();
+    blockPos = world.getTopPosition(Type.WORLD_SURFACE_WG, blockPos);
 
     if (blockPos.getY() < 57) {
       return false;
     }
 
-    final RandomSource random = context.random();
-    final MutableBlockPos POS = GlobalState.stateForThread().POS;
-    double radius = Mth.nextDouble(random, 10., 20.);
-    int dist2 = Mth.floor(radius * 1.5);
+    final Random random = context.getRandom();
+    final Mutable POS = GlobalState.stateForThread().POS;
+    double radius = MathHelper.nextDouble(random, 10., 20.);
+    int dist2 = MathHelper.floor(radius * 1.5);
 
     int minX = blockPos.getX() - dist2;
     int maxX = blockPos.getX() + dist2;
@@ -68,73 +67,73 @@ public class SulphurLake extends Feature<NoneFeatureConfiguration> {
         r2 *= r2;
         int dist = x2 + z2;
         if (dist <= r) {
-          POS.setY(world.getHeight(Types.WORLD_SURFACE_WG, x, z) - 1);
-          if (world.getBlockState(POS).is(LighterEndTags.END_STONES)) {
+          POS.setY(world.getTopY(Type.WORLD_SURFACE_WG, x, z) - 1);
+          if (world.getBlockState(POS).isIn(LighterEndTags.END_STONES)) {
             if (isBorder(world, POS)) {
               if (random.nextInt(8) > 0) {
-                brimstone.add(POS.immutable());
+                brimstone.add(POS.toImmutable());
                 if (random.nextBoolean()) {
-                  brimstone.add(POS.below());
+                  brimstone.add(POS.down());
                   if (random.nextBoolean()) {
-                    brimstone.add(POS.below(2));
+                    brimstone.add(POS.down(2));
                   }
                 }
               } else {
                 if (!isAbsoluteBorder(world, POS)) {
-                  world.setBlock(POS, Blocks.WATER.defaultBlockState(), Flags.SILENT);
+                  world.setBlockState(POS, Blocks.WATER.getDefaultState(), Flags.SILENT);
 
-                  world.scheduleTick(POS, Fluids.WATER, 0);
-                  brimstone.add(POS.below());
+                  world.scheduleFluidTick(POS, Fluids.WATER, 0);
+                  brimstone.add(POS.down());
                   if (random.nextBoolean()) {
-                    brimstone.add(POS.below(2));
+                    brimstone.add(POS.down(2));
                     if (random.nextBoolean()) {
-                      brimstone.add(POS.below(3));
+                      brimstone.add(POS.down(3));
                     }
                   }
                 } else {
-                  brimstone.add(POS.immutable());
+                  brimstone.add(POS.toImmutable());
                   if (random.nextBoolean()) {
-                    brimstone.add(POS.below());
+                    brimstone.add(POS.down());
                   }
                 }
               }
             } else {
-              world.setBlock(POS, Blocks.WATER.defaultBlockState(), Flags.SILENT);
+              world.setBlockState(POS, Blocks.WATER.getDefaultState(), Flags.SILENT);
               brimstone.remove(POS);
-              for (Direction dir : Direction.Plane.HORIZONTAL) {
-                BlockPos offsetted = POS.relative(dir);
-                if (world.getBlockState(offsetted).is(LighterEndTags.END_STONES)) {
+              for (Direction dir : Direction.Type.HORIZONTAL) {
+                BlockPos offsetted = POS.offset(dir);
+                if (world.getBlockState(offsetted).isIn(LighterEndTags.END_STONES)) {
                   brimstone.add(offsetted);
                 }
               }
               if (isDeepWater(world, POS)) {
-                world.setBlock(POS.move(Direction.DOWN), Blocks.WATER.defaultBlockState(),
+                world.setBlockState(POS.move(Direction.DOWN), Blocks.WATER.getDefaultState(),
                     Flags.SILENT);
                 brimstone.remove(POS);
-                for (Direction dir : Direction.Plane.HORIZONTAL) {
-                  BlockPos offseted = POS.relative(dir);
-                  if (world.getBlockState(offseted).is(LighterEndTags.END_STONES)) {
+                for (Direction dir : Direction.Type.HORIZONTAL) {
+                  BlockPos offseted = POS.offset(dir);
+                  if (world.getBlockState(offseted).isIn(LighterEndTags.END_STONES)) {
                     brimstone.add(offseted);
                   }
                 }
               }
-              brimstone.add(POS.below());
+              brimstone.add(POS.down());
               if (random.nextBoolean()) {
-                brimstone.add(POS.below(2));
+                brimstone.add(POS.down(2));
                 if (random.nextBoolean()) {
-                  brimstone.add(POS.below(3));
+                  brimstone.add(POS.down(3));
                 }
               }
             }
           }
         } else if (dist < r2) {
-          POS.setY(world.getHeight(Types.WORLD_SURFACE_WG, x, z) - 1);
-          if (world.getBlockState(POS).is(LighterEndTags.END_STONES)) {
-            brimstone.add(POS.immutable());
+          POS.setY(world.getTopY(Type.WORLD_SURFACE_WG, x, z) - 1);
+          if (world.getBlockState(POS).isIn(LighterEndTags.END_STONES)) {
+            brimstone.add(POS.toImmutable());
             if (random.nextBoolean()) {
-              brimstone.add(POS.below());
+              brimstone.add(POS.down());
               if (random.nextBoolean()) {
-                brimstone.add(POS.below(2));
+                brimstone.add(POS.down(2));
               }
             }
           }
@@ -149,13 +148,13 @@ public class SulphurLake extends Feature<NoneFeatureConfiguration> {
     return true;
   }
 
-  protected static boolean isBorder(WorldGenLevel world, BlockPos pos) {
+  protected static boolean isBorder(StructureWorldAccess world, BlockPos pos) {
     int y = pos.getY() + 1;
     for (Direction dir : Direction.values()) {
-      if (world.getHeight(
-          Types.WORLD_SURFACE_WG,
-          pos.getX() + dir.getStepX(),
-          pos.getZ() + dir.getStepZ()
+      if (world.getTopY(
+          Type.WORLD_SURFACE_WG,
+          pos.getX() + dir.getOffsetX(),
+          pos.getZ() + dir.getOffsetZ()
       ) < y) {
         return true;
       }
@@ -163,13 +162,13 @@ public class SulphurLake extends Feature<NoneFeatureConfiguration> {
     return false;
   }
 
-  protected static boolean isAbsoluteBorder(WorldGenLevel world, BlockPos pos) {
+  protected static boolean isAbsoluteBorder(StructureWorldAccess world, BlockPos pos) {
     int y = pos.getY() - 2;
     for (Direction dir : Direction.values()) {
-      if (world.getHeight(
-          Types.WORLD_SURFACE_WG,
-          pos.getX() + dir.getStepX() * 3,
-          pos.getZ() + dir.getStepZ() * 3
+      if (world.getTopY(
+          Type.WORLD_SURFACE_WG,
+          pos.getX() + dir.getOffsetX() * 3,
+          pos.getZ() + dir.getOffsetZ() * 3
       ) < y) {
         return true;
       }
@@ -177,22 +176,22 @@ public class SulphurLake extends Feature<NoneFeatureConfiguration> {
     return false;
   }
 
-  protected static boolean isDeepWater(WorldGenLevel world, BlockPos pos) {
+  protected static boolean isDeepWater(StructureWorldAccess world, BlockPos pos) {
     int y = pos.getY() + 1;
     for (Direction dir : Direction.values()) {
-      if (world.getHeight(
-          Types.WORLD_SURFACE_WG,
-          pos.getX() + dir.getStepX(),
-          pos.getZ() + dir.getStepZ()
+      if (world.getTopY(
+          Type.WORLD_SURFACE_WG,
+          pos.getX() + dir.getOffsetX(),
+          pos.getZ() + dir.getOffsetZ()
       ) < y
-          || world.getHeight(
-          Types.WORLD_SURFACE_WG,
-          pos.getX() + dir.getStepX() * 2,
-          pos.getZ() + dir.getStepZ() * 2
-      ) < y || world.getHeight(
-          Types.WORLD_SURFACE_WG,
-          pos.getX() + dir.getStepX() * 3,
-          pos.getZ() + dir.getStepZ() * 3
+          || world.getTopY(
+          Type.WORLD_SURFACE_WG,
+          pos.getX() + dir.getOffsetX() * 2,
+          pos.getZ() + dir.getOffsetZ() * 2
+      ) < y || world.getTopY(
+          Type.WORLD_SURFACE_WG,
+          pos.getX() + dir.getOffsetX() * 3,
+          pos.getZ() + dir.getOffsetZ() * 3
       ) < y) {
         return false;
       }
@@ -200,33 +199,33 @@ public class SulphurLake extends Feature<NoneFeatureConfiguration> {
     return true;
   }
 
-  protected static void placeBrimstone(WorldGenLevel world, BlockPos pos, RandomSource random) {
+  protected static void placeBrimstone(StructureWorldAccess world, BlockPos pos, Random random) {
     BlockState state = getBrimstone(world, pos);
-    world.setBlock(pos, state, Flags.SILENT);
-    if (state.getValue(Brimstone.ACTIVATED)) {
+    world.setBlockState(pos, state, Flags.SILENT);
+    if (state.get(Brimstone.ACTIVATED)) {
       makeShards(world, pos, random);
     }
   }
 
-  protected static BlockState getBrimstone(WorldGenLevel world, BlockPos pos) {
+  protected static BlockState getBrimstone(StructureWorldAccess world, BlockPos pos) {
     for (Direction dir : Direction.values()) {
-      if (world.getBlockState(pos.relative(dir)).is(Blocks.WATER)) {
-        return LighterEndBlocks.BRIMSTONE.defaultBlockState().setValue(Brimstone.ACTIVATED, true);
+      if (world.getBlockState(pos.offset(dir)).isOf(Blocks.WATER)) {
+        return LighterEndBlocks.BRIMSTONE.getDefaultState().with(Brimstone.ACTIVATED, true);
       }
     }
-    return LighterEndBlocks.BRIMSTONE.defaultBlockState();
+    return LighterEndBlocks.BRIMSTONE.getDefaultState();
   }
 
-  protected static void makeShards(WorldGenLevel world, BlockPos pos, RandomSource random) {
+  protected static void makeShards(StructureWorldAccess world, BlockPos pos, Random random) {
     for (Direction dir : Direction.values()) {
       BlockPos side;
-      if (random.nextInt(16) == 0 && world.getBlockState((side = pos.relative(dir)))
-          .is(Blocks.WATER)) {
-        BlockState state = LighterEndBlocks.SULPHUR_CRYSTAL.defaultBlockState()
-            .setValue(SulphurCrystal.WATERLOGGED, true)
-            .setValue(SulphurCrystal.FACING, dir)
-            .setValue(SulphurCrystal.STAGE, random.nextInt(3));
-        world.setBlock(side, state, Flags.SILENT);
+      if (random.nextInt(16) == 0 && world.getBlockState((side = pos.offset(dir)))
+          .isOf(Blocks.WATER)) {
+        BlockState state = LighterEndBlocks.SULPHUR_CRYSTAL.getDefaultState()
+            .with(SulphurCrystal.WATERLOGGED, true)
+            .with(SulphurCrystal.FACING, dir)
+            .with(SulphurCrystal.STAGE, random.nextInt(3));
+        world.setBlockState(side, state, Flags.SILENT);
       }
     }
   }
